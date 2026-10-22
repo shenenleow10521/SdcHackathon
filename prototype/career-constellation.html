@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HalaTuju Career Constellation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: route-planner sidebar on the left; on the right a 3D stage with three rings (your skills, skills to learn, future jobs) around you, plus floating agents, legend, timeline and view controls. Stacks stage-first on phones. */
+:root {
+  --bg: #eef1f5;
+  --panel: #ffffff;
+  --panel-2: #f6f8fa;
+  --ink: #0f1722;
+  --ink-2: #485364;
+  --muted: #667182;
+  --line: #e2e7ed;
+  --accent: #2a78d6;
+  --accent-ink: #ffffff;
+  --accent-wash: #e8f1fc;
+  --good-ink: #0b6b26; --good-wash: #e3f4e6;
+  --warn-ink: #8a5300; --warn-wash: #fdf1d8;
+  --crit-ink: #b42828; --crit-wash: #fce7e7;
+  --shadow: 0 1px 2px rgba(15, 23, 34, 0.06), 0 4px 8px rgba(15, 23, 34, 0.06);
+
+  /* stage + node palette (validated: blue / aqua / orange) */
+  --stage-a: #f7f9fc;
+  --stage-b: #e6ebf2;
+  --ring: rgba(72, 83, 100, 0.22);
+  --n-you: #1d2633;
+  --n-have: #2a78d6;
+  --n-learn: #1baf7a;
+  --n-job: #eb6834;
+  --n-risk: #d03b3b;
+  --n-taken: #a9b3c0;
+  --l-base: rgba(72, 83, 100, 0.30);
+  --l-dead: rgba(208, 59, 59, 0.16);
+  --l-path: #eb6834;
+  --particle: #1d2633;
+
+  --font: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --z-rings: 0;
+  --z-canvas: 1;
+  --z-labels: 2;
+  --z-ui: 10;
+  --z-toast: 30;
+  --z-tip: 40;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1015; --panel: #151a21; --panel-2: #1b2129; --ink: #e8ecf1; --ink-2: #aeb8c5; --muted: #8b96a6; --line: #262d37;
+    --accent: #3987e5; --accent-ink: #ffffff; --accent-wash: #16263a;
+    --good-ink: #7fd38f; --good-wash: #15291b; --warn-ink: #f0c56a; --warn-wash: #2e2410; --crit-ink: #f19c9c; --crit-wash: #331a1a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+    --stage-a: #121821; --stage-b: #07090d; --ring: rgba(174, 184, 197, 0.16);
+    --n-you: #f2f4f7; --n-have: #3987e5; --n-learn: #199e70; --n-job: #d95926; --n-risk: #e66767; --n-taken: #4a5260;
+    --l-base: rgba(174, 184, 197, 0.22); --l-dead: rgba(230, 103, 103, 0.14); --l-path: #f08a5d; --particle: #ffffff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1015; --panel: #151a21; --panel-2: #1b2129; --ink: #e8ecf1; --ink-2: #aeb8c5; --muted: #8b96a6; --line: #262d37;
+  --accent: #3987e5; --accent-ink: #ffffff; --accent-wash: #16263a;
+  --good-ink: #7fd38f; --good-wash: #15291b; --warn-ink: #f0c56a; --warn-wash: #2e2410; --crit-ink: #f19c9c; --crit-wash: #331a1a;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+  --stage-a: #121821; --stage-b: #07090d; --ring: rgba(174, 184, 197, 0.16);
+  --n-you: #f2f4f7; --n-have: #3987e5; --n-learn: #199e70; --n-job: #d95926; --n-risk: #e66767; --n-taken: #4a5260;
+  --l-base: rgba(174, 184, 197, 0.22); --l-dead: rgba(230, 103, 103, 0.14); --l-path: #f08a5d; --particle: #ffffff;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+button, select, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.app { height: 100%; display: grid; grid-template-columns: 384px minmax(0, 1fr); grid-template-areas: "side stage"; }
+.side {
+  grid-area: side; min-width: 0; overflow-y: auto; background: var(--panel); border-right: 1px solid var(--line);
+  padding-block: 18px 24px; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: 18px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.stage { grid-area: stage; position: relative; min-width: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 45%, var(--stage-a) 0%, var(--stage-b) 75%); }
+/* the scene is wider than the stage and slid left, so the rings centre in the space beside the Agents card */
+.scene { position: absolute; top: 0; bottom: 0; left: -240px; right: 0; }
+#rings { position: absolute; inset: 0; z-index: var(--z-rings); width: 100%; height: 100%; pointer-events: none; }
+#graph { position: absolute; inset: 0; z-index: var(--z-canvas); }
+#labels { position: absolute; inset: 0; z-index: var(--z-labels); pointer-events: none; }
+.agents { grid-area: stage; align-self: start; justify-self: end; z-index: var(--z-ui); margin: 16px max(16px, env(safe-area-inset-right, 0px)) 0 0; width: 300px; }
+
+@media (max-width: 900px) {
+  html, body { height: auto; }
+  .app { height: auto; grid-template-columns: minmax(0, 1fr); grid-template-areas: "stage" "agents" "side"; }
+  .stage { height: 68svh; min-height: 460px; }
+  .scene { left: 0; }
+  .timeline { left: 50%; }
+  .agents { justify-self: stretch; width: auto; margin: 12px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); }
+  .side { border-right: 0; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+/* sidebar */
+.brand { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand-mark { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.brand-mark svg { width: 28px; height: 28px; }
+.tag { font-size: 11.5px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: var(--warn-wash); color: var(--warn-ink); white-space: nowrap; }
+.profile { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; }
+.avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--accent-wash); color: var(--accent); display: grid; place-items: center; font-weight: 700; }
+.profile .name { font-weight: 600; }
+.profile .meta { color: var(--ink-2); font-size: 13px; }
+.sync { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.sync i { width: 6px; height: 6px; border-radius: 50%; background: var(--good-ink); flex: none; }
+
+.score { background: var(--panel-2); border-radius: var(--r-md); padding: 14px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; align-items: center; }
+.score-num { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+.score-num small { font-size: 16px; font-weight: 600; color: var(--ink-2); }
+.score-label { font-weight: 600; font-size: 13px; }
+.score-sub { font-size: 12.5px; color: var(--ink-2); }
+.score-sub b { color: var(--good-ink); font-weight: 600; }
+
+.sec-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0 0 8px; }
+.sec-h h2 { margin: 0; font-size: 14px; font-weight: 600; }
+.sec-h span { font-size: 12px; color: var(--muted); }
+.jobs { display: grid; gap: 8px; }
+.job { text-align: left; border: 1px solid var(--line); background: var(--panel); border-radius: var(--r-sm); padding: 10px 12px; display: grid; gap: 6px; transition: border-color .18s ease-out, background-color .18s ease-out; }
+.job:hover { border-color: var(--muted); }
+.job[aria-pressed="true"] { border-color: var(--n-job); background: var(--panel-2); }
+.job-top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.job-name { font-weight: 600; }
+.job-pct { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--n-job); border-radius: 3px; transition: width .25s ease-out; }
+.job-meta { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+.seg { display: inline-flex; background: var(--panel-2); border-radius: var(--r-sm); padding: 3px; gap: 2px; }
+.seg button { border: 0; background: transparent; padding: 5px 10px; border-radius: 6px; font-size: 12.5px; color: var(--ink-2); font-weight: 500; }
+.seg button[aria-pressed="true"] { background: var(--panel); color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+.mode-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.mode-note { font-size: 12.5px; color: var(--ink-2); margin: 6px 0 0; }
+
+.eta { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.eta .big { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.eta .sm { color: var(--ink-2); font-size: 13px; }
+.risk { font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+.risk.low { background: var(--good-wash); color: var(--good-ink); }
+.risk.med { background: var(--warn-wash); color: var(--warn-ink); }
+.risk.high { background: var(--crit-wash); color: var(--crit-ink); }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; }
+.steps li { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 10px; padding: 9px 0; position: relative; cursor: pointer; }
+.steps li:hover .t { color: var(--accent); }
+.steps li:not(:last-child)::before { content: ""; position: absolute; left: 13px; top: 33px; bottom: -6px; border-left: 2px dotted var(--line); }
+.ico { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; position: relative; z-index: 1; }
+.ico.start { background: var(--n-you); color: var(--panel); }
+.ico.have { background: var(--accent-wash); color: var(--accent); }
+.ico.learn { background: var(--panel); border: 2.5px solid var(--n-learn); color: var(--ink); }
+.ico.arrive { background: var(--n-job); color: #fff; }
+.steps .t { font-weight: 600; transition: color .15s ease-out; }
+.steps .s { color: var(--ink-2); font-size: 13px; }
+.steps .c { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.steps .w { font-size: 13px; color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; padding-top: 2px; }
+
+.approve { display: grid; gap: 8px; border-top: 1px solid var(--line); padding-top: 16px; }
+.btn-primary { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: var(--r-sm); padding: 10px 14px; font-weight: 600; }
+.btn-primary:hover { filter: brightness(1.06); }
+.btn-primary:disabled { opacity: .6; cursor: default; filter: none; }
+.approve p, .foot { margin: 0; font-size: 12.5px; color: var(--ink-2); }
+.foot { font-size: 12px; color: var(--muted); }
+
+/* floating UI */
+.float { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow); }
+.agents { padding: 12px; display: grid; gap: 10px; }
+.agents-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.agents-head h3 { margin: 0; font-size: 13px; font-weight: 600; }
+.fresh { font-size: 11.5px; color: var(--muted); }
+.agent-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.agent-list li { display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 8px; align-items: start; }
+.st { width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; background: var(--good-ink); }
+.st.idle { background: var(--muted); }
+.st.run { background: var(--accent); animation: pulse 1s ease-out infinite; }
+.agent-list .an { font-weight: 600; font-size: 13px; }
+.agent-list .ad { font-size: 12px; color: var(--ink-2); }
+.log { list-style: none; margin: 0; padding: 8px 10px; background: var(--panel-2); border-radius: var(--r-sm); display: grid; gap: 4px; font-size: 12px; color: var(--ink-2); }
+.log li::before { content: "› "; color: var(--accent); font-weight: 700; }
+.agent-actions { display: flex; gap: 8px; }
+.btn { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 7px 10px; font-weight: 600; font-size: 13px; }
+.btn:hover { background: var(--panel-2); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); flex: 1; }
+.btn.primary:hover { filter: brightness(1.06); background: var(--accent); }
+.btn:disabled { opacity: .55; cursor: default; }
+
+.chip-top { position: absolute; z-index: var(--z-ui); left: 16px; top: 16px; }
+.chip-top .float { padding: 6px 10px; font-size: 12px; color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; }
+.chip-top b { color: var(--ink); font-weight: 600; }
+.live { width: 7px; height: 7px; border-radius: 50%; background: var(--good-ink); }
+.legend { position: absolute; z-index: var(--z-ui); left: 16px; right: 348px; top: 58px; width: fit-content; padding: 7px 12px; display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--ink-2); }
+.legend .row { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.dot { width: 11px; height: 11px; border-radius: 50%; flex: none; }
+.dot.you { background: var(--n-you); width: 13px; height: 13px; }
+.dot.have { background: var(--n-have); }
+.dot.learn { background: var(--n-learn); }
+.dot.job { background: var(--n-job); width: 13px; height: 13px; }
+.dot.risk { background: var(--n-risk); }
+.dot.taken { background: var(--n-taken); width: 7px; height: 7px; margin: 0 2px; }
+.ln { width: 14px; height: 3px; border-radius: 2px; background: var(--l-path); flex: none; }
+
+.timeline { position: absolute; z-index: var(--z-ui); left: calc(50% - 120px); transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 12px; padding: 8px 12px; flex-wrap: wrap; justify-content: center; max-width: calc(100% - 32px); }
+.timeline input[type="range"] { width: 150px; accent-color: var(--accent); }
+.year { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 4ch; }
+.iconbtn { min-width: 32px; height: 32px; padding: 0 6px; display: grid; place-items: center; border: 0; background: transparent; border-radius: var(--r-sm); color: var(--ink); font-weight: 700; font-size: 12px; }
+.iconbtn:hover { background: var(--panel-2); }
+.iconbtn[aria-pressed="true"] { background: var(--accent-wash); color: var(--accent); }
+.viewctl { position: absolute; z-index: var(--z-ui); right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: grid; padding: 4px; gap: 2px; }
+@media (max-width: 900px) {
+  .legend { display: none; }
+  .timeline { gap: 8px; padding: 6px 8px; }
+  .timeline input[type="range"] { width: 96px; }
+  .viewctl { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* labels in the 3D scene */
+.lb { position: absolute; left: 0; top: 0; transform: translate(-50%, 0); white-space: nowrap; font-size: 12px; font-weight: 600; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px; box-shadow: 0 1px 3px rgba(0,0,0,.12); display: inline-flex; align-items: center; gap: 6px; will-change: transform; }
+.lb.hide { display: none; }
+.lb.job { padding: 4px 10px; font-size: 12.5px; flex-direction: column; align-items: center; gap: 0; border-radius: 10px; }
+.lb.job small { font-size: 11.5px; font-weight: 600; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.lb.job.sel { border-color: var(--n-job); box-shadow: 0 0 0 2px var(--n-job); }
+.lb.you { background: var(--n-you); color: var(--panel); border-color: transparent; }
+.lb .n { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 10.5px; font-weight: 700; border: 2px solid var(--n-learn); }
+.lb .tag-risk { font-size: 10.5px; font-weight: 700; color: var(--crit-ink); }
+.lb .tag-taken { font-size: 10.5px; font-weight: 700; color: var(--muted); }
+.ring-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; fill: var(--muted); }
+.incident { position: absolute; z-index: var(--z-labels); transform: translate(-50%, -100%); pointer-events: none; display: inline-flex; align-items: center; gap: 6px; background: var(--warn-wash); color: var(--warn-ink); border: 1px solid #eda100; border-radius: 999px; padding: 3px 9px; font-size: 12px; font-weight: 700; white-space: nowrap; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+
+.toast { position: absolute; z-index: var(--z-toast); left: 50%; top: 64px; transform: translate(-50%, -8px); opacity: 0; padding: 10px 14px; display: grid; gap: 2px; width: min(420px, calc(100% - 32px)); pointer-events: none; transition: opacity .22s ease-out, transform .22s ease-out; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast .tt { font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.toast .td { font-size: 12.5px; color: var(--ink-2); }
+.badge-warn { font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: var(--warn-wash); color: var(--warn-ink); }
+.badge-info { font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: var(--accent-wash); color: var(--accent); }
+.rerouting { position: absolute; z-index: var(--z-toast); left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 10px 16px; font-weight: 600; display: inline-flex; gap: 10px; align-items: center; opacity: 0; pointer-events: none; transition: opacity .2s ease-out; }
+.rerouting.show { opacity: 1; }
+.spin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--accent-wash); border-top-color: var(--accent); animation: spin .8s linear infinite; }
+.tip { position: absolute; z-index: var(--z-tip); pointer-events: none; padding: 9px 11px; min-width: 210px; font-size: 12.5px; }
+.tip b { display: block; font-size: 13px; margin-bottom: 2px; }
+.tip .k { color: var(--muted); font-size: 11.5px; margin-bottom: 6px; display: block; }
+.tip .row { display: flex; justify-content: space-between; gap: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.tip .row span:last-child { color: var(--ink); font-weight: 600; }
+.nograph { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-2); padding: 24px; text-align: center; }
+
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(42,120,214,.5); } 100% { box-shadow: 0 0 0 7px rgba(42,120,214,0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .st.run, .spin { animation: none; }
+  .toast, .rerouting, .job, .bar i, .steps .t { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Career planner">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7" fill="var(--accent)"/><circle cx="14" cy="14" r="3.2" fill="#fff"/><circle cx="14" cy="14" r="8" fill="none" stroke="#fff" stroke-width="1.6" opacity=".7"/><circle cx="21.5" cy="9" r="2" fill="#fff"/></svg>
+        HalaTuju
+      </div>
+      <span class="tag" title="All people, numbers, sources and courses on this page are sample data">Sample data</span>
+    </div>
+
+    <div class="profile">
+      <div class="avatar" aria-hidden="true">AS</div>
+      <div>
+        <div class="name">Aisyah binti Salleh</div>
+        <div class="meta">Accounts payable clerk · 9 years · Cyberjaya</div>
+        <div class="sync"><i></i>Synced from LinkedIn PDF · 10 skills · 6 h/week to learn</div>
+      </div>
+    </div>
+
+    <div class="score" id="score"></div>
+
+    <div>
+      <div class="sec-h"><h2>Where you can go</h2><span>match with your skills today</span></div>
+      <div class="jobs" id="jobs" role="group" aria-label="Future jobs"></div>
+    </div>
+
+    <div>
+      <div class="mode-row">
+        <div class="eta" id="eta"></div>
+        <div class="seg" role="group" aria-label="Route type">
+          <button type="button" data-mode="fastest" aria-pressed="true">Fastest</button>
+          <button type="button" data-mode="noregret" aria-pressed="false">No-regret</button>
+          <button type="button" data-mode="safest" aria-pressed="false">Safest</button>
+        </div>
+      </div>
+      <p class="mode-note" id="mode-note"></p>
+    </div>
+
+    <ol class="steps" id="steps"></ol>
+
+    <div class="approve">
+      <button class="btn-primary" id="approve" type="button">Send path to my advisor</button>
+      <p id="approve-note">You or your career advisor approve the path before it goes into your learning plan. The app suggests; people decide.</p>
+    </div>
+    <p class="foot">Sample data for a hackathon demo. Planned sources: ILO generative-AI exposure index, O*NET task lists, TalentCorp 2024 workforce study, live AI and job-market signals.</p>
+  </aside>
+
+  <section class="stage" id="stage" aria-label="Career constellation">
+    <div class="scene">
+      <svg id="rings" aria-hidden="true"></svg>
+      <div id="graph"></div>
+      <div id="labels"></div>
+    </div>
+    <div class="chip-top"><div class="float"><span class="live"></span><span>Knowledge base updated <b id="fresh-when">3 days ago</b> · <b id="fresh-n">214</b> sources</span></div></div>
+    <div class="legend float" aria-label="Legend">
+      <div class="row"><span class="dot you"></span>You (current job)</div>
+      <div class="row"><span class="dot have"></span>Skills you have</div>
+      <div class="row"><span class="dot learn"></span>Skills to learn</div>
+      <div class="row"><span class="dot job"></span>Future jobs (size = match)</div>
+      <div class="row"><span class="dot risk"></span>At risk from AI</div>
+      <div class="row"><span class="dot taken"></span>AI has taken over</div>
+      <div class="row"><span class="ln"></span>Your path</div>
+    </div>
+    <div class="toast float" id="toast" role="status" aria-live="polite"></div>
+    <div class="rerouting float" id="rerouting"><span class="spin"></span>Finding a new path…</div>
+    <div class="tip float" id="tip" hidden></div>
+
+    <div class="timeline float" role="group" aria-label="Forecast controls">
+      <button class="iconbtn" id="play" type="button" aria-label="Play the forecast from 2026 to 2030">▶</button>
+      <input type="range" id="year" min="2026" max="2030" step="1" value="2026" aria-label="Forecast year">
+      <span class="year" id="year-out">2026</span>
+      <div class="seg" role="group" aria-label="AI adoption speed">
+        <button type="button" data-scn="moderate" aria-pressed="true">Moderate AI</button>
+        <button type="button" data-scn="fast" aria-pressed="false">Fast AI</button>
+      </div>
+    </div>
+    <div class="viewctl float" role="group" aria-label="View">
+      <button class="iconbtn" id="rotate" type="button" aria-pressed="true" aria-label="Stop rotating">⟳</button>
+      <button class="iconbtn" id="labels-btn" type="button" aria-pressed="false" aria-label="Show all labels">Aa</button>
+      <button class="iconbtn" id="reset-view" type="button" aria-label="Reset the view">⌖</button>
+    </div>
+  </section>
+
+  <section class="agents float" aria-label="AI agents">
+    <div class="agents-head"><h3>Agents</h3><span class="fresh" id="agents-fresh">Last scout run 3 days ago</span></div>
+    <ul class="agent-list" id="agent-list"></ul>
+    <ul class="log" id="log" hidden></ul>
+    <div class="agent-actions">
+      <button class="btn primary" id="scout" type="button">Run market scout now</button>
+      <button class="btn" id="reset" type="button" hidden>Reset</button>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.79.0/dist/3d-force-graph.min.js"></script>
+<script>
+/*LOGIC-START*/
+// ======================= Sample data (illustrative, not research results) =======================
+// ring 0 = you, 1 = skills you have, 2 = skills to learn, 3 = future jobs. a = angle on the ring (degrees).
+// e = AI exposure [2026, 2030 moderate, 2030 fast]; d = demand change % [same].
+const NODES = {
+  ap:      { name: "Accounts Payable Clerk", type: "you", ring: 0, a: 0, e: [.80, .88, .93], d: [-10, -30, -42] },
+
+  inv:     { name: "Invoice data entry", type: "have", level: 5, ring: 1, a: 350, e: [.86, .93, .97], d: [-14, -42, -55] },
+  three:   { name: "Three-way matching", type: "have", level: 5, ring: 1, a: 318, e: [.74, .84, .91], d: [-4, -30, -44] },
+  pay:     { name: "Payment runs", type: "have", level: 4, ring: 1, a: 286, e: [.64, .78, .86], d: [-12, -28, -38] },
+  tax:     { name: "SST compliance", type: "have", level: 3, ring: 1, a: 252, e: [.33, .45, .52], d: [-2, -4, -8] },
+  erp:     { name: "ERP operation (SAP)", type: "have", level: 4, ring: 1, a: 218, e: [.42, .54, .61], d: [4, -2, -8] },
+  dispute: { name: "Vendor dispute resolution", type: "have", level: 3, ring: 1, a: 184, e: [.22, .30, .35], d: [6, 10, 12] },
+  process: { name: "Process improvement", type: "have", level: 2, ring: 1, a: 150, e: [.16, .21, .24], d: [16, 24, 28] },
+  audit:   { name: "Audit trail documentation", type: "have", level: 4, ring: 1, a: 116, e: [.38, .49, .56], d: [18, 26, 30] },
+  recon:   { name: "Vendor reconciliation", type: "have", level: 4, ring: 1, a: 82, e: [.54, .68, .77], d: [2, -14, -24] },
+  excel:   { name: "Spreadsheet analysis", type: "have", level: 4, ring: 1, a: 46, e: [.48, .61, .69], d: [12, 6, 0] },
+
+  auto:    { name: "Workflow automation", type: "learn", ring: 2, a: 212, e: [.30, .36, .40], d: [30, 44, 50], course: "Automating finance workflows · 18 h · free" },
+  aisup:   { name: "Supervising AI workflows", type: "learn", ring: 2, a: 172, e: [.12, .16, .18], d: [30, 44, 54], course: "Supervising AI agents in finance · 12 h · free" },
+  disc:    { name: "Sustainability disclosure", type: "learn", ring: 2, a: 138, e: [.22, .31, .38], d: [26, 44, 50], course: "Sustainability reporting basics · 18 h · free" },
+  ghg:     { name: "GHG emissions accounting", type: "learn", ring: 2, a: 108, e: [.30, .38, .45], d: [34, 50, 56], course: "GHG accounting fundamentals · 24 h · free" },
+  esgdata: { name: "ESG data management", type: "learn", ring: 2, a: 80, e: [.35, .45, .52], d: [24, 40, 46], course: "ESG data management · 18 h · paid (ask HR about HRD Corp)" },
+  viz:     { name: "Dashboard reporting", type: "learn", ring: 2, a: 44, e: [.46, .57, .64], d: [22, 26, 22], course: "Power BI dashboards · 12 h · free" },
+  fin:     { name: "Financial analysis", type: "learn", ring: 2, a: 14, e: [.40, .46, .50], d: [28, 36, 38], course: "Financial analysis and forecasting · 24 h · paid" },
+
+  opsRole: { name: "Finance Automation Specialist", type: "job", ring: 3, a: 196, e: [.34, .40, .44], d: [28, 40, 46] },
+  esgRole: { name: "ESG & Carbon Reporting Analyst", type: "job", ring: 3, a: 112, e: [.28, .33, .38], d: [36, 52, 58] },
+  faRole:  { name: "AI-Augmented Finance Analyst", type: "job", ring: 3, a: 28, e: [.42, .48, .52], d: [24, 32, 34] }
+};
+const OWNED = Object.keys(NODES).filter(k => NODES[k].type === "have");
+const JOBS = ["esgRole", "faRole", "opsRole"];
+// What each job needs: [skill, weight]
+const REQ = {
+  esgRole: [["ghg", 3], ["disc", 2], ["esgdata", 2], ["audit", 2], ["excel", 1]],
+  faRole:  [["fin", 3], ["viz", 2], ["excel", 2], ["erp", 1], ["aisup", 1]],
+  opsRole: [["auto", 3], ["aisup", 2], ["erp", 2], ["process", 2], ["three", 1]]
+};
+// [from, to, weeks at 6 h/week, why this connection exists]
+const EDGES = [
+  ...OWNED.map(k => ["ap", k, 0, "A skill you already have"]),
+  ["recon", "ghg", 4, "Both trace every number back to a source document."],
+  ["recon", "esgdata", 3, "Reconciliation habits carry over to checking ESG data."],
+  ["excel", "esgdata", 3, "Cleaning and merging data is the core of ESG data work."],
+  ["audit", "esgdata", 2, "Evidence trails are what ESG data needs most."],
+  ["esgdata", "ghg", 3, "Clean activity data is the input to emissions accounting."],
+  ["audit", "disc", 3, "Disclosures need the same complete evidence trail."],
+  ["disc", "ghg", 3, "Disclosure work shows you which emissions to count."],
+  ["ghg", "esgRole", 2, "Portfolio project: a sample emissions report."],
+  ["disc", "esgRole", 4, "Portfolio project: a sample climate disclosure."],
+  ["process", "aisup", 2, "You already redesign workflows; now some steps run on AI."],
+  ["aisup", "esgRole", 8, "Lead AI-assisted ESG reporting; a longer on-the-job ramp."],
+  ["excel", "viz", 2, "Moves your spreadsheet summaries onto shared dashboards."],
+  ["viz", "fin", 3, "Dashboards are where analysis gets read."],
+  ["excel", "fin", 4, "Turns spreadsheet skill into forecasts managers act on."],
+  ["aisup", "fin", 3, "Analysts now review AI-built forecasts."],
+  ["fin", "faRole", 2, "Portfolio project: a sample monthly variance report."],
+  ["viz", "faRole", 5, "Portfolio project: a finance dashboard."],
+  ["process", "auto", 3, "Automation is process improvement done with software."],
+  ["erp", "auto", 3, "You know the ERP screens the automations will run on."],
+  ["auto", "opsRole", 2, "Portfolio project: automate one AP workflow end to end."],
+  ["aisup", "opsRole", 4, "Portfolio project: a review checklist for AI agents."]
+];
+const SIGNAL = {
+  node: "recon", boost: 0.18,
+  title: "AI agents now close the month-end books",
+  detail: "Vendor reconciliation: AI exposure 54% → 72%. Sample source · 21 Oct 2026",
+  short: "New AI signal"
+};
+
+// ======================= Model =======================
+const S = { year: 2026, scenario: "moderate", signal: false };
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+function interp(arr, year, scenario) {
+  const f = clamp((year - 2026) / 4, 0, 1);
+  return arr[0] + ((scenario === "fast" ? arr[2] : arr[1]) - arr[0]) * f;
+}
+function exposure(id, year = S.year, scenario = S.scenario) {
+  return clamp(interp(NODES[id].e, year, scenario) + (S.signal && SIGNAL.node === id ? SIGNAL.boost : 0), 0, 0.99);
+}
+function demand(id, year = S.year, scenario = S.scenario) { return interp(NODES[id].d, year, scenario); }
+function tide(year = S.year, scenario = S.scenario) { return clamp((year - 2026) / 4, 0, 1) * (scenario === "fast" ? 1 : 0.6); }
+const isSkill = id => NODES[id].type === "have" || NODES[id].type === "learn";
+// "Taken over": AI does most of the skill and demand is falling.
+function taken(id, year = S.year, scenario = S.scenario) {
+  if (!isSkill(id) && id !== "ap") return false;
+  return exposure(id, year, scenario) >= 0.85 - 0.2 * tide(year, scenario) && demand(id, year, scenario) < 0;
+}
+function zone(id) {
+  const e = exposure(id), d = demand(id);
+  if (d >= 0) return e < 0.5 ? "Grow" : "Augment";
+  return e < 0.5 ? "Hold" : "At risk";
+}
+function edgeCost(mode, to, weeks) {
+  const base = 0.01;
+  if (!isSkill(to)) return (mode === "safest" ? 0.3 * weeks : weeks) + base;
+  const e = exposure(to);
+  if (mode === "fastest") return weeks + base + 30 * Math.max(0, e - 0.5) ** 2;
+  if (mode === "safest") return 0.3 * weeks + base + 10 * e * e;
+  const worst = clamp(NODES[to].e[2] + (S.signal && SIGNAL.node === to ? SIGNAL.boost : 0), 0, 0.99);
+  return weeks + base + 6 * worst * worst;
+}
+function shortestPath(dest, mode) {
+  const dist = { ap: 0 }, prev = {}, done = new Set();
+  while (true) {
+    let u = null;
+    for (const k in dist) if (!done.has(k) && (u === null || dist[k] < dist[u])) u = k;
+    if (u === null || u === dest) break;
+    done.add(u);
+    for (const [a, b, w, why] of EDGES) {
+      if (a !== u || done.has(b)) continue;
+      if (isSkill(b) && taken(b)) continue; // closed: AI has taken this skill over
+      const nd = dist[u] + edgeCost(mode, b, w);
+      if (dist[b] === undefined || nd < dist[b]) { dist[b] = nd; prev[b] = { from: u, w, why }; }
+    }
+  }
+  if (dist[dest] === undefined) return null;
+  const legs = [];
+  for (let v = dest; v !== "ap"; v = prev[v].from) legs.unshift({ from: prev[v].from, to: v, weeks: prev[v].w, why: prev[v].why });
+  const nodes = ["ap", ...legs.map(l => l.to)];
+  const skills = nodes.filter(isSkill);
+  return { dest, mode, legs, nodes, weeks: legs.reduce((s, l) => s + l.weeks, 0),
+    avgE: skills.reduce((s, k) => s + exposure(k), 0) / Math.max(1, skills.length), key: nodes.join(">") };
+}
+// Match % = how much of the job's weighted skill needs you cover today.
+function coverage(skill) {
+  const n = NODES[skill];
+  if (n.type === "have") return taken(skill) ? 0.3 : Math.min(1, n.level / 3);
+  const bridged = EDGES.some(([a, b]) => b === skill && NODES[a].type === "have" && !taken(a));
+  return bridged ? 0.4 : 0;
+}
+function match(job) {
+  const req = REQ[job];
+  return Math.round(100 * req.reduce((s, [k, w]) => s + w * coverage(k), 0) / req.reduce((s, [, w]) => s + w, 0));
+}
+function riskOf(avgE) { return avgE < 0.35 ? ["low", "Low AI risk"] : avgE < 0.55 ? ["med", "Medium AI risk"] : ["high", "High AI risk"]; }
+function futureScore(extra = []) {
+  const ids = [...OWNED, ...extra];
+  return Math.round(100 * ids.filter(k => !taken(k) && (zone(k) === "Grow" || zone(k) === "Augment")).length / ids.length);
+}
+/*LOGIC-END*/
+
+// ======================= UI state =======================
+const UI = { job: "esgRole", mode: "fastest", labelsAll: false, rotating: true };
+const MODE_LABEL = { fastest: "Fastest", noregret: "No-regret", safest: "Safest" };
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (reduceMotion) UI.rotating = false;
+let paths = {}, current = null;
+const $ = id => document.getElementById(id);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+function computePaths() {
+  paths = {};
+  JOBS.forEach(j => paths[j] = shortestPath(j, UI.mode));
+  current = paths[UI.job];
+}
+
+// ---------- sidebar ----------
+function renderScore() {
+  const now = futureScore();
+  const after = futureScore(current ? current.nodes.filter(k => NODES[k].type === "learn") : []);
+  $("score").innerHTML = `<div class="score-num">${now}<small>%</small></div>
+    <div><div class="score-label">Future-proof score</div>
+    <div class="score-sub">Share of your skills safe from AI in ${S.year}. After this path: <b>${after}%</b></div></div>`;
+}
+function renderJobs() {
+  const order = [...JOBS].sort((a, b) => match(b) - match(a));
+  $("jobs").innerHTML = order.map(j => {
+    const p = paths[j], m = match(j), d = Math.round(demand(j));
+    const [rc, rl] = p ? riskOf(p.avgE) : ["high", "No open path"];
+    return `<button class="job" type="button" data-job="${j}" aria-pressed="${UI.job === j}">
+      <div class="job-top"><span class="job-name">${NODES[j].name}</span><span class="job-pct">${m}%</span></div>
+      <div class="bar"><i style="width:${m}%"></i></div>
+      <div class="job-meta"><span>${p ? p.weeks + " weeks" : "No open path"}</span><span>Demand ${d > 0 ? "+" : ""}${d}%</span><span class="risk ${rc}">${rl}</span></div>
+    </button>`;
+  }).join("");
+  $("jobs").querySelectorAll(".job").forEach(b => b.addEventListener("click", () => { UI.job = b.dataset.job; resetApprove(); refresh(); focusNode(UI.job); }));
+}
+function renderSteps() {
+  document.querySelectorAll('.seg button[data-mode]').forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === UI.mode)));
+  const note = { fastest: "Fewest weeks, slowed down by AI-exposed skills on the way.", noregret: "Still a good path if AI moves fast by 2030.", safest: "Builds on the skills AI is least likely to take over." }[UI.mode];
+  const same = Object.keys(MODE_LABEL).filter(m => m !== UI.mode && current && (shortestPath(UI.job, m) || {}).key === current.key).map(m => MODE_LABEL[m]);
+  $("mode-note").textContent = note + (same.length ? ` Same path as ${same.join(" and ")}.` : "");
+  if (!current) { $("eta").innerHTML = '<span class="big">No open path</span>'; $("steps").innerHTML = ""; return; }
+  const [rc, rl] = riskOf(current.avgE);
+  $("eta").innerHTML = `<span class="big">${current.weeks} weeks</span><span class="sm">at 6 h/week</span><span class="risk ${rc}">${rl}</span>`;
+  let n = 0;
+  const items = [`<li data-node="ap"><span class="ico start">●</span><div><div class="t">You: Accounts Payable Clerk</div><div class="s">${taken("ap") ? "AI has taken over most of this job by " + S.year + "." : "AI is already changing this job."}</div></div><span class="w"></span></li>`];
+  current.legs.forEach(l => {
+    const nd = NODES[l.to];
+    if (nd.type === "have") items.push(`<li data-node="${l.to}"><span class="ico have">✓</span><div><div class="t">Start from ${nd.name}</div><div class="s">You already have this (level ${nd.level} of 5).</div></div><span class="w">0 wk</span></li>`);
+    else if (nd.type === "learn") { n++; items.push(`<li data-node="${l.to}"><span class="ico learn">${n}</span><div><div class="t">Learn ${nd.name}</div><div class="s">${l.why}</div><div class="c">${nd.course}</div></div><span class="w">${l.weeks} wk</span></li>`); }
+    else items.push(`<li data-node="${l.to}"><span class="ico arrive">◆</span><div><div class="t">Become ${nd.name}</div><div class="s">${l.why}</div></div><span class="w">${l.weeks} wk</span></li>`);
+  });
+  $("steps").innerHTML = items.join("");
+  $("steps").querySelectorAll("li").forEach(li => li.addEventListener("click", () => focusNode(li.dataset.node)));
+}
+function renderAgents(st = {}) {
+  const A = [
+    ["Interviewer", "Read your LinkedIn PDF and asked 3 follow-up questions", "done"],
+    ["Job analyst", "Checked 31 tasks in your current job", "done"],
+    ["Market scout", st.scout || "Watches AI news and job postings daily", st.scoutSt || "idle"],
+    ["Career planner", st.plan || "Found paths to 3 future jobs", st.planSt || "done"],
+    ["Fact checker", st.fact || "14 of 14 claims have a source", st.factSt || "done"]
+  ];
+  $("agent-list").innerHTML = A.map(([n, d, s]) => `<li><span class="st ${s === "done" ? "" : s}"></span><div><div class="an">${n}</div><div class="ad">${d}</div></div></li>`).join("");
+}
+
+// ======================= 3D constellation =======================
+const RING = [0, 85, 165, 245];       // radius per ring
+const LIFT = [0, 10, 24, 44];         // height per ring: the rings rise like a bowl
+let Graph = null, graphReady = false, gNodes = [], gLinks = [], labelEls = {}, incidentEl = null;
+
+function nodePos(n) {
+  const r = RING[n.ring], t = n.a * Math.PI / 180;
+  return { x: r * Math.cos(t), y: LIFT[n.ring], z: r * Math.sin(t) };
+}
+function buildGraphData() {
+  gNodes = Object.entries(NODES).map(([id, n]) => { const p = nodePos(n); return { id, ...p, fx: p.x, fy: p.y, fz: p.z }; });
+  gLinks = EDGES.map(([a, b]) => ({ source: a, target: b, key: a + ">" + b, from: a, to: b }));
+}
+function pathKeys() {
+  const s = new Set();
+  if (current) current.legs.forEach(l => s.add(l.from + ">" + l.to));
+  return s;
+}
+function nodeColor(n) {
+  const nd = NODES[n.id];
+  if (nd.type === "you") return css("--n-you");
+  if (nd.type === "job") return css("--n-job");
+  if (taken(n.id)) return css("--n-taken");
+  if (nd.type === "have") return zone(n.id) === "At risk" ? css("--n-risk") : css("--n-have");
+  return css("--n-learn");
+}
+function nodeVal(n) {
+  const nd = NODES[n.id], onPath = current && current.nodes.includes(n.id);
+  if (nd.type === "you") return 34;
+  if (nd.type === "job") return 10 + match(n.id) * 0.4 + (n.id === UI.job ? 10 : 0);
+  if (taken(n.id)) return 2.5;
+  if (nd.type === "have") return 4 + nd.level * 1.6 + (onPath ? 4 : 0);
+  return onPath ? 11 : 6;
+}
+function restyle() {
+  if (!Graph) return;
+  const pk = pathKeys();
+  const dead = l => taken(l.from) || taken(l.to);
+  Graph
+    .nodeColor(nodeColor)
+    .nodeVal(nodeVal)
+    .linkColor(l => pk.has(l.key) ? css("--l-path") : dead(l) ? css("--l-dead") : css("--l-base"))
+    .linkWidth(l => pk.has(l.key) ? 2.4 : dead(l) ? 0 : 0.6)
+    .linkDirectionalParticles(l => !reduceMotion && pk.has(l.key) ? 3 : 0)
+    .linkDirectionalParticleColor(() => css("--particle"));
+  if (graphReady) Graph.d3ReheatSimulation(); // a few layout ticks re-place the lines; nodes stay pinned to their rings
+  updateLabels(true);
+}
+
+function initGraph() {
+  if (!window.ForceGraph3D) { $("graph").innerHTML = '<div class="nograph">The 3D library could not load. The planner on the left still works.</div>'; return; }
+  buildGraphData();
+  const el = $("graph");
+  try {
+    Graph = ForceGraph3D({ controlType: "orbit" })(el)
+      .width(el.clientWidth).height(el.clientHeight)
+      .backgroundColor("rgba(0,0,0,0)")
+      .showNavInfo(false)
+      .graphData({ nodes: gNodes, links: gLinks })
+      .nodeId("id")
+      .nodeRelSize(4)
+      .nodeOpacity(0.95)
+      .nodeResolution(24)
+      .nodeLabel(() => "")
+      .linkOpacity(0.9)
+      .linkCurvature(0.12)
+      .linkDirectionalParticleWidth(2.4)
+      .linkDirectionalParticleSpeed(0.007)
+      .enableNodeDrag(false)
+      .warmupTicks(0)
+      .cooldownTicks(8)
+      .onEngineTick(() => { graphReady = true; })
+      .onNodeHover(n => { el.style.cursor = n ? "pointer" : ""; hoverId = n ? n.id : null; if (!n) $("tip").hidden = true; })
+      .onNodeClick(n => { if (NODES[n.id].type === "job") { UI.job = n.id; resetApprove(); refresh(); } focusNode(n.id); });
+  } catch (err) {
+    $("graph").innerHTML = '<div class="nograph">This browser cannot draw 3D graphics (WebGL is off). The planner on the left still works.</div>';
+    Graph = null; return;
+  }
+  // Nodes are pinned to their rings, so no layout forces are needed. The link force stays (it attaches lines to nodes) at zero strength.
+  Graph.d3Force("charge", null);
+  Graph.d3Force("center", null);
+  Graph.d3Force("link").strength(0);
+  resetView(false);
+  const c = Graph.controls();
+  c.autoRotate = UI.rotating; c.autoRotateSpeed = 0.55; c.enableDamping = true;
+  c.addEventListener("start", () => { if (UI.rotating) setRotate(false); });
+  buildLabels();
+  restyle();
+  requestAnimationFrame(frame);
+}
+function resetView(animate) {
+  if (!Graph) return;
+  const narrow = $("graph").clientWidth < 700;
+  const dist = narrow ? 1.85 : 1.5;
+  Graph.cameraPosition({ x: 0, y: 440 * dist, z: 420 * dist }, { x: 0, y: 10, z: 0 }, animate && !reduceMotion ? 900 : 0);
+}
+function focusNode(id) {
+  if (!Graph) return;
+  const p = nodePos(NODES[id]);
+  const len = Math.hypot(p.x, p.z) || 1;
+  const back = 230;
+  Graph.cameraPosition({ x: p.x + p.x / len * back * 0.6, y: p.y + 200, z: p.z + p.z / len * back * 0.6 + (len < 1 ? 300 : 0) }, p, reduceMotion ? 0 : 900);
+  if (UI.rotating) setRotate(false);
+}
+function setRotate(on) {
+  UI.rotating = on;
+  if (Graph) Graph.controls().autoRotate = on;
+  $("rotate").setAttribute("aria-pressed", String(on));
+  $("rotate").setAttribute("aria-label", on ? "Stop rotating" : "Start rotating");
+}
+
+// ---------- HTML labels + ring guides, projected every frame ----------
+let hoverId = null;
+function buildLabels() {
+  $("labels").innerHTML = "";
+  labelEls = {};
+  Object.keys(NODES).forEach(id => { const d = document.createElement("div"); d.className = "lb"; $("labels").appendChild(d); labelEls[id] = d; });
+  incidentEl = document.createElement("div"); incidentEl.className = "incident"; incidentEl.hidden = true; $("labels").appendChild(incidentEl);
+}
+function updateLabels() {
+  const pathSet = new Set(current ? current.nodes : []);
+  let step = 0; const stepOf = {};
+  if (current) current.nodes.forEach(k => { if (NODES[k].type === "learn") stepOf[k] = ++step; });
+  Object.entries(labelEls).forEach(([id, el]) => {
+    const n = NODES[id], tk = taken(id);
+    let html = "", cls = "lb";
+    if (n.type === "you") { cls += " you"; html = `You · ${n.name}`; }
+    else if (n.type === "job") {
+      cls += " job" + (id === UI.job ? " sel" : "");
+      const p = paths[id];
+      html = `${n.name}<small>${match(id)}% match · ${p ? p.weeks + " wk" : "no path"}</small>`;
+    } else if (n.type === "learn") html = `${stepOf[id] ? `<span class="n">${stepOf[id]}</span>` : ""}${n.name}`;
+    else html = `${n.name}${tk ? ' <span class="tag-taken">AI took over</span>' : zone(id) === "At risk" ? ' <span class="tag-risk">At risk</span>' : ""}`;
+    const show = UI.labelsAll || n.type === "you" || n.type === "job" || pathSet.has(id) || (n.type === "have" && (tk || zone(id) === "At risk")) || id === hoverId;
+    el.className = cls + (show ? "" : " hide");
+    el.innerHTML = html;
+  });
+  if (incidentEl) { incidentEl.hidden = !S.signal; incidentEl.textContent = "⚠ " + SIGNAL.short + ": reconciliation"; }
+}
+function frame() {
+  if (Graph) {
+    Object.entries(labelEls).forEach(([id, el]) => {
+      if (el.classList.contains("hide")) return;
+      const p = nodePos(NODES[id]);
+      const s = Graph.graph2ScreenCoords(p.x, p.y, p.z);
+      const off = NODES[id].type === "job" ? 18 : NODES[id].type === "you" ? 20 : 11;
+      el.style.transform = `translate(${s.x}px, ${s.y + off}px) translate(-50%, 0)`;
+    });
+    if (S.signal && incidentEl) {
+      const p = nodePos(NODES[SIGNAL.node]); const s = Graph.graph2ScreenCoords(p.x, p.y, p.z);
+      incidentEl.style.left = s.x + "px"; incidentEl.style.top = (s.y - 12) + "px";
+    }
+    drawRings();
+    if (hoverId) showTip(hoverId);
+  }
+  requestAnimationFrame(frame);
+}
+function drawRings() {
+  const svg = $("rings"), names = ["", "Your skills", "Skills to learn", "Future jobs"];
+  let out = "";
+  for (let r = 1; r <= 3; r++) {
+    let d = "";
+    for (let i = 0; i <= 72; i++) {
+      const t = i / 72 * Math.PI * 2;
+      const s = Graph.graph2ScreenCoords(RING[r] * Math.cos(t), LIFT[r], RING[r] * Math.sin(t));
+      d += (i ? "L" : "M") + s.x.toFixed(1) + "," + s.y.toFixed(1);
+    }
+    out += `<path d="${d}" fill="none" stroke="var(--ring)" stroke-width="1.2" stroke-dasharray="${r === 3 ? "0" : "4 5"}"/>`;
+    // label each ring at its point nearest the viewer
+    let best = null;
+    for (let i = 0; i < 36; i++) {
+      const t = i / 36 * Math.PI * 2;
+      const s = Graph.graph2ScreenCoords(RING[r] * Math.cos(t), LIFT[r], RING[r] * Math.sin(t));
+      if (!best || s.y > best.y) best = s;
+    }
+    out += `<text class="ring-label" x="${best.x.toFixed(1)}" y="${(best.y + 26).toFixed(1)}" text-anchor="middle">${names[r]}</text>`;
+  }
+  svg.innerHTML = out;
+}
+function showTip(id) {
+  const n = NODES[id], tip = $("tip");
+  const p = nodePos(n), s = Graph.graph2ScreenCoords(p.x, p.y, p.z);
+  const kind = n.type === "you" ? "Your current job" : n.type === "job" ? "Future job" : n.type === "have" ? `Your skill · level ${n.level} of 5` : "Skill you could learn";
+  const d = Math.round(demand(id));
+  const z = taken(id) ? "AI has taken over" : n.type === "job" ? `${match(id)}% match` : zone(id);
+  tip.innerHTML = `<b>${n.name}</b><span class="k">${kind}</span>
+    <div class="row"><span>AI exposure</span><span>${Math.round(exposure(id) * 100)}%</span></div>
+    <div class="row"><span>Demand change</span><span>${d > 0 ? "+" : d < 0 ? "−" : ""}${Math.abs(d)}%</span></div>
+    <div class="row"><span>${n.type === "job" ? "Your match" : "Status in " + S.year}</span><span>${z}</span></div>`;
+  tip.hidden = false;
+  const W = $("stage").clientWidth, tw = tip.offsetWidth;
+  const sx = s.x + ($("graph").getBoundingClientRect().left - $("stage").getBoundingClientRect().left); // scene → stage coordinates
+  tip.style.left = (sx + 20 + tw > W ? sx - 20 - tw : sx + 20) + "px";
+  tip.style.top = Math.max(8, s.y - 40) + "px";
+}
+
+// ======================= interactions =======================
+function refresh(reroute = false) {
+  const prev = current && current.key;
+  computePaths();
+  renderScore(); renderJobs(); renderSteps();
+  $("year-out").textContent = S.year; $("year").value = S.year;
+  const changed = reroute && prev !== (current && current.key);
+  if (changed && Graph) {
+    $("rerouting").classList.add("show");
+    setTimeout(() => { $("rerouting").classList.remove("show"); restyle(); }, reduceMotion ? 200 : 1000);
+  } else restyle();
+  return changed;
+}
+function toast(title, detail, badge = '<span class="badge-warn">New signal</span>') {
+  const t = $("toast");
+  t.innerHTML = `<div class="tt">${badge}${title}</div><div class="td">${detail}</div>`;
+  t.classList.add("show");
+  clearTimeout(toast.timer); toast.timer = setTimeout(() => t.classList.remove("show"), 5200);
+}
+document.querySelectorAll('.seg button[data-mode]').forEach(b => b.addEventListener("click", () => { UI.mode = b.dataset.mode; resetApprove(); refresh(); }));
+document.querySelectorAll('.seg button[data-scn]').forEach(b => b.addEventListener("click", () => {
+  S.scenario = b.dataset.scn;
+  document.querySelectorAll('.seg button[data-scn]').forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+  if (refresh(true)) toast("Path changed", `With ${S.scenario} AI adoption, a skill on your old path is no longer a safe bet.`, '<span class="badge-info">New path</span>');
+}));
+$("year").addEventListener("input", e => { stopPlay(); S.year = +e.target.value; refresh(true); });
+let playTimer = null;
+function stopPlay() { if (playTimer) { clearInterval(playTimer); playTimer = null; $("play").textContent = "▶"; } }
+$("play").addEventListener("click", () => {
+  if (playTimer) { stopPlay(); return; }
+  if (S.year >= 2030) { S.year = 2026; refresh(); }
+  $("play").textContent = "❚❚";
+  playTimer = setInterval(() => { if (S.year >= 2030) { stopPlay(); return; } S.year += 1; refresh(true); }, reduceMotion ? 500 : 1200);
+});
+$("rotate").addEventListener("click", () => setRotate(!UI.rotating));
+$("labels-btn").addEventListener("click", () => { UI.labelsAll = !UI.labelsAll; $("labels-btn").setAttribute("aria-pressed", String(UI.labelsAll)); updateLabels(); });
+$("reset-view").addEventListener("click", () => resetView(true));
+function resetApprove() { $("approve").disabled = false; $("approve").textContent = "Send path to my advisor"; $("approve-note").textContent = "You or your career advisor approve the path before it goes into your learning plan. The app suggests; people decide."; }
+$("approve").addEventListener("click", () => {
+  $("approve").disabled = true; $("approve").textContent = "Sent for review";
+  $("approve-note").textContent = `Sample advisor Encik Faiz will review your ${MODE_LABEL[UI.mode].toLowerCase()} path to ${NODES[UI.job].name}. Nothing changes until it is approved.`;
+});
+
+$("scout").addEventListener("click", () => {
+  const btn = $("scout"), log = $("log"), D = reduceMotion ? 0.3 : 1;
+  btn.disabled = true; btn.textContent = "Scouting…"; log.hidden = false; log.innerHTML = "";
+  renderAgents({ scout: "Searching…", scoutSt: "run" });
+  [[400, "Searched 17 skills across 6 source types"], [1100, "Read 312 pages · 41 relevant after removing duplicates"], [1800, "Found 9 new signals · reviewer approved 6"], [2500, "Biggest change: vendor reconciliation"]]
+    .forEach(([t, txt]) => setTimeout(() => { const li = document.createElement("li"); li.textContent = txt; log.appendChild(li); }, t * D));
+  setTimeout(() => {
+    S.signal = true;
+    $("fresh-when").textContent = "just now"; $("fresh-n").textContent = "220"; $("agents-fresh").textContent = "Last scout run just now";
+    toast(SIGNAL.title, SIGNAL.detail);
+    renderAgents({ scout: "6 approved signals added", plan: "Re-planning after new signal", planSt: "run", fact: "Checking new claims…", factSt: "run" });
+    refresh(true);
+    setTimeout(() => {
+      renderAgents({ scout: "6 approved signals added", plan: `Path to ${NODES[UI.job].name} updated`, fact: "20 of 20 claims have a source" });
+      btn.textContent = "Scout is up to date"; $("reset").hidden = false;
+    }, 1500 * D);
+  }, 3000 * D);
+});
+$("reset").addEventListener("click", () => {
+  S.signal = false; $("reset").hidden = true; $("log").hidden = true;
+  $("scout").disabled = false; $("scout").textContent = "Run market scout now";
+  $("fresh-when").textContent = "3 days ago"; $("fresh-n").textContent = "214"; $("agents-fresh").textContent = "Last scout run 3 days ago";
+  renderAgents(); refresh(); resetView(true);
+});
+
+new MutationObserver(restyle).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", restyle);
+new ResizeObserver(() => { if (Graph) Graph.width($("graph").clientWidth).height($("graph").clientHeight); }).observe($("graph"));
+
+computePaths();
+renderScore(); renderJobs(); renderSteps(); renderAgents();
+initGraph();
+</script>
+</body>
+</html>

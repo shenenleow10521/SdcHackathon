@@ -1,0 +1,1649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HalaTuju</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: a career app. Left: planner sidebar with Jobs / Path / My skills tabs. Right: a dark "night sky" stage holding the 3D career constellation, with floating agents, timeline, legend and a detail drawer. A first-use onboarding modal sits on top. */
+:root {
+  --bg: #f3f4f6;
+  --panel: #ffffff;
+  --panel-2: #f6f7f9;
+  --ink: #0c1220;
+  --ink-2: #475163;
+  --muted: #687284;
+  --line: #e5e7eb;
+  --line-2: #d9dde3;
+  --accent: #2a78d6;
+  --accent-ink: #ffffff;
+  --accent-wash: #eaf2fd;
+  --good: #0b7a2b; --good-wash: #e4f5e8;
+  --warn: #8a5300; --warn-wash: #fdf1d8;
+  --crit: #b42828; --crit-wash: #fce8e8;
+  --violet: #5b4bd0; --violet-wash: #efedfc;
+  --shadow-1: 0 1px 2px rgba(12, 18, 32, 0.06);
+  --shadow-2: 0 2px 4px rgba(12, 18, 32, 0.06), 0 6px 8px rgba(12, 18, 32, 0.05);
+  --split-ai: #8b95a6; --split-assist: #c9d0da; --split-you: #2a78d6;
+
+  /* the stage is a deliberate night sky in both themes */
+  --stage-a: #142036;
+  --stage-b: #05070c;
+  --ring: rgba(160, 182, 214, 0.18);
+  --ring-label: rgba(190, 205, 228, 0.55);
+  --n-you: #f4f6fa;
+  --n-have: #3987e5;
+  --n-learn: #199e70;
+  --n-job: #e3672f;
+  --n-risk: #e66767;
+  --n-taken: #4b5466;
+  --l-base: rgba(170, 186, 212, 0.20);
+  --l-dead: rgba(230, 103, 103, 0.10);
+  --l-path: #f08a5d;
+  --l-evolve: #9085e9;
+  --l-alt: rgba(214, 224, 238, 0.55);
+  --particle: #ffffff;
+
+  --font: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px;
+  --z-scene: 1; --z-labels: 2; --z-ui: 10; --z-drawer: 20; --z-toast: 30; --z-tip: 40; --z-modal: 50;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a0c11; --panel: #12151c; --panel-2: #181c25; --ink: #e9ecf2; --ink-2: #aab3c2; --muted: #8790a0; --line: #232835; --line-2: #2e3443;
+    --accent: #3987e5; --accent-wash: #15253a;
+    --good: #7fd38f; --good-wash: #14281a; --warn: #f0c56a; --warn-wash: #2d2410; --crit: #f19c9c; --crit-wash: #321a1a; --violet: #a99ff0; --violet-wash: #221f3d;
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4); --shadow-2: 0 2px 4px rgba(0, 0, 0, 0.35), 0 6px 8px rgba(0, 0, 0, 0.3);
+    --split-ai: #6b7486; --split-assist: #3a4252; --split-you: #3987e5;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a0c11; --panel: #12151c; --panel-2: #181c25; --ink: #e9ecf2; --ink-2: #aab3c2; --muted: #8790a0; --line: #232835; --line-2: #2e3443;
+  --accent: #3987e5; --accent-wash: #15253a;
+  --good: #7fd38f; --good-wash: #14281a; --warn: #f0c56a; --warn-wash: #2d2410; --crit: #f19c9c; --crit-wash: #321a1a; --violet: #a99ff0; --violet-wash: #221f3d;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4); --shadow-2: 0 2px 4px rgba(0, 0, 0, 0.35), 0 6px 8px rgba(0, 0, 0, 0.3);
+  --split-ai: #6b7486; --split-assist: #3a4252; --split-you: #3987e5;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+button, select, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- shell ---------- */
+.app { height: 100%; display: grid; grid-template-columns: 408px minmax(0, 1fr); grid-template-areas: "side stage"; }
+.side { grid-area: side; min-width: 0; display: flex; flex-direction: column; background: var(--panel); border-right: 1px solid var(--line); overflow: hidden; }
+.side-head { padding-block: 16px 14px; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: 18px; display: grid; gap: 14px; border-bottom: 1px solid var(--line); }
+.side-body { flex: 1; overflow-y: auto; padding-block: 16px 28px; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: 18px; }
+.stage { grid-area: stage; position: relative; min-width: 0; overflow: hidden; background: radial-gradient(ellipse 80% 70% at 42% 48%, var(--stage-a) 0%, var(--stage-b) 78%); }
+.agents { grid-area: stage; align-self: start; justify-self: end; z-index: var(--z-ui); margin: 16px max(16px, env(safe-area-inset-right, 0px)) 0 0; width: 300px; }
+
+@media (max-width: 980px) {
+  html, body { height: auto; }
+  .app { height: auto; grid-template-columns: minmax(0, 1fr); grid-template-areas: "stage" "agents" "side"; }
+  .stage { height: 66svh; min-height: 460px; }
+  .agents { justify-self: stretch; width: auto; margin: 12px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); }
+  .side { border-right: 0; overflow: visible; }
+  .side-body { overflow: visible; }
+  .side-head, .side-body { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+/* ---------- sidebar head ---------- */
+.brand { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 650; font-size: 16.5px; letter-spacing: -0.015em; }
+.logo-mark { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(145deg, #3a8be6, #1f5fb3); display: grid; place-items: center; color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.25); }
+.logo-mark svg { width: 15px; height: 15px; }
+.brand-right { display: flex; align-items: center; gap: 6px; }
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap; line-height: 1.5; }
+.badge svg { width: 12px; height: 12px; }
+.b-warn { background: var(--warn-wash); color: var(--warn); }
+.b-good { background: var(--good-wash); color: var(--good); }
+.b-crit { background: var(--crit-wash); color: var(--crit); }
+.b-info { background: var(--accent-wash); color: var(--accent); }
+.b-violet { background: var(--violet-wash); color: var(--violet); }
+.b-mute { background: var(--panel-2); color: var(--ink-2); border: 1px solid var(--line); }
+.ghost { border: 1px solid var(--line); background: var(--panel); border-radius: var(--r-sm); height: 30px; padding: 0 9px; display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 550; color: var(--ink-2); transition: background-color .15s ease-out, border-color .15s ease-out; }
+.ghost:hover { background: var(--panel-2); border-color: var(--line-2); color: var(--ink); }
+
+.me { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+.avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-wash); color: var(--accent); display: grid; place-items: center; font-weight: 650; font-size: 14px; }
+.me .name { font-weight: 600; }
+.me .meta { color: var(--ink-2); font-size: 12.5px; }
+.score-mini { text-align: right; }
+.score-mini .v { font-size: 22px; font-weight: 600; line-height: 1; }
+.score-mini .v small { font-size: 12px; color: var(--ink-2); }
+.score-mini .l { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.scorebar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 12px; }
+.scorebar .t { font-size: 12.5px; color: var(--ink-2); }
+.scorebar .t b { color: var(--ink); font-weight: 600; }
+.scorebar .t .up { color: var(--good); font-weight: 600; }
+.scorebar svg.spark { width: 92px; height: 28px; }
+
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 3px; gap: 2px; }
+.tab { border: 0; background: transparent; border-radius: 7px; height: 32px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 550; color: var(--ink-2); transition: background-color .15s ease-out, color .15s ease-out; }
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { background: var(--panel); color: var(--ink); box-shadow: var(--shadow-1); }
+
+/* ---------- sidebar body ---------- */
+.h2 { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0 0 10px; }
+.h2 h2 { margin: 0; font-size: 13.5px; font-weight: 600; }
+.h2 span { font-size: 12px; color: var(--muted); }
+.stack { display: grid; gap: 20px; }
+
+.search { position: relative; }
+.search input { width: 100%; height: 42px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--panel); padding: 0 12px 0 38px; font-size: 14px; transition: border-color .15s ease-out, box-shadow .15s ease-out; }
+.search input::placeholder { color: var(--muted); }
+.search input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
+.search > svg { position: absolute; left: 12px; top: 13px; color: var(--muted); }
+.results { display: grid; gap: 6px; margin-top: 8px; }
+.result { text-align: left; border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 9px 11px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; transition: border-color .15s ease-out; }
+.result:hover { border-color: var(--line-2); }
+.result .ic { width: 28px; height: 28px; border-radius: 8px; background: var(--panel-2); display: grid; place-items: center; color: var(--ink-2); }
+.result .rn { font-weight: 600; font-size: 13.5px; }
+.result .rm { font-size: 12px; color: var(--ink-2); }
+.result .rp { font-size: 15px; font-weight: 600; }
+.found { border: 1px dashed var(--line-2); border-radius: 10px; padding: 12px; display: grid; gap: 8px; }
+.found .fn { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.found .fn b { font-size: 14px; }
+.found p { margin: 0; font-size: 12.5px; color: var(--ink-2); }
+.loading { display: flex; gap: 8px; align-items: center; color: var(--ink-2); font-size: 12.5px; }
+.spin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--accent-wash); border-top-color: var(--accent); animation: spin .8s linear infinite; flex: none; }
+
+.jobs { display: grid; gap: 10px; }
+.job { text-align: left; border: 1px solid var(--line); background: var(--panel); border-radius: var(--r-md); padding: 12px 14px; display: grid; gap: 9px; transition: border-color .18s ease-out, box-shadow .18s ease-out; position: relative; }
+.job:hover { border-color: var(--line-2); box-shadow: var(--shadow-1); }
+.job[aria-pressed="true"] { border-color: var(--n-job); box-shadow: 0 0 0 1px var(--n-job); }
+.job-top { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: start; }
+.job-name { font-weight: 600; font-size: 14px; line-height: 1.3; }
+.job-tags { display: flex; gap: 6px; margin-top: 5px; flex-wrap: wrap; }
+.job-pct { font-size: 24px; font-weight: 600; line-height: 1; text-align: right; }
+.job-pct small { font-size: 11px; color: var(--muted); display: block; margin-top: 4px; font-family: var(--font); font-weight: 500; letter-spacing: 0; }
+.bar { height: 6px; border-radius: 3px; background: var(--panel-2); border: 1px solid var(--line); overflow: hidden; }
+.bar i { display: block; height: 100%; background: linear-gradient(90deg, #e3672f, #f08a5d); border-radius: 3px; transition: width .35s cubic-bezier(.22,1,.36,1); }
+.job-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--ink-2); }
+.job-meta span { display: inline-flex; align-items: center; gap: 5px; }
+.job-meta svg { width: 13px; height: 13px; color: var(--muted); }
+
+.path-head { display: grid; gap: 10px; }
+.path-title { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+.path-title h2 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3; text-wrap: balance; }
+.seg { display: inline-grid; grid-auto-flow: column; background: var(--panel-2); border: 1px solid var(--line); border-radius: 9px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: transparent; padding: 5px 11px; border-radius: 6px; font-size: 12.5px; color: var(--ink-2); font-weight: 550; }
+.seg button[aria-pressed="true"] { background: var(--panel); color: var(--ink); box-shadow: var(--shadow-1); }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.tile { background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 9px 10px; }
+.tile .k { font-size: 11.5px; color: var(--muted); }
+.tile .v { font-size: 18px; font-weight: 600; margin-top: 2px; }
+.tile .v small { font-size: 12px; color: var(--ink-2); font-family: var(--font); font-weight: 500; }
+.mode-note { font-size: 12.5px; color: var(--ink-2); margin: 0; }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; }
+.step { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 11px; padding: 10px 8px; margin: 0 -8px; border-radius: 10px; position: relative; cursor: pointer; transition: background-color .15s ease-out; }
+.step:hover { background: var(--panel-2); }
+.step:not(:last-child)::before { content: ""; position: absolute; left: 22px; top: 40px; bottom: -10px; width: 2px; background: repeating-linear-gradient(to bottom, var(--line-2) 0 3px, transparent 3px 7px); }
+.sico { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; position: relative; z-index: 1; }
+.sico svg { width: 15px; height: 15px; }
+.k-start { background: var(--ink); color: var(--panel); }
+.k-reuse { background: var(--accent-wash); color: var(--accent); }
+.k-upskill { background: var(--good-wash); color: var(--good); }
+.k-evolve { background: var(--violet-wash); color: var(--violet); }
+.k-reskill { background: var(--panel); color: #0f8a5f; box-shadow: inset 0 0 0 2px #199e70; }
+.k-arrive { background: var(--n-job); color: #fff; }
+.step .t { font-weight: 600; font-size: 13.5px; }
+.step .ty { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 1px; }
+.step .s { color: var(--ink-2); font-size: 12.5px; margin-top: 1px; }
+.step .w { font-size: 12.5px; color: var(--ink-2); white-space: nowrap; padding-top: 4px; }
+.sub-h { font-size: 12px; font-weight: 600; color: var(--ink-2); margin: 16px 0 4px; display: flex; align-items: center; gap: 6px; }
+.approve { display: grid; gap: 8px; border-top: 1px solid var(--line); padding-top: 16px; margin-top: 8px; }
+.btn { height: 40px; border: 0; border-radius: 10px; padding: 0 14px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: filter .15s ease-out, background-color .15s ease-out, transform .1s ease-out; }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--accent); color: var(--accent-ink); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), var(--shadow-1); }
+.btn-primary:hover { filter: brightness(1.06); }
+.btn-primary:disabled { opacity: .6; cursor: default; filter: none; transform: none; }
+.btn-soft { background: var(--panel-2); border: 1px solid var(--line); color: var(--ink); }
+.btn-soft:hover { background: var(--line); }
+.note { font-size: 12.5px; color: var(--ink-2); margin: 0; }
+.foot { font-size: 11.5px; color: var(--muted); margin: 18px 0 0; }
+
+.split { display: grid; gap: 8px; }
+.split-bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; gap: 2px; }
+.split-bar i { display: block; height: 100%; transition: flex-basis .4s cubic-bezier(.22,1,.36,1); }
+.split-key { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--ink-2); }
+.split-key span { display: inline-flex; align-items: center; gap: 6px; }
+.split-key i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+.card { border: 1px solid var(--line); border-radius: var(--r-md); padding: 14px; background: var(--panel); display: grid; gap: 10px; }
+.card.edge { background: linear-gradient(180deg, var(--good-wash), var(--panel) 70%); border-color: color-mix(in srgb, var(--good) 25%, var(--line)); }
+.card h3 { margin: 0; font-size: 13.5px; font-weight: 600; display: flex; align-items: center; gap: 7px; }
+.card p { margin: 0; font-size: 12.5px; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 4px 10px; font-size: 12.5px; font-weight: 550; display: inline-flex; align-items: center; gap: 6px; transition: border-color .15s ease-out; }
+.chip:hover { border-color: var(--line-2); }
+.skills { display: grid; }
+.skill { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: center; padding: 10px 8px; margin: 0 -8px; border-radius: 10px; cursor: pointer; text-align: left; border: 0; background: transparent; transition: background-color .15s ease-out; }
+.skill:hover { background: var(--panel-2); }
+.skill + .skill { border-top: 1px solid var(--line); border-radius: 0; }
+.skill .sn { font-weight: 550; font-size: 13.5px; }
+.skill .sm { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.dots { display: inline-flex; gap: 3px; }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line-2); }
+.dots i.on { background: var(--accent); }
+
+.sectors { display: flex; flex-wrap: wrap; gap: 6px; }
+.sector { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 5px 11px; font-size: 12.5px; font-weight: 550; display: inline-flex; gap: 6px; align-items: center; color: var(--ink-2); transition: background-color .15s ease-out, color .15s ease-out, border-color .15s ease-out; }
+.sector svg { width: 14px; height: 14px; }
+.sector:hover { border-color: var(--line-2); color: var(--ink); }
+.sector[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.sector-note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.try { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; align-items: center; font-size: 12px; color: var(--muted); }
+.try button { border: 0; background: var(--panel-2); color: var(--ink-2); border-radius: 6px; padding: 3px 8px; font-size: 12px; font-weight: 550; }
+.try button:hover { color: var(--accent); }
+
+/* admin view */
+.count { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--n-job); color: #fff; font-size: 11px; font-weight: 700; display: inline-grid; place-items: center; font-family: var(--mono); }
+.count[hidden], .tabs[hidden] { display: none; }
+.ghost[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.admin-banner { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: start; }
+.admin-banner h2 { margin: 2px 0 6px; font-size: 18px; font-weight: 600; }
+.tiles-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.flow { display: grid; gap: 7px; font-size: 12.5px; color: var(--ink-2); background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--r-md); padding: 12px; }
+.flow div { display: flex; gap: 9px; align-items: center; }
+.flow b { width: 20px; height: 20px; border-radius: 50%; background: var(--panel); border: 1px solid var(--line-2); display: grid; place-items: center; font-size: 11px; font-family: var(--mono); flex: none; color: var(--ink); }
+.rv { border: 1px solid var(--line); border-radius: var(--r-md); padding: 12px 14px; display: grid; gap: 7px; background: var(--panel); }
+.rv + .rv { margin-top: 10px; }
+.rv-top { display: flex; flex-wrap: wrap; gap: 6px; }
+.rv-t { font-weight: 600; font-size: 13.5px; }
+.rv-m { font-size: 12.5px; color: var(--ink-2); }
+.rv-q { margin: 0; padding: 8px 10px; border-radius: 8px; background: var(--panel-2); font-size: 12.5px; color: var(--ink-2); font-style: italic; }
+.rv-s { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--muted); }
+.rv-s svg { width: 13px; height: 13px; }
+.rv-actions { display: flex; gap: 8px; margin-top: 2px; flex-wrap: wrap; }
+.rv-actions .btn { height: 34px; font-size: 13px; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.checks li { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto auto; gap: 8px; align-items: center; font-size: 12.5px; }
+.checks li svg { width: 15px; height: 15px; }
+.checks li .rs { font-size: 11.5px; color: var(--muted); }
+.handled { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+.handled li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; font-size: 12.5px; color: var(--ink-2); }
+.handled li svg { width: 15px; height: 15px; margin-top: 2px; }
+.handled li b { color: var(--ink); font-weight: 600; display: block; font-size: 12px; }
+.empty { border: 1px dashed var(--line-2); border-radius: var(--r-md); padding: 14px; font-size: 12.5px; color: var(--ink-2); }
+
+/* ---------- stage overlays ---------- */
+#stars { position: absolute; inset: 0; width: 100%; height: 100%; }
+.scene { position: absolute; top: 0; bottom: 0; left: -240px; right: 0; }
+@media (max-width: 980px) { .scene { left: 0; } }
+#rings { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: var(--z-scene); }
+#graph { position: absolute; inset: 0; z-index: var(--z-scene); }
+#labels { position: absolute; inset: 0; pointer-events: none; z-index: var(--z-labels); }
+.glass { background: color-mix(in srgb, var(--panel) 92%, transparent); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-2); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.topbar { position: absolute; z-index: var(--z-ui); left: 16px; top: 16px; right: 336px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.pill { display: inline-flex; align-items: center; gap: 7px; padding: 6px 11px; font-size: 12px; color: var(--ink-2); }
+.pill b { color: var(--ink); font-weight: 600; }
+.live { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.18); }
+.legend { display: flex; flex-wrap: wrap; gap: 5px 14px; padding: 7px 12px; font-size: 12px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.lg { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.lg.line { width: 14px; height: 3px; border-radius: 2px; }
+@media (max-width: 980px) { .topbar { right: 16px; } .legend { display: none; } }
+
+.agents { padding: 12px; display: grid; gap: 10px; }
+.ag-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ag-head h3 { margin: 0; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 7px; }
+.ag-toggle { border: 0; background: transparent; color: var(--muted); width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; }
+.ag-toggle:hover { background: var(--panel-2); color: var(--ink); }
+.ag-fresh { font-size: 11.5px; color: var(--muted); }
+.ag-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+.ag-list li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 9px; align-items: start; }
+.ag-ic { width: 26px; height: 26px; border-radius: 7px; background: var(--panel-2); border: 1px solid var(--line); display: grid; place-items: center; color: var(--ink-2); position: relative; }
+.ag-ic svg { width: 14px; height: 14px; }
+.ag-ic::after { content: ""; position: absolute; right: -2px; bottom: -2px; width: 8px; height: 8px; border-radius: 50%; border: 2px solid var(--panel); background: #22c55e; }
+.ag-ic.idle::after { background: var(--muted); }
+.ag-ic.run::after { background: var(--accent); animation: pulse 1s ease-out infinite; }
+.ag-list .an { font-weight: 600; font-size: 12.5px; }
+.ag-list .ad { font-size: 12px; color: var(--ink-2); }
+.log { list-style: none; margin: 0; padding: 8px 10px; background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--r-sm); display: grid; gap: 4px; font-size: 12px; color: var(--ink-2); }
+.log li { display: flex; gap: 6px; }
+.log li::before { content: "›"; color: var(--accent); font-weight: 700; }
+.ag-actions { display: flex; gap: 8px; }
+.ag-actions .btn { height: 36px; font-size: 13px; flex: 1; }
+.agents.collapsed .ag-body { display: none; }
+.ag-body { display: grid; gap: 10px; }
+
+.timeline { position: absolute; z-index: var(--z-ui); left: calc(50% - 120px); transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 12px; padding: 7px 10px; flex-wrap: wrap; justify-content: center; max-width: calc(100% - 32px); }
+.timeline input[type="range"] { width: 160px; accent-color: var(--accent); }
+.year { font-size: 14px; font-weight: 600; min-width: 4ch; }
+.icon-btn { width: 32px; height: 32px; border: 0; background: transparent; border-radius: var(--r-sm); display: grid; place-items: center; color: var(--ink); }
+.icon-btn:hover { background: var(--panel-2); }
+.icon-btn[aria-pressed="true"] { background: var(--accent-wash); color: var(--accent); }
+.viewctl { position: absolute; z-index: var(--z-ui); right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: grid; padding: 4px; gap: 2px; }
+@media (max-width: 980px) { .timeline { left: 50%; gap: 8px; } .timeline input[type="range"] { width: 100px; } .viewctl { bottom: calc(72px + env(safe-area-inset-bottom, 0px)); } }
+
+/* scene labels */
+.lb { position: absolute; left: 0; top: 0; white-space: nowrap; font-size: 12px; font-weight: 550; color: #e9eef6; background: rgba(14, 20, 32, 0.78); border: 1px solid rgba(160, 182, 214, 0.22); border-radius: 999px; padding: 2px 9px; display: inline-flex; align-items: center; gap: 6px; will-change: transform; backdrop-filter: blur(4px); }
+.lb.hide { display: none; }
+.lb.job { flex-direction: column; gap: 0; border-radius: 10px; padding: 5px 11px; font-size: 12.5px; font-weight: 600; background: rgba(14, 20, 32, 0.88); }
+.lb.job small { font-family: var(--mono); font-size: 11.5px; color: #f3b08e; font-weight: 500; }
+.lb.job.sel { border-color: #f08a5d; box-shadow: 0 0 0 1px #f08a5d, 0 0 18px rgba(240, 138, 93, 0.35); }
+.lb.you { background: #f4f6fa; color: #0c1220; border-color: transparent; font-weight: 650; }
+.lb .n { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 10.5px; font-weight: 700; border: 2px solid #199e70; color: #e9eef6; }
+.lb .tg { font-size: 10.5px; font-weight: 700; letter-spacing: .02em; }
+.tg.risk { color: #ff9b9b; } .tg.taken { color: #9aa4b6; } .tg.human { color: #7fe0a0; } .tg.new { color: #c3bbff; }
+.ring-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; fill: var(--ring-label); font-family: var(--font); }
+.incident { position: absolute; transform: translate(-50%, -100%); pointer-events: none; display: inline-flex; align-items: center; gap: 6px; background: #3a2a0c; color: #ffd27a; border: 1px solid #c98500; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 650; white-space: nowrap; box-shadow: 0 0 20px rgba(201, 133, 0, 0.35); }
+.incident svg { width: 13px; height: 13px; }
+
+/* drawer */
+.drawer { position: absolute; z-index: var(--z-drawer); top: 12px; right: 12px; bottom: 12px; width: 384px; max-width: calc(100% - 24px); overflow-y: auto; padding: 18px; display: grid; align-content: start; gap: 18px; transform: translateX(calc(100% + 24px)); visibility: hidden; transition: transform .32s cubic-bezier(.22,1,.36,1), visibility 0s linear .32s; }
+.drawer.open { transform: none; visibility: visible; transition: transform .32s cubic-bezier(.22,1,.36,1), visibility 0s; }
+.dr-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: start; }
+.dr-kind { font-size: 11.5px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; display: flex; align-items: center; gap: 6px; }
+.dr-head h2 { margin: 4px 0 8px; font-size: 19px; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; text-wrap: balance; }
+.sec h3 { margin: 0 0 8px; font-size: 12px; font-weight: 600; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.levels { display: grid; gap: 4px; }
+.lvl { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 6px 8px; border-radius: 8px; font-size: 12.5px; color: var(--ink-2); }
+.lvl b { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.lvl.cur { background: var(--accent-wash); color: var(--ink); }
+.lvl.cur b { color: var(--accent); }
+.lvl.need { box-shadow: inset 0 0 0 1px var(--n-job); }
+.lvl .mk { font-size: 11px; font-weight: 600; }
+.tasks { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.tasks li { display: flex; justify-content: space-between; gap: 10px; align-items: center; font-size: 13px; }
+.lpp { display: grid; gap: 8px; }
+.lpp-item { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.lpp-item .ic { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; }
+.lpp-item .ic svg { width: 15px; height: 15px; }
+.lpp-item .k { font-size: 11px; font-weight: 650; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.lpp-item .v { font-size: 13px; font-weight: 550; }
+.lpp-item .m { font-size: 12px; color: var(--ink-2); }
+.req { display: grid; }
+.req-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 9px 0; border-top: 1px solid var(--line); font-size: 13px; cursor: pointer; }
+.req-row:first-child { border-top: 0; }
+.req-row:hover .rn { color: var(--accent); }
+.req-row .rn { font-weight: 550; }
+.req-row .rs { font-size: 11.5px; color: var(--muted); }
+.req-row .share { font-size: 12.5px; color: var(--ink-2); text-align: right; }
+.cov { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; }
+.cov svg { width: 13px; height: 13px; }
+.cov.full { background: var(--good-wash); color: var(--good); }
+.cov.part { background: var(--warn-wash); color: var(--warn); }
+.cov.none { background: var(--panel-2); color: var(--muted); border: 1px solid var(--line); }
+.big-pct { font-size: 40px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+.sdg { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; align-items: center; font-size: 12.5px; color: var(--ink-2); }
+.sdg b { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; color: #fff; font-family: var(--mono); font-size: 13px; }
+.src { font-size: 11.5px; color: var(--muted); margin: 0; }
+
+.toast { position: absolute; z-index: var(--z-toast); left: calc(50% - 120px); top: 66px; transform: translate(-50%, -8px); opacity: 0; padding: 11px 14px; display: grid; gap: 3px; width: min(440px, calc(100% - 32px)); pointer-events: none; transition: opacity .22s ease-out, transform .22s ease-out; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast .tt { font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 13.5px; }
+.toast .td { font-size: 12.5px; color: var(--ink-2); }
+.rerouting { position: absolute; z-index: var(--z-toast); left: calc(50% - 120px); top: 50%; transform: translate(-50%, -50%); padding: 10px 16px; font-weight: 600; display: inline-flex; gap: 10px; align-items: center; opacity: 0; pointer-events: none; transition: opacity .2s ease-out; }
+.rerouting.show { opacity: 1; }
+.tip { position: absolute; z-index: var(--z-tip); pointer-events: none; padding: 10px 12px; min-width: 220px; font-size: 12.5px; }
+.tip b { display: block; font-size: 13px; margin-bottom: 2px; }
+.tip .k { color: var(--muted); font-size: 11.5px; margin-bottom: 7px; display: block; }
+.tip .row { display: flex; justify-content: space-between; gap: 12px; color: var(--ink-2); }
+.tip .row span:last-child { color: var(--ink); font-weight: 600; font-family: var(--mono); }
+.nograph { position: absolute; inset: 0; display: grid; place-items: center; color: #aab3c2; padding: 24px; text-align: center; }
+
+/* onboarding */
+.ob { position: fixed; inset: 0; z-index: var(--z-modal); display: grid; place-items: center; padding: 16px; background: rgba(5, 8, 14, 0.62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.ob[hidden] { display: none; }
+.ob-card { width: min(620px, 100%); max-height: calc(100% - 16px); overflow-y: auto; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: 0 8px 8px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.2); display: grid; }
+.ob-top { padding: 20px 24px 0; display: grid; gap: 14px; }
+.ob-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.ob-steps i { height: 4px; border-radius: 2px; background: var(--line); transition: background-color .3s ease-out; }
+.ob-steps i.on { background: var(--accent); }
+.ob-kicker { font-size: 12px; color: var(--muted); font-weight: 550; }
+.ob-top h2 { margin: 2px 0 0; font-size: 22px; font-weight: 600; letter-spacing: -0.015em; text-wrap: balance; }
+.ob-top p { margin: 4px 0 0; color: var(--ink-2); }
+.ob-body { padding: 18px 24px; display: grid; gap: 14px; }
+.ob-foot { padding: 14px 24px 20px; display: flex; justify-content: space-between; align-items: center; gap: 10px; border-top: 1px solid var(--line); }
+.ob-foot .left { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.drop { border: 1.5px dashed var(--line-2); border-radius: var(--r-md); padding: 18px; display: grid; gap: 12px; justify-items: center; text-align: center; background: var(--panel-2); }
+.drop .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--accent-wash); color: var(--accent); display: grid; place-items: center; }
+.drop .ic svg { width: 20px; height: 20px; }
+.file { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; text-align: left; }
+.file .fi { width: 32px; height: 32px; border-radius: 8px; background: var(--crit-wash); color: var(--crit); display: grid; place-items: center; }
+.file .fm { font-size: 12px; color: var(--muted); }
+.found-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.found-list li { display: flex; gap: 10px; align-items: center; font-size: 13.5px; }
+.found-list li svg { color: var(--good); }
+.found-list li.warn svg { color: var(--warn); }
+.q { display: grid; gap: 10px; }
+.q-msg { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; align-items: start; }
+.q-msg .bot { width: 30px; height: 30px; border-radius: 9px; background: var(--accent-wash); color: var(--accent); display: grid; place-items: center; }
+.q-msg .bubble { background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px 12px 12px 12px; padding: 9px 12px; font-size: 13.5px; }
+.q-ans { display: flex; flex-wrap: wrap; gap: 6px; padding-left: 40px; }
+.q-ans button { border: 1px solid var(--line-2); background: var(--panel); border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 550; transition: background-color .15s ease-out, border-color .15s ease-out; }
+.q-ans button:hover { border-color: var(--accent); }
+.q-ans button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.rate { display: grid; gap: 2px; }
+.rate-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+.rate-row:first-child { border-top: 0; }
+.rate-row .rn { font-weight: 550; font-size: 13.5px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.rate-row .rd { grid-column: 1 / -1; font-size: 12px; color: var(--ink-2); }
+.lv { display: inline-grid; grid-auto-flow: column; gap: 3px; }
+.lv button { width: 30px; height: 28px; border: 1px solid var(--line-2); background: var(--panel); border-radius: 7px; font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+.lv button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(57,135,229,.55); } 100% { box-shadow: 0 0 0 7px rgba(57,135,229,0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .spin, .ag-ic.run::after { animation: none; }
+  .drawer, .drawer.open, .toast, .rerouting, .bar i, .split-bar i, .job, .tab, .step, .skill { transition: none; }
+}
+@media (max-width: 980px) {
+  .drawer { position: fixed; top: auto; left: 8px; right: 8px; bottom: 8px; width: auto; max-height: 78svh; transform: translateY(calc(100% + 24px)); }
+  .toast, .rerouting { left: 50%; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Career planner">
+    <div class="side-head">
+      <div class="brand">
+        <div class="logo"><span class="logo-mark"><i data-lucide="compass"></i></span>HalaTuju</div>
+        <div class="brand-right">
+          <span class="badge b-warn" title="All people, numbers, sources and courses here are sample data">Sample data</span>
+          <button class="ghost" id="admin-btn" type="button" aria-pressed="false" title="Admin view: knowledge review queue"><i data-lucide="shield-check"></i>Review<span class="count" id="admin-count">4</span></button>
+          <button class="ghost" id="replay" type="button" title="Replay first-time setup" aria-label="Replay first-time setup"><i data-lucide="rotate-ccw"></i></button>
+        </div>
+      </div>
+      <div class="me">
+        <div class="avatar" aria-hidden="true">AS</div>
+        <div>
+          <div class="name">Aisyah binti Salleh</div>
+          <div class="meta">Accounts payable clerk · 9 yrs · Cyberjaya</div>
+        </div>
+        <div class="score-mini"><div class="v num" id="score-now">60<small>%</small></div><div class="l">Future-proof</div></div>
+      </div>
+      <div class="scorebar" id="scorebar"></div>
+      <div class="tabs" role="tablist" aria-label="Planner sections">
+        <button class="tab" role="tab" id="tab-jobs" aria-selected="true" aria-controls="panel"><i data-lucide="briefcase"></i>Jobs</button>
+        <button class="tab" role="tab" id="tab-path" aria-selected="false" aria-controls="panel"><i data-lucide="route"></i>Path</button>
+        <button class="tab" role="tab" id="tab-skills" aria-selected="false" aria-controls="panel"><i data-lucide="layers"></i>My skills</button>
+      </div>
+    </div>
+    <div class="side-body" id="panel" role="tabpanel"></div>
+  </aside>
+
+  <main class="stage" id="stage" aria-label="Career constellation">
+    <canvas id="stars" aria-hidden="true"></canvas>
+    <div class="scene">
+      <svg id="rings" aria-hidden="true"></svg>
+      <div id="graph"></div>
+      <div id="labels"></div>
+    </div>
+    <div class="topbar">
+      <div class="pill glass"><span class="live"></span><span>Knowledge updated <b id="fresh-when">3 days ago</b> · <b class="num" id="fresh-n">214</b> sources</span></div>
+      <div class="legend glass" aria-label="Legend">
+        <span><i class="lg" style="background:var(--n-you)"></i>You</span>
+        <span><i class="lg" style="background:var(--n-have)"></i>Your skills</span>
+        <span><i class="lg" style="background:var(--n-learn)"></i>Skills to learn</span>
+        <span><i class="lg" style="background:var(--n-job)"></i>Jobs</span>
+        <span><i class="lg" style="background:var(--n-risk)"></i>At risk</span>
+        <span><i class="lg line" style="background:var(--l-path)"></i>Your path</span>
+        <span><i class="lg line" style="background:var(--l-alt)"></i>Other routes</span>
+        <span><i class="lg line" style="background:var(--l-evolve)"></i>Evolves into</span>
+      </div>
+    </div>
+    <div class="toast glass" id="toast" role="status" aria-live="polite"></div>
+    <div class="rerouting glass" id="rerouting"><span class="spin"></span>Finding a new path…</div>
+    <div class="tip glass" id="tip" hidden></div>
+    <aside class="drawer glass" id="drawer" aria-label="Details"></aside>
+    <div class="timeline glass" role="group" aria-label="Forecast">
+      <button class="icon-btn" id="play" type="button" aria-label="Play the forecast"><i data-lucide="play"></i></button>
+      <input type="range" id="year" min="2026" max="2030" step="1" value="2026" aria-label="Forecast year">
+      <span class="year num" id="year-out">2026</span>
+      <div class="seg" role="group" aria-label="AI adoption speed">
+        <button type="button" data-scn="moderate" aria-pressed="true">Moderate AI</button>
+        <button type="button" data-scn="fast" aria-pressed="false">Fast AI</button>
+      </div>
+    </div>
+    <div class="viewctl glass" role="group" aria-label="View">
+      <button class="icon-btn" id="rotate" type="button" aria-pressed="true" aria-label="Stop rotating"><i data-lucide="rotate-3d"></i></button>
+      <button class="icon-btn" id="labels-btn" type="button" aria-pressed="false" aria-label="Show all labels"><i data-lucide="type"></i></button>
+      <button class="icon-btn" id="reset-view" type="button" aria-label="Reset view"><i data-lucide="locate-fixed"></i></button>
+    </div>
+  </main>
+
+  <section class="agents glass" id="agents" aria-label="AI agents">
+    <div class="ag-head">
+      <h3><i data-lucide="bot"></i>Agents</h3>
+      <div style="display:flex;align-items:center;gap:6px"><span class="ag-fresh" id="ag-fresh">Scout ran 3 days ago</span>
+        <button class="ag-toggle" id="ag-toggle" type="button" aria-expanded="true" aria-label="Collapse agents"><i data-lucide="chevron-up"></i></button></div>
+    </div>
+    <div class="ag-body">
+      <ul class="ag-list" id="ag-list"></ul>
+      <ul class="log" id="log" hidden></ul>
+      <div class="ag-actions">
+        <button class="btn btn-primary" id="scout" type="button"><i data-lucide="radar"></i>Run market scout</button>
+        <button class="btn btn-soft" id="reset" type="button" hidden style="flex:none">Reset</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- First-use onboarding -->
+<div class="ob" id="ob" role="dialog" aria-modal="true" aria-labelledby="ob-title">
+  <div class="ob-card" id="ob-card"></div>
+</div>
+
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.79.0/dist/3d-force-graph.min.js"></script>
+<script>
+/*LOGIC-START*/
+// ============ Sample data (illustrative, not research results) ============
+// e = AI exposure, d = demand change % : [2026, 2030 moderate, 2030 fast]. Your skills keep fixed angles (a) on the inner ring;
+// skills to learn and jobs are placed automatically around the jobs currently on your map.
+const NODES = {
+  ap:      { name: "Accounts Payable Clerk", type: "you", e: [.80, .88, .93], d: [-10, -30, -42] },
+  inv:     { name: "Invoice data entry", type: "have", a: 350, e: [.84, .93, .97], d: [-14, -42, -55] },
+  three:   { name: "Three-way matching", type: "have", a: 318, e: [.74, .84, .91], d: [-4, -30, -44] },
+  pay:     { name: "Payment runs", type: "have", a: 286, e: [.64, .78, .86], d: [-12, -28, -38] },
+  tax:     { name: "SST compliance", type: "have", a: 252, e: [.33, .45, .52], d: [-2, -4, -8] },
+  erp:     { name: "ERP operation (SAP)", type: "have", a: 218, e: [.42, .54, .61], d: [4, -2, -8] },
+  dispute: { name: "Vendor dispute resolution", type: "have", a: 184, e: [.22, .30, .35], d: [6, 10, 12] },
+  process: { name: "Process improvement", type: "have", a: 150, e: [.16, .21, .24], d: [16, 24, 28] },
+  audit:   { name: "Audit trail documentation", type: "have", a: 116, e: [.38, .49, .56], d: [18, 26, 30] },
+  recon:   { name: "Vendor reconciliation", type: "have", a: 82, e: [.54, .68, .77], d: [2, -14, -24] },
+  excel:   { name: "Spreadsheet analysis", type: "have", a: 46, e: [.48, .61, .69], d: [12, 6, 0] },
+
+  fin:      { name: "Financial analysis", type: "learn", e: [.40, .46, .50], d: [28, 36, 38] },
+  viz:      { name: "Dashboard reporting", type: "learn", e: [.46, .57, .64], d: [22, 26, 22] },
+  esgdata:  { name: "ESG data management", type: "learn", e: [.35, .45, .52], d: [24, 40, 46] },
+  ghg:      { name: "GHG emissions accounting", type: "learn", e: [.30, .38, .45], d: [34, 50, 56] },
+  disc:     { name: "Sustainability disclosure", type: "learn", e: [.22, .31, .38], d: [26, 44, 50] },
+  aisup:    { name: "Supervising AI workflows", type: "learn", e: [.12, .16, .18], d: [30, 44, 54], emerging: 24 },
+  auto:     { name: "Workflow automation", type: "learn", e: [.30, .36, .40], d: [30, 44, 50] },
+  prompt:   { name: "Prompting AI tools for finance", type: "learn", e: [.35, .45, .50], d: [32, 46, 50], emerging: 31 },
+  aiinv:    { name: "AI invoice review & exceptions", type: "learn", e: [.30, .38, .44], d: [18, 30, 34], emerging: 14 },
+  sql:      { name: "SQL for business data", type: "learn", e: [.40, .50, .56], d: [30, 38, 40] },
+  python:   { name: "Python for data work", type: "learn", e: [.45, .55, .62], d: [26, 32, 30] },
+  stats:    { name: "Statistics basics", type: "learn", e: [.35, .42, .48], d: [18, 24, 26] },
+  lca:      { name: "Life-cycle assessment", type: "learn", e: [.25, .32, .38], d: [28, 44, 50] },
+  greenfin: { name: "Green finance & ESG investing", type: "learn", e: [.28, .35, .40], d: [30, 46, 52] },
+  audit2:   { name: "Internal audit & controls", type: "learn", e: [.32, .40, .46], d: [16, 22, 24] },
+  treasury: { name: "Cash & treasury management", type: "learn", e: [.36, .45, .50], d: [10, 14, 14] },
+  procure:  { name: "Strategic sourcing", type: "learn", e: [.30, .38, .44], d: [14, 20, 22] },
+  scm:      { name: "Supply chain planning", type: "learn", e: [.38, .46, .52], d: [16, 22, 24] },
+  invent:   { name: "Inventory analytics", type: "learn", e: [.45, .55, .62], d: [14, 18, 18] },
+
+  stayRole:     { name: "AI-Assisted AP Specialist", type: "job", e: [.40, .46, .50], d: [8, 14, 16] },
+  opsRole:      { name: "Finance Automation Specialist", type: "job", e: [.34, .40, .44], d: [28, 40, 46] },
+  faRole:       { name: "AI-Augmented Finance Analyst", type: "job", e: [.42, .48, .52], d: [24, 32, 34] },
+  esgRole:      { name: "ESG & Carbon Reporting Analyst", type: "job", e: [.28, .33, .38], d: [36, 52, 58] },
+  intAudit:     { name: "Internal Auditor", type: "job", e: [.36, .42, .46], d: [12, 18, 20] },
+  treasuryRole: { name: "Treasury Analyst", type: "job", e: [.44, .52, .58], d: [8, 12, 12] },
+  lcaRole:      { name: "Product Carbon Footprint Analyst", type: "job", e: [.26, .32, .36], d: [30, 46, 52] },
+  greenRole:    { name: "Green Finance Analyst", type: "job", e: [.34, .40, .44], d: [26, 40, 46] },
+  assurRole:    { name: "ESG Assurance Associate", type: "job", e: [.28, .34, .38], d: [28, 44, 50] },
+  dataRole:     { name: "Data Analyst", type: "job", e: [.48, .56, .62], d: [18, 22, 22] },
+  biRole:       { name: "BI Developer", type: "job", e: [.46, .54, .60], d: [16, 20, 20] },
+  aiQaRole:     { name: "AI Data Quality Specialist", type: "job", e: [.30, .36, .40], d: [34, 50, 58] },
+  procRole:     { name: "Procurement Specialist", type: "job", e: [.38, .45, .50], d: [10, 16, 18] },
+  scmRole:      { name: "Supply Chain Planner", type: "job", e: [.40, .48, .54], d: [14, 20, 22] },
+  invRole:      { name: "Inventory Analyst", type: "job", e: [.50, .60, .66], d: [6, 8, 6] }
+};
+const OWNED = Object.keys(NODES).filter(k => NODES[k].type === "have");
+const ALL_JOBS = Object.keys(NODES).filter(k => NODES[k].type === "job");
+const SECTORS = {
+  best:    { name: "Best matches", icon: "sparkles", jobs: null, note: "The jobs that fit your skills best, across all sectors." },
+  finance: { name: "Finance", icon: "landmark", jobs: ["stayRole", "faRole", "intAudit", "treasuryRole"], note: "Stay close to accounting, with more judgement and less data entry." },
+  sustain: { name: "Sustainability", icon: "leaf", jobs: ["esgRole", "lcaRole", "greenRole", "assurRole"], note: "Fast-growing roles as climate reporting becomes mandatory." },
+  data:    { name: "Tech & data", icon: "database", jobs: ["dataRole", "biRole", "aiQaRole", "opsRole"], note: "Work with the data and the AI tools themselves." },
+  ops:     { name: "Operations", icon: "truck", jobs: ["procRole", "scmRole", "invRole", "opsRole"], note: "Use your vendor and ERP know-how in buying and supply chain." }
+};
+
+// The user's profile (onboarding edits these)
+const PROFILE = {
+  hours: 6,
+  level: { inv: 5, three: 5, pay: 4, tax: 3, erp: 4, dispute: 3, process: 2, audit: 4, recon: 4, excel: 4 },
+  conf: { inv: "cv", three: "cv", pay: "self", tax: "self", erp: "cv", dispute: "self", process: "self", audit: "verified", recon: "cv", excel: "verified" }
+};
+
+// [from, to, weeks at 6 h/week, why, kind]
+const EDGES = [
+  ...OWNED.map(k => ["ap", k, 0, "A skill you already have", "own"]),
+  ["recon", "ghg", 4, "Both trace every number back to a source document.", "build"],
+  ["recon", "esgdata", 3, "Reconciliation habits carry over to checking ESG data.", "build"],
+  ["excel", "esgdata", 3, "Cleaning and merging data is the core of ESG data work.", "build"],
+  ["audit", "esgdata", 2, "Evidence trails are what ESG data needs most.", "build"],
+  ["esgdata", "ghg", 3, "Clean activity data is the input to emissions accounting.", "build"],
+  ["audit", "disc", 3, "Disclosures need the same complete evidence trail.", "build"],
+  ["disc", "ghg", 3, "Disclosure work shows you which emissions to count.", "build"],
+  ["process", "aisup", 2, "You already redesign workflows; now some steps run on AI.", "build"],
+  ["excel", "viz", 2, "Moves your spreadsheet summaries onto shared dashboards.", "build"],
+  ["viz", "fin", 3, "Dashboards are where analysis gets read.", "build"],
+  ["excel", "fin", 4, "Turns spreadsheet skill into forecasts managers act on.", "build"],
+  ["aisup", "fin", 3, "Analysts now review AI-built forecasts.", "build"],
+  ["process", "auto", 3, "Automation is process improvement done with software.", "build"],
+  ["erp", "auto", 3, "You know the ERP screens the automations will run on.", "build"],
+  ["inv", "aiinv", 1, "Same work, new version: you check what AI captured and fix the exceptions.", "evolve"],
+  ["three", "aiinv", 1, "Your matching rules become the checks you apply to AI output.", "evolve"],
+  ["excel", "prompt", 1, "You already structure data; now you instruct AI tools to do the first pass.", "build"],
+  ["excel", "sql", 3, "You already think in tables; SQL asks the same questions of bigger data.", "build"],
+  ["sql", "python", 4, "Python picks up where SQL stops: cleaning, automating, modelling.", "build"],
+  ["excel", "stats", 3, "Averages and trends in your reports are the start of statistics.", "build"],
+  ["ghg", "lca", 3, "Life-cycle assessment counts emissions product by product.", "build"],
+  ["esgdata", "lca", 4, "LCA runs on the same activity data, in more detail.", "build"],
+  ["fin", "greenfin", 4, "Green finance is financial analysis with climate risk added.", "build"],
+  ["disc", "greenfin", 3, "Investors read the disclosures you would help prepare.", "build"],
+  ["audit", "audit2", 3, "Evidence trails are the core of internal audit.", "build"],
+  ["recon", "audit2", 2, "Finding unexplained differences is what auditors do all day.", "build"],
+  ["tax", "audit2", 3, "Compliance work teaches you how controls are tested.", "build"],
+  ["pay", "treasury", 3, "Payment runs are the daily face of cash management.", "build"],
+  ["three", "procure", 3, "Matching POs teaches you how buying really works.", "build"],
+  ["dispute", "procure", 2, "Negotiating with vendors is half of sourcing.", "build"],
+  ["erp", "scm", 4, "You know how orders and receipts flow through SAP.", "build"],
+  ["erp", "invent", 3, "Stock data lives in the same ERP you use daily.", "build"],
+  ["excel", "invent", 3, "Inventory analytics is spreadsheet analysis on stock levels.", "build"],
+  // into jobs: portfolio projects or on-the-job ramps
+  ["ghg", "esgRole", 2, "Portfolio project: a sample emissions report.", "build"],
+  ["disc", "esgRole", 4, "Portfolio project: a sample climate disclosure.", "build"],
+  ["aisup", "esgRole", 8, "Lead AI-assisted ESG reporting; a longer on-the-job ramp.", "build"],
+  ["fin", "faRole", 2, "Portfolio project: a sample monthly variance report.", "build"],
+  ["viz", "faRole", 5, "Portfolio project: a finance dashboard.", "build"],
+  ["auto", "opsRole", 2, "Portfolio project: automate one AP workflow end to end.", "build"],
+  ["aisup", "opsRole", 4, "Portfolio project: a review checklist for AI agents.", "build"],
+  ["aiinv", "stayRole", 1, "On the job: run AI invoice capture for one vendor group for a month.", "build"],
+  ["prompt", "stayRole", 2, "On the job: build a prompt library for your team's AP tasks.", "build"],
+  ["audit2", "intAudit", 2, "Portfolio project: audit one month of AP payments.", "build"],
+  ["treasury", "treasuryRole", 2, "Portfolio project: a 13-week cash forecast.", "build"],
+  ["lca", "lcaRole", 2, "Portfolio project: the footprint of one product.", "build"],
+  ["greenfin", "greenRole", 2, "Portfolio project: screen 5 bonds against green criteria.", "build"],
+  ["disc", "assurRole", 3, "Portfolio project: check a disclosure against its evidence.", "build"],
+  ["audit2", "assurRole", 3, "Assurance is audit applied to sustainability claims.", "build"],
+  ["sql", "dataRole", 3, "Portfolio project: analyse a public dataset end to end.", "build"],
+  ["viz", "dataRole", 3, "Portfolio project: a dashboard that answers one business question.", "build"],
+  ["stats", "dataRole", 3, "Portfolio project: test whether a process change really helped.", "build"],
+  ["viz", "biRole", 3, "Portfolio project: a self-service finance dashboard.", "build"],
+  ["sql", "biRole", 3, "Portfolio project: a clean reporting data model.", "build"],
+  ["aisup", "aiQaRole", 2, "Portfolio project: an error log for 200 AI outputs.", "build"],
+  ["prompt", "aiQaRole", 3, "Portfolio project: a test set that catches AI mistakes.", "build"],
+  ["procure", "procRole", 2, "Portfolio project: a sourcing plan for one category.", "build"],
+  ["scm", "scmRole", 3, "Portfolio project: a monthly demand and supply plan.", "build"],
+  ["invent", "invRole", 2, "Portfolio project: find slow-moving stock in sample data.", "build"]
+];
+
+// What each job needs: skill, weight, level needed, share of postings asking for it, status in frameworks
+const REQ = {
+  stayRole:     [["aiinv", 3, 3, 68, "emerging"], ["prompt", 2, 2, 46, "emerging"], ["three", 2, 4, 55, "essential"], ["dispute", 2, 3, 38, "optional"], ["erp", 1, 3, 40, "optional"]],
+  opsRole:      [["auto", 3, 3, 74, "essential"], ["aisup", 2, 3, 44, "emerging"], ["erp", 2, 4, 52, "essential"], ["process", 2, 3, 49, "essential"], ["three", 1, 3, 30, "optional"]],
+  faRole:       [["fin", 3, 3, 81, "essential"], ["viz", 2, 3, 62, "optional"], ["excel", 2, 5, 77, "essential"], ["erp", 1, 3, 35, "optional"], ["aisup", 1, 2, 22, "emerging"]],
+  esgRole:      [["ghg", 3, 3, 72, "essential"], ["disc", 2, 3, 58, "essential"], ["esgdata", 2, 3, 41, "optional"], ["audit", 2, 4, 47, "essential"], ["excel", 1, 3, 65, "optional"]],
+  intAudit:     [["audit2", 3, 3, 70, "essential"], ["audit", 2, 4, 55, "essential"], ["recon", 2, 3, 40, "optional"], ["tax", 1, 3, 30, "optional"], ["aisup", 1, 2, 26, "emerging"]],
+  treasuryRole: [["treasury", 3, 3, 76, "essential"], ["pay", 2, 4, 48, "essential"], ["excel", 2, 4, 62, "essential"], ["fin", 1, 3, 40, "optional"]],
+  lcaRole:      [["lca", 3, 3, 70, "essential"], ["ghg", 2, 3, 64, "essential"], ["esgdata", 2, 3, 45, "optional"], ["excel", 1, 3, 50, "optional"]],
+  greenRole:    [["greenfin", 3, 3, 72, "essential"], ["fin", 2, 3, 60, "essential"], ["disc", 2, 3, 44, "optional"], ["excel", 1, 4, 55, "optional"]],
+  assurRole:    [["disc", 3, 3, 68, "essential"], ["audit2", 2, 3, 52, "essential"], ["audit", 2, 4, 50, "essential"], ["esgdata", 1, 3, 36, "optional"]],
+  dataRole:     [["sql", 3, 3, 82, "essential"], ["stats", 2, 3, 58, "essential"], ["viz", 2, 3, 66, "essential"], ["python", 2, 2, 54, "optional"], ["excel", 1, 4, 60, "optional"]],
+  biRole:       [["viz", 3, 4, 80, "essential"], ["sql", 3, 3, 74, "essential"], ["excel", 1, 4, 50, "optional"], ["erp", 1, 3, 30, "optional"]],
+  aiQaRole:     [["aisup", 3, 3, 70, "emerging"], ["prompt", 2, 3, 50, "emerging"], ["aiinv", 2, 3, 40, "emerging"], ["audit", 1, 3, 35, "optional"]],
+  procRole:     [["procure", 3, 3, 78, "essential"], ["dispute", 2, 3, 60, "essential"], ["three", 2, 3, 45, "optional"], ["erp", 1, 3, 50, "optional"]],
+  scmRole:      [["scm", 3, 3, 80, "essential"], ["erp", 2, 4, 58, "essential"], ["excel", 2, 4, 62, "essential"], ["stats", 1, 3, 34, "optional"]],
+  invRole:      [["invent", 3, 3, 74, "essential"], ["erp", 2, 3, 50, "essential"], ["excel", 2, 4, 60, "essential"], ["sql", 1, 2, 30, "optional"]]
+};
+const SDG = { 8: ["#a21942", "Decent work"], 9: ["#fd6925", "Industry & innovation"], 12: ["#bf8b2e", "Responsible production"], 13: ["#3f7e44", "Climate action"], 16: ["#00689d", "Strong institutions"] };
+const JOBMETA = {
+  stayRole:     { move: false, postings: 18, conf: "Medium", blurb: "Stay in AP, but run the AI tools instead of typing invoices.", split: [[20, 45, 35], [26, 44, 30], [30, 44, 26]], sdg: [[8, "Keeps an experienced worker employed through the AI shift"]] },
+  opsRole:      { move: true, postings: 30, conf: "High", blurb: "Design and run the automations that take over routine finance steps.", split: [[18, 42, 40], [22, 44, 34], [25, 45, 30]], sdg: [[8, "Productive, higher-skilled roles"], [9, "Modernises finance operations"]] },
+  faRole:       { move: true, postings: 30, conf: "High", blurb: "Use AI to build analysis, then explain what the numbers mean.", split: [[20, 40, 40], [26, 42, 32], [30, 42, 28]], sdg: [[8, "A growing analytical role"]] },
+  esgRole:      { move: true, postings: 30, conf: "High", blurb: "Measure and report a company's emissions and sustainability data.", split: [[15, 35, 50], [20, 38, 42], [24, 38, 38]], sdg: [[13, "Measures company emissions"], [12, "Supports sustainability disclosure"]] },
+  intAudit:     { move: true, postings: 30, conf: "High", blurb: "Test whether the company's controls actually work, and find what slips through.", split: [[18, 37, 45], [23, 39, 38], [26, 40, 34]], sdg: [[16, "Strong controls against fraud and error"]] },
+  treasuryRole: { move: true, postings: 24, conf: "Medium", blurb: "Forecast and manage the company's cash so bills and payroll are always covered.", split: [[25, 40, 35], [32, 40, 28], [36, 40, 24]], sdg: [[8, "Keeps businesses financially healthy"]] },
+  lcaRole:      { move: true, postings: 16, conf: "Medium", blurb: "Work out the carbon footprint of individual products, from raw material to disposal.", split: [[15, 35, 50], [19, 37, 44], [22, 38, 40]], sdg: [[12, "Shows which products pollute most"], [13, "Targets emission cuts"]] },
+  greenRole:    { move: true, postings: 20, conf: "Medium", blurb: "Check whether loans and investments really fund green projects.", split: [[18, 37, 45], [23, 39, 38], [26, 40, 34]], sdg: [[13, "Moves money towards climate solutions"], [8, "Sustainable growth"]] },
+  assurRole:    { move: true, postings: 22, conf: "Medium", blurb: "Check that sustainability claims are backed by real evidence.", split: [[14, 34, 52], [18, 36, 46], [21, 37, 42]], sdg: [[12, "Makes green claims trustworthy"], [16, "Accountable institutions"]] },
+  dataRole:     { move: true, postings: 30, conf: "High", blurb: "Turn messy business data into answers people can act on.", split: [[25, 40, 35], [32, 42, 26], [36, 42, 22]], sdg: [[9, "Data-driven businesses"]] },
+  biRole:       { move: true, postings: 28, conf: "High", blurb: "Build the dashboards and data models a whole company reports from.", split: [[24, 42, 34], [30, 44, 26], [34, 44, 22]], sdg: [[9, "Better decisions from shared data"]] },
+  aiQaRole:     { move: true, postings: 14, conf: "Medium", blurb: "Check AI output for mistakes and teach the tools to do better.", split: [[12, 38, 50], [15, 40, 45], [17, 41, 42]], sdg: [[8, "New human work created by AI"], [9, "Safer AI in industry"]] },
+  procRole:     { move: true, postings: 30, conf: "High", blurb: "Choose suppliers and negotiate what the company buys.", split: [[20, 35, 45], [25, 37, 38], [28, 38, 34]], sdg: [[12, "Responsible sourcing"]] },
+  scmRole:      { move: true, postings: 26, conf: "High", blurb: "Plan what to make and buy so stock arrives when it's needed.", split: [[24, 40, 36], [30, 42, 28], [34, 42, 24]], sdg: [[9, "Resilient supply chains"]] },
+  invRole:      { move: true, postings: 20, conf: "Medium", blurb: "Track stock levels and cut waste from slow-moving inventory.", split: [[32, 38, 30], [40, 38, 22], [45, 37, 18]], sdg: [[12, "Less waste"]] },
+  ap:           { split: [[35, 25, 40], [48, 24, 28], [58, 22, 20]] }
+};
+const TASKS = {
+  inv: [["Capture invoice fields from PDFs", "ai"], ["Code invoices to GL accounts", "ai"], ["Chase missing PO numbers", "assist"]],
+  three: [["Match PO, invoice and goods receipt", "ai"], ["Flag price or quantity mismatches", "ai"], ["Decide on tolerance exceptions", "human"]],
+  pay: [["Build the payment proposal", "ai"], ["Check cash before release", "assist"], ["Approve and release payments", "human"]],
+  recon: [["Match statements to the ledger", "ai"], ["Investigate unexplained differences", "assist"], ["Trace numbers to source documents", "human"]],
+  erp: [["Post and adjust entries", "assist"], ["Maintain vendor master data", "assist"], ["Fix workflow errors", "human"]],
+  excel: [["Build pivot summaries", "ai"], ["Clean and merge data", "assist"], ["Decide which numbers matter", "human"]],
+  tax: [["Calculate SST on invoices", "ai"], ["Interpret rule changes", "assist"], ["Sign off on returns", "human"]],
+  audit: [["Assemble evidence packs", "assist"], ["Keep the document trail complete", "assist"], ["Answer auditor questions", "human"]],
+  dispute: [["Draft replies to vendors", "assist"], ["Negotiate settlements", "human"], ["Judge the relationship impact", "human"]],
+  process: [["Map the current workflow", "assist"], ["Find bottlenecks", "assist"], ["Get the team to adopt the change", "human"]],
+  ghg: [["Collect activity data from bills", "assist"], ["Apply emission factors", "ai"], ["Check data quality and trace to source", "human"]],
+  disc: [["Draft disclosure text", "assist"], ["Map data to disclosure items", "assist"], ["Judge materiality with management", "human"]],
+  esgdata: [["Collect data from many systems", "assist"], ["Flag gaps and outliers", "ai"], ["Agree data owners and controls", "human"]],
+  viz: [["Build dashboards", "assist"], ["Refresh data feeds", "ai"], ["Choose the right view for the audience", "human"]],
+  fin: [["Build forecasts", "assist"], ["Prepare monthly reports", "ai"], ["Explain variances to managers", "human"]],
+  aisup: [["Set up AI agents for routine steps", "assist"], ["Review AI output for errors", "human"], ["Decide when AI should not act", "human"]],
+  auto: [["Build simple automations", "assist"], ["Choose which steps to automate", "human"], ["Monitor automations", "assist"]],
+  prompt: [["Write instructions for AI tools", "human"], ["Draft summaries with AI", "assist"], ["Check AI output for errors", "human"]],
+  aiinv: [["Check AI-captured invoice fields", "assist"], ["Resolve exceptions AI can't match", "human"], ["Feed corrections back to the AI tool", "assist"]],
+  sql: [["Write queries for routine reports", "assist"], ["Join data from several systems", "assist"], ["Decide what question to ask", "human"]],
+  python: [["Write scripts to clean data", "assist"], ["Automate repeat analysis", "assist"], ["Check results make sense", "human"]],
+  stats: [["Calculate summaries and trends", "ai"], ["Test whether a change made a difference", "assist"], ["Explain uncertainty to managers", "human"]],
+  lca: [["Gather material and energy data", "assist"], ["Run the footprint model", "ai"], ["Set the boundaries and assumptions", "human"]],
+  greenfin: [["Screen investments against criteria", "ai"], ["Assess climate risk", "assist"], ["Challenge green claims", "human"]],
+  audit2: [["Pull samples and evidence", "ai"], ["Test controls", "assist"], ["Judge findings and report to management", "human"]],
+  treasury: [["Build the daily cash position", "ai"], ["Forecast cash for 13 weeks", "assist"], ["Decide funding and bank relationships", "human"]],
+  procure: [["Compare supplier quotes", "ai"], ["Assess supplier risk", "assist"], ["Negotiate contracts", "human"]],
+  scm: [["Forecast demand", "ai"], ["Balance supply and demand", "assist"], ["Agree plans with sales and production", "human"]],
+  invent: [["Track stock levels", "ai"], ["Find slow-moving stock", "assist"], ["Decide what to write off or discount", "human"]]
+};
+const LPP = {
+  ghg: ["GHG Protocol corporate accounting basics", "Online course · 24 h · free", "Calculate Scope 2 emissions from a sample electricity bill", "10-question check + a one-page emissions summary"],
+  disc: ["Sustainability reporting basics", "Online course · 18 h · free", "Map one company's data to 5 climate disclosure items", "Short check + a draft disclosure paragraph"],
+  esgdata: ["ESG data management", "Workshop · 18 h · paid · may be HRD Corp-claimable", "Clean a sample utility-bill dataset and flag the gaps", "Data-quality checklist on a new sample"],
+  viz: ["Power BI dashboards for finance", "Online course · 12 h · free", "Build a one-page AP ageing dashboard from sample data", "Dashboard reviewed against a rubric"],
+  fin: ["Financial analysis and forecasting", "Online course · 24 h · paid", "Explain 3 variances in a sample monthly report", "Mini case: forecast next quarter's costs"],
+  aisup: ["Supervising AI agents in finance", "Online course · 12 h · free", "Review 20 AI-processed invoices and log every error", "Error-spotting check: find 8 planted mistakes"],
+  auto: ["Automating finance workflows", "Online course · 18 h · free", "Automate one approval email flow in a sandbox", "Working automation demo + short check"],
+  prompt: ["Prompting AI tools for finance work", "Online course · 6 h · free", "Get an AI tool to draft a reconciliation summary, then correct it", "5 prompt-and-review tasks"],
+  aiinv: ["Hands-on with AI invoice capture", "Workshop · 6 h · may be HRD Corp-claimable", "Fix the exceptions in 30 AI-captured sample invoices", "Exception-handling check: 10 cases"],
+  sql: ["SQL for business analysts", "Online course · 18 h · free", "Answer 10 questions about a sample sales database", "Timed query check"],
+  python: ["Python for data analysis", "Online course · 24 h · free", "Clean and summarise a messy CSV file", "Notebook reviewed against a rubric"],
+  stats: ["Business statistics basics", "Online course · 18 h · free", "Check whether a sample process change cut processing time", "10-question check"],
+  lca: ["Life-cycle assessment fundamentals", "Online course · 18 h · paid", "Footprint a simple product from sample data", "Short check + one-page LCA summary"],
+  greenfin: ["Green and sustainable finance", "Online course · 24 h · free", "Screen 5 sample bonds against green criteria", "Mini case review"],
+  audit2: ["Internal audit and controls", "Online course · 18 h · paid · may be HRD Corp-claimable", "Test 3 controls on a sample AP process", "Audit working paper reviewed"],
+  treasury: ["Cash and treasury management", "Online course · 18 h · paid", "Build a 13-week cash forecast from sample data", "Forecast reviewed against actuals"],
+  procure: ["Strategic sourcing basics", "Workshop · 12 h · may be HRD Corp-claimable", "Compare 3 sample supplier quotes and pick one", "Sourcing case check"],
+  scm: ["Supply chain planning fundamentals", "Online course · 24 h · free", "Build a monthly supply plan from sample demand", "Plan reviewed against a rubric"],
+  invent: ["Inventory analytics", "Online course · 12 h · free", "Find slow-moving stock in a sample dataset", "Short check"],
+  excel: ["Advanced Excel: Power Query and data models", "Online course · 8 h · free", "Rebuild your monthly AP report with Power Query", "Timed task check"],
+  process: ["Lean process improvement basics", "Workshop · 6 h · may be HRD Corp-claimable", "Map your team's approval flow and find 2 bottlenecks", "Advisor reviews your process map"],
+  erp: ["SAP S/4HANA finance essentials", "Online course · 10 h · paid", "Run a full vendor-to-payment cycle in a training system", "Scenario check: 6 tasks"],
+  three: ["Controls for AI-assisted matching", "Online course · 4 h · free", "Set tolerance rules for 20 sample mismatches", "Short check"],
+  dispute: ["Negotiation for finance teams", "Workshop · 6 h · may be HRD Corp-claimable", "Role-play two vendor disputes", "Advisor-scored role-play"],
+  audit: ["Audit evidence and documentation", "Online course · 8 h · free", "Prepare an evidence pack for one month's payments", "Checklist review"],
+  pay: ["Payment controls and fraud prevention", "Online course · 6 h · free", "Spot 5 red flags in a sample payment batch", "Short check"]
+};
+const SKILL_SDG = { ghg: [13, "Measures emissions so companies can cut them"], disc: [12, "Makes company sustainability claims checkable"], esgdata: [13, "Reliable climate data is the base of climate action"],
+  aisup: [8, "Keeps people in control of AI at work"], dispute: [8, "Fair, human-led supplier relationships"], process: [9, "Better, more productive processes"],
+  lca: [12, "Shows which products pollute most"], greenfin: [13, "Moves money towards climate solutions"], audit2: [16, "Strong controls against fraud"], procure: [12, "Responsible sourcing"] };
+const LEVELS = ["", "I know what it is", "I can do it with help", "I can do it on my own", "I handle the hard cases and help others", "I improve how it's done"];
+const SIGNAL = { node: "recon", boost: 0.18, title: "AI agents now close the month-end books", detail: "Vendor reconciliation · AI exposure 54% → 72% · Sample source, 21 Oct 2026" };
+
+// Emerging skills, detected by the AI committee from job postings. All thresholds must pass before a skill is added.
+const THRESH = { postings: 15, employers: 5, weeks: 4 };
+const EMERGING = {
+  aisup:  { postings: 24, employers: 9, weeks: 7, synonyms: ["AI agent oversight", "Human-in-the-loop review"], status: "confirmed" },
+  prompt: { postings: 31, employers: 12, weeks: 9, synonyms: ["Prompt writing", "Using generative AI tools"], status: "provisional" },
+  aiinv:  { postings: 18, employers: 6, weeks: 6, synonyms: ["AI-assisted invoice processing", "Invoice exception handling"], status: "provisional" }
+};
+// Knowledge updates that the rules flagged for a person. Sample data.
+const REVIEW = [
+  { id: "s1", kind: "signal", status: "hidden", node: "recon", title: SIGNAL.title, change: "AI exposure +18 points", reasons: ["Big change", "Would reroute 1,240 users"],
+    quote: "“…agents now match statements, post adjustments and draft the reconciliation pack for sign-off…”", source: "Sample product announcement · 21 Oct 2026 · 3 independent sources", verdict: "AI reviewer agrees · confidence 0.91" },
+  { id: "s2", kind: "signal", status: "pending", node: "pay", boostE: 0.12, title: "ERP vendors add AI agents that prepare payment runs", change: "AI exposure +12 points", reasons: ["Big change", "Would reroute 310 users"],
+    quote: "“…the agent prepares the payment proposal and routes it for approval…”", source: "Sample ERP release notes · 19 Oct 2026 · 2 sources", verdict: "AI reviewer agrees · confidence 0.86" },
+  { id: "s3", kind: "signal", status: "pending", node: "tax", boostD: -8, title: "Fewer postings ask for SST specialists", change: "Demand −8 points", reasons: ["Single source"],
+    quote: "“…SST-focused roles fell for the second quarter in a row…”", source: "Sample job-board report · 17 Oct 2026 · 1 source", verdict: "AI reviewer unsure · confidence 0.58" },
+  { id: "e1", kind: "emerging", status: "pending", node: "prompt" },
+  { id: "e2", kind: "emerging", status: "pending", node: "aiinv" }
+];
+const AUTO = [
+  ["check", "Applied automatically", "Dashboard reporting: demand +2 points (3 sources, small change)"],
+  ["check", "Applied automatically", "GHG emissions accounting: demand +3 points (4 sources, small change)"],
+  ["x", "Rejected by rules", "“Excel will disappear by 2027”: the quote was not found on the source page"],
+  ["x", "Rejected by the skeptic agent", "“Copilot Studio” proposed as a new skill: a product name, not a skill. Mapped to Workflow automation"]
+];
+const REVIEW_INIT = REVIEW.map(r => r.status), EMERGING_INIT = Object.fromEntries(Object.entries(EMERGING).map(([k, v]) => [k, v.status]));
+
+// ============ Model ============
+const S = { year: 2026, scenario: "moderate", signal: false, extraE: {}, extraD: {} };
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lvl = k => PROFILE.level[k] || 0;
+function interp(arr) { const f = clamp((S.year - 2026) / 4, 0, 1); return arr[0] + ((S.scenario === "fast" ? arr[2] : arr[1]) - arr[0]) * f; }
+// approved signals shift a skill's AI exposure or demand
+const boostE = id => (S.signal && SIGNAL.node === id ? SIGNAL.boost : 0) + (S.extraE[id] || 0);
+const exposure = id => clamp(interp(NODES[id].e) + boostE(id), 0, 0.99);
+const demand = id => interp(NODES[id].d) + (S.extraD[id] || 0);
+const tide = () => clamp((S.year - 2026) / 4, 0, 1) * (S.scenario === "fast" ? 1 : 0.6);
+const isSkill = id => NODES[id].type === "have" || NODES[id].type === "learn";
+function taken(id) { if (!isSkill(id) && id !== "ap") return false; return exposure(id) >= 0.85 - 0.2 * tide() && demand(id) < 0; }
+function zone(id) { const e = exposure(id), d = demand(id); return d >= 0 ? (e < 0.5 ? "Grow" : "Augment") : (e < 0.5 ? "Hold" : "At risk"); }
+function impact(id) {
+  if (taken(id)) return ["Declining", "b-mute", "AI has taken over most of this"];
+  const z = zone(id), e = exposure(id), d = demand(id);
+  if (z === "At risk") return ["Declining", "b-crit", "AI can do most of it and demand is falling"];
+  if (z === "Augment") return ["Changing", "b-warn", "Still needed, but AI changes how it is done"];
+  if (e < 0.3 && d >= 5) return ["Rising human skill", "b-good", "AI can't do this well, and it matters more as AI takes the routine work"];
+  return ["Durable", "b-info", "Steady demand; AI only helps at the edges"];
+}
+function edgeCost(mode, to, weeks) {
+  const base = 0.01;
+  if (!isSkill(to)) return (mode === "safest" ? 0.3 * weeks : weeks) + base;
+  const e = exposure(to);
+  if (mode === "fastest") return weeks + base + 30 * Math.max(0, e - 0.5) ** 2;
+  if (mode === "safest") return 0.3 * weeks + base + 10 * e * e;
+  const worst = clamp(NODES[to].e[2] + boostE(to), 0, 0.99);
+  return weeks + base + 6 * worst * worst;
+}
+function shortestPath(dest, mode) {
+  const dist = { ap: 0 }, prev = {}, done = new Set();
+  while (true) {
+    let u = null;
+    for (const k in dist) if (!done.has(k) && (u === null || dist[k] < dist[u])) u = k;
+    if (u === null || u === dest) break;
+    done.add(u);
+    for (const [a, b, w, why, kind] of EDGES) {
+      if (a !== u || done.has(b)) continue;
+      if (NODES[b].type === "job" && b !== dest) continue; // jobs are destinations, never stopovers
+      if (isSkill(b) && taken(b)) continue;                 // closed road: AI has taken this skill over
+      const nd = dist[u] + edgeCost(mode, b, w);
+      if (dist[b] === undefined || nd < dist[b]) { dist[b] = nd; prev[b] = { from: u, w, why, kind }; }
+    }
+  }
+  if (dist[dest] === undefined) return null;
+  const legs = [];
+  for (let v = dest; v !== "ap"; v = prev[v].from) legs.unshift({ from: prev[v].from, to: v, weeks: prev[v].w, why: prev[v].why, kind: prev[v].kind });
+  const nodes = ["ap", ...legs.map(l => l.to)];
+  const skills = nodes.filter(isSkill);
+  return { dest, mode, legs, nodes, weeks: legs.reduce((s, l) => s + l.weeks, 0), avgE: skills.reduce((s, k) => s + exposure(k), 0) / Math.max(1, skills.length), key: nodes.join(">") };
+}
+const bridgedFrom = skill => EDGES.filter(([a, b, , , kind]) => b === skill && NODES[a].type === "have" && (kind === "evolve" || !taken(a)));
+function coverage(skill, need) { return NODES[skill].type === "have" ? (taken(skill) ? 0.3 : Math.min(1, lvl(skill) / need)) : (bridgedFrom(skill).length ? 0.4 : 0); }
+// Emerging skills that an expert hasn't confirmed yet count at half weight.
+const weightOf = (k, w) => w * (EMERGING[k] && EMERGING[k].status !== "confirmed" ? 0.5 : 1);
+function match(job) { const r = REQ[job]; return Math.round(100 * r.reduce((s, [k, w, n]) => s + weightOf(k, w) * coverage(k, n), 0) / r.reduce((s, [k, w]) => s + weightOf(k, w), 0)); }
+// Ranking for "Best matches": 60% match, 40% outlook (demand growth, minus AI exposure)
+function rankScore(job) { const outlook = clamp(50 + demand(job) - 40 * exposure(job), 0, 100); return 0.6 * match(job) + 0.4 * outlook; }
+function planFor(job, mode) {
+  const route = shortestPath(job, mode);
+  const onRoute = new Set(route ? route.nodes : []);
+  const ups = [], extras = [];
+  REQ[job].forEach(([k, , need]) => {
+    if (NODES[k].type === "have") { if (!taken(k) && lvl(k) < need) ups.push({ id: k, from: lvl(k), to: need, weeks: need - lvl(k) }); }
+    else if (!onRoute.has(k)) {
+      const inc = EDGES.filter(e => e[1] === k && ((NODES[e[0]].type === "have" && (e[4] === "evolve" || !taken(e[0]))) || onRoute.has(e[0])));
+      const best = inc.sort((x, y) => x[2] - y[2])[0];
+      extras.push({ id: k, weeks: best ? best[2] : 4, from: best ? best[0] : null, why: best ? best[3] : "", kind: best && best[4] === "evolve" ? "evolve" : "reskill" });
+    }
+  });
+  const core = route ? route.weeks : 0;
+  return { route, ups, extras, core, ready: core + ups.reduce((s, u) => s + u.weeks, 0) + extras.reduce((s, x) => s + x.weeks, 0) };
+}
+function humanSplit(job) { const s = JOBMETA[job].split; return [0, 1, 2].map(i => Math.round(interp([s[0][i], s[1][i], s[2][i]]))); }
+const riskOf = a => a < 0.35 ? ["Low", "b-good"] : a < 0.55 ? ["Medium", "b-warn"] : ["High", "b-crit"];
+function futureScore(extra = []) { const ids = [...OWNED, ...extra]; return Math.round(100 * ids.filter(k => !taken(k) && (zone(k) === "Grow" || zone(k) === "Augment")).length / ids.length); }
+function sectorJobs(sector) {
+  if (SECTORS[sector].jobs) return [...SECTORS[sector].jobs];
+  // Best matches: top 4 across all sectors, always including the "stay and adapt" option
+  const top = [...ALL_JOBS].sort((a, b) => rankScore(b) - rankScore(a)).slice(0, 4);
+  if (!top.includes("stayRole")) top[3] = "stayRole";
+  return top;
+}
+/*LOGIC-END*/
+
+// ============ UI state ============
+const UI = { tab: "jobs", sector: "best", pinned: null, ring: [], job: "esgRole", mode: "fastest", labelsAll: false, rotating: true, drawer: null, search: "", found: null, approved: false, admin: false };
+const MODE = { fastest: "Fastest", noregret: "No-regret", safest: "Safest" };
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (reduce) UI.rotating = false;
+const $ = id => document.getElementById(id);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const W = w => w === 0 ? 0 : Math.max(1, Math.round(w * 6 / PROFILE.hours));
+const sign = d => (d > 0 ? "+" : d < 0 ? "−" : "") + Math.abs(Math.round(d)) + "%";
+const icons = () => window.lucide && lucide.createIcons();
+const confBadge = k => ({ verified: '<span class="badge b-good"><i data-lucide="badge-check"></i>Verified</span>', cv: '<span class="badge b-info"><i data-lucide="file-text"></i>From your CV</span>', self: '<span class="badge b-mute">Self-rated</span>' })[PROFILE.conf[k]] || "";
+let plans = {}, plan = null;
+
+function computeRing() {
+  const ring = sectorJobs(UI.sector);
+  if (UI.pinned && !ring.includes(UI.pinned)) ring.push(UI.pinned);
+  UI.ring = ring.sort((a, b) => match(b) - match(a));
+  if (!UI.ring.includes(UI.job)) UI.job = UI.ring[0];
+}
+function computePlans() { plans = {}; UI.ring.forEach(j => plans[j] = planFor(j, UI.mode)); plan = plans[UI.job]; }
+
+// ============ sidebar ============
+function renderHead() {
+  const now = futureScore();
+  const learned = plan && plan.route ? plan.route.nodes.filter(k => NODES[k].type === "learn") : [];
+  const after = futureScore([...learned, ...(plan ? plan.extras.map(x => x.id) : [])]);
+  $("score-now").innerHTML = `${now}<small>%</small>`;
+  const hist = [now + 7, now + 6, now + 4, now + 3, now + 1, now];
+  const w = 92, h = 28, mx = Math.max(...hist) + 1, mn = Math.min(...hist) - 1;
+  const px = i => 2 + i * (w - 4) / (hist.length - 1), py = v => h - 3 - (v - mn) / (mx - mn) * (h - 6);
+  const d = hist.map((v, i) => `${i ? "L" : "M"}${px(i).toFixed(1)},${py(v).toFixed(1)}`).join("");
+  $("scorebar").innerHTML = `<div class="t">Share of your skills safe from AI in <b class="num">${S.year}</b>. After your path to ${NODES[UI.job].name}: <span class="up num">${after}%</span></div>
+    <svg class="spark" viewBox="0 0 ${w} ${h}" aria-label="Last 6 months, sample history"><path d="${d}L${px(5)},${h}L${px(0)},${h}Z" fill="var(--accent)" opacity=".1"/><path d="${d}" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/><circle cx="${px(5)}" cy="${py(now)}" r="3" fill="var(--accent)" stroke="var(--panel)" stroke-width="1.5"/></svg>`;
+}
+function renderJobs() {
+  const sec = SECTORS[UI.sector];
+  return `<div class="stack">
+    <div>
+      <div class="search"><i data-lucide="search"></i><label class="sr" for="q">Search any job</label>
+        <input id="q" type="search" placeholder="Where do you want to go?" value="${UI.search.replace(/"/g, "&quot;")}" autocomplete="off"></div>
+      <div class="try">Try: ${["Data Analyst", "Internal Auditor", "Procurement", "Green finance", "Prompt engineer"].map(t => `<button type="button" data-try="${t}">${t}</button>`).join("")}</div>
+      <div class="results" id="results">${searchResults(UI.search)}</div>
+    </div>
+    <div>
+      <div class="sectors" role="group" aria-label="Explore by sector">${Object.entries(SECTORS).map(([k, s]) => `<button class="sector" type="button" data-sector="${k}" aria-pressed="${UI.sector === k}"><i data-lucide="${s.icon}"></i>${s.name}</button>`).join("")}</div>
+      <p class="sector-note">${sec.note}</p>
+    </div>
+    <div>
+      <div class="h2"><h2>${UI.sector === "best" ? "Best matches for you" : sec.name + " jobs"}</h2><span>on your map now</span></div>
+      <div class="jobs">${UI.ring.map(j => jobCard(j)).join("")}</div>
+    </div>
+  </div>`;
+}
+function jobCard(j) {
+  const p = plans[j], m = match(j), meta = JOBMETA[j], [, , hYou] = humanSplit(j), [rl, rc] = p.route ? riskOf(p.route.avgE) : ["High", "b-crit"];
+  return `<button class="job" type="button" data-job="${j}" aria-pressed="${UI.job === j}">
+    <div class="job-top">
+      <div><div class="job-name">${NODES[j].name}</div>
+        <div class="job-tags">${meta.move ? '<span class="badge b-mute"><i data-lucide="arrow-right"></i>Move</span>' : '<span class="badge b-violet"><i data-lucide="repeat"></i>Stay & adapt</span>'}<span class="badge ${rc}">${rl} AI risk</span>${j === UI.pinned ? '<span class="badge b-info"><i data-lucide="search"></i>Searched</span>' : ""}</div></div>
+      <div class="job-pct num">${m}%<small>match</small></div>
+    </div>
+    <div class="bar"><i style="width:${m}%"></i></div>
+    <div class="job-meta">
+      <span><i data-lucide="clock"></i><span class="num">${p.route ? W(p.core) : "–"}</span>&nbsp;wk path · <span class="num">${W(p.ready)}</span>&nbsp;wk job-ready</span>
+      <span><i data-lucide="${demand(j) >= 0 ? "trending-up" : "trending-down"}"></i>Demand <span class="num">${sign(demand(j))}</span></span>
+      <span><i data-lucide="user-round"></i>You keep <span class="num">${hYou}%</span> of tasks</span>
+      <span><i data-lucide="shield-check"></i>${meta.conf} confidence · <span class="num">${meta.postings}</span> postings</span>
+    </div>
+  </button>`;
+}
+const UNKNOWN = [
+  { re: /prompt/i, name: "Prompt Engineer", match: 21, postings: 9, near: "aiQaRole" },
+  { re: /payroll/i, name: "Payroll Specialist", match: 61, postings: 22, near: "stayRole" },
+  { re: /market/i, name: "Marketing Analyst", match: 33, postings: 18, near: "dataRole" },
+  { re: /hr|human res/i, name: "HR Operations Specialist", match: 38, postings: 15, near: "procRole" }
+];
+const ALIAS = {
+  stayRole: /accounts payable|\bap\b|invoice|stay/i, opsRole: /automat|rpa/i, faRole: /financ(e|ial) anal|fp&a/i, esgRole: /esg|carbon report/i,
+  intAudit: /audit/i, treasuryRole: /treasur|cash/i, lcaRole: /footprint|life.?cycle|lca/i, greenRole: /green fin|sustainable fin|esg invest/i, assurRole: /assur/i,
+  dataRole: /data anal|analytics/i, biRole: /\bbi\b|business intel|power bi|dashboard/i, aiQaRole: /ai (data|quality)|ai trainer|annotat/i,
+  procRole: /procure|purchas|sourcing|buyer/i, scmRole: /supply chain|planner|logistic/i, invRole: /inventor|stock|warehouse/i
+};
+function searchResults(q) {
+  q = q.trim();
+  if (!q) return "";
+  if (UI.found && UI.found.q === q) return foundCard(UI.found);
+  const known = ALL_JOBS.filter(j => ALIAS[j].test(q) || NODES[j].name.toLowerCase().includes(q.toLowerCase())).slice(0, 4);
+  const kn = known.map(j => `<button class="result" type="button" data-pick="${j}"><span class="ic"><i data-lucide="${UI.ring.includes(j) ? "map-pin" : "plus"}"></i></span>
+    <span><div class="rn">${NODES[j].name}</div><div class="rm">${UI.ring.includes(j) ? "Already on your map" : "Add to your map"} · ${JOBMETA[j].conf} confidence</div></span><span class="rp num">${match(j)}%</span></button>`).join("");
+  const unk = UNKNOWN.find(u => u.re.test(q));
+  const build = !known.length || unk ? `<button class="result" type="button" data-build="${q.replace(/"/g, "&quot;")}"><span class="ic"><i data-lucide="sparkles"></i></span>
+    <span><div class="rn">${unk ? unk.name : q.replace(/</g, "&lt;")}</div><div class="rm">Not in our catalogue yet · build it from job postings</div></span><i data-lucide="chevron-right"></i></button>` : "";
+  return kn + build;
+}
+function foundCard(f) {
+  if (f.loading) return `<div class="found"><div class="loading"><span class="spin"></span>Reading job postings for “${f.name}” and mapping skills…</div></div>`;
+  return `<div class="found">
+    <div class="fn"><b>${f.name}</b><span class="num" style="font-size:18px;font-weight:600">${f.match}%</span></div>
+    <div class="chips"><span class="badge ${f.postings >= 20 ? "b-info" : "b-warn"}">${f.postings >= 20 ? "Medium" : "Low"} confidence</span><span class="badge b-mute">Built from <span class="num">&nbsp;${f.postings}&nbsp;</span> postings</span></div>
+    <p>We built this job from recent postings, so it is less certain than jobs in our catalogue. The closest catalogue job is <b>${NODES[f.near].name}</b>.</p>
+    <button class="btn btn-soft" type="button" data-pick="${f.near}" style="height:34px;font-size:13px"><i data-lucide="map-pin"></i>Put the closest job on my map</button>
+  </div>`;
+}
+function stepRow(kind, title, sub, weeks, node, n) {
+  const icon = { start: "user-round", reuse: "check", upskill: "arrow-up", evolve: "refresh-cw", reskill: "plus", arrive: "flag" }[kind];
+  const label = { start: "Start", reuse: "Reuse", upskill: "Upskill", evolve: "Evolve your skill", reskill: "New skill", arrive: "Arrive" }[kind];
+  return `<li class="step" data-node="${node}"><span class="sico k-${kind}">${n ? `<b class="num" style="font-size:12px">${n}</b>` : `<i data-lucide="${icon}"></i>`}</span>
+    <div><div class="ty">${label}</div><div class="t">${title}</div>${sub ? `<div class="s">${sub}</div>` : ""}</div>
+    <span class="w">${weeks === null ? "" : `<span class="num">${W(weeks)}</span> wk`}</span></li>`;
+}
+function renderPath() {
+  const p = plan, j = UI.job;
+  if (!p.route) return `<div class="card"><h3>No open path</h3><p>Every road to this job passes through skills AI has taken over in ${S.year}. Try another job or year.</p></div>`;
+  const [rl, rc] = riskOf(p.route.avgE);
+  const note = { fastest: "Fewest weeks, slowed down by AI-exposed skills on the way.", noregret: "Still a good path if AI moves fast by 2030.", safest: "Builds on the skills AI is least likely to take over." }[UI.mode];
+  let n = 0;
+  const rows = [stepRow("start", "Accounts Payable Clerk (you)", taken("ap") ? `AI has taken over most of this job by ${S.year}.` : "AI is already changing this job.", null, "ap")];
+  p.route.legs.forEach(l => {
+    const nd = NODES[l.to];
+    if (nd.type === "have") rows.push(stepRow("reuse", nd.name, `You already have this · level ${lvl(l.to)} of 5`, 0, l.to));
+    else if (nd.type === "learn") rows.push(stepRow(l.kind === "evolve" ? "evolve" : "reskill", nd.name, l.why, l.weeks, l.to, ++n));
+    else rows.push(stepRow("arrive", nd.name, l.why, l.weeks, l.to));
+  });
+  const more = [
+    ...p.ups.map(u => stepRow("upskill", `${NODES[u.id].name}: level ${u.from} → ${u.to}`, `The job needs “${LEVELS[u.to].toLowerCase()}”.`, u.weeks, u.id)),
+    ...p.extras.map(x => stepRow(x.kind, NODES[x.id].name, x.from ? (x.kind === "evolve" ? `Evolves from ${NODES[x.from].name}. ` : `Builds on ${NODES[x.from].name}. `) + x.why : "", x.weeks, x.id))
+  ];
+  return `<div class="stack">
+    <div class="path-head">
+      <div class="path-title"><div><div class="ob-kicker">Your path to</div><h2>${NODES[j].name}</h2></div>
+        <span class="badge ${JOBMETA[j].move ? "b-mute" : "b-violet"}">${JOBMETA[j].move ? "Move" : "Stay & adapt"}</span></div>
+      <div class="seg" role="group" aria-label="Route type">${Object.keys(MODE).map(m => `<button type="button" data-mode="${m}" aria-pressed="${UI.mode === m}">${MODE[m]}</button>`).join("")}</div>
+      <p class="mode-note">${note}</p>
+      <div class="tiles">
+        <div class="tile"><div class="k">Core path</div><div class="v num">${W(p.core)}<small> wk</small></div></div>
+        <div class="tile"><div class="k">Fully job-ready</div><div class="v num">${W(p.ready)}<small> wk</small></div></div>
+        <div class="tile"><div class="k">AI risk</div><div class="v"><span class="badge ${rc}" style="font-size:12.5px">${rl}</span></div></div>
+      </div>
+    </div>
+    <div>
+      <ol class="steps">${rows.join("")}</ol>
+      ${more.length ? `<div class="sub-h"><i data-lucide="list-plus"></i>Also build to be fully job-ready</div><ol class="steps">${more.join("")}</ol>` : ""}
+    </div>
+    <div class="approve">
+      <button class="btn btn-primary" id="approve" type="button" ${UI.approved ? "disabled" : ""}><i data-lucide="send"></i>${UI.approved ? "Sent for review" : "Send path to my advisor"}</button>
+      <p class="note">${UI.approved ? `Sample advisor Encik Faiz will review your ${MODE[UI.mode].toLowerCase()} path. Nothing changes until it is approved.` : "You or your career advisor approve the path before it goes into your learning plan. The app suggests; people decide."}</p>
+    </div>
+  </div>`;
+}
+function visibleLearn() { return [...(LAYOUT.visible || [])].filter(k => NODES[k].type === "learn"); }
+function renderSkills() {
+  const [a, b, c] = humanSplit("ap");
+  const rising = [...OWNED, ...visibleLearn()].filter(k => impact(k)[0] === "Rising human skill");
+  const order = { "Declining": 0, "Changing": 1, "Durable": 2, "Rising human skill": 3 };
+  const list = [...OWNED].sort((x, y) => order[impact(x)[0]] - order[impact(y)[0]]);
+  return `<div class="stack">
+    <div class="card">
+      <h3><i data-lucide="pie-chart"></i>Your job today, task by task</h3>
+      <div class="split"><div class="split-bar"><i style="flex-basis:${a}%;background:var(--split-ai)"></i><i style="flex-basis:${b}%;background:var(--split-assist)"></i><i style="flex-basis:${c}%;background:var(--split-you)"></i></div>
+        <div class="split-key"><span><i style="background:var(--split-ai)"></i>AI does it <b class="num">${a}%</b></span><span><i style="background:var(--split-assist)"></i>AI assists <b class="num">${b}%</b></span><span><i style="background:var(--split-you)"></i>Still needs you <b class="num">${c}%</b></span></div></div>
+      <p>AI takes over tasks, not whole people. Showing ${S.year}, ${S.scenario} AI adoption.</p>
+    </div>
+    <div class="card edge">
+      <h3><i data-lucide="sparkles" style="color:var(--good)"></i>Your human edge</h3>
+      <p>These skills are hard for AI and matter more as it takes the routine work. Double down on them.</p>
+      <div class="chips">${rising.map(k => `<button class="chip" type="button" data-skill="${k}"><i data-lucide="${NODES[k].type === "have" ? "check" : "plus"}"></i>${NODES[k].name}</button>`).join("")}</div>
+    </div>
+    <div>
+      <div class="h2"><h2>Your skills</h2><span>tap one to see tasks and next steps</span></div>
+      <div class="skills">${list.map(k => { const [t, cls] = impact(k); return `<button class="skill" type="button" data-skill="${k}">
+        <span class="sn">${NODES[k].name}</span><span class="dots" aria-label="Level ${lvl(k)} of 5">${[1, 2, 3, 4, 5].map(i => `<i class="${i <= lvl(k) ? "on" : ""}"></i>`).join("")}</span>
+        <span class="sm"><span class="badge ${cls}">${t}</span>${confBadge(k)}${EDGES.some(e => e[0] === k && e[4] === "evolve") ? '<span class="badge b-violet"><i data-lucide="refresh-cw"></i>Evolves</span>' : ""}</span></button>`; }).join("")}</div>
+    </div>
+  </div>`;
+}
+// ============ admin view: knowledge review queue ============
+function thresholdRows(k) {
+  const e = EMERGING[k];
+  const link = EDGES.find(x => x[1] === k && NODES[x[0]].type === "have");
+  return [["Postings mentioning it", e.postings, THRESH.postings], ["Different employers", e.employers, THRESH.employers], ["Weeks of steady growth", e.weeks, THRESH.weeks]]
+    .map(([l, v, t]) => `<li><i data-lucide="${v >= t ? "circle-check" : "circle-x"}" style="color:${v >= t ? "var(--good)" : "var(--crit)"}"></i><span>${l}</span><b class="num">${v}</b><span class="rs">need ≥ ${t}</span></li>`).join("")
+    + `<li><i data-lucide="circle-check" style="color:var(--good)"></i><span>Linked to an existing skill</span><b style="font-weight:600">${link ? NODES[link[0]].name : "–"}</b><span></span></li>`;
+}
+function signalCard(r) {
+  return `<div class="rv"><div class="rv-top"><span class="badge b-warn"><i data-lucide="flag"></i>Flagged</span>${r.reasons.map(x => `<span class="badge ${/reroute|Big/.test(x) ? "b-crit" : "b-mute"}">${x}</span>`).join("")}</div>
+    <div class="rv-t">${r.title}</div><div class="rv-m">${NODES[r.node].name} · ${r.change}</div>
+    <blockquote class="rv-q">${r.quote}</blockquote>
+    <div class="rv-s"><i data-lucide="link"></i>${r.source}</div><div class="rv-s"><i data-lucide="bot"></i>${r.verdict}</div>
+    <div class="rv-actions"><button class="btn btn-primary" type="button" data-approve="${r.id}"><i data-lucide="check"></i>Approve and apply</button><button class="btn btn-soft" type="button" data-reject="${r.id}">Reject</button></div></div>`;
+}
+function emergingCard(r) {
+  const e = EMERGING[r.node];
+  return `<div class="rv"><div class="rv-top"><span class="badge b-violet"><i data-lucide="sparkles"></i>Emerging · AI-detected</span><span class="badge b-mute">Half weight until confirmed</span></div>
+    <div class="rv-t">${NODES[r.node].name}</div><div class="rv-m">Merged from: ${e.synonyms.join(", ")}</div>
+    <ul class="checks">${thresholdRows(r.node)}</ul>
+    <div class="rv-s"><i data-lucide="bot"></i>AI committee: proposer ✓ · skeptic “a real skill, not a tool” ✓ · duplicate check ✓</div>
+    <div class="rv-actions"><button class="btn btn-primary" type="button" data-confirm="${r.id}"><i data-lucide="badge-check"></i>Confirm as established</button><button class="btn btn-soft" type="button" data-keep="${r.id}">Keep provisional</button></div></div>`;
+}
+function renderAdmin() {
+  const pend = REVIEW.filter(r => r.status === "pending"), sig = pend.filter(r => r.kind === "signal"), emg = pend.filter(r => r.kind === "emerging");
+  const label = { approved: ["check", "Approved by you"], rejected: ["x", "Rejected by you"], confirmed: ["badge-check", "Confirmed by you"], kept: ["clock", "Kept provisional"] };
+  const done = REVIEW.filter(r => label[r.status]).map(r => [label[r.status][0], label[r.status][1], r.kind === "emerging" ? `${NODES[r.node].name} (new skill)` : r.title]);
+  return `<div class="stack">
+    <div class="admin-banner"><div><div class="ob-kicker">Admin view · sample reviewer</div><h2>Knowledge review</h2>
+      <p class="note">AI reads the sources. Fixed rules apply small, well-sourced changes on their own. You only review what is big, uncertain or new.</p></div>
+      <button class="ghost" type="button" id="admin-exit"><i data-lucide="arrow-left"></i>User view</button></div>
+    <div class="tiles tiles-4">
+      <div class="tile"><div class="k">Sources read this week</div><div class="v num">312</div></div>
+      <div class="tile"><div class="k">Applied automatically</div><div class="v num">29</div></div>
+      <div class="tile"><div class="k">Waiting for you</div><div class="v num">${pend.length}</div></div>
+      <div class="tile"><div class="k">Spot-check accuracy</div><div class="v num">94<small>%</small></div></div>
+    </div>
+    <div class="flow">
+      <div><b>1</b>Rules drop items with no source, a fake quote, or a duplicate</div>
+      <div><b>2</b>A second AI model checks the claim against its evidence</div>
+      <div><b>3</b>Small change, 2+ sources, AI agrees → applied automatically</div>
+      <div><b>4</b>Big, single-source, would reroute users, or a new skill → sent to you</div>
+    </div>
+    <div><div class="h2"><h2>Needs your review</h2><span>${sig.length} change${sig.length === 1 ? "" : "s"}</span></div>
+      ${sig.length ? sig.map(signalCard).join("") : '<div class="empty">Nothing waiting. Run the market scout to look for new signals.</div>'}</div>
+    <div><div class="h2"><h2>New skills to confirm</h2><span>${emg.length}</span></div>
+      ${emg.length ? emg.map(emergingCard).join("") : '<div class="empty">No new skills waiting.</div>'}</div>
+    <div><div class="h2"><h2>Handled this week</h2><span>a person spot-checks 5% of these</span></div>
+      <ul class="handled">${[...done, ...AUTO].map(([ic, t, d]) => `<li><i data-lucide="${ic}" style="color:${ic === "x" ? "var(--crit)" : "var(--good)"}"></i><div><b>${t}</b>${d}</div></li>`).join("")}</ul></div>
+  </div>`;
+}
+function updateAdminCount() { const n = REVIEW.filter(r => r.status === "pending").length; $("admin-count").textContent = n; $("admin-count").hidden = n === 0; }
+function setAdmin(on) { UI.admin = on; $("admin-btn").setAttribute("aria-pressed", String(on)); renderPanel(true); $("panel").scrollTop = 0; }
+function reviewAction(id, action) {
+  const r = REVIEW.find(x => x.id === id);
+  if (action === "approve") {
+    r.status = "approved";
+    if (r.id === "s1") {
+      S.signal = true; scoutState = "done";
+      $("fresh-when").textContent = "just now"; $("fresh-n").textContent = "220";
+      $("scout").innerHTML = '<i data-lucide="check"></i>Up to date'; $("scout").disabled = true;
+    }
+    if (r.boostE) S.extraE[r.node] = r.boostE;
+    if (r.boostD) S.extraD[r.node] = r.boostD;
+    refresh(true);
+    renderAgents(r.id === "s1" ? { scout: "Signal approved and applied", plan: `Path to ${NODES[UI.job].name} re-checked`, fact: "20 of 20 claims have a source" } : {});
+    toast("Approved and applied", `${NODES[r.node].name}: ${r.change}. ${r.reasons.find(x => /reroute/.test(x)) ? "Affected users' routes were re-checked." : ""}`, '<span class="badge b-good">Applied</span>');
+  } else if (action === "reject") { r.status = "rejected"; refresh(); toast("Rejected", "Nothing changes. The scout will not propose this source again.", '<span class="badge b-mute">Rejected</span>'); }
+  else if (action === "confirm") { r.status = "confirmed"; EMERGING[r.node].status = "confirmed"; refresh(); toast(`${NODES[r.node].name} confirmed`, "It now counts at full weight in every match score.", '<span class="badge b-good">Confirmed</span>'); }
+  else if (action === "keep") { r.status = "kept"; refresh(); }
+  updateAdminCount();
+}
+
+function renderPanel(animate) {
+  const el = $("panel");
+  document.querySelector(".tabs").hidden = UI.admin;
+  el.innerHTML = UI.admin ? renderAdmin() : UI.tab === "jobs" ? renderJobs() : UI.tab === "path" ? renderPath() : renderSkills();
+  ["jobs", "path", "skills"].forEach(t => $("tab-" + t).setAttribute("aria-selected", String(UI.tab === t)));
+  bindPanel(); icons();
+  if (animate && window.gsap && !reduce) gsap.from(el.querySelectorAll(".job, .step, .skill, .card, .result, .rv"), { y: 6, opacity: 0, duration: 0.28, stagger: 0.025, ease: "power3.out", clearProps: "all" });
+}
+function bindPanel() {
+  const el = $("panel");
+  [["approve", "approve"], ["reject", "reject"], ["confirm", "confirm"], ["keep", "keep"]].forEach(([attr, act]) => el.querySelectorAll(`[data-${attr}]`).forEach(b => b.addEventListener("click", () => reviewAction(b.dataset[attr], act))));
+  const ex = $("admin-exit"); if (ex) ex.addEventListener("click", () => setAdmin(false));
+  el.querySelectorAll(".job[data-job]").forEach(b => b.addEventListener("click", () => selectJob(b.dataset.job)));
+  el.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { UI.mode = b.dataset.mode; UI.approved = false; refresh(); }));
+  el.querySelectorAll("[data-node]").forEach(b => b.addEventListener("click", () => openDrawer(b.dataset.node)));
+  el.querySelectorAll("[data-skill]").forEach(b => b.addEventListener("click", () => openDrawer(b.dataset.skill)));
+  el.querySelectorAll("[data-sector]").forEach(b => b.addEventListener("click", () => setSector(b.dataset.sector)));
+  el.querySelectorAll("[data-try]").forEach(b => b.addEventListener("click", () => { UI.search = b.dataset.try; UI.found = null; renderPanel(); const q = $("q"); q.focus(); q.setSelectionRange(q.value.length, q.value.length); }));
+  const ap = $("approve"); if (ap) ap.addEventListener("click", () => { UI.approved = true; renderPanel(); toast("Sent to your advisor", "Nothing changes in your plan until it is approved.", '<span class="badge b-info">Review</span>'); });
+  const q = $("q");
+  if (q) q.addEventListener("input", e => { UI.search = e.target.value; UI.found = null; $("results").innerHTML = searchResults(UI.search); bindResults(); icons(); });
+  bindResults();
+}
+function bindResults() {
+  $("panel").querySelectorAll("#results [data-pick]").forEach(b => b.onclick = () => pinJob(b.dataset.pick));
+  $("panel").querySelectorAll("#results [data-build]").forEach(b => b.onclick = () => buildJob(b.dataset.build));
+}
+function buildJob(q) {
+  const unk = UNKNOWN.find(u => u.re.test(q)) || { name: q.replace(/</g, "&lt;"), match: 35, postings: 7, near: "dataRole" };
+  UI.found = { q: UI.search.trim(), loading: true, ...unk };
+  $("results").innerHTML = searchResults(UI.search); icons();
+  setTimeout(() => { UI.found.loading = false; $("results").innerHTML = searchResults(UI.search); bindResults(); icons(); }, reduce ? 300 : 1400);
+}
+function setSector(s) {
+  UI.sector = s; UI.pinned = null;
+  computeRing(); refresh(false, true);
+  toast(`${SECTORS[s].name}: ${UI.ring.length} jobs on your map`, `Best fit here: ${NODES[UI.ring[0]].name} (${match(UI.ring[0])}% match). Your skills stay the same; only the destinations change.`, '<span class="badge b-info">Map updated</span>');
+}
+function pinJob(j) {
+  const added = !UI.ring.includes(j);
+  if (added) UI.pinned = j;
+  UI.job = j; UI.search = ""; UI.found = null;
+  computeRing(); refresh(false, true);
+  if (added) toast(`${NODES[j].name} added to your map`, `${match(j)}% match · about ${W(plans[j].ready)} weeks to be job-ready.`, '<span class="badge b-info">Added</span>');
+  openDrawer(j);
+}
+function selectJob(j) { UI.job = j; UI.approved = false; UI.tab = "path"; refresh(false, true); openDrawer(j); }
+
+// ============ drawer ============
+function openDrawer(id, quiet) {
+  UI.drawer = id;
+  const n = NODES[id], d = $("drawer");
+  d.innerHTML = n.type === "job" ? jobDetail(id) : n.type === "you" ? youDetail() : skillDetail(id);
+  d.classList.add("open"); if (!quiet) d.scrollTop = 0;
+  d.querySelector("#dr-close").addEventListener("click", closeDrawer);
+  d.querySelectorAll("[data-skill]").forEach(b => b.addEventListener("click", () => openDrawer(b.dataset.skill)));
+  const pv = d.querySelector("#prove"); if (pv) pv.addEventListener("click", () => takeCheck(id, pv));
+  const sp = d.querySelector("#show-path"); if (sp) sp.addEventListener("click", () => { if (!UI.ring.includes(id)) { UI.pinned = id; computeRing(); } UI.job = id; UI.tab = "path"; refresh(); closeDrawer(); });
+  icons();
+  if (Graph && !quiet) focusNode(id);
+}
+function closeDrawer() { UI.drawer = null; $("drawer").classList.remove("open"); resetView(true); }
+function drHead(kind, icon, title, badges) {
+  return `<div class="dr-head"><div><div class="dr-kind"><i data-lucide="${icon}"></i>${kind}</div><h2>${title}</h2><div class="chips">${badges}</div></div>
+    <button class="icon-btn" id="dr-close" type="button" aria-label="Close details"><i data-lucide="x"></i></button></div>`;
+}
+function splitBlock(job) {
+  const [a, b, c] = humanSplit(job);
+  return `<div class="sec"><h3><i data-lucide="pie-chart"></i>Who does the work in ${S.year}</h3><div class="split"><div class="split-bar"><i style="flex-basis:${a}%;background:var(--split-ai)"></i><i style="flex-basis:${b}%;background:var(--split-assist)"></i><i style="flex-basis:${c}%;background:var(--split-you)"></i></div>
+    <div class="split-key"><span><i style="background:var(--split-ai)"></i>AI does <b class="num">${a}%</b></span><span><i style="background:var(--split-assist)"></i>AI assists <b class="num">${b}%</b></span><span><i style="background:var(--split-you)"></i>You <b class="num">${c}%</b></span></div></div></div>`;
+}
+function jobDetail(j) {
+  const m = match(j), meta = JOBMETA[j], p = plans[j] || planFor(j, UI.mode);
+  const rows = REQ[j].map(([k, w, need, share, st]) => {
+    const cov = coverage(k, need);
+    const ci = cov >= 1 ? ["full", "check"] : cov > 0 ? ["part", "minus"] : ["none", "plus"];
+    const stB = st === "emerging" ? '<span class="badge b-violet">Emerging</span>' : st === "essential" ? '<span class="badge b-info">Essential</span>' : '<span class="badge b-mute">Optional</span>';
+    return `<div class="req-row" data-skill="${k}"><div><div class="rn">${NODES[k].name}</div><div class="rs">Level ${need} needed · ${stB}</div></div>
+      <div class="share"><span class="num">${share}%</span><div class="rs">of postings</div></div><span class="cov ${ci[0]}"><i data-lucide="${ci[1]}"></i></span></div>`;
+  }).join("");
+  return `${drHead("Job", "briefcase", NODES[j].name, `${meta.move ? '<span class="badge b-mute">Move</span>' : '<span class="badge b-violet">Stay & adapt</span>'}<span class="badge b-info"><i data-lucide="shield-check"></i>${meta.conf} confidence</span>`)}
+    <div style="display:flex;align-items:end;justify-content:space-between;gap:12px"><div><div class="big-pct num">${m}%</div><div class="note">match with your skills today</div></div>
+      <div style="text-align:right"><div class="num" style="font-size:18px;font-weight:600">${p.route ? W(p.ready) : "–"} wk</div><div class="note">to be job-ready</div></div></div>
+    <p class="note">${meta.blurb}</p>
+    ${splitBlock(j)}
+    <div class="sec"><h3><i data-lucide="list-checks"></i>What employers ask for</h3><div class="req">${rows}</div>
+      <p class="src" style="margin-top:8px">From <span class="num">${meta.postings}</span> Malaysian postings in the last 90 days, checked against ESCO and O*NET. Sample values.</p></div>
+    <div class="sec"><h3><i data-lucide="globe"></i>SDG links</h3><div style="display:grid;gap:8px">${meta.sdg.map(([n, r]) => `<div class="sdg"><b style="background:${SDG[n][0]}">${n}</b><span><b style="all:unset;font-weight:600;color:var(--ink)">${SDG[n][1]}.</b> ${r}</span></div>`).join("")}</div></div>
+    <button class="btn btn-primary" id="show-path" type="button"><i data-lucide="route"></i>Show my path</button>`;
+}
+function youDetail() {
+  return `${drHead("You", "user-round", "Accounts Payable Clerk", `<span class="badge b-crit">AI exposure <span class="num">&nbsp;${Math.round(exposure("ap") * 100)}%</span></span>`)}
+    ${splitBlock("ap")}
+    <p class="note">Your experience is not wasted. Most of what you know carries into the jobs on your map through the skills on the inner ring.</p>`;
+}
+function skillDetail(k) {
+  const n = NODES[k], have = n.type === "have", [it, ic, idesc] = impact(k);
+  const needs = UI.ring.flatMap(j => REQ[j].filter(r => r[0] === k).map(r => ({ j, need: r[2], share: r[3] })));
+  const maxNeed = needs.length ? Math.max(...needs.map(x => x.need)) : 0;
+  const evoOut = EDGES.filter(e => e[0] === k && e[4] === "evolve"), evoIn = EDGES.filter(e => e[1] === k && e[4] === "evolve");
+  const buildsOn = EDGES.filter(e => e[1] === k && e[4] === "build" && NODES[e[0]].type !== "you");
+  const lpp = LPP[k];
+  const em = EMERGING[k];
+  const badges = `<span class="badge ${ic}">${it}</span>${em ? `<span class="badge b-violet"><i data-lucide="sparkles"></i>Emerging · ${em.status === "confirmed" ? "expert-confirmed" : "AI-detected"}</span>` : '<span class="badge b-mute">In ESCO / O*NET</span>'}${have ? confBadge(k) : ""}`;
+  const emgSec = em ? `<div class="sec"><h3><i data-lucide="sparkles"></i>Why we think this is a new skill</h3><ul class="checks">${thresholdRows(k)}</ul>
+    <p class="src" style="margin-top:8px">${em.status === "confirmed" ? "Confirmed by an expert reviewer, so it counts at full weight in match scores." : "Found by our AI committee and not yet confirmed by an expert, so it counts at half weight in match scores."} Merged from: ${em.synonyms.join(", ")}.</p></div>` : "";
+  const levels = `<div class="sec"><h3><i data-lucide="gauge"></i>${have ? "Your level" : "Levels"}</h3><div class="levels">${[1, 2, 3, 4, 5].map(i => `<div class="lvl ${have && i === lvl(k) ? "cur" : ""} ${i === maxNeed ? "need" : ""}"><b>${i}</b><span>${LEVELS[i]}</span><span class="mk">${have && i === lvl(k) ? '<span style="color:var(--accent)">You</span>' : ""}${i === maxNeed ? ' <span style="color:var(--n-job)">Needed</span>' : ""}</span></div>`).join("")}</div></div>`;
+  const tasks = TASKS[k] ? `<div class="sec"><h3><i data-lucide="list"></i>Tasks inside this skill</h3><ul class="tasks">${TASKS[k].map(([t, w]) => `<li><span>${t}</span>${w === "ai" ? '<span class="badge b-mute"><i data-lucide="cpu"></i>AI does it</span>' : w === "assist" ? '<span class="badge b-warn">AI assists</span>' : '<span class="badge b-good"><i data-lucide="user-round"></i>Human-led</span>'}</li>`).join("")}</ul></div>` : "";
+  const links = [
+    ...evoOut.map(e => `<button class="chip" type="button" data-skill="${e[1]}"><i data-lucide="refresh-cw" style="color:var(--violet)"></i>Evolves into ${NODES[e[1]].name}</button>`),
+    ...evoIn.map(e => `<button class="chip" type="button" data-skill="${e[0]}"><i data-lucide="refresh-cw" style="color:var(--violet)"></i>New version of ${NODES[e[0]].name}</button>`),
+    ...buildsOn.map(e => `<button class="chip" type="button" data-skill="${e[0]}"><i data-lucide="corner-down-right"></i>Builds on ${NODES[e[0]].name}</button>`),
+    ...needs.map(x => `<button class="chip" type="button" data-skill="${x.j}"><i data-lucide="briefcase"></i>${NODES[x.j].name} · <span class="num">${x.share}%</span> of postings</button>`)
+  ].join("");
+  const step = lpp ? `<div class="sec"><h3><i data-lucide="footprints"></i>${have ? "Get to the next level" : "How to build it"}</h3><div class="lpp">
+      <div class="lpp-item"><span class="ic" style="background:var(--accent-wash);color:var(--accent)"><i data-lucide="book-open"></i></span><div><div class="k">Learn</div><div class="v">${lpp[0]}</div><div class="m">${lpp[1]}</div></div></div>
+      <div class="lpp-item"><span class="ic" style="background:var(--warn-wash);color:var(--warn)"><i data-lucide="hammer"></i></span><div><div class="k">Practice</div><div class="v">${lpp[2]}</div><div class="m">A small real task with sample data</div></div></div>
+      <div class="lpp-item"><span class="ic" style="background:var(--good-wash);color:var(--good)"><i data-lucide="badge-check"></i></span><div><div class="k">Prove</div><div class="v">${lpp[3]}</div><div class="m">Passing marks this skill as verified in your profile</div></div></div>
+    </div>${have ? `<button class="btn btn-soft" id="prove" type="button" style="margin-top:8px;width:100%" ${PROFILE.conf[k] === "verified" ? "disabled" : ""}><i data-lucide="badge-check"></i>${PROFILE.conf[k] === "verified" ? "Already verified" : "Take the 5-minute check"}</button>` : ""}</div>` : "";
+  const sdg = SKILL_SDG[k] ? `<div class="sec"><h3><i data-lucide="globe"></i>SDG link</h3><div class="sdg"><b style="background:${SDG[SKILL_SDG[k][0]][0]}">${SKILL_SDG[k][0]}</b><span>${SKILL_SDG[k][1]}</span></div></div>` : "";
+  return `${drHead(have ? "Your skill" : "Skill to learn", have ? "check-circle" : "plus-circle", n.name, badges)}
+    <div class="sec"><p class="note">${idesc}. AI exposure <b class="num">${Math.round(exposure(k) * 100)}%</b> · demand <b class="num">${sign(demand(k))}</b> in ${S.year}.</p></div>
+    ${emgSec}
+    ${links ?`<div class="sec"><h3><i data-lucide="git-branch"></i>Connections</h3><div class="chips">${links}</div></div>` : ""}
+    ${levels}${tasks}${step}${sdg}
+    <p class="src">Sample data. Tasks and AI exposure would come from O*NET / ESCO task lists and the ILO exposure index; demand from job postings.</p>`;
+}
+function takeCheck(k, btn) {
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Checking your answers…';
+  setTimeout(() => { PROFILE.conf[k] = "verified"; refresh(); openDrawer(k); toast("Skill verified", `${NODES[k].name} is now marked as verified in your profile.`, '<span class="badge b-good">Verified</span>'); }, reduce ? 300 : 1300);
+}
+
+// ============ agents ============
+let agState = {};
+function renderAgents(next) {
+  if (next) agState = next;
+  const st = agState;
+  const A = [
+    ["Interviewer", "message-square-text", "Read your LinkedIn PDF · asked 3 questions", "done"],
+    ["Job analyst", "scan-search", "Split your job into 31 tasks", "done"],
+    ["Market scout", "radar", st.scout || "Watches AI news and job postings daily", st.scoutSt || "idle"],
+    ["Career planner", "route", st.plan || `Found paths to ${UI.ring.length} jobs`, st.planSt || "done"],
+    ["Fact checker", "shield-check", st.fact || "14 of 14 claims have a source", st.factSt || "done"]
+  ];
+  $("ag-list").innerHTML = A.map(([n, ic, d, s]) => `<li><span class="ag-ic ${s === "done" ? "" : s}"><i data-lucide="${ic}"></i></span><div><div class="an">${n}</div><div class="ad">${d}</div></div></li>`).join("");
+  icons();
+}
+
+// ============ 3D constellation (dynamic rings) ============
+const RING = [0, 85, 165, 245], LIFT = [0, 10, 24, 44], D2R = Math.PI / 180;
+const LAYOUT = { key: "", visible: new Set(), target: {} };
+const OBJ = {};   // persistent graph node objects, so moving nodes glide instead of jumping
+let Graph = null, graphReady = false, labelEls = {}, incidentEl = null, hoverId = null;
+const ringOf = id => ({ you: 0, have: 1, learn: 2, job: 3 })[NODES[id].type];
+const at = (ring, deg) => ({ x: RING[ring] * Math.cos(deg * D2R), y: LIFT[ring], z: RING[ring] * Math.sin(deg * D2R) });
+function computeLayout() {
+  const ring = UI.ring, n = ring.length, jobA = {};
+  ring.forEach((j, i) => jobA[j] = (100 + i * 360 / n) % 360);
+  const pull = new Map();
+  ring.forEach(j => {
+    const ids = new Set(REQ[j].filter(r => NODES[r[0]].type === "learn").map(r => r[0]));
+    const p = plans[j]; if (p && p.route) p.route.nodes.forEach(k => { if (NODES[k].type === "learn") ids.add(k); });
+    ids.forEach(k => { if (!pull.has(k)) pull.set(k, []); pull.get(k).push(jobA[j]); });
+  });
+  // skills on the alternative routes to the selected job also need a place on the map
+  if (jobA[UI.job] !== undefined) Object.keys(MODE).forEach(m => { const r = shortestPath(UI.job, m); if (r) r.nodes.forEach(k => { if (NODES[k].type === "learn" && !pull.has(k)) pull.set(k, [jobA[UI.job]]); }); });
+  // place each skill-to-learn at the average direction of the jobs that need it, then spread them apart
+  const learn = [...pull].map(([k, angs]) => { const x = angs.reduce((s, a) => s + Math.cos(a * D2R), 0), y = angs.reduce((s, a) => s + Math.sin(a * D2R), 0); return [k, (Math.atan2(y, x) / D2R + 360) % 360]; });
+  learn.sort((a, b) => a[1] - b[1]);
+  const gap = Math.min(30, 360 / Math.max(1, learn.length));
+  for (let pass = 0; pass < 40; pass++) for (let i = 0; i < learn.length && learn.length > 1; i++) {
+    const a = learn[i], b = learn[(i + 1) % learn.length], g = (b[1] - a[1] + 360) % 360;
+    if (g < gap) { const p = (gap - g) / 2; a[1] = (a[1] - p + 360) % 360; b[1] = (b[1] + p) % 360; }
+  }
+  const target = { ap: at(0, 0) };
+  OWNED.forEach(k => target[k] = at(1, NODES[k].a));
+  learn.forEach(([k, a]) => target[k] = at(2, a));
+  ring.forEach(j => target[j] = at(3, jobA[j]));
+  LAYOUT.target = target;
+  LAYOUT.visible = new Set(Object.keys(target));
+  return Object.keys(target).sort().join(",") + "|" + ring.join(",");
+}
+function graphLinks() { return EDGES.filter(([a, b]) => LAYOUT.visible.has(a) && LAYOUT.visible.has(b)).map(([a, b, , , kind]) => ({ source: a, target: b, key: a + ">" + b, from: a, to: b, kind })); }
+function applyLayout(animate) {
+  const key = computeLayout();
+  if (key === LAYOUT.key) return false;
+  LAYOUT.key = key;
+  const from = {};
+  Object.keys(LAYOUT.target).forEach(id => {
+    const t = LAYOUT.target[id];
+    if (!OBJ[id]) OBJ[id] = { id, x: t.x, y: t.y, z: t.z, fx: t.x, fy: t.y, fz: t.z };
+    from[id] = { x: OBJ[id].fx, y: OBJ[id].fy, z: OBJ[id].fz };
+  });
+  if (Graph) Graph.graphData({ nodes: Object.keys(LAYOUT.target).map(id => OBJ[id]), links: graphLinks() });
+  buildLabels();
+  const step = p => {
+    Object.keys(LAYOUT.target).forEach(id => {
+      const a = from[id], b = LAYOUT.target[id], o = OBJ[id];
+      o.fx = o.x = a.x + (b.x - a.x) * p; o.fy = o.y = a.y + (b.y - a.y) * p; o.fz = o.z = a.z + (b.z - a.z) * p;
+    });
+    if (Graph && graphReady) Graph.d3ReheatSimulation();
+  };
+  if (animate && window.gsap && !reduce) { const st = { p: 0 }; gsap.to(st, { p: 1, duration: 0.9, ease: "power3.inOut", onUpdate: () => step(st.p) }); }
+  else step(1);
+  return true;
+}
+const posOf = id => OBJ[id] ? { x: OBJ[id].fx, y: OBJ[id].fy, z: OBJ[id].fz } : LAYOUT.target[id];
+function pathKeys() { const s = new Set(); if (plan && plan.route) plan.route.legs.forEach(l => s.add(l.from + ">" + l.to)); return s; }
+const onPlan = id => plan && ((plan.route && plan.route.nodes.includes(id)) || plan.extras.some(x => x.id === id) || plan.ups.some(u => u.id === id));
+function nColor(n) {
+  const t = NODES[n.id].type;
+  if (t === "you") return css("--n-you");
+  if (t === "job") return css("--n-job");
+  if (taken(n.id)) return css("--n-taken");
+  if (t === "have") return zone(n.id) === "At risk" ? css("--n-risk") : css("--n-have");
+  return css("--n-learn");
+}
+function nVal(n) {
+  const t = NODES[n.id].type;
+  if (t === "you") return 34;
+  if (t === "job") return 10 + match(n.id) * 0.4 + (n.id === UI.job ? 12 : 0);
+  if (taken(n.id)) return 2.5;
+  if (t === "have") return 4 + lvl(n.id) * 1.6 + (onPlan(n.id) ? 4 : 0);
+  return onPlan(n.id) ? 11 : 6;
+}
+// Links on the other route options to the same job, mapped to which option they belong to (like grey GPS alternatives)
+function altKeys() {
+  const s = new Map();
+  if (!plan || !plan.route) return s;
+  Object.keys(MODE).forEach(m => {
+    if (m === UI.mode) return;
+    const r = shortestPath(UI.job, m);
+    if (r && r.key !== plan.route.key) r.legs.forEach(l => { const k = l.from + ">" + l.to; if (!s.has(k)) s.set(k, m); });
+  });
+  return s;
+}
+function restyle() {
+  if (!Graph) return;
+  const pk = pathKeys(), ak = altKeys(), dead = l => taken(l.from) || taken(l.to);
+  Graph.nodeColor(nColor).nodeVal(nVal)
+    .linkColor(l => pk.has(l.key) ? css("--l-path") : ak.has(l.key) ? css("--l-alt") : l.kind === "evolve" ? css("--l-evolve") : dead(l) ? css("--l-dead") : css("--l-base"))
+    .linkWidth(l => pk.has(l.key) ? 2.6 : ak.has(l.key) ? 1.6 : l.kind === "evolve" ? 1.4 : dead(l) ? 0 : 0.6)
+    .linkDirectionalParticles(l => !reduce && pk.has(l.key) ? 3 : !reduce && l.kind === "evolve" ? 1 : 0)
+    .linkDirectionalParticleColor(l => l.kind === "evolve" ? css("--l-evolve") : css("--particle"));
+  if (graphReady) Graph.d3ReheatSimulation();
+  updateLabels();
+}
+function initGraph() {
+  if (!window.ForceGraph3D) { $("graph").innerHTML = '<div class="nograph">The 3D library could not load. The planner still works.</div>'; return; }
+  const el = $("graph");
+  try {
+    Graph = ForceGraph3D({ controlType: "orbit" })(el)
+      .width(el.clientWidth).height(el.clientHeight).backgroundColor("rgba(0,0,0,0)").showNavInfo(false)
+      .graphData({ nodes: Object.keys(LAYOUT.target).map(id => OBJ[id]), links: graphLinks() })
+      .nodeId("id").nodeRelSize(4).nodeOpacity(0.96).nodeResolution(28).nodeLabel(() => "")
+      .linkOpacity(0.9).linkCurvature(0.12).linkDirectionalParticleWidth(2.4).linkDirectionalParticleSpeed(0.007)
+      .enableNodeDrag(false).warmupTicks(0).cooldownTicks(8).onEngineTick(() => { graphReady = true; })
+      .onNodeHover(n => { el.style.cursor = n ? "pointer" : ""; hoverId = n ? n.id : null; if (!n) $("tip").hidden = true; })
+      .onNodeClick(n => { if (NODES[n.id].type === "job") { UI.job = n.id; UI.approved = false; UI.tab = "path"; refresh(); } openDrawer(n.id); })
+      .onLinkHover(l => { el.style.cursor = l && altKeys().has(l.key) ? "pointer" : ""; })
+      .onLinkClick(l => {
+        const m = altKeys().get(l.key);
+        if (!m) return;
+        UI.mode = m; UI.approved = false; UI.tab = "path"; refresh();
+        toast(`Switched to the ${MODE[m]} route`, `Same destination: ${NODES[UI.job].name}. ${plan && plan.route ? W(plan.ready) + " weeks to be job-ready." : ""}`, '<span class="badge b-info">Route</span>');
+      });
+  } catch (err) { $("graph").innerHTML = '<div class="nograph">This browser cannot draw 3D graphics. The planner still works.</div>'; Graph = null; return; }
+  Graph.d3Force("charge", null); Graph.d3Force("center", null); Graph.d3Force("link").strength(0);
+  resetView(false);
+  const c = Graph.controls(); c.autoRotate = UI.rotating; c.autoRotateSpeed = 0.5; c.enableDamping = true;
+  c.addEventListener("start", () => { if (UI.rotating) setRotate(false); });
+  restyle(); requestAnimationFrame(frame);
+}
+function resetView(animate) {
+  if (!Graph) return;
+  const d = $("graph").clientWidth < 700 ? 1.85 : 1.5;
+  Graph.cameraPosition({ x: 0, y: 440 * d, z: 420 * d }, { x: 0, y: 10, z: 0 }, animate && !reduce ? 900 : 0);
+}
+function focusNode(id) {
+  const p = LAYOUT.target[id]; if (!p) return;
+  const len = Math.hypot(p.x, p.z);
+  if (len < 1) return resetView(true);
+  Graph.cameraPosition({ x: p.x * 1.9, y: 420, z: p.z * 1.9 + 160 }, { x: p.x * 0.55, y: p.y, z: p.z * 0.55 }, reduce ? 0 : 900);
+  if (UI.rotating) setRotate(false);
+}
+function setRotate(on) { UI.rotating = on; if (Graph) Graph.controls().autoRotate = on; $("rotate").setAttribute("aria-pressed", String(on)); $("rotate").setAttribute("aria-label", on ? "Stop rotating" : "Start rotating"); }
+function buildLabels() {
+  $("labels").innerHTML = ""; labelEls = {};
+  LAYOUT.visible.forEach(id => { const d = document.createElement("div"); d.className = "lb hide"; $("labels").appendChild(d); labelEls[id] = d; });
+  incidentEl = document.createElement("div"); incidentEl.className = "incident"; incidentEl.hidden = true;
+  incidentEl.innerHTML = '<i data-lucide="triangle-alert"></i>New AI signal: reconciliation'; $("labels").appendChild(incidentEl); icons();
+  updateLabels();
+}
+function updateLabels() {
+  let step = 0; const stepOf = {};
+  if (plan && plan.route) plan.route.nodes.forEach(k => { if (NODES[k].type === "learn") stepOf[k] = ++step; });
+  Object.entries(labelEls).forEach(([id, el]) => {
+    const n = NODES[id], tk = taken(id), imp = isSkill(id) ? impact(id)[0] : "";
+    let html = "", cls = "lb";
+    if (n.type === "you") { cls += " you"; html = "You · AP Clerk"; }
+    else if (n.type === "job") { cls += " job" + (id === UI.job ? " sel" : ""); const p = plans[id]; html = `${n.name}<small>${match(id)}% match · ${p && p.route ? W(p.ready) + " wk" : "no path"}</small>`; }
+    else if (n.type === "learn") html = `${stepOf[id] ? `<span class="n">${stepOf[id]}</span>` : ""}${n.name}${EMERGING[id] ? ' <span class="tg new">NEW</span>' : ""}`;
+    else html = `${n.name}${tk ? ' <span class="tg taken">AI took over</span>' : imp === "Declining" ? ' <span class="tg risk">At risk</span>' : imp === "Rising human skill" ? ' <span class="tg human">Human edge</span>' : ""}`;
+    // Risk and human-edge labels appear on the My skills tab, so the map stays calm elsewhere.
+    const show = UI.labelsAll || n.type === "you" || n.type === "job" || onPlan(id) || (UI.tab === "skills" && n.type === "have" && (imp === "Declining" || imp === "Rising human skill")) || id === hoverId;
+    el.className = cls + (show ? "" : " hide"); el.innerHTML = html;
+  });
+  if (incidentEl) incidentEl.hidden = !S.signal;
+}
+function frame() {
+  if (Graph) {
+    Object.entries(labelEls).forEach(([id, el]) => {
+      if (el.classList.contains("hide")) return;
+      const p = posOf(id), s = Graph.graph2ScreenCoords(p.x, p.y, p.z);
+      const off = NODES[id].type === "job" ? 20 : NODES[id].type === "you" ? 22 : 12;
+      el.style.transform = `translate(${s.x}px, ${s.y + off}px) translate(-50%, 0)`;
+    });
+    if (S.signal && incidentEl) { const p = posOf(SIGNAL.node), s = Graph.graph2ScreenCoords(p.x, p.y, p.z); incidentEl.style.left = s.x + "px"; incidentEl.style.top = (s.y - 14) + "px"; }
+    drawRings();
+    if (hoverId && LAYOUT.visible.has(hoverId)) showTip(hoverId);
+  }
+  requestAnimationFrame(frame);
+}
+function drawRings() {
+  const names = ["", "Your skills", "Skills to learn", UI.sector === "best" ? "Best-match jobs" : SECTORS[UI.sector].name + " jobs"];
+  let out = "";
+  for (let r = 1; r <= 3; r++) {
+    let d = "", best = null;
+    for (let i = 0; i <= 72; i++) {
+      const t = i / 72 * Math.PI * 2, s = Graph.graph2ScreenCoords(RING[r] * Math.cos(t), LIFT[r], RING[r] * Math.sin(t));
+      d += (i ? "L" : "M") + s.x.toFixed(1) + "," + s.y.toFixed(1);
+      if (!best || s.y > best.y) best = s;
+    }
+    out += `<path d="${d}" fill="none" stroke="var(--ring)" stroke-width="1.1" ${r < 3 ? 'stroke-dasharray="3 6"' : ""}/>`;
+    out += `<text class="ring-label" x="${best.x.toFixed(1)}" y="${(best.y + 26).toFixed(1)}" text-anchor="middle">${names[r]}</text>`;
+  }
+  $("rings").innerHTML = out;
+}
+function showTip(id) {
+  const n = NODES[id], tip = $("tip"), p = posOf(id), s = Graph.graph2ScreenCoords(p.x, p.y, p.z);
+  const kind = n.type === "you" ? "Your current job" : n.type === "job" ? "Job" : n.type === "have" ? `Your skill · level ${lvl(id)} of 5` : "Skill to learn";
+  tip.innerHTML = `<b>${n.name}</b><span class="k">${kind}</span>
+    <div class="row"><span>AI exposure</span><span>${Math.round(exposure(id) * 100)}%</span></div>
+    <div class="row"><span>Demand</span><span>${sign(demand(id))}</span></div>
+    <div class="row"><span>${n.type === "job" ? "Your match" : "Status"}</span><span>${n.type === "job" ? match(id) + "%" : taken(id) ? "AI took over" : isSkill(id) ? impact(id)[0] : "–"}</span></div>`;
+  tip.hidden = false;
+  const off = $("graph").getBoundingClientRect().left - $("stage").getBoundingClientRect().left;
+  const W2 = $("stage").clientWidth, tw = tip.offsetWidth, sx = s.x + off;
+  tip.style.left = (sx + 20 + tw > W2 ? sx - 20 - tw : sx + 20) + "px"; tip.style.top = Math.max(8, s.y - 40) + "px";
+}
+function drawStars() {
+  const c = $("stars"), r = c.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  c.width = r.width * dpr; c.height = r.height * dpr;
+  const g = c.getContext("2d"); g.scale(dpr, dpr);
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  for (let i = 0; i < 160; i++) { g.fillStyle = `rgba(200,215,240,${0.08 + rnd() * 0.35})`; g.beginPath(); g.arc(rnd() * r.width, rnd() * r.height, rnd() * 1.1 + 0.2, 0, Math.PI * 2); g.fill(); }
+}
+
+// ============ refresh, toasts, controls ============
+function refresh(reroute = false, animate = false) {
+  const prev = plan && plan.route && plan.route.key;
+  computeRing(); computePlans();
+  const relaid = applyLayout(true);
+  renderHead(); renderPanel(animate); renderAgents();
+  $("year-out").textContent = S.year; $("year").value = S.year;
+  if (UI.drawer && $("drawer").classList.contains("open")) { const d = $("drawer"), st = d.scrollTop; openDrawer(UI.drawer, true); d.scrollTop = st; }
+  const changed = reroute && prev !== (plan && plan.route && plan.route.key);
+  if (changed && Graph && !relaid) { $("rerouting").classList.add("show"); setTimeout(() => { $("rerouting").classList.remove("show"); restyle(); }, reduce ? 200 : 1000); }
+  else restyle();
+  return changed;
+}
+function toast(title, detail, badge = '<span class="badge b-warn">New signal</span>') {
+  const t = $("toast"); t.innerHTML = `<div class="tt">${badge}${title}</div><div class="td">${detail}</div>`;
+  t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 5200);
+}
+["jobs", "path", "skills"].forEach(t => $("tab-" + t).addEventListener("click", () => { UI.tab = t; renderPanel(true); updateLabels(); }));
+document.querySelectorAll(".seg [data-scn]").forEach(b => b.addEventListener("click", () => {
+  S.scenario = b.dataset.scn;
+  document.querySelectorAll(".seg [data-scn]").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+  if (refresh(true)) toast("Path changed", `With ${S.scenario} AI adoption, a skill on your old path is no longer a safe bet.`, '<span class="badge b-info">New path</span>');
+}));
+$("year").addEventListener("input", e => { stopPlay(); S.year = +e.target.value; refresh(true); });
+let playT = null;
+function stopPlay() { if (playT) { clearInterval(playT); playT = null; $("play").innerHTML = '<i data-lucide="play"></i>'; icons(); } }
+$("play").addEventListener("click", () => {
+  if (playT) return stopPlay();
+  if (S.year >= 2030) { S.year = 2026; refresh(); }
+  $("play").innerHTML = '<i data-lucide="pause"></i>'; icons();
+  playT = setInterval(() => { if (S.year >= 2030) return stopPlay(); S.year++; refresh(true); }, reduce ? 500 : 1200);
+});
+$("rotate").addEventListener("click", () => setRotate(!UI.rotating));
+$("labels-btn").addEventListener("click", () => { UI.labelsAll = !UI.labelsAll; $("labels-btn").setAttribute("aria-pressed", String(UI.labelsAll)); updateLabels(); });
+$("reset-view").addEventListener("click", () => resetView(true));
+$("ag-toggle").addEventListener("click", () => {
+  const c = $("agents").classList.toggle("collapsed");
+  $("ag-toggle").setAttribute("aria-expanded", String(!c)); $("ag-toggle").innerHTML = `<i data-lucide="${c ? "chevron-down" : "chevron-up"}"></i>`; icons();
+});
+// The scout finds signals; rules apply the small ones; the big one waits for a person in the admin view.
+let scoutState = "idle"; // idle | running | flagged | done
+$("scout").addEventListener("click", () => {
+  if (scoutState === "flagged") { setAdmin(true); return; }
+  if (scoutState !== "idle") return;
+  scoutState = "running";
+  const btn = $("scout"), log = $("log"), D = reduce ? 0.3 : 1;
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Scouting…'; log.hidden = false; log.innerHTML = "";
+  renderAgents({ scout: "Searching…", scoutSt: "run" });
+  [[400, "Searched 30 skills across 6 source types"], [1100, "Read 312 pages · 41 relevant after removing duplicates"], [1800, "5 small, well-sourced changes applied automatically"], [2500, "1 big change flagged for human review: vendor reconciliation"]]
+    .forEach(([t, x]) => setTimeout(() => { const li = document.createElement("li"); li.textContent = x; log.appendChild(li); }, t * D));
+  setTimeout(() => {
+    scoutState = "flagged";
+    REVIEW.find(r => r.id === "s1").status = "pending"; updateAdminCount();
+    $("ag-fresh").textContent = "Scout ran just now";
+    renderAgents({ scout: "1 change waiting for human review", scoutSt: "run" });
+    btn.disabled = false; btn.innerHTML = '<i data-lucide="shield-check"></i>Review flagged change'; $("reset").hidden = false; icons();
+    toast("1 change needs a human", `${SIGNAL.title}. It would reroute 1,240 users, so the rules sent it for review. Nothing changes until it is approved.`, '<span class="badge b-warn">Flagged</span>');
+    if (UI.admin) renderPanel();
+  }, 3000 * D);
+});
+$("reset").addEventListener("click", () => {
+  S.signal = false; S.extraE = {}; S.extraD = {}; scoutState = "idle";
+  REVIEW.forEach((r, i) => r.status = REVIEW_INIT[i]);
+  Object.keys(EMERGING).forEach(k => EMERGING[k].status = EMERGING_INIT[k]);
+  $("reset").hidden = true; $("log").hidden = true; $("scout").disabled = false; $("scout").innerHTML = '<i data-lucide="radar"></i>Run market scout';
+  $("fresh-when").textContent = "3 days ago"; $("fresh-n").textContent = "214"; $("ag-fresh").textContent = "Scout ran 3 days ago";
+  renderAgents({}); updateAdminCount(); refresh();
+});
+$("admin-btn").addEventListener("click", () => setAdmin(!UI.admin));
+
+// ============ onboarding ============
+const OB = { step: 0, read: false, answers: {} };
+const QUESTIONS = [
+  { id: "pay", q: "You mention SAP. Do you also run the weekly payment batch?", a: ["Yes, every week", "Sometimes", "No"] },
+  { id: "exc", q: "When the system can't match an invoice, do you resolve it yourself or pass it on?", a: ["I resolve it myself", "I pass it on"] },
+  { id: "hours", q: "How many hours a week can you spend learning?", a: ["3 h", "6 h", "10 h"] }
+];
+function obRender() {
+  const c = $("ob-card"), s = OB.step;
+  const bars = `<div class="ob-steps">${[0, 1, 2].map(i => `<i class="${i <= s ? "on" : ""}"></i>`).join("")}</div>`;
+  let head = "", body = "", foot = "";
+  if (s === 0) {
+    head = `<div class="ob-kicker">Step 1 of 3 · Your experience</div><h2 id="ob-title">Start with what you've already done</h2><p>Upload your LinkedIn profile PDF or CV. You won't type your experience twice.</p>`;
+    body = `<div class="drop"><span class="ic"><i data-lucide="upload"></i></span>
+        <div class="file"><span class="fi"><i data-lucide="file-text"></i></span><div><div style="font-weight:600;font-size:13.5px">Aisyah_Salleh_LinkedIn.pdf</div><div class="fm">Sample file · 2 pages</div></div><i data-lucide="check" style="color:var(--good)"></i></div></div>
+      ${OB.read ? `<ul class="found-list" id="found-list">
+        <li><i data-lucide="circle-check"></i>9 years in accounts payable at a shared-services centre</li>
+        <li><i data-lucide="circle-check"></i>12 skills found, 10 matched to our skill list</li>
+        <li><i data-lucide="circle-check"></i>Tools: SAP, Excel</li>
+        <li class="warn"><i data-lucide="circle-help"></i>3 things are unclear, so we'll ask you</li></ul>` : ""}`;
+    foot = `<span class="left"><i data-lucide="lock"></i>Your file stays private. We never use age, gender, race or religion.</span>
+      <button class="btn btn-primary" id="ob-next" type="button">${OB.read ? 'Continue<i data-lucide="arrow-right"></i>' : '<i data-lucide="sparkles"></i>Read my profile'}</button>`;
+  } else if (s === 1) {
+    head = `<div class="ob-kicker">Step 2 of 3 · A few questions</div><h2 id="ob-title">Our interviewer has 3 quick questions</h2><p>Your profile left a few gaps. Your answers make the match more accurate.</p>`;
+    body = QUESTIONS.map(q => `<div class="q"><div class="q-msg"><span class="bot"><i data-lucide="bot"></i></span><div class="bubble">${q.q}</div></div>
+      <div class="q-ans">${q.a.map(a => `<button type="button" data-q="${q.id}" data-a="${a}" aria-pressed="${OB.answers[q.id] === a}">${a}</button>`).join("")}</div></div>`).join("");
+    foot = `<button class="ghost" id="ob-back" type="button"><i data-lucide="arrow-left"></i>Back</button>
+      <button class="btn btn-primary" id="ob-next" type="button" ${Object.keys(OB.answers).length < 3 ? "disabled" : ""}>Continue<i data-lucide="arrow-right"></i></button>`;
+  } else {
+    head = `<div class="ob-kicker">Step 3 of 3 · Your skills</div><h2 id="ob-title">Check your skills and levels</h2><p>We pre-filled these from your profile. Adjust anything that's off. You can prove any skill later with a short check.</p>`;
+    body = `<div class="rate">${OWNED.map(k => `<div class="rate-row"><div class="rn">${NODES[k].name} ${confBadge(k)}</div>
+        <div class="lv" role="group" aria-label="${NODES[k].name} level">${[1, 2, 3, 4, 5].map(i => `<button type="button" data-k="${k}" data-l="${i}" aria-pressed="${lvl(k) === i}">${i}</button>`).join("")}</div>
+        <div class="rd">Level ${lvl(k)}: ${LEVELS[lvl(k)]}</div></div>`).join("")}</div>`;
+    foot = `<button class="ghost" id="ob-back" type="button"><i data-lucide="arrow-left"></i>Back</button>
+      <button class="btn btn-primary" id="ob-next" type="button"><i data-lucide="sparkles"></i>Build my career map</button>`;
+  }
+  c.innerHTML = `<div class="ob-top">${bars}<div>${head}</div></div><div class="ob-body">${body}</div><div class="ob-foot">${foot}</div>`;
+  icons();
+  const next = $("ob-next"), back = $("ob-back");
+  if (back) back.addEventListener("click", () => { OB.step--; obRender(); });
+  c.querySelectorAll("[data-q]").forEach(b => b.addEventListener("click", () => {
+    OB.answers[b.dataset.q] = b.dataset.a;
+    if (b.dataset.q === "hours") PROFILE.hours = parseInt(b.dataset.a, 10);
+    if (b.dataset.q === "exc" && b.dataset.a === "I resolve it myself") PROFILE.level.three = 5;
+    obRender();
+  }));
+  c.querySelectorAll("[data-k]").forEach(b => b.addEventListener("click", () => {
+    PROFILE.level[b.dataset.k] = +b.dataset.l;
+    if (PROFILE.conf[b.dataset.k] !== "verified") PROFILE.conf[b.dataset.k] = "self";
+    obRender();
+  }));
+  next.addEventListener("click", () => {
+    if (s === 0 && !OB.read) {
+      next.disabled = true; next.innerHTML = '<span class="spin"></span>Reading…';
+      setTimeout(() => { OB.read = true; obRender(); if (window.gsap && !reduce) gsap.from("#found-list li", { opacity: 0, x: -6, stagger: 0.12, duration: 0.3, ease: "power3.out" }); }, reduce ? 200 : 1100);
+      return;
+    }
+    if (s < 2) { OB.step++; obRender(); if (window.gsap && !reduce) gsap.from(".ob-body", { opacity: 0, y: 8, duration: 0.3, ease: "power3.out" }); return; }
+    finishOnboarding();
+  });
+}
+function finishOnboarding() {
+  const done = () => { $("ob").hidden = true; refresh(false, true); toast("Your career map is ready", `${UI.ring.length} jobs found. Best match: ${NODES[UI.ring[0]].name}. Try the sector chips to explore more.`, '<span class="badge b-good">Ready</span>'); };
+  if (window.gsap && !reduce) gsap.to("#ob", { opacity: 0, duration: 0.3, ease: "power2.out", onComplete: () => { done(); gsap.set("#ob", { opacity: 1 }); } });
+  else done();
+}
+$("replay").addEventListener("click", () => { OB.step = 0; OB.read = false; OB.answers = {}; $("ob").hidden = false; obRender(); });
+
+// ============ boot ============
+new MutationObserver(restyle).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", restyle);
+new ResizeObserver(() => { if (Graph) Graph.width($("graph").clientWidth).height($("graph").clientHeight); drawStars(); }).observe($("stage"));
+computeRing(); computePlans(); applyLayout(false);
+renderHead(); renderPanel(); renderAgents();
+initGraph(); drawStars(); obRender(); updateAdminCount(); icons();
+</script>
+</body>
+</html>

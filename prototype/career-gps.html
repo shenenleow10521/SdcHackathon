@@ -1,0 +1,953 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HalaTuju Career GPS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: navigation-app shell. Route planner sidebar on the left, full-bleed tilted city map on the right with floating agent, timeline and view controls. Stacks map-first on phones. */
+:root {
+  --bg: #eef1f5;
+  --panel: #ffffff;
+  --panel-2: #f6f8fa;
+  --ink: #0f1722;
+  --ink-2: #485364;
+  --muted: #667182;
+  --line: #e2e7ed;
+  --accent: #2a78d6;
+  --accent-ink: #ffffff;
+  --accent-wash: #e8f1fc;
+  --learn: #eb6834;
+  --good-ink: #0b6b26;
+  --good-wash: #e3f4e6;
+  --warn-ink: #8a5300;
+  --warn-wash: #fdf1d8;
+  --crit-ink: #b42828;
+  --crit-wash: #fce7e7;
+  --shadow: 0 1px 2px rgba(15, 23, 34, 0.06), 0 4px 8px rgba(15, 23, 34, 0.06);
+
+  /* map palette (hex, read by the map engine) */
+  --map-sea: #dde4ec;
+  --map-land: #f5f7f9;
+  --map-road: #ffffff;
+  --map-casing: #d3dbe4;
+  --map-water: #4f9fe0;
+  --map-have: #2a78d6;
+  --map-learn: #eb6834;
+  --map-other: #c5ccd6;
+  --map-role: #5b6676;
+  --map-flood: #8ca7c0;
+  --map-amber: #eda100;
+  --map-red: #e34948;
+  --map-route-casing: #ffffff;
+  --map-alt: #9aa6b6;
+  --d-grow: rgba(12, 163, 12, 0.08);
+  --d-aug: rgba(237, 161, 0, 0.08);
+  --d-hold: rgba(110, 120, 135, 0.06);
+  --d-low: rgba(208, 59, 59, 0.07);
+
+  --font: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --z-map-ui: 10;
+  --z-toast: 30;
+  --z-tip: 40;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1015; --panel: #151a21; --panel-2: #1b2129; --ink: #e8ecf1; --ink-2: #aeb8c5; --muted: #8b96a6; --line: #262d37;
+    --accent: #3987e5; --accent-ink: #ffffff; --accent-wash: #16263a; --learn: #d95926;
+    --good-ink: #7fd38f; --good-wash: #15291b; --warn-ink: #f0c56a; --warn-wash: #2e2410; --crit-ink: #f19c9c; --crit-wash: #331a1a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+    --map-sea: #0a0d11; --map-land: #141920; --map-road: #2a313b; --map-casing: #0d1015; --map-water: #2b77bd;
+    --map-have: #3987e5; --map-learn: #d95926; --map-other: #3b434f; --map-role: #9aa5b5; --map-flood: #34506b;
+    --map-amber: #c98500; --map-red: #e66767; --map-route-casing: #0d1015; --map-alt: #5d6878;
+    --d-grow: rgba(12, 163, 12, 0.10); --d-aug: rgba(237, 161, 0, 0.09); --d-hold: rgba(140, 150, 165, 0.06); --d-low: rgba(208, 59, 59, 0.10);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1015; --panel: #151a21; --panel-2: #1b2129; --ink: #e8ecf1; --ink-2: #aeb8c5; --muted: #8b96a6; --line: #262d37;
+  --accent: #3987e5; --accent-ink: #ffffff; --accent-wash: #16263a; --learn: #d95926;
+  --good-ink: #7fd38f; --good-wash: #15291b; --warn-ink: #f0c56a; --warn-wash: #2e2410; --crit-ink: #f19c9c; --crit-wash: #331a1a;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+  --map-sea: #0a0d11; --map-land: #141920; --map-road: #2a313b; --map-casing: #0d1015; --map-water: #2b77bd;
+  --map-have: #3987e5; --map-learn: #d95926; --map-other: #3b434f; --map-role: #9aa5b5; --map-flood: #34506b;
+  --map-amber: #c98500; --map-red: #e66767; --map-route-casing: #0d1015; --map-alt: #5d6878;
+  --d-grow: rgba(12, 163, 12, 0.10); --d-aug: rgba(237, 161, 0, 0.09); --d-hold: rgba(140, 150, 165, 0.06); --d-low: rgba(208, 59, 59, 0.10);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+button, select, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- shell ---------- */
+.app {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 384px minmax(0, 1fr);
+  grid-template-areas: "side map";
+}
+.side {
+  grid-area: side; min-width: 0; overflow-y: auto; background: var(--panel); border-right: 1px solid var(--line);
+  padding-block: 18px 24px;
+  padding-left: max(18px, env(safe-area-inset-left, 0px));
+  padding-right: 18px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.mapwrap { grid-area: map; position: relative; min-width: 0; background: var(--map-sea); }
+#map { position: absolute; inset: 0; }
+.agents { grid-area: map; align-self: start; justify-self: end; z-index: var(--z-map-ui); margin: 16px max(16px, env(safe-area-inset-right, 0px)) 0 0; width: 300px; }
+
+@media (max-width: 900px) {
+  html, body { height: auto; }
+  .app { height: auto; grid-template-columns: minmax(0, 1fr); grid-template-areas: "map" "agents" "side"; }
+  .mapwrap { height: 68svh; min-height: 460px; }
+  .agents { justify-self: stretch; width: auto; margin: 12px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); }
+  .side { border-right: 0; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+/* ---------- sidebar ---------- */
+.brand { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand-mark { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.brand-mark svg { width: 28px; height: 28px; }
+.tag { font-size: 11.5px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: var(--warn-wash); color: var(--warn-ink); white-space: nowrap; }
+
+.profile { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; }
+.avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--accent-wash); color: var(--accent); display: grid; place-items: center; font-weight: 700; }
+.profile .name { font-weight: 600; }
+.profile .meta { color: var(--ink-2); font-size: 13px; }
+.sync { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.sync i { width: 6px; height: 6px; border-radius: 50%; background: var(--good-ink); }
+
+.score { background: var(--panel-2); border-radius: var(--r-md); padding: 14px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; align-items: center; }
+.score-num { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+.score-num small { font-size: 16px; font-weight: 600; color: var(--ink-2); }
+.score-label { font-weight: 600; font-size: 13px; }
+.score-sub { font-size: 12.5px; color: var(--ink-2); }
+.score-sub b { color: var(--good-ink); font-weight: 600; }
+.spark { grid-column: 1 / -1; display: flex; align-items: end; gap: 8px; margin-top: 6px; }
+.spark svg { flex: 1; height: 34px; min-width: 0; }
+.spark span { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+.field-label { font-size: 12px; font-weight: 600; color: var(--ink-2); margin-bottom: 6px; display: block; }
+.dest { display: grid; gap: 6px; }
+.dest-row { display: flex; align-items: center; gap: 10px; background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 0 10px; }
+.dest-row .dot-from { width: 10px; height: 10px; border-radius: 50%; border: 2.5px solid var(--accent); flex: none; }
+.dest-row .dot-to { width: 10px; height: 10px; border-radius: 2px; background: var(--learn); flex: none; }
+.dest-row select, .dest-row .from { flex: 1; min-width: 0; border: 0; background: transparent; padding: 9px 0; font-weight: 500; }
+.dest-row select { cursor: pointer; }
+.dest-row .from { color: var(--ink-2); }
+
+.options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.opt { text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 9px 10px; display: grid; gap: 2px; transition: border-color .18s ease-out, background-color .18s ease-out; }
+.opt:hover { border-color: var(--muted); }
+.opt[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-wash); }
+.opt .k { font-size: 12px; font-weight: 600; color: var(--ink-2); display: flex; flex-wrap: wrap; align-items: center; gap: 0 5px; }
+.opt .v { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.opt .r { font-size: 11.5px; color: var(--ink-2); }
+.opt .rec { font-size: 10.5px; font-weight: 700; color: var(--accent); }
+.opt-note { font-size: 12.5px; color: var(--ink-2); margin: 8px 0 0; }
+
+.eta { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.eta h2 { margin: 0; font-size: 15px; font-weight: 600; }
+.eta .big { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.eta .sm { color: var(--ink-2); font-size: 13px; }
+.risk { font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+.risk.low { background: var(--good-wash); color: var(--good-ink); }
+.risk.med { background: var(--warn-wash); color: var(--warn-ink); }
+.risk.high { background: var(--crit-wash); color: var(--crit-ink); }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; }
+.steps li { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 10px; padding: 10px 0; position: relative; cursor: pointer; border-radius: var(--r-sm); }
+.steps li:hover .t { color: var(--accent); }
+.steps li:not(:last-child)::before { content: ""; position: absolute; left: 13px; top: 34px; bottom: -6px; border-left: 2px dotted var(--line); }
+.ico { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; background: var(--panel-2); color: var(--ink-2); position: relative; z-index: 1; }
+.ico.start { background: var(--accent); color: var(--accent-ink); }
+.ico.have { background: var(--accent-wash); color: var(--accent); }
+.ico.learn { background: var(--panel); border: 2.5px solid var(--learn); color: var(--ink); }
+.ico.arrive { background: var(--learn); color: #fff; }
+.steps .t { font-weight: 600; transition: color .15s ease-out; }
+.steps .s { color: var(--ink-2); font-size: 13px; }
+.steps .c { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.steps .w { font-size: 13px; color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; padding-top: 2px; }
+
+.approve { display: grid; gap: 8px; border-top: 1px solid var(--line); padding-top: 16px; }
+.btn-primary { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: var(--r-sm); padding: 10px 14px; font-weight: 600; transition: filter .15s ease-out; }
+.btn-primary:hover { filter: brightness(1.06); }
+.btn-primary:disabled { opacity: .6; cursor: default; filter: none; }
+.approve p { margin: 0; font-size: 12.5px; color: var(--ink-2); }
+.foot { font-size: 12px; color: var(--muted); margin: 0; }
+
+/* ---------- floating map UI ---------- */
+.float { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow); }
+.agents { padding: 12px; display: grid; gap: 10px; }
+.agents-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.agents-head h3 { margin: 0; font-size: 13px; font-weight: 600; }
+.fresh { font-size: 11.5px; color: var(--muted); }
+.agent-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.agent-list li { display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 8px; align-items: start; }
+.st { width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; background: var(--good-ink); }
+.st.idle { background: var(--muted); }
+.st.run { background: var(--accent); animation: pulse 1s ease-out infinite; }
+.agent-list .an { font-weight: 600; font-size: 13px; }
+.agent-list .ad { font-size: 12px; color: var(--ink-2); }
+.log { list-style: none; margin: 0; padding: 8px 10px; background: var(--panel-2); border-radius: var(--r-sm); display: grid; gap: 4px; font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.log li::before { content: "› "; color: var(--accent); font-weight: 700; }
+.agent-actions { display: flex; gap: 8px; }
+.btn { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 7px 10px; font-weight: 600; font-size: 13px; transition: background-color .15s ease-out; }
+.btn:hover { background: var(--panel-2); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); flex: 1; }
+.btn.primary:hover { filter: brightness(1.06); background: var(--accent); }
+.btn:disabled { opacity: .55; cursor: default; }
+
+.timeline {
+  position: absolute; z-index: var(--z-map-ui); left: 50%; transform: translateX(-50%);
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  display: flex; align-items: center; gap: 12px; padding: 8px 12px; flex-wrap: wrap; justify-content: center;
+  max-width: calc(100% - 32px);
+}
+.timeline .lbl { font-size: 12px; font-weight: 600; color: var(--ink-2); }
+.timeline input[type="range"] { width: 150px; accent-color: var(--accent); }
+.year { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 4ch; }
+.seg { display: inline-flex; background: var(--panel-2); border-radius: var(--r-sm); padding: 3px; gap: 2px; }
+.seg button { border: 0; background: transparent; padding: 4px 10px; border-radius: 6px; font-size: 12.5px; color: var(--ink-2); font-weight: 500; }
+.seg button[aria-pressed="true"] { background: var(--panel); color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+.tide { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-2); }
+.tide i { width: 12px; height: 12px; border-radius: 3px; background: var(--map-water); opacity: .8; }
+.iconbtn { width: 32px; height: 32px; display: grid; place-items: center; border: 0; background: transparent; border-radius: var(--r-sm); color: var(--ink); font-weight: 700; font-size: 12px; }
+.iconbtn:hover { background: var(--panel-2); }
+
+.viewctl { position: absolute; z-index: var(--z-map-ui); right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: grid; padding: 4px; gap: 2px; }
+.legend { position: absolute; z-index: var(--z-map-ui); left: 16px; top: 60px; padding: 10px 12px; display: grid; gap: 6px; font-size: 12px; color: var(--ink-2); }
+.legend .row { display: flex; align-items: center; gap: 8px; }
+.sw { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.sw.have { background: var(--map-have); }
+.sw.learn { background: var(--map-learn); }
+.sw.water { background: var(--map-water); opacity: .8; }
+.sw.traffic { background: linear-gradient(90deg, var(--map-amber) 50%, var(--map-red) 50%); border-radius: 2px; height: 5px; }
+.sw.route { background: var(--accent); height: 5px; border-radius: 2px; }
+.axis { font-weight: 600; color: var(--ink); }
+.chip-top { position: absolute; z-index: var(--z-map-ui); left: 16px; top: 16px; display: flex; gap: 8px; flex-wrap: wrap; max-width: calc(100% - 350px); }
+.chip-top .float { padding: 6px 10px; font-size: 12px; color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; }
+.chip-top .float b { color: var(--ink); font-weight: 600; }
+.live { width: 7px; height: 7px; border-radius: 50%; background: var(--good-ink); }
+@media (max-width: 900px) {
+  .legend { display: none; }
+  .chip-top { max-width: calc(100% - 32px); }
+  .timeline { gap: 8px; padding: 6px 8px; }
+  .timeline input[type="range"] { width: 96px; }
+  .viewctl { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+}
+
+.toast {
+  position: absolute; z-index: var(--z-toast); left: 50%; top: 64px; transform: translate(-50%, -8px); opacity: 0;
+  padding: 10px 14px; display: grid; gap: 2px; width: min(420px, calc(100% - 32px)); pointer-events: none;
+  transition: opacity .22s ease-out, transform .22s ease-out;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast .tt { font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.toast .td { font-size: 12.5px; color: var(--ink-2); }
+.badge-warn { font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: var(--warn-wash); color: var(--warn-ink); }
+.badge-info { font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: var(--accent-wash); color: var(--accent); }
+
+.tip { position: absolute; z-index: var(--z-tip); pointer-events: none; padding: 9px 11px; min-width: 200px; font-size: 12.5px; }
+.tip b { display: block; font-size: 13px; margin-bottom: 2px; }
+.tip .k { color: var(--muted); font-size: 11.5px; margin-bottom: 6px; display: block; }
+.tip .row { display: flex; justify-content: space-between; gap: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.tip .row span:last-child { color: var(--ink); font-weight: 600; }
+
+/* map markers */
+.maplibregl-map { position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; }
+.maplibregl-canvas-container, .maplibregl-canvas { position: absolute; left: 0; top: 0; }
+.maplibregl-canvas-container.maplibregl-interactive { cursor: grab; }
+.maplibregl-canvas-container.maplibregl-interactive:active { cursor: grabbing; }
+.maplibregl-marker { position: absolute; top: 0; left: 0; will-change: transform; }
+.mk { pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.pill { background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px 3px 4px; font-size: 12px; font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+.pill.plain { padding-left: 9px; }
+.pill .n { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 10.5px; font-weight: 700; border: 2px solid var(--learn); background: var(--panel); }
+.pill .h { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-wash); color: var(--accent); font-size: 10px; }
+.pill .fl { font-size: 10.5px; font-weight: 700; color: var(--crit-ink); }
+.mk.hide { display: none; }
+.district { pointer-events: none; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); opacity: .75; white-space: nowrap; }
+.you { position: relative; width: 22px; height: 22px; }
+.you::before { content: ""; position: absolute; inset: -10px; border-radius: 50%; background: var(--accent); opacity: .18; animation: halo 2s ease-out infinite; }
+.you::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--accent); border: 3px solid var(--panel); box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+.flag { width: 26px; height: 32px; }
+.incident { pointer-events: none; display: inline-flex; align-items: center; gap: 6px; background: var(--warn-wash); color: var(--warn-ink); border: 1px solid var(--map-amber); border-radius: 999px; padding: 3px 9px; font-size: 12px; font-weight: 700; white-space: nowrap; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+
+.rerouting { position: absolute; z-index: var(--z-toast); left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 10px 16px; font-weight: 600; display: inline-flex; gap: 10px; align-items: center; opacity: 0; pointer-events: none; transition: opacity .2s ease-out; }
+.rerouting.show { opacity: 1; }
+.spin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--accent-wash); border-top-color: var(--accent); animation: spin .8s linear infinite; }
+.nomap { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-2); padding: 24px; text-align: center; }
+
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(42,120,214,.5); } 100% { box-shadow: 0 0 0 7px rgba(42,120,214,0); } }
+@keyframes halo { 0% { transform: scale(.6); opacity: .35; } 100% { transform: scale(1.6); opacity: 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .you::before, .st.run, .spin { animation: none; }
+  .toast, .rerouting, .opt, .btn, .steps .t { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Route planner">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7" fill="var(--accent)"/><path d="M14 5 L20 21 L14 17.5 L8 21 Z" fill="#fff"/></svg>
+        HalaTuju
+      </div>
+      <span class="tag" title="All people, numbers, sources and courses on this page are sample data">Sample data</span>
+    </div>
+
+    <div class="profile">
+      <div class="avatar" aria-hidden="true">AS</div>
+      <div>
+        <div class="name">Aisyah binti Salleh</div>
+        <div class="meta">Accounts payable clerk · 9 years · Cyberjaya</div>
+        <div class="sync"><i></i>Synced from LinkedIn PDF · 10 skills · 6 h/week to learn</div>
+      </div>
+    </div>
+
+    <div class="score" id="score"></div>
+
+    <div class="dest">
+      <span class="field-label">Route</span>
+      <div class="dest-row"><span class="dot-from"></span><span class="from">Accounts Payable Clerk (you)</span></div>
+      <div class="dest-row"><span class="dot-to"></span>
+        <label class="sr" for="dest" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Destination role</label>
+        <select id="dest">
+          <option value="esgRole">ESG & Carbon Reporting Analyst</option>
+          <option value="faRole">AI-Augmented Finance Analyst</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <div class="options" id="options" role="group" aria-label="Route options"></div>
+      <p class="opt-note" id="opt-note"></p>
+    </div>
+
+    <div class="eta" id="eta"></div>
+    <ol class="steps" id="steps"></ol>
+
+    <div class="approve">
+      <button class="btn-primary" id="approve" type="button">Send route to my advisor</button>
+      <p id="approve-note">You or your career advisor approve the route before it goes into your learning plan. The app suggests; people decide.</p>
+    </div>
+    <p class="foot">Sample data for a hackathon demo. Planned sources: ILO generative-AI exposure index, O*NET task lists, TalentCorp 2024 workforce study, live AI and job-market signals.</p>
+  </aside>
+
+  <section class="mapwrap" aria-label="Career map">
+    <div id="map"></div>
+    <div class="chip-top">
+      <div class="float"><span class="live"></span><span>Knowledge base updated <b id="fresh-when">3 days ago</b> · <b id="fresh-n">214</b> sources</span></div>
+    </div>
+    <div class="toast float" id="toast" role="status" aria-live="polite"></div>
+    <div class="rerouting float" id="rerouting"><span class="spin"></span>Rerouting…</div>
+    <div class="tip float" id="tip" hidden></div>
+
+    <div class="legend float" aria-label="Map legend">
+      <div class="row"><span class="axis">↑ More employer demand · → More AI exposure</span></div>
+      <div class="row"><span class="sw have"></span>Your skills (height = demand)</div>
+      <div class="row"><span class="sw learn"></span>Skills on your route</div>
+      <div class="row"><span class="sw route"></span>Your route</div>
+      <div class="row"><span class="sw traffic"></span>Traffic = AI exposure</div>
+      <div class="row"><span class="sw water"></span>AI tide: skills AI has taken over</div>
+    </div>
+
+    <div class="timeline float" role="group" aria-label="Forecast controls">
+      <button class="iconbtn" id="play" type="button" aria-label="Play the forecast from 2026 to 2030">▶</button>
+      <input type="range" id="year" min="2026" max="2030" step="1" value="2026" aria-label="Forecast year">
+      <span class="year" id="year-out">2026</span>
+      <div class="seg" role="group" aria-label="AI adoption speed">
+        <button type="button" id="scn-moderate" data-scn="moderate" aria-pressed="true">Moderate AI</button>
+        <button type="button" id="scn-fast" data-scn="fast" aria-pressed="false">Fast AI</button>
+      </div>
+      <span class="tide"><i></i><span id="tide-out">Tide: low</span></span>
+    </div>
+
+    <div class="viewctl float" role="group" aria-label="Map view">
+      <button class="iconbtn" id="tilt" type="button" aria-label="Switch to 2D view">2D</button>
+      <button class="iconbtn" id="labels" type="button" aria-label="Show all labels">Aa</button>
+      <button class="iconbtn" id="recenter" type="button" aria-label="Recenter the map">⌖</button>
+    </div>
+  </section>
+
+  <section class="agents float" aria-label="AI agents">
+    <div class="agents-head">
+      <h3>Agents</h3>
+      <span class="fresh" id="agents-fresh">Last scout run 3 days ago</span>
+    </div>
+    <ul class="agent-list" id="agent-list"></ul>
+    <ul class="log" id="log" hidden></ul>
+    <div class="agent-actions">
+      <button class="btn primary" id="scout" type="button">Run market scout now</button>
+      <button class="btn" id="reset" type="button" hidden>Reset</button>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script>
+/*LOGIC-START*/
+// ======================= Sample data (illustrative, not research results) =======================
+// x = AI exposure (0-100), y = demand (-75..75): the city is laid out on the same axes as the skill quadrant.
+// e = AI exposure [2026, 2030 moderate, 2030 fast]; d = demand change % [same].
+const NODES = {
+  ap:      { name: "Accounts Payable Clerk", type: "role", x: 82, y: -46, e: [.80, .88, .93], d: [-10, -30, -42] },
+  esgRole: { name: "ESG & Carbon Reporting Analyst", type: "role", x: 24, y: 66, e: [.28, .33, .38], d: [36, 52, 58] },
+  faRole:  { name: "AI-Augmented Finance Analyst", type: "role", x: 66, y: 66, e: [.42, .48, .52], d: [24, 32, 34] },
+
+  inv:     { name: "Invoice data entry", type: "have", level: 5, x: 92, y: -22, e: [.86, .93, .97], d: [-14, -42, -55] },
+  three:   { name: "Three-way matching", type: "have", level: 5, x: 78, y: -10, e: [.74, .84, .91], d: [-4, -30, -44] },
+  pay:     { name: "Payment runs", type: "have", level: 4, x: 68, y: -30, e: [.64, .78, .86], d: [-12, -28, -38] },
+  recon:   { name: "Vendor reconciliation", type: "have", level: 4, x: 58, y: 0, e: [.54, .68, .77], d: [2, -14, -24] },
+  erp:     { name: "ERP operation (SAP)", type: "have", level: 4, x: 46, y: -16, e: [.42, .54, .61], d: [4, -2, -8] },
+  excel:   { name: "Spreadsheet analysis", type: "have", level: 4, x: 50, y: 16, e: [.48, .61, .69], d: [12, 6, 0] },
+  tax:     { name: "SST compliance", type: "have", level: 3, x: 30, y: -24, e: [.33, .45, .52], d: [-2, -4, -8] },
+  audit:   { name: "Audit trail documentation", type: "have", level: 4, x: 34, y: 10, e: [.38, .49, .56], d: [18, 26, 30] },
+  dispute: { name: "Vendor dispute resolution", type: "have", level: 3, x: 18, y: -8, e: [.22, .30, .35], d: [6, 10, 12] },
+  process: { name: "Process improvement", type: "have", level: 2, x: 12, y: 22, e: [.16, .21, .24], d: [16, 24, 28] },
+
+  esgdata: { name: "ESG data management", type: "learn", x: 40, y: 32, e: [.35, .45, .52], d: [24, 40, 46], course: "ESG data management · 18 h · paid (ask HR about HRD Corp)" },
+  ghg:     { name: "GHG emissions accounting", type: "learn", x: 28, y: 46, e: [.30, .38, .45], d: [34, 50, 56], course: "GHG accounting fundamentals · 24 h · free" },
+  disc:    { name: "Sustainability disclosure", type: "learn", x: 14, y: 40, e: [.22, .31, .38], d: [26, 44, 50], course: "Sustainability reporting basics · 18 h · free" },
+  viz:     { name: "Dashboard reporting", type: "learn", x: 58, y: 32, e: [.46, .57, .64], d: [22, 26, 22], course: "Power BI dashboards · 12 h · free" },
+  fin:     { name: "Financial analysis", type: "learn", x: 70, y: 44, e: [.40, .46, .50], d: [28, 36, 38], course: "Financial analysis and forecasting · 24 h · paid" },
+  aisup:   { name: "Supervising AI workflows", type: "learn", x: 4, y: 52, e: [.12, .16, .18], d: [30, 44, 54], course: "Supervising AI agents in finance · 12 h · free" }
+};
+const OWNED = Object.keys(NODES).filter(k => NODES[k].type === "have");
+// [from, to, weeks at 6 h/week, why this road exists]
+const EDGES = [
+  ...OWNED.map(k => ["ap", k, 0, "A skill you already have"]),
+  ["recon", "ghg", 4, "Both trace every number back to a source document."],
+  ["recon", "esgdata", 3, "Reconciliation habits carry over to checking ESG data."],
+  ["excel", "esgdata", 3, "Cleaning and merging data is the core of ESG data work."],
+  ["audit", "esgdata", 2, "Evidence trails are what ESG data needs most."],
+  ["esgdata", "ghg", 3, "Clean activity data is the input to emissions accounting."],
+  ["audit", "disc", 3, "Disclosures need the same complete evidence trail."],
+  ["disc", "ghg", 3, "Disclosure work shows you which emissions to count."],
+  ["ghg", "esgRole", 2, "Portfolio project: a sample emissions report."],
+  ["disc", "esgRole", 4, "Portfolio project: a sample climate disclosure."],
+  ["process", "aisup", 2, "You already redesign workflows; now some steps run on AI."],
+  ["aisup", "esgRole", 8, "Lead AI-assisted ESG reporting; a longer on-the-job ramp."],
+  ["excel", "viz", 2, "Moves your spreadsheet summaries onto shared dashboards."],
+  ["viz", "fin", 3, "Dashboards are where analysis gets read."],
+  ["excel", "fin", 4, "Turns spreadsheet skill into forecasts managers act on."],
+  ["aisup", "fin", 3, "Analysts now review AI-built forecasts."],
+  ["fin", "faRole", 2, "Portfolio project: a sample monthly variance report."],
+  ["viz", "faRole", 5, "Portfolio project: a finance dashboard."]
+];
+// The market scout's sample finding
+const SIGNAL = {
+  node: "recon", boost: 0.18,
+  title: "AI agents now close the month-end books",
+  detail: "Vendor reconciliation: AI exposure 54% → 72%. Sample source · 21 Oct 2026",
+  short: "AI traffic: month-end close agents"
+};
+
+// ======================= Model =======================
+const S = { year: 2026, scenario: "moderate", signal: false };
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+function interp(arr, year, scenario) {
+  const f = clamp((year - 2026) / 4, 0, 1);
+  const end = scenario === "fast" ? arr[2] : arr[1];
+  return arr[0] + (end - arr[0]) * f;
+}
+function exposure(id, year = S.year, scenario = S.scenario) {
+  const n = NODES[id];
+  return clamp(interp(n.e, year, scenario) + (S.signal && SIGNAL.node === id ? SIGNAL.boost : 0), 0, 0.99);
+}
+function demand(id, year = S.year, scenario = S.scenario) { return interp(NODES[id].d, year, scenario); }
+function tide(year = S.year, scenario = S.scenario) {
+  return clamp((year - 2026) / 4, 0, 1) * (scenario === "fast" ? 1 : 0.6);
+}
+function flooded(id, year = S.year, scenario = S.scenario) {
+  if (NODES[id].type === "role" && id !== "ap") return false;
+  const tau = 0.85 - 0.2 * tide(year, scenario);
+  return exposure(id, year, scenario) >= tau && demand(id, year, scenario) < 0;
+}
+function zone(id, year, scenario) {
+  const e = exposure(id, year, scenario), d = demand(id, year, scenario);
+  if (d >= 0) return e < 0.5 ? "Grow" : "Augment";
+  return e < 0.5 ? "Hold" : "At risk";
+}
+const isSkill = id => NODES[id].type !== "role";
+
+// Edge cost for each route option. Closed roads: a skill under the AI tide cannot be routed through.
+function edgeCost(mode, to, weeks) {
+  const base = 0.01; // tie-break: fewer turns wins
+  if (!isSkill(to)) return (mode === "safest" ? 0.3 * weeks : weeks) + base;
+  const e = exposure(to);
+  if (mode === "fastest") return weeks + base + 30 * Math.max(0, e - 0.5) ** 2;          // traffic slows you down
+  if (mode === "safest") return 0.3 * weeks + base + 10 * e * e;                          // avoid AI-exposed skills
+  const worst = clamp(NODES[to].e[2] + (S.signal && SIGNAL.node === to ? SIGNAL.boost : 0), 0, 0.99);
+  return weeks + base + 6 * worst * worst;                                                // no-regret: holds even under fast AI by 2030
+}
+function shortestPath(dest, mode) {
+  const dist = { ap: 0 }, prev = {}, done = new Set();
+  while (true) {
+    let u = null;
+    for (const k in dist) if (!done.has(k) && (u === null || dist[k] < dist[u])) u = k;
+    if (u === null || u === dest) break;
+    done.add(u);
+    for (const [a, b, w, why] of EDGES) {
+      if (a !== u || done.has(b)) continue;
+      if (b !== dest && isSkill(b) && flooded(b)) continue;
+      const nd = dist[u] + edgeCost(mode, b, w);
+      if (dist[b] === undefined || nd < dist[b]) { dist[b] = nd; prev[b] = { from: u, w, why }; }
+    }
+  }
+  if (dist[dest] === undefined) return null;
+  const legs = [];
+  for (let v = dest; v !== "ap"; v = prev[v].from) legs.unshift({ from: prev[v].from, to: v, weeks: prev[v].w, why: prev[v].why });
+  const nodes = ["ap", ...legs.map(l => l.to)];
+  const weeks = legs.reduce((s, l) => s + l.weeks, 0);
+  const skills = nodes.filter(isSkill);
+  const avgE = skills.reduce((s, k) => s + exposure(k), 0) / Math.max(1, skills.length);
+  return { mode, dest, legs, nodes, weeks, avgE, key: nodes.join(">") };
+}
+function riskOf(avgE) { return avgE < 0.35 ? ["low", "Low AI risk"] : avgE < 0.55 ? ["med", "Medium AI risk"] : ["high", "High AI risk"]; }
+function futureScore(extra = []) {
+  const ids = [...OWNED, ...extra];
+  const safe = ids.filter(k => !flooded(k) && (zone(k) === "Grow" || zone(k) === "Augment")).length;
+  return Math.round(100 * safe / ids.length);
+}
+/*LOGIC-END*/
+
+// ======================= UI state =======================
+const UI = { dest: "esgRole", mode: "fastest", labelsAll: false, pitched: true, approved: false };
+const MODES = [
+  { id: "fastest", label: "Fastest" },
+  { id: "noregret", label: "No-regret" },
+  { id: "safest", label: "Safest" }
+];
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let routes = {}, current = null;
+
+function computeRoutes() {
+  routes = {};
+  MODES.forEach(m => routes[m.id] = shortestPath(UI.dest, m.id));
+  current = routes[UI.mode];
+}
+
+// ---------- sidebar ----------
+const $ = id => document.getElementById(id);
+function renderScore() {
+  const now = futureScore();
+  const learned = current ? current.nodes.filter(k => NODES[k].type === "learn") : [];
+  const after = futureScore(learned);
+  const hist = [now + 7, now + 6, now + 4, now + 3, now + 1, now]; // sample history
+  const w = 220, h = 34, max = Math.max(...hist) + 2, min = Math.min(...hist) - 2;
+  const px = i => (i / (hist.length - 1)) * (w - 6) + 3, py = v => h - 3 - ((v - min) / (max - min)) * (h - 6);
+  const line = hist.map((v, i) => `${i ? "L" : "M"}${px(i).toFixed(1)},${py(v).toFixed(1)}`).join(" ");
+  const area = `${line} L${px(hist.length - 1)},${h} L${px(0)},${h} Z`;
+  $("score").innerHTML = `
+    <div class="score-num">${now}<small>%</small></div>
+    <div><div class="score-label">Future-proof score</div>
+      <div class="score-sub">Share of your skills safe from AI in ${S.year}. After this route: <b>${after}%</b></div></div>
+    <div class="spark">
+      <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-label="Score over the last 6 months, sample history">
+        <path d="${area}" fill="var(--accent)" opacity=".10"/>
+        <path d="${line}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+        <circle cx="${px(hist.length - 1)}" cy="${py(now)}" r="3.5" fill="var(--accent)" stroke="var(--panel)" stroke-width="2"/>
+      </svg>
+      <span>6 months · sample</span>
+    </div>`;
+}
+function renderOptions() {
+  $("options").innerHTML = MODES.map(m => {
+    const r = routes[m.id];
+    if (!r) return `<button class="opt" type="button" disabled><span class="k">${m.label}</span><span class="v">–</span><span class="r">No open road</span></button>`;
+    const [, rl] = riskOf(r.avgE);
+    return `<button class="opt" type="button" data-mode="${m.id}" aria-pressed="${UI.mode === m.id}">
+      <span class="k">${m.label}${m.id === "noregret" ? ' <span class="rec">Recommended</span>' : ""}</span>
+      <span class="v">${r.weeks} wk</span><span class="r">${rl}</span></button>`;
+  }).join("");
+  $("options").querySelectorAll(".opt[data-mode]").forEach(b => b.addEventListener("click", () => { UI.mode = b.dataset.mode; refresh(false); }));
+  const same = MODES.filter(m => m.id !== UI.mode && routes[m.id] && current && routes[m.id].key === current.key).map(m => m.label);
+  const why = { fastest: "Fewest weeks, counting AI traffic on the way.", noregret: "Stays a good route even if AI moves fast. Closed roads are avoided.", safest: "Builds on the skills AI is least likely to take over." }[UI.mode];
+  $("opt-note").textContent = why + (same.length ? ` Same route as ${same.join(" and ")}.` : "");
+}
+function renderSteps() {
+  if (!current) { $("eta").innerHTML = "<h2>No open route</h2>"; $("steps").innerHTML = ""; return; }
+  const [rc, rl] = riskOf(current.avgE);
+  $("eta").innerHTML = `<h2>${NODES[UI.dest].name}</h2>
+    <div><span class="big">${current.weeks} weeks</span> <span class="sm">at 6 h/week</span> <span class="risk ${rc}">${rl}</span></div>`;
+  let n = 0;
+  const items = [`<li data-node="ap"><span class="ico start">●</span><div><div class="t">Start: Accounts Payable Clerk</div><div class="s">You are here. ${flooded("ap") ? "This role is under the AI tide in " + S.year + "." : "AI is already changing this role."}</div></div><span class="w"></span></li>`];
+  current.legs.forEach(l => {
+    const node = NODES[l.to];
+    if (node.type === "have") items.push(`<li data-node="${l.to}"><span class="ico have">✓</span><div><div class="t">Head to ${node.name}</div><div class="s">You already have this skill (level ${node.level} of 5).</div></div><span class="w">0 wk</span></li>`);
+    else if (node.type === "learn") { n++; items.push(`<li data-node="${l.to}"><span class="ico learn">${n}</span><div><div class="t">Turn onto ${node.name}</div><div class="s">${l.why}</div><div class="c">${node.course}</div></div><span class="w">${l.weeks} wk</span></li>`); }
+    else items.push(`<li data-node="${l.to}"><span class="ico arrive">⚑</span><div><div class="t">Arrive: ${node.name}</div><div class="s">${l.why}</div></div><span class="w">${l.weeks} wk</span></li>`);
+  });
+  $("steps").innerHTML = items.join("");
+  $("steps").querySelectorAll("li").forEach(li => li.addEventListener("click", () => flyToNode(li.dataset.node)));
+}
+function renderAgents(state = {}) {
+  const A = [
+    ["Interviewer", "Read your LinkedIn PDF and asked 3 follow-up questions", "done"],
+    ["Job analyst", "Checked 31 tasks in your current job", "done"],
+    ["Market scout", state.scout || "Watches AI news and job postings daily", state.scoutSt || "idle"],
+    ["Career planner", state.plan || `Planned 3 routes to ${NODES[UI.dest].name}`, state.planSt || "done"],
+    ["Fact checker", state.fact || "14 of 14 claims have a source", state.factSt || "done"]
+  ];
+  $("agent-list").innerHTML = A.map(([n, d, s]) => `<li><span class="st ${s === "done" ? "" : s}"></span><div><div class="an">${n}</div><div class="ad">${d}</div></div></li>`).join("");
+}
+function renderTimeline() {
+  $("year-out").textContent = S.year;
+  $("year").value = S.year;
+  const t = tide();
+  $("tide-out").textContent = "Tide: " + (t < 0.25 ? "low" : t < 0.65 ? "rising" : "high");
+}
+
+// ======================= Map =======================
+const K = 0.0005;
+const LL = (x, y) => [x * K, y * K];
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+let map = null, mapReady = false, markers = {}, incidentMarker = null, dash = 0;
+
+function square(x, y, h) { return [[LL(x - h, y - h), LL(x + h, y - h), LL(x + h, y + h), LL(x - h, y + h), LL(x - h, y - h)]]; }
+function circle(x, y, rx, ry, steps = 48, a0 = 0, a1 = Math.PI * 2) {
+  const pts = [];
+  for (let i = 0; i <= steps; i++) { const a = a0 + (a1 - a0) * i / steps; pts.push(LL(x + rx * Math.cos(a), y + ry * Math.sin(a))); }
+  return pts;
+}
+function roadCoords(a, b) {
+  const A = NODES[a], B = NODES[b];
+  return [LL(A.x, A.y), LL(B.x, A.y), LL(B.x, B.y)]; // streets run east-west first, then north-south
+}
+
+function buildingsGeo(year, scenario) {
+  const onRoute = new Set(current ? current.nodes : []);
+  const feats = Object.entries(NODES).map(([id, n]) => {
+    const fl = flooded(id, year, scenario);
+    const d = demand(id, year, scenario);
+    let color, height, half = 2;
+    if (n.type === "role") {
+      half = 3; height = id === UI.dest ? 900 : id === "ap" ? 320 : 600;
+      color = id === UI.dest ? css("--map-learn") : css("--map-role");
+    } else {
+      height = 140 + (d + 60) * 6;
+      color = n.type === "have" ? css("--map-have") : onRoute.has(id) ? css("--map-learn") : css("--map-other");
+    }
+    if (fl) { color = css("--map-flood"); height *= 0.45; }
+    return { type: "Feature", properties: { id, color, height, base: 0 }, geometry: { type: "Polygon", coordinates: square(n.x, n.y, half) } };
+  });
+  return { type: "FeatureCollection", features: feats };
+}
+function waterGeo(year, scenario) {
+  const t = tide(year, scenario) + (S.signal ? 0.06 : 0);
+  const polys = [];
+  const rx = 6 + 34 * t, ry = 12 + 46 * t;
+  const bay = circle(100, -75, rx, ry, 40, Math.PI / 2, Math.PI);
+  polys.push([[LL(100, -75), ...bay, LL(100, -75)]]);
+  Object.keys(NODES).forEach(id => { if (isSkill(id) || id === "ap") if (flooded(id, year, scenario)) polys.push([circle(NODES[id].x, NODES[id].y, 6, 6)]); });
+  return { type: "FeatureCollection", features: polys.map(p => ({ type: "Feature", properties: {}, geometry: { type: "Polygon", coordinates: p } })) };
+}
+function roadsGeo() {
+  const feats = EDGES.map(([a, b]) => {
+    const ex = Math.max(isSkill(a) ? exposure(a) : 0, isSkill(b) ? exposure(b) : 0);
+    const closed = (isSkill(b) && flooded(b)) || (isSkill(a) && flooded(a));
+    const tc = closed ? css("--map-flood") : ex >= 0.7 ? css("--map-red") : ex >= 0.5 ? css("--map-amber") : css("--map-road");
+    return { type: "Feature", properties: { tc, local: a === "ap" ? 1 : 0 }, geometry: { type: "LineString", coordinates: roadCoords(a, b) } };
+  });
+  return { type: "FeatureCollection", features: feats };
+}
+function routeGeo(r) {
+  if (!r) return { type: "FeatureCollection", features: [] };
+  const coords = [];
+  r.legs.forEach(l => { const c = roadCoords(l.from, l.to); coords.push(...(coords.length ? c.slice(1) : c)); });
+  return { type: "FeatureCollection", features: [{ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: coords } }] };
+}
+function altsGeo() {
+  const feats = [];
+  MODES.forEach(m => { const r = routes[m.id]; if (r && current && r.key !== current.key && !feats.some(f => f.properties.key === r.key)) { const g = routeGeo(r).features[0]; g.properties = { mode: m.id, key: r.key }; feats.push(g); } });
+  return { type: "FeatureCollection", features: feats };
+}
+function districtsGeo() {
+  const q = (x1, y1, x2, y2, c) => ({ type: "Feature", properties: { c }, geometry: { type: "Polygon", coordinates: [[LL(x1, y1), LL(x2, y1), LL(x2, y2), LL(x1, y2), LL(x1, y1)]] } });
+  return { type: "FeatureCollection", features: [
+    q(-8, 0, 50, 80, css("--d-grow")), q(50, 0, 108, 80, css("--d-aug")),
+    q(-8, -80, 50, 0, css("--d-hold")), q(50, -80, 108, 0, css("--d-low"))
+  ] };
+}
+
+function initMap() {
+  if (!window.maplibregl) { $("map").innerHTML = '<div class="nomap">The map library could not load. The route planner still works.</div>'; return; }
+  try {
+    map = new maplibregl.Map({
+      container: "map",
+      style: { version: 8, sources: {}, layers: [{ id: "sea", type: "background", paint: { "background-color": css("--map-sea") } }] },
+      center: LL(50, 4), zoom: 13.4, pitch: 52, bearing: -14, maxPitch: 70,
+      attributionControl: false, antialias: true, dragRotate: true
+    });
+  } catch (err) {
+    $("map").innerHTML = '<div class="nomap">This browser cannot draw 3D maps (WebGL is off). The route planner still works.</div>';
+    return;
+  }
+  map.on("load", () => {
+    map.setLight({ anchor: "viewport", color: "#ffffff", intensity: 0.35, position: [1.2, 200, 40] });
+    map.addSource("land", { type: "geojson", data: { type: "Feature", properties: {}, geometry: { type: "Polygon", coordinates: [[LL(-8, -80), LL(108, -80), LL(108, 80), LL(-8, 80), LL(-8, -80)]] } } });
+    map.addLayer({ id: "land", type: "fill", source: "land", paint: { "fill-color": css("--map-land") } });
+    map.addSource("districts", { type: "geojson", data: districtsGeo() });
+    map.addLayer({ id: "districts", type: "fill", source: "districts", paint: { "fill-color": ["get", "c"] } });
+    map.addSource("roads", { type: "geojson", data: roadsGeo() });
+    map.addLayer({ id: "roads-casing", type: "line", source: "roads", layout: { "line-join": "round", "line-cap": "round" }, paint: { "line-color": css("--map-casing"), "line-width": ["case", ["==", ["get", "local"], 1], 6, 10] } });
+    map.addLayer({ id: "roads", type: "line", source: "roads", layout: { "line-join": "round", "line-cap": "round" }, paint: { "line-color": ["get", "tc"], "line-width": ["case", ["==", ["get", "local"], 1], 3.5, 6.5] } });
+    map.addSource("alts", { type: "geojson", data: altsGeo() });
+    map.addLayer({ id: "alts", type: "line", source: "alts", layout: { "line-join": "round", "line-cap": "round" }, paint: { "line-color": css("--map-alt"), "line-width": 6, "line-opacity": 0.85 } });
+    map.addSource("route", { type: "geojson", data: routeGeo(current) });
+    map.addLayer({ id: "route-casing", type: "line", source: "route", layout: { "line-join": "round", "line-cap": "round" }, paint: { "line-color": css("--map-route-casing"), "line-width": 12 } });
+    map.addLayer({ id: "route", type: "line", source: "route", layout: { "line-join": "round", "line-cap": "round" }, paint: { "line-color": css("--accent"), "line-width": 7 } });
+    map.addLayer({ id: "route-flow", type: "line", source: "route", layout: { "line-join": "round" }, paint: { "line-color": "#ffffff", "line-width": 3, "line-opacity": 0.55, "line-dasharray": [0, 4, 3] } });
+    map.addSource("water", { type: "geojson", data: waterGeo(S.year, S.scenario) });
+    map.addLayer({ id: "water", type: "fill-extrusion", source: "water", paint: { "fill-extrusion-color": css("--map-water"), "fill-extrusion-height": 70, "fill-extrusion-opacity": 0.55 } });
+    map.addSource("buildings", { type: "geojson", data: buildingsGeo(S.year, S.scenario) });
+    map.addLayer({ id: "buildings", type: "fill-extrusion", source: "buildings", paint: {
+      "fill-extrusion-color": ["get", "color"], "fill-extrusion-height": ["get", "height"], "fill-extrusion-base": 0,
+      "fill-extrusion-opacity": 0.95, "fill-extrusion-vertical-gradient": true } });
+
+    buildMarkers();
+    fitCity(false);
+    mapReady = true;
+    syncMap();
+
+    map.on("mousemove", "buildings", e => { map.getCanvas().style.cursor = "pointer"; showTip(e.features[0].properties.id, e.point); });
+    map.on("mouseleave", "buildings", () => { map.getCanvas().style.cursor = ""; $("tip").hidden = true; });
+    map.on("click", "buildings", e => flyToNode(e.features[0].properties.id));
+    map.on("mouseenter", "alts", () => map.getCanvas().style.cursor = "pointer");
+    map.on("mouseleave", "alts", () => map.getCanvas().style.cursor = "");
+    map.on("click", "alts", e => { UI.mode = e.features[0].properties.mode; refresh(false); });
+    if (!reduceMotion) animateFlow();
+  });
+}
+function fitCity(animate) {
+  if (!map) return;
+  const narrow = $("map").clientWidth < 700;
+  const padding = { top: 70, bottom: 90, left: narrow ? 10 : 40, right: narrow ? 10 : 330 };
+  const cam = map.cameraForBounds([LL(-8, -80), LL(108, 80)], { padding });
+  const opts = { zoom: (cam ? cam.zoom : 13) + 0.3, pitch: UI.pitched ? 52 : 0, bearing: UI.pitched ? -14 : 0, center: LL(50, 0), padding };
+  animate && !reduceMotion ? map.easeTo({ ...opts, duration: 700 }) : map.jumpTo(opts);
+}
+function flyToNode(id) {
+  if (!map) return;
+  const n = NODES[id];
+  map.easeTo({ center: LL(n.x, n.y), zoom: Math.max(map.getZoom(), 14.6), duration: reduceMotion ? 0 : 700 });
+}
+
+function el(html) { const d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; }
+function buildMarkers() {
+  Object.values(markers).forEach(m => m.remove());
+  markers = {};
+  [["Growth Heights", 18, 74], ["AI Boulevard", 82, 74], ["Old Town", 18, -74], ["The Lowlands", 74, -74]].forEach(([t, x, y]) => {
+    markers["d-" + t] = new maplibregl.Marker({ element: el(`<div class="district">${t}</div>`), anchor: "center" }).setLngLat(LL(x, y)).addTo(map);
+  });
+  Object.entries(NODES).forEach(([id, n]) => {
+    const node = el(`<div class="mk"></div>`);
+    markers[id] = new maplibregl.Marker({ element: node, anchor: "top", offset: [0, 8] }).setLngLat(LL(n.x, n.y)).addTo(map);
+  });
+  markers.you = new maplibregl.Marker({ element: el(`<div class="you" aria-hidden="true"></div>`), anchor: "center" }).setLngLat(LL(NODES.ap.x, NODES.ap.y)).addTo(map);
+}
+function updateMarkers() {
+  if (!mapReady) return;
+  const onRoute = new Set(current ? current.nodes : []);
+  let step = 0;
+  const stepOf = {};
+  if (current) current.nodes.forEach(k => { if (NODES[k].type === "learn") stepOf[k] = ++step; });
+  Object.entries(NODES).forEach(([id, n]) => {
+    const m = markers[id]; if (!m) return;
+    const node = m.getElement();
+    const fl = flooded(id);
+    let html = "", show = UI.labelsAll || onRoute.has(id) || fl || n.type === "role";
+    if (id === "ap") html = `<span class="pill plain">You are here · AP Clerk${fl ? ' <span class="fl">underwater</span>' : ""}</span>`;
+    else if (n.type === "role") html = id === UI.dest
+      ? `<span class="pill plain">⚑ ${n.name} · ${current ? current.weeks + " wk" : "no route"}</span>`
+      : `<span class="pill plain">${n.name}</span>`;
+    else if (n.type === "learn") html = `<span class="pill">${stepOf[id] ? `<span class="n">${stepOf[id]}</span>` : '<span class="n">·</span>'}${n.name}</span>`;
+    else html = `<span class="pill"><span class="h">✓</span>${n.name}${fl ? ' <span class="fl">underwater</span>' : ""}</span>`;
+    node.innerHTML = html;
+    node.classList.toggle("hide", !show);
+  });
+  if (incidentMarker) incidentMarker.remove(), incidentMarker = null;
+  if (S.signal) {
+    const n = NODES[SIGNAL.node];
+    incidentMarker = new maplibregl.Marker({ element: el(`<div class="incident">⚠ ${SIGNAL.short}</div>`), anchor: "bottom", offset: [0, -30] }).setLngLat(LL(n.x, n.y)).addTo(map);
+  }
+}
+function syncMap(yearF = S.year) {
+  if (!mapReady) return;
+  map.getSource("buildings").setData(buildingsGeo(yearF, S.scenario));
+  map.getSource("water").setData(waterGeo(yearF, S.scenario));
+  map.getSource("roads").setData(roadsGeo());
+  map.getSource("route").setData(routeGeo(current));
+  map.getSource("alts").setData(altsGeo());
+  updateMarkers();
+}
+function applyMapTheme() {
+  if (!mapReady) return;
+  map.setPaintProperty("sea", "background-color", css("--map-sea"));
+  map.setPaintProperty("land", "fill-color", css("--map-land"));
+  map.setPaintProperty("roads-casing", "line-color", css("--map-casing"));
+  map.setPaintProperty("alts", "line-color", css("--map-alt"));
+  map.setPaintProperty("route-casing", "line-color", css("--map-route-casing"));
+  map.setPaintProperty("route", "line-color", css("--accent"));
+  map.setPaintProperty("water", "fill-extrusion-color", css("--map-water"));
+  map.getSource("districts").setData(districtsGeo());
+  syncMap();
+}
+function animateFlow() {
+  const seq = [[0, 4, 3], [0.5, 4, 2.5], [1, 4, 2], [1.5, 4, 1.5], [2, 4, 1], [2.5, 4, 0.5], [3, 4, 0], [0, 0.5, 3, 3.5], [0, 1, 3, 3], [0, 1.5, 3, 2.5], [0, 2, 3, 2], [0, 2.5, 3, 1.5], [0, 3, 3, 1], [0, 3.5, 3, 0.5]];
+  let last = 0;
+  const tick = t => {
+    if (t - last > 70 && mapReady) { dash = (dash + 1) % seq.length; map.setPaintProperty("route-flow", "line-dasharray", seq[dash]); last = t; }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+function showTip(id, pt) {
+  const n = NODES[id], tip = $("tip");
+  const kind = id === "ap" ? "Your current role" : n.type === "role" ? "Destination role" : n.type === "have" ? `Your skill · level ${n.level} of 5` : "Skill you could learn";
+  const z = flooded(id) ? "Under the AI tide" : zone(id);
+  tip.innerHTML = `<b>${n.name}</b><span class="k">${kind}</span>
+    <div class="row"><span>AI exposure</span><span>${Math.round(exposure(id) * 100)}%</span></div>
+    <div class="row"><span>Demand change</span><span>${(d => (d > 0 ? "+" : d < 0 ? "−" : "") + Math.abs(d) + "%")(Math.round(demand(id)))}</span></div>
+    <div class="row"><span>Zone in ${S.year}</span><span>${z}</span></div>`;
+  tip.hidden = false;
+  const W = $("map").clientWidth, tw = tip.offsetWidth;
+  tip.style.left = (pt.x + 16 + tw > W ? pt.x - 16 - tw : pt.x + 16) + "px";
+  tip.style.top = Math.max(8, pt.y - 30) + "px";
+}
+
+// ======================= interactions =======================
+let tween = null, shownYear = S.year;
+function animateYear(to) {
+  if (tween) cancelAnimationFrame(tween);
+  const from = shownYear, t0 = performance.now(), dur = reduceMotion ? 0 : 650;
+  const ease = t => 1 - Math.pow(1 - t, 4);
+  const step = now => {
+    const p = dur ? clamp((now - t0) / dur, 0, 1) : 1;
+    shownYear = from + (to - from) * ease(p);
+    if (mapReady) {
+      map.getSource("buildings").setData(buildingsGeo(shownYear, S.scenario));
+      map.getSource("water").setData(waterGeo(shownYear, S.scenario));
+    }
+    if (p < 1) tween = requestAnimationFrame(step); else { tween = null; shownYear = to; }
+  };
+  tween = requestAnimationFrame(step);
+}
+function refresh(animateTime = true, reroute = false) {
+  const prevKey = current && current.key;
+  computeRoutes();
+  renderScore(); renderOptions(); renderSteps(); renderTimeline();
+  if (!mapReady) return;
+  const go = () => { syncMap(shownYear); if (animateTime) animateYear(S.year); };
+  if (reroute && prevKey !== (current && current.key)) {
+    $("rerouting").classList.add("show");
+    setTimeout(() => { $("rerouting").classList.remove("show"); go(); }, reduceMotion ? 200 : 1100);
+  } else go();
+}
+function toast(title, detail, badge = '<span class="badge-warn">Traffic report</span>') {
+  const t = $("toast");
+  t.innerHTML = `<div class="tt">${badge}${title}</div><div class="td">${detail}</div>`;
+  t.classList.add("show");
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => t.classList.remove("show"), 5200);
+}
+
+$("dest").addEventListener("change", e => { UI.dest = e.target.value; UI.approved = false; resetApprove(); renderAgents(); refresh(false); });
+document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => {
+  const prev = current && current.key;
+  S.scenario = b.dataset.scn;
+  document.querySelectorAll(".seg button").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+  refresh(true, true);
+  if (current && current.key !== prev) toast("Route changed", `With ${S.scenario} AI adoption, your ${MODES.find(m => m.id === UI.mode).label.toLowerCase()} route now takes a different road.`, '<span class="badge-info">Rerouted</span>');
+}));
+$("year").addEventListener("input", e => { stopPlay(); S.year = +e.target.value; refresh(true, true); });
+let playTimer = null;
+function stopPlay() { if (playTimer) { clearInterval(playTimer); playTimer = null; $("play").textContent = "▶"; $("play").setAttribute("aria-label", "Play the forecast from 2026 to 2030"); } }
+$("play").addEventListener("click", () => {
+  if (playTimer) { stopPlay(); return; }
+  if (S.year >= 2030) { S.year = 2026; refresh(true); }
+  $("play").textContent = "❚❚"; $("play").setAttribute("aria-label", "Pause the forecast");
+  playTimer = setInterval(() => { if (S.year >= 2030) { stopPlay(); return; } S.year += 1; refresh(true, true); }, reduceMotion ? 500 : 1000);
+});
+$("tilt").addEventListener("click", () => {
+  UI.pitched = !UI.pitched;
+  $("tilt").textContent = UI.pitched ? "2D" : "3D";
+  $("tilt").setAttribute("aria-label", UI.pitched ? "Switch to 2D view" : "Switch to 3D view");
+  if (map) map.easeTo({ pitch: UI.pitched ? 52 : 0, bearing: UI.pitched ? -14 : 0, duration: reduceMotion ? 0 : 600 });
+});
+$("labels").addEventListener("click", () => {
+  UI.labelsAll = !UI.labelsAll;
+  $("labels").setAttribute("aria-label", UI.labelsAll ? "Show route labels only" : "Show all labels");
+  $("labels").style.background = UI.labelsAll ? "var(--accent-wash)" : "";
+  updateMarkers();
+});
+$("recenter").addEventListener("click", () => fitCity(true));
+
+function resetApprove() { $("approve").disabled = false; $("approve").textContent = "Send route to my advisor"; $("approve-note").textContent = "You or your career advisor approve the route before it goes into your learning plan. The app suggests; people decide."; }
+$("approve").addEventListener("click", () => {
+  $("approve").disabled = true; $("approve").textContent = "Sent for review";
+  $("approve-note").textContent = `Sample advisor Encik Faiz will review the ${MODES.find(m => m.id === UI.mode).label.toLowerCase()} route (${current ? current.weeks : "–"} weeks). Nothing changes until it is approved.`;
+});
+
+// ---------- the market scout (mock run) ----------
+$("scout").addEventListener("click", () => {
+  const btn = $("scout"), log = $("log");
+  btn.disabled = true; btn.textContent = "Scouting…";
+  log.hidden = false; log.innerHTML = "";
+  renderAgents({ scout: "Searching…", scoutSt: "run" });
+  const lines = [
+    [400, "Searched 15 tasks across 6 source types"],
+    [1100, "Read 312 pages · 41 relevant after removing duplicates"],
+    [1800, "Found 9 new signals · reviewer approved 6"],
+    [2500, "Biggest change: vendor reconciliation"]
+  ];
+  const D = reduceMotion ? 0.3 : 1;
+  lines.forEach(([t, txt]) => setTimeout(() => { const li = document.createElement("li"); li.textContent = txt; log.appendChild(li); }, t * D));
+  setTimeout(() => {
+    S.signal = true;
+    $("fresh-when").textContent = "just now"; $("fresh-n").textContent = "220";
+    $("agents-fresh").textContent = "Last scout run just now";
+    toast(SIGNAL.title, SIGNAL.detail);
+    renderAgents({ scout: "6 approved signals added", plan: "Re-planned after new traffic", planSt: "run", fact: "Checking new claims…", factSt: "run" });
+    refresh(false, true);
+    setTimeout(() => {
+      renderAgents({ scout: "6 approved signals added", plan: `Route updated to ${NODES[UI.dest].name}`, fact: "20 of 20 claims have a source" });
+      btn.textContent = "Scout is up to date"; $("reset").hidden = false;
+    }, 1500 * D);
+  }, 3000 * D);
+});
+$("reset").addEventListener("click", () => {
+  S.signal = false; $("reset").hidden = true; $("log").hidden = true;
+  $("scout").disabled = false; $("scout").textContent = "Run market scout now";
+  $("fresh-when").textContent = "3 days ago"; $("fresh-n").textContent = "214";
+  $("agents-fresh").textContent = "Last scout run 3 days ago";
+  renderAgents(); refresh(false);
+});
+
+// ---------- theme ----------
+new MutationObserver(applyMapTheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyMapTheme);
+
+// ---------- boot ----------
+computeRoutes();
+renderScore(); renderOptions(); renderSteps(); renderTimeline(); renderAgents();
+initMap();
+new ResizeObserver(() => { if (map) map.resize(); }).observe($("map"));
+</script>
+</body>
+</html>

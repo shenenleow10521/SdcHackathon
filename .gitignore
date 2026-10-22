@@ -1,0 +1,10 @@
+# Organiser materials (large files, not our work)
+*.zip
+*.mp4
+extracted/
+SDC Hackathon 2026 - Participant Resources*/
+
+# Local / build
+node_modules/
+.env
+.DS_Store

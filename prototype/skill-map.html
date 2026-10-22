@@ -1,0 +1,605 @@
+<title>Future Skill Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: control bar above a two-pane workspace (quadrant map left, skill detail right); learning route and table view below */
+:root {
+  --bg: #f4f4f1;
+  --surface: #fcfcfb;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.10);
+  --have: #2a78d6;
+  --learn: #eb6834;
+  --good-wash: rgba(12, 163, 12, 0.07);
+  --crit-wash: rgba(208, 59, 59, 0.07);
+  --note-bg: #fdf3dc;
+  --note-ink: #5c4000;
+  --ai-bg: #fbe6e6;    --ai-ink: #8a2222;
+  --assist-bg: #fcefd2; --assist-ink: #5c4000;
+  --human-bg: #e1f1e1; --human-ink: #1d551d;
+  --control-bg: #ecebe6;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #45453f; --border: rgba(255, 255, 255, 0.10);
+    --have: #3987e5; --learn: #d95926;
+    --good-wash: rgba(12, 163, 12, 0.10); --crit-wash: rgba(208, 59, 59, 0.12);
+    --note-bg: #33290f; --note-ink: #f3d38a;
+    --ai-bg: #3d1d1d; --ai-ink: #f2b5b5; --assist-bg: #3a2e10; --assist-ink: #f3d38a; --human-bg: #1b331b; --human-ink: #a8dca8;
+    --control-bg: #262624;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #45453f; --border: rgba(255, 255, 255, 0.10);
+  --have: #3987e5; --learn: #d95926;
+  --good-wash: rgba(12, 163, 12, 0.10); --crit-wash: rgba(208, 59, 59, 0.12);
+  --note-bg: #33290f; --note-ink: #f3d38a;
+  --ai-bg: #3d1d1d; --ai-ink: #f2b5b5; --assist-bg: #3a2e10; --assist-ink: #f3d38a; --human-bg: #1b331b; --human-ink: #a8dca8;
+  --control-bg: #262624;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.45;
+  padding-block: 20px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; gap: 16px; }
+
+header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 24px; }
+h1 { font-size: 22px; font-weight: 650; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+.persona { color: var(--ink-2); margin: 2px 0 0; }
+.demo-note { background: var(--note-bg); color: var(--note-ink); border-radius: 6px; padding: 6px 10px; font-size: 12.5px; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+.ctl { display: flex; align-items: center; gap: 8px; }
+.ctl-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); font-weight: 600; }
+.seg { display: inline-flex; background: var(--control-bg); border-radius: 8px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: transparent; color: var(--ink-2); font: inherit; font-size: 13px; padding: 5px 10px; border-radius: 6px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+input[type="range"] { width: 140px; accent-color: var(--have); }
+.year-out { font-variant-numeric: tabular-nums; font-weight: 650; min-width: 3ch; }
+select, .btn {
+  font: inherit; font-size: 13px; color: var(--ink); background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 5px 10px; cursor: pointer;
+}
+.btn { display: inline-flex; align-items: center; gap: 6px; }
+:focus-visible { outline: 2px solid var(--have); outline-offset: 2px; }
+
+.workspace { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; align-items: start; }
+@media (max-width: 860px) { .workspace { grid-template-columns: minmax(0, 1fr); } }
+
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; min-width: 0; }
+.chart-panel { padding: 12px 12px 6px; position: relative; }
+#chart { position: relative; width: 100%; }
+#chart svg { display: block; overflow: visible; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12.5px; color: var(--ink-2); padding: 4px 6px 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.key-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--have); }
+.key-ring { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--learn); }
+.key-trail { width: 18px; border-top: 1.5px dashed var(--muted); }
+.key-route { width: 18px; border-top: 1.5px solid var(--ink-2); position: relative; }
+.key-route::after { content: ""; position: absolute; right: -2px; top: -4.5px; border-left: 6px solid var(--ink-2); border-top: 3.5px solid transparent; border-bottom: 3.5px solid transparent; }
+
+.tip {
+  position: absolute; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 10px; font-size: 12.5px; box-shadow: 0 4px 14px rgba(0,0,0,.14); min-width: 180px; z-index: 5;
+}
+.tip b { display: block; margin-bottom: 4px; }
+.tip .row { display: flex; justify-content: space-between; gap: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.tip .row span:last-child { color: var(--ink); }
+
+.detail { padding: 16px; display: grid; gap: 14px; }
+.kicker { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.detail h2 { font-size: 18px; margin: 2px 0 0; font-weight: 650; text-wrap: balance; }
+.zone { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: var(--control-bg); color: var(--ink); width: fit-content; }
+.metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.metric { background: var(--bg); border-radius: 8px; padding: 8px 10px; }
+.metric .lbl { font-size: 11.5px; color: var(--ink-2); }
+.metric .val { font-size: 18px; font-weight: 650; }
+.metric .from { font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.why { margin: 0; color: var(--ink-2); }
+.detail h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); margin: 0 0 6px; font-weight: 600; }
+.tasks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.tasks li { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+.chip { font-size: 11.5px; font-weight: 600; padding: 2px 7px; border-radius: 999px; white-space: nowrap; }
+.chip.ai { background: var(--ai-bg); color: var(--ai-ink); }
+.chip.assist { background: var(--assist-bg); color: var(--assist-ink); }
+.chip.human { background: var(--human-bg); color: var(--human-ink); }
+.bridge { border-top: 1px solid var(--border); padding-top: 12px; color: var(--ink-2); margin: 0; }
+.bridge b { color: var(--ink); }
+.source { font-size: 12px; color: var(--muted); margin: 0; }
+
+.below { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 860px) { .below { grid-template-columns: minmax(0, 1fr); } }
+.route { padding: 16px; }
+.route-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.route-head h2 { font-size: 16px; margin: 0; font-weight: 650; }
+.route-head .total { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.route ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.route li { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 10px; align-items: start; }
+.step { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--learn); display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+.route li .t { font-weight: 600; }
+.route li .s { color: var(--ink-2); font-size: 13px; }
+.route li .w { color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; font-size: 13px; }
+.route .empty { color: var(--ink-2); margin: 0; }
+.route .review { margin: 12px 0 0; font-size: 12.5px; color: var(--ink-2); }
+
+.tablebox { padding: 12px 16px; }
+.tablebox summary { cursor: pointer; font-weight: 600; }
+.tablewrap { overflow-x: auto; margin-top: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+th { font-size: 11.5px; color: var(--ink-2); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+th.num { text-align: right; }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Future Skill Map</h1>
+      <p class="persona">Aisyah · Accounts payable clerk, 9 years · Cyberjaya · 6 h a week to study</p>
+    </div>
+    <div class="demo-note">Demo data. These values are illustrative, not research results.</div>
+  </header>
+
+  <div class="controls" role="group" aria-label="Map controls">
+    <div class="ctl">
+      <span class="ctl-label" id="scn-label">AI adoption</span>
+      <div class="seg" role="group" aria-labelledby="scn-label">
+        <button type="button" id="scn-moderate" data-scn="moderate" aria-pressed="true">Moderate</button>
+        <button type="button" id="scn-fast" data-scn="fast" aria-pressed="false">Fast</button>
+      </div>
+    </div>
+    <div class="ctl">
+      <label class="ctl-label" for="year">Year</label>
+      <input type="range" id="year" min="2026" max="2030" step="1" value="2026">
+      <span class="year-out" id="year-out">2026</span>
+      <button type="button" class="btn" id="play" aria-label="Play years 2026 to 2030">▶ Play</button>
+    </div>
+    <div class="ctl">
+      <label class="ctl-label" for="target">Target role</label>
+      <select id="target">
+        <option value="esg">ESG & Carbon Reporting Analyst</option>
+        <option value="fin">AI-Augmented Finance Analyst</option>
+        <option value="none">None</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="workspace">
+    <section class="panel chart-panel" aria-label="Skill map">
+      <div class="legend">
+        <span><i class="key-dot"></i>Your skills (size = your level)</span>
+        <span><i class="key-ring"></i>Skill to learn, numbered in route order</span>
+        <span><i class="key-route"></i>Learning route</span>
+        <span><i class="key-trail"></i>Movement since 2026</span>
+      </div>
+      <div id="chart"></div>
+    </section>
+    <aside class="panel detail" id="detail" aria-live="polite"></aside>
+  </div>
+
+  <div class="below">
+    <section class="panel route" id="route" aria-label="Learning route"></section>
+    <details class="panel tablebox">
+      <summary>Show the map as a table</summary>
+      <div class="tablewrap"><table id="table"></table></div>
+    </details>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+// ---------- Demo data (illustrative values, not research results) ----------
+// Each position is [AI exposure %, demand change % since 2024]. y26 = today; moderate/fast = 2030 under each scenario.
+const SKILLS = [
+  { id: "inv", name: "Invoice data entry", kind: "have", level: 5, y26: [86, -14], moderate: [93, -42], fast: [97, -55],
+    why: "Document AI now reads most invoice layouts without templates, so manual capture is shrinking fast.",
+    tasks: [["Capture invoice fields from PDFs", "ai"], ["Code invoices to GL accounts", "ai"], ["Chase missing PO numbers", "assist"]] },
+  { id: "three", name: "Three-way matching", kind: "have", level: 5, y26: [74, -4], moderate: [84, -30], fast: [91, -44],
+    why: "Matching POs, invoices and receipts is rule-based, which AI agents handle well.",
+    tasks: [["Match PO, invoice and goods receipt", "ai"], ["Flag price or quantity mismatches", "ai"], ["Decide on tolerance exceptions", "human"]] },
+  { id: "pay", name: "Payment runs", kind: "have", level: 4, y26: [64, -12], moderate: [78, -28], fast: [86, -38],
+    why: "ERP systems now propose payment batches automatically. People still approve the release.",
+    tasks: [["Build the payment proposal", "ai"], ["Check cash position before release", "assist"], ["Approve and release payments", "human"]] },
+  { id: "recon", name: "Vendor reconciliation", kind: "have", level: 4, y26: [54, 2], moderate: [68, -14], fast: [77, -24],
+    why: "Statement matching is being automated, but tracing differences to source documents still needs judgement.",
+    tasks: [["Match vendor statements to the ledger", "ai"], ["Investigate unexplained differences", "assist"], ["Trace each number to its source document", "human"]] },
+  { id: "erp", name: "ERP operation (SAP)", kind: "have", level: 4, y26: [42, 4], moderate: [54, -2], fast: [61, -8],
+    why: "Copilots inside ERP systems take over routine postings. Fixing broken workflows stays human.",
+    tasks: [["Post and adjust entries", "assist"], ["Maintain vendor master data", "assist"], ["Fix workflow errors", "human"]] },
+  { id: "excel", name: "Spreadsheet analysis", kind: "have", level: 4, y26: [48, 12], moderate: [61, 6], fast: [69, 0],
+    why: "AI builds summaries quickly. Deciding which numbers matter is still the valuable part.",
+    tasks: [["Build pivot summaries", "ai"], ["Clean and merge data", "assist"], ["Decide which numbers matter", "human"]] },
+  { id: "tax", name: "SST compliance", kind: "have", level: 3, y26: [33, -2], moderate: [45, -4], fast: [52, -8],
+    why: "Tax calculation is automated, but interpreting rule changes and signing off are not.",
+    tasks: [["Calculate SST on invoices", "ai"], ["Interpret rule changes", "assist"], ["Sign off on returns", "human"]] },
+  { id: "audit", name: "Audit trail documentation", kind: "have", level: 4, y26: [38, 18], moderate: [49, 26], fast: [56, 30],
+    why: "New sustainability and AI rules need complete evidence trails, so demand is rising.",
+    tasks: [["Assemble evidence packs", "assist"], ["Keep the document trail complete", "assist"], ["Answer auditor questions", "human"]] },
+  { id: "dispute", name: "Vendor dispute resolution", kind: "have", level: 3, y26: [22, 6], moderate: [30, 10], fast: [35, 12],
+    why: "Negotiation and relationship judgement are hard to automate.",
+    tasks: [["Draft replies to vendors", "assist"], ["Negotiate settlements", "human"], ["Judge the relationship impact", "human"]] },
+  { id: "process", name: "Process improvement", kind: "have", level: 2, y26: [16, 16], moderate: [21, 24], fast: [24, 28],
+    why: "Every team adopting AI needs someone who can redesign the workflow around it.",
+    tasks: [["Map the current workflow", "assist"], ["Find bottlenecks", "assist"], ["Get the team to adopt the change", "human"]] },
+
+  { id: "ghg", name: "GHG emissions accounting", kind: "learn", y26: [30, 34], moderate: [38, 50], fast: [45, 56],
+    why: "Malaysia's sustainability reporting rules are phasing in, so companies need people who can count emissions from business data.",
+    tasks: [["Collect activity data from invoices and bills", "assist"], ["Apply emission factors", "ai"], ["Check data quality and trace to source", "human"]] },
+  { id: "disc", name: "Sustainability disclosure", kind: "learn", y26: [22, 26], moderate: [31, 44], fast: [38, 50],
+    why: "Listed companies must publish climate disclosures, and the evidence behind them must hold up to audit.",
+    tasks: [["Draft disclosure text", "assist"], ["Map data to disclosure requirements", "assist"], ["Judge materiality with management", "human"]] },
+  { id: "viz", name: "Dashboard reporting", kind: "learn", y26: [46, 22], moderate: [57, 26], fast: [64, 22],
+    why: "Managers want live dashboards instead of monthly spreadsheets.",
+    tasks: [["Build dashboards", "assist"], ["Refresh data feeds", "ai"], ["Choose the right view for the audience", "human"]] },
+  { id: "aisup", name: "Supervising AI workflows", kind: "learn", y26: [12, 30], moderate: [16, 44], fast: [18, 54],
+    why: "As AI agents take over routine finance steps, someone must set them up, check them and stop them.",
+    tasks: [["Set up AI agents for routine steps", "assist"], ["Review AI output for errors", "human"], ["Decide when AI should not act", "human"]] },
+  { id: "fin", name: "Financial analysis", kind: "learn", y26: [40, 28], moderate: [46, 36], fast: [50, 38],
+    why: "Explaining what the numbers mean for the business keeps its value as reporting gets automated.",
+    tasks: [["Build forecasts", "assist"], ["Prepare monthly reports", "ai"], ["Explain variances to managers", "human"]] }
+];
+
+const TARGETS = {
+  esg: { name: "ESG & Carbon Reporting Analyst", route: [
+    { from: "recon", to: "ghg", weeks: 4, why: "Both trace every number back to a source document." },
+    { from: "audit", to: "disc", weeks: 3, why: "Disclosures need the same complete evidence trail." },
+    { from: "excel", to: "viz", weeks: 2, why: "Moves your spreadsheet summaries onto shared dashboards." },
+    { from: "process", to: "aisup", weeks: 2, why: "You already redesign workflows; now some steps run on AI." }
+  ] },
+  fin: { name: "AI-Augmented Finance Analyst", route: [
+    { from: "excel", to: "fin", weeks: 4, why: "Turns spreadsheet skill into analysis managers act on." },
+    { from: "excel", to: "viz", weeks: 2, why: "Moves your spreadsheet summaries onto shared dashboards." },
+    { from: "process", to: "aisup", weeks: 2, why: "You already redesign workflows; now some steps run on AI." }
+  ] },
+  none: { name: "No target role", route: [] }
+};
+
+const TASK_LABEL = { ai: "AI does it", assist: "AI assists", human: "Human-led" };
+const byId = Object.fromEntries(SKILLS.map(s => [s.id, s]));
+
+// ---------- State ----------
+const state = { scenario: "moderate", year: 2026, target: "esg", selected: "inv" };
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const DUR = reduceMotion ? 0 : 650;
+
+function posAt(s, year, scenario) {
+  const f = (year - 2026) / 4;
+  const a = s.y26, b = s[scenario];
+  return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
+}
+function zoneOf(x, y) {
+  if (x >= 50) return y >= 0 ? "Augment" : "At risk";
+  return y >= 0 ? "Grow" : "Hold";
+}
+const ZONE_TEXT = {
+  "Grow": "In demand, hard to automate",
+  "Augment": "In demand, AI changes the work",
+  "Hold": "Stable, little growth",
+  "At risk": "AI can do most tasks"
+};
+const ZONE_ICON = { "Grow": "▲", "Augment": "◆", "Hold": "■", "At risk": "▼" };
+function routeFor(target) { return TARGETS[target].route; }
+function stepOf(id) { const i = routeFor(state.target).findIndex(r => r.to === id); return i < 0 ? null : i + 1; }
+function visibleSkills() {
+  const learnIds = new Set(routeFor(state.target).map(r => r.to));
+  return SKILLS.filter(s => s.kind === "have" || learnIds.has(s.id));
+}
+const fmtPct = v => `${Math.round(v)}%`;
+const fmtSigned = v => { const r = Math.round(v); return (r > 0 ? "+" : r < 0 ? "−" : "") + Math.abs(r) + "%"; };
+
+// ---------- Chart scaffolding ----------
+const chartEl = document.getElementById("chart");
+const svg = d3.select(chartEl).append("svg").attr("role", "img")
+  .attr("aria-label", "Quadrant map of skills: AI exposure on the horizontal axis, demand change on the vertical axis");
+const defs = svg.append("defs");
+defs.append("marker").attr("id", "arrow").attr("viewBox", "0 0 10 10").attr("refX", 9).attr("refY", 5)
+  .attr("markerWidth", 7).attr("markerHeight", 7).attr("orient", "auto-start-reverse")
+  .append("path").attr("d", "M0,0 L10,5 L0,10 z").attr("fill", "var(--ink-2)");
+const gQuad = svg.append("g");
+const gGrid = svg.append("g");
+const gAxes = svg.append("g");
+const gTrails = svg.append("g");
+const gRoutes = svg.append("g");
+const gDots = svg.append("g");
+const gLabels = svg.append("g");
+const tip = d3.select(chartEl).append("div").attr("class", "tip").attr("hidden", true);
+
+const M = { t: 16, r: 16, b: 50, l: 58 };
+const x = d3.scaleLinear().domain([0, 100]);
+const y = d3.scaleLinear().domain([-75, 75]); // headroom above/below ±60 keeps the zone labels clear of the dots
+let W = 0, H = 0;
+let cornerBoxes = [];
+const measureCtx = document.createElement("canvas").getContext("2d");
+
+function drawStatic() {
+  gQuad.selectAll("*").remove(); gGrid.selectAll("*").remove(); gAxes.selectAll("*").remove();
+  const x0 = x(0), x50 = x(50), x100 = x(100), yTop = y(75), y0 = y(0), yBot = y(-75);
+  cornerBoxes = [];
+  // Quadrant washes: only the two zones that carry a clear message get a tint
+  gQuad.append("rect").attr("x", x0).attr("y", yTop).attr("width", x50 - x0).attr("height", y0 - yTop).attr("fill", "var(--good-wash)");
+  gQuad.append("rect").attr("x", x50).attr("y", y0).attr("width", x100 - x50).attr("height", yBot - y0).attr("fill", "var(--crit-wash)");
+  const small = W < 520;
+  const corners = [
+    { z: "Grow", x: x0 + 10, y: yTop + 18, a: "start" },
+    { z: "Augment", x: x100 - 10, y: yTop + 18, a: "end" },
+    { z: "Hold", x: x0 + 10, y: yBot - 24, a: "start" },
+    { z: "At risk", x: x100 - 10, y: yBot - 24, a: "end" }
+  ];
+  corners.forEach(c => {
+    const t = gQuad.append("text").attr("x", c.x).attr("y", c.y).attr("text-anchor", c.a).attr("fill", "var(--ink-2)");
+    t.append("tspan").attr("font-size", 12.5).attr("font-weight", 650).text(`${ZONE_ICON[c.z]} ${c.z}`);
+    if (!small) t.append("tspan").attr("x", c.x).attr("dy", 15).attr("font-size", 11.5).attr("fill", "var(--muted)").text(ZONE_TEXT[c.z]);
+    const bb = t.node().getBBox();
+    cornerBoxes.push({ x1: bb.x - 2, y1: bb.y - 2, x2: bb.x + bb.width + 2, y2: bb.y + bb.height + 2 });
+  });
+  // Grid
+  const xt = [0, 25, 50, 75, 100], yt = [-60, -30, 0, 30, 60];
+  gGrid.selectAll("line.v").data(xt).join("line").attr("x1", d => x(d)).attr("x2", d => x(d)).attr("y1", yTop).attr("y2", yBot)
+    .attr("stroke", d => d === 50 ? "var(--axis)" : "var(--grid)").attr("stroke-width", 1);
+  gGrid.selectAll("line.h").data(yt).join("line").attr("y1", d => y(d)).attr("y2", d => y(d)).attr("x1", x0).attr("x2", x100)
+    .attr("stroke", d => d === 0 ? "var(--axis)" : "var(--grid)").attr("stroke-width", 1);
+  // Ticks
+  gAxes.selectAll("text.xt").data(xt).join("text").attr("x", d => x(d)).attr("y", yBot + 16).attr("text-anchor", "middle")
+    .attr("font-size", 11).attr("fill", "var(--muted)").style("font-variant-numeric", "tabular-nums").text(d => d + "%");
+  gAxes.selectAll("text.yt").data(yt).join("text").attr("x", x0 - 8).attr("y", d => y(d)).attr("dy", "0.35em").attr("text-anchor", "end")
+    .attr("font-size", 11).attr("fill", "var(--muted)").style("font-variant-numeric", "tabular-nums").text(d => fmtSigned(d));
+  gAxes.append("text").attr("x", (x0 + x100) / 2).attr("y", H - 8).attr("text-anchor", "middle").attr("font-size", 12).attr("fill", "var(--ink-2)")
+    .text("AI exposure: share of the skill's tasks AI can do or assist →");
+  gAxes.append("text").attr("transform", `translate(14, ${(yTop + yBot) / 2}) rotate(-90)`).attr("text-anchor", "middle")
+    .attr("font-size", 12).attr("fill", "var(--ink-2)").text("Demand change since 2024 →");
+}
+
+function radius(s) { return s.kind === "have" ? 4 + s.level * 1.4 : 10; }
+
+function computeNodes() {
+  return visibleSkills().map(s => {
+    const [ex, dm] = posAt(s, state.year, state.scenario);
+    const [ex0, dm0] = s.y26;
+    return { s, id: s.id, name: s.name, ex, dm, px: x(ex), py: y(dm), p0x: x(ex0), p0y: y(dm0), r: radius(s) };
+  });
+}
+
+// Greedy label placement: try right, left, above, below; keep the spot with the least overlap.
+function placeLabels(nodes) {
+  measureCtx.font = `500 12px ${getComputedStyle(document.body).fontFamily}`;
+  const placed = [...cornerBoxes];
+  const dots = nodes.map(n => ({ id: n.id, x1: n.px - n.r - 2, y1: n.py - n.r - 2, x2: n.px + n.r + 2, y2: n.py + n.r + 2 }));
+  const bounds = { x1: x(0), y1: y(75), x2: x(100) + M.r, y2: y(-75) };
+  const area = (a, b) => Math.max(0, Math.min(a.x2, b.x2) - Math.max(a.x1, b.x1)) * Math.max(0, Math.min(a.y2, b.y2) - Math.max(a.y1, b.y1));
+  const out = [];
+  [...nodes].sort((a, b) => a.py - b.py).forEach(n => {
+    const w = measureCtx.measureText(n.name).width, h = 14, g = n.r + 5;
+    const c = [
+      { x: n.px + g, y: n.py, a: "start", b: { x1: n.px + g, y1: n.py - h / 2, x2: n.px + g + w, y2: n.py + h / 2 } },
+      { x: n.px - g, y: n.py, a: "end", b: { x1: n.px - g - w, y1: n.py - h / 2, x2: n.px - g, y2: n.py + h / 2 } },
+      { x: n.px, y: n.py - g - 3, a: "middle", b: { x1: n.px - w / 2, y1: n.py - g - 3 - h / 2, x2: n.px + w / 2, y2: n.py - g - 3 + h / 2 } },
+      { x: n.px, y: n.py + g + 3, a: "middle", b: { x1: n.px - w / 2, y1: n.py + g + 3 - h / 2, x2: n.px + w / 2, y2: n.py + g + 3 + h / 2 } }
+    ];
+    let best = null, bestScore = Infinity;
+    c.forEach((cand, i) => {
+      let s = i * 2;
+      placed.forEach(p => s += area(cand.b, p) * 4);
+      dots.forEach(d => { if (d.id !== n.id) s += area(cand.b, d) * 3; });
+      const inside = area(cand.b, bounds), full = (cand.b.x2 - cand.b.x1) * (cand.b.y2 - cand.b.y1);
+      s += (full - inside) * 10;
+      if (s < bestScore) { bestScore = s; best = cand; }
+    });
+    placed.push(best.b);
+    out.push({ id: n.id, name: n.name, x: best.x, y: best.y, a: best.a });
+  });
+  return out;
+}
+
+function routePath(a, b, rEnd) {
+  const dx = b.px - a.px, dy = b.py - a.py, len = Math.hypot(dx, dy) || 1;
+  const sx = a.px + dx / len * (a.r + 3), sy = a.py + dy / len * (a.r + 3);
+  const ex = b.px - dx / len * (rEnd + 4), ey = b.py - dy / len * (rEnd + 4);
+  const mx = (sx + ex) / 2 - dy / len * len * 0.18, my = (sy + ey) / 2 + dx / len * len * 0.18;
+  return `M${sx},${sy} Q${mx},${my} ${ex},${ey}`;
+}
+
+function draw(animate) {
+  const nodes = computeNodes();
+  const nodeById = Object.fromEntries(nodes.map(n => [n.id, n]));
+  const t = svg.transition().duration(animate ? DUR : 0).ease(d3.easeCubicInOut);
+
+  // Trails from the 2026 position
+  const trailData = state.year > 2026 ? nodes : [];
+  gTrails.selectAll("g.trail").data(trailData, d => d.id).join(
+    enter => { const g = enter.append("g").attr("class", "trail").attr("opacity", 0);
+      g.append("line").attr("stroke", "var(--muted)").attr("stroke-width", 1.5).attr("stroke-dasharray", "3 3");
+      g.append("circle").attr("r", 3).attr("fill", "var(--surface)").attr("stroke", "var(--muted)").attr("stroke-width", 1.5);
+      g.select("line").attr("x1", d => d.p0x).attr("y1", d => d.p0y).attr("x2", d => d.p0x).attr("y2", d => d.p0y);
+      g.select("circle").attr("cx", d => d.p0x).attr("cy", d => d.p0y);
+      return g; },
+    update => update,
+    exit => exit.transition(t).attr("opacity", 0).remove()
+  ).call(g => {
+    g.transition(t).attr("opacity", 1);
+    g.select("line").transition(t).attr("x1", d => d.p0x).attr("y1", d => d.p0y).attr("x2", d => d.px).attr("y2", d => d.py);
+    g.select("circle").transition(t).attr("cx", d => d.p0x).attr("cy", d => d.p0y);
+  });
+
+  // Learning route arrows
+  const routes = routeFor(state.target).map((r, i) => ({ key: r.from + ">" + r.to, a: nodeById[r.from], b: nodeById[r.to], i }));
+  gRoutes.selectAll("path").data(routes, d => d.key).join(
+    enter => enter.append("path").attr("fill", "none").attr("stroke", "var(--ink-2)").attr("stroke-width", 1.5)
+      .attr("marker-end", "url(#arrow)").attr("opacity", 0).attr("d", d => routePath(d.a, d.b, d.b.r)),
+    update => update,
+    exit => exit.transition(t).attr("opacity", 0).remove()
+  ).transition(t).attr("opacity", 0.75).attr("d", d => routePath(d.a, d.b, d.b.r));
+
+  // Dots
+  gDots.selectAll("g.node").data(nodes, d => d.id).join(
+    enter => {
+      const g = enter.append("g").attr("class", "node").attr("tabindex", 0).attr("role", "button")
+        .style("cursor", "pointer").attr("transform", d => `translate(${d.px},${d.py})`).attr("opacity", 0);
+      g.append("circle").attr("class", "sel").attr("fill", "none").attr("stroke", "var(--ink)").attr("stroke-width", 1.5);
+      g.append("circle").attr("class", "hit").attr("r", 18).attr("fill", "transparent");
+      g.append("circle").attr("class", "mark");
+      g.append("text").attr("class", "num").attr("text-anchor", "middle").attr("dy", "0.35em").attr("font-size", 11).attr("font-weight", 700).attr("fill", "var(--ink)");
+      g.on("pointerenter", (ev, d) => showTip(d)).on("pointerleave", hideTip)
+        .on("focus", (ev, d) => showTip(d)).on("blur", hideTip)
+        .on("click", (ev, d) => select(d.id))
+        .on("keydown", (ev, d) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); select(d.id); } });
+      return g;
+    },
+    update => update,
+    exit => exit.transition(t).attr("opacity", 0).remove()
+  ).call(g => {
+    g.attr("aria-label", d => `${d.name}: AI exposure ${fmtPct(d.ex)}, demand ${fmtSigned(d.dm)}, zone ${zoneOf(d.ex, d.dm)}`);
+    g.select("circle.mark").attr("r", d => d.r)
+      .attr("fill", d => d.s.kind === "have" ? "var(--have)" : "var(--surface)")
+      .attr("stroke", d => d.s.kind === "have" ? "var(--surface)" : "var(--learn)")
+      .attr("stroke-width", d => d.s.kind === "have" ? 2 : 2.5);
+    g.select("circle.sel").attr("r", d => d.r + 4).attr("opacity", d => d.id === state.selected ? 1 : 0);
+    g.select("text.num").text(d => d.s.kind === "learn" ? stepOf(d.id) : "");
+    g.transition(t).attr("opacity", 1).attr("transform", d => `translate(${d.px},${d.py})`);
+  });
+
+  // Labels
+  const labels = placeLabels(nodes);
+  gLabels.selectAll("text").data(labels, d => d.id).join(
+    enter => enter.append("text").attr("font-size", 12).attr("font-weight", 500).attr("fill", "var(--ink)")
+      .attr("dy", "0.35em").attr("pointer-events", "none").attr("opacity", 0)
+      .attr("x", d => d.x).attr("y", d => d.y).text(d => d.name)
+      .style("paint-order", "stroke").attr("stroke", "var(--surface)").attr("stroke-width", 3).attr("stroke-linejoin", "round"),
+    update => update,
+    exit => exit.transition(t).attr("opacity", 0).remove()
+  ).attr("text-anchor", d => d.a).transition(t).attr("opacity", 1).attr("x", d => d.x).attr("y", d => d.y);
+}
+
+function showTip(d) {
+  const z = zoneOf(d.ex, d.dm);
+  tip.attr("hidden", null).html(
+    `<b>${d.name}</b>` +
+    `<div class="row"><span>AI exposure</span><span>${fmtPct(d.ex)}</span></div>` +
+    `<div class="row"><span>Demand change</span><span>${fmtSigned(d.dm)}</span></div>` +
+    `<div class="row"><span>Zone</span><span>${ZONE_ICON[z]} ${z}</span></div>`);
+  const tw = tip.node().offsetWidth;
+  const left = d.px + 16 + tw > W ? d.px - 16 - tw : d.px + 16;
+  tip.style("left", Math.max(0, left) + "px").style("top", Math.max(0, d.py - 20) + "px");
+}
+function hideTip() { tip.attr("hidden", true); }
+
+// ---------- Side panel, route, table ----------
+function select(id) {
+  state.selected = id;
+  gDots.selectAll("g.node").select("circle.sel").attr("opacity", d => d.id === id ? 1 : 0);
+  renderDetail();
+}
+
+function renderDetail() {
+  if (!visibleSkills().some(s => s.id === state.selected)) state.selected = "inv";
+  const s = byId[state.selected];
+  const [ex, dm] = posAt(s, state.year, state.scenario);
+  const z = zoneOf(ex, dm);
+  const step = stepOf(s.id);
+  const kicker = s.kind === "have"
+    ? `<i class="key-dot"></i>Your skill · level ${s.level} of 5`
+    : `<i class="key-ring"></i>Skill to learn · step ${step}`;
+  const route = routeFor(state.target);
+  let bridge = "";
+  if (s.kind === "learn") {
+    const r = route.find(r => r.to === s.id);
+    bridge = `<p class="bridge">Builds on <b>${byId[r.from].name}</b>. ${r.why} About ${r.weeks} weeks at 6 h a week.</p>`;
+  } else {
+    const leads = route.filter(r => r.from === s.id);
+    if (leads.length) bridge = `<p class="bridge">Leads to ${leads.map(r => `<b>${byId[r.to].name}</b> (step ${stepOf(r.to)})`).join(" and ")}.</p>`;
+  }
+  const yearNote = state.year === 2026 ? "today" : `${state.year}, ${state.scenario} AI adoption`;
+  document.getElementById("detail").innerHTML = `
+    <div>
+      <div class="kicker">${kicker}</div>
+      <h2>${s.name}</h2>
+    </div>
+    <div class="zone">${ZONE_ICON[z]} ${z} · ${ZONE_TEXT[z]}</div>
+    <div class="metrics">
+      <div class="metric"><div class="lbl">AI exposure</div><div class="val">${fmtPct(ex)}</div><div class="from">${state.year === 2026 ? "today" : "from " + fmtPct(s.y26[0]) + " in 2026"}</div></div>
+      <div class="metric"><div class="lbl">Demand change</div><div class="val">${fmtSigned(dm)}</div><div class="from">${state.year === 2026 ? "since 2024" : "from " + fmtSigned(s.y26[1]) + " in 2026"}</div></div>
+    </div>
+    <p class="why">${s.why}</p>
+    <div>
+      <h3>Tasks in this skill</h3>
+      <ul class="tasks">${s.tasks.map(([t, k]) => `<li><span>${t}</span><span class="chip ${k}">${TASK_LABEL[k]}</span></li>`).join("")}</ul>
+    </div>
+    ${bridge}
+    <p class="source">Showing ${yearNote}. Demo values. Planned sources: ILO generative-AI exposure index, O*NET task lists, TalentCorp 2024 workforce study.</p>`;
+}
+
+function renderRoute() {
+  const tgt = TARGETS[state.target];
+  const el = document.getElementById("route");
+  if (!tgt.route.length) {
+    el.innerHTML = `<div class="route-head"><h2>Learning route</h2></div><p class="empty">Pick a target role to draw a route on the map.</p>`;
+    return;
+  }
+  const total = tgt.route.reduce((a, r) => a + r.weeks, 0);
+  el.innerHTML = `
+    <div class="route-head"><h2>Route to ${tgt.name}</h2><span class="total">about ${total} weeks</span></div>
+    <ol>${tgt.route.map((r, i) => `
+      <li><span class="step">${i + 1}</span>
+        <div><div class="t">${byId[r.to].name}</div><div class="s">Builds on ${byId[r.from].name}. ${r.why}</div></div>
+        <span class="w">${r.weeks} wk</span></li>`).join("")}</ol>
+    <p class="review">A career advisor or Aisyah reviews and edits this route before she follows it.</p>`;
+}
+
+function renderTable() {
+  const rows = visibleSkills().map(s => { const [ex, dm] = posAt(s, state.year, state.scenario); return { s, ex, dm, z: zoneOf(ex, dm) }; })
+    .sort((a, b) => b.ex - a.ex);
+  document.getElementById("table").innerHTML = `
+    <thead><tr><th>Skill</th><th>Type</th><th class="num">AI exposure</th><th class="num">Demand</th><th>Zone</th></tr></thead>
+    <tbody>${rows.map(r => `<tr><td>${r.s.name}</td><td>${r.s.kind === "have" ? "Yours" : "To learn"}</td>
+      <td class="num">${fmtPct(r.ex)}</td><td class="num">${fmtSigned(r.dm)}</td><td>${ZONE_ICON[r.z]} ${r.z}</td></tr>`).join("")}</tbody>`;
+}
+
+function update(animate = true) { draw(animate); renderDetail(); renderRoute(); renderTable(); }
+
+function layout() {
+  W = chartEl.clientWidth;
+  H = Math.round(Math.max(380, Math.min(580, W * 0.68)));
+  svg.attr("width", W).attr("height", H).attr("viewBox", `0 0 ${W} ${H}`);
+  x.range([M.l, W - M.r]);
+  y.range([H - M.b, M.t]);
+  drawStatic();
+  draw(false);
+}
+
+// ---------- Controls ----------
+document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => {
+  state.scenario = b.dataset.scn;
+  document.querySelectorAll(".seg button").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+  update();
+}));
+const yearEl = document.getElementById("year"), yearOut = document.getElementById("year-out"), playBtn = document.getElementById("play");
+function setYear(v) { state.year = +v; yearEl.value = v; yearOut.textContent = v; update(); }
+yearEl.addEventListener("input", e => { stopPlay(); setYear(e.target.value); });
+document.getElementById("target").addEventListener("change", e => { state.target = e.target.value; update(); });
+
+let timer = null;
+function stopPlay() { if (timer) { clearInterval(timer); timer = null; playBtn.textContent = "▶ Play"; } }
+playBtn.addEventListener("click", () => {
+  if (timer) { stopPlay(); return; }
+  if (state.year >= 2030) setYear(2026);
+  playBtn.textContent = "❚❚ Pause";
+  timer = setInterval(() => { if (state.year >= 2030) { stopPlay(); return; } setYear(state.year + 1); }, reduceMotion ? 400 : 900);
+});
+
+new ResizeObserver(() => { if (chartEl.clientWidth !== W) layout(); }).observe(chartEl);
+layout();
+renderDetail(); renderRoute(); renderTable();
+</script>
