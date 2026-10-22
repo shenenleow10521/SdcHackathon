@@ -310,6 +310,7 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 .scene { position: absolute; top: 0; bottom: 0; left: -240px; right: 0; }
 @media (max-width: 980px) { .scene { left: 0; } }
 #rings { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: var(--z-scene); }
+.stage.fx #rings { z-index: var(--z-labels); }
 #graph { position: absolute; inset: 0; z-index: var(--z-scene); }
 #labels { position: absolute; inset: 0; pointer-events: none; z-index: var(--z-labels); }
 .glass { background: color-mix(in srgb, var(--panel) 92%, transparent); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-2); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
@@ -361,11 +362,12 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 }
 
 /* scene labels */
-.lb { position: absolute; left: 0; top: 0; white-space: nowrap; font-size: 12px; font-weight: 550; color: #e9eef6; background: rgba(14, 20, 32, 0.78); border: 1px solid rgba(160, 182, 214, 0.22); border-radius: 999px; padding: 2px 9px; display: inline-flex; align-items: center; gap: 6px; will-change: transform; backdrop-filter: blur(4px); }
+.lb { position: absolute; left: 0; top: 0; white-space: nowrap; font-size: 12px; font-weight: 550; color: #e9eef6; background: rgba(10, 16, 28, 0.72); border: 1px solid rgba(160, 182, 214, 0.22); border-radius: 999px; padding: 2px 9px; display: inline-flex; align-items: center; gap: 6px; will-change: transform; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 6px 18px -8px rgba(0, 0, 0, .7); transition: opacity .25s ease-out; }
+.lb.clash { opacity: 0; }
 .lb.hide { display: none; }
 .lb.job { flex-direction: column; gap: 0; border-radius: 10px; padding: 5px 11px; font-size: 12.5px; font-weight: 600; background: rgba(14, 20, 32, 0.88); }
 .lb.job small { font-family: var(--mono); font-size: 11.5px; color: #f3b08e; font-weight: 500; }
-.lb.job.sel { border-color: #f08a5d; box-shadow: 0 0 0 1px #f08a5d, 0 0 18px rgba(240, 138, 93, 0.35); }
+.lb.job.sel { border-color: #f08a5d; box-shadow: 0 0 0 1px #f08a5d, 0 0 26px rgba(240, 138, 93, 0.55); }
 .lb.you { background: #f4f6fa; color: #0c1220; border-color: transparent; font-weight: 650; }
 .lb .n { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 10.5px; font-weight: 700; border: 2px solid #199e70; color: #e9eef6; }
 .lb .tg { font-size: 10.5px; font-weight: 700; letter-spacing: .02em; }
@@ -1166,6 +1168,7 @@ function reviewAction(id, action) {
     if (r.boostE) S.extraE[r.node] = r.boostE;
     if (r.boostD) S.extraD[r.node] = r.boostD;
     refresh(true);
+    if (r.id === "s1") fxWave(SIGNAL.node, "#f2b33d", 1.9, 560);
     renderAgents(r.id === "s1" ? { scout: "Signal approved and applied", plan: `Path to ${NODES[UI.job].name} re-checked`, fact: "20 of 20 claims have a source" } : {});
     toast("Approved and applied", `${NODES[r.node].name}: ${r.change}. ${r.reasons.find(x => /reroute/.test(x)) ? "Affected users' routes were re-checked." : ""}`, '<span class="badge b-good">Applied</span>');
   } else if (action === "reject") { r.status = "rejected"; refresh(); toast("Rejected", "Nothing changes. The scout will not propose this source again.", '<span class="badge b-mute">Rejected</span>'); }
@@ -1220,7 +1223,7 @@ function pinJob(j) {
   if (added) toast(`${NODES[j].name} added to your map`, `${match(j)}% match · about ${W(plans[j].ready)} weeks to be job-ready.`, '<span class="badge b-info">Added</span>');
   openDrawer(j);
 }
-function selectJob(j) { UI.job = j; UI.approved = false; UI.tab = "path"; TOUR_DONE.job = true; refresh(false, true); openDrawer(j); }
+function selectJob(j) { UI.job = j; UI.approved = false; UI.tab = "path"; TOUR_DONE.job = true; refresh(false, true); openDrawer(j); fxWave(j, "#f08a5d", 1.2, 240); }
 
 // ============ drawer ============
 function openDrawer(id, quiet) {
@@ -1413,11 +1416,13 @@ function altKeys() {
 function restyle() {
   if (!Graph) return;
   const pk = pathKeys(), ak = altKeys(), dead = l => taken(l.from) || taken(l.to);
+  const fo = FX.on && FX.focus, faded = l => fo && !pk.has(l.key) && !(fo.has(l.from) && fo.has(l.to));
   Graph.nodeColor(nColor).nodeVal(nVal)
-    .linkColor(l => pk.has(l.key) ? css("--l-path") : ak.has(l.key) ? css("--l-alt") : l.kind === "evolve" ? css("--l-evolve") : dead(l) ? css("--l-dead") : css("--l-base"))
+    .linkColor(l => faded(l) ? "rgba(170,186,212,0.05)" : pk.has(l.key) ? css("--l-path") : ak.has(l.key) ? css("--l-alt") : l.kind === "evolve" ? css("--l-evolve") : dead(l) ? css("--l-dead") : css("--l-base"))
     .linkWidth(l => pk.has(l.key) ? 2.6 : ak.has(l.key) ? 1.6 : l.kind === "evolve" ? 1.4 : dead(l) ? 0 : 0.6)
     .linkDirectionalParticles(l => !reduce && pk.has(l.key) ? 3 : !reduce && l.kind === "evolve" ? 1 : 0)
     .linkDirectionalParticleColor(l => l.kind === "evolve" ? css("--l-evolve") : css("--particle"));
+  if (FX.on) fxStyleAll();
   if (graphReady) Graph.d3ReheatSimulation();
   updateLabels();
 }
@@ -1431,7 +1436,7 @@ function initGraph() {
       .nodeId("id").nodeRelSize(4).nodeOpacity(0.96).nodeResolution(28).nodeLabel(() => "")
       .linkOpacity(0.9).linkCurvature(0.12).linkDirectionalParticleWidth(2.4).linkDirectionalParticleSpeed(0.007)
       .enableNodeDrag(false).warmupTicks(0).cooldownTicks(8).onEngineTick(() => { graphReady = true; })
-      .onNodeHover(n => { el.style.cursor = n ? "pointer" : ""; hoverId = n ? n.id : null; if (!n) $("tip").hidden = true; })
+      .onNodeHover(n => { el.style.cursor = n ? "pointer" : ""; hoverId = n ? n.id : null; if (!n) $("tip").hidden = true; fxFocus(hoverId); })
       .onNodeClick(n => { if (NODES[n.id].type === "job") { UI.job = n.id; UI.approved = false; UI.tab = "path"; TOUR_DONE.job = true; refresh(); } openDrawer(n.id); })
       .onLinkHover(l => { el.style.cursor = l && altKeys().has(l.key) ? "pointer" : ""; })
       .onLinkClick(l => {
@@ -1446,6 +1451,7 @@ function initGraph() {
   const c = Graph.controls(); c.autoRotate = UI.rotating; c.autoRotateSpeed = 0.5; c.enableDamping = true;
   c.addEventListener("start", () => { if (UI.rotating) setRotate(false); });
   restyle(); requestAnimationFrame(frame);
+  setTimeout(fxInit, 150);
 }
 function resetView(animate) {
   if (!Graph) return;
@@ -1481,16 +1487,16 @@ function updateLabels() {
     const show = UI.labelsAll || n.type === "you" || n.type === "job" || onPlan(id) || (UI.tab === "skills" && n.type === "have" && (imp === "Declining" || imp === "Rising human skill")) || id === hoverId;
     el.className = cls + (show ? "" : " hide"); el.innerHTML = html;
   });
+  Object.values(labelEls).forEach(el => { if (!el.classList.contains("hide")) { el._w = el.offsetWidth; el._h = el.offsetHeight; } });
   if (incidentEl) incidentEl.hidden = !S.signal;
 }
-function frame() {
+let lastFrame = performance.now();
+function frame(now) {
+  now = now || performance.now();
+  const dt = Math.min(0.05, Math.max(0, (now - lastFrame) / 1000)); lastFrame = now;
   if (Graph) {
-    Object.entries(labelEls).forEach(([id, el]) => {
-      if (el.classList.contains("hide")) return;
-      const p = posOf(id), s = Graph.graph2ScreenCoords(p.x, p.y, p.z);
-      const off = NODES[id].type === "job" ? 20 : NODES[id].type === "you" ? 22 : 12;
-      el.style.transform = `translate(${s.x}px, ${s.y + off}px) translate(-50%, 0)`;
-    });
+    fxTick(dt);
+    placeLabels();
     if (S.signal && incidentEl) { const p = posOf(SIGNAL.node), s = Graph.graph2ScreenCoords(p.x, p.y, p.z); incidentEl.style.left = s.x + "px"; incidentEl.style.top = (s.y - 14) + "px"; }
     drawRings();
     if (hoverId && LAYOUT.visible.has(hoverId)) showTip(hoverId);
@@ -1507,7 +1513,7 @@ function drawRings() {
       d += (i ? "L" : "M") + s.x.toFixed(1) + "," + s.y.toFixed(1);
       if (!best || s.y > best.y) best = s;
     }
-    out += `<path d="${d}" fill="none" stroke="var(--ring)" stroke-width="1.1" ${r < 3 ? 'stroke-dasharray="3 6"' : ""}/>`;
+    if (!FX.on) out += `<path d="${d}" fill="none" stroke="var(--ring)" stroke-width="1.1" ${r < 3 ? 'stroke-dasharray="3 6"' : ""}/>`;
     out += `<text class="ring-label" x="${best.x.toFixed(1)}" y="${(best.y + 26).toFixed(1)}" text-anchor="middle">${names[r]}</text>`;
   }
   $("rings").innerHTML = out;
@@ -1532,6 +1538,384 @@ function drawStars() {
   for (let i = 0; i < 160; i++) { g.fillStyle = `rgba(200,215,240,${0.08 + rnd() * 0.35})`; g.beginPath(); g.arc(rnd() * r.width, rnd() * r.height, rnd() * 1.1 + 0.2, 0, Math.PI * 2); g.fill(); }
 }
 
+// ============ cinematic layer: glowing planets, bloom, deep-space backdrop ============
+// Built only from the three.js classes that already live inside the 3D library (taken from its
+// post-processing composer), so the page never loads a second copy of three.js. Every effect is
+// optional: if any step fails, the plain constellation keeps working exactly as before.
+const FX = { on: false, K: null, scene: null, geo: null, U: { uTime: { value: 0 }, uEnc: { value: 1 } }, nodes: {}, objs: [], waves: [],
+  beam: null, sky: null, bg: null, bloom: null, bloomRan: false, intro: null, introPending: false, focus: null, focusId: null, now: 0, lastWave: 0, aspect: 1.6,
+  speed: reduce ? 0 : 1 };
+const FXS = {
+  enc: "uniform float uEnc;\nvec3 enc(vec3 c){ return mix(c, pow(max(c, vec3(0.0)), vec3(0.4545)), uEnc); }\n",
+  coreV: `varying vec3 vN; varying vec3 vV;
+void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0); vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }`,
+  coreF: `uniform vec3 uColor; uniform float uAlpha; uniform float uGlow; varying vec3 vN; varying vec3 vV;
+void main(){ vec3 n = normalize(vN), v = normalize(vV); float ndv = clamp(dot(n, v), 0.0, 1.0);
+  vec3 L = normalize(vec3(-0.45, 0.65, 0.6)); float dif = clamp(dot(n, L), 0.0, 1.0);
+  float rim = pow(1.0 - ndv, 2.4); float spec = pow(clamp(dot(reflect(-L, n), v), 0.0, 1.0), 28.0);
+  vec3 c = uColor * (0.22 + 0.78 * dif) + uColor * uGlow + mix(uColor, vec3(1.0), 0.45) * rim * 1.1 + vec3(spec * 0.45);
+  gl_FragColor = vec4(enc(c), uAlpha); }`,
+  bbV: `attribute vec2 corner; uniform float uSize; varying vec2 vC;
+void main(){ vC = corner; vec4 mv = modelViewMatrix * vec4(0.0, 0.0, 0.0, 1.0); mv.xy += corner * uSize; gl_Position = projectionMatrix * mv; }`,
+  haloF: `uniform vec3 uColor; uniform float uAlpha; uniform float uTime; uniform float uPulse; uniform float uFlare; varying vec2 vC;
+void main(){ float d = length(vC); if (d > 1.0) discard;
+  float g = exp(-d * d * 6.0) * 0.8 + exp(-d * d * 28.0) * 0.9;
+  float p = 1.0 + uPulse * 0.35 * sin(uTime * 3.0);
+  float ax = abs(vC.x), ay = abs(vC.y);
+  float spikes = (exp(-ay * 70.0) * exp(-ax * 3.2) + exp(-ax * 70.0) * exp(-ay * 3.2)) * (0.8 + 0.2 * sin(uTime * 1.7));
+  vec3 col = mix(uColor, vec3(1.0), clamp(spikes * uFlare, 0.0, 0.7));
+  gl_FragColor = vec4(enc(col), (g * (1.0 - smoothstep(0.7, 1.0, d)) * p + spikes * uFlare) * uAlpha); }`,
+  pulseF: `uniform vec3 uColor; uniform float uAlpha; uniform float uTime; varying vec2 vC;
+void main(){ float d = length(vC); float a = 0.0;
+  for (int i = 0; i < 2; i++) { float r = fract(uTime * 0.38 + float(i) * 0.5); a += (1.0 - smoothstep(0.0, 0.045, abs(d - r))) * (1.0 - r) * (1.0 - r); }
+  gl_FragColor = vec4(enc(uColor), a * uAlpha); }`,
+  flatV: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+  ringF: `uniform vec3 uColor; uniform float uAlpha; uniform float uTime; varying vec2 vUv;
+void main(){ float edge = smoothstep(0.0, 0.3, vUv.y) * (1.0 - smoothstep(0.55, 1.0, vUv.y));
+  float bands = 0.6 + 0.4 * sin(vUv.y * 22.0);
+  float sweep = 0.35 + 0.65 * pow(0.5 + 0.5 * sin((vUv.x - uTime * 0.07) * 6.2831853), 5.0);
+  gl_FragColor = vec4(enc(uColor), edge * bands * sweep * uAlpha); }`,
+  orbitF: `uniform vec3 uColor; uniform float uAlpha; uniform float uTime; uniform float uDash; uniform float uSpeed; uniform float uOff; varying vec2 vUv;
+void main(){ float edge = 1.0 - abs(vUv.y * 2.0 - 1.0); edge *= edge;
+  float dash = mix(1.0, step(0.45, fract(vUv.x * 140.0)), uDash);
+  float t = fract(vUv.x - uTime * uSpeed + uOff); float comet = pow(t, 22.0) * 3.2 + pow(t, 4.0) * 0.35;
+  vec3 c = mix(uColor, vec3(1.0), clamp(comet, 0.0, 1.0) * 0.6);
+  gl_FragColor = vec4(enc(c), edge * (uAlpha * dash + comet * 0.9)); }`,
+  beamV: `attribute vec2 corner; uniform float uH; uniform float uW; varying vec2 vC;
+void main(){ vC = corner; vec4 mv = modelViewMatrix * vec4(0.0, corner.y * uH, 0.0, 1.0); mv.x += corner.x * uW; gl_Position = projectionMatrix * mv; }`,
+  beamF: `uniform vec3 uColor; uniform float uAlpha; uniform float uTime; varying vec2 vC;
+void main(){ float x = vC.x, y = vC.y; float core = exp(-x * x * 22.0); float soft = exp(-x * x * 3.0) * 0.4;
+  float fade = pow(1.0 - y, 1.7) * smoothstep(0.0, 0.04, y);
+  float scan = 0.7 + 0.3 * sin(y * 46.0 - uTime * 5.0);
+  gl_FragColor = vec4(enc(mix(uColor, vec3(1.0), core * 0.55)), (core + soft) * fade * scan * uAlpha); }`,
+  waveF: `uniform vec3 uColor; uniform float uProg; varying vec2 vUv;
+void main(){ vec2 q = vUv * 2.0 - 1.0; float d = length(q); if (d > 1.0) discard; float r = max(uProg, 0.001); float w = 0.03 + 0.10 * r;
+  float ring = 1.0 - smoothstep(0.0, w, abs(d - r)); float fill = (1.0 - smoothstep(0.0, r, d)) * 0.12 * (1.0 - r);
+  gl_FragColor = vec4(enc(uColor), (ring + fill) * (1.0 - r) * 1.5); }`,
+  starV: `attribute vec2 corner; attribute float seed; attribute float size; uniform float uTime; varying vec2 vC; varying float vA; varying float vS;
+void main(){ vC = corner; vS = seed; vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  float tw = 0.55 + 0.45 * sin(uTime * (0.7 + seed * 2.3) + seed * 51.0); vA = tw;
+  mv.xy += corner * size * (0.8 + 0.2 * tw); gl_Position = projectionMatrix * mv; }`,
+  starF: `varying vec2 vC; varying float vA; varying float vS;
+void main(){ float d = length(vC); if (d > 1.0) discard; float a = pow(1.0 - d, 2.6) + exp(-d * d * 40.0) * 0.6;
+  vec3 c = vec3(0.78, 0.85, 1.0); if (vS > 0.88) c = vec3(1.0, 0.86, 0.7); else if (vS < 0.18) c = vec3(0.62, 0.74, 1.0);
+  gl_FragColor = vec4(enc(c), a * vA); }`,
+  dustV: `attribute vec2 corner; attribute vec3 polar; attribute float seed; uniform float uTime; varying vec2 vC; varying float vS; varying float vR;
+void main(){ float r = polar.x; float a = polar.y + uTime * 0.05 * (150.0 / (r + 60.0));
+  vec4 mv = modelViewMatrix * vec4(cos(a) * r, polar.z, sin(a) * r, 1.0);
+  mv.xy += corner * (1.0 + 2.4 * fract(seed * 7.13)); vC = corner; vS = seed; vR = r; gl_Position = projectionMatrix * mv; }`,
+  dustF: `uniform float uAlpha; varying vec2 vC; varying float vS; varying float vR;
+void main(){ float d = length(vC); if (d > 1.0) discard; float a = pow(1.0 - d, 2.0) * (0.25 + 0.75 * fract(vS * 13.7));
+  vec3 warm = vec3(1.0, 0.5, 0.28), cool = vec3(0.3, 0.52, 1.0), mid = vec3(0.62, 0.45, 1.0);
+  vec3 c = mix(warm, mid, smoothstep(30.0, 140.0, vR)); c = mix(c, cool, smoothstep(140.0, 300.0, vR));
+  gl_FragColor = vec4(enc(c), a * uAlpha); }`,
+  nebF: `uniform vec3 uColor; uniform float uAlpha; uniform float uSeed; varying vec2 vC;
+float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float n2(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(h(i), h(i + vec2(1.0, 0.0)), f.x), mix(h(i + vec2(0.0, 1.0)), h(i + vec2(1.0, 1.0)), f.x), f.y); }
+float fbm(vec2 p){ float s = 0.0, a = 0.5; for (int i = 0; i < 5; i++) { s += a * n2(p); p = p * 2.03 + 1.7; a *= 0.5; } return s; }
+void main(){ float d = length(vC); if (d > 1.0) discard; float f = fbm(vC * 2.4 + uSeed * 7.0);
+  float g = exp(-d * d * 3.2) * smoothstep(0.3, 0.9, f);
+  gl_FragColor = vec4(enc(uColor * (0.7 + 0.6 * f)), g * uAlpha); }`,
+  bgV: `varying vec2 vS; void main(){ vS = position.xy * 0.5 + 0.5; gl_Position = vec4(position.xy, 0.9999, 1.0); }`,
+  bgF: `uniform float uAspect; varying vec2 vS;
+void main(){ vec2 q = (vS - vec2(0.42, 0.5)) * vec2(uAspect, 1.0); float d = length(q);
+  vec3 c = mix(vec3(0.0085, 0.016, 0.040), vec3(0.0014, 0.0019, 0.0035), smoothstep(0.0, 0.95, d));
+  c += vec3(0.010, 0.004, 0.022) * exp(-pow(length((vS - vec2(0.85, 0.15)) * vec2(uAspect, 1.0)), 2.0) * 3.0);
+  gl_FragColor = vec4(enc(c), 1.0); }`,
+  fsV: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }`,
+  brightF: `uniform sampler2D tDiffuse; uniform float uThreshold; varying vec2 vUv;
+void main(){ vec3 c = texture2D(tDiffuse, vUv).rgb; float l = max(max(c.r, c.g), c.b); gl_FragColor = vec4(c * smoothstep(uThreshold, uThreshold + 0.5, l), 1.0); }`,
+  blurF: `uniform sampler2D tDiffuse; uniform vec2 uDir; varying vec2 vUv;
+void main(){ vec3 s = texture2D(tDiffuse, vUv).rgb * 0.2270270270;
+  s += texture2D(tDiffuse, vUv + uDir * 1.3846153846).rgb * 0.3162162162; s += texture2D(tDiffuse, vUv - uDir * 1.3846153846).rgb * 0.3162162162;
+  s += texture2D(tDiffuse, vUv + uDir * 3.2307692308).rgb * 0.0702702703; s += texture2D(tDiffuse, vUv - uDir * 3.2307692308).rgb * 0.0702702703;
+  gl_FragColor = vec4(s, 1.0); }`,
+  compF: `uniform sampler2D tDiffuse; uniform sampler2D tB1; uniform sampler2D tB2; uniform float uStrength; varying vec2 vUv;
+void main(){ vec3 base = texture2D(tDiffuse, vUv).rgb; vec3 b = texture2D(tB1, vUv).rgb * 0.8 + texture2D(tB2, vUv).rgb * 1.3;
+  vec3 c = base + b * uStrength; c = c / (1.0 + max(c - vec3(1.0), vec3(0.0)) * 0.6);
+  vec2 q = vUv - vec2(0.5); c *= 1.0 - smoothstep(0.3, 0.95, length(q * vec2(1.15, 1.0))) * 0.38;
+  c = pow(max(c, vec3(0.0)), vec3(0.4545));
+  c += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 255.0;
+  gl_FragColor = vec4(c, 1.0); }`
+};
+const hashOf = s => { let h = 2166136261; for (const ch of s) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return ((h >>> 0) % 1000) / 1000; };
+function fxLin(c) {
+  c = (c || "").trim(); let r = 1, g = 1, b = 1;
+  const m = /rgba?\(([^)]+)\)/.exec(c);
+  if (m) { const p = m[1].split(",").map(Number); r = p[0] / 255; g = p[1] / 255; b = p[2] / 255; }
+  else if (c[0] === "#") { let h = c.slice(1); if (h.length === 3) h = h.split("").map(x => x + x).join(""); const n = parseInt(h, 16); r = (n >> 16 & 255) / 255; g = (n >> 8 & 255) / 255; b = (n & 255) / 255; }
+  return [r, g, b].map(v => Math.pow(v, 2.2));
+}
+const fxMix = (a, b, t) => [0, 1, 2].map(i => a[i] + (b[i] - a[i]) * t);
+
+// three.js classes, borrowed from the library's own composer
+function fxKit() {
+  const comp = Graph.postProcessingComposer && Graph.postProcessingComposer();
+  const cp = comp && comp.copyPass, quad = cp && (cp.fsQuad || cp._fsQuad), qm = quad && (quad._mesh || quad.mesh);
+  if (!qm || !cp.material || !comp.renderTarget1) return null;
+  let BG = qm.geometry.constructor; const up = Object.getPrototypeOf(BG);
+  if (up && up.prototype && typeof up.prototype.setAttribute === "function") BG = up;
+  return { comp, SM: cp.material.constructor, Mesh: qm.constructor, BG, Attr: qm.geometry.attributes.position.constructor,
+    Quad: quad.constructor, Obj3D: Object.getPrototypeOf(Graph.scene().constructor), fsGeo: qm.geometry };
+}
+function fxGeo(attrs, index) {
+  const g = new FX.K.BG();
+  Object.entries(attrs).forEach(([k, [arr, n]]) => g.setAttribute(k, new FX.K.Attr(arr, n)));
+  if (index) g.setIndex(index);
+  return g;
+}
+function fxMat(vs, fs, uniforms, opts) {
+  return new FX.K.SM(Object.assign({ uniforms: Object.assign({ uTime: FX.U.uTime, uEnc: FX.U.uEnc }, uniforms || {}),
+    vertexShader: vs, fragmentShader: FXS.enc + fs, transparent: true, depthWrite: false, blending: 2 }, opts || {}));
+}
+function fxMesh(geo, mat, cull) { const m = new FX.K.Mesh(geo, mat); if (!cull) m.frustumCulled = false; return m; }
+const fxNoRay = () => {};
+function fxSphere(n) {
+  const p = [], idx = [];
+  for (let y = 0; y <= n; y++) { const th = y / n * Math.PI; for (let x = 0; x <= n; x++) { const ph = x / n * Math.PI * 2; p.push(-Math.cos(ph) * Math.sin(th), Math.cos(th), Math.sin(ph) * Math.sin(th)); } }
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+    const a = y * (n + 1) + x + 1, b = y * (n + 1) + x, c = (y + 1) * (n + 1) + x, d = (y + 1) * (n + 1) + x + 1;
+    if (y !== 0) idx.push(a, b, d); if (y !== n - 1) idx.push(b, c, d);
+  }
+  const g = fxGeo({ position: [p, 3], normal: [p.slice(), 3] }, idx); g.computeBoundingSphere(); return g;
+}
+function fxQuads(n, each) {
+  const a = { position: [[], 3], corner: [[], 2] }, idx = [];
+  for (let i = 0; i < n; i++) {
+    const v = each ? each(i) : {}, b = i * 4;
+    for (let k = 0; k < 4; k++) { a.position[0].push(...(v.pos || [0, 0, 0])); Object.entries(v.attrs || {}).forEach(([key, val]) => { const arr = Array.isArray(val) ? val : [val]; (a[key] = a[key] || [[], arr.length])[0].push(...arr); }); }
+    a.corner[0].push(-1, -1, 1, -1, 1, 1, -1, 1); idx.push(b, b + 1, b + 2, b, b + 2, b + 3);
+  }
+  return fxGeo(a, idx);
+}
+function fxAnnulus(r0, r1, seg) {
+  const pos = [], uv = [], idx = [];
+  for (let i = 0; i <= seg; i++) { const a = i / seg * Math.PI * 2, c = Math.cos(a), s = Math.sin(a); pos.push(c * r0, 0, s * r0, c * r1, 0, s * r1); uv.push(i / seg, 0, i / seg, 1); }
+  for (let i = 0; i < seg; i++) { const a = i * 2; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+  return fxGeo({ position: [pos, 3], uv: [uv, 2] }, idx);
+}
+
+// one glowing planet per node: a lit core, a soft halo, and for jobs and "you" a ring and a pulse
+function fxNode(n) {
+  const K = FX.K, id = n.id, t = NODES[id].type, g = new K.Obj3D();
+  const core = new K.Mesh(FX.geo.sphere, fxMat(FXS.coreV, FXS.coreF, { uColor: { value: [1, 1, 1] }, uAlpha: { value: 1 }, uGlow: { value: 0.2 } }, { blending: 1, depthWrite: true }));
+  const halo = fxMesh(FX.geo.quad, fxMat(FXS.bbV, FXS.haloF, { uColor: { value: [1, 1, 1] }, uAlpha: { value: 0 }, uSize: { value: 1 }, uPulse: { value: 0 }, uFlare: { value: 0 } }));
+  halo.renderOrder = 3; halo.raycast = fxNoRay;
+  g.add(core); g.add(halo);
+  const st = { id, g, core, halo, ring: null, pulse: null };
+  if (t === "job" || t === "you") {
+    const h = hashOf(id);
+    const ring = fxMesh(FX.geo.annulus, fxMat(FXS.flatV, FXS.ringF, { uColor: { value: [1, 1, 1] }, uAlpha: { value: 0 } }, { side: 2 }), true);
+    ring.rotation.x = 0.25 + h * 0.4; ring.rotation.z = (h - 0.5) * 0.7; ring.raycast = fxNoRay; ring.renderOrder = 2;
+    const pulse = fxMesh(FX.geo.quad, fxMat(FXS.bbV, FXS.pulseF, { uColor: { value: [1, 1, 1] }, uAlpha: { value: 0 }, uSize: { value: 1 } }));
+    pulse.raycast = fxNoRay; pulse.renderOrder = 3;
+    g.add(ring); g.add(pulse); st.ring = ring; st.pulse = pulse;
+  }
+  st.tgt = fxTarget(id); st.cur = Object.assign({}, st.tgt, { c: st.tgt.c.slice() });
+  FX.nodes[id] = st; fxApply(st, 1);
+  return g;
+}
+function fxTarget(id) {
+  const t = NODES[id].type, tk = taken(id), sel = id === UI.job, on = onPlan(id), n = { id };
+  const c = fxLin(nColor(n)), r = Math.max(2.2, Math.cbrt(nVal(n)) * 4);
+  const risk = isSkill(id) && !tk && impact(id)[0] === "Declining";
+  let hs, ha, glow = 0.18, ra = 0, pa = 0, fl = 0;
+  if (t === "you") { hs = r * 3.5; ha = 0.5; glow = 0.38; ra = 0.5; pa = 0.4; fl = 0.7; }
+  else if (t === "job") { hs = r * (sel ? 4.6 : 3.2); ha = sel ? 0.95 : 0.5; glow = sel ? 0.55 : 0.3; ra = sel ? 0.95 : 0.4; pa = sel ? 0.8 : 0; fl = sel ? 0.4 : 0; }
+  else if (tk) { hs = 0; ha = 0; glow = 0; }
+  else { hs = r * (on ? 3.6 : 2.6); ha = on ? 0.8 : 0.36; glow = on ? 0.4 : 0.2; }
+  const dim = FX.focus && !FX.focus.has(id) ? 0.18 : 1;
+  return { c, r, hs, ha: ha * dim, glow, ra: ra * dim, pa: pa * dim, fl: fl * dim, ca: (tk ? 0.55 : 1) * (dim < 1 ? 0.35 : 1), pulse: risk ? 1 : 0 };
+}
+function fxIntroScale(id) {
+  if (!FX.intro) return 1;
+  const k = (FX.now - FX.intro.t0 - [0.1, 0.5, 0.95, 1.3][ringOf(id)] - hashOf(id) * 0.35) / 0.8;
+  if (k <= 0) return 0; if (k >= 1) return 1;
+  const x = k - 1; return 1 + 2.70158 * x * x * x + 1.70158 * x * x; // ease-out-back
+}
+function fxApply(st, k) {
+  const a = st.cur, b = st.tgt;
+  for (let i = 0; i < 3; i++) a.c[i] += (b.c[i] - a.c[i]) * k;
+  for (const p of ["r", "hs", "ha", "glow", "ra", "pa", "ca", "pulse", "fl"]) a[p] += (b[p] - a[p]) * k;
+  const s = fxIntroScale(st.id), cu = st.core.material.uniforms, hu = st.halo.material.uniforms;
+  st.core.scale.setScalar(Math.max(0.001, a.r * s));
+  cu.uColor.value = a.c; cu.uAlpha.value = a.ca * Math.min(1, s * 1.5); cu.uGlow.value = a.glow;
+  hu.uColor.value = a.c; hu.uSize.value = a.hs * s; hu.uAlpha.value = a.ha; hu.uPulse.value = a.pulse; hu.uFlare.value = a.fl;
+  st.halo.visible = a.ha > 0.01 && s > 0.01;
+  if (st.ring) {
+    st.ring.scale.setScalar(a.r * s); st.ring.material.uniforms.uColor.value = fxMix(a.c, [1, 1, 1], 0.35); st.ring.material.uniforms.uAlpha.value = a.ra;
+    st.ring.visible = a.ra > 0.01 && s > 0.01;
+    const pu = st.pulse.material.uniforms; pu.uColor.value = a.c; pu.uSize.value = a.r * 6.5 * s; pu.uAlpha.value = a.pa; st.pulse.visible = a.pa > 0.01;
+  }
+}
+function fxStyleAll() { Object.values(FX.nodes).forEach(st => { st.tgt = fxTarget(st.id); }); }
+
+// the deep-space backdrop: gradient sky, twinkling stars, nebulae, a slowly turning dust disc, glowing orbits
+function fxBackdrop() {
+  const K = FX.K, small = $("graph").clientWidth < 700;
+  FX.bg = fxMesh(K.fsGeo, fxMat(FXS.bgV, FXS.bgF, { uAspect: { value: FX.aspect } }, { transparent: false, blending: 1, depthTest: false, depthWrite: false }));
+  FX.bg.renderOrder = -1000; FX.bg.raycast = fxNoRay;
+  const sky = new K.Obj3D();
+  const stars = fxMesh(fxQuads(small ? 1400 : 2600, () => {
+    const u = Math.random() * 2 - 1, th = Math.random() * Math.PI * 2, rad = 2600 + Math.random() * 1800, s = Math.sqrt(1 - u * u);
+    return { pos: [rad * s * Math.cos(th), rad * u, rad * s * Math.sin(th)], attrs: { seed: Math.random(), size: 3.2 + Math.pow(Math.random(), 7) * 16 } };
+  }), fxMat(FXS.starV, FXS.starF));
+  sky.add(stars);
+  [["#2b4aa8", -1500, 2600, 0.6, 1700, 0.5], ["#6a3fb0", -1300, 2600, 2.1, 1500, 0.45], ["#1f7f8a", -1700, 2700, 3.6, 1600, 0.45], ["#a8452a", -1200, 2500, 5.0, 1300, 0.26], ["#3c55c4", 900, 2900, 1.4, 1800, 0.4]].forEach(([hex, y, rad, ang, size, al], i) => {
+    const m = fxMesh(FX.geo.quad, fxMat(FXS.bbV, FXS.nebF, { uColor: { value: fxLin(hex) }, uAlpha: { value: al }, uSize: { value: size }, uSeed: { value: i * 1.37 } }));
+    m.position.set(Math.cos(ang) * rad, y, Math.sin(ang) * rad); m.renderOrder = -10; sky.add(m);
+  });
+  const dust = fxMesh(fxQuads(small ? 900 : 1800, i => {
+    const r = 20 + 300 * Math.pow(Math.random(), 0.7), arm = i % 3;
+    const a0 = arm * Math.PI * 2 / 3 + r * 0.021 + (Math.random() - 0.5) * (0.5 + r / 400);
+    return { attrs: { polar: [r, a0, 44 * Math.pow(r / 245, 1.25) - 6 + (Math.random() - 0.5) * 8], seed: Math.random() } };
+  }), fxMat(FXS.dustV, FXS.dustF, { uAlpha: { value: 0.55 } }));
+  dust.renderOrder = 1;
+  FX.sky = sky; [FX.bg, sky, dust].forEach(o => { FX.scene.add(o); FX.objs.push(o); });
+  for (let r = 1; r <= 3; r++) {
+    const m = fxMesh(fxAnnulus(RING[r] - 0.9, RING[r] + 0.9, 256), fxMat(FXS.flatV, FXS.orbitF, { uColor: { value: fxLin("#7f93b8") }, uAlpha: { value: r === 3 ? 0.42 : 0.3 },
+      uDash: { value: r < 3 ? 1 : 0 }, uSpeed: { value: [0, 0.03, 0.022, 0.015][r] }, uOff: { value: r * 0.31 } }, { side: 2 }));
+    m.position.y = LIFT[r]; m.renderOrder = 1; FX.scene.add(m); FX.objs.push(m);
+  }
+  FX.beam = fxMesh(fxQuads(1), fxMat(FXS.beamV, FXS.beamF, { uColor: { value: fxLin("#ff8a4c") }, uAlpha: { value: 0 }, uH: { value: 150 }, uW: { value: 9 } }));
+  // the beam's quad goes from the node upwards
+  const cy = FX.beam.geometry.getAttribute("corner"); for (let i = 0; i < 4; i++) cy.setY(i, i < 2 ? 0 : 1); cy.needsUpdate = true;
+  FX.beam.renderOrder = 5; FX.beam.raycast = fxNoRay; FX.scene.add(FX.beam); FX.objs.push(FX.beam);
+}
+
+// bloom: bright pass, two blur levels, then one composite that also encodes to sRGB and adds a vignette
+function fxBloom() {
+  const K = FX.K, comp = K.comp;
+  const mk = (fs, u) => new K.SM({ uniforms: u, vertexShader: FXS.fsV, fragmentShader: fs, depthTest: false, depthWrite: false });
+  const rt = () => comp.renderTarget1.clone(), A = rt(), B = rt(), C = rt(), D = rt();
+  const mBright = mk(FXS.brightF, { tDiffuse: { value: null }, uThreshold: { value: 0.42 } });
+  const mBlur = mk(FXS.blurF, { tDiffuse: { value: null }, uDir: { value: [0, 0] } });
+  const mComp = mk(FXS.compF, { tDiffuse: { value: null }, tB1: { value: null }, tB2: { value: null }, uStrength: { value: 1.15 } });
+  const quad = new K.Quad(mBright);
+  let w = 1, h = 1;
+  const pass = {
+    enabled: true, needsSwap: true, clear: false, renderToScreen: false,
+    setSize(W, H) { w = Math.max(1, W >> 1); h = Math.max(1, H >> 1); A.setSize(w, h); B.setSize(w, h); C.setSize(Math.max(1, w >> 1), Math.max(1, h >> 1)); D.setSize(Math.max(1, w >> 1), Math.max(1, h >> 1)); },
+    render(renderer, writeBuffer, readBuffer) {
+      const blur = (src, dst, dx, dy) => { mBlur.uniforms.tDiffuse.value = src.texture; mBlur.uniforms.uDir.value = [dx, dy]; quad.material = mBlur; renderer.setRenderTarget(dst); quad.render(renderer); };
+      mBright.uniforms.tDiffuse.value = readBuffer.texture; quad.material = mBright; renderer.setRenderTarget(A); quad.render(renderer);
+      blur(A, B, 1 / w, 0); blur(B, A, 0, 1 / h); blur(A, B, 2 / w, 0); blur(B, A, 0, 2 / h);
+      const w2 = Math.max(1, w >> 1), h2 = Math.max(1, h >> 1);
+      blur(A, C, 1 / w2, 0); blur(C, D, 0, 1 / h2); blur(D, C, 2.5 / w2, 0); blur(C, D, 0, 2.5 / h2);
+      mComp.uniforms.tDiffuse.value = readBuffer.texture; mComp.uniforms.tB1.value = A.texture; mComp.uniforms.tB2.value = D.texture;
+      quad.material = mComp; renderer.setRenderTarget(this.renderToScreen ? null : writeBuffer); quad.render(renderer);
+      if (!FX.bloomRan) { FX.bloomRan = true; FX.U.uEnc.value = 0; } // the composite now does the sRGB encoding
+    },
+    dispose() { [A, B, C, D].forEach(r => r.dispose()); [mBright, mBlur, mComp].forEach(m => m.dispose()); }
+  };
+  comp.addPass(pass);
+  return pass;
+}
+
+function fxInit() {
+  if (FX.on || !Graph) return;
+  try {
+    const K = fxKit(); if (!K) return;
+    FX.K = K; FX.scene = Graph.scene();
+    const cam = Graph.camera(); if (cam.far < 30000) { cam.far = 30000; cam.updateProjectionMatrix(); }
+    const rr = Graph.renderer(), pr = Math.min(window.devicePixelRatio || 1, 1.75);
+    if (rr.getPixelRatio && rr.getPixelRatio() > pr) { rr.setPixelRatio(pr); if (K.comp.setPixelRatio) K.comp.setPixelRatio(pr); }
+    FX.aspect = $("graph").clientWidth / Math.max(1, $("graph").clientHeight);
+    FX.geo = { sphere: fxSphere(28), quad: fxQuads(1), annulus: fxAnnulus(1.55, 2.45, 96), flat: fxGeo({ position: [[-1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1], 3], uv: [[0, 0, 1, 0, 1, 1, 0, 1], 2] }, [0, 2, 1, 0, 3, 2]) };
+    fxBackdrop();
+    FX.on = true;
+    Graph.nodeThreeObject(n => fxNode(n)).linkDirectionalParticleWidth(3.2);
+    try { FX.bloom = fxBloom(); } catch (e) { FX.bloom = null; }
+    $("stars").style.display = "none"; $("stage").classList.add("fx");
+    restyle();
+    if (FX.introPending) fxIntro();
+    setTimeout(fxHealth, 1500); setTimeout(fxHealth, 5000);
+  } catch (e) { fxDisable(e); }
+}
+// If the GPU refused a shader, or the library never ran our bloom pass, fall back quietly.
+function fxHealth() {
+  if (!FX.on) return;
+  try {
+    const progs = (Graph.renderer().info && Graph.renderer().info.programs) || [];
+    if (progs.some(p => p.diagnostics && p.diagnostics.runnable === false)) return fxDisable("shader error");
+    if (FX.bloom && !FX.bloomRan) { const ps = FX.K.comp.passes, i = ps.indexOf(FX.bloom); if (i >= 0) ps.splice(i, 1); FX.bloom = null; FX.U.uEnc.value = 1; }
+  } catch (e) {}
+}
+function fxDisable(why) {
+  try {
+    if (window.console) console.warn("HalaTuju: cinematic layer turned off.", why || "");
+    FX.objs.concat(FX.waves.map(w => w.m)).forEach(o => FX.scene && FX.scene.remove(o)); FX.objs = []; FX.waves = [];
+    if (FX.bloom && FX.K) { const ps = FX.K.comp.passes, i = ps.indexOf(FX.bloom); if (i >= 0) ps.splice(i, 1); }
+    const was = FX.on; FX.on = false; FX.bloom = null; FX.nodes = {}; FX.U.uEnc.value = 1;
+    if (was && Graph) { Graph.nodeThreeObject(null); $("stars").style.display = ""; $("stage").classList.remove("fx"); restyle(); }
+  } catch (e) {}
+}
+function fxIntro() {
+  if (!FX.on) { FX.introPending = true; return; }
+  FX.introPending = false;
+  if (reduce || !Graph) return;
+  FX.intro = { t0: performance.now() / 1000 };
+  const d = $("graph").clientWidth < 700 ? 1.85 : 1.5, was = UI.rotating;
+  if (was) setRotate(false);
+  Graph.cameraPosition({ x: 300, y: 1500 * d, z: 1900 * d }, { x: 0, y: 10, z: 0 }, 0);
+  setTimeout(() => { Graph.cameraPosition({ x: 0, y: 440 * d, z: 420 * d }, { x: 0, y: 10, z: 0 }, 2600); setTimeout(() => { if (was && !UI.rotating) setRotate(true); }, 2700); }, 60);
+  setTimeout(() => fxWave("ap", "#f4f6fa", 2.2, 760), 250);
+}
+function fxWave(id, hex, dur, size) {
+  if (!FX.on || reduce || !LAYOUT.visible.has(id)) return;
+  const p = posOf(id); if (!p) return;
+  const m = fxMesh(FX.geo.flat, fxMat(FXS.flatV, FXS.waveF, { uColor: { value: fxLin(hex) }, uProg: { value: 0 } }, { side: 2 }));
+  m.position.set(p.x, p.y + 1, p.z); m.scale.setScalar(size / 2); m.renderOrder = 4; m.raycast = fxNoRay;
+  FX.scene.add(m); FX.waves.push({ m, t0: performance.now() / 1000, dur });
+}
+function fxFocus(id) {
+  if (!FX.on) return;
+  const key = id && LAYOUT.visible.has(id) ? id : null;
+  if (key === FX.focusId) return;
+  FX.focusId = key;
+  FX.focus = key ? new Set([key, "ap", ...EDGES.filter(e => e[0] === key || e[1] === key).flatMap(e => [e[0], e[1]]), ...(REQ[key] || []).map(r => r[0])]) : null;
+  restyle();
+}
+function fxTick(dt) {
+  if (!FX.on) return;
+  FX.now = performance.now() / 1000; FX.U.uTime.value += dt * FX.speed;
+  if (FX.intro && FX.now - FX.intro.t0 > 3.4) FX.intro = null;
+  const k = 1 - Math.pow(0.002, dt);
+  for (const id in FX.nodes) fxApply(FX.nodes[id], k);
+  const b = FX.beam, p = LAYOUT.visible.has(UI.job) ? posOf(UI.job) : null, bu = b.material.uniforms;
+  if (p) b.position.set(p.x, p.y, p.z);
+  bu.uAlpha.value += ((p ? 0.7 : 0) * fxIntroScale(UI.job) - bu.uAlpha.value) * k; b.visible = bu.uAlpha.value > 0.01;
+  FX.waves = FX.waves.filter(w => {
+    const q = Math.min(1, (FX.now - w.t0) / w.dur); w.m.material.uniforms.uProg.value = 1 - Math.pow(1 - q, 2.2);
+    if (q >= 1) { FX.scene.remove(w.m); w.m.material.dispose(); return false; }
+    return true;
+  });
+  if (scoutState === "running" && FX.now - FX.lastWave > 0.7) { FX.lastWave = FX.now; fxWave("ap", "#4a93ea", 1.3, 420); }
+  if (FX.sky) FX.sky.rotation.y += dt * 0.006 * FX.speed;
+  if (FX.bg) FX.bg.material.uniforms.uAspect.value = FX.aspect;
+}
+
+// labels: place the most important ones first and hide any that would collide
+function placeLabels() {
+  const items = [];
+  for (const id in labelEls) {
+    const el = labelEls[id]; if (el.classList.contains("hide")) continue;
+    const p = posOf(id), s = Graph.graph2ScreenCoords(p.x, p.y, p.z), t = NODES[id].type;
+    const pr = id === hoverId ? 0 : t === "you" ? 1 : id === UI.job ? 2 : onPlan(id) ? 3 : t === "job" ? 4 : 5;
+    items.push({ el, s, off: t === "job" ? 20 : t === "you" ? 22 : 12, pr, w: el._w || 120, h: el._h || 22 });
+  }
+  items.sort((a, b) => a.pr - b.pr);
+  const placed = [], hit = r => placed.some(q => r.x < q.x + q.w && r.x + r.w > q.x && r.y < q.y + q.h && r.y + r.h > q.y);
+  items.forEach(it => {
+    let y = null;
+    for (const cy of [it.s.y + it.off, it.s.y - it.off - it.h]) { const r = { x: it.s.x - it.w / 2 - 4, y: cy - 2, w: it.w + 8, h: it.h + 4 }; if (!hit(r)) { y = cy; placed.push(r); break; } }
+    if (y === null && it.pr <= 2) { y = it.s.y + it.off; placed.push({ x: it.s.x - it.w / 2, y, w: it.w, h: it.h }); }
+    if (y === null) { it.el.classList.add("clash"); return; }
+    it.el.classList.remove("clash");
+    it.el.style.transform = `translate(${it.s.x}px, ${y}px) translate(-50%, 0)`;
+  });
+}
+
 // ============ refresh, toasts, controls ============
 function refresh(reroute = false, animate = false) {
   const prev = plan && plan.route && plan.route.key;
@@ -1541,6 +1925,7 @@ function refresh(reroute = false, animate = false) {
   $("year-out").textContent = S.year; $("year").value = S.year;
   if (UI.drawer && $("drawer").classList.contains("open")) { const d = $("drawer"), st = d.scrollTop; openDrawer(UI.drawer, true); d.scrollTop = st; }
   const changed = reroute && prev !== (plan && plan.route && plan.route.key);
+  if (changed) fxWave("ap", "#f08a5d", 1.6, 620);
   if (changed && Graph && !relaid) { $("rerouting").classList.add("show"); setTimeout(() => { $("rerouting").classList.remove("show"); restyle(); }, reduce ? 200 : 1000); }
   else restyle();
   return changed;
@@ -1668,7 +2053,7 @@ function obRender() {
   });
 }
 function finishOnboarding() {
-  const done = () => { $("ob").hidden = true; refresh(false, true); toast("Your career map is ready", `${UI.ring.length} jobs found. Best match: ${NODES[UI.ring[0]].name}. Follow the demo guide to see a live reroute.`, '<span class="badge b-good">Ready</span>'); const g = $("guide"); if (g && !g.hidden) { g.classList.remove("hint"); void g.offsetWidth; g.classList.add("hint"); } };
+  const done = () => { $("ob").hidden = true; refresh(false, true); fxIntro(); toast("Your career map is ready", `${UI.ring.length} jobs found. Best match: ${NODES[UI.ring[0]].name}. Follow the demo guide to see a live reroute.`, '<span class="badge b-good">Ready</span>'); const g = $("guide"); if (g && !g.hidden) { g.classList.remove("hint"); void g.offsetWidth; g.classList.add("hint"); } };
   if (window.gsap && !reduce) gsap.to("#ob", { opacity: 0, duration: 0.3, ease: "power2.out", onComplete: () => { done(); gsap.set("#ob", { opacity: 1 }); } });
   else done();
 }
@@ -1744,7 +2129,7 @@ document.addEventListener("keydown", e => {
 // ============ boot ============
 new MutationObserver(restyle).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", restyle);
-new ResizeObserver(() => { if (Graph) Graph.width($("graph").clientWidth).height($("graph").clientHeight); drawStars(); }).observe($("stage"));
+new ResizeObserver(() => { const g = $("graph"); FX.aspect = g.clientWidth / Math.max(1, g.clientHeight); if (Graph) Graph.width(g.clientWidth).height(g.clientHeight); if (!FX.on) drawStars(); }).observe($("stage"));
 computeRing(); computePlans(); applyLayout(false);
 renderHead(); renderPanel(); renderAgents();
 initGraph(); drawStars(); obRender(); updateAdminCount(); renderGuide(); icons();
