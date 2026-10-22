@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HalaTuju · Career GPS</title>
+<meta name="description" content="HalaTuju is a career GPS for workers whose jobs are being changed by AI. When AI changes the road, it reroutes your career, and every change comes with its source.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap">
+<style>
+/* HalaTuju landing page.
+   One idea carries the page: a GPS that reroutes your career when AI changes the road.
+   Colours keep the same meaning as in the app: orange = your route, blue = skills you have,
+   green = skills to learn, grey = slowed or closed road, expressway green = destination signs only. */
+:root {
+  --paper: #f3f5f8;
+  --surface: #ffffff;
+  --ink: #0f1a2b;
+  --ink-2: #44506a;
+  --muted: #5f6b83;
+  --line: #dde2ea;
+  --line-2: #c9d0db;
+  --route: #e3672f;
+  --route-ink: #b4471a;
+  --skill: #2a78d6;
+  --learn: #199e70;
+  --closed: #8b95a6;
+  --sign: #0b6b46;
+  --hazard: #f2b33d;
+  --focus: #2a78d6;
+  /* the map is a night map in both themes, like the app's constellation */
+  --night-a: #16233b;
+  --night-b: #05070c;
+  --font: "Overpass", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --measure: 62ch;
+  --page: 1160px;
+  --gutter: 16px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0b0f17; --surface: #121826; --ink: #e8ecf3; --ink-2: #b0b9c9; --muted: #8e98ab;
+    --line: #232b3b; --line-2: #313a4d; --route-ink: #f39a6e; --skill: #4a93ea; --learn: #3fbf8f; --focus: #6aa8f0;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0b0f17; --surface: #121826; --ink: #e8ecf3; --ink-2: #b0b9c9; --muted: #8e98ab;
+  --line: #232b3b; --line-2: #313a4d; --route-ink: #f39a6e; --skill: #4a93ea; --learn: #3fbf8f; --focus: #6aa8f0;
+  color-scheme: dark;
+}
+@media (min-width: 720px) { :root { --gutter: 32px; } }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+svg.i { width: 1em; height: 1em; flex: none; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.wrap { max-width: var(--page); margin: 0 auto; padding-left: max(var(--gutter), env(safe-area-inset-left, 0px)); padding-right: max(var(--gutter), env(safe-area-inset-right, 0px)); }
+.num { font-variant-numeric: tabular-nums; }
+.skip { position: absolute; left: 12px; top: -60px; background: var(--ink); color: var(--paper); padding: 10px 14px; border-radius: 8px; z-index: 10; text-decoration: none; font-weight: 700; }
+.skip:focus { top: 12px; }
+
+/* ---------- buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; font: inherit; font-weight: 700; font-size: 16px; text-decoration: none; border: 2px solid transparent; cursor: pointer; transition: background-color .15s ease-out, border-color .15s ease-out, transform .1s ease-out; }
+.btn:active { transform: translateY(1px); }
+.btn-go { background: var(--route); color: #fff; }
+.btn-go:hover { background: #cf5a25; }
+.btn-line { background: transparent; color: var(--ink); border-color: var(--line-2); }
+.btn-line:hover { border-color: var(--ink); }
+.btn svg.i { width: 18px; height: 18px; }
+
+/* ---------- top bar ---------- */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .2s ease-out; }
+.top.scrolled { border-bottom-color: var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
+.logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; letter-spacing: -0.01em; text-decoration: none; }
+.logo-mark { width: 32px; height: 32px; border-radius: 9px; background: linear-gradient(145deg, #3a8be6, #1f5fb3); display: grid; place-items: center; color: #fff; }
+.logo-mark svg.i { width: 18px; height: 18px; }
+.nav { display: flex; align-items: center; gap: 4px; }
+.nav a.lnk { text-decoration: none; color: var(--ink-2); font-weight: 600; font-size: 15px; padding: 8px 12px; border-radius: 8px; }
+.nav a.lnk:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.nav .btn { min-height: 40px; padding: 0 16px; font-size: 15px; margin-left: 8px; }
+@media (max-width: 860px) { .nav a.lnk { display: none; } }
+
+/* ---------- hero ---------- */
+.hero { padding: 40px 0 64px; }
+.hero .wrap { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 1000px) { .hero { padding: 56px 0 88px; } .hero .wrap { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; } }
+h1 { font-size: clamp(2.5rem, 3.6vw + 0.7rem, 3.6rem); line-height: 1.02; letter-spacing: -0.025em; font-weight: 800; margin: 0; text-wrap: balance; }
+.lede { font-size: clamp(1.1rem, 0.5vw + 1rem, 1.25rem); color: var(--ink-2); max-width: 40ch; margin: 22px 0 0; text-wrap: pretty; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.fine { font-size: 14px; color: var(--muted); margin: 22px 0 0; max-width: 46ch; }
+.fine b { color: var(--ink-2); font-weight: 600; }
+
+/* the reroute map */
+.map { position: relative; border-radius: 22px; overflow: hidden; background: radial-gradient(ellipse 85% 75% at 45% 50%, var(--night-a) 0%, var(--night-b) 80%); color: #e9eef6; box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 20px 40px -24px rgba(5, 10, 20, .55); }
+.map-canvas { position: relative; aspect-ratio: 600 / 420; }
+.map-canvas > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.road-bg { stroke: rgba(160, 182, 214, 0.13); stroke-width: 1.5; fill: none; }
+.road { fill: none; stroke-linecap: round; }
+.road.base { stroke: rgba(160, 182, 214, 0.22); stroke-width: 2; }
+.road.lit { stroke: var(--route); stroke-width: 5; }
+.road.slow { stroke: var(--closed); stroke-width: 3; stroke-dasharray: 2 9; opacity: .9; }
+.node-ring { fill: none; stroke: rgba(255,255,255,.22); stroke-width: 1.5; }
+.pin { position: absolute; transform: translate(-50%, 0); white-space: nowrap; font-size: 13px; font-weight: 600; line-height: 1.2; background: rgba(14, 20, 32, 0.82); border: 1px solid rgba(160, 182, 214, 0.24); border-radius: 999px; padding: 5px 10px 4px; display: inline-flex; align-items: center; gap: 6px; }
+.pin .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.pin.you { background: #f4f6fa; color: #0c1220; border-color: transparent; font-weight: 700; }
+.pin.dim { opacity: .55; }
+.sign { position: absolute; right: 3.5%; top: 5%; width: min(50%, 290px); background: var(--sign); color: #fff; border-radius: 10px; padding: 4px; box-shadow: 0 8px 24px -8px rgba(0,0,0,.6); }
+.sign-in { border: 2px solid #fff; border-radius: 7px; padding: 9px 12px 8px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 4px 10px; align-items: center; }
+.sign-in svg.i { width: 22px; height: 22px; stroke-width: 2.6; grid-row: span 2; align-self: start; margin-top: 2px; }
+.sign-name { font-weight: 800; font-size: 16px; line-height: 1.15; letter-spacing: -0.005em; }
+.sign-eta { font-weight: 800; font-size: 26px; line-height: 1; text-align: right; grid-row: span 2; align-self: center; white-space: nowrap; }
+.sign-eta small { font-size: 14px; font-weight: 700; margin-left: 2px; }
+.sign-via { grid-column: 2; font-size: 13px; line-height: 1.25; color: #d4ecdf; font-weight: 600; }
+.sign.flip .sign-eta { animation: flip .5s ease-out; }
+@keyframes flip { 0% { opacity: 0; transform: translateY(-6px); } 100% { opacity: 1; transform: none; } }
+.hazard { position: absolute; transform: translate(-50%, -100%); display: inline-flex; align-items: center; gap: 7px; background: #3a2a0c; color: #ffd27a; border: 1px solid #c98500; border-radius: 10px; padding: 7px 11px 6px; font-size: 13px; font-weight: 700; line-height: 1.25; max-width: 260px; box-shadow: 0 0 24px rgba(201, 133, 0, 0.35); opacity: 0; pointer-events: none; }
+.hazard svg.i { width: 16px; height: 16px; flex: none; }
+.hazard small { display: block; font-weight: 500; color: #f0d9a6; font-size: 12px; }
+.hazard.show { opacity: 1; }
+.map-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 14px 18px 16px; border-top: 1px solid rgba(160, 182, 214, 0.16); font-size: 14.5px; }
+.status { margin: 0; color: #cdd6e4; min-height: 2.6em; display: flex; align-items: center; gap: 10px; flex: 1 1 280px; line-height: 1.35; }
+.status b { color: #fff; font-weight: 700; }
+.status .lamp { width: 10px; height: 10px; border-radius: 50%; background: var(--route); flex: none; box-shadow: 0 0 0 4px rgba(227, 103, 47, .2); }
+.status.warn .lamp { background: var(--hazard); box-shadow: 0 0 0 4px rgba(242, 179, 61, .22); }
+.replay { background: transparent; color: #e9eef6; border: 1px solid rgba(160, 182, 214, 0.35); border-radius: 999px; min-height: 36px; padding: 0 14px; font: inherit; font-size: 14px; font-weight: 600; display: inline-flex; gap: 8px; align-items: center; cursor: pointer; }
+.replay:hover { border-color: #e9eef6; }
+.replay svg.i { width: 15px; height: 15px; }
+.keys { display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 0 18px 16px; font-size: 13px; color: #aab6c8; }
+.keys span { display: inline-flex; align-items: center; gap: 7px; }
+.keys i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; }
+.keys i.ln { width: 16px; height: 4px; border-radius: 2px; }
+@media (max-width: 560px) {
+  .pin { font-size: 11px; padding: 3px 7px 2px; }
+  .pin.opt { display: none; }
+  .pin.you { transform: translate(-28%, 0); }
+  .sign { width: 54%; }
+  .sign-in { padding: 6px 8px 5px; gap: 2px 6px; }
+  .sign-in svg.i { width: 16px; height: 16px; }
+  .sign-name { font-size: 12.5px; }
+  .sign-via { display: none; }
+  .sign-eta { font-size: 19px; }
+  .sign-eta small { font-size: 11px; }
+  .hazard { font-size: 11.5px; padding: 5px 8px 4px; max-width: 170px; }
+  .hazard small { display: none; }
+  .map-foot { padding: 12px 14px 14px; font-size: 14px; }
+  .keys { padding: 0 14px 14px; }
+}
+
+/* ---------- sections ---------- */
+section { padding: 72px 0; }
+@media (min-width: 1000px) { section { padding: 104px 0; } }
+.band { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+h2 { font-size: clamp(1.85rem, 2.2vw + 1rem, 2.75rem); line-height: 1.08; letter-spacing: -0.02em; font-weight: 800; margin: 0; max-width: 22ch; text-wrap: balance; }
+.intro { font-size: 18px; color: var(--ink-2); max-width: var(--measure); margin: 18px 0 0; text-wrap: pretty; }
+.intro a { color: var(--route-ink); text-underline-offset: 3px; }
+h3 { font-size: 20px; line-height: 1.25; font-weight: 750; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+
+/* problem: three questions */
+.qs { list-style: none; margin: 48px 0 0; padding: 0; display: grid; }
+.qs li { display: grid; gap: 8px 48px; padding: 26px 0; border-top: 1px solid var(--line); }
+.qs li:last-child { border-bottom: 1px solid var(--line); }
+@media (min-width: 860px) { .qs li { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: baseline; } }
+.qs .q { font-size: clamp(1.3rem, 1vw + 1rem, 1.6rem); font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; text-wrap: balance; }
+.qs .a { color: var(--ink-2); max-width: 46ch; }
+.qs .a b { color: var(--ink); font-weight: 650; }
+
+/* first week: a timeline drawn as a road */
+.trip { list-style: none; margin: 56px 0 0; padding: 0; display: grid; gap: 0; position: relative; }
+.trip li { position: relative; padding: 0 0 34px 44px; }
+.trip li::before { content: ""; position: absolute; left: 9px; top: 26px; bottom: -2px; width: 4px; border-radius: 2px; background: var(--route); opacity: .9; }
+.trip li:last-child::before { display: none; }
+.trip li.gap::before { background: repeating-linear-gradient(to bottom, var(--route) 0 6px, transparent 6px 12px); opacity: .7; }
+.stop { position: absolute; left: 0; top: 2px; width: 22px; height: 22px; border-radius: 50%; background: var(--surface); border: 4px solid var(--route); }
+.trip li.turn .stop { border-color: var(--hazard); background: #3a2a0c; }
+.trip li.end .stop { background: var(--route); }
+.when { font-size: 14px; font-weight: 700; color: var(--route-ink); font-variant-numeric: tabular-nums; }
+.trip li.turn .when { color: #a26a00; }
+:root[data-theme="dark"] .trip li.turn .when { color: var(--hazard); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .trip li.turn .when { color: var(--hazard); } }
+.trip h3 { margin: 2px 0 6px; }
+.trip p { color: var(--ink-2); max-width: 52ch; }
+.trip blockquote { margin: 12px 0 0; padding: 12px 16px; border-left: 4px solid var(--hazard); background: color-mix(in srgb, var(--hazard) 12%, var(--surface)); border-radius: 0 10px 10px 0; color: var(--ink); font-weight: 600; max-width: 52ch; }
+@media (min-width: 1000px) {
+  .trip { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 28px; }
+  .trip li { padding: 44px 0 0; }
+  .trip li::before { left: 22px; right: -30px; top: 9px; bottom: auto; width: auto; height: 4px; }
+  .trip li.gap::before { background: repeating-linear-gradient(to right, var(--route) 0 6px, transparent 6px 12px); }
+  .trip p, .trip blockquote { font-size: 15.5px; }
+  .trip blockquote { padding: 10px 12px; }
+}
+
+/* route choices */
+.routes { margin-top: 48px; display: grid; gap: 14px; }
+.route { display: grid; gap: 14px 28px; align-items: center; padding: 22px 24px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+.route.pick { border: 2px solid var(--route); padding: 21px 23px; }
+@media (min-width: 900px) { .route { grid-template-columns: 170px minmax(0, 1fr) 96px 110px; } }
+.route-name { font-weight: 800; font-size: 20px; letter-spacing: -0.01em; }
+.route-name small { display: block; font-weight: 500; font-size: 14.5px; color: var(--muted); letter-spacing: 0; margin-top: 2px; line-height: 1.35; }
+.legs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; }
+.legs .sk { padding: 5px 12px 4px; border-radius: 999px; border: 1.5px solid; line-height: 1.3; }
+.legs .have { border-color: color-mix(in srgb, var(--skill) 55%, transparent); color: var(--skill); }
+.legs .learn { border-color: color-mix(in srgb, var(--learn) 55%, transparent); color: var(--learn); }
+.legs .dest { background: var(--sign); border-color: var(--sign); color: #fff; }
+.legs svg.i { color: var(--muted); width: 16px; height: 16px; }
+.wk { font-size: 30px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+.wk small { font-size: 15px; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+.risk { font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
+.risk i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.route-meta { display: flex; gap: 28px; align-items: center; }
+@media (min-width: 900px) { .route-meta { display: contents; } }
+.legend-note { margin-top: 18px; font-size: 14.5px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.legend-note span { display: inline-flex; gap: 8px; align-items: center; }
+.legend-note i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; border: 2px solid; }
+
+/* how it stays honest: pipeline */
+.cols { display: grid; gap: 48px; }
+@media (min-width: 1000px) { .cols { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 72px; align-items: start; } }
+.pipe { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: p; }
+.pipe li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 0 16px; position: relative; padding-bottom: 26px; }
+.pipe li::after { content: ""; position: absolute; left: 21px; top: 44px; bottom: 4px; width: 2px; background: var(--line-2); }
+.pipe li:last-child { padding-bottom: 0; }
+.pipe li:last-child::after { display: none; }
+.pipe .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--surface); border: 1px solid var(--line); color: var(--ink-2); }
+.pipe .ic svg.i { width: 20px; height: 20px; }
+.pipe li.human .ic { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.pipe li.go .ic { background: var(--route); border-color: var(--route); color: #fff; }
+.pipe h3 { font-size: 18px; margin-top: 9px; }
+.pipe p { color: var(--ink-2); margin-top: 4px; font-size: 16px; }
+.formula { margin-top: 36px; padding: 22px 24px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+.formula p { color: var(--ink-2); font-size: 16px; }
+.eq { font-size: clamp(1.15rem, 1vw + 0.9rem, 1.45rem); font-weight: 700; margin: 10px 0 12px; letter-spacing: -0.005em; }
+.eq var { font-style: normal; color: var(--route-ink); }
+
+/* domain checklist */
+.musts { list-style: none; margin: 40px 0 0; padding: 0; display: grid; gap: 0; }
+.musts li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 2px 14px; padding: 16px 0; border-top: 1px solid var(--line); }
+.musts li:last-child { border-bottom: 1px solid var(--line); }
+.musts .ck { grid-row: span 2; width: 28px; height: 28px; border-radius: 50%; background: color-mix(in srgb, var(--learn) 16%, transparent); color: var(--learn); display: grid; place-items: center; }
+.musts .ck svg.i { width: 16px; height: 16px; stroke-width: 2.6; }
+.musts b { font-weight: 700; margin-top: 2px; }
+.musts .d { color: var(--ink-2); font-size: 16px; }
+
+/* SDGs */
+.sdgs { list-style: none; margin: 40px 0 0; padding: 0; display: grid; gap: 14px; }
+@media (min-width: 760px) { .sdgs { grid-template-columns: 1fr 1fr; } }
+.sdgs li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; align-items: start; }
+.sdg { width: 64px; height: 64px; border-radius: 10px; color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 28px; line-height: 1; }
+.sdgs h3 { font-size: 18px; margin-top: 4px; }
+.sdgs p { color: var(--ink-2); font-size: 16px; margin-top: 4px; }
+
+/* trust */
+.trust { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+.trust li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 14px; }
+.trust svg.i { width: 22px; height: 22px; color: var(--route-ink); margin-top: 3px; }
+.trust b { display: block; font-weight: 700; }
+.trust span { color: var(--ink-2); font-size: 16px; }
+.data { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px; }
+.data span { font-size: 14.5px; font-weight: 600; padding: 6px 12px 5px; border-radius: 8px; background: var(--paper); border: 1px solid var(--line); color: var(--ink-2); }
+
+/* final call */
+.final { padding: 0 0 96px; }
+.final-box { border-radius: 24px; background: radial-gradient(ellipse 80% 90% at 30% 40%, var(--night-a), var(--night-b) 85%); color: #eef2f8; padding: clamp(28px, 5vw, 64px); display: grid; gap: 28px; align-items: center; }
+@media (min-width: 900px) { .final-box { grid-template-columns: minmax(0, 1fr) auto; } }
+.final h2 { color: #fff; max-width: 18ch; }
+.final p { color: #c6cfdd; margin-top: 14px; max-width: 52ch; }
+.final .btn-line { color: #eef2f8; border-color: rgba(238, 242, 248, .35); }
+.final .btn-line:hover { border-color: #eef2f8; }
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: 14.5px; color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: space-between; }
+footer a { color: var(--ink-2); }
+footer p { max-width: 70ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .top, .sign.flip .sign-eta { transition: none; animation: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Inline icon set (Lucide paths, ISC licence), so the page works without any script CDN -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></symbol>
+  <symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-arrow-ur" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-replay" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-radar" viewBox="0 0 24 24"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"/><circle cx="12" cy="12" r="2"/><path d="m13.41 10.59 5.66-5.66"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></symbol>
+  <symbol id="i-user-check" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+</svg>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#main" aria-label="HalaTuju home"><span class="logo-mark"><svg class="i"><use href="#i-compass"/></svg></span>HalaTuju</a>
+    <nav class="nav" aria-label="Page">
+      <a class="lnk" href="#problem">Why</a>
+      <a class="lnk" href="#week">How it works</a>
+      <a class="lnk" href="#trust">Trust</a>
+      <a class="lnk" href="#sdg">SDGs</a>
+      <a class="btn btn-go" href="halatuju-app.html">Open the demo</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- ================= HERO ================= -->
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>When AI changes the road, HalaTuju reroutes your career.</h1>
+        <p class="lede">Upload your CV. See which of your skills AI is taking over, which jobs you can reach, and how many weeks of learning it takes. When the job market moves, your route updates, and every change shows its source.</p>
+        <div class="ctas">
+          <a class="btn btn-go" href="halatuju-app.html">Try it as Aisyah<svg class="i"><use href="#i-arrow-r"/></svg></a>
+          <a class="btn btn-line" href="#week">See her first week</a>
+        </div>
+        <p class="fine"><b>HalaTuju</b> means “direction” in Malay. This is a working prototype for SDC Hackathon 2026 (Domain 1). The people, numbers and courses in it are sample data.</p>
+      </div>
+
+      <figure class="map" aria-labelledby="map-status" style="margin:0">
+        <div class="map-canvas" id="map">
+          <svg viewBox="0 0 600 420" aria-hidden="true" focusable="false">
+            <!-- faint side roads, so it reads as a map -->
+            <g class="road-bg">
+              <path d="M-10,270 C30,262 50,282 70,320"/>
+              <path d="M70,320 C60,370 90,410 140,440"/>
+              <path d="M210,200 C180,150 150,110 120,70"/>
+              <path d="M120,70 C180,40 250,20 330,-10"/>
+              <path d="M210,200 C260,250 330,280 385,320"/>
+              <path d="M215,345 C260,390 330,405 420,430"/>
+              <path d="M380,175 C420,120 440,80 460,-10"/>
+              <path d="M385,320 C430,365 500,380 610,370"/>
+              <path d="M530,250 C565,265 590,280 620,290"/>
+              <path d="M-10,140 C50,120 90,100 120,70"/>
+            </g>
+            <!-- the two routes to the destination -->
+            <g id="roads">
+              <path class="road base" id="a1" d="M70,320 C110,270 150,225 210,200"/>
+              <path class="road base" id="a2" d="M210,200 C270,175 320,170 380,175"/>
+              <path class="road base" id="a3" d="M380,175 C450,180 500,205 530,250"/>
+              <path class="road base" id="b1" d="M70,320 C125,340 165,348 215,345"/>
+              <path class="road base" id="b2" d="M215,345 C285,345 330,322 385,320"/>
+              <path class="road base" id="b3" d="M385,320 C450,318 500,295 530,250"/>
+            </g>
+            <g id="lit"></g>
+            <!-- stops -->
+            <g>
+              <circle cx="120" cy="70" r="5" fill="#3987e5" opacity=".45"/>
+              <circle cx="210" cy="200" r="13" class="node-ring"/>
+              <circle cx="210" cy="200" r="8" fill="#3987e5" id="n-recon"/>
+              <circle cx="215" cy="345" r="13" class="node-ring"/>
+              <circle cx="215" cy="345" r="8" fill="#3987e5"/>
+              <circle cx="380" cy="175" r="13" class="node-ring"/>
+              <circle cx="380" cy="175" r="8" fill="#199e70"/>
+              <circle cx="385" cy="320" r="13" class="node-ring"/>
+              <circle cx="385" cy="320" r="8" fill="#199e70"/>
+              <circle cx="530" cy="250" r="20" fill="#e3672f" opacity=".18"/>
+              <circle cx="530" cy="250" r="12" fill="#e3672f"/>
+              <circle cx="70" cy="320" r="16" fill="#f4f6fa"/>
+              <circle cx="70" cy="320" r="22" fill="none" stroke="#f4f6fa" stroke-opacity=".25" stroke-width="2"/>
+            </g>
+          </svg>
+
+          <span class="pin you" style="left:11.7%;top:82.4%">You · AP clerk</span>
+          <span class="pin" style="left:35%;top:52%"><i class="dot" style="background:#3987e5"></i>Vendor reconciliation</span>
+          <span class="pin" style="left:35.8%;top:86.4%"><i class="dot" style="background:#3987e5"></i>Audit trail</span>
+          <span class="pin opt" style="left:63.3%;top:46%"><i class="dot" style="background:#199e70"></i>GHG accounting</span>
+          <span class="pin opt" style="left:64.2%;top:80.5%"><i class="dot" style="background:#199e70"></i>Sustainability disclosure</span>
+          <span class="pin dim opt" style="left:20%;top:19.5%">Spreadsheet analysis</span>
+
+          <div class="sign" id="sign" aria-hidden="true">
+            <div class="sign-in">
+              <svg class="i"><use href="#i-arrow-ur"/></svg>
+              <span class="sign-name">ESG &amp; Carbon Reporting Analyst</span>
+              <span class="sign-eta num" id="sign-eta">6<small>wk</small></span>
+              <span class="sign-via" id="sign-via">via GHG accounting</span>
+            </div>
+          </div>
+
+          <div class="hazard" id="hazard" style="left:35%;top:43.8%" aria-hidden="true">
+            <svg class="i"><use href="#i-alert"/></svg>
+            <span>AI agents now close the month-end books<small>Reconciliation AI exposure 54% → 72%</small></span>
+          </div>
+        </div>
+        <div class="map-foot">
+          <p class="status" id="map-status" role="status" aria-live="polite"><span class="lamp"></span><span id="status-text">Fastest route to ESG &amp; Carbon Reporting Analyst: <b>6 weeks</b>, through skills you already have.</span></p>
+          <button class="replay" type="button" id="replay"><svg class="i"><use href="#i-replay"/></svg>Replay</button>
+        </div>
+        <div class="keys" aria-hidden="true">
+          <span><i style="background:#f4f6fa"></i>You</span>
+          <span><i style="background:#3987e5"></i>Skills you have</span>
+          <span><i style="background:#199e70"></i>Skills to learn</span>
+          <span><i class="ln" style="background:#e3672f"></i>Your route</span>
+          <span><i class="ln" style="background:#8b95a6"></i>Slowed by AI</span>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <!-- ================= PROBLEM ================= -->
+  <section class="band" id="problem">
+    <div class="wrap">
+      <h2>Aisyah has 90 days and six hours a week.</h2>
+      <p class="intro">She has spent nine years in accounts payable at a shared-services centre in Cyberjaya. Her company has just announced AI will process its invoices. She is not alone: TalentCorp's 2024 study found <a href="https://www.malaymail.com/news/malaysia/2024/11/18/hr-minister-proposes-upskilling-as-study-shows-620000-jobs-in-10-sectors-set-for-impact-soon-from-ai-digitalisation/157256" target="_blank" rel="noopener">620,000 jobs in 10 key sectors</a>, including global business services, face significant change within three to five years. Aisyah is a sample persona; her questions are real.</p>
+      <ol class="qs">
+        <li><p class="q">Which of my skills are still worth something?</p><p class="a">AI takes over <b>tasks, not whole jobs</b>. HalaTuju splits each skill into tasks and shows which ones AI already does, which it assists with, and which still need you.</p></li>
+        <li><p class="q">Where can I realistically go from here?</p><p class="a">Keyword matching misses real transfers. HalaTuju finds <b>skill bridges</b>, such as reconciliation leading into carbon accounting, because both trace every number back to a source document.</p></li>
+        <li><p class="q">Will this advice still be right next month?</p><p class="a">Career tests are one-off snapshots. HalaTuju's market scout checks for new AI capabilities daily, and <b>your route updates</b> when a change is approved.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= FIRST WEEK ================= -->
+  <section id="week">
+    <div class="wrap">
+      <h2>Aisyah's first week with HalaTuju</h2>
+      <p class="intro">From a CV upload to a personal route in under three minutes, then a reroute three days later when the market moves.</p>
+      <ol class="trip">
+        <li><span class="stop"></span><span class="when">Day 1, minute 1</span><h3>Upload, then answer three questions</h3><p>The interviewer agent reads her LinkedIn PDF and asks only about the gaps, like whether she runs the weekly payment batch.</p></li>
+        <li><span class="stop"></span><span class="when">Day 1, minute 2</span><h3>See where she stands</h3><p>Her future-proof score is 60%. Invoice data entry is declining; audit trail work is a rising human skill.</p></li>
+        <li><span class="stop"></span><span class="when">Day 1, minute 3</span><h3>Pick a destination</h3><p>She searches “ESG analyst” and gets three routes with weeks, courses and the reason each step works. Her advisor approves the plan.</p></li>
+        <li class="turn gap"><span class="stop"></span><span class="when">Day 4</span><h3>Rerouted, with a source</h3><blockquote>Your fastest route now goes through Audit trail and Sustainability disclosure: 7 weeks.</blockquote></li>
+        <li class="end"><span class="stop"></span><span class="when">Week 6</span><h3>Closer every week</h3><p>She finishes GHG accounting basics. Her match rises and her score history shows the climb.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= ROUTES ================= -->
+  <section class="band" id="routes">
+    <div class="wrap">
+      <h2>Three routes, like a GPS</h2>
+      <p class="intro">HalaTuju runs a shortest-path search over the skills network. Each road costs weeks of learning at your pace, plus “traffic”: how exposed that skill is to AI.</p>
+      <div class="routes">
+        <div class="route pick">
+          <p class="route-name">Fastest<small>Fewest weeks</small></p>
+          <p class="legs"><span class="sk have">Vendor reconciliation</span><svg class="i"><use href="#i-chev"/></svg><span class="sk learn">GHG emissions accounting</span><svg class="i"><use href="#i-chev"/></svg><span class="sk dest">ESG Analyst</span></p>
+          <div class="route-meta"><p class="wk num">6<small> wk</small></p><p class="risk"><i style="background:var(--hazard)"></i>Medium risk</p></div>
+        </div>
+        <div class="route">
+          <p class="route-name">No-regret<small>Holds up if AI moves fast</small></p>
+          <p class="legs"><span class="sk have">Audit trail</span><svg class="i"><use href="#i-chev"/></svg><span class="sk learn">Sustainability disclosure</span><svg class="i"><use href="#i-chev"/></svg><span class="sk dest">ESG Analyst</span></p>
+          <div class="route-meta"><p class="wk num">7<small> wk</small></p><p class="risk"><i style="background:var(--learn)"></i>Low risk</p></div>
+        </div>
+        <div class="route">
+          <p class="route-name">Safest<small>Avoids AI-exposed skills</small></p>
+          <p class="legs"><span class="sk have">Process improvement</span><svg class="i"><use href="#i-chev"/></svg><span class="sk learn">Supervising AI workflows</span><svg class="i"><use href="#i-chev"/></svg><span class="sk dest">ESG Analyst</span></p>
+          <div class="route-meta"><p class="wk num">10<small> wk</small></p><p class="risk"><i style="background:var(--learn)"></i>Low risk</p></div>
+        </div>
+      </div>
+      <p class="legend-note"><span><i style="border-color:var(--skill)"></i>A skill she already has</span><span><i style="border-color:var(--learn)"></i>A skill to learn</span><span>Weeks assume six hours of study a week.</span></p>
+    </div>
+  </section>
+
+  <!-- ================= TRUST ================= -->
+  <section id="trust">
+    <div class="wrap cols">
+      <div>
+        <h2>Agents read. Formulas score. People decide.</h2>
+        <p class="intro">AI does the reading and the talking. Every number on screen comes from plain code and a sourced record, so the same input always gives the same answer.</p>
+        <div class="formula">
+          <p>How well you match a job</p>
+          <p class="eq">Match = Σ (<var>skill weight</var> × <var>your coverage</var>) ÷ Σ <var>skill weight</var></p>
+          <p>Skill weights come from how often employers ask for a skill. Coverage is your level divided by the level the job needs.</p>
+        </div>
+      </div>
+      <ol class="pipe" aria-label="How a new AI signal reaches your route">
+        <li><span class="ic"><svg class="i"><use href="#i-radar"/></svg></span><div><h3>The market scout finds a signal</h3><p>It searches arXiv, OpenAlex and AI vendor news for each task it tracks, and must copy an exact quote and a source link.</p></div></li>
+        <li><span class="ic"><svg class="i"><use href="#i-filter"/></svg></span><div><h3>Fixed rules filter it</h3><p>No source, a quote that isn't on the page, or a duplicate: dropped. Small changes backed by two or more sources apply on their own.</p></div></li>
+        <li><span class="ic"><svg class="i"><use href="#i-bot"/></svg></span><div><h3>A second AI checks the claim</h3><p>A separate reviewer model compares the claim with its evidence quote and reports how confident it is.</p></div></li>
+        <li class="human"><span class="ic"><svg class="i"><use href="#i-user-check"/></svg></span><div><h3>A person approves big changes</h3><p>Anything big, single-source, new, or that would change someone's route waits for a human reviewer.</p></div></li>
+        <li class="go"><span class="ic"><svg class="i"><use href="#i-route"/></svg></span><div><h3>Everyone affected is rerouted</h3><p>Profiles are re-scored against the new knowledge version, and each user sees what changed and why.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= DOMAIN FIT + RESPONSIBLE AI ================= -->
+  <section class="band" id="domain">
+    <div class="wrap cols">
+      <div>
+        <h2>Built for the Domain 1 brief</h2>
+        <p class="intro">Aiversecity asked for a tool that tracks AI advancement, matches people to future roles, and builds reskilling pathways linked to the SDGs. Here is where each requirement lives in the app.</p>
+        <ul class="musts">
+          <li><span class="ck"><svg class="i"><use href="#i-check"/></svg></span><b>Skills profile intake</b><span class="d">CV or LinkedIn upload, interviewer questions, level check</span></li>
+          <li><span class="ck"><svg class="i"><use href="#i-check"/></svg></span><b>Dated AI-trend signals</b><span class="d">Market scout, review queue, versioned knowledge</span></li>
+          <li><span class="ck"><svg class="i"><use href="#i-check"/></svg></span><b>Future-role matching</b><span class="d">Match % and skill gaps in weeks, per job</span></li>
+          <li><span class="ck"><svg class="i"><use href="#i-check"/></svg></span><b>Personal reskilling paths</b><span class="d">Fastest, No-regret and Safest routes with courses</span></li>
+          <li><span class="ck"><svg class="i"><use href="#i-check"/></svg></span><b>SDG mapping</b><span class="d">Every job and skill tagged, with a one-line reason</span></li>
+          <li><span class="ck"><svg class="i"><use href="#i-check"/></svg></span><b>More than one future</b><span class="d">Moderate vs fast AI, and a 2026–2030 slider</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-size:22px;margin-top:6px">Guardrails we hold ourselves to</h3>
+        <ul class="trust" style="margin-top:22px">
+          <li><svg class="i"><use href="#i-hand"/></svg><div><b>Suggest, don't decide</b><span>No path enters a learning plan until the worker or their advisor approves it.</span></div></li>
+          <li><svg class="i"><use href="#i-link"/></svg><div><b>No invented facts</b><span>Agents can only pick skills, jobs and courses that exist in the database. A fact checker removes any claim without a source.</span></div></li>
+          <li><svg class="i"><use href="#i-scale"/></svg><div><b>Fair by design</b><span>HalaTuju never asks for or uses age, gender, race or religion.</span></div></li>
+          <li><svg class="i"><use href="#i-lock"/></svg><div><b>Private by default</b><span>Personal details are removed from a CV before any AI model sees it. The demo uses synthetic data only.</span></div></li>
+        </ul>
+        <div class="data" aria-label="Data sources"><span>ESCO</span><span>O*NET</span><span>MASCO 2020</span><span>ILO AI exposure index</span><span>arXiv</span><span>OpenAlex</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SDGs ================= -->
+  <section id="sdg">
+    <div class="wrap">
+      <h2>Linked to the SDGs at every step</h2>
+      <p class="intro">SDG links appear on each skill and job with a reason, so they are part of the decision, not decoration.</p>
+      <ul class="sdgs">
+        <li><span class="sdg" style="background:#a21942">8</span><div><h3>Decent work and economic growth</h3><p>Helps workers in AI-exposed jobs move into growing roles before they are displaced.</p></div></li>
+        <li><span class="sdg" style="background:#c5192d">4</span><div><h3>Quality education</h3><p>Turns lifelong learning into a concrete, current, personal path (target 4.4).</p></div></li>
+        <li><span class="sdg" style="background:#dd1367">10</span><div><h3>Reduced inequalities</h3><p>Reaches mid-career workers in routine roles and puts free and HRD Corp-claimable courses first.</p></div></li>
+        <li><span class="sdg" style="background:#3f7e44">13</span><div><h3>Climate action</h3><p>Shows realistic routes into green roles such as carbon accounting, where demand is growing.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= FINAL ================= -->
+  <div class="final">
+    <div class="wrap">
+      <div class="final-box">
+        <div>
+          <h2>Walk through Aisyah's map yourself.</h2>
+          <p>Pick a job, switch between routes, drag the forecast to 2030, then run the market scout and approve the change to watch her route update.</p>
+        </div>
+        <div class="ctas" style="margin-top:0">
+          <a class="btn btn-go" href="halatuju-app.html">Open the demo<svg class="i"><use href="#i-arrow-r"/></svg></a>
+          <a class="btn btn-line" href="https://github.com/shenenleow10521/SdcHackathon" target="_blank" rel="noopener"><svg class="i"><use href="#i-github"/></svg>Source code</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>HalaTuju, a prototype for SDC Hackathon 2026, Domain 1: Aiversecity Future-Ready Workforce. All people, numbers, sources and courses in the demo are sample data. Uses the ESCO classification of the European Commission and the O*NET Database (USDOL/ETA, CC BY 4.0).</p>
+    <p><a href="https://github.com/shenenleow10521/SdcHackathon" target="_blank" rel="noopener">GitHub</a> · Apache 2.0</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Sticky bar gets a hairline once the page scrolls
+  var top = document.getElementById("top");
+  var onScroll = function () { top.classList.toggle("scrolled", window.scrollY > 8); };
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+  // ---------- the reroute demo in the hero ----------
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var NS = "http://www.w3.org/2000/svg";
+  var lit = document.getElementById("lit");
+  var hazard = document.getElementById("hazard");
+  var sign = document.getElementById("sign");
+  var eta = document.getElementById("sign-eta");
+  var via = document.getElementById("sign-via");
+  var status = document.getElementById("map-status");
+  var statusText = document.getElementById("status-text");
+  var replayBtn = document.getElementById("replay");
+  var timers = [], anims = [];
+
+  function d(id) { return document.getElementById(id).getAttribute("d"); }
+  function road(ids, cls) {
+    return ids.map(function (id) {
+      var p = document.createElementNS(NS, "path");
+      p.setAttribute("d", d(id)); p.setAttribute("class", "road " + cls);
+      lit.appendChild(p); return p;
+    });
+  }
+  // draw a list of segments one after another
+  function draw(paths, total) {
+    var lens = paths.map(function (p) { return p.getTotalLength(); });
+    var sum = lens.reduce(function (a, b) { return a + b; }, 0), delay = 0;
+    paths.forEach(function (p, i) {
+      var L = lens[i], dur = total * L / sum;
+      p.style.strokeDasharray = L; p.style.strokeDashoffset = L;
+      anims.push(p.animate([{ strokeDashoffset: L }, { strokeDashoffset: 0 }], { duration: dur, delay: delay, easing: i === paths.length - 1 ? "ease-out" : "linear", fill: "forwards" }));
+      delay += dur;
+    });
+  }
+  function setSign(w, v) { eta.innerHTML = w + "<small>wk</small>"; via.textContent = v; sign.classList.remove("flip"); void sign.offsetWidth; sign.classList.add("flip"); }
+  function say(html, warn) { statusText.innerHTML = html; status.classList.toggle("warn", !!warn); }
+  function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+  function clear() { timers.forEach(clearTimeout); timers = []; anims.forEach(function (a) { a.cancel(); }); anims = []; lit.innerHTML = ""; hazard.classList.remove("show"); }
+
+  function finalState() {
+    clear();
+    road(["a1", "a2", "a3"], "slow");
+    road(["b1", "b2", "b3"], "lit");
+    hazard.classList.add("show");
+    eta.innerHTML = "7<small>wk</small>"; via.textContent = "via Sustainability disclosure";
+    say("Rerouted after an approved AI signal (sample source, 21 Oct 2026). New route: <b>7 weeks</b> through Audit trail and Sustainability disclosure.");
+  }
+
+  function play() {
+    if (reduce) return finalState();
+    clear();
+    eta.innerHTML = "6<small>wk</small>"; via.textContent = "via GHG accounting";
+    say("Fastest route to ESG &amp; Carbon Reporting Analyst: <b>6 weeks</b>, through skills you already have.");
+    var a = road(["a1", "a2", "a3"], "lit");
+    draw(a, 1600);
+    at(2400, function () {
+      hazard.classList.add("show");
+      anims.push(hazard.animate([{ opacity: 0, transform: "translate(-50%, -80%)" }, { opacity: 1, transform: "translate(-50%, -100%)" }], { duration: 380, easing: "cubic-bezier(.22,1,.36,1)" }));
+      say("New AI signal: <b>agents now close the month-end books.</b> Reconciliation is getting crowded.", true);
+    });
+    at(3700, function () {
+      a.forEach(function (p) { p.style.strokeDasharray = ""; p.style.strokeDashoffset = ""; p.setAttribute("class", "road slow"); });
+      say("Rerouting…", true);
+    });
+    at(4300, function () {
+      draw(road(["b1", "b2", "b3"], "lit"), 1500);
+    });
+    at(5900, function () {
+      setSign(7, "via Sustainability disclosure");
+      say("Rerouted after an approved AI signal (sample source, 21 Oct 2026). New route: <b>7 weeks</b> through Audit trail and Sustainability disclosure.");
+    });
+  }
+
+  replayBtn.addEventListener("click", play);
+  // start when the map is on screen
+  var started = false;
+  var start = function () { if (!started) { started = true; setTimeout(play, reduce ? 0 : 500); } };
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { start(); io.disconnect(); } }, { threshold: 0.35 });
+    io.observe(document.getElementById("map"));
+  } else start();
+})();
+</script>
+</body>
+</html>
