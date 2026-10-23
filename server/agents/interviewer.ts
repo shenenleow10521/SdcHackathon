@@ -15,10 +15,10 @@ export interface Question { id: string; text: string; skillId?: string; field?: 
 type Lang = "en" | "ms";
 
 const LEVELS: Record<Lang, string[]> = {
-  en: ["0 · Not yet", "1 · Beginner: done it with help", "2 · Basic: done it a few times", "3 · Working: do it regularly on my own",
-       "4 · Strong: handle complex cases", "5 · Expert: lead or teach others"],
-  ms: ["0 · Belum pernah", "1 · Permulaan: pernah buat dengan bantuan", "2 · Asas: pernah buat beberapa kali", "3 · Biasa: buat sendiri secara kerap",
-       "4 · Mahir: urus kes yang rumit", "5 · Pakar: memimpin atau mengajar orang lain"],
+  en: ["Not yet", "Beginner: done it with help", "Basic: done it a few times", "Working: do it regularly on my own",
+       "Strong: handle complex cases", "Expert: lead or teach others"],
+  ms: ["Belum pernah", "Permulaan: pernah buat dengan bantuan", "Asas: pernah buat beberapa kali", "Biasa: buat sendiri secara kerap",
+       "Mahir: urus kes yang rumit", "Pakar: memimpin atau mengajar orang lain"],
 };
 const T = {
   confirm: { en: (l: string) => `Your CV suggests you know "${l}". How would you rate yourself?`,

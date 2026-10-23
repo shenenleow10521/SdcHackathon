@@ -258,8 +258,11 @@ async function aiDraft(svc: Services, cv: string, catalog: SkillInfo[], occs: { 
   });
   for (const id of bySkill.keys()) nearMisses.delete(id);
 
-  const occId = occIds.includes(data.occupationId) ? data.occupationId : "other";
+  let occId = occIds.includes(data.occupationId) ? data.occupationId : "other";
   const kw = await matchOccupation(svc, jobTitle, occs);
+  // The CV's own job title is the strongest evidence of the current job: when it matches a catalogue
+  // occupation with high confidence, it wins over a different AI pick (e.g. the AI-era "stay" version of the job).
+  if (kw.id !== "other" && kw.confidence === "high" && occId !== kw.id) occId = kw.id;
   const occupation = {
     id: occId, title: occs.find(o => o.id === occId)!.title,
     confidence: (occId === "other" ? "low" : kw.id === occId ? "high" : "medium") as "high" | "medium" | "low",
