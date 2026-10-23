@@ -40,7 +40,7 @@ async function openPg(url: string): Promise<Db> {
   const { default: pg } = await import("pg");
   // Return `date` columns as 'YYYY-MM-DD' strings, like PGlite does by default for our usage.
   pg.types.setTypeParser(1082, (v: string) => v);
-  const pool = new pg.Pool({ connectionString: url, max: 5, ssl: /sslmode=require|neon|replit/.test(url) ? { rejectUnauthorized: false } : undefined });
+  const pool = new pg.Pool({ connectionString: url, max: 5, ssl: /sslmode=require|neon|replit|supabase/.test(url) ? { rejectUnauthorized: false } : undefined });
   await pool.query("select 1");
   const fromClient = (c: any): Db => ({
     kind: "pg",
