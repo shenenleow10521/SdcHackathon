@@ -1,5 +1,6 @@
 // Profile & intake routes (OWNER: intake agent). Contract: docs/API.md, "Profile & intake".
-//   POST /profile/intake          CV (PDF upload or pasted text) -> new profile + draft + up to 3 questions
+//   POST /profile/intake          CV (PDF, scan or photo upload, or pasted text) -> new profile + draft + up to 3 questions
+//                                 (a scan read with low OCR confidence returns { needsReview, text } for the user to check first)
 //   POST /profile/:id/answers     interviewer answers -> levels become 'self'
 //   GET  /profile/:id             the profile
 //   PUT  /profile/:id             edit settings (hours, budget, target date, SDG priority, language, current job)
@@ -12,7 +13,9 @@ import { z } from "zod";
 import type { Services } from "../context.ts";
 import { parse, badRequest, notFound, rateLimit, HttpError } from "../lib/http.ts";
 import { loadProfile, audit } from "../repo.ts";
-import { extractPdfText, MAX_PDF_BYTES } from "../lib/pdf.ts";
+import { MAX_PDF_BYTES } from "../lib/pdf.ts";
+import { extractCvText, type OcrInfo } from "../lib/extract.ts";
+import { OCR_MAX_PAGES } from "../lib/ocr.ts";
 import { extractDraft, MAX_CV_CHARS } from "../agents/cv.ts";
 import { buildQuestions, applyAnswers } from "../agents/interviewer.ts";
 import { createCheck, submitCheck } from "../agents/checks.ts";
@@ -51,15 +54,17 @@ const checkBody = z.object({
   answers: z.record(z.string().max(10), z.number().int().min(0).max(10)),
 });
 
-/** One PDF in memory (never written to disk). Multer errors become friendly JSON errors. */
+/** One PDF, or up to 3 photos (one per page), in memory (never written to disk). Multer errors become friendly JSON errors. */
 function uploadCv() {
-  const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: MAX_PDF_BYTES, files: 1, fields: 10 } }).single("cv");
+  const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: MAX_PDF_BYTES, files: OCR_MAX_PAGES, fields: 10 } }).array("cv", OCR_MAX_PAGES);
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.is("multipart/form-data")) return next();
     upload(req, res, (err: any) => {
       if (!err) return next();
-      if (err.code === "LIMIT_FILE_SIZE") return next(new HttpError(413, "too_large", "The PDF is larger than 5 MB. You can paste your CV text instead."));
-      next(badRequest(`Upload problem: ${err.message}. Send one PDF in the field "cv".`));
+      if (err.code === "LIMIT_FILE_SIZE") return next(new HttpError(413, "too_large", "The file is larger than 5 MB. You can paste your CV text instead."));
+      if (err.code === "LIMIT_FILE_COUNT" || (err.code === "LIMIT_UNEXPECTED_FILE" && err.field === "cv"))
+        return next(new HttpError(400, "too_many_files", `Send one PDF, or up to ${OCR_MAX_PAGES} photos (one per page).`));
+      next(badRequest(`Upload problem: ${err.message}. Send one PDF, JPG or PNG in the field "cv".`));
     });
   };
 }
@@ -85,13 +90,15 @@ export default function profileRoutes(svc: Services) {
   };
 
   r.post("/profile/intake", rateLimit(10, 60_000), uploadCv(), async (req, res) => {
-    let text: string, fields: z.infer<typeof intakeFields>, source: "pdf" | "paste";
-    if (req.file) {
+    let text: string, fields: z.infer<typeof intakeFields>, source: "pdf" | "ocr" | "paste", ocr: OcrInfo | undefined;
+    const files = (req.files as Express.Multer.File[] | undefined) || [];
+    if (files.length) {
       fields = parse(intakeFields, req.body || {});
-      text = (await extractPdfText(req.file.buffer)).text;
-      source = "pdf";
+      ({ text, source, ocr } = await extractCvText(files));
+      // A shaky scan: send the text back for the user to check and fix. Nothing is saved and no AI has seen it.
+      if (ocr?.lowConfidence) { res.json({ needsReview: true, text: text.slice(0, MAX_CV_CHARS), ocr }); return; }
     } else if (req.is("multipart/form-data")) {
-      throw badRequest('No file received. Send a PDF in the field "cv", or paste your CV text.');
+      throw badRequest('No file received. Send a PDF, JPG or PNG in the field "cv", or paste your CV text.');
     } else {
       const b = parse(pasteBody, req.body || {});
       fields = b; text = b.text; source = "paste";
@@ -112,10 +119,10 @@ export default function profileRoutes(svc: Services) {
         if (e.shownInUse) await t.query("insert into profile_esco_skills(profile_id, skill_id, source) values ($1,$2,'cv') on conflict do nothing", [id, e.escoId]);
       return id;
     });
-    await audit(svc.db, "user", "profile.intake", String(profileId), { source, skills: draft.skills.length, occupation: draft.occupation.id, providers });
+    await audit(svc.db, "user", "profile.intake", String(profileId), { source, skills: draft.skills.length, occupation: draft.occupation.id, providers, ...(ocr ? { ocrConfidence: ocr.confidence } : {}) });
     const questions = await buildQuestions(svc, draft, { hoursGiven: fields.hours !== undefined, lang: fields.lang });
     const { nearMisses: _internal, ...publicDraft } = draft;
-    res.status(201).json({ profileId, profile: await loadProfile(svc.db, profileId), draft: publicDraft, questions, scrubbed, providers });
+    res.status(201).json({ profileId, profile: await loadProfile(svc.db, profileId), draft: publicDraft, questions, scrubbed, providers, ...(ocr ? { ocr } : {}) });
   });
 
   r.post("/profile/:id/answers", async (req, res) => {

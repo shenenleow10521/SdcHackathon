@@ -56,7 +56,7 @@ describe("POST /api/profile/intake", () => {
     expect(res.body.error.code).toBe("not_pdf");
     expect(res.body.error.message).toMatch(/paste your CV text/);
     res = await request(app).post("/api/profile/intake").attach("cv", makePdf([]), "scan.pdf");
-    expect(res.body.error.code).toBe("pdf_no_text");
+    expect(res.body.error.code).toBe("pdf_scan_unreadable"); // no text layer and no page image to OCR
     res = await request(app).post("/api/profile/intake").attach("cv", Buffer.alloc(5 * 1024 * 1024 + 10, 0x25), "big.pdf");
     expect(res.status).toBe(413);
     res = await request(app).post("/api/profile/intake").attach("other", PRIYA_PDF, "cv.pdf");

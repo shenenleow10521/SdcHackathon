@@ -1,7 +1,8 @@
 // PDF text extraction for CV upload (OWNER: intake agent). Uses unpdf (a serverless build of Mozilla pdf.js).
 // Checks: size <= 5 MB, starts with the %PDF magic bytes, not password-protected, has real text (not a scan).
 // Every failure is a friendly 400 that tells the user they can paste their CV text instead.
-import { getDocumentProxy, extractText } from "unpdf";
+// pdfScanImages() pulls the scanned page images out of a PDF with no text layer (pure JS, no canvas), for local OCR.
+import { getDocumentProxy, extractText, getResolvedPDFJS } from "unpdf";
 import { HttpError } from "./http.ts";
 
 export const MAX_PDF_BYTES = 5 * 1024 * 1024;
@@ -34,6 +35,59 @@ export async function extractPdfText(buf: Buffer | Uint8Array): Promise<{ text: 
     throw fail("pdf_unreadable", "We couldn't read the text in this PDF.");
   } finally {
     // Free pdf.js memory (destroy() exists at runtime but is missing from unpdf's types).
+    try { await (pdf as any).destroy?.(); } catch { /* ignore */ }
+  }
+}
+
+/** Grey 8-bit PGM (P5) image: Tesseract reads it directly, and it needs no encoder. */
+function toPgm(img: { width: number; height: number; kind?: number; data: Uint8Array | Uint8ClampedArray }): Buffer | null {
+  const { width: w, height: h, data } = img;
+  const head = Buffer.from(`P5
+${w} ${h}
+255
+`, "latin1");
+  const out = Buffer.alloc(head.length + w * h);
+  head.copy(out);
+  const px = out.subarray(head.length);
+  const n = w * h;
+  if (data.length === n * 3 || data.length === n * 4) {
+    const ch = data.length / n;
+    for (let i = 0; i < n; i++) px[i] = (data[i * ch] * 77 + data[i * ch + 1] * 150 + data[i * ch + 2] * 29) >> 8;
+  } else if (data.length === n) {
+    px.set(data);
+  } else if (data.length === ((w + 7) >> 3) * h) {
+    // pdf.js 1-bit images (fax-style scans): rows padded to whole bytes, bit 1 = white.
+    const row = (w + 7) >> 3;
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) px[y * w + x] = data[y * row + (x >> 3)] & (0x80 >> (x & 7)) ? 255 : 0;
+  } else return null;
+  return out;
+}
+
+/**
+ * For a PDF with no text layer: the largest image on each of the first `maxPages` pages, as grey PGM images.
+ * Pages with no usable image (e.g. text drawn as vector shapes) are skipped.
+ */
+export async function pdfScanImages(buf: Buffer | Uint8Array, maxPages: number, maxPixels: number): Promise<{ images: Buffer[]; pagesTotal: number }> {
+  const pdf = await getDocumentProxy(new Uint8Array(buf), { verbosity: 0, isEvalSupported: false } as any);
+  try {
+    const { OPS } = await getResolvedPDFJS();
+    const images: Buffer[] = [];
+    for (let p = 1; p <= Math.min(pdf.numPages, maxPages); p++) {
+      const page = await pdf.getPage(p);
+      const ops = await page.getOperatorList();
+      let best: any = null;
+      for (let i = 0; i < ops.fnArray.length; i++) {
+        if (ops.fnArray[i] !== OPS.paintImageXObject) continue;
+        const key = ops.argsArray[i][0] as string;
+        const img: any = await new Promise(r => (key.startsWith("g_") ? page.commonObjs : page.objs).get(key, r));
+        if (img?.data && img.width * img.height <= maxPixels && (!best || img.width * img.height > best.width * best.height)) best = img;
+      }
+      // Skip logos and icons: a scanned page is at least a few hundred pixels each way.
+      const pgm = best && best.width >= 400 && best.height >= 300 ? toPgm(best) : null;
+      if (pgm) images.push(pgm);
+    }
+    return { images, pagesTotal: pdf.numPages };
+  } finally {
     try { await (pdf as any).destroy?.(); } catch { /* ignore */ }
   }
 }

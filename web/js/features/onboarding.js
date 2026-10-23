@@ -1,5 +1,6 @@
 // First-use onboarding, wired to the intake agent:
-// 1. Upload a CV / LinkedIn PDF (POST /api/profile/intake, field "cv") or paste text (JSON { text }) → detected skills, scrubbed details, matching used.
+// 1. Upload a CV / LinkedIn PDF, a scan, or up to 3 photos (POST /api/profile/intake, field "cv") or paste text (JSON { text }) → detected skills, scrubbed details, matching used.
+//    Scans and photos are read by OCR on our server. If the server is unsure of the text ({ needsReview }), it lands in the paste box to check first.
 // 2. The interviewer's follow-up questions (POST /api/profile/:id/answers).
 // 3. Confirm levels on the 1–5 scale (PUT /api/profile/:id/skills) and set hours, target date and budget (PUT /api/profile/:id).
 // "Use the sample persona" is always one click away. The shared sample persona is never changed on the server:
@@ -11,14 +12,18 @@ import { $, esc, icons, badge, store, reduce, toast, errorBox } from "../util.js
 import { intro as guideIntro } from "./guide.js";
 import { intro as mapIntro } from "../graph3d.js";
 
-const OB = { step: 0, mode: "upload", file: null, text: "", busy: false, stage: 0, err: null, intake: null, answers: {}, levels: {}, goals: {}, add: "" };
+const OB = { step: 0, mode: "upload", files: [], review: null, text: "", busy: false, stage: 0, err: null, intake: null, answers: {}, levels: {}, goals: {}, add: "" };
 let stageTimer = null, lastFocus = null;
 const STAGES = ["ob.stage1", "ob.stage2", "ob.stage3", "ob.stage4"];
-const MAX_PDF = 5 * 1024 * 1024;
+const MAX_FILE = 5 * 1024 * 1024, MAX_PHOTOS = 3;
+const isPdf = f => /pdf$/i.test(f.type) || /\.pdf$/i.test(f.name);
+const isPhoto = f => /^image\/(jpeg|png)$/i.test(f.type) || /\.(jpe?g|png)$/i.test(f.name);
+// The first stage reads "on our server" for photos, which go through OCR.
+const stageText = i => t(i === 0 && OB.mode === "upload" && OB.files.some(isPhoto) ? "ob.stageOcr" : STAGES[i]);
 
 export function openOnboarding(step = 0) {
   lastFocus = document.activeElement;
-  if (step === 0) Object.assign(OB, { step: 0, file: null, text: "", busy: false, err: null, intake: null, answers: {} });
+  if (step === 0) Object.assign(OB, { step: 0, files: [], review: null, text: "", busy: false, err: null, intake: null, answers: {} });
   else OB.step = step;
   seedLevels();
   $("ob").hidden = false;
@@ -54,14 +59,17 @@ function render() {
       <div class="seg" role="group" aria-label="${esc(t("ob.modeAria"))}"><button type="button" data-obmode="upload" aria-pressed="${OB.mode === "upload"}"><i data-lucide="upload"></i>${esc(t("ob.upload"))}</button><button type="button" data-obmode="paste" aria-pressed="${OB.mode === "paste"}"><i data-lucide="clipboard-paste"></i>${esc(t("ob.paste"))}</button></div>
       ${OB.mode === "upload" ? `<label class="drop" id="drop" for="cv-file"><span class="ic"><i data-lucide="upload"></i></span>
           <span><b>${esc(t("ob.dropTitle"))}</b><br><span class="note">${esc(t("ob.dropHint"))}</span></span>
-          <input id="cv-file" type="file" accept="application/pdf,.pdf" class="sr">
-          ${OB.file ? `<span class="file"><span class="fi"><i data-lucide="file-text"></i></span><span><span style="font-weight:600;font-size:13.5px">${esc(OB.file.name)}</span><br><span class="fm">${Math.round(OB.file.size / 1024)} KB</span></span><i data-lucide="check" style="color:var(--good)"></i></span>` : ""}
-        </label>`
-      : `<label class="sr" for="cv-text">${esc(t("ob.pasteLabel"))}</label><textarea id="cv-text" class="textarea" rows="8" maxlength="30000" placeholder="${esc(t("ob.pastePh"))}">${esc(OB.text)}</textarea>
+          <input id="cv-file" type="file" accept="application/pdf,.pdf,image/jpeg,image/png,.jpg,.jpeg,.png" multiple class="sr">
+          ${OB.files.length > 1 ? `<span class="fm">${esc(t("ob.filesN", { n: OB.files.length }))}</span>` : ""}
+          ${OB.files.map(f => `<span class="file"><span class="fi"><i data-lucide="${isPhoto(f) ? "image" : "file-text"}"></i></span><span><span style="font-weight:600;font-size:13.5px">${esc(f.name)}</span><br><span class="fm">${Math.round(f.size / 1024)} KB</span></span><i data-lucide="check" style="color:var(--good)"></i></span>`).join("")}
+        </label>
+        <p class="note ob-scan-note"><i data-lucide="shield-check"></i>${esc(t("ob.scanPrivacy"))}</p>`
+      : `${OB.review ? `<div class="ob-review" role="status"><b>${esc(t("ob.reviewTitle"))}</b><p class="note">${esc(t("ob.reviewNote", { n: OB.review.confidence }))}</p></div>` : ""}
+         <label class="sr" for="cv-text">${esc(t("ob.pasteLabel"))}</label><textarea id="cv-text" class="textarea" rows="8" maxlength="30000" placeholder="${esc(t("ob.pastePh"))}">${esc(OB.text)}</textarea>
          <div class="rs">${esc(t("ob.chars", { n: OB.text.length }))}</div>`}
-      ${OB.busy ? `<div class="loading" role="status"><span class="spin"></span>${esc(t(STAGES[OB.stage]))}</div><ul class="stages">${STAGES.map((k, i) => `<li class="${i < OB.stage ? "done" : i === OB.stage ? "on" : ""}"><i data-lucide="${i < OB.stage ? "circle-check" : "circle"}"></i>${esc(t(k))}</li>`).join("")}</ul>` : ""}
+      ${OB.busy ? `<div class="loading" role="status"><span class="spin"></span>${esc(stageText(OB.stage))}</div><ul class="stages">${STAGES.map((k, i) => `<li class="${i < OB.stage ? "done" : i === OB.stage ? "on" : ""}"><i data-lucide="${i < OB.stage ? "circle-check" : "circle"}"></i>${esc(stageText(i))}</li>`).join("")}</ul>` : ""}
       ${OB.err ? errorBox(OB.err) : ""}`;
-    const ready = OB.mode === "upload" ? !!OB.file : OB.text.trim().length >= 40;
+    const ready = OB.mode === "upload" ? OB.files.length > 0 : OB.text.trim().length >= 40;
     foot = `<span class="left"><i data-lucide="lock"></i>${esc(t("ob.private"))}</span>
       <div class="right">${OB.intake ? "" : `<button class="ghost" id="ob-sample" type="button">${esc(t("ob.skip"))}</button>`}
       ${OB.intake ? `<button class="btn btn-primary" id="ob-next" type="button">${esc(t("ob.continue"))}<i data-lucide="arrow-right"></i></button>`
@@ -114,6 +122,7 @@ function intakeSummary() {
   const llmOk = pr.llm === true || (typeof pr.llm === "string" && !/^(unavailable|none|off|false)$/i.test(pr.llm));
   return `<ul class="found-list">
       ${occ ? `<li><i data-lucide="circle-check"></i><span>${esc(t("ob.occ", { title: occ.title || nameOf(occ.id) }))}${occ.confidence == null ? "" : ` <span class="found-sub">(${esc(typeof occ.confidence === "number" ? t("ob.conf", { n: Math.round(occ.confidence * (occ.confidence <= 1 ? 100 : 1)) }) : tOr("ob.confLevel." + occ.confidence, occ.confidence))})</span>`}</span></li>` : ""}
+      ${r.ocr ? `<li><i data-lucide="scan-text"></i><span>${esc(t("ob.ocrRead", { n: r.ocr.confidence }))}${r.ocr.pagesTotal > r.ocr.pagesRead ? ` ${esc(t("ob.ocrPages", { n: r.ocr.pagesRead, m: r.ocr.pagesTotal }))}` : ""}</span></li>` : ""}
       <li><i data-lucide="circle-check"></i><span>${esc(t("ob.skillsFound", { n: skills.length, m: un.length }))}</span></li>
       ${removed.length ? `<li><i data-lucide="shield-check"></i><span>${esc(t("ob.scrubbed", { list: [...new Set(removed)].map(k => tOr("pii." + k, k)).join(", ") }))}</span></li>` : `<li><i data-lucide="shield-check"></i><span>${esc(t("ob.scrubbedNone"))}</span></li>`}
       ${(r.questions || []).length ? `<li class="warn"><i data-lucide="circle-help"></i><span>${esc(t("ob.unclear", { n: r.questions.length }))}</span></li>` : ""}
@@ -127,14 +136,14 @@ function intakeSummary() {
 
 function bind(c) {
   c.querySelector("#ob-close").addEventListener("click", closeOnboarding);
-  c.querySelectorAll("[data-obmode]").forEach(b => b.addEventListener("click", () => { OB.mode = b.dataset.obmode; OB.err = null; render(); }));
+  c.querySelectorAll("[data-obmode]").forEach(b => b.addEventListener("click", () => { OB.mode = b.dataset.obmode; OB.err = null; if (OB.mode === "upload") OB.review = null; render(); }));
   const f = c.querySelector("#cv-file");
-  if (f) f.addEventListener("change", () => pickFile(f.files[0]));
+  if (f) f.addEventListener("change", () => pickFiles(f.files));
   const drop = c.querySelector("#drop");
   if (drop) {
     ["dragenter", "dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
     ["dragleave", "drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
-    drop.addEventListener("drop", e => pickFile(e.dataTransfer?.files?.[0]));
+    drop.addEventListener("drop", e => pickFiles(e.dataTransfer?.files));
   }
   const ta = c.querySelector("#cv-text");
   if (ta) ta.addEventListener("input", () => {
@@ -162,12 +171,16 @@ function keepGoals(c) {
   OB.goals.hours = h.value; OB.goals.targetDate = c.querySelector("#g-target").value; OB.goals.budgetRm = c.querySelector("#g-budget").value;
 }
 
-function pickFile(file) {
-  if (!file) return;
-  OB.err = null;
-  if (!/pdf$/i.test(file.type) && !/\.pdf$/i.test(file.name)) { OB.err = { message: t("ob.notPdf") }; OB.file = null; render(); return; }
-  if (file.size > MAX_PDF) { OB.err = { message: t("ob.tooBig") }; OB.file = null; render(); return; }
-  OB.file = file; render();
+// One PDF, or up to 3 photos (one per page, in the order chosen).
+function pickFiles(list) {
+  const files = [...(list || [])];
+  if (!files.length) return;
+  OB.err = null; OB.files = [];
+  if (!files.every(f => isPdf(f) || isPhoto(f))) OB.err = { message: t("ob.notPdf") };
+  else if (files.some(f => f.size > MAX_FILE)) OB.err = { message: t("ob.tooBig") };
+  else if ((files.some(isPdf) && files.length > 1) || files.length > MAX_PHOTOS) OB.err = { message: t("ob.tooMany") };
+  else OB.files = files;
+  render();
 }
 
 async function readProfile() {
@@ -177,8 +190,16 @@ async function readProfile() {
   stageTimer = setInterval(() => { if (OB.stage < STAGES.length - 1) { OB.stage++; if (OB.step === 0 && OB.busy) render(); } }, reduce ? 1500 : 2200);
   try {
     let res;
-    if (OB.mode === "upload") { const fd = new FormData(); fd.append("cv", OB.file); res = await upload("/profile/intake", fd, { timeout: 120000 }); }
+    if (OB.mode === "upload") { const fd = new FormData(); OB.files.forEach(f => fd.append("cv", f)); res = await upload("/profile/intake", fd, { timeout: 120000 }); }
     else res = await post("/profile/intake", { text: OB.text.trim() }, { timeout: 120000 });
+    if (res.needsReview) {
+      // The server wasn't sure of the scan's text: show it in the paste box to check. Nothing was saved or sent to an AI.
+      Object.assign(OB, { mode: "paste", text: res.text || "", review: res.ocr || { confidence: 0 }, files: [] });
+      clearInterval(stageTimer); OB.busy = false; render();
+      setTimeout(() => $("ob-card").querySelector("#cv-text")?.focus(), 30);
+      return;
+    }
+    OB.review = null;
     OB.intake = res;
     if (res.profileId) setProfileId(res.profileId);
     if (res.profile) { S.profile = normaliseProfile(res.profile); S.profileFallback = false; }
