@@ -1,0 +1,1297 @@
+{
+ "startedAt": "2026-10-23T20:03:03.666Z",
+ "embedder": "BAAI/bge-m3",
+ "rules": {
+  "mentions": 15,
+  "organisations": 5,
+  "weeks": 4,
+  "duplicateCosine": 0.85
+ },
+ "settings": {
+  "maxPages": 24,
+  "perCall": 2,
+  "maxProposerCalls": 12,
+  "maxSkepticCalls": 8,
+  "queriesPerRun": 4,
+  "maxPagesPerOrg": 4,
+  "nearest": 5,
+  "embedTimeoutMs": 90000
+ },
+ "precheck": [
+  {
+   "skill": "Prompting AI tools for finance",
+   "top": [
+    {
+     "escoId": "4b3ae518-6746-4487-8d3b-4cfc063a43d0",
+     "title": "use business simulation tools",
+     "score": 0.545
+    },
+    {
+     "escoId": "68a596a2-6255-42bd-b3b1-e33a2214bef6",
+     "title": "facilitate the bidding process",
+     "score": 0.541
+    },
+    {
+     "escoId": "7d10fcb2-b368-48ab-996b-7c9fafcf68ed",
+     "title": "use automatic programming",
+     "score": 0.525
+    },
+    {
+     "escoId": "edf081e4-d2dc-4a60-8c49-7b7e45b5ebe3",
+     "title": "create risk maps",
+     "score": 0.52
+    },
+    {
+     "escoId": "c0502e2a-1e12-422e-994e-cf9bf814e3b2",
+     "title": "guide learners in using assistive technologies",
+     "score": 0.519
+    },
+    {
+     "escoId": "6bf6b5bd-6658-4338-b0ee-dc143e68e6d3",
+     "title": "provide support in financial calculation",
+     "score": 0.518
+    }
+   ]
+  },
+  {
+   "skill": "Supervising AI workflows",
+   "top": [
+    {
+     "escoId": "7add3681-17b6-4027-8a9d-ee92d2b96a42",
+     "title": "manage workflow processes",
+     "score": 0.595
+    },
+    {
+     "escoId": "7a9c3fa5-a9bb-46a0-8b5b-4d87427c8b76",
+     "title": "monitor processing conditions",
+     "score": 0.589
+    },
+    {
+     "escoId": "751941a0-5645-4f8b-b97e-b252909d5edb",
+     "title": "develop ICT workflow",
+     "score": 0.579
+    },
+    {
+     "escoId": "f399a9c1-be41-4117-bf86-a64b503c4cfd",
+     "title": "supervise data entry",
+     "score": 0.57
+    },
+    {
+     "escoId": "9581639c-e521-4d12-9b4e-25faca24d34b",
+     "title": "supervise crew",
+     "score": 0.569
+    },
+    {
+     "escoId": "2966d47d-72ad-404f-bad0-b45abb2b2058",
+     "title": "monitor policy proposals",
+     "score": 0.569
+    }
+   ]
+  },
+  {
+   "skill": "AI invoice review & exceptions",
+   "top": [
+    {
+     "escoId": "e3e42d54-78bd-4337-aa87-bb31a7670c9a",
+     "title": "issue sales invoices",
+     "score": 0.511
+    },
+    {
+     "escoId": "5079319b-b12d-46ae-8ba7-78a3aa242e6e",
+     "title": "review event bills",
+     "score": 0.504
+    },
+    {
+     "escoId": "1be2bb07-dbb2-4a67-b133-30b4ff30b094",
+     "title": "monitor billing procedures",
+     "score": 0.499
+    },
+    {
+     "escoId": "0c606377-fbd6-4f66-b700-ba4524670b73",
+     "title": "screen clients",
+     "score": 0.496
+    },
+    {
+     "escoId": "1336899e-859e-4cd2-8aaf-21d2c4e6989e",
+     "title": "monitor cashiers",
+     "score": 0.495
+    },
+    {
+     "escoId": "31418b90-4ae2-4fa1-b57b-42e190c1a214",
+     "title": "enter receipt of coffee inventory",
+     "score": 0.49
+    }
+   ]
+  },
+  {
+   "skill": "GHG emissions accounting",
+   "top": [
+    {
+     "escoId": "c8b4b02c-d9ce-4e24-ab43-5dd52c6dff48",
+     "title": "advise on carbon emissions reduction",
+     "score": 0.535
+    },
+    {
+     "escoId": "ade05884-0e4c-486c-9a0d-e033dd066ffc",
+     "title": "maintain gas mileage records",
+     "score": 0.528
+    },
+    {
+     "escoId": "4300b453-9bcf-474c-9ee3-92ec2229720c",
+     "title": "global standards for sustainability reporting",
+     "score": 0.526
+    },
+    {
+     "escoId": "b55376e1-41c3-45f8-9b35-d3e7b1288a33",
+     "title": "evaluate vehicle ecological footprint",
+     "score": 0.521
+    },
+    {
+     "escoId": "b322a6f0-8c28-478e-97ca-1e593d1a20c1",
+     "title": "operate biogas meter",
+     "score": 0.503
+    },
+    {
+     "escoId": "3310562c-ed9e-43c2-a4d0-bafeed7057a4",
+     "title": "report on fuel distribution incidents",
+     "score": 0.494
+    }
+   ]
+  },
+  {
+   "skill": "Three-way matching",
+   "top": [
+    {
+     "escoId": "dae63e12-3547-493c-8e6b-809c348984fe",
+     "title": "match vehicles with routes",
+     "score": 0.569
+    },
+    {
+     "escoId": "aed3d1e7-e9f5-4298-9a51-45266a49c844",
+     "title": "match people",
+     "score": 0.544
+    },
+    {
+     "escoId": "f7779005-c640-4c5d-8d95-558c1b53b6f5",
+     "title": "match product moulds",
+     "score": 0.528
+    },
+    {
+     "escoId": "322a8b34-af40-438c-ac67-882d482b7643",
+     "title": "use color matching techniques",
+     "score": 0.527
+    },
+    {
+     "escoId": "2d2873ab-34da-49c5-ba15-218419162aa2",
+     "title": "match frames to pictures",
+     "score": 0.519
+    },
+    {
+     "escoId": "6e53fd99-b646-4327-9580-ac062ab21188",
+     "title": "3D lighting",
+     "score": 0.514
+    }
+   ]
+  }
+ ],
+ "committee": {
+  "runId": 34,
+  "status": "ok",
+  "counts": {
+   "proposals": 7,
+   "phrases": 7,
+   "accumulated": 0,
+   "merged": 1,
+   "mergedCatalogue": 0,
+   "mergedEsco": 0,
+   "mergedSkeptic": 1,
+   "rejected": 4,
+   "watching": 2,
+   "provisional": 0
+  },
+  "funnel": {
+   "merged": 1,
+   "phrases": 7,
+   "rejected": 4,
+   "watching": 2,
+   "pagesRead": 24,
+   "proposals": 7,
+   "mergedEsco": 0,
+   "unreadable": 10,
+   "accumulated": 0,
+   "provisional": 0,
+   "rawProposals": 11,
+   "skepticCalls": 7,
+   "itemsRelevant": 125,
+   "mergedSkeptic": 1,
+   "proposerCalls": 12,
+   "itemsCollected": 329,
+   "mergedCatalogue": 0,
+   "verifiedProposals": 7,
+   "droppedQuoteNotOnPage": 0,
+   "droppedWordsNotInText": 4
+  },
+  "escoCheck": {
+   "mode": "vector",
+   "model": "BAAI/bge-m3"
+  },
+  "notes": [],
+  "queries": [
+   "AI sustainability reporting ESG",
+   "AI carbon accounting",
+   "AI shared services finance operations",
+   "AI finance jobs new skills"
+  ],
+  "sources": {
+   "hn": {
+    "ok": true,
+    "items": 0,
+    "errors": [],
+    "queries": 4
+   },
+   "rss": {
+    "ok": true,
+    "items": 288,
+    "detail": {
+     "OpenAI News": "74 recent items",
+     "Ars Technica": "20 recent items",
+     "The Verge AI": "10 recent items",
+     "TechCrunch AI": "20 recent items",
+     "BBC Technology": "20 recent items",
+     "Google AI blog": "6 recent items",
+     "Malay Mail money": "50 recent items",
+     "Microsoft Research": "10 recent items",
+     "Google DeepMind blog": "12 recent items",
+     "Official Microsoft Blog": "6 recent items",
+     "Free Malaysia Today business": "50 recent items",
+     "Microsoft Dynamics 365 blog (finance & operations)": "10 recent items"
+    },
+    "errors": [],
+    "queries": 1
+   },
+   "arxiv": {
+    "ok": true,
+    "items": 2,
+    "errors": [],
+    "queries": 4
+   },
+   "openalex": {
+    "ok": false,
+    "items": 0,
+    "errors": [
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)"
+    ],
+    "queries": 4
+   },
+   "websearch": {
+    "ok": true,
+    "items": 39,
+    "errors": [],
+    "queries": 4
+   }
+  },
+  "pagesRead": [
+   {
+    "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/10/22/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-cloud-erp-finance/",
+    "via": "Microsoft Dynamics 365 blog (finance & operations)",
+    "date": "2026-10-22",
+    "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Cloud ERP Finance",
+    "excerpt": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Cloud ERP Finance Microsoft has been named a Leader in the 2026 Gartner® Magic Quadrant™ for Cloud ERP Finance.¹ We believe this recognition reflects something finance leaders are seeing as AI moves into their work: the financial syst",
+    "relevance": 40,
+    "sourceKind": "rss",
+    "organisation": "microsoft.com"
+   },
+   {
+    "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/09/23/build-the-future-of-agentic-erp-with-new-microsoft-dynamics-365-capabilities/",
+    "via": "Microsoft Dynamics 365 blog (finance & operations)",
+    "date": "2026-09-23",
+    "title": "Build the future of agentic ERP with new Microsoft Dynamics 365 capabilities",
+    "excerpt": "Build the future of agentic ERP with new Microsoft Dynamics 365 capabilities Discover what’s next for Microsoft Dynamics 365 ERP, from new capabilities across Finance, Supply Chain Management, Commerce, and more to the foundation for agentic ERP. Explore how AI, agents, and connected business proces",
+    "relevance": 40,
+    "sourceKind": "rss",
+    "organisation": "microsoft.com"
+   },
+   {
+    "url": "https://careers.ey.com/ey/job/Chicago-Tech-Consulting-AI-Finance-Manager-Location-Open-IL-60606/1446407333",
+    "via": "Tavily",
+    "date": "2026-10-12",
+    "title": "Tech Consulting - AI Finance - Manager - Location Open Job Details | EY",
+    "excerpt": "Tech Consulting - AI Finance - Manager - Location Open Cookie information Welcome to the EY careers job search site. This website is based on the SuccessFactors software provided by SAP. On this page, functional and optional cookies are used to improve your experience and design our careers site mor",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "ey.com"
+   },
+   {
+    "url": "https://www.microsoft.com/en-us/research/blog/agent-lightning-v1-0-a-3500-line-lightweight-agentic-rl-framework-for-training-agents-with-real-harnesses/",
+    "via": "Microsoft Research",
+    "date": "2026-10-07",
+    "title": "Agent Lightning v1.0: A 3,500-Line Lightweight Agentic RL Framework for Training Agents with Real Harnesses",
+    "excerpt": "Agent Lightning v1.0: A 3,500-Line Lightweight Agentic RL Framework for Training Agents with Real Harnesses Training AI agents with reinforcement learning can be challenging because their tools, context, and decision-making are managed by complex frameworks. Agent Lightning connects existing agents ",
+    "relevance": 34,
+    "sourceKind": "rss",
+    "organisation": "microsoft.com"
+   },
+   {
+    "url": "https://www.microsoft.com/en-us/dynamics-365/blog/it-professional/2026/09/30/adapt-dynamics-365-commerce-faster-with-ai-assisted-extensibility/",
+    "via": "Microsoft Dynamics 365 blog (finance & operations)",
+    "date": "2026-09-30",
+    "title": "Adapt Dynamics 365 Commerce faster with AI-assisted extensibility",
+    "excerpt": "Adapt Dynamics 365 Commerce faster with AI-assisted extensibility Dynamics 365 Commerce 10.0.49 introduces AI-powered extension skills that help developers translate business requirements into working commerce extensions faster. These skills bring first-party Commerce architecture knowledge into AI ",
+    "relevance": 34,
+    "sourceKind": "rss",
+    "organisation": "microsoft.com"
+   },
+   {
+    "url": "https://www.accountingtoday.com/news/aicpa-releases-practice-guide-for-auditors-dealing-with-ai",
+    "via": "Tavily",
+    "date": "2026-10-14",
+    "title": "AICPA releases practice guide for auditors dealing with AI - Accounting Today",
+    "excerpt": "AICPA releases practice guide for auditors dealing with AI Technology AICPA releases practice guide for auditors dealing with AI By Chris Gaetano CloseText About Chris linkedin chris-gaetano-870989232/ Published October 14, 2026, 2:39 p.m. EDT | Updated October 17, 2026, 7:33 p.m. EDT 12 Min Read Fa",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "accountingtoday.com"
+   },
+   {
+    "url": "https://www.accountingtoday.com/list/tech-news-bizbuydata-will-pay-accounting-firms-for-data-to-train-ai",
+    "via": "Tavily",
+    "date": "2026-10-16",
+    "title": "Tech news: BizBuyData will pay accounting firms for data to train AI - Accounting Today",
+    "excerpt": "Tech news: BizBuyData will pay accounting firms for data to train AI Author Follow Us linkedin facebook twitter whatsapp © 2026 Arizent. All rights reserved. Sections Show Search M&A Tax Regulations IRS Artificial Intelligence Firm Growth Forum Research Technology Tech news: BizBuyData will pay acco",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "accountingtoday.com"
+   },
+   {
+    "url": "https://www.accountingtoday.com/list/tech-news-tipalti-touts-ai-agent-to-manage-entire-ap-process",
+    "via": "Tavily",
+    "date": "2026-10-23",
+    "title": "Tech news: Tipalti touts AI agent to manage entire AP process - Accounting Today",
+    "excerpt": "Tech news: Tipalti touts AI agent to manage entire AP process Author Follow Us linkedin facebook twitter whatsapp © 2026 Arizent. All rights reserved. Sections Show Search M&A Tax Regulations IRS Artificial Intelligence Firm Growth Forum Research Technology Tech news: Tipalti touts AI agent to manag",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "accountingtoday.com"
+   },
+   {
+    "url": "https://www.accountingtoday.com/news/thomson-reuters-debuts-new-cocounsel-for-tax-audit-and-accounting-pros",
+    "via": "Tavily",
+    "date": "2026-10-22",
+    "title": "Thomson Reuters debuts new CoCounsel for tax, audit and accounting pros - Accounting Today",
+    "excerpt": "Thomson Reuters debuts new CoCounsel for tax, audit and accounting pros Technology Thomson Reuters debuts new CoCounsel for tax, audit and accounting pros By Chris Gaetano CloseText About Chris linkedin chris-gaetano-870989232/ Published October 22, 2026, 9:49 a.m. EDT | Updated October 22, 2026, 10",
+    "relevance": 37,
+    "sourceKind": "websearch",
+    "organisation": "accountingtoday.com"
+   },
+   {
+    "url": "https://arxiv.org/abs/2610.01116v1",
+    "via": "arXiv",
+    "date": "2026-10-01",
+    "title": "Beyond State-of-the-Art: Standardising Environmental Impact Metrics for AI Research",
+    "excerpt": "Beyond State-of-the-Art: Standardising Environmental Impact Metrics for AI Research As the capabilities and ubiquity of Large Language Models (LLMs) grow, so does their environmental footprint. Despite calls for responsible AI, the machine learning community lacks standardised practices for carbon a",
+    "relevance": 23,
+    "sourceKind": "arxiv",
+    "organisation": "arxiv.org"
+   },
+   {
+    "url": "https://www.malaymail.com/news/money/2026/10/22/meta-revenue-beats-forecasts-but-legal-charges-weigh-on-profit/240122",
+    "via": "Malay Mail money",
+    "date": "2026-10-22",
+    "title": "Meta revenue beats forecasts but legal charges weigh on profit",
+    "excerpt": "Meta revenue beats forecasts but legal charges weigh on profit SAN FRANCISCO, Oct 22 — Meta beat investor expectations for third-quarter revenue on Wednesday as it doubles down... SAN FRANCISCO, Oct 22 — Meta beat investor expectations for third-quarter revenue on Wednesday as it doubles down on a g",
+    "relevance": 22,
+    "sourceKind": "rss",
+    "organisation": "malaymail.com"
+   },
+   {
+    "url": "https://www.freemalaysiatoday.com/category/business/2026/10/22/barclays-bank-to-cut-about-5-000-jobs-amid-ai-drive",
+    "via": "Free Malaysia Today business",
+    "date": "2026-10-22",
+    "title": "Barclays bank to cut about 5,000 jobs amid AI drive",
+    "excerpt": "Barclays bank to cut about 5,000 jobs amid AI drive The British bank also reported a 13% rise in third-quarter net profit, driven by surging income from its equities division. Barclays' profit after tax grew to £1.65 billion in the third quarter from £1.46 billion in the July-September period a year",
+    "relevance": 21,
+    "sourceKind": "rss",
+    "organisation": "freemalaysiatoday.com"
+   },
+   {
+    "url": "https://www.malaymail.com/news/money/2026/10/22/tesla-profits-drop-on-ai-robotics-spending-spree-as-elon-inc-talk-builds/240116",
+    "via": "Malay Mail money",
+    "date": "2026-10-22",
+    "title": "Tesla profits drop on AI, robotics spending spree as ‘Elon Inc’ talk builds",
+    "excerpt": "Tesla profits drop on AI, robotics spending spree as ‘Elon Inc’ talk builds NEW YORK, Oct 22 — Tesla reported lower third-quarter profits Wednesday as near-trillionaire Elon Musk’s ele... NEW YORK, Oct 22 — Tesla reported lower third-quarter profits Wednesday as near-trillionaire Elon Musk’s electri",
+    "relevance": 21,
+    "sourceKind": "rss",
+    "organisation": "malaymail.com"
+   },
+   {
+    "url": "https://www.malaymail.com/news/money/2026/10/21/two-musk-empires-one-company-billionaire-backs-spacex-tesla-merger/239955",
+    "via": "Malay Mail money",
+    "date": "2026-10-21",
+    "title": "Two Musk empires, one company? Billionaire backs SpaceX-Tesla merger",
+    "excerpt": "Two Musk empires, one company? Billionaire backs SpaceX-Tesla merger WASHINGTON, Oct 21 — Elon Musk said yesterday he would back a merger of SpaceX and Tesla, as his rocket and AI com... WASHINGTON, Oct 21 — Elon Musk said yesterday he would back a merger of SpaceX and Tesla, as his rocket and AI co",
+    "relevance": 21,
+    "sourceKind": "rss",
+    "organisation": "malaymail.com"
+   },
+   {
+    "url": "https://www.freemalaysiatoday.com/category/business/2026/10/23/yen-shines-as-ai-jitters-spur-safe-haven-rush",
+    "via": "Free Malaysia Today business",
+    "date": "2026-10-23",
+    "title": "Yen shines as AI jitters spur safe-haven rush",
+    "excerpt": "Yen shines as AI jitters spur safe-haven rush Currency moves were driven by doubts over AI spending, with Brent crude futures above US$110 as growth concerns outweighed inflation worries. The yen strengthened 0.3% on Friday to 156.28 per dollar, leading gains among major currencies. (AFP pic) SHANGH",
+    "relevance": 20,
+    "sourceKind": "rss",
+    "organisation": "freemalaysiatoday.com"
+   },
+   {
+    "url": "https://www.worldbank.org/en/news/press-release/2026/10/20/world-bank-group-launches-first-digital-strategy-to-expand-access-and-create-jobs",
+    "via": "Tavily",
+    "date": "2026-10-20",
+    "title": "World Bank Group Launches First Digital Strategy to Expand Access and Create Jobs",
+    "excerpt": "World Bank Group Launches First Digital Strategy to Expand Access and Create Jobs false Home https://www.worldbank.org/ext/en/home News https://www.worldbank.org/ext/en/news Press Release https://www.worldbank.org/en/news/all?displayconttype_exact=Press+Release&lang_exact=English World Bank Group La",
+    "relevance": 34,
+    "sourceKind": "websearch",
+    "organisation": "worldbank.org"
+   },
+   {
+    "url": "https://www.freemalaysiatoday.com/category/business/2026/10/22/nvidia-boss-criticises-cheap-ai-doomsday-warnings",
+    "via": "Free Malaysia Today business",
+    "date": "2026-10-22",
+    "title": "Nvidia boss criticises ‘cheap’ AI doomsday warnings",
+    "excerpt": "Nvidia boss criticises ‘cheap’ AI doomsday warnings AI systems bypassing controls during tests have fuelled debate over whether the technology poses an existential threat to humanity. Nvidia chief Jensen Huang urged people concerned about future generations and sustainability to embrace AI developme",
+    "relevance": 19,
+    "sourceKind": "rss",
+    "organisation": "freemalaysiatoday.com"
+   },
+   {
+    "url": "https://arstechnica.com/security/2026/10/vulnerability-in-agents-from-google-and-others-exposes-structural-flaw-in-mcp/",
+    "via": "Ars Technica",
+    "date": "2026-10-05",
+    "title": "MCP for agent-to-agent comms may be the riskiest protocol you've never heard of",
+    "excerpt": "MCP for agent-to-agent comms may be the riskiest protocol you've never heard of Trust gaps in the new protocol spread malicious prompts from one agent to another. The adoption of AI agents in millions of organizations is creating new opportunities for attackers to make them take malicious actions, s",
+    "relevance": 19,
+    "sourceKind": "rss",
+    "organisation": "arstechnica.com"
+   },
+   {
+    "url": "https://www.freemalaysiatoday.com/category/business/2026/10/23/sk-hynix-puts-solidigm-us-ipo-on-hold-amid-shareholder-concerns",
+    "via": "Free Malaysia Today business",
+    "date": "2026-10-23",
+    "title": "SK Hynix puts Solidigm’s US IPO on hold amid shareholder concerns",
+    "excerpt": "SK Hynix puts Solidigm’s US IPO on hold amid shareholder concerns A listing had been under consideration to help fund a new US factory and meet surging demand for chips in AI data centres. Concerns have mounted in South Korea that a US listing of Solidigm would dilute the interests of SK Hynix’s sha",
+    "relevance": 18,
+    "sourceKind": "rss",
+    "organisation": "freemalaysiatoday.com"
+   },
+   {
+    "url": "https://www.malaymail.com/news/money/2026/10/23/ringgit-opens-higher-as-greenback-weakens-amid-ai-investment-concerns/240257",
+    "via": "Malay Mail money",
+    "date": "2026-10-23",
+    "title": "Ringgit opens higher as greenback weakens amid AI investment concerns",
+    "excerpt": "Ringgit opens higher as greenback weakens amid AI investment concerns KUALA LUMPUR, Oct 23 — The ringgit opened higher today as the greenback weakened after equity prices fell am... KUALA LUMPUR, Oct 23 — The ringgit opened higher today as the greenback weakened after equity prices fell amid heighte",
+    "relevance": 18,
+    "sourceKind": "rss",
+    "organisation": "malaymail.com"
+   },
+   {
+    "url": "https://www.cnbc.com/video/2026/10/20/fiscal-sustainability-ai-on-agenda-at-apec-fin-ministers-meeting.html",
+    "via": "Tavily",
+    "date": "2026-10-20",
+    "title": "Fiscal sustainability, AI infrastructure and supply chain resilience on APEC finance ministers' agenda - CNBC",
+    "excerpt": "Fiscal sustainability, AI infrastructure and supply chain resilience on APEC finance ministers' agenda Skip Navigation Markets Pre-Markets U.S. Markets Europe Markets China Markets Asia Markets World Markets Currencies Prediction Markets Cryptocurrency Futures & Commodities Bonds Funds & ETFs Busine",
+    "relevance": 27,
+    "sourceKind": "websearch",
+    "organisation": "cnbc.com"
+   },
+   {
+    "url": "https://arxiv.org/abs/2610.21368v1",
+    "via": "arXiv",
+    "date": "2026-10-15",
+    "title": "ESG-Kor: A Korean Dataset for ESG-related Information Extraction and Practical Use Cases",
+    "excerpt": "ESG-Kor: A Korean Dataset for ESG-related Information Extraction and Practical Use Cases With the expansion of pre-trained language model usage in recent years, the importance of datasets for performing tasks in specialized domains has significantly increased. Therefore, we have built a Korean datas",
+    "relevance": 18,
+    "sourceKind": "arxiv",
+    "organisation": "arxiv.org"
+   },
+   {
+    "url": "https://careers.ey.com/ey/job/New-York-Senior-Manager-Financial-Services-CTO%2C-Semantic-AI-and-Enterprise-Knowledge-Transformation-NY-10001-8604/1431253633",
+    "via": "Tavily",
+    "date": "2026-09-25",
+    "title": "Senior Manager - Financial Services - CTO, Semantic AI and Enterprise Knowledge Transformation Job Details | EY",
+    "excerpt": "Senior Manager - Financial Services - CTO, Semantic AI and Enterprise Knowledge Transformation Cookie information Welcome to the EY careers job search site. This website is based on the SuccessFactors software provided by SAP. On this page, functional and optional cookies are used to improve your ex",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "ey.com"
+   },
+   {
+    "url": "https://arstechnica.com/security/2026/10/apple-changes-full-disk-access-permissions-to-curb-abuse-from-ai-agents/",
+    "via": "Ars Technica",
+    "date": "2026-10-02",
+    "title": "Apple changes full-disk access permissions to curb abuse from AI agents",
+    "excerpt": "Apple changes full-disk access permissions to curb abuse from AI agents Meta says FDA isn't sufficient to Muse reading messages. Apple begs to differ. Apple says it is changing its macOS privacy settings to stop third-party app developers from misusing them to access message histories. Friday's anno",
+    "relevance": 15,
+    "sourceKind": "rss",
+    "organisation": "arstechnica.com"
+   }
+  ],
+  "proposerErrors": [],
+  "candidates": [
+   {
+    "label": "preview allocations before posting",
+    "state": "watching",
+    "status": "pending",
+    "wordings": [
+     "preview allocations before posting"
+    ],
+    "committee": {
+     "esco": {
+      "check": "vector",
+      "match": null,
+      "nearest": [
+       {
+        "id": "e717b036-2c0c-4c11-99e9-0cb4ce084fed",
+        "how": "vector",
+        "name": "perform account allocation",
+        "score": 0.545,
+        "source": "esco"
+       },
+       {
+        "id": "0b6cc8e4-b34d-4631-9061-3ba839ecc640",
+        "how": "vector",
+        "name": "report on grants",
+        "score": 0.525,
+        "source": "esco"
+       },
+       {
+        "id": "7c05199f-7b03-4a4a-afee-7c9dfcf9066a",
+        "how": "vector",
+        "name": "plan resource allocation",
+        "score": 0.513,
+        "source": "esco"
+       }
+      ]
+     },
+     "skeptic": "keep: Previewing allocations is a specific quality control step in financial accounting workflows that ensures accuracy before final ledger commitment. It is distinct from the act of performing the allocation itself and is not covered by the provided catalogue or ESCO skills.",
+     "proposer": "Seen in 1 trusted source from 1 organisation: \"The financial journals experience is being re-engineered to support higher transaction volumes and cross-legal-entity complexity, with capabilities designed to \"",
+     "wordings": [
+      "preview allocations before posting"
+     ],
+     "catalogue": {
+      "match": null,
+      "nearest": [
+       {
+        "id": "viz",
+        "how": "embedding",
+        "name": "Dashboard reporting",
+        "score": 0.565,
+        "source": "catalogue"
+       },
+       {
+        "id": "recon",
+        "how": "embedding",
+        "name": "Vendor reconciliation",
+        "score": 0.543,
+        "source": "catalogue"
+       },
+       {
+        "id": "process",
+        "how": "embedding",
+        "name": "Process improvement",
+        "score": 0.532,
+        "source": "catalogue"
+       }
+      ]
+     },
+     "duplicate": "No match in ESCO (13,939 skills; nearest 'perform account allocation' (ESCO e717b036-2c0c-4c11-99e9-0cb4ce084fed), vector 0.545) or our catalogue (nearest 'Dashboard reporting', embedding 0.565)",
+     "thresholds": {
+      "weeks": 4,
+      "passes": {
+       "linked": true,
+       "growing": false,
+       "mentions": false,
+       "earlierRun": true,
+       "organisations": false
+      },
+      "mentions": 15,
+      "organisations": 5,
+      "duplicateCosine": 0.85
+     }
+    },
+    "evidence": [
+     {
+      "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/10/22/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-cloud-erp-finance/",
+      "date": "2026-10-22",
+      "quote": "The financial journals experience is being re-engineered to support higher transaction volumes and cross-legal-entity complexity, with capabilities designed to help teams view intercompany transactions, create accruals, and preview allocations before posting.",
+      "organisation": "microsoft.com"
+     }
+    ],
+    "progress": {
+     "mentions": {
+      "have": 1,
+      "need": 15
+     },
+     "organisations": {
+      "have": 1,
+      "need": 5
+     },
+     "weeks": {
+      "have": 1,
+      "need": 4
+     }
+    },
+    "linkedSkill": "fin"
+   },
+   {
+    "label": "Account Reconciliation Agent",
+    "state": "rejected",
+    "status": "rejected",
+    "wordings": [
+     "Account Reconciliation Agent"
+    ],
+    "committee": {
+     "esco": {
+      "check": "vector",
+      "match": null,
+      "nearest": [
+       {
+        "id": "72c02483-714c-47de-a3ff-870c5eb634d0",
+        "how": "vector",
+        "name": "resolve difficult account allocation cases",
+        "score": 0.544,
+        "source": "esco"
+       },
+       {
+        "id": "e717b036-2c0c-4c11-99e9-0cb4ce084fed",
+        "how": "vector",
+        "name": "perform account allocation",
+        "score": 0.51,
+        "source": "esco"
+       },
+       {
+        "id": "8a8c1c9a-abaf-41b1-860e-1d9264b94d38",
+        "how": "vector",
+        "name": "redirect callers",
+        "score": 0.509,
+        "source": "esco"
+       }
+      ]
+     },
+     "skeptic": "not_a_person_skill: The evidence describes an automated software agent or system feature that performs reconciliation tasks, rather than a skill or competency required by a human worker.",
+     "proposer": "Seen in 1 trusted source from 1 organisation: \"The Account Reconciliation Agent is also evolving to resolve exceptions in bulk, enabled by legal entity and module, addition of limits and notifications, and e\"",
+     "wordings": [
+      "Account Reconciliation Agent"
+     ],
+     "catalogue": {
+      "match": null,
+      "nearest": [
+       {
+        "id": "recon",
+        "how": "embedding",
+        "name": "Vendor reconciliation",
+        "score": 0.673,
+        "source": "catalogue"
+       },
+       {
+        "id": "dispute",
+        "how": "embedding",
+        "name": "Vendor dispute resolution",
+        "score": 0.597,
+        "source": "catalogue"
+       },
+       {
+        "id": "aisup",
+        "how": "embedding",
+        "name": "Supervising AI workflows",
+        "score": 0.596,
+        "source": "catalogue"
+       }
+      ]
+     },
+     "duplicate": "No match in ESCO (13,939 skills; nearest 'resolve difficult account allocation cases' (ESCO 72c02483-714c-47de-a3ff-870c5eb634d0), vector 0.544) or our catalogue (nearest 'Vendor reconciliation', embedding 0.673)",
+     "thresholds": {
+      "weeks": 4,
+      "passes": {
+       "linked": true,
+       "growing": false,
+       "mentions": false,
+       "earlierRun": true,
+       "organisations": false
+      },
+      "mentions": 15,
+      "organisations": 5,
+      "duplicateCosine": 0.85
+     }
+    },
+    "evidence": [
+     {
+      "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/09/23/build-the-future-of-agentic-erp-with-new-microsoft-dynamics-365-capabilities/",
+      "date": "2026-09-23",
+      "quote": "The Account Reconciliation Agent is also evolving to resolve exceptions in bulk, enabled by legal entity and module, addition of limits and notifications, and expanded agent suggestion summaries.",
+      "organisation": "microsoft.com"
+     }
+    ],
+    "progress": {
+     "mentions": {
+      "have": 1,
+      "need": 15
+     },
+     "organisations": {
+      "have": 1,
+      "need": 5
+     },
+     "weeks": {
+      "have": 1,
+      "need": 4
+     }
+    },
+    "linkedSkill": "recon"
+   },
+   {
+    "label": "Finance Agent variance analysis",
+    "state": "rejected",
+    "status": "rejected",
+    "wordings": [
+     "Finance Agent variance analysis"
+    ],
+    "committee": {
+     "esco": {
+      "check": "vector",
+      "match": null,
+      "nearest": [
+       {
+        "id": "e95058a6-e139-42e7-a470-72038a606649",
+        "how": "vector",
+        "name": "assess financial viability",
+        "score": 0.476,
+        "source": "esco"
+       },
+       {
+        "id": "bcadc519-00f4-43bc-9373-054f4ac717cb",
+        "how": "vector",
+        "name": "modern portfolio theory",
+        "score": 0.467,
+        "source": "esco"
+       },
+       {
+        "id": "eb8babfb-ab91-4937-a032-6a79f82e9b7f",
+        "how": "vector",
+        "name": "analyse financial risk",
+        "score": 0.467,
+        "source": "esco"
+       }
+      ]
+     },
+     "skeptic": "not_a_person_skill: The evidence describes 'Finance Agent' as a software tool or system performing these tasks, rather than a specific human competency or skill.",
+     "proposer": "Seen in 1 trusted source from 1 organisation: \"Finance Agent is bringing skills for reconciliation, data preparation, variance analysis, collections, and business intelligence across Microsoft 365 surfaces\"",
+     "wordings": [
+      "Finance Agent variance analysis"
+     ],
+     "catalogue": {
+      "match": null,
+      "nearest": [
+       {
+        "id": "fin",
+        "how": "embedding",
+        "name": "Financial analysis",
+        "score": 0.63,
+        "source": "catalogue"
+       },
+       {
+        "id": "aisup",
+        "how": "embedding",
+        "name": "Supervising AI workflows",
+        "score": 0.566,
+        "source": "catalogue"
+       },
+       {
+        "id": "stats",
+        "how": "embedding",
+        "name": "Statistics basics",
+        "score": 0.561,
+        "source": "catalogue"
+       }
+      ]
+     },
+     "duplicate": "No match in ESCO (13,939 skills; nearest 'assess financial viability' (ESCO e95058a6-e139-42e7-a470-72038a606649), vector 0.476) or our catalogue (nearest 'Financial analysis', embedding 0.63)",
+     "thresholds": {
+      "weeks": 4,
+      "passes": {
+       "linked": true,
+       "growing": false,
+       "mentions": false,
+       "earlierRun": true,
+       "organisations": false
+      },
+      "mentions": 15,
+      "organisations": 5,
+      "duplicateCosine": 0.85
+     }
+    },
+    "evidence": [
+     {
+      "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/09/23/build-the-future-of-agentic-erp-with-new-microsoft-dynamics-365-capabilities/",
+      "date": "2026-09-23",
+      "quote": "Finance Agent is bringing skills for reconciliation, data preparation, variance analysis, collections, and business intelligence across Microsoft 365 surfaces",
+      "organisation": "microsoft.com"
+     }
+    ],
+    "progress": {
+     "mentions": {
+      "have": 1,
+      "need": 15
+     },
+     "organisations": {
+      "have": 1,
+      "need": 5
+     },
+     "weeks": {
+      "have": 1,
+      "need": 4
+     }
+    },
+    "linkedSkill": "fin"
+   },
+   {
+    "label": "Procurement agent impact analysis",
+    "state": "rejected",
+    "status": "rejected",
+    "wordings": [
+     "Procurement agent impact analysis"
+    ],
+    "committee": {
+     "esco": {
+      "check": "vector",
+      "match": null,
+      "nearest": [
+       {
+        "id": "6dd4ce8c-1813-429d-9f06-3382c4833ca3",
+        "how": "vector",
+        "name": "assess procurement needs",
+        "score": 0.568,
+        "source": "esco"
+       },
+       {
+        "id": "6c97d04d-7239-4dc7-90ef-3e812ba2b124",
+        "how": "vector",
+        "name": "perform procurement market analysis",
+        "score": 0.563,
+        "source": "esco"
+       },
+       {
+        "id": "3bc08c26-2f98-4730-bbb6-ec4a8566e3cf",
+        "how": "vector",
+        "name": "procurement lifecycle",
+        "score": 0.517,
+        "source": "esco"
+       }
+      ]
+     },
+     "skeptic": "product_name: The evidence describes a specific feature or tool named 'Procurement agent impact analysis' within a software platform, rather than a general professional skill.",
+     "proposer": "Seen in 1 trusted source from 1 organisation: \"Procurement agent impact analysis, now in public preview, traces supplier-proposed purchase order changes to affected sales, production, transfer orders, and pr\"",
+     "wordings": [
+      "Procurement agent impact analysis"
+     ],
+     "catalogue": {
+      "match": null,
+      "nearest": [
+       {
+        "id": "fin",
+        "how": "embedding",
+        "name": "Financial analysis",
+        "score": 0.586,
+        "source": "catalogue"
+       },
+       {
+        "id": "procure",
+        "how": "embedding",
+        "name": "Strategic sourcing",
+        "score": 0.572,
+        "source": "catalogue"
+       },
+       {
+        "id": "aisup",
+        "how": "embedding",
+        "name": "Supervising AI workflows",
+        "score": 0.541,
+        "source": "catalogue"
+       }
+      ]
+     },
+     "duplicate": "No match in ESCO (13,939 skills; nearest 'assess procurement needs' (ESCO 6dd4ce8c-1813-429d-9f06-3382c4833ca3), vector 0.568) or our catalogue (nearest 'Financial analysis', embedding 0.586)",
+     "thresholds": {
+      "weeks": 4,
+      "passes": {
+       "linked": true,
+       "growing": false,
+       "mentions": false,
+       "earlierRun": true,
+       "organisations": false
+      },
+      "mentions": 15,
+      "organisations": 5,
+      "duplicateCosine": 0.85
+     }
+    },
+    "evidence": [
+     {
+      "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/09/23/build-the-future-of-agentic-erp-with-new-microsoft-dynamics-365-capabilities/",
+      "date": "2026-09-23",
+      "quote": "Procurement agent impact analysis, now in public preview, traces supplier-proposed purchase order changes to affected sales, production, transfer orders, and projected inventory.",
+      "organisation": "microsoft.com"
+     }
+    ],
+    "progress": {
+     "mentions": {
+      "have": 1,
+      "need": 15
+     },
+     "organisations": {
+      "have": 1,
+      "need": 5
+     },
+     "weeks": {
+      "have": 1,
+      "need": 4
+     }
+    },
+    "linkedSkill": "procure"
+   },
+   {
+    "label": "de-identifying data for AI training",
+    "state": "watching",
+    "status": "pending",
+    "wordings": [
+     "de-identifying data for AI training"
+    ],
+    "committee": {
+     "esco": {
+      "check": "vector",
+      "match": null,
+      "nearest": [
+       {
+        "id": "4570a262-b51f-46a1-a834-13ff67bee1c8",
+        "how": "vector",
+        "name": "decentralised identifiers",
+        "score": 0.531,
+        "source": "esco"
+       },
+       {
+        "id": "3e2ab38a-4519-4bef-b762-a8bf4836a775",
+        "how": "vector",
+        "name": "perform dimensionality reduction",
+        "score": 0.515,
+        "source": "esco"
+       },
+       {
+        "id": "4216e465-7baa-4884-a241-54b197bb9278",
+        "how": "vector",
+        "name": "perform data mining",
+        "score": 0.508,
+        "source": "esco"
+       }
+      ]
+     },
+     "skeptic": "keep: De-identifying data is a specific privacy and compliance task distinct from general data mining or normalization. None of the existing skills cover the specific process of sanitizing datasets for AI training purposes.",
+     "proposer": "Seen in 1 trusted source from 1 organisation: \"Once a firm accepts the final offer, Mode collects and de-identifies the data, a process that takes 15 to 30 days before the data is shared for AI training.\"",
+     "wordings": [
+      "de-identifying data for AI training"
+     ],
+     "catalogue": {
+      "match": null,
+      "nearest": [
+       {
+        "id": "aisup",
+        "how": "embedding",
+        "name": "Supervising AI workflows",
+        "score": 0.609,
+        "source": "catalogue"
+       },
+       {
+        "id": "prompt",
+        "how": "embedding",
+        "name": "Prompting AI tools for finance",
+        "score": 0.608,
+        "source": "catalogue"
+       },
+       {
+        "id": "python",
+        "how": "embedding",
+        "name": "Python for data work",
+        "score": 0.593,
+        "source": "catalogue"
+       }
+      ]
+     },
+     "duplicate": "No match in ESCO (13,939 skills; nearest 'decentralised identifiers' (ESCO 4570a262-b51f-46a1-a834-13ff67bee1c8), vector 0.531) or our catalogue (nearest 'Supervising AI workflows', embedding 0.609)",
+     "thresholds": {
+      "weeks": 4,
+      "passes": {
+       "linked": true,
+       "growing": false,
+       "mentions": false,
+       "earlierRun": false,
+       "organisations": false
+      },
+      "mentions": 15,
+      "organisations": 5,
+      "duplicateCosine": 0.85
+     }
+    },
+    "evidence": [
+     {
+      "url": "https://www.accountingtoday.com/list/tech-news-bizbuydata-will-pay-accounting-firms-for-data-to-train-ai",
+      "date": "2026-10-16",
+      "quote": "Once a firm accepts the final offer, Mode collects and de-identifies the data, a process that takes 15 to 30 days before the data is shared for AI training.",
+      "organisation": "accountingtoday.com"
+     }
+    ],
+    "progress": {
+     "mentions": {
+      "have": 1,
+      "need": 15
+     },
+     "organisations": {
+      "have": 1,
+      "need": 5
+     },
+     "weeks": {
+      "have": 1,
+      "need": 4
+     }
+    },
+    "linkedSkill": "esgdata"
+   },
+   {
+    "label": "managing entire accounts payable process",
+    "state": "rejected",
+    "status": "rejected",
+    "wordings": [
+     "managing entire accounts payable process"
+    ],
+    "committee": {
+     "esco": {
+      "check": "vector",
+      "match": null,
+      "nearest": [
+       {
+        "id": "e06f3ac6-1d3e-49c6-945d-1a61ca746986",
+        "how": "vector",
+        "name": "complete administration",
+        "score": 0.599,
+        "source": "esco"
+       },
+       {
+        "id": "68b51538-b056-4cb3-bb15-ab8c3e576cc9",
+        "how": "vector",
+        "name": "follow up accounts receivables",
+        "score": 0.593,
+        "source": "esco"
+       },
+       {
+        "id": "c7d64df4-7af3-4269-add6-97833bd5448e",
+        "how": "vector",
+        "name": "manage purchasing cycle",
+        "score": 0.592,
+        "source": "esco"
+       }
+      ]
+     },
+     "skeptic": "not_a_person_skill: The evidence describes an AI agent performing the accounts payable process, not a skill required by a human worker.",
+     "proposer": "Seen in 1 trusted source from 1 organisation: \"Payments platform Tipalti announced the launch of a new AI agent that can handle the entire accounts payable process, as well as new Model Context Protocol capa\"",
+     "wordings": [
+      "managing entire accounts payable process"
+     ],
+     "catalogue": {
+      "match": null,
+      "nearest": [
+       {
+        "id": "inv",
+        "how": "embedding",
+        "name": "Invoice data entry",
+        "score": 0.668,
+        "source": "catalogue"
+       },
+       {
+        "id": "scm",
+        "how": "embedding",
+        "name": "Supply chain planning",
+        "score": 0.667,
+        "source": "catalogue"
+       },
+       {
+        "id": "dispute",
+        "how": "embedding",
+        "name": "Vendor dispute resolution",
+        "score": 0.649,
+        "source": "catalogue"
+       }
+      ]
+     },
+     "duplicate": "No match in ESCO (13,939 skills; nearest 'complete administration' (ESCO e06f3ac6-1d3e-49c6-945d-1a61ca746986), vector 0.599) or our catalogue (nearest 'Invoice data entry', embedding 0.668)",
+     "thresholds": {
+      "weeks": 4,
+      "passes": {
+       "linked": true,
+       "growing": false,
+       "mentions": false,
+       "earlierRun": false,
+       "organisations": false
+      },
+      "mentions": 15,
+      "organisations": 5,
+      "duplicateCosine": 0.85
+     }
+    },
+    "evidence": [
+     {
+      "url": "https://www.accountingtoday.com/list/tech-news-tipalti-touts-ai-agent-to-manage-entire-ap-process",
+      "date": "2026-10-23",
+      "quote": "Payments platform Tipalti announced the launch of a new AI agent that can handle the entire accounts payable process, as well as new Model Context Protocol capabilities.",
+      "organisation": "accountingtoday.com"
+     }
+    ],
+    "progress": {
+     "mentions": {
+      "have": 1,
+      "need": 15
+     },
+     "organisations": {
+      "have": 1,
+      "need": 5
+     },
+     "weeks": {
+      "have": 1,
+      "need": 4
+     }
+    },
+    "linkedSkill": "pay"
+   },
+   {
+    "label": "reviewing automated spreadsheet outputs",
+    "state": "merged",
+    "status": "merged",
+    "wordings": [
+     "reviewing automated spreadsheet outputs"
+    ],
+    "committee": {
+     "esco": {
+      "check": "vector",
+      "match": null,
+      "nearest": [
+       {
+        "id": "1973c966-f236-40c9-b2d4-5d71a89019be",
+        "how": "vector",
+        "name": "use spreadsheets software",
+        "score": 0.574,
+        "source": "esco"
+       },
+       {
+        "id": "f241fbf8-08a2-4c05-b9c1-3438d3e648dd",
+        "how": "vector",
+        "name": "revise drafts made by managers",
+        "score": 0.569,
+        "source": "esco"
+       },
+       {
+        "id": "c290c45c-b8da-4517-be4a-b16fdce26cb2",
+        "how": "vector",
+        "name": "review drafts",
+        "score": 0.562,
+        "source": "esco"
+       }
+      ]
+     },
+     "skeptic": "duplicate: The task of reviewing automated spreadsheet outputs is functionally identical to the existing skill 'Review AI output for errors' found within 'Supervising AI workflows'.",
+     "proposer": "Seen in 1 trusted source from 1 organisation: \"Shifting human accounting labor from performing calculations to reviewing automated spreadsheet outputs.\"",
+     "wordings": [
+      "reviewing automated spreadsheet outputs"
+     ],
+     "catalogue": {
+      "match": {
+       "id": "aisup",
+       "how": "embedding",
+       "name": "Supervising AI workflows",
+       "score": 0.666,
+       "source": "catalogue",
+       "description": "tasks: Set up AI agents for routine steps; Review AI output for errors; Decide when AI should not act"
+      },
+      "nearest": [
+       {
+        "id": "excel",
+        "how": "embedding",
+        "name": "Spreadsheet analysis",
+        "score": 0.689,
+        "source": "catalogue"
+       },
+       {
+        "id": "aisup",
+        "how": "embedding",
+        "name": "Supervising AI workflows",
+        "score": 0.666,
+        "source": "catalogue"
+       },
+       {
+        "id": "recon",
+        "how": "embedding",
+        "name": "Vendor reconciliation",
+        "score": 0.628,
+        "source": "catalogue"
+       }
+      ]
+     },
+     "duplicate": "Skeptic: same as catalogue skill 'Supervising AI workflows', embedding 0.666: alias",
+     "thresholds": {
+      "weeks": 4,
+      "passes": {
+       "linked": true,
+       "growing": false,
+       "mentions": false,
+       "earlierRun": false,
+       "organisations": false
+      },
+      "mentions": 15,
+      "organisations": 5,
+      "duplicateCosine": 0.85
+     }
+    },
+    "evidence": [
+     {
+      "url": "https://www.accountingtoday.com/news/thomson-reuters-debuts-new-cocounsel-for-tax-audit-and-accounting-pros",
+      "date": "2026-10-22",
+      "quote": "Shifting human accounting labor from performing calculations to reviewing automated spreadsheet outputs.",
+      "organisation": "accountingtoday.com"
+     }
+    ],
+    "progress": {
+     "mentions": {
+      "have": 1,
+      "need": 15
+     },
+     "organisations": {
+      "have": 1,
+      "need": 5
+     },
+     "weeks": {
+      "have": 1,
+      "need": 4
+     }
+    },
+    "linkedSkill": "excel"
+   }
+  ],
+  "cost": {
+   "llmCalls": {
+    "main": 12,
+    "reviewer": 7
+   },
+   "llmFailures": 0,
+   "tavilySearches": 4,
+   "otherFetches": 71,
+   "embedCalls": 2,
+   "embedSeconds": 2.4,
+   "embedTexts": 126
+  }
+ },
+ "seconds": 165
+}

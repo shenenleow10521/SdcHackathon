@@ -1,0 +1,298 @@
+{
+  "judge": {
+    "main": "claude-opus-5-5 (6 blind agents, one per sixth of the cases)",
+    "note": "Gemini judge models ran out of free daily quota after 6 cases; those partial Gemini verdicts were discarded"
+  },
+  "modelOf": [
+    "claude-opus-5-5 (blind agent, part 1)",
+    "claude-opus-5-5 (blind agent, part 2)",
+    "claude-opus-5-5 (blind agent, part 3)",
+    "claude-opus-5-5 (blind agent, part 4)",
+    "claude-opus-5-5 (blind agent, part 5)",
+    "claude-opus-5-5 (blind agent, part 6)"
+  ],
+  "precision": {
+    "all": {
+      "shown": {
+        "k": 805,
+        "n": 1151,
+        "pct": 69.9,
+        "ci95": [
+          0.672,
+          0.725
+        ]
+      },
+      "savedAsUsed": {
+        "k": 547,
+        "n": 820,
+        "pct": 66.7,
+        "ci95": [
+          0.634,
+          0.698
+        ]
+      },
+      "supportedAnyWay": {
+        "k": 809,
+        "n": 1151,
+        "pct": 70.3,
+        "ci95": [
+          0.676,
+          0.729
+        ]
+      }
+    },
+    "heldout": {
+      "shown": {
+        "k": 511,
+        "n": 713,
+        "pct": 71.7,
+        "ci95": [
+          0.683,
+          0.749
+        ]
+      },
+      "savedAsUsed": {
+        "k": 351,
+        "n": 519,
+        "pct": 67.6,
+        "ci95": [
+          0.635,
+          0.715
+        ]
+      },
+      "supportedAnyWay": {
+        "k": 514,
+        "n": 713,
+        "pct": 72.1,
+        "ci95": [
+          0.687,
+          0.753
+        ]
+      }
+    },
+    "tuning": {
+      "shown": {
+        "k": 294,
+        "n": 438,
+        "pct": 67.1,
+        "ci95": [
+          0.626,
+          0.714
+        ]
+      },
+      "savedAsUsed": {
+        "k": 196,
+        "n": 301,
+        "pct": 65.1,
+        "ci95": [
+          0.596,
+          0.703
+        ]
+      },
+      "supportedAnyWay": {
+        "k": 295,
+        "n": 438,
+        "pct": 67.4,
+        "ci95": [
+          0.628,
+          0.716
+        ]
+      }
+    },
+    "all:messy": {
+      "shown": {
+        "k": 394,
+        "n": 568,
+        "pct": 69.4,
+        "ci95": [
+          0.655,
+          0.73
+        ]
+      },
+      "savedAsUsed": {
+        "k": 259,
+        "n": 389,
+        "pct": 66.6,
+        "ci95": [
+          0.618,
+          0.711
+        ]
+      },
+      "supportedAnyWay": {
+        "k": 396,
+        "n": 568,
+        "pct": 69.7,
+        "ci95": [
+          0.658,
+          0.734
+        ]
+      }
+    },
+    "heldout:messy": {
+      "shown": {
+        "k": 100,
+        "n": 130,
+        "pct": 76.9,
+        "ci95": [
+          0.69,
+          0.833
+        ]
+      },
+      "savedAsUsed": {
+        "k": 63,
+        "n": 88,
+        "pct": 71.6,
+        "ci95": [
+          0.614,
+          0.8
+        ]
+      },
+      "supportedAnyWay": {
+        "k": 101,
+        "n": 130,
+        "pct": 77.7,
+        "ci95": [
+          0.698,
+          0.84
+        ]
+      }
+    },
+    "all:clean": {
+      "shown": {
+        "k": 317,
+        "n": 439,
+        "pct": 72.2,
+        "ci95": [
+          0.678,
+          0.762
+        ]
+      },
+      "savedAsUsed": {
+        "k": 241,
+        "n": 344,
+        "pct": 70.1,
+        "ci95": [
+          0.65,
+          0.747
+        ]
+      },
+      "supportedAnyWay": {
+        "k": 318,
+        "n": 439,
+        "pct": 72.4,
+        "ci95": [
+          0.681,
+          0.764
+        ]
+      }
+    },
+    "heldout:clean": {
+      "shown": {
+        "k": 317,
+        "n": 439,
+        "pct": 72.2,
+        "ci95": [
+          0.678,
+          0.762
+        ]
+      },
+      "savedAsUsed": {
+        "k": 241,
+        "n": 344,
+        "pct": 70.1,
+        "ci95": [
+          0.65,
+          0.747
+        ]
+      },
+      "supportedAnyWay": {
+        "k": 318,
+        "n": 439,
+        "pct": 72.4,
+        "ci95": [
+          0.681,
+          0.764
+        ]
+      }
+    },
+    "all:linkedin": {
+      "shown": {
+        "k": 94,
+        "n": 144,
+        "pct": 65.3,
+        "ci95": [
+          0.572,
+          0.726
+        ]
+      },
+      "savedAsUsed": {
+        "k": 47,
+        "n": 87,
+        "pct": 54,
+        "ci95": [
+          0.436,
+          0.641
+        ]
+      },
+      "supportedAnyWay": {
+        "k": 95,
+        "n": 144,
+        "pct": 66,
+        "ci95": [
+          0.579,
+          0.732
+        ]
+      }
+    },
+    "heldout:linkedin": {
+      "shown": {
+        "k": 94,
+        "n": 144,
+        "pct": 65.3,
+        "ci95": [
+          0.572,
+          0.726
+        ]
+      },
+      "savedAsUsed": {
+        "k": 47,
+        "n": 87,
+        "pct": 54,
+        "ci95": [
+          0.436,
+          0.641
+        ]
+      },
+      "supportedAnyWay": {
+        "k": 95,
+        "n": 144,
+        "pct": 66,
+        "ci95": [
+          0.579,
+          0.732
+        ]
+      }
+    }
+  },
+  "judgeCheck": {
+    "randomDecoysRejected": {
+      "k": 582,
+      "n": 591,
+      "pct": 98.5,
+      "ci95": [
+        0.971,
+        0.992
+      ]
+    },
+    "lookalikeDecoysRejected": {
+      "k": 528,
+      "n": 569,
+      "pct": 92.8,
+      "ci95": [
+        0.904,
+        0.946
+      ]
+    }
+  },
+  "missingVerdicts": 0
+}
