@@ -141,6 +141,15 @@ App = screen recording of the live demo server. MG = motion graphic (HTML/CSS/GS
 - Don't say or show "live on Replit" unless it is.
 - The weaker benchmark numbers (ESCO skill precision 71.7%, per-task model error) stay out of the video and in the README and Q&A, where they are reported in full.
 
+## Built for frame-precise edits later (required)
+
+The video must stay editable without regenerating everything:
+- **One file per scene:** raw recording, its overlay/highlight definitions (code or JSON with frame numbers), and the rendered scene clip. Changing a caption, a zoom or a cut point re-renders only that scene.
+- **A timeline file** (`timeline.json`: scene order, in/out frames, transitions, subtitle cues, music in/out and ducking points) drives the final assembly. Re-assembly concatenates the rendered scene clips with identical encode settings, so unchanged scenes are stream-copied, not re-encoded (seconds).
+- **Keep the raw recordings** at full quality, so a scene can be re-cut without re-recording.
+- **Also export an editor project** for hand edits: the scene clips plus an FCPXML or EDL that DaVinci Resolve (free) opens as a timeline, and the `.srt` for subtitles, so the team can trim frames themselves.
+- Record the exact app state for each scene (the DEMO.md step and the scripted actions), so any scene can be re-recorded identically if the app changes.
+
 ## Deliverables
 
 1. `halatuju-pitch.mp4` (1920×1080, ~6:00, burned-in subtitles, music, no narration yet or with the team's narration).
