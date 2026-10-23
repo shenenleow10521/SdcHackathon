@@ -1,0 +1,35 @@
+CHONG YI XUAN
+BI Developer
+Cyberjaya, Selangor | 012-555 4073 | yixuan.chong@example.com | github.com/yixuan-chong-example
+
+SUMMARY
+BI developer with 5 years building data models and Power BI reports for finance and operations
+teams in a shared-services centre.
+
+EXPERIENCE
+
+BI Developer - Orbit Global Business Services Sdn Bhd, Cyberjaya                   Jan 2022 - Present
+- Design star-schema data models in Azure SQL and Power BI for AP, AR and procurement reporting
+  across 11 countries.
+- Write T-SQL views and stored procedures that join SAP, Coupa and ServiceNow extracts; schedule
+  loads with Azure Data Factory.
+- Build and publish Power BI dashboards (DAX measures, row-level security) used by 300 finance
+  users; the AP ageing and days-payable dashboard replaced 14 manual Excel reports.
+- Gather reporting requirements from finance process owners and agree KPI definitions such as
+  first-pass match rate and on-time payment.
+- Set up data quality checks that flag missing vendor IDs and duplicate invoice numbers before
+  each refresh.
+- Wrote Python scripts to pull currency rates from an API and load them into the data warehouse.
+- Coach two junior developers and review their DAX and SQL.
+
+Reporting Analyst - Orbit Global Business Services Sdn Bhd, Cyberjaya              Jun 2019 - Dec 2021
+- Produced weekly AP and AR KPI reports in Excel (Power Pivot) for the Finance Director.
+- Migrated 20 Excel reports to Power BI.
+
+EDUCATION
+BSc (Hons) Computer Science (Data Science), Asia Pacific University, 2015 - 2019
+Microsoft Certified: Power BI Data Analyst Associate (PL-300), 2021
+
+SKILLS
+Power BI, DAX, Power Query, T-SQL, Azure Data Factory, Python, Excel
+Languages: English, Mandarin, Bahasa Malaysia

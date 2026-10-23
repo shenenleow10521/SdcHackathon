@@ -1,0 +1,34 @@
+Contact
+www.linkedin.com/in/nadia-fauzi-example
+(LinkedIn)
+Top Skills
+Data Annotation
+Quality Assurance
+Document AI
+Languages
+Malay (Native or Bilingual)
+English (Professional Working)
+Nadia Fauzi
+AI Data Quality Specialist | Document AI for finance | Ex-Accounts Executive
+Cyberjaya, Selangor, Malaysia
+Summary
+I teach machines to read invoices - and check that they read them right.
+Experience
+Kognitif AI Sdn Bhd
+AI Data Quality Specialist
+June 2024 - Present (2 years 5 months)
+Cyberjaya, Selangor, Malaysia
+Label and review invoice, receipt and bank statement fields for our document-AI models. Write
+the labelling guidelines for Malaysian invoice formats (SST, e-Invoice) and run weekly agreement
+checks across 8 annotators. Investigate fields where model accuracy drops and send error
+examples back to the ML team for retraining.
+Bayu Trading Sdn Bhd
+Accounts Executive
+March 2019 - May 2024 (5 years 3 months)
+Klang, Selangor, Malaysia
+Full set of accounts, AP/AR, SST returns and bank reconciliations for a trading company.
+  Page 1 of 2
+Education
+Universiti Teknologi MARA
+Diploma in Accountancy · (2015 - 2018)
+  Page 2 of 2

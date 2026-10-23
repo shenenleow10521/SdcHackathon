@@ -1,0 +1,40 @@
+AISYAH BINTI MOHD RIDZUAN
+Financial Planning & Analysis (FP&A) Analyst
+Petaling Jaya, Selangor | 013-555 9027 | aisyah.ridzuan@example.com
+linkedin.com/in/aisyah-ridzuan-example
+
+SUMMARY
+FP&A analyst with 5 years in consumer goods and telco. I build budgets, forecasts and monthly
+performance packs, and explain the numbers to business heads.
+
+EXPERIENCE
+
+FP&A Analyst - Nadi Consumer Brands Sdn Bhd, Petaling Jaya                         Jul 2022 - Present
+- Own the monthly performance pack for 3 business units: actual vs budget vs forecast, with
+  commentary on the top variances for the CFO.
+- Build and maintain the annual budget model and the quarterly rolling forecast in Excel
+  (driver-based: volume, price, mix, A&P spend).
+- Run scenario and sensitivity analysis on raw-material prices and FX for the 2024 budget;
+  recommended a price increase that management approved.
+- Built a Power BI dashboard on gross margin by SKU and channel, now used weekly by 25 sales and
+  marketing managers.
+- Wrote SQL queries against the sales data warehouse to pull secondary sales by outlet for
+  promotion post-evaluation.
+- Use Microsoft Copilot to draft first versions of variance commentary; check every number
+  against the ledger before it goes out.
+- Partner with brand managers to evaluate promotion ROI (uplift vs baseline).
+
+Finance Executive, Commercial Finance - TeleSeri Communications Sdn Bhd, Cyberjaya  Feb 2020 - Jun 2022
+- Prepared monthly revenue and churn reports by customer segment in Excel (pivot tables, Power
+  Query).
+- Supported the annual budget by consolidating cost-centre inputs.
+- Built the capex tracking schedule and reconciled it to the fixed asset register.
+
+EDUCATION
+Bachelor of Finance (Hons), Universiti Kebangsaan Malaysia, 2015 - 2019
+CIMA Certificate in Business Accounting (2021); CIMA Operational level (in progress)
+
+SKILLS
+Excel (advanced: INDEX/MATCH, data tables, Power Query), Power BI (DAX basics), SQL (basic),
+SAP BPC, Copilot
+Languages: Bahasa Malaysia, English

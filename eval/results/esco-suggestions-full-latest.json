@@ -1,0 +1,4342 @@
+[
+ {
+  "caseId": "c01-ap-messy-pdf",
+  "escoId": "bb99af26-71ff-4dca-bde7-1eb1f6194426",
+  "title": "SAP R3",
+  "shownInUse": true,
+  "phrase": "Process approx 600-700 vendor invoices / month for 9 APAC entities; key in and code to GL & cost centre in SAP S/4 (MIRO, FB60)"
+ },
+ {
+  "caseId": "c01-ap-messy-pdf",
+  "escoId": "28a2ff4b-5f99-448e-8bd7-fb836166e95f",
+  "title": "allocate bills",
+  "shownInUse": true,
+  "phrase": "Process approx 600-700 vendor invoices / month for 9 APAC entities; key in and code to GL & cost centre in SAP S/4 (MIRO, FB60)"
+ },
+ {
+  "caseId": "c01-ap-messy-pdf",
+  "escoId": "f7f56b20-8f05-4731-a1bf-79fdcffc72ce",
+  "title": "check deliveries on receipt",
+  "shownInUse": true,
+  "phrase": "Perform 3WM (PO vs GRN vs invoice); investigate qty / price variance, park or block invoice until buyer confirm"
+ },
+ {
+  "caseId": "c01-ap-messy-pdf",
+  "escoId": "9e7ffb8a-e034-4024-8370-0cf68cd05352",
+  "title": "set tolerances",
+  "shownInUse": true,
+  "phrase": "Approve tolerance exceptions up to RM500 per line"
+ },
+ {
+  "caseId": "c01-ap-messy-pdf",
+  "escoId": "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23",
+  "title": "process payments",
+  "shownInUse": true,
+  "phrase": "Prepare weekly F110 payment proposal, check vendor bank details and cash cut-off before Team Lead releases payment"
+ },
+ {
+  "caseId": "c01-ap-messy-pdf",
+  "escoId": "909c2e48-262e-4ebe-be05-5324ab086c1d",
+  "title": "generate reconciliation reports",
+  "shownInUse": true,
+  "phrase": "Monthly vendor statement reconciliation for top 50 vendors; investigate unexplained differences, trace to invoice / credit note and clear aged items with buyers & GL team"
+ },
+ {
+  "caseId": "c01-ap-messy-pdf",
+  "escoId": "8e105acc-e365-481b-bf6b-7e3f8ff19417",
+  "title": "handle complaints",
+  "shownInUse": true,
+  "phrase": "Handle vendor queries on late / short payment, draft reply, agree credit note or settlement with vendor & escalate to procurement if pricing dispute"
+ },
+ {
+  "caseId": "c01-ap-messy-pdf",
+  "escoId": "c241f5a5-e23f-47bf-ad24-d83ea0010166",
+  "title": "ensure proper document management",
+  "shownInUse": true,
+  "phrase": "Maintain vendor master (new vendor creation, bank change) with dual-check, as per SOP"
+ },
+ {
+  "caseId": "c01-ap-messy-pdf",
+  "escoId": "4c5d616e-f6d8-4fb4-8ce6-89a4b048b916",
+  "title": "create training materials",
+  "shownInUse": true,
+  "phrase": "Trained 3 new joiners on MIRO & 3WM exceptions; created desk manual"
+ },
+ {
+  "caseId": "c01-ap-messy-pdf",
+  "escoId": "cbd9cd0f-6c22-4bbc-8af2-dc9c7f5efcb5",
+  "title": "write manuals",
+  "shownInUse": true,
+  "phrase": "Trained 3 new joiners on MIRO & 3WM exceptions; created desk manual"
+ },
+ {
+  "caseId": "c01-ap-messy-pdf",
+  "escoId": "3d427a49-4f85-42cd-8a92-62d4a34f41a1",
+  "title": "file documents",
+  "shownInUse": true,
+  "phrase": "Key in supplier invoices into SAP R/3, file & scan supporting docs"
+ },
+ {
+  "caseId": "c01-ap-messy-pdf",
+  "escoId": "63321ecf-4fc6-44d9-88f1-5373a4f3038a",
+  "title": "handle petty cash",
+  "shownInUse": true,
+  "phrase": "Reconciliation of petty cash & staff claims"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "16e995d4-4938-4424-b1e6-1e1d54f4dbc8",
+  "title": "assign codes to product items",
+  "shownInUse": true,
+  "phrase": "Memasukkan invois pembekal ke dalam sistem SAP dan memastikan kod GL betul"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "e717b036-2c0c-4c11-99e9-0cb4ce084fed",
+  "title": "perform account allocation",
+  "shownInUse": true,
+  "phrase": "Memasukkan invois pembekal ke dalam sistem SAP dan memastikan kod GL betul"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "f7f56b20-8f05-4731-a1bf-79fdcffc72ce",
+  "title": "check deliveries on receipt",
+  "shownInUse": true,
+  "phrase": "Menyemak padanan PO, nota terimaan barang (GRN) dan invois sebelum posting"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "852e680d-917a-4beb-97b8-fa51560ad247",
+  "title": "compare shipment contents with waybill",
+  "shownInUse": true,
+  "phrase": "Menyemak padanan PO, nota terimaan barang (GRN) dan invois sebelum posting"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "909c2e48-262e-4ebe-be05-5324ab086c1d",
+  "title": "generate reconciliation reports",
+  "shownInUse": true,
+  "phrase": "Menyelaras penyata vendor dengan lejar setiap bulan dan menyiasat perbezaan"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "dc417e19-edb4-4401-883a-2375f67a162f",
+  "title": "manage the general ledger",
+  "shownInUse": true,
+  "phrase": "Menyelaras penyata vendor dengan lejar setiap bulan dan menyiasat perbezaan"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23",
+  "title": "process payments",
+  "shownInUse": true,
+  "phrase": "Mengurus tuntutan pembayaran vendor & sediakan cadangan bayaran mingguan (F110) untuk kelulusan pengurus"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "1be2bb07-dbb2-4a67-b133-30b4ff30b094",
+  "title": "monitor billing procedures",
+  "shownInUse": true,
+  "phrase": "Sediakan laporan SST dan semak caj cukai perkhidmatan pada invois sebelum dihantar ke unit cukai"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+  "title": "check accounting records",
+  "shownInUse": true,
+  "phrase": "Sediakan laporan SST dan semak caj cukai perkhidmatan pada invois sebelum dihantar ke unit cukai"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "68b51538-b056-4cb3-bb15-ab8c3e576cc9",
+  "title": "follow up accounts receivables",
+  "shownInUse": true,
+  "phrase": "Keluarkan invois pelanggan & rekod kutipan; follow up dgn customer utk overdue >60 hari"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "2fd26ae6-bd98-46c7-b1ba-8a0b52734fac",
+  "title": "debt collection techniques",
+  "shownInUse": true,
+  "phrase": "Keluarkan invois pelanggan & rekod kutipan; follow up dgn customer utk overdue >60 hari"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "1973c966-f236-40c9-b2d4-5d71a89019be",
+  "title": "use spreadsheets software",
+  "shownInUse": true,
+  "phrase": "Sediakan aging report AP/AR guna Excel (pivot) utk mesyuarat bulanan"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "c544a9f3-5945-4b54-afed-de0697852817",
+  "title": "report analysis results",
+  "shownInUse": true,
+  "phrase": "Sediakan aging report AP/AR guna Excel (pivot) utk mesyuarat bulanan"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "6bf6b5bd-6658-4338-b0ee-dc143e68e6d3",
+  "title": "provide support in financial calculation",
+  "shownInUse": true,
+  "phrase": "Bantu juruaudit luar semasa audit tahunan - sediakan dokumen sokongan"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "3e9b580d-811b-48df-a5d1-a7bdd26f901f",
+  "title": "prepare financial auditing reports",
+  "shownInUse": true,
+  "phrase": "Bantu juruaudit luar semasa audit tahunan - sediakan dokumen sokongan"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "f4d3a8ff-2db1-4015-aa28-d4564afef3fd",
+  "title": "keep records on sales",
+  "shownInUse": true,
+  "phrase": "Rekod jualan harian & baucer bayaran dlm UBS"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "a0d79341-8398-4019-ad1b-27888ec35aaa",
+  "title": "use accounting systems",
+  "shownInUse": true,
+  "phrase": "Rekod jualan harian & baucer bayaran dlm UBS"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "3fc5a30d-d493-44ed-a2b5-ff9a50f84de3",
+  "title": "solve bank account problems",
+  "shownInUse": true,
+  "phrase": "Sediakan penyesuaian bank (bank rec) bulanan"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "e1f5c539-7c93-49ee-917d-a24e0d887686",
+  "title": "control of expenses",
+  "shownInUse": true,
+  "phrase": "Urus tuntutan perbelanjaan staf"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "63321ecf-4fc6-44d9-88f1-5373a4f3038a",
+  "title": "handle petty cash",
+  "shownInUse": true,
+  "phrase": "Urus tuntutan perbelanjaan staf"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "ab986bc4-df92-4351-9ac1-aa75af943cf7",
+  "title": "perform clerical duties",
+  "shownInUse": true,
+  "phrase": "Kerja-kerja am pejabat, filing, jawab telefon"
+ },
+ {
+  "caseId": "c02-ap-bm",
+  "escoId": "5a0bffcf-4ff6-49cf-a7db-4142e63f5f04",
+  "title": "answer incoming calls",
+  "shownInUse": true,
+  "phrase": "Kerja-kerja am pejabat, filing, jawab telefon"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "307ffd2d-8fb3-43ff-8ad8-4052382f8f83",
+  "title": "report on overall management of a business",
+  "shownInUse": true,
+  "phrase": "Prepare monthly mgmt accounts pack for 6 estates + 2 mills; explain variances vs budget to CFO"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "147170ba-0141-4337-89af-b4513d745afe",
+  "title": "support development of annual budget",
+  "shownInUse": true,
+  "phrase": "Build annual budget & rolling forecast model for CPO / FFB yield in Excel"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "4b2db903-cd8e-48ce-97fb-a92db4def54e",
+  "title": "financial forecasting",
+  "shownInUse": true,
+  "phrase": "Build annual budget & rolling forecast model for CPO / FFB yield in Excel"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "dc417e19-edb4-4401-883a-2375f67a162f",
+  "title": "manage the general ledger",
+  "shownInUse": true,
+  "phrase": "Coordinate MEC timetable; review GL recons submitted by estate accountants"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "0d6714c6-720e-4985-9791-5ab85d28da79",
+  "title": "gather data",
+  "shownInUse": true,
+  "phrase": "Collect diesel, electricity and fertiliser data from 8 operating units monthly"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "806557a0-49e6-4a06-9398-51cbf72f7a4c",
+  "title": "report utility meter readings",
+  "shownInUse": true,
+  "phrase": "Collect diesel, electricity and fertiliser data from 8 operating units monthly"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "3b73a161-be59-4079-815e-b4879f9b20b5",
+  "title": "gas consumption",
+  "shownInUse": true,
+  "phrase": "Calculate Scope 1 & 2 emissions using GHG Protocol and the national grid emission factor"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "4300b453-9bcf-474c-9ee3-92ec2229720c",
+  "title": "global standards for sustainability reporting",
+  "shownInUse": true,
+  "phrase": "Drafted climate sections of the FY2024 Sustainability Statement mapped to Bursa common indicators & TCFD"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "f3cc52e3-a96c-4549-b841-6e41a846fa99",
+  "title": "report on environmental issues",
+  "shownInUse": true,
+  "phrase": "Drafted climate sections of the FY2024 Sustainability Statement mapped to Bursa common indicators & TCFD"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "26baf34d-6721-4bac-b7eb-add0bc566a82",
+  "title": "attend to detail in preparation for audits",
+  "shownInUse": true,
+  "phrase": "Prepared evidence binders for limited assurance by the external assurance provider"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "d84326c9-a3d3-4e22-a6a1-1ad42a356f10",
+  "title": "sustainability consulting",
+  "shownInUse": true,
+  "phrase": "Supported consultant in a cradle-to-gate carbon footprint pilot for crude palm oil"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "4e87c852-602a-4a0e-b8d8-20709ce14ac5",
+  "title": "assess the life cycle of resources",
+  "shownInUse": true,
+  "phrase": "Supported consultant in a cradle-to-gate carbon footprint pilot for crude palm oil"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "d53eab76-e8ff-4e28-af26-7e012951c763",
+  "title": "measure company's sustainability performance",
+  "shownInUse": true,
+  "phrase": "Set up a Power BI page showing monthly emissions intensity for the Sustainability Committee"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "9190d87f-9792-42e0-bb7f-64294a656bcd",
+  "title": "monitor system performance",
+  "shownInUse": true,
+  "phrase": "Set up a Power BI page showing monthly emissions intensity for the Sustainability Committee"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+  "title": "check accounting records",
+  "shownInUse": true,
+  "phrase": "Full set of accounts for 3 subsidiaries; intercompany recon"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "585ed991-fdab-4f3c-9187-a32bfb7ab822",
+  "title": "perform balance sheet operations",
+  "shownInUse": true,
+  "phrase": "Full set of accounts for 3 subsidiaries; intercompany recon"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "22a173f5-868c-4d82-87e6-beed500ce070",
+  "title": "prepare tax returns forms",
+  "shownInUse": true,
+  "phrase": "Prepared SST-02 returns bi-monthly for the service arm"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "24e67151-ff7e-43e2-99c0-424a758278a4",
+  "title": "liaise with auditors",
+  "shownInUse": true,
+  "phrase": "Liaised with external auditors and tax agents during year-end"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "76f4dac8-9cf6-4f07-9cfc-e350e50fb39e",
+  "title": "organise tree plantations",
+  "shownInUse": true,
+  "phrase": "Organised tree planting at Taman Tasik Shah Alam"
+ },
+ {
+  "caseId": "c03-finance-to-esg",
+  "escoId": "a281365c-a432-4e82-97ce-2dcc4907685f",
+  "title": "plant trees",
+  "shownInUse": true,
+  "phrase": "Organised tree planting at Taman Tasik Shah Alam"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "ed0718f6-5823-4c74-9749-2936c9c06203",
+  "title": "develop audit plan",
+  "shownInUse": true,
+  "phrase": "plan & execute risk-based audits on procure-to-pay, inventory, payroll & treasury cycle"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "1dd23dba-dd00-45ab-abf4-642902538317",
+  "title": "perform risk analysis",
+  "shownInUse": true,
+  "phrase": "plan & execute risk-based audits on procure-to-pay, inventory, payroll & treasury cycle"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "60097ce1-0f58-417b-b9c2-053d96300d49",
+  "title": "conduct evaluation of quality standards",
+  "shownInUse": true,
+  "phrase": "test design & operating effectivness of key controls (segregation of duties, PO approval limits, vendor master changes)"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "f8e3425c-fe44-4ffb-bafe-0e20d91dadf4",
+  "title": "SAP Data Services",
+  "shownInUse": true,
+  "phrase": "pull samples from SAP using ACL"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "c95c29fe-3971-46b7-80e9-1f7e75ba99b3",
+  "title": "use specific data analysis software",
+  "shownInUse": true,
+  "phrase": "pull samples from SAP using ACL"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "e717b036-2c0c-4c11-99e9-0cb4ce084fed",
+  "title": "perform account allocation",
+  "shownInUse": true,
+  "phrase": "found duplicate vendor payments RM182k by matching vendor bank acc + invoice no. across 3 yrs AP data"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "1b8194a4-952a-48e6-8087-237a29039f50",
+  "title": "analyse claim files",
+  "shownInUse": true,
+  "phrase": "found duplicate vendor payments RM182k by matching vendor bank acc + invoice no. across 3 yrs AP data"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "01819474-b960-4b8f-b020-2da26518d43a",
+  "title": "apply for refunds",
+  "shownInUse": true,
+  "phrase": "recovered RM140k from vendors"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "53386714-0e24-4df5-a460-b884e2d6c4c4",
+  "title": "collect damages",
+  "shownInUse": true,
+  "phrase": "recovered RM140k from vendors"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "3e9b580d-811b-48df-a5d1-a7bdd26f901f",
+  "title": "prepare financial auditing reports",
+  "shownInUse": true,
+  "phrase": "write audit report & present findings to Audit & Risk Mgmt Committee (ARMC)"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "918f5211-b99f-4b29-9a34-6e475583ef55",
+  "title": "write work-related reports",
+  "shownInUse": true,
+  "phrase": "write audit report & present findings to Audit & Risk Mgmt Committee (ARMC)"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "286e486c-a094-4715-8e5b-a2370b09a408",
+  "title": "manage corrective actions",
+  "shownInUse": true,
+  "phrase": "follow-up mgmt action plans quarterly until closed"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "5efec19d-aca8-4608-b824-f8cf438a8dfe",
+  "title": "monitor recommendation follow-up",
+  "shownInUse": true,
+  "phrase": "follow-up mgmt action plans quarterly until closed"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "6451e645-67b5-4cc7-aafd-fab19629fa82",
+  "title": "archive documentation related to work",
+  "shownInUse": true,
+  "phrase": "maintain working papers in TeamMate; every finding linked to evidence & sign-off"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "7837ef5c-2c81-4a89-8227-b4d4f1f7331e",
+  "title": "maintain professional records",
+  "shownInUse": true,
+  "phrase": "maintain working papers in TeamMate; every finding linked to evidence & sign-off"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "8a98707e-b2ee-48fe-9f36-e47e3555ecf7",
+  "title": "evaluate employees work",
+  "shownInUse": true,
+  "phrase": "coach 2 audit executives, review their working papers"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "0cc9c234-f817-4f4c-908a-4d28fe3b0f4a",
+  "title": "coach employees",
+  "shownInUse": true,
+  "phrase": "coach 2 audit executives, review their working papers"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "5b8a3dd2-de10-48a0-8ce5-522f1fff8450",
+  "title": "perform contract compliance audits",
+  "shownInUse": true,
+  "phrase": "Perform compliance audits on SST, customs duty & sales / purchase processes"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "a6ae7a34-5a5c-48dd-9b82-8beccca63e3c",
+  "title": "ensure compliance with purchasing and contracting regulations",
+  "shownInUse": true,
+  "phrase": "Perform compliance audits on SST, customs duty & sales / purchase processes"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "dc417e19-edb4-4401-883a-2375f67a162f",
+  "title": "manage the general ledger",
+  "shownInUse": true,
+  "phrase": "Vouching, ICQ walk-through, reconcilation of sub-ledger to GL"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "909c2e48-262e-4ebe-be05-5324ab086c1d",
+  "title": "generate reconciliation reports",
+  "shownInUse": true,
+  "phrase": "Vouching, ICQ walk-through, reconcilation of sub-ledger to GL"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "d83cba15-8511-4d07-b89a-9fde0d1d8241",
+  "title": "perform quality audits",
+  "shownInUse": true,
+  "phrase": "Assisted in the ISO 9001 internal quality audit"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "ccbd0898-e225-4abc-8992-57a23b0e2eec",
+  "title": "support implementation of quality management systems",
+  "shownInUse": true,
+  "phrase": "Assisted in the ISO 9001 internal quality audit"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "095fdace-1cc3-4e80-b37b-268fe297904a",
+  "title": "prepare audit activities",
+  "shownInUse": true,
+  "phrase": "Prepare audit programme & checklist"
+ },
+ {
+  "caseId": "c04-internal-audit",
+  "escoId": "a8fe6eae-cfc1-4580-ad12-f325e8c2b21b",
+  "title": "keep records of attendance",
+  "shownInUse": true,
+  "phrase": "stock count attendance, vouching"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "3982571a-e9ce-442a-a4a0-fdfc97727091",
+  "title": "manage cash desk",
+  "shownInUse": true,
+  "phrase": "Daily cash position for 11 bank accts (4 banks) by 10am; sweep surplus to FD / money market placements"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "e4b6f863-fa9f-4fe7-a984-f948f8c90d24",
+  "title": "handle cash flow",
+  "shownInUse": true,
+  "phrase": "Daily cash position for 11 bank accts (4 banks) by 10am; sweep surplus to FD / money market placements"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "4b2db903-cd8e-48ce-97fb-a92db4def54e",
+  "title": "financial forecasting",
+  "shownInUse": true,
+  "phrase": "13-wk cash flow forecast, rolling; compare actual vs forecast & explain gaps to Fin Controller every Monday"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "e2887d71-8ff4-4188-9926-22bdaefa7713",
+  "title": "develop predictive models",
+  "shownInUse": true,
+  "phrase": "built the forecast model in Excel (INDEX/MATCH, macros to pull bank statements)"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "38d49d88-9069-467b-b29e-3cae739bdd4d",
+  "title": "build predictive models",
+  "shownInUse": true,
+  "phrase": "built the forecast model in Excel (INDEX/MATCH, macros to pull bank statements)"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23",
+  "title": "process payments",
+  "shownInUse": true,
+  "phrase": "Release vendor payment batches in bank e-portals after checking vs approved payment list"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "c35b19ad-b06f-44e8-be9f-c20c68750346",
+  "title": "monitor loan portfolio",
+  "shownInUse": true,
+  "phrase": "Manage trade lines: BA / TR / revolving credit drawdown & rollover, covenant monitoring"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "12d93356-78e7-4857-99a6-f00b4ae2ec77",
+  "title": "analyse loans",
+  "shownInUse": true,
+  "phrase": "Manage trade lines: BA / TR / revolving credit drawdown & rollover, covenant monitoring"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "6dbf93ce-2e5d-4116-a9f5-5468968d59f2",
+  "title": "trade foreign currencies",
+  "shownInUse": true,
+  "phrase": "FX: book forward contracts to hedge USD receivables (per policy, max USD 2m/month)"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "4792dddd-1fba-4863-8d21-0c2fd083b66e",
+  "title": "implement hedging strategies for clients",
+  "shownInUse": true,
+  "phrase": "FX: book forward contracts to hedge USD receivables (per policy, max USD 2m/month)"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+  "title": "check accounting records",
+  "shownInUse": true,
+  "phrase": "Monthly bank recon for all accounts"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+  "title": "maintain records of financial transactions",
+  "shownInUse": true,
+  "phrase": "Monthly bank recon for all accounts"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "68b51538-b056-4cb3-bb15-ab8c3e576cc9",
+  "title": "follow up accounts receivables",
+  "shownInUse": true,
+  "phrase": "Collection follow-up, customer SOA, credit limit review"
+ },
+ {
+  "caseId": "c05-treasury",
+  "escoId": "ecc18804-a466-40d9-98b4-fba5cd67dd4b",
+  "title": "accounting",
+  "shownInUse": true,
+  "phrase": "Bank rec, cash book"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "2206af0c-3deb-48c5-a544-b9983d347da3",
+  "title": "answer requests for quotation",
+  "shownInUse": true,
+  "phrase": "Buat RFQ utk indirect & MRO items, compare min 3 quotation and recommend supplier to Purchasing Mgr"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "9e9a4209-c7cf-4f6e-973e-dc2ffadccc74",
+  "title": "perform procurement processes",
+  "shownInUse": true,
+  "phrase": "Buat RFQ utk indirect & MRO items, compare min 3 quotation and recommend supplier to Purchasing Mgr"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "5f2efbdf-08a2-49cd-9c06-bd284e4f0fbf",
+  "title": "negotiate terms with suppliers",
+  "shownInUse": true,
+  "phrase": "Negotiate price & payment term with suppliers - saved approx 8% on annual cleanroom consumables contract (RM1.2mil)"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "7ee9fb56-91b1-4363-b51f-ea54ae1b5761",
+  "title": "negotiate price",
+  "shownInUse": true,
+  "phrase": "Negotiate price & payment term with suppliers - saved approx 8% on annual cleanroom consumables contract (RM1.2mil)"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "fe1ec582-d63b-466c-9149-e7fc4fe93e22",
+  "title": "supplier management",
+  "shownInUse": true,
+  "phrase": "Supplier evaluation every quarter (QCD - quality, cost, delivery) & blacklist supplier yg selalu late delivery"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "96ec2d53-4f41-4172-8ef2-70742c4bb540",
+  "title": "assess supplier risks",
+  "shownInUse": true,
+  "phrase": "Supplier evaluation every quarter (QCD - quality, cost, delivery) & blacklist supplier yg selalu late delivery"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "df08a4ae-4024-4460-8c92-eab78da1c94b",
+  "title": "ensure material compliance",
+  "shownInUse": true,
+  "phrase": "New supplier registration: check SSM, financial report, ISO cert before approve"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "73225018-7139-433b-bdba-2b90774761d9",
+  "title": "issue purchase orders",
+  "shownInUse": true,
+  "phrase": "Issue PO in SAP (ME21N), follow up delivery with supplier & warehouse"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "3a5d7eea-29fa-4449-8487-43cf37b68e53",
+  "title": "resolve shipment issues",
+  "shownInUse": true,
+  "phrase": "Settle issue with supplier bila barang short / rosak - arrange replacement or credit note"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "f79e4715-5776-485c-ab7d-631c9b8d70ad",
+  "title": "manage contract disputes",
+  "shownInUse": true,
+  "phrase": "Settle issue with supplier bila barang short / rosak - arrange replacement or credit note"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "fc1eae96-01cb-4d97-b594-d5040913675e",
+  "title": "maintain parts inventory",
+  "shownInUse": true,
+  "phrase": "Kawal stok alat ganti (spare parts) & buat order bila stok bawah min level"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "44f6a65f-6be7-4818-9a66-73908797283f",
+  "title": "monitor stock level",
+  "shownInUse": true,
+  "phrase": "Kawal stok alat ganti (spare parts) & buat order bila stok bawah min level"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "f60416d5-2d98-4401-ba0d-b92b53e01d86",
+  "title": "keep stock records",
+  "shownInUse": true,
+  "phrase": "Tolong stor masa stock take hujung tahun"
+ },
+ {
+  "caseId": "c06-procurement",
+  "escoId": "9839e458-9555-45ea-b330-712b0d932acf",
+  "title": "store goods",
+  "shownInUse": true,
+  "phrase": "Tolong stor masa stock take hujung tahun"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "bb99af26-71ff-4dca-bde7-1eb1f6194426",
+  "title": "SAP R3",
+  "shownInUse": true,
+  "phrase": "Run weekly MRP in SAP (MD04 / MD06), convert planned orders & release PRs to purchasing"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "f0393af3-bcd9-41af-a36e-0cfb83b60081",
+  "title": "manage standard enterprise resource planning system",
+  "shownInUse": true,
+  "phrase": "Run weekly MRP in SAP (MD04 / MD06), convert planned orders & release PRs to purchasing"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "68e73bf6-2838-4705-86f4-e4bda4ac8a6f",
+  "title": "forecast products' demand",
+  "shownInUse": true,
+  "phrase": "Monthly demand forecast for 120 SKUs using 12-mth moving avg + seasonality; track forecast accuracy (MAPE) and bias by customer"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "e5c108c3-d6b6-4018-a34f-763e7793e746",
+  "title": "forecast production quantities",
+  "shownInUse": true,
+  "phrase": "Monthly demand forecast for 120 SKUs using 12-mth moving avg + seasonality; track forecast accuracy (MAPE) and bias by customer"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "6e9aaf01-f2a4-4405-9733-29dc9825efa9",
+  "title": "adapt production levels",
+  "shownInUse": true,
+  "phrase": "Lead S&OP pre-meeting with Sales & Production; agree constrained plan and capacity at line level"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "2c5cbddf-3393-452f-abb0-8e734d1b61be",
+  "title": "plan future capacity requirements",
+  "shownInUse": true,
+  "phrase": "Lead S&OP pre-meeting with Sales & Production; agree constrained plan and capacity at line level"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+  "title": "manage inventory",
+  "shownInUse": true,
+  "phrase": "Weekly inventory health review: days-of-supply, slow-moving & obsolete (SLOB) stock >180 days; proposed RM600k write-off / rework to Finance"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "44f6a65f-6be7-4818-9a66-73908797283f",
+  "title": "monitor stock level",
+  "shownInUse": true,
+  "phrase": "Weekly inventory health review: days-of-supply, slow-moving & obsolete (SLOB) stock >180 days; proposed RM600k write-off / rework to Finance"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "1973c966-f236-40c9-b2d4-5d71a89019be",
+  "title": "use spreadsheets software",
+  "shownInUse": true,
+  "phrase": "Built Excel + Power Query model that pulls SAP stock & open PO, cut weekly prep from 1 day to 2 hours"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "fbafa41f-cd05-4109-a649-8b44d306d779",
+  "title": "create data models",
+  "shownInUse": true,
+  "phrase": "Built Excel + Power Query model that pulls SAP stock & open PO, cut weekly prep from 1 day to 2 hours"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "020b3c27-bae1-4b85-9d6f-eccee0f5ed99",
+  "title": "manage supplies",
+  "shownInUse": true,
+  "phrase": "Expedite critical parts with suppliers during 2021 chip shortage"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "fe1ec582-d63b-466c-9149-e7fc4fe93e22",
+  "title": "supplier management",
+  "shownInUse": true,
+  "phrase": "Expedite critical parts with suppliers during 2021 chip shortage"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "2a778aeb-f246-4f03-9a96-c60183001037",
+  "title": "schedule production",
+  "shownInUse": true,
+  "phrase": "Daily production schedule for 25 injection moulding machines"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "0f7b4bf5-8d37-4205-bd61-fe0878e9d9e2",
+  "title": "adjust production schedule",
+  "shownInUse": true,
+  "phrase": "Daily production schedule for 25 injection moulding machines"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "53815c73-d352-4d4d-92cb-fb7020cbd8e6",
+  "title": "carry out inventory control accuracy",
+  "shownInUse": true,
+  "phrase": "Quarterly stock take; investigate variance > 2%"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "fc153ec6-1320-4f13-9158-ebde86c5303e",
+  "title": "liaise with logistics management teams",
+  "shownInUse": true,
+  "phrase": "Coordinate with QA, warehouse & logistics"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "f14ff4b7-be1e-4b55-b39b-520005f8a97e",
+  "title": "liaise with managers",
+  "shownInUse": true,
+  "phrase": "Coordinate with QA, warehouse & logistics"
+ },
+ {
+  "caseId": "c07-scm-planner",
+  "escoId": "3012a059-e062-4171-b37e-f9e7c7eb603e",
+  "title": "perform lectures",
+  "shownInUse": true,
+  "phrase": "Part-time lecturer (weekends), Diploma in Logistics, private college Bukit Mertajam"
+ },
+ {
+  "caseId": "c08-data-analyst",
+  "escoId": "b0565bd9-29c8-42f6-b174-702970fc2f4f",
+  "title": "produce sales reports",
+  "shownInUse": true,
+  "phrase": "Write SQL (BigQuery) for weekly sales & returns reports; join orders, payments and logistics tables"
+ },
+ {
+  "caseId": "c08-data-analyst",
+  "escoId": "918f5211-b99f-4b29-9a34-6e475583ef55",
+  "title": "write work-related reports",
+  "shownInUse": true,
+  "phrase": "Write SQL (BigQuery) for weekly sales & returns reports; join orders, payments and logistics tables"
+ },
+ {
+  "caseId": "c08-data-analyst",
+  "escoId": "50b100ea-74fd-4706-99db-3e4ca55e51b8",
+  "title": "perform data cleansing",
+  "shownInUse": true,
+  "phrase": "Python (pandas) scripts to clean seller product feeds & dedupe SKUs"
+ },
+ {
+  "caseId": "c08-data-analyst",
+  "escoId": "a9dc215e-4e26-4ac0-b1e8-a721a88af813",
+  "title": "execute conversion testing",
+  "shownInUse": true,
+  "phrase": "Analysed free-shipping A/B test (t-test, n≈18k) — showed +3.1% conversion, no significant change in AOV"
+ },
+ {
+  "caseId": "c08-data-analyst",
+  "escoId": "a0c4e4a2-9d7c-499d-af51-4e32dd028418",
+  "title": "manage key performance indicators of call centres",
+  "shownInUse": true,
+  "phrase": "Excel reports on call centre KPI (AHT, FCR) every Monday; pivot tables"
+ },
+ {
+  "caseId": "c08-data-analyst",
+  "escoId": "1973c966-f236-40c9-b2d4-5d71a89019be",
+  "title": "use spreadsheets software",
+  "shownInUse": true,
+  "phrase": "Excel reports on call centre KPI (AHT, FCR) every Monday; pivot tables"
+ },
+ {
+  "caseId": "c08-data-analyst",
+  "escoId": "143769cb-b61e-47d8-a61e-eedfbec1016c",
+  "title": "business intelligence",
+  "shownInUse": true,
+  "phrase": "Migrated 6 Excel reports to Power BI"
+ },
+ {
+  "caseId": "c08-data-analyst",
+  "escoId": "020918ef-4b55-47c1-8430-ab7b8f6a7377",
+  "title": "migrate existing data",
+  "shownInUse": true,
+  "phrase": "Migrated 6 Excel reports to Power BI"
+ },
+ {
+  "caseId": "c09-fresh-grad",
+  "escoId": "99b163e8-7815-43e2-83f3-a47f3076354c",
+  "title": "accounting entries",
+  "shownInUse": true,
+  "phrase": "Key in supplier invoices into AutoCount & file supporting docs"
+ },
+ {
+  "caseId": "c09-fresh-grad",
+  "escoId": "3d427a49-4f85-42cd-8a92-62d4a34f41a1",
+  "title": "file documents",
+  "shownInUse": true,
+  "phrase": "Key in supplier invoices into AutoCount & file supporting docs"
+ },
+ {
+  "caseId": "c09-fresh-grad",
+  "escoId": "5c99d21a-9d02-4638-9b52-a6ba840dcb0a",
+  "title": "synthesise financial information",
+  "shownInUse": true,
+  "phrase": "Assist senior prepare bank reconciliation"
+ },
+ {
+  "caseId": "c09-fresh-grad",
+  "escoId": "6bf6b5bd-6658-4338-b0ee-dc143e68e6d3",
+  "title": "provide support in financial calculation",
+  "shownInUse": true,
+  "phrase": "Assist senior prepare bank reconciliation"
+ },
+ {
+  "caseId": "c09-fresh-grad",
+  "escoId": "30b1f3e1-1586-4d41-aa02-e2ab021b5164",
+  "title": "handle paperwork",
+  "shownInUse": true,
+  "phrase": "Photocopy, scan, filing"
+ },
+ {
+  "caseId": "c09-fresh-grad",
+  "escoId": "ab986bc4-df92-4351-9ac1-aa75af943cf7",
+  "title": "perform clerical duties",
+  "shownInUse": true,
+  "phrase": "Photocopy, scan, filing"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "9601b2a8-68e4-4906-9306-a23679b8f0b0",
+  "title": "supervise staff",
+  "shownInUse": true,
+  "phrase": "Supervise 14 staff, duty roster & OT claims"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "4118be70-c09d-45cd-b53e-0bcdbdc98be0",
+  "title": "supervise the work of staff on different shifts",
+  "shownInUse": true,
+  "phrase": "Supervise 14 staff, duty roster & OT claims"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "44f6a65f-6be7-4818-9a66-73908797283f",
+  "title": "monitor stock level",
+  "shownInUse": true,
+  "phrase": "Monthly stock take & cycle count; investigate shrinkage, report to Store Manager"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+  "title": "manage inventory",
+  "shownInUse": true,
+  "phrase": "Monthly stock take & cycle count; investigate shrinkage, report to Store Manager"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "25fce4fb-35b6-49b6-a4fa-c7aa168fd770",
+  "title": "examine merchandise",
+  "shownInUse": true,
+  "phrase": "Weekly check slow moving & near-expiry items, propose markdown / return to supplier - buat price tag clearance"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "8269dc3d-50ee-46b5-a742-a7d2cb7d90bb",
+  "title": "check for damaged items",
+  "shownInUse": true,
+  "phrase": "Weekly check slow moving & near-expiry items, propose markdown / return to supplier - buat price tag clearance"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "f7f56b20-8f05-4731-a1bf-79fdcffc72ce",
+  "title": "check deliveries on receipt",
+  "shownInUse": true,
+  "phrase": "Receiving bay: check supplier delivery vs PO & DO, sign GRN, reject damaged goods"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "2cae39d6-78c2-4ce3-bee8-628504371463",
+  "title": "receive goods",
+  "shownInUse": true,
+  "phrase": "Receiving bay: check supplier delivery vs PO & DO, sign GRN, reject damaged goods"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "28d715e3-3e5b-4fb6-8dd2-4be4919c8587",
+  "title": "handle customer complaints",
+  "shownInUse": true,
+  "phrase": "Handle supplier complaints bila short delivery – call supplier, arrange credit note"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "85e77619-6723-48cd-9654-2bcbe71054f9",
+  "title": "carry out end of day accounts",
+  "shownInUse": true,
+  "phrase": "End-of-day cash up for 12 tills, variance > RM20 must explain to manager"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "3982571a-e9ce-442a-a4a0-fdfc97727091",
+  "title": "manage cash desk",
+  "shownInUse": true,
+  "phrase": "End-of-day cash up for 12 tills, variance > RM20 must explain to manager"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "b0565bd9-29c8-42f6-b174-702970fc2f4f",
+  "title": "produce sales reports",
+  "shownInUse": true,
+  "phrase": "Weekly sales & shrinkage report in Excel (pivot table, VLOOKUP) – self-learned from YouTube"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "1973c966-f236-40c9-b2d4-5d71a89019be",
+  "title": "use spreadsheets software",
+  "shownInUse": true,
+  "phrase": "Weekly sales & shrinkage report in Excel (pivot table, VLOOKUP) – self-learned from YouTube"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "a6d697d1-80ba-4175-82d4-43440ed04270",
+  "title": "process refunds",
+  "shownInUse": true,
+  "phrase": "Cash handling, voids, refund approval, open/close counter"
+ },
+ {
+  "caseId": "c10-career-changer-retail",
+  "escoId": "0cb013af-6dd9-4fb2-b34e-63dda1a5cf82",
+  "title": "operate cash register",
+  "shownInUse": true,
+  "phrase": "Cash handling, voids, refund approval, open/close counter"
+ },
+ {
+  "caseId": "c11-staff-nurse",
+  "escoId": "1023ac61-250f-4eef-b7a9-238cf071685f",
+  "title": "provide professional care in nursing",
+  "shownInUse": true,
+  "phrase": "Provide nursing care for 28-bed medical ward: vital signs, drug administration, IV therapy, wound care"
+ },
+ {
+  "caseId": "c11-staff-nurse",
+  "escoId": "135488ce-f5ba-4238-b7d1-8a1197664ab6",
+  "title": "manage patients with acute illnesses",
+  "shownInUse": true,
+  "phrase": "Provide nursing care for 28-bed medical ward: vital signs, drug administration, IV therapy, wound care"
+ },
+ {
+  "caseId": "c11-staff-nurse",
+  "escoId": "60b2dd49-c677-4f47-816e-aff3b577e113",
+  "title": "provide health education",
+  "shownInUse": true,
+  "phrase": "Admission & discharge, patient education for diabetic and post-stroke patients"
+ },
+ {
+  "caseId": "c11-staff-nurse",
+  "escoId": "a46743b7-ff8c-49b6-99f7-7fa5bc241771",
+  "title": "use electronic health records in nursing",
+  "shownInUse": true,
+  "phrase": "Document nursing notes & care plans in EMR"
+ },
+ {
+  "caseId": "c11-staff-nurse",
+  "escoId": "6acf652c-33b2-4e28-8f79-1e553f255229",
+  "title": "plan nursing care",
+  "shownInUse": true,
+  "phrase": "Document nursing notes & care plans in EMR"
+ },
+ {
+  "caseId": "c11-staff-nurse",
+  "escoId": "0c8f1351-d1fe-4542-89fe-b70729679c52",
+  "title": "manage consumables stock",
+  "shownInUse": true,
+  "phrase": "In charge of ward consumables: weekly stock check & monthly indent to central store, check expiry dates"
+ },
+ {
+  "caseId": "c11-staff-nurse",
+  "escoId": "bf2be07f-2290-4d5d-84ec-fbcf3b1001d1",
+  "title": "participate in medical inventory control",
+  "shownInUse": true,
+  "phrase": "In charge of ward consumables: weekly stock check & monthly indent to central store, check expiry dates"
+ },
+ {
+  "caseId": "c11-staff-nurse",
+  "escoId": "0c8c1e58-1c48-4efc-9359-9a28f803c52d",
+  "title": "undertake clinical audit",
+  "shownInUse": true,
+  "phrase": "Conduct monthly hand hygiene compliance audit for the ward & submit to Infection Control Unit"
+ },
+ {
+  "caseId": "c11-staff-nurse",
+  "escoId": "d83cba15-8511-4d07-b89a-9fde0d1d8241",
+  "title": "perform quality audits",
+  "shownInUse": true,
+  "phrase": "Conduct monthly hand hygiene compliance audit for the ward & submit to Infection Control Unit"
+ },
+ {
+  "caseId": "c11-staff-nurse",
+  "escoId": "28722c99-68b7-4b7b-808f-53f343299935",
+  "title": "provide mentorship",
+  "shownInUse": true,
+  "phrase": "Preceptor for new nurses & student nurses"
+ },
+ {
+  "caseId": "c11-staff-nurse",
+  "escoId": "43e346fb-ddc8-4679-b975-e5d0644e40ad",
+  "title": "supervise nursing staff",
+  "shownInUse": true,
+  "phrase": "Preceptor for new nurses & student nurses"
+ },
+ {
+  "caseId": "c11-staff-nurse",
+  "escoId": "281a0cb1-4e12-46f4-ba4a-2746cba36e78",
+  "title": "coordinate shifts",
+  "shownInUse": true,
+  "phrase": "Night shift in-charge (2019 - present)"
+ },
+ {
+  "caseId": "c11-staff-nurse",
+  "escoId": "4118be70-c09d-45cd-b53e-0bcdbdc98be0",
+  "title": "supervise the work of staff on different shifts",
+  "shownInUse": true,
+  "phrase": "Night shift in-charge (2019 - present)"
+ },
+ {
+  "caseId": "c12-mechanic-short",
+  "escoId": "9b57ce6d-97ba-487b-9b66-41cfb15db739",
+  "title": "maintain vehicle service",
+  "shownInUse": true,
+  "phrase": "servis berkala, tukar minyak hitam, brek, suspension"
+ },
+ {
+  "caseId": "c12-mechanic-short",
+  "escoId": "65155435-1c5b-41ee-8812-e0b9b03ae480",
+  "title": "carry out repair of vehicles",
+  "shownInUse": true,
+  "phrase": "servis berkala, tukar minyak hitam, brek, suspension"
+ },
+ {
+  "caseId": "c12-mechanic-short",
+  "escoId": "5b264a14-d4db-4352-9278-fbb63c5ebed4",
+  "title": "use automotive diagnostic equipment",
+  "shownInUse": true,
+  "phrase": "diagnose engine guna scanner OBD2"
+ },
+ {
+  "caseId": "c12-mechanic-short",
+  "escoId": "52743af8-ab5d-4ce3-b877-13d349394456",
+  "title": "diagnose problems with vehicles",
+  "shownInUse": true,
+  "phrase": "diagnose engine guna scanner OBD2"
+ },
+ {
+  "caseId": "c12-mechanic-short",
+  "escoId": "fc1eae96-01cb-4d97-b594-d5040913675e",
+  "title": "maintain parts inventory",
+  "shownInUse": true,
+  "phrase": "check & order spare part dari supplier, update stok dlm buku log"
+ },
+ {
+  "caseId": "c12-mechanic-short",
+  "escoId": "5d494ec9-c7d3-402e-8dde-08c2c06beae6",
+  "title": "maintain availability of spare parts",
+  "shownInUse": true,
+  "phrase": "check & order spare part dari supplier, update stok dlm buku log"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "f7e7ccb6-fadc-4c35-935d-e1040be40dfe",
+  "title": "handle financial transactions",
+  "shownInUse": true,
+  "phrase": "Lead day-to-day AP BAU including invoice queue, payment runs, vendor statement reconciliations, and month-end close accruals"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "f5652e8e-7e25-4f3a-bd31-509c8406213f",
+  "title": "supervise accounting operations",
+  "shownInUse": true,
+  "phrase": "Lead day-to-day AP BAU including invoice queue, payment runs, vendor statement reconciliations, and month-end close accruals"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23",
+  "title": "process payments",
+  "shownInUse": true,
+  "phrase": "Approve and release twice-weekly payment runs after checking cash availability with Treasury and handle urgent or manual payments"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "f7f56b20-8f05-4731-a1bf-79fdcffc72ce",
+  "title": "check deliveries on receipt",
+  "shownInUse": true,
+  "phrase": "Own the 3WM exception queue for price and quantity variances, missing goods receipt notes, and blocked payments"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "9c0ac2f1-6ed5-4413-9831-e8e3f8b0d695",
+  "title": "manage backlogs",
+  "shownInUse": true,
+  "phrase": "Own the 3WM exception queue for price and quantity variances, missing goods receipt notes, and blocked payments"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "f70b5f39-b8b6-407b-8c08-64fd65db79e9",
+  "title": "handle financial disputes",
+  "shownInUse": true,
+  "phrase": "Serve as final escalation point for vendor disputes and negotiate settlement on short-pays and late payment interest claims"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "d4199178-81a1-40dd-a8c8-0f91b0489913",
+  "title": "negotiate settlements",
+  "shownInUse": true,
+  "phrase": "Serve as final escalation point for vendor disputes and negotiate settlement on short-pays and late payment interest claims"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "1be2bb07-dbb2-4a67-b133-30b4ff30b094",
+  "title": "monitor billing procedures",
+  "shownInUse": true,
+  "phrase": "Act as business super-user for the AI invoice-capture pilot, reviewing low-confidence fields and resolving matching exceptions"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "0e0c9c11-b39e-43cf-ba95-2fe646f5de64",
+  "title": "identify customer requirements",
+  "shownInUse": true,
+  "phrase": "Determine confidence thresholds for straight-through posting and decide which invoice types remain manual with IT"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "8dd2806f-6dcf-477c-a5bf-66b5d6e02637",
+  "title": "prepare correspondence for customers",
+  "shownInUse": true,
+  "phrase": "Draft vendor replies and summarize aging commentary for the month-end close deck using Copilot and ChatGPT Enterprise"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "ec0bbf39-0edd-4015-a2c3-82ad563ce3a8",
+  "title": "draft corporate emails",
+  "shownInUse": true,
+  "phrase": "Draft vendor replies and summarize aging commentary for the month-end close deck using Copilot and ChatGPT Enterprise"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "7add3681-17b6-4027-8a9d-ee92d2b96a42",
+  "title": "manage workflow processes",
+  "shownInUse": true,
+  "phrase": "Build a Power Automate flow routing non-PO invoice approvals to cost-centre owners and monitoring failed runs"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "8add048c-4d51-41c5-8aa2-f57412c4a637",
+  "title": "enhance production workflow",
+  "shownInUse": true,
+  "phrase": "Build a Power Automate flow routing non-PO invoice approvals to cost-centre owners and monitoring failed runs"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "958b8802-ec3e-4813-97f7-6c8f48610dbd",
+  "title": "identify process improvements",
+  "shownInUse": true,
+  "phrase": "Map the non-PO invoice process with the continuous improvement team using Lean and SIPOC methodologies"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "75b30aeb-34c0-40f4-b77d-271d75a98b14",
+  "title": "improve business processes",
+  "shownInUse": true,
+  "phrase": "Map the non-PO invoice process with the continuous improvement team using Lean and SIPOC methodologies"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "8dcbcabe-09f7-4d11-940d-125af57bbc40",
+  "title": "track key performance indicators",
+  "shownInUse": true,
+  "phrase": "Maintain weekly AP KPI dashboards in Power BI and present metrics to the Finance Director"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "26baf34d-6721-4bac-b7eb-add0bc566a82",
+  "title": "attend to detail in preparation for audits",
+  "shownInUse": true,
+  "phrase": "Prepare quarterly SOX control evidence including vendor master change logs and payment approvals for internal and external auditors"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "afbc401c-cad8-43b6-8d61-775d2c7b58d5",
+  "title": "prepare compliance documents",
+  "shownInUse": true,
+  "phrase": "Prepare quarterly SOX control evidence including vendor master change logs and payment approvals for internal and external auditors"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "b9efc4b5-0266-43e3-a7e3-064d09bcf90a",
+  "title": "inspect taxation documents",
+  "shownInUse": true,
+  "phrase": "Review monthly SST on imported services with the tax team prior to SST-02 submission"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "6bf6b5bd-6658-4338-b0ee-dc143e68e6d3",
+  "title": "provide support in financial calculation",
+  "shownInUse": true,
+  "phrase": "Review monthly SST on imported services with the tax team prior to SST-02 submission"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "8b9332c7-2551-4527-9a64-a615713d8b02",
+  "title": "evaluate employees",
+  "shownInUse": true,
+  "phrase": "Conduct monthly one-on-ones, set KPIs, and perform half-yearly appraisals for a team of 9 clerks"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "4012e28f-1826-4024-9772-7a4183d63b7f",
+  "title": "provide feedback on job performance",
+  "shownInUse": true,
+  "phrase": "Conduct monthly one-on-ones, set KPIs, and perform half-yearly appraisals for a team of 9 clerks"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "f0393af3-bcd9-41af-a36e-0cfb83b60081",
+  "title": "manage standard enterprise resource planning system",
+  "shownInUse": true,
+  "phrase": "Process invoices for 5 Malaysian entities in SAP ECC using MIRO and FB60 with general ledger and cost-centre coding"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "c753a3b5-d5cc-406d-adfe-3372bb267f4b",
+  "title": "maintain customer records",
+  "shownInUse": true,
+  "phrase": "Perform vendor master data maintenance and execute bank detail change call-back verifications"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "faf8943c-72ff-4736-a587-25508695d6f0",
+  "title": "maintain financial records",
+  "shownInUse": true,
+  "phrase": "Perform vendor master data maintenance and execute bank detail change call-back verifications"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "909c2e48-262e-4ebe-be05-5324ab086c1d",
+  "title": "generate reconciliation reports",
+  "shownInUse": true,
+  "phrase": "Conduct monthly reconciliations of top-100 vendor statements and clear aged differences with buyers"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "c64c4f42-253b-4d53-8637-fd00d86100c7",
+  "title": "develop working procedures",
+  "shownInUse": true,
+  "phrase": "Mentor new clerks and write desk procedures for the Malaysian entities"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "fbca4e43-3816-44cf-81a5-d7b5ae320c00",
+  "title": "guide staff",
+  "shownInUse": true,
+  "phrase": "Mentor new clerks and write desk procedures for the Malaysian entities"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "28a2ff4b-5f99-448e-8bd7-fb836166e95f",
+  "title": "allocate bills",
+  "shownInUse": true,
+  "phrase": "Handle full spectrum of accounts payable and receivable including invoice keying, cheque payments, and debtor follow-ups"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "63321ecf-4fc6-44d9-88f1-5373a4f3038a",
+  "title": "handle petty cash",
+  "shownInUse": true,
+  "phrase": "Manage petty cash, bank reconciliations, filing, and general administrative duties"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "ab986bc4-df92-4351-9ac1-aa75af943cf7",
+  "title": "perform clerical duties",
+  "shownInUse": true,
+  "phrase": "Manage petty cash, bank reconciliations, filing, and general administrative duties"
+ },
+ {
+  "caseId": "c13-ap-lead-ai-long",
+  "escoId": "7849ac25-1166-4b96-955e-a754e72fdd4c",
+  "title": "calculate sales commission",
+  "shownInUse": true,
+  "phrase": "Prepare monthly sales commission listings for salesmen"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "7a1c6c1b-4248-42e4-9faa-a71a9d0dd6da",
+  "title": "prepare credit offers",
+  "shownInUse": true,
+  "phrase": "Saring permohonan pembiayaan korporat berdasarkan CCPT BNM sebelum ke credit committee"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "42c3ffa5-d6a9-4a57-942a-6b79f0bbfcd7",
+  "title": "prepare credit reports",
+  "shownInUse": true,
+  "phrase": "Saring permohonan pembiayaan korporat berdasarkan CCPT BNM sebelum ke credit committee"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "b7729524-6d0e-45b6-87c8-79af1e955a5b",
+  "title": "identify risk of flooding",
+  "shownInUse": true,
+  "phrase": "Assess climate physical risk for SME property collateral using public flood maps and input to credit paper"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "eb8babfb-ab91-4937-a032-6a79f82e9b7f",
+  "title": "analyse financial risk",
+  "shownInUse": true,
+  "phrase": "Assess climate physical risk for SME property collateral using public flood maps and input to credit paper"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "f80e10ac-b642-40a7-a760-3d720f3ce0e1",
+  "title": "check request legitimacy",
+  "shownInUse": true,
+  "phrase": "Semak dakwaan hijau pelanggan dan minta bukti sebelum label pinjaman sebagai green financing"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "86f0bb12-6491-4be7-8306-c88900e91a63",
+  "title": "green bonds",
+  "shownInUse": true,
+  "phrase": "Semak dakwaan hijau pelanggan dan minta bukti sebelum label pinjaman sebagai green financing"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "bd832a82-b079-4001-80d1-f59efed33688",
+  "title": "create risk reports",
+  "shownInUse": true,
+  "phrase": "Sediakan laporan suku tahunan portfolio hijau kepada Jawatankuasa Risiko"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "f3cc52e3-a96c-4549-b841-6e41a846fa99",
+  "title": "report on environmental issues",
+  "shownInUse": true,
+  "phrase": "Sediakan laporan suku tahunan portfolio hijau kepada Jawatankuasa Risiko"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "6bf6b5bd-6658-4338-b0ee-dc143e68e6d3",
+  "title": "provide support in financial calculation",
+  "shownInUse": true,
+  "phrase": "Bantu team anggarkan financed emissions untuk sektor sawit dan janakuasa dengan kumpul data pelanggan"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "0d6714c6-720e-4985-9791-5ab85d28da79",
+  "title": "gather data",
+  "shownInUse": true,
+  "phrase": "Bantu team anggarkan financed emissions untuk sektor sawit dan janakuasa dengan kumpul data pelanggan"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "d53eab76-e8ff-4e28-af26-7e012951c763",
+  "title": "measure company's sustainability performance",
+  "shownInUse": true,
+  "phrase": "Contribute data and draft text for bank's Sustainability Report TCFD section"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "2636b3d3-843e-46a9-8b4c-a9d6ca3f5a2d",
+  "title": "provide technical documentation",
+  "shownInUse": true,
+  "phrase": "Contribute data and draft text for bank's Sustainability Report TCFD section"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "8a43795b-bb38-4f29-91df-a6c92ad4643c",
+  "title": "analyse financial performance of a company",
+  "shownInUse": true,
+  "phrase": "Analyse financial statements of SME borrowers and write credit papers for new and renewal facilities"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "5f1d1319-7954-4a9b-90c7-57668e3a0d4b",
+  "title": "interpret financial statements",
+  "shownInUse": true,
+  "phrase": "Analyse financial statements of SME borrowers and write credit papers for new and renewal facilities"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "0c606377-fbd6-4f66-b700-ba4524670b73",
+  "title": "screen clients",
+  "shownInUse": true,
+  "phrase": "Annual review of 60+ accounts and flag early warning signs"
+ },
+ {
+  "caseId": "c14-green-finance-mixed",
+  "escoId": "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+  "title": "check accounting records",
+  "shownInUse": true,
+  "phrase": "Annual review of 60+ accounts and flag early warning signs"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "16e995d4-4938-4424-b1e6-1e1d54f4dbc8",
+  "title": "assign codes to product items",
+  "shownInUse": true,
+  "phrase": "Key in 350-400 supplier invoices a month into AutoCount and code them to the correct expense and stock accounts"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "a0d79341-8398-4019-ad1b-27888ec35aaa",
+  "title": "use accounting systems",
+  "shownInUse": true,
+  "phrase": "Key in 350-400 supplier invoices a month into AutoCount and code them to the correct expense and stock accounts"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "f7f56b20-8f05-4731-a1bf-79fdcffc72ce",
+  "title": "check deliveries on receipt",
+  "shownInUse": true,
+  "phrase": "Match supplier invoices to purchase orders and goods received notes before posting"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "2cae39d6-78c2-4ce3-bee8-628504371463",
+  "title": "receive goods",
+  "shownInUse": true,
+  "phrase": "Match supplier invoices to purchase orders and goods received notes before posting"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "f70b5f39-b8b6-407b-8c08-64fd65db79e9",
+  "title": "handle financial disputes",
+  "shownInUse": true,
+  "phrase": "Hold invoices with price or quantity differences and refer them to the purchaser"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "909c2e48-262e-4ebe-be05-5324ab086c1d",
+  "title": "generate reconciliation reports",
+  "shownInUse": true,
+  "phrase": "Reconcile major supplier statements against the creditors ledger every month and follow up missing invoices and credit notes"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "3cd35f5d-ce6d-4f14-9a09-53d7a28d834c",
+  "title": "maintain relationship with suppliers",
+  "shownInUse": true,
+  "phrase": "Reconcile major supplier statements against the creditors ledger every month and follow up missing invoices and credit notes"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23",
+  "title": "process payments",
+  "shownInUse": true,
+  "phrase": "Prepare the fortnightly payment listing by due date for the Finance Manager to approve, then upload the approved payments to the bank's online portal"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "4e756773-ae14-4981-838b-9fe27e81c0af",
+  "title": "carry out financial transactions",
+  "shownInUse": true,
+  "phrase": "Prepare the fortnightly payment listing by due date for the Finance Manager to approve, then upload the approved payments to the bank's online portal"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "68b51538-b056-4cb3-bb15-ab8c3e576cc9",
+  "title": "follow up accounts receivables",
+  "shownInUse": true,
+  "phrase": "Issue customer invoices from delivery orders, send monthly statements of account and chase debtors overdue more than 60 days"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "e3e42d54-78bd-4337-aa87-bb31a7670c9a",
+  "title": "issue sales invoices",
+  "shownInUse": true,
+  "phrase": "Issue customer invoices from delivery orders, send monthly statements of account and chase debtors overdue more than 60 days"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "1973c966-f236-40c9-b2d4-5d71a89019be",
+  "title": "use spreadsheets software",
+  "shownInUse": true,
+  "phrase": "Prepare monthly AP and AR ageing schedules in Excel using pivot tables for the management meeting"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "925cb6fb-9506-48a5-9106-400088a4a436",
+  "title": "arrange audit",
+  "shownInUse": true,
+  "phrase": "Gather invoices and payment vouchers requested by the external auditors during the year-end audit"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "f4d3a8ff-2db1-4015-aa28-d4564afef3fd",
+  "title": "keep records on sales",
+  "shownInUse": true,
+  "phrase": "Recorded daily cash sales and petty cash vouchers in SQL Accounting"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "63321ecf-4fc6-44d9-88f1-5373a4f3038a",
+  "title": "handle petty cash",
+  "shownInUse": true,
+  "phrase": "Recorded daily cash sales and petty cash vouchers in SQL Accounting"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "ecc18804-a466-40d9-98b4-fba5cd67dd4b",
+  "title": "accounting",
+  "shownInUse": true,
+  "phrase": "Prepared the monthly bank reconciliation for two current accounts"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "13e4f822-6dbc-4e95-9de5-43ce104c5193",
+  "title": "prepare documents for scanning",
+  "shownInUse": true,
+  "phrase": "Filing and scanning of supporting documents"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "3d427a49-4f85-42cd-8a92-62d4a34f41a1",
+  "title": "file documents",
+  "shownInUse": true,
+  "phrase": "Filing and scanning of supporting documents"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "047fcf0a-2936-49fb-b4eb-97cdd8d09d0b",
+  "title": "maintain statutory books",
+  "shownInUse": true,
+  "phrase": "Keep the association's cash book and prepare the annual accounts for the AGM"
+ },
+ {
+  "caseId": "c15-ap-ar-clerk",
+  "escoId": "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+  "title": "maintain records of financial transactions",
+  "shownInUse": true,
+  "phrase": "Keep the association's cash book and prepare the annual accounts for the AGM"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "a0d79341-8398-4019-ad1b-27888ec35aaa",
+  "title": "use accounting systems",
+  "shownInUse": true,
+  "phrase": "Run month-end close for 4 entities on SAP S/4HANA: post accruals, prepayments and depreciation journals by working day 3"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "b048b4d3-80d6-4a6a-a02d-804faf0e2632",
+  "title": "review closing procedures",
+  "shownInUse": true,
+  "phrase": "Run month-end close for 4 entities on SAP S/4HANA: post accruals, prepayments and depreciation journals by working day 3"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "909c2e48-262e-4ebe-be05-5324ab086c1d",
+  "title": "generate reconciliation reports",
+  "shownInUse": true,
+  "phrase": "Prepare monthly balance sheet reconciliations for 120 GL accounts and clear reconciling items older than 90 days"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "585ed991-fdab-4f3c-9187-a32bfb7ab822",
+  "title": "perform balance sheet operations",
+  "shownInUse": true,
+  "phrase": "Prepare monthly balance sheet reconciliations for 120 GL accounts and clear reconciling items older than 90 days"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "faf8943c-72ff-4736-a587-25508695d6f0",
+  "title": "maintain financial records",
+  "shownInUse": true,
+  "phrase": "Maintain the fixed asset register: capitalise additions, run depreciation and record disposals"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+  "title": "maintain records of financial transactions",
+  "shownInUse": true,
+  "phrase": "Maintain the fixed asset register: capitalise additions, run depreciation and record disposals"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "60f51172-37c0-4933-a27a-cbf55dcd7580",
+  "title": "prepare financial statements",
+  "shownInUse": true,
+  "phrase": "Prepare quarterly management accounts and explain movements in key P&L lines to the Financial Controller"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "307ffd2d-8fb3-43ff-8ad8-4052382f8f83",
+  "title": "report on overall management of a business",
+  "shownInUse": true,
+  "phrase": "Prepare quarterly management accounts and explain movements in key P&L lines to the Financial Controller"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "22a173f5-868c-4d82-87e6-beed500ce070",
+  "title": "prepare tax returns forms",
+  "shownInUse": true,
+  "phrase": "Prepare the bi-monthly SST-02 return for the haulage services entity and reconcile output tax to the GL"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "24e67151-ff7e-43e2-99c0-424a758278a4",
+  "title": "liaise with auditors",
+  "shownInUse": true,
+  "phrase": "Act as main contact for external auditors on balance sheet items; prepare the PBC schedules and answer their queries"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "89ff28d6-342c-435d-83aa-83e71dbbbc96",
+  "title": "conduct financial audits",
+  "shownInUse": true,
+  "phrase": "Act as main contact for external auditors on balance sheet items; prepare the PBC schedules and answer their queries"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "50ab7296-bc34-4cb1-9fdb-7cf7b6f80f9c",
+  "title": "maintain work standards",
+  "shownInUse": true,
+  "phrase": "Trained two junior accountants on journal posting and reconciliation standards"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "e54ff029-1ce9-447d-a5b2-eb7283a23e6e",
+  "title": "train employees",
+  "shownInUse": true,
+  "phrase": "Trained two junior accountants on journal posting and reconciliation standards"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "eaa9727c-df1e-407a-85d3-48cc71508bc2",
+  "title": "prepare trial accounting balances",
+  "shownInUse": true,
+  "phrase": "Full set of accounts for two small subsidiaries up to trial balance"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "6bf6b5bd-6658-4338-b0ee-dc143e68e6d3",
+  "title": "provide support in financial calculation",
+  "shownInUse": true,
+  "phrase": "Assisted in the annual statutory audit and the tax computation with the tax agent"
+ },
+ {
+  "caseId": "c16-gl-accountant",
+  "escoId": "925cb6fb-9506-48a5-9106-400088a4a436",
+  "title": "arrange audit",
+  "shownInUse": true,
+  "phrase": "Assisted in the annual statutory audit and the tax computation with the tax agent"
+ },
+ {
+  "caseId": "c17-finance-analyst",
+  "escoId": "16f61a5b-23ba-4268-8517-82c77c4041a1",
+  "title": "examine budgets",
+  "shownInUse": true,
+  "phrase": "Own the monthly performance pack for 3 business units: actual vs budget vs forecast, with commentary on the top variances for the CFO."
+ },
+ {
+  "caseId": "c17-finance-analyst",
+  "escoId": "1ba35185-09cc-4b54-a3c5-57b87be4d9d1",
+  "title": "compare production forecasts with actual results",
+  "shownInUse": true,
+  "phrase": "Own the monthly performance pack for 3 business units: actual vs budget vs forecast, with commentary on the top variances for the CFO."
+ },
+ {
+  "caseId": "c17-finance-analyst",
+  "escoId": "147170ba-0141-4337-89af-b4513d745afe",
+  "title": "support development of annual budget",
+  "shownInUse": true,
+  "phrase": "Build and maintain the annual budget model and the quarterly rolling forecast in Excel (driver-based: volume, price, mix, A&P spend)."
+ },
+ {
+  "caseId": "c17-finance-analyst",
+  "escoId": "4b2db903-cd8e-48ce-97fb-a92db4def54e",
+  "title": "financial forecasting",
+  "shownInUse": true,
+  "phrase": "Build and maintain the annual budget model and the quarterly rolling forecast in Excel (driver-based: volume, price, mix, A&P spend)."
+ },
+ {
+  "caseId": "c17-finance-analyst",
+  "escoId": "3ad4d492-6fae-47b3-b72a-9a7c1c17da6e",
+  "title": "perform financial analysis on price strategies",
+  "shownInUse": true,
+  "phrase": "Run scenario and sensitivity analysis on raw-material prices and FX for the 2024 budget; recommended a price increase that management approved."
+ },
+ {
+  "caseId": "c17-finance-analyst",
+  "escoId": "e95058a6-e139-42e7-a470-72038a606649",
+  "title": "assess financial viability",
+  "shownInUse": true,
+  "phrase": "Run scenario and sensitivity analysis on raw-material prices and FX for the 2024 budget; recommended a price increase that management approved."
+ },
+ {
+  "caseId": "c17-finance-analyst",
+  "escoId": "143769cb-b61e-47d8-a61e-eedfbec1016c",
+  "title": "business intelligence",
+  "shownInUse": true,
+  "phrase": "Built a Power BI dashboard on gross margin by SKU and channel, now used weekly by 25 sales and marketing managers."
+ },
+ {
+  "caseId": "c17-finance-analyst",
+  "escoId": "b0565bd9-29c8-42f6-b174-702970fc2f4f",
+  "title": "produce sales reports",
+  "shownInUse": true,
+  "phrase": "Built a Power BI dashboard on gross margin by SKU and channel, now used weekly by 25 sales and marketing managers."
+ },
+ {
+  "caseId": "c17-finance-analyst",
+  "escoId": "2dd6ecdf-8a08-438b-8b4b-e0374f7b523b",
+  "title": "carry out sales analysis",
+  "shownInUse": true,
+  "phrase": "Wrote SQL queries against the sales data warehouse to pull secondary sales by outlet for promotion post-evaluation."
+ },
+ {
+  "caseId": "c17-finance-analyst",
+  "escoId": "c95c29fe-3971-46b7-80e9-1f7e75ba99b3",
+  "title": "use specific data analysis software",
+  "shownInUse": true,
+  "phrase": "Wrote SQL queries against the sales data warehouse to pull secondary sales by outlet for promotion post-evaluation."
+ },
+ {
+  "caseId": "c17-finance-analyst",
+  "escoId": "6bf6b5bd-6658-4338-b0ee-dc143e68e6d3",
+  "title": "provide support in financial calculation",
+  "shownInUse": true,
+  "phrase": "Supported the annual budget by consolidating cost-centre inputs."
+ },
+ {
+  "caseId": "c17-finance-analyst",
+  "escoId": "909c2e48-262e-4ebe-be05-5324ab086c1d",
+  "title": "generate reconciliation reports",
+  "shownInUse": true,
+  "phrase": "Built the capex tracking schedule and reconciled it to the fixed asset register."
+ },
+ {
+  "caseId": "c17-finance-analyst",
+  "escoId": "24814e7a-70cd-47e5-98b2-d44b46be92d2",
+  "title": "maintain transaction's reports",
+  "shownInUse": true,
+  "phrase": "Built the capex tracking schedule and reconciled it to the fixed asset register."
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "6f8f86f8-0ef9-4dd6-8e29-7d790e65706b",
+  "title": "calculate production costs",
+  "shownInUse": true,
+  "phrase": "Menyediakan kos standard bagi 60 jenis sarung tangan dan mengemas kini kos bahan mentah setiap suku tahun"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "46406ae4-31b4-41d0-bd12-8a78588f431f",
+  "title": "monitor production costs",
+  "shownInUse": true,
+  "phrase": "Menyediakan kos standard bagi 60 jenis sarung tangan dan mengemas kini kos bahan mentah setiap suku tahun"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "1ba35185-09cc-4b54-a3c5-57b87be4d9d1",
+  "title": "compare production forecasts with actual results",
+  "shownInUse": true,
+  "phrase": "Menganalisis varians kos pengeluaran berbanding kos standard dan membentangkan punca utama kepada Pengurus Kilang"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "21c5790c-0930-4d74-b3b0-84caf5af12ea",
+  "title": "manage budgets",
+  "shownInUse": true,
+  "phrase": "Menyediakan belanjawan tahunan kilang dan ramalan semula separuh tahun bersama ketua jabatan"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "4b2db903-cd8e-48ce-97fb-a92db4def54e",
+  "title": "financial forecasting",
+  "shownInUse": true,
+  "phrase": "Menyediakan belanjawan tahunan kilang dan ramalan semula separuh tahun bersama ketua jabatan"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "683bc3e3-6ec1-4ad2-8d62-d0ac1fabbe76",
+  "title": "use analytics for commercial purposes",
+  "shownInUse": true,
+  "phrase": "Menyediakan analisis keuntungan mengikut pelanggan dan produk menggunakan Excel"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "27ed854c-15b8-4ba2-90e9-ae888a219703",
+  "title": "perform business analysis",
+  "shownInUse": true,
+  "phrase": "Menyediakan analisis keuntungan mengikut pelanggan dan produk menggunakan Excel"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "a0d79341-8398-4019-ad1b-27888ec35aaa",
+  "title": "use accounting systems",
+  "shownInUse": true,
+  "phrase": "Menjalankan kiraan stok akhir bulan bersama stor dan menyelaras perbezaan kuantiti stok dengan sistem SAP"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "de804504-bd5c-465d-b54f-9da299d8ee90",
+  "title": "maintain stock control systems",
+  "shownInUse": true,
+  "phrase": "Menjalankan kiraan stok akhir bulan bersama stor dan menyelaras perbezaan kuantiti stok dengan sistem SAP"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+  "title": "manage inventory",
+  "shownInUse": true,
+  "phrase": "Mengenal pasti stok bergerak perlahan melebihi 180 hari dan mencadangkan peruntukan susut nilai stok"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "44f6a65f-6be7-4818-9a66-73908797283f",
+  "title": "monitor stock level",
+  "shownInUse": true,
+  "phrase": "Mengenal pasti stok bergerak perlahan melebihi 180 hari dan mencadangkan peruntukan susut nilai stok"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "afbc401c-cad8-43b6-8d61-775d2c7b58d5",
+  "title": "prepare compliance documents",
+  "shownInUse": true,
+  "phrase": "Menyediakan kertas kerja penilaian pelaburan mesin baharu untuk kelulusan lembaga pengarah"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "e717b036-2c0c-4c11-99e9-0cb4ce084fed",
+  "title": "perform account allocation",
+  "shownInUse": true,
+  "phrase": "Menyediakan akaun penuh sehingga imbangan duga dan penyesuaian bank bulanan"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "6bf6b5bd-6658-4338-b0ee-dc143e68e6d3",
+  "title": "provide support in financial calculation",
+  "shownInUse": true,
+  "phrase": "Membantu juruaudit luar semasa audit tahunan"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "f1b5800e-b763-4740-9586-3fef30568e81",
+  "title": "analyse production processes for improvement",
+  "shownInUse": true,
+  "phrase": "Mengurangkan varians bahan mentah sebanyak 3% pada 2023 selepas mencadangkan semakan semula resipi lateks"
+ },
+ {
+  "caseId": "c18-management-accountant-bm",
+  "escoId": "05bd9f18-370a-4a88-98c7-473cffb7b2ca",
+  "title": "produce materials for decision making",
+  "shownInUse": true,
+  "phrase": "Mengurangkan varians bahan mentah sebanyak 3% pada 2023 selepas mencadangkan semakan semula resipi lateks"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "0d6714c6-720e-4985-9791-5ab85d28da79",
+  "title": "gather data",
+  "shownInUse": true,
+  "phrase": "Collect quarterly ESG data from 14 business units through an online data template"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "4d97e3c3-f335-47cc-a4ee-0d779fd42222",
+  "title": "manage data, information and digital content",
+  "shownInUse": true,
+  "phrase": "Collect quarterly ESG data from 14 business units through an online data template"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "9d7050b4-684f-4db3-9b25-05616a88d6fc",
+  "title": "develop technical glossaries",
+  "shownInUse": true,
+  "phrase": "Built a data dictionary and an owner-and-reviewer sign-off for each ESG indicator"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "5865c47c-cf1a-4dcb-8871-d4a1ea4b047b",
+  "title": "set up documentation control system",
+  "shownInUse": true,
+  "phrase": "Built a data dictionary and an owner-and-reviewer sign-off for each ESG indicator"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "3b73a161-be59-4079-815e-b4879f9b20b5",
+  "title": "gas consumption",
+  "shownInUse": true,
+  "phrase": "Calculate Scope 1 and Scope 2 emissions using the GHG Protocol and published emission factors"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "5aec5b83-df71-483e-90b9-21e56a0a3cb2",
+  "title": "measure pollution",
+  "shownInUse": true,
+  "phrase": "Calculate Scope 1 and Scope 2 emissions using the GHG Protocol and published emission factors"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "4300b453-9bcf-474c-9ee3-92ec2229720c",
+  "title": "global standards for sustainability reporting",
+  "shownInUse": true,
+  "phrase": "Draft the Sustainability Statement in the annual report against Bursa Malaysia's common sustainability matters and the GRI Standards"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "f3cc52e3-a96c-4549-b841-6e41a846fa99",
+  "title": "report on environmental issues",
+  "shownInUse": true,
+  "phrase": "Draft the Sustainability Statement in the annual report against Bursa Malaysia's common sustainability matters and the GRI Standards"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "99c4c69a-025c-464f-adda-874c7f107a31",
+  "title": "engage with stakeholders",
+  "shownInUse": true,
+  "phrase": "Run the materiality assessment survey with management"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "1af2db15-2af9-44dd-9639-bf1fc69d4c34",
+  "title": "manage relationships with stakeholders",
+  "shownInUse": true,
+  "phrase": "Run the materiality assessment survey with management"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "594bd121-9614-4e87-9ecf-6ccb95507efe",
+  "title": "draw up risk assessment",
+  "shownInUse": true,
+  "phrase": "Prepare the TCFD-aligned climate disclosure with the risk team"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "bd832a82-b079-4001-80d1-f59efed33688",
+  "title": "create risk reports",
+  "shownInUse": true,
+  "phrase": "Prepare the TCFD-aligned climate disclosure with the risk team"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "d53eab76-e8ff-4e28-af26-7e012951c763",
+  "title": "measure company's sustainability performance",
+  "shownInUse": true,
+  "phrase": "Respond to the FTSE4Good ESG rating questionnaire and track the score gap year on year"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "8dcbcabe-09f7-4d11-940d-125af57bbc40",
+  "title": "track key performance indicators",
+  "shownInUse": true,
+  "phrase": "Respond to the FTSE4Good ESG rating questionnaire and track the score gap year on year"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "c3e36d05-8ae8-447f-bb2b-6f9409f85389",
+  "title": "deliver visual presentation of data",
+  "shownInUse": true,
+  "phrase": "Maintain a Power BI dashboard of ESG KPIs for the Sustainability Working Committee"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "089ee650-297e-4716-87d1-440743b70a0d",
+  "title": "ensure compliance with environmental legislation",
+  "shownInUse": true,
+  "phrase": "Monitored site compliance with the Environmental Quality Act"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "e3f2c37f-e484-4b4c-ad82-f565a2b98f89",
+  "title": "environmental management monitors",
+  "shownInUse": true,
+  "phrase": "Monitored site compliance with the Environmental Quality Act"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "afbc401c-cad8-43b6-8d61-775d2c7b58d5",
+  "title": "prepare compliance documents",
+  "shownInUse": true,
+  "phrase": "Prepared monthly environmental monitoring reports for the Department of Environment"
+ },
+ {
+  "caseId": "c19-esg-executive",
+  "escoId": "e5f77488-7561-475a-9888-decd2443d37a",
+  "title": "train staff on waste management",
+  "shownInUse": true,
+  "phrase": "Conducted toolbox talks on waste segregation for site workers"
+ },
+ {
+  "caseId": "c20-carbon-lca-analyst",
+  "escoId": "00b9a3aa-7070-4bb5-8020-f228a97cf42f",
+  "title": "draft scientific or academic papers and technical documentation",
+  "shownInUse": true,
+  "phrase": "Set the system boundary, functional unit, allocation rules and cut-off criteria for each study and document them in the study report"
+ },
+ {
+  "caseId": "c20-carbon-lca-analyst",
+  "escoId": "e671c957-b998-49df-b630-7908806966f1",
+  "title": "inform customers environmental protection",
+  "shownInUse": true,
+  "phrase": "Run sensitivity checks on electricity grid factors and component data choices, and explain the main hotspots to customers"
+ },
+ {
+  "caseId": "c20-carbon-lca-analyst",
+  "escoId": "d53eab76-e8ff-4e28-af26-7e012951c763",
+  "title": "measure company's sustainability performance",
+  "shownInUse": true,
+  "phrase": "Answer customer sustainability questionnaires (EcoVadis, CDP supply chain) with the quality team"
+ },
+ {
+  "caseId": "c20-carbon-lca-analyst",
+  "escoId": "8b94aa1e-89c9-459d-b3b4-1dfab8dec2df",
+  "title": "use software libraries",
+  "shownInUse": true,
+  "phrase": "Wrote a Python script that converts the SAP bill of materials export into a SimaPro import file; cut model set-up time from two days to half a day"
+ },
+ {
+  "caseId": "c20-carbon-lca-analyst",
+  "escoId": "82ea1455-ff29-43c8-8074-685fa2653144",
+  "title": "maintain waste collection records",
+  "shownInUse": true,
+  "phrase": "Managed scheduled waste records and the wastewater treatment plant permit conditions"
+ },
+ {
+  "caseId": "c20-carbon-lca-analyst",
+  "escoId": "b13e0689-636d-42d0-86c3-df9d6f85a882",
+  "title": "manage environmental management system",
+  "shownInUse": true,
+  "phrase": "Managed scheduled waste records and the wastewater treatment plant permit conditions"
+ },
+ {
+  "caseId": "c20-carbon-lca-analyst",
+  "escoId": "29bfe2cd-f011-4f94-a3aa-f77768e60460",
+  "title": "analyse energy consumption",
+  "shownInUse": true,
+  "phrase": "Tracked monthly electricity and LPG use per production line and proposed compressed-air leak repairs that saved 6% of plant energy"
+ },
+ {
+  "caseId": "c20-carbon-lca-analyst",
+  "escoId": "83fc0b2b-6cd2-46af-b1ff-d3fc83604c26",
+  "title": "energy efficiency",
+  "shownInUse": true,
+  "phrase": "Tracked monthly electricity and LPG use per production line and proposed compressed-air leak repairs that saved 6% of plant energy"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "ed0718f6-5823-4c74-9749-2936c9c06203",
+  "title": "develop audit plan",
+  "shownInUse": true,
+  "phrase": "Merancang dan melaksanakan audit berasaskan risiko ke atas kitaran pembelian-ke-pembayaran, pengurusan stok cawangan dan tunai kedai"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "8804d963-5a31-4609-b5df-f741b7199fb7",
+  "title": "internal auditing",
+  "shownInUse": true,
+  "phrase": "Merancang dan melaksanakan audit berasaskan risiko ke atas kitaran pembelian-ke-pembayaran, pengurusan stok cawangan dan tunai kedai"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "6c315001-d329-4930-9294-9cf2c7afb672",
+  "title": "revise quality control systems documentation",
+  "shownInUse": true,
+  "phrase": "Menguji reka bentuk dan keberkesanan kawalan utama, termasuk had kelulusan pesanan belian dan pengasingan tugas dalam modul SAP MM"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "541cdc23-1eec-4520-81fc-3392eaf538ed",
+  "title": "fraud detection",
+  "shownInUse": true,
+  "phrase": "Menggunakan IDEA untuk menganalisis 100% transaksi pembayaran dan mengesan bayaran berganda serta vendor tanpa nombor cukai"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "0295b2a4-fb86-495f-9547-d479532fc4c2",
+  "title": "trace financial transactions",
+  "shownInUse": true,
+  "phrase": "Menggunakan IDEA untuk menganalisis 100% transaksi pembayaran dan mengesan bayaran berganda serta vendor tanpa nombor cukai"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "3e9b580d-811b-48df-a5d1-a7bdd26f901f",
+  "title": "prepare financial auditing reports",
+  "shownInUse": true,
+  "phrase": "Menulis laporan audit dan membentangkan penemuan kepada Jawatankuasa Audit; memantau pelan tindakan pengurusan sehingga ditutup"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "d0f2f8a7-d935-4a6d-8e54-dcc3e5e2cbeb",
+  "title": "present reports",
+  "shownInUse": true,
+  "phrase": "Menulis laporan audit dan membentangkan penemuan kepada Jawatankuasa Audit; memantau pelan tindakan pengurusan sehingga ditutup"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+  "title": "check accounting records",
+  "shownInUse": true,
+  "phrase": "Melawat 25 cawangan setahun untuk kiraan tunai mengejut dan semakan kiraan stok"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "8269dc3d-50ee-46b5-a742-a7d2cb7d90bb",
+  "title": "check for damaged items",
+  "shownInUse": true,
+  "phrase": "Melawat 25 cawangan setahun untuk kiraan tunai mengejut dan semakan kiraan stok"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "9601b2a8-68e4-4906-9306-a23679b8f0b0",
+  "title": "supervise staff",
+  "shownInUse": true,
+  "phrase": "Menyelia dan menyemak kertas kerja dua orang eksekutif audit"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "5b8a3dd2-de10-48a0-8ce5-522f1fff8450",
+  "title": "perform contract compliance audits",
+  "shownInUse": true,
+  "phrase": "Melaksanakan audit pematuhan ke atas proses pinjaman dan kutipan mengikut garis panduan BNM"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "c35b19ad-b06f-44e8-be9f-c20c68750346",
+  "title": "monitor loan portfolio",
+  "shownInUse": true,
+  "phrase": "Melaksanakan audit pematuhan ke atas proses pinjaman dan kutipan mengikut garis panduan BNM"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "095fdace-1cc3-4e80-b37b-268fe297904a",
+  "title": "prepare audit activities",
+  "shownInUse": true,
+  "phrase": "Menyediakan program audit dan senarai semak bagi setiap tugasan"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "89ff28d6-342c-435d-83aa-83e71dbbbc96",
+  "title": "conduct financial audits",
+  "shownInUse": true,
+  "phrase": "Audit berkanun syarikat SME: pengesahan baki bank, vouching dan kehadiran kiraan stok"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "a6d697d1-80ba-4175-82d4-43440ed04270",
+  "title": "process refunds",
+  "shownInUse": true,
+  "phrase": "Penemuan bayaran berganda RM96,000 pada 2023; RM88,000 berjaya dipulihkan daripada vendor"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "2b92a5b2-6758-4ee3-9fb4-b6387a55cc8f",
+  "title": "perform data analysis",
+  "shownInUse": true,
+  "phrase": "Penceramah jemputan, bengkel Analitik Data untuk Juruaudit anjuran IIAM, 2024"
+ },
+ {
+  "caseId": "c21-internal-auditor-bm",
+  "escoId": "2d008d5a-b7bd-46f7-bbb1-5d70a0af9c84",
+  "title": "control financial resources",
+  "shownInUse": true,
+  "phrase": "Bendahari, Persatuan Penduduk Taman Bangi Perdana"
+ },
+ {
+  "caseId": "c22-risk-compliance",
+  "escoId": "8d5ee30c-4b1c-465f-84a1-7bb7a05aaca6",
+  "title": "monitor banking activities",
+  "shownInUse": true,
+  "phrase": "Review alerts from the transaction monitoring system, investigate unusual patterns and prepare suspicious transaction reports for the Compliance Officer to submit to the regulator."
+ },
+ {
+  "caseId": "c22-risk-compliance",
+  "escoId": "61a3f3ea-d34c-478d-9b41-c8adb09e6631",
+  "title": "identify suspicious behaviour",
+  "shownInUse": true,
+  "phrase": "Review alerts from the transaction monitoring system, investigate unusual patterns and prepare suspicious transaction reports for the Compliance Officer to submit to the regulator."
+ },
+ {
+  "caseId": "c22-risk-compliance",
+  "escoId": "d7b66759-c40c-44de-9f31-9418f84e10c5",
+  "title": "assess risk factors",
+  "shownInUse": true,
+  "phrase": "Perform enhanced due diligence on high-risk merchants and agents: ownership checks, sanctions and adverse media screening."
+ },
+ {
+  "caseId": "c22-risk-compliance",
+  "escoId": "9a4e91f4-67a4-45d3-b717-743b2c2ab733",
+  "title": "check subjects",
+  "shownInUse": true,
+  "phrase": "Perform enhanced due diligence on high-risk merchants and agents: ownership checks, sanctions and adverse media screening."
+ },
+ {
+  "caseId": "c22-risk-compliance",
+  "escoId": "96550830-539b-4746-96aa-92aa4959945d",
+  "title": "apply risk management processes",
+  "shownInUse": true,
+  "phrase": "Maintain the operational risk register: run quarterly risk and control self-assessments with 9 department heads and track key risk indicators."
+ },
+ {
+  "caseId": "c22-risk-compliance",
+  "escoId": "594bd121-9614-4e87-9ecf-6ccb95507efe",
+  "title": "draw up risk assessment",
+  "shownInUse": true,
+  "phrase": "Maintain the operational risk register: run quarterly risk and control self-assessments with 9 department heads and track key risk indicators."
+ },
+ {
+  "caseId": "c22-risk-compliance",
+  "escoId": "afbc401c-cad8-43b6-8d61-775d2c7b58d5",
+  "title": "prepare compliance documents",
+  "shownInUse": true,
+  "phrase": "Map new BNM policy documents to internal procedures and track gaps until closed; prepared the gap analysis for the e-money policy update in 2023."
+ },
+ {
+  "caseId": "c22-risk-compliance",
+  "escoId": "f698f8df-b473-40aa-a5c9-033cd892467a",
+  "title": "keep up-to-date with regulations",
+  "shownInUse": true,
+  "phrase": "Map new BNM policy documents to internal procedures and track gaps until closed; prepared the gap analysis for the e-money policy update in 2023."
+ },
+ {
+  "caseId": "c22-risk-compliance",
+  "escoId": "96a893b6-4520-4daa-89c1-b79487505da2",
+  "title": "key risk indicators",
+  "shownInUse": true,
+  "phrase": "Prepare the monthly compliance report and KRI dashboard for the Board Risk Committee."
+ },
+ {
+  "caseId": "c22-risk-compliance",
+  "escoId": "0c606377-fbd6-4f66-b700-ba4524670b73",
+  "title": "screen clients",
+  "shownInUse": true,
+  "phrase": "Screened customers against sanctions lists and verified KYC documents at onboarding."
+ },
+ {
+  "caseId": "c22-risk-compliance",
+  "escoId": "87d0ccdb-3aa3-4af6-94e5-c7a04791c07e",
+  "title": "authenticate documents",
+  "shownInUse": true,
+  "phrase": "Screened customers against sanctions lists and verified KYC documents at onboarding."
+ },
+ {
+  "caseId": "c22-risk-compliance",
+  "escoId": "24814e7a-70cd-47e5-98b2-d44b46be92d2",
+  "title": "maintain transaction's reports",
+  "shownInUse": true,
+  "phrase": "Kept records of cash threshold reports and assisted in the yearly BNM onsite examination."
+ },
+ {
+  "caseId": "c22-risk-compliance",
+  "escoId": "faf8943c-72ff-4736-a587-25508695d6f0",
+  "title": "maintain financial records",
+  "shownInUse": true,
+  "phrase": "Kept records of cash threshold reports and assisted in the yearly BNM onsite examination."
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "e4b6f863-fa9f-4fe7-a984-f948f8c90d24",
+  "title": "handle cash flow",
+  "shownInUse": true,
+  "phrase": "Prepare the group's daily cash position across 32 bank accounts and decide transfers between subsidiaries to cover payments due"
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "658a38bd-6954-4a2a-945c-42330c5d13b9",
+  "title": "manage corporate bank accounts",
+  "shownInUse": true,
+  "phrase": "Prepare the group's daily cash position across 32 bank accounts and decide transfers between subsidiaries to cover payments due"
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "4b2db903-cd8e-48ce-97fb-a92db4def54e",
+  "title": "financial forecasting",
+  "shownInUse": true,
+  "phrase": "Build and update the 13-week cash flow forecast; compare actual to forecast every week and explain variances to the Head of Treasury"
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "0c9da986-721e-4f75-b566-0c6c212a8f60",
+  "title": "make investment decisions",
+  "shownInUse": true,
+  "phrase": "Place surplus funds in fixed deposits and money market placements; compare rates from five banks before placement"
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "c35b19ad-b06f-44e8-be9f-c20c68750346",
+  "title": "monitor loan portfolio",
+  "shownInUse": true,
+  "phrase": "Monitor bridging loan and revolving credit drawdowns against project progress claims; prepare the quarterly financial covenant compliance certificates"
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "3dd3dfa7-51c0-40ef-af46-e2df300489f6",
+  "title": "monitor parameters' compliance in construction projects",
+  "shownInUse": true,
+  "phrase": "Monitor bridging loan and revolving credit drawdowns against project progress claims; prepare the quarterly financial covenant compliance certificates"
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "42c3ffa5-d6a9-4a57-942a-6b79f0bbfcd7",
+  "title": "prepare credit reports",
+  "shownInUse": true,
+  "phrase": "Arranged a new RM150 million Islamic revolving credit facility with two banks: prepared the information pack and compared term sheets"
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "e92f4673-1dec-41ec-b6ec-36fef226359c",
+  "title": "provide financial product information",
+  "shownInUse": true,
+  "phrase": "Arranged a new RM150 million Islamic revolving credit facility with two banks: prepared the information pack and compared term sheets"
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23",
+  "title": "process payments",
+  "shownInUse": true,
+  "phrase": "Approve the release of supplier payment files in the bank portals as second authoriser, up to RM500,000 per batch"
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "2ada2f9d-77f7-4ba0-9096-89ae285a65c5",
+  "title": "monitor financial accounts",
+  "shownInUse": true,
+  "phrase": "Prepare monthly bank reconciliations reviewed by the Treasury Manager"
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "1973c966-f236-40c9-b2d4-5d71a89019be",
+  "title": "use spreadsheets software",
+  "shownInUse": true,
+  "phrase": "Automated the daily bank balance download with an Excel Power Query template, saving 45 minutes a day"
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "1be2bb07-dbb2-4a67-b133-30b4ff30b094",
+  "title": "monitor billing procedures",
+  "shownInUse": true,
+  "phrase": "Prepared progress billing to purchasers and tracked collections from end-financiers"
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "68b51538-b056-4cb3-bb15-ab8c3e576cc9",
+  "title": "follow up accounts receivables",
+  "shownInUse": true,
+  "phrase": "Prepared progress billing to purchasers and tracked collections from end-financiers"
+ },
+ {
+  "caseId": "c23-treasury-analyst",
+  "escoId": "af0f7625-b9fc-4f97-a71d-d7c7648bfc35",
+  "title": "prepare paychecks",
+  "shownInUse": true,
+  "phrase": "Prepared payment vouchers and cheques for contractors"
+ },
+ {
+  "caseId": "c24-bank-credit-analyst",
+  "escoId": "8a43795b-bb38-4f29-91df-a6c92ad4643c",
+  "title": "analyse financial performance of a company",
+  "shownInUse": true,
+  "phrase": "Analyse audited accounts and management accounts of borrowers: profitability, leverage, working capital cycle and debt service coverage ratio (DSCR)."
+ },
+ {
+  "caseId": "c24-bank-credit-analyst",
+  "escoId": "e95058a6-e139-42e7-a470-72038a606649",
+  "title": "assess financial viability",
+  "shownInUse": true,
+  "phrase": "Analyse audited accounts and management accounts of borrowers: profitability, leverage, working capital cycle and debt service coverage ratio (DSCR)."
+ },
+ {
+  "caseId": "c24-bank-credit-analyst",
+  "escoId": "f6068fdb-8033-48ee-9444-5cbd2b40ba64",
+  "title": "apply credit stress testing methodologies",
+  "shownInUse": true,
+  "phrase": "Build 3-year cash flow projections and stress test them for a sales decline and interest rate increases."
+ },
+ {
+  "caseId": "c24-bank-credit-analyst",
+  "escoId": "d37bc902-f640-48d7-9db4-544db9aa65fa",
+  "title": "prepare financial projections",
+  "shownInUse": true,
+  "phrase": "Build 3-year cash flow projections and stress test them for a sales decline and interest rate increases."
+ },
+ {
+  "caseId": "c24-bank-credit-analyst",
+  "escoId": "42c3ffa5-d6a9-4a57-942a-6b79f0bbfcd7",
+  "title": "prepare credit reports",
+  "shownInUse": true,
+  "phrase": "Write credit papers for new, renewal and restructuring facilities of RM2 million to RM50 million and present them at the credit committee."
+ },
+ {
+  "caseId": "c24-bank-credit-analyst",
+  "escoId": "dd7c9dfd-6e2c-46fd-aefc-369402d0200c",
+  "title": "create a financial report",
+  "shownInUse": true,
+  "phrase": "Write credit papers for new, renewal and restructuring facilities of RM2 million to RM50 million and present them at the credit committee."
+ },
+ {
+  "caseId": "c24-bank-credit-analyst",
+  "escoId": "102b6ba8-452c-4f6b-8b3f-1ab5a2d02ffe",
+  "title": "advise on credit rating",
+  "shownInUse": true,
+  "phrase": "Assign internal risk grades using the bank's rating model and justify any overrides."
+ },
+ {
+  "caseId": "c24-bank-credit-analyst",
+  "escoId": "d7b66759-c40c-44de-9f31-9418f84e10c5",
+  "title": "assess risk factors",
+  "shownInUse": true,
+  "phrase": "Assign internal risk grades using the bank's rating model and justify any overrides."
+ },
+ {
+  "caseId": "c24-bank-credit-analyst",
+  "escoId": "c35b19ad-b06f-44e8-be9f-c20c68750346",
+  "title": "monitor loan portfolio",
+  "shownInUse": true,
+  "phrase": "Run the quarterly early-warning watchlist review for a portfolio of 85 accounts and recommend actions for deteriorating borrowers."
+ },
+ {
+  "caseId": "c24-bank-credit-analyst",
+  "escoId": "b90316c1-67e9-4338-b4dd-c950831ce33e",
+  "title": "manage portfolio",
+  "shownInUse": true,
+  "phrase": "Run the quarterly early-warning watchlist review for a portfolio of 85 accounts and recommend actions for deteriorating borrowers."
+ },
+ {
+  "caseId": "c24-bank-credit-analyst",
+  "escoId": "7236d0d1-127f-4307-a7d4-9730ee8a9167",
+  "title": "determine loan conditions",
+  "shownInUse": true,
+  "phrase": "Checked facility conditions before disbursement and maintained facility limits in the loan system."
+ },
+ {
+  "caseId": "c24-bank-credit-analyst",
+  "escoId": "5ef628ac-c5a1-4150-a115-f864343dcb24",
+  "title": "manage loan administration",
+  "shownInUse": true,
+  "phrase": "Checked facility conditions before disbursement and maintained facility limits in the loan system."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "9e9a4209-c7cf-4f6e-973e-dc2ffadccc74",
+  "title": "perform procurement processes",
+  "shownInUse": true,
+  "phrase": "Run RFQs and tenders for packaging materials and third-party logistics; build bid comparison sheets on total cost, lead time and quality record."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "2206af0c-3deb-48c5-a544-b9983d347da3",
+  "title": "answer requests for quotation",
+  "shownInUse": true,
+  "phrase": "Run RFQs and tenders for packaging materials and third-party logistics; build bid comparison sheets on total cost, lead time and quality record."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "5f2efbdf-08a2-49cd-9c06-bd284e4f0fbf",
+  "title": "negotiate terms with suppliers",
+  "shownInUse": true,
+  "phrase": "Negotiate annual contracts and price reviews with 20 key suppliers; delivered RM1.6 million savings in 2024, mainly from film laminate consolidation."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "c842be42-81b3-40f2-904c-ea8790ac88bd",
+  "title": "negotiate supplier arrangements",
+  "shownInUse": true,
+  "phrase": "Negotiate annual contracts and price reviews with 20 key suppliers; delivered RM1.6 million savings in 2024, mainly from film laminate consolidation."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "96ec2d53-4f41-4172-8ef2-70742c4bb540",
+  "title": "assess supplier risks",
+  "shownInUse": true,
+  "phrase": "Assess new suppliers on financial health, food safety certification (FSSC 22000, halal) and capacity before onboarding; run supplier audits with QA."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "d83cba15-8511-4d07-b89a-9fde0d1d8241",
+  "title": "perform quality audits",
+  "shownInUse": true,
+  "phrase": "Assess new suppliers on financial health, food safety certification (FSSC 22000, halal) and capacity before onboarding; run supplier audits with QA."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "ace994b7-0c7c-44b2-8087-3aa0bfd2a93a",
+  "title": "provide performance feedback",
+  "shownInUse": true,
+  "phrase": "Track supplier on-time delivery and quality scorecards quarterly and hold performance reviews with underperforming suppliers."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "d89f5cee-649a-44bd-9aa9-8e74bbdbd50d",
+  "title": "monitor contractor performance",
+  "shownInUse": true,
+  "phrase": "Track supplier on-time delivery and quality scorecards quarterly and hold performance reviews with underperforming suppliers."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "96d549bb-3e62-4c45-92a7-f114df089581",
+  "title": "analyse supply chain strategies",
+  "shownInUse": true,
+  "phrase": "Introduced a dual-sourcing plan for corrugated cartons after a supplier fire in 2022 disrupted supply."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "020b3c27-bae1-4b85-9d6f-eccee0f5ed99",
+  "title": "manage supplies",
+  "shownInUse": true,
+  "phrase": "Introduced a dual-sourcing plan for corrugated cartons after a supplier fire in 2022 disrupted supply."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "92721092-fe7c-4689-96bd-4f02385bc0e7",
+  "title": "manage contracts",
+  "shownInUse": true,
+  "phrase": "Draft and maintain contracts with the legal team, including price adjustment clauses linked to resin prices."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "49118827-3dbd-4c96-aebf-a23096e43d25",
+  "title": "maintain contractual information",
+  "shownInUse": true,
+  "phrase": "Draft and maintain contracts with the legal team, including price adjustment clauses linked to resin prices."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "73225018-7139-433b-bdba-2b90774761d9",
+  "title": "issue purchase orders",
+  "shownInUse": true,
+  "phrase": "Create purchase orders in SAP Ariba and resolve invoice price mismatches raised by Accounts Payable."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "47ae7b24-3fe0-47e0-b0ea-825ebc10e18c",
+  "title": "calculate purchasing levels of raw materials",
+  "shownInUse": true,
+  "phrase": "Raised purchase orders for raw materials and spares based on MRP requirements."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "2aed5d29-15c3-44ba-bb5c-80750a815b3c",
+  "title": "follow up orders for customers",
+  "shownInUse": true,
+  "phrase": "Followed up deliveries with suppliers and updated the price list in Excel."
+ },
+ {
+  "caseId": "c25-procurement-executive",
+  "escoId": "12b7d5a1-1ad4-45dc-b0fa-b31d1eb2c79a",
+  "title": "maintain pricing database",
+  "shownInUse": true,
+  "phrase": "Followed up deliveries with suppliers and updated the price list in Excel."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "5f2efbdf-08a2-49cd-9c06-bd284e4f0fbf",
+  "title": "negotiate terms with suppliers",
+  "shownInUse": true,
+  "phrase": "Berunding harga, diskaun volum dan syarat kredit dengan 35 pembekal; mencapai penjimatan 4% bagi kategori minuman pada 2024."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "fde186df-c9c4-49f5-b2a5-d66adc7c43a5",
+  "title": "negotiate buying conditions",
+  "shownInUse": true,
+  "phrase": "Berunding harga, diskaun volum dan syarat kredit dengan 35 pembekal; mencapai penjimatan 4% bagi kategori minuman pada 2024."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "56c59e98-f133-48ad-9d01-f357a8e2c218",
+  "title": "estimate profitability",
+  "shownInUse": true,
+  "phrase": "Menilai tawaran produk baharu daripada pembekal berdasarkan margin, data jualan dan ruang rak."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "d15ba5cb-9212-4a90-85af-2c560da59925",
+  "title": "perform product planning",
+  "shownInUse": true,
+  "phrase": "Menilai tawaran produk baharu daripada pembekal berdasarkan margin, data jualan dan ruang rak."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "2dd6ecdf-8a08-438b-8b4b-e0374f7b523b",
+  "title": "carry out sales analysis",
+  "shownInUse": true,
+  "phrase": "Menganalisis jualan mingguan setiap SKU menggunakan Excel dan mengenal pasti produk bergerak perlahan."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "171eee55-19b9-46d6-aded-33193ba8ccf1",
+  "title": "study sales levels of products",
+  "shownInUse": true,
+  "phrase": "Menganalisis jualan mingguan setiap SKU menggunakan Excel dan mengenal pasti produk bergerak perlahan."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "05281013-f5ae-4bf2-ad23-d5d6f7573b46",
+  "title": "carry out inventory planning",
+  "shownInUse": true,
+  "phrase": "Menetapkan tahap stok minimum dan kuantiti pesanan bagi setiap cawangan bersama perancang stok."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "44f6a65f-6be7-4818-9a66-73908797283f",
+  "title": "monitor stock level",
+  "shownInUse": true,
+  "phrase": "Menetapkan tahap stok minimum dan kuantiti pesanan bagi setiap cawangan bersama perancang stok."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "ba62c716-f9d3-49c8-a7cd-d3d8b7c8067e",
+  "title": "set sales promotions",
+  "shownInUse": true,
+  "phrase": "Merancang promosi bulanan dengan pembekal dan memantau prestasi jualan promosi."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+  "title": "manage inventory",
+  "shownInUse": true,
+  "phrase": "Merancang promosi bulanan dengan pembekal dan memantau prestasi jualan promosi."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "3a5d7eea-29fa-4449-8487-43cf37b68e53",
+  "title": "resolve shipment issues",
+  "shownInUse": true,
+  "phrase": "Menyelesaikan isu bekalan lewat dan barang rosak dengan pembekal, termasuk mendapatkan nota kredit."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "f79e4715-5776-485c-ab7d-631c9b8d70ad",
+  "title": "manage contract disputes",
+  "shownInUse": true,
+  "phrase": "Menyelesaikan isu bekalan lewat dan barang rosak dengan pembekal, termasuk mendapatkan nota kredit."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "73225018-7139-433b-bdba-2b90774761d9",
+  "title": "issue purchase orders",
+  "shownInUse": true,
+  "phrase": "Mengeluarkan pesanan belian dalam sistem ERP dan mengemas kini harga kos."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "9e9a4209-c7cf-4f6e-973e-dc2ffadccc74",
+  "title": "perform procurement processes",
+  "shownInUse": true,
+  "phrase": "Mengeluarkan pesanan belian dalam sistem ERP dan mengemas kini harga kos."
+ },
+ {
+  "caseId": "c26-buyer-bm",
+  "escoId": "7e6509bd-9642-4af5-bad3-5b2cec29b6f9",
+  "title": "control reorder points",
+  "shownInUse": true,
+  "phrase": "Menyemak laporan stok cawangan dan membuat pesanan tambahan."
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "68e73bf6-2838-4705-86f4-e4bda4ac8a6f",
+  "title": "forecast products' demand",
+  "shownInUse": true,
+  "phrase": "Produce the monthly statistical demand forecast for 300 SKUs in SAP IBP using exponential smoothing"
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "ae57a9c3-f761-4b03-be2b-99a781704c73",
+  "title": "use sales forecasting softwares",
+  "shownInUse": true,
+  "phrase": "Produce the monthly statistical demand forecast for 300 SKUs in SAP IBP using exponential smoothing"
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "6e9aaf01-f2a4-4405-9733-29dc9825efa9",
+  "title": "adapt production levels",
+  "shownInUse": true,
+  "phrase": "Adjust for promotions and new launches with input from the sales team"
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "be727774-46d7-43d7-aee9-1a51b5cd8c71",
+  "title": "carry out statistical forecasts",
+  "shownInUse": true,
+  "phrase": "Measure forecast accuracy (MAPE) and bias by channel"
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "50b100ea-74fd-4706-99db-3e4ca55e51b8",
+  "title": "perform data cleansing",
+  "shownInUse": true,
+  "phrase": "Cut MAPE from 42% to 31% in two years by cleaning promotion history"
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "75b30aeb-34c0-40f4-b77d-271d75a98b14",
+  "title": "improve business processes",
+  "shownInUse": true,
+  "phrase": "Cut MAPE from 42% to 31% in two years by cleaning promotion history"
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "2c5cbddf-3393-452f-abb0-8e734d1b61be",
+  "title": "plan future capacity requirements",
+  "shownInUse": true,
+  "phrase": "Convert the demand plan into a 12-week production and replenishment plan, checking line capacity and raw material availability"
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "2a778aeb-f246-4f03-9a96-c60183001037",
+  "title": "schedule production",
+  "shownInUse": true,
+  "phrase": "Convert the demand plan into a 12-week production and replenishment plan, checking line capacity and raw material availability"
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "44f6a65f-6be7-4818-9a66-73908797283f",
+  "title": "monitor stock level",
+  "shownInUse": true,
+  "phrase": "Set safety stock levels by SKU class (ABC/XYZ) and review days-of-cover weekly with the warehouse"
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+  "title": "manage inventory",
+  "shownInUse": true,
+  "phrase": "Flag excess and near-expiry stock at month-end and agree clearance plans with sales"
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "ac469a4f-77dd-4bd6-b3f5-ffcd2ef7dca2",
+  "title": "create production schedules",
+  "shownInUse": true,
+  "phrase": "Prepared the weekly production schedule for 4 filling lines"
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "bb99af26-71ff-4dca-bde7-1eb1f6194426",
+  "title": "SAP R3",
+  "shownInUse": true,
+  "phrase": "Ran MRP in SAP and released purchase requisitions for packaging"
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "f0393af3-bcd9-41af-a36e-0cfb83b60081",
+  "title": "manage standard enterprise resource planning system",
+  "shownInUse": true,
+  "phrase": "Ran MRP in SAP and released purchase requisitions for packaging"
+ },
+ {
+  "caseId": "c27-scm-demand-planner",
+  "escoId": "4932c6e3-f6c7-49bf-bf66-f8508237054f",
+  "title": "comply with schedule",
+  "shownInUse": true,
+  "phrase": "Tracked schedule adherence and reported reasons for misses"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "53815c73-d352-4d4d-92cb-fb7020cbd8e6",
+  "title": "carry out inventory control accuracy",
+  "shownInUse": true,
+  "phrase": "Plan and run the daily cycle count programme (ABC classification); keep inventory record accuracy above 99.5%"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+  "title": "manage inventory",
+  "shownInUse": true,
+  "phrase": "Plan and run the daily cycle count programme (ABC classification); keep inventory record accuracy above 99.5%"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "5d2e82cc-5943-4218-a459-a1956fad2b63",
+  "title": "manage warehouse inventory",
+  "shownInUse": true,
+  "phrase": "Investigate count variances, trace them to picking or receiving errors and post approved adjustments in the WMS"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "e705db38-4fcf-4069-b01f-3fbdda894cc1",
+  "title": "manage stock rotation",
+  "shownInUse": true,
+  "phrase": "Produce the monthly ageing and slow-moving stock report for each client and recommend disposal or return of items not moved for 180 days"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "cfa0114b-01e8-43ca-ad0f-eea07adc27c9",
+  "title": "monitor stock movement",
+  "shownInUse": true,
+  "phrase": "Produce the monthly ageing and slow-moving stock report for each client and recommend disposal or return of items not moved for 180 days"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "909c2e48-262e-4ebe-be05-5324ab086c1d",
+  "title": "generate reconciliation reports",
+  "shownInUse": true,
+  "phrase": "Reconcile WMS stock balances with each client's SAP stock every month and resolve differences with the client's planners"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "fbafa41f-cd05-4109-a649-8b44d306d779",
+  "title": "create data models",
+  "shownInUse": true,
+  "phrase": "Built an Excel model with pivot tables to track stock days-on-hand by client and SKU"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "1973c966-f236-40c9-b2d4-5d71a89019be",
+  "title": "use spreadsheets software",
+  "shownInUse": true,
+  "phrase": "Built an Excel model with pivot tables to track stock days-on-hand by client and SKU"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "7a6f50a7-d876-461a-8336-f85a01af4c5f",
+  "title": "oversee stock quality control",
+  "shownInUse": true,
+  "phrase": "Lead the annual wall-to-wall stock take for 2 warehouses with the external auditors observing"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "7ace7312-2775-4bfc-9705-3416a9f7b35b",
+  "title": "provide staff training in warehouse management",
+  "shownInUse": true,
+  "phrase": "Train new warehouse clerks on receiving and stock movement procedures"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "089ddb19-1c7a-43ff-ba64-070f7ce4787a",
+  "title": "warehouse operations",
+  "shownInUse": true,
+  "phrase": "Train new warehouse clerks on receiving and stock movement procedures"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "4118be70-c09d-45cd-b53e-0bcdbdc98be0",
+  "title": "supervise the work of staff on different shifts",
+  "shownInUse": true,
+  "phrase": "Supervised 18 pickers and forklift drivers on two shifts"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "9601b2a8-68e4-4906-9306-a23679b8f0b0",
+  "title": "supervise staff",
+  "shownInUse": true,
+  "phrase": "Supervised 18 pickers and forklift drivers on two shifts"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "f7f56b20-8f05-4731-a1bf-79fdcffc72ce",
+  "title": "check deliveries on receipt",
+  "shownInUse": true,
+  "phrase": "Checked inbound deliveries against purchase orders and delivery orders and signed the goods received notes"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "2cae39d6-78c2-4ce3-bee8-628504371463",
+  "title": "receive goods",
+  "shownInUse": true,
+  "phrase": "Checked inbound deliveries against purchase orders and delivery orders and signed the goods received notes"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "fa7be6bf-f906-4b8e-857d-48a9a7da901c",
+  "title": "manage warehouse operations",
+  "shownInUse": true,
+  "phrase": "Prepared weekly warehouse KPI reports (order accuracy, dispatch on time)"
+ },
+ {
+  "caseId": "c28-inventory-controller",
+  "escoId": "095b0a0f-9b66-4e42-965e-d1c538a2986f",
+  "title": "set production KPI",
+  "shownInUse": true,
+  "phrase": "Prepared weekly warehouse KPI reports (order accuracy, dispatch on time)"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "fbafa41f-cd05-4109-a649-8b44d306d779",
+  "title": "create data models",
+  "shownInUse": true,
+  "phrase": "Design star-schema data models in Azure SQL and Power BI for AP, AR and procurement reporting across 11 countries"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "dfff95c6-9758-4c04-a228-7eaa88dec6cd",
+  "title": "design for organisational complexity",
+  "shownInUse": true,
+  "phrase": "Design star-schema data models in Azure SQL and Power BI for AP, AR and procurement reporting across 11 countries"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "fd6d2981-3d4a-4ce2-9741-cfc98c5b74bd",
+  "title": "implement data warehousing techniques",
+  "shownInUse": true,
+  "phrase": "Write T-SQL views and stored procedures that join SAP, Coupa and ServiceNow extracts and schedule loads with Azure Data Factory"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "9d0d89be-bffa-4393-b6f6-8d05bea49051",
+  "title": "data extraction, transformation and loading tools",
+  "shownInUse": true,
+  "phrase": "Write T-SQL views and stored procedures that join SAP, Coupa and ServiceNow extracts and schedule loads with Azure Data Factory"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "ec85cc63-4e24-4631-bf92-8789db2605c0",
+  "title": "maintain database security",
+  "shownInUse": true,
+  "phrase": "Build and publish Power BI dashboards with DAX measures and row-level security used by 300 finance users"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "4f060129-8b75-4d58-a8dd-515bd8fef349",
+  "title": "develop financial statistics reports",
+  "shownInUse": true,
+  "phrase": "Build and publish Power BI dashboards with DAX measures and row-level security used by 300 finance users"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "095b0a0f-9b66-4e42-965e-d1c538a2986f",
+  "title": "set production KPI",
+  "shownInUse": true,
+  "phrase": "Gather reporting requirements from finance process owners and agree KPI definitions such as first-pass match rate and on-time payment"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "a8797f21-1af0-4c5e-98ca-bf1442929363",
+  "title": "interact with users to gather requirements",
+  "shownInUse": true,
+  "phrase": "Gather reporting requirements from finance process owners and agree KPI definitions such as first-pass match rate and on-time payment"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "713fb616-118e-40bc-9366-4a69879a49d5",
+  "title": "implement data quality processes",
+  "shownInUse": true,
+  "phrase": "Set up data quality checks that flag missing vendor IDs and duplicate invoice numbers before each refresh"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "50b100ea-74fd-4706-99db-3e4ca55e51b8",
+  "title": "perform data cleansing",
+  "shownInUse": true,
+  "phrase": "Set up data quality checks that flag missing vendor IDs and duplicate invoice numbers before each refresh"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "0d6714c6-720e-4985-9791-5ab85d28da79",
+  "title": "gather data",
+  "shownInUse": true,
+  "phrase": "Wrote Python scripts to pull currency rates from an API and load them into the data warehouse"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "5ef0c719-5bcb-49f8-b8eb-824388225333",
+  "title": "use scripting programming",
+  "shownInUse": true,
+  "phrase": "Wrote Python scripts to pull currency rates from an API and load them into the data warehouse"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "0cc9c234-f817-4f4c-908a-4d28fe3b0f4a",
+  "title": "coach employees",
+  "shownInUse": true,
+  "phrase": "Coach two junior developers and review their DAX and SQL"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "fb9c12af-ec45-498a-8e52-891371191557",
+  "title": "mentor individual employees",
+  "shownInUse": true,
+  "phrase": "Coach two junior developers and review their DAX and SQL"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "1973c966-f236-40c9-b2d4-5d71a89019be",
+  "title": "use spreadsheets software",
+  "shownInUse": true,
+  "phrase": "Produced weekly AP and AR KPI reports in Excel using Power Pivot for the Finance Director"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "c544a9f3-5945-4b54-afed-de0697852817",
+  "title": "report analysis results",
+  "shownInUse": true,
+  "phrase": "Produced weekly AP and AR KPI reports in Excel using Power Pivot for the Finance Director"
+ },
+ {
+  "caseId": "c29-bi-developer",
+  "escoId": "143769cb-b61e-47d8-a61e-eedfbec1016c",
+  "title": "business intelligence",
+  "shownInUse": true,
+  "phrase": "Migrated 20 Excel reports to Power BI"
+ },
+ {
+  "caseId": "c30-rpa-analyst",
+  "escoId": "56042303-972b-41be-9310-58467599ff7e",
+  "title": "analyse business processes",
+  "shownInUse": true,
+  "phrase": "Run process assessments with process owners to choose which steps to automate; score candidates on volume, rule clarity and exception rate"
+ },
+ {
+  "caseId": "c30-rpa-analyst",
+  "escoId": "958b8802-ec3e-4813-97f7-6c8f48610dbd",
+  "title": "identify process improvements",
+  "shownInUse": true,
+  "phrase": "Run process assessments with process owners to choose which steps to automate; score candidates on volume, rule clarity and exception rate"
+ },
+ {
+  "caseId": "c30-rpa-analyst",
+  "escoId": "385479b7-5da5-4367-9763-0d15b41bb65b",
+  "title": "provide user documentation",
+  "shownInUse": true,
+  "phrase": "Write process design documents and test scripts; run user acceptance testing with the AP and GL teams"
+ },
+ {
+  "caseId": "c30-rpa-analyst",
+  "escoId": "f10142ce-d522-49c3-9fd1-054fb63529d4",
+  "title": "develop test procedures",
+  "shownInUse": true,
+  "phrase": "Write process design documents and test scripts; run user acceptance testing with the AP and GL teams"
+ },
+ {
+  "caseId": "c30-rpa-analyst",
+  "escoId": "50b100ea-74fd-4706-99db-3e4ca55e51b8",
+  "title": "perform data cleansing",
+  "shownInUse": true,
+  "phrase": "Use Python to clean bank statement files before bot processing"
+ },
+ {
+  "caseId": "c30-rpa-analyst",
+  "escoId": "4463a721-69f3-413d-8321-43e3af13a4f1",
+  "title": "use databases",
+  "shownInUse": true,
+  "phrase": "Write SQL queries to check bot output against SAP tables"
+ },
+ {
+  "caseId": "c30-rpa-analyst",
+  "escoId": "909c2e48-262e-4ebe-be05-5324ab086c1d",
+  "title": "generate reconciliation reports",
+  "shownInUse": true,
+  "phrase": "Reconciled vendor statements for the top 40 suppliers every month"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "496932f1-0b6b-4f73-9432-d95c7ddcd43b",
+  "title": "recruit employees",
+  "shownInUse": true,
+  "phrase": "Handle end-to-end recruitment for production and engineering roles including job ads, screening, interviews and offer letters"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "5aa57bdc-5765-435e-8fc9-99b3febdb213",
+  "title": "hire human resources",
+  "shownInUse": true,
+  "phrase": "Handle end-to-end recruitment for production and engineering roles including job ads, screening, interviews and offer letters"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "9d916d7c-89b3-4084-a6d9-e2b0b3091404",
+  "title": "manage payroll",
+  "shownInUse": true,
+  "phrase": "Process monthly payroll for 450 employees in SQL Payroll with overtime, statutory deductions and salary bank file submission"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "207f87c4-ac68-4987-990c-636ca19c2626",
+  "title": "calculate wages",
+  "shownInUse": true,
+  "phrase": "Process monthly payroll for 450 employees in SQL Payroll with overtime, statutory deductions and salary bank file submission"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "8b9332c7-2551-4527-9a64-a615713d8b02",
+  "title": "evaluate employees",
+  "shownInUse": true,
+  "phrase": "Run onboarding for new hires and track probation reviews"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "cc0b95b8-5fae-4ee2-851e-9b1e9fa178be",
+  "title": "manage employee complaints",
+  "shownInUse": true,
+  "phrase": "Handle disciplinary cases, issue show-cause letters, arrange domestic inquiries and keep records in line with the Employment Act 1955"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "72836f47-cf5c-48e1-a82b-1cf6e4e0f623",
+  "title": "protect employee rights",
+  "shownInUse": true,
+  "phrase": "Handle disciplinary cases, issue show-cause letters, arrange domestic inquiries and keep records in line with the Employment Act 1955"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "ebff1a39-7261-49cd-9cb2-88f565e8dc26",
+  "title": "develop corporate training programmes",
+  "shownInUse": true,
+  "phrase": "Plan the annual training calendar and claim HRD Corp grants for 40 programmes a year"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "0ffce932-cec4-4fec-87e6-df23fb6bdc12",
+  "title": "find grants",
+  "shownInUse": true,
+  "phrase": "Plan the annual training calendar and claim HRD Corp grants for 40 programmes a year"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "1973c966-f236-40c9-b2d4-5d71a89019be",
+  "title": "use spreadsheets software",
+  "shownInUse": true,
+  "phrase": "Prepare monthly HR reports in Excel using pivot tables on headcount, turnover and overtime cost for management"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535",
+  "title": "use microsoft office",
+  "shownInUse": true,
+  "phrase": "Prepare monthly HR reports in Excel using pivot tables on headcount, turnover and overtime cost for management"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "d0f2f8a7-d935-4a6d-8e54-dcc3e5e2cbeb",
+  "title": "present reports",
+  "shownInUse": true,
+  "phrase": "Coordinate the annual employee engagement survey and present the results to department heads"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "6053cf28-2f42-44bb-8d27-a43920128b30",
+  "title": "gather feedback from employees",
+  "shownInUse": true,
+  "phrase": "Coordinate the annual employee engagement survey and present the results to department heads"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "a8fe6eae-cfc1-4580-ad12-f325e8c2b21b",
+  "title": "keep records of attendance",
+  "shownInUse": true,
+  "phrase": "Kept attendance and leave records and prepared overtime listings for payroll"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "40005305-4541-4da7-9f76-abab74f0bc51",
+  "title": "monitor staff absences",
+  "shownInUse": true,
+  "phrase": "Kept attendance and leave records and prepared overtime listings for payroll"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "7361c086-443c-43c2-8215-31ef8e8895e5",
+  "title": "process medical insurance claims",
+  "shownInUse": true,
+  "phrase": "Arranged medical check-ups for new hires and processed staff medical claims"
+ },
+ {
+  "caseId": "c31-hr-executive",
+  "escoId": "c57fbedb-6e0b-49cf-9ba2-cf431d61972e",
+  "title": "manage claims process",
+  "shownInUse": true,
+  "phrase": "Arranged medical check-ups for new hires and processed staff medical claims"
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "1de548e0-9535-4d2e-9d20-d4474c1ea813",
+  "title": "oversee construction project",
+  "shownInUse": true,
+  "phrase": "Supervise construction of a 12-storey mixed development: piling, reinforced concrete frame and external works; coordinate 9 subcontractors."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "763e3863-d4c8-471a-9357-860580a95529",
+  "title": "supervise property development projects",
+  "shownInUse": true,
+  "phrase": "Supervise construction of a 12-storey mixed development: piling, reinforced concrete frame and external works; coordinate 9 subcontractors."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "75791d32-ec99-49c3-92dc-728fe73a9de7",
+  "title": "inspect concrete structures",
+  "shownInUse": true,
+  "phrase": "Check setting-out, reinforcement and formwork before concrete pours and keep inspection records for the consultant."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "4f9f0410-5db0-4b3b-8de3-1ded1600c719",
+  "title": "inspect construction sites",
+  "shownInUse": true,
+  "phrase": "Check setting-out, reinforcement and formwork before concrete pours and keep inspection records for the consultant."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "8c6feedd-339f-4dba-b28a-dae84c759853",
+  "title": "develop project schedule",
+  "shownInUse": true,
+  "phrase": "Prepare the 3-week look-ahead programme and update the master schedule in Primavera P6."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "c73ea1b8-e121-4f91-b8f0-dee4ee28d6ec",
+  "title": "plan schedule",
+  "shownInUse": true,
+  "phrase": "Prepare the 3-week look-ahead programme and update the master schedule in Primavera P6."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "9be758b6-a45d-403c-8943-68390ee2c961",
+  "title": "quantity surveying",
+  "shownInUse": true,
+  "phrase": "Measure work done on site for monthly progress claims and check subcontractor claims against the bill of quantities."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "ccfbdaad-b91d-4bfe-bd0e-d30b33587f19",
+  "title": "keep records of work progress",
+  "shownInUse": true,
+  "phrase": "Measure work done on site for monthly progress claims and check subcontractor claims against the bill of quantities."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "ae25d3a9-a85f-415c-a601-806013ea8229",
+  "title": "compare contractors' bids",
+  "shownInUse": true,
+  "phrase": "Obtain and compare quotations from three subcontractors for minor works and recommend one to the Project Manager."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "9e9a4209-c7cf-4f6e-973e-dc2ffadccc74",
+  "title": "perform procurement processes",
+  "shownInUse": true,
+  "phrase": "Obtain and compare quotations from three subcontractors for minor works and recommend one to the Project Manager."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "93a68dcb-3dc6-4dbe-b196-f6d212228a50",
+  "title": "promote health and safety",
+  "shownInUse": true,
+  "phrase": "Run weekly safety walks and toolbox talks with the safety officer; zero lost-time injuries in 2023."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "0cfc7eb9-2891-4153-b335-6331f381ff05",
+  "title": "communicate health and safety measures",
+  "shownInUse": true,
+  "phrase": "Run weekly safety walks and toolbox talks with the safety officer; zero lost-time injuries in 2023."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "9f1bd2a4-91af-4b60-aeb3-0fe1f4434966",
+  "title": "order construction supplies",
+  "shownInUse": true,
+  "phrase": "Order site materials (rebar, cement, formwork plywood) based on the weekly programme and track deliveries."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "360e1c45-d335-4a19-b717-e1932927a72b",
+  "title": "handle delivery of raw materials",
+  "shownInUse": true,
+  "phrase": "Order site materials (rebar, cement, formwork plywood) based on the weekly programme and track deliveries."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "ebf40cf9-5c98-4d84-9f01-b7ca74e90682",
+  "title": "test concrete",
+  "shownInUse": true,
+  "phrase": "Carried out field density and slump tests with the lab technician."
+ },
+ {
+  "caseId": "c32-civil-engineer",
+  "escoId": "c9eea75d-918e-4733-bf1d-86ecd7a04946",
+  "title": "perform studies and field investigation",
+  "shownInUse": true,
+  "phrase": "Carried out field density and slump tests with the lab technician."
+ },
+ {
+  "caseId": "c33-data-analyst-linkedin",
+  "escoId": "4463a721-69f3-413d-8321-43e3af13a4f1",
+  "title": "use databases",
+  "shownInUse": true,
+  "phrase": "Write SQL in Snowflake to build the monthly motor claims dataset, joining policy, claims and workshop tables"
+ },
+ {
+  "caseId": "c33-data-analyst-linkedin",
+  "escoId": "fbafa41f-cd05-4109-a649-8b44d306d779",
+  "title": "create data models",
+  "shownInUse": true,
+  "phrase": "Write SQL in Snowflake to build the monthly motor claims dataset, joining policy, claims and workshop tables"
+ },
+ {
+  "caseId": "c33-data-analyst-linkedin",
+  "escoId": "c3e36d05-8ae8-447f-bb2b-6f9409f85389",
+  "title": "deliver visual presentation of data",
+  "shownInUse": true,
+  "phrase": "Built the Power BI claims-ageing dashboard used by 60 claims handlers and their managers"
+ },
+ {
+  "caseId": "c33-data-analyst-linkedin",
+  "escoId": "7a450b0e-7b4f-446f-a045-fd7d2bf9361e",
+  "title": "assemble visual displays",
+  "shownInUse": true,
+  "phrase": "Built the Power BI claims-ageing dashboard used by 60 claims handlers and their managers"
+ },
+ {
+  "caseId": "c33-data-analyst-linkedin",
+  "escoId": "541cdc23-1eec-4520-81fc-3392eaf538ed",
+  "title": "fraud detection",
+  "shownInUse": true,
+  "phrase": "Analysed repair cost by workshop and flagged 12 outlier workshops for the fraud team (z-scores, Python)"
+ },
+ {
+  "caseId": "c33-data-analyst-linkedin",
+  "escoId": "70159320-b7f9-4d3e-9f00-99e0adf3f77e",
+  "title": "perform inspection analysis",
+  "shownInUse": true,
+  "phrase": "Analysed repair cost by workshop and flagged 12 outlier workshops for the fraud team (z-scores, Python)"
+ },
+ {
+  "caseId": "c33-data-analyst-linkedin",
+  "escoId": "bef39770-1abe-4b86-830a-7c168f69c459",
+  "title": "keep records of merchandise delivery",
+  "shownInUse": true,
+  "phrase": "Weekly delivery performance reports in Excel and Google Sheets"
+ },
+ {
+  "caseId": "c33-data-analyst-linkedin",
+  "escoId": "e5d4da88-aac9-4941-8e27-f985027020ab",
+  "title": "prepare freight shipment reports",
+  "shownInUse": true,
+  "phrase": "Weekly delivery performance reports in Excel and Google Sheets"
+ },
+ {
+  "caseId": "c34-graphic-designer-linkedin",
+  "escoId": "e10d57dd-6717-4b24-961a-8a87c7e80b5d",
+  "title": "plan new packaging designs",
+  "shownInUse": true,
+  "phrase": "Lead designer for packaging and in-store campaigns for 140 outlets"
+ },
+ {
+  "caseId": "c34-graphic-designer-linkedin",
+  "escoId": "ae6af2c6-890d-40a7-9849-326a8c21df76",
+  "title": "coordinate advertising campaigns",
+  "shownInUse": true,
+  "phrase": "Lead designer for packaging and in-store campaigns for 140 outlets"
+ },
+ {
+  "caseId": "c34-graphic-designer-linkedin",
+  "escoId": "754690ad-6207-4e1c-9df7-9a2b58afa587",
+  "title": "define brand identity",
+  "shownInUse": true,
+  "phrase": "Rebranded the retail coffee range in 2023 (12 SKUs)"
+ },
+ {
+  "caseId": "c34-graphic-designer-linkedin",
+  "escoId": "c3e36d05-8ae8-447f-bb2b-6f9409f85389",
+  "title": "deliver visual presentation of data",
+  "shownInUse": true,
+  "phrase": "Designed the infographics for the group's annual report and sustainability report"
+ },
+ {
+  "caseId": "c34-graphic-designer-linkedin",
+  "escoId": "7fb699d9-182a-430e-b7a0-6d8ed05c284b",
+  "title": "graphic design",
+  "shownInUse": true,
+  "phrase": "Designed the infographics for the group's annual report and sustainability report"
+ },
+ {
+  "caseId": "c34-graphic-designer-linkedin",
+  "escoId": "9c6e951f-aa88-4890-983d-e7a6ee49f5bb",
+  "title": "plan marketing campaigns",
+  "shownInUse": true,
+  "phrase": "Social media and print campaigns for FMCG and property clients"
+ },
+ {
+  "caseId": "c34-graphic-designer-linkedin",
+  "escoId": "b1a5d83a-e02a-449f-a68b-539b34821078",
+  "title": "design materials for multimedia campaigns",
+  "shownInUse": true,
+  "phrase": "Social media and print campaigns for FMCG and property clients"
+ },
+ {
+  "caseId": "c34-graphic-designer-linkedin",
+  "escoId": "8ff314a8-57d7-4b8c-bf41-79f9572fedd0",
+  "title": "use digital illustration techniques",
+  "shownInUse": false,
+  "phrase": "Illustrator"
+ },
+ {
+  "caseId": "c35-ap-specialist-ai-linkedin",
+  "escoId": "bb99af26-71ff-4dca-bde7-1eb1f6194426",
+  "title": "SAP R3",
+  "shownInUse": true,
+  "phrase": "Process and review vendor invoices for 6 ASEAN entities in SAP"
+ },
+ {
+  "caseId": "c35-ap-specialist-ai-linkedin",
+  "escoId": "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+  "title": "identify accounting errors",
+  "shownInUse": true,
+  "phrase": "Check fields extracted by AI invoice-capture tool and fix errors"
+ },
+ {
+  "caseId": "c35-ap-specialist-ai-linkedin",
+  "escoId": "57f55b4e-ce44-4afd-8815-4cc4d103100e",
+  "title": "detect flaws in record",
+  "shownInUse": true,
+  "phrase": "Check fields extracted by AI invoice-capture tool and fix errors"
+ },
+ {
+  "caseId": "c35-ap-specialist-ai-linkedin",
+  "escoId": "72c02483-714c-47de-a3ff-870c5eb634d0",
+  "title": "resolve difficult account allocation cases",
+  "shownInUse": true,
+  "phrase": "Resolve exceptions that AI cannot match to a PO"
+ },
+ {
+  "caseId": "c35-ap-specialist-ai-linkedin",
+  "escoId": "909c2e48-262e-4ebe-be05-5324ab086c1d",
+  "title": "generate reconciliation reports",
+  "shownInUse": true,
+  "phrase": "Handle vendor queries and monthly statement reconciliations for vendor group"
+ },
+ {
+  "caseId": "c35-ap-specialist-ai-linkedin",
+  "escoId": "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+  "title": "check accounting records",
+  "shownInUse": true,
+  "phrase": "Handle vendor queries and monthly statement reconciliations for vendor group"
+ },
+ {
+  "caseId": "c36-esg-consultant-linkedin",
+  "escoId": "5aec5b83-df71-483e-90b9-21e56a0a3cb2",
+  "title": "measure pollution",
+  "shownInUse": true,
+  "phrase": "Lead GHG inventories (Scope 1, 2 and selected Scope 3) for 15 manufacturing and property clients"
+ },
+ {
+  "caseId": "c36-esg-consultant-linkedin",
+  "escoId": "27ed854c-15b8-4ba2-90e9-ae888a219703",
+  "title": "perform business analysis",
+  "shownInUse": true,
+  "phrase": "Set organisational boundaries and review client activity data back to bills and meter readings"
+ },
+ {
+  "caseId": "c36-esg-consultant-linkedin",
+  "escoId": "f17f94f1-88cb-4815-873a-2a9639f10729",
+  "title": "draft project documentation",
+  "shownInUse": true,
+  "phrase": "Draft Sustainability Statements and IFRS S2 gap assessments"
+ },
+ {
+  "caseId": "c36-esg-consultant-linkedin",
+  "escoId": "4300b453-9bcf-474c-9ee3-92ec2229720c",
+  "title": "global standards for sustainability reporting",
+  "shownInUse": true,
+  "phrase": "Draft Sustainability Statements and IFRS S2 gap assessments"
+ },
+ {
+  "caseId": "c36-esg-consultant-linkedin",
+  "escoId": "99c4c69a-025c-464f-adda-874c7f107a31",
+  "title": "engage with stakeholders",
+  "shownInUse": true,
+  "phrase": "Facilitate materiality workshops with client boards"
+ },
+ {
+  "caseId": "c36-esg-consultant-linkedin",
+  "escoId": "2d580707-99df-4ee0-9269-64fcf3f97171",
+  "title": "plan workshop activity",
+  "shownInUse": true,
+  "phrase": "Facilitate materiality workshops with client boards"
+ },
+ {
+  "caseId": "c37-esg-assurance-linkedin",
+  "escoId": "d53eab76-e8ff-4e28-af26-7e012951c763",
+  "title": "measure company's sustainability performance",
+  "shownInUse": true,
+  "phrase": "Perform limited assurance procedures on Scope 1 and 2 emissions and selected Bursa common indicators for listed clients"
+ },
+ {
+  "caseId": "c37-esg-assurance-linkedin",
+  "escoId": "0d6714c6-720e-4985-9791-5ab85d28da79",
+  "title": "gather data",
+  "shownInUse": true,
+  "phrase": "Conduct walkthroughs of the data collection process"
+ },
+ {
+  "caseId": "c37-esg-assurance-linkedin",
+  "escoId": "b5a1fc87-c9f2-41f4-a1ae-28e023715592",
+  "title": "perform sample testing",
+  "shownInUse": true,
+  "phrase": "Perform sample testing of activity data to invoices and meter readings"
+ },
+ {
+  "caseId": "c37-esg-assurance-linkedin",
+  "escoId": "89ff28d6-342c-435d-83aa-83e71dbbbc96",
+  "title": "conduct financial audits",
+  "shownInUse": true,
+  "phrase": "Statutory audits of manufacturing and plantation companies"
+ },
+ {
+  "caseId": "c37-esg-assurance-linkedin",
+  "escoId": "b3b2547b-5c37-4d21-8ee5-f01b6bd672ae",
+  "title": "follow stock control instructions",
+  "shownInUse": true,
+  "phrase": "Attend stock counts"
+ },
+ {
+  "caseId": "c38-finance-automation-lead-linkedin",
+  "escoId": "1f1d2ff8-c4c1-45cc-9812-6a7ee84a73cb",
+  "title": "lead a team",
+  "shownInUse": true,
+  "phrase": "Lead a team of 5 building Power Automate and UiPath automations for finance"
+ },
+ {
+  "caseId": "c38-finance-automation-lead-linkedin",
+  "escoId": "f642d7ed-e8d7-4355-a747-b85094d4e2e3",
+  "title": "prioritise requests",
+  "shownInUse": true,
+  "phrase": "Run the intake and prioritisation of automation ideas with process owners"
+ },
+ {
+  "caseId": "c38-finance-automation-lead-linkedin",
+  "escoId": "c3e88160-eebc-4cb9-aacb-c11792bcdc7a",
+  "title": "consult with stakeholders on implementation of a production",
+  "shownInUse": true,
+  "phrase": "Run the intake and prioritisation of automation ideas with process owners"
+ },
+ {
+  "caseId": "c38-finance-automation-lead-linkedin",
+  "escoId": "75b30aeb-34c0-40f4-b77d-271d75a98b14",
+  "title": "improve business processes",
+  "shownInUse": true,
+  "phrase": "Redesigned the intercompany settlement process across 4 entities, cutting close by 2 days"
+ },
+ {
+  "caseId": "c38-finance-automation-lead-linkedin",
+  "escoId": "958b8802-ec3e-4813-97f7-6c8f48610dbd",
+  "title": "identify process improvements",
+  "shownInUse": true,
+  "phrase": "Redesigned the intercompany settlement process across 4 entities, cutting close by 2 days"
+ },
+ {
+  "caseId": "c38-finance-automation-lead-linkedin",
+  "escoId": "c290c45c-b8da-4517-be4a-b16fdce26cb2",
+  "title": "review drafts",
+  "shownInUse": true,
+  "phrase": "Piloting a GenAI assistant that drafts variance commentary and set the review rules"
+ },
+ {
+  "caseId": "c38-finance-automation-lead-linkedin",
+  "escoId": "3e679f1c-e515-4f1b-82b3-2a7e848183a5",
+  "title": "advise on drafting policies",
+  "shownInUse": true,
+  "phrase": "Piloting a GenAI assistant that drafts variance commentary and set the review rules"
+ },
+ {
+  "caseId": "c39-green-finance-linkedin",
+  "escoId": "d53eab76-e8ff-4e28-af26-7e012951c763",
+  "title": "measure company's sustainability performance",
+  "shownInUse": true,
+  "phrase": "Score issuers on ESG risk and engage companies whose transition plans look weak"
+ },
+ {
+  "caseId": "c39-green-finance-linkedin",
+  "escoId": "203083ca-b051-4c28-8986-fc8731bacee5",
+  "title": "sustainable finance",
+  "shownInUse": true,
+  "phrase": "Score issuers on ESG risk and engage companies whose transition plans look weak"
+ },
+ {
+  "caseId": "c39-green-finance-linkedin",
+  "escoId": "8a43795b-bb38-4f29-91df-a6c92ad4643c",
+  "title": "analyse financial performance of a company",
+  "shownInUse": true,
+  "phrase": "Credit research on Malaysian corporate sukuk issuers"
+ },
+ {
+  "caseId": "c40-category-manager-linkedin",
+  "escoId": "4b2c4de9-43d7-4905-9d58-bc2e7d84b2e1",
+  "title": "manage tender processes",
+  "shownInUse": true,
+  "phrase": "Ran tenders for maintenance services and spare parts"
+ },
+ {
+  "caseId": "c40-category-manager-linkedin",
+  "escoId": "9e9a4209-c7cf-4f6e-973e-dc2ffadccc74",
+  "title": "perform procurement processes",
+  "shownInUse": true,
+  "phrase": "Ran tenders for maintenance services and spare parts"
+ },
+ {
+  "caseId": "c40-category-manager-linkedin",
+  "escoId": "5f2efbdf-08a2-49cd-9c06-bd284e4f0fbf",
+  "title": "negotiate terms with suppliers",
+  "shownInUse": true,
+  "phrase": "Negotiated term contracts"
+ },
+ {
+  "caseId": "c40-category-manager-linkedin",
+  "escoId": "92721092-fe7c-4689-96bd-4f02385bc0e7",
+  "title": "manage contracts",
+  "shownInUse": true,
+  "phrase": "Negotiated term contracts"
+ },
+ {
+  "caseId": "c41-ai-data-quality-linkedin",
+  "escoId": "fabc4abb-d255-403e-bfbb-6557afb4db58",
+  "title": "label samples",
+  "shownInUse": true,
+  "phrase": "Label and review invoice, receipt and bank statement fields for our document-AI models"
+ },
+ {
+  "caseId": "c41-ai-data-quality-linkedin",
+  "escoId": "713fb616-118e-40bc-9366-4a69879a49d5",
+  "title": "implement data quality processes",
+  "shownInUse": true,
+  "phrase": "Label and review invoice, receipt and bank statement fields for our document-AI models"
+ },
+ {
+  "caseId": "c41-ai-data-quality-linkedin",
+  "escoId": "35ebe444-9ece-4fbc-a55d-e99ea37267ae",
+  "title": "manage quality",
+  "shownInUse": true,
+  "phrase": "Run weekly agreement checks across 8 annotators"
+ },
+ {
+  "caseId": "c41-ai-data-quality-linkedin",
+  "escoId": "29154735-107a-4daa-a050-537f7707f34e",
+  "title": "conduct content quality assurance",
+  "shownInUse": true,
+  "phrase": "Run weekly agreement checks across 8 annotators"
+ },
+ {
+  "caseId": "c41-ai-data-quality-linkedin",
+  "escoId": "ace994b7-0c7c-44b2-8087-3aa0bfd2a93a",
+  "title": "provide performance feedback",
+  "shownInUse": true,
+  "phrase": "Investigate fields where model accuracy drops and send error examples back to the ML team for retraining"
+ },
+ {
+  "caseId": "c41-ai-data-quality-linkedin",
+  "escoId": "2b92a5b2-6758-4ee3-9fb4-b6387a55cc8f",
+  "title": "perform data analysis",
+  "shownInUse": true,
+  "phrase": "Investigate fields where model accuracy drops and send error examples back to the ML team for retraining"
+ },
+ {
+  "caseId": "c41-ai-data-quality-linkedin",
+  "escoId": "99b163e8-7815-43e2-83f3-a47f3076354c",
+  "title": "accounting entries",
+  "shownInUse": true,
+  "phrase": "Full set of accounts, AP/AR, SST returns and bank reconciliations for a trading company"
+ },
+ {
+  "caseId": "c41-ai-data-quality-linkedin",
+  "escoId": "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+  "title": "maintain records of financial transactions",
+  "shownInUse": true,
+  "phrase": "Full set of accounts, AP/AR, SST returns and bank reconciliations for a trading company"
+ },
+ {
+  "caseId": "c42-digital-marketing-linkedin",
+  "escoId": "660060e4-c418-4049-836b-beade5f8a4a8",
+  "title": "create annual marketing budget",
+  "shownInUse": true,
+  "phrase": "Manage a RM3 million yearly ad budget across Meta, Google and TikTok"
+ },
+ {
+  "caseId": "c42-digital-marketing-linkedin",
+  "escoId": "750f86d2-18be-4015-84b1-d4a26d9b2d88",
+  "title": "online ads campaign techniques",
+  "shownInUse": true,
+  "phrase": "Manage a RM3 million yearly ad budget across Meta, Google and TikTok"
+ },
+ {
+  "caseId": "c42-digital-marketing-linkedin",
+  "escoId": "9c6e951f-aa88-4890-983d-e7a6ee49f5bb",
+  "title": "plan marketing campaigns",
+  "shownInUse": true,
+  "phrase": "plan campaigns with the brand team and an agency"
+ },
+ {
+  "caseId": "c42-digital-marketing-linkedin",
+  "escoId": "7893605c-18cc-4c68-8c22-4f969df1a673",
+  "title": "liaise with advertising agencies",
+  "shownInUse": true,
+  "phrase": "plan campaigns with the brand team and an agency"
+ },
+ {
+  "caseId": "c42-digital-marketing-linkedin",
+  "escoId": "a9dc215e-4e26-4ac0-b1e8-a721a88af813",
+  "title": "execute conversion testing",
+  "shownInUse": true,
+  "phrase": "Run A/B tests on landing pages and ad creatives"
+ },
+ {
+  "caseId": "c42-digital-marketing-linkedin",
+  "escoId": "36931cb7-ca3f-4be1-8428-f38eefc8e1ed",
+  "title": "execute email marketing",
+  "shownInUse": true,
+  "phrase": "Social media content and email marketing"
+ },
+ {
+  "caseId": "c42-digital-marketing-linkedin",
+  "escoId": "509909a2-4a8f-4ead-8ad0-968df63b77cc",
+  "title": "social media marketing techniques",
+  "shownInUse": true,
+  "phrase": "Social media content and email marketing"
+ },
+ {
+  "caseId": "c43-it-auditor-linkedin",
+  "escoId": "7e1f9657-ab4e-407c-842f-b846197060e3",
+  "title": "execute ICT audits",
+  "shownInUse": true,
+  "phrase": "Plan and run IT general control audits on billing and ERP systems"
+ },
+ {
+  "caseId": "c43-it-auditor-linkedin",
+  "escoId": "ed0718f6-5823-4c74-9749-2936c9c06203",
+  "title": "develop audit plan",
+  "shownInUse": true,
+  "phrase": "Plan and run IT general control audits on billing and ERP systems"
+ },
+ {
+  "caseId": "c43-it-auditor-linkedin",
+  "escoId": "0295b2a4-fb86-495f-9547-d479532fc4c2",
+  "title": "trace financial transactions",
+  "shownInUse": true,
+  "phrase": "Write SQL and Python scripts to test 100% of billing and procurement transactions for control breaches"
+ },
+ {
+  "caseId": "c43-it-auditor-linkedin",
+  "escoId": "3e9b580d-811b-48df-a5d1-a7bdd26f901f",
+  "title": "prepare financial auditing reports",
+  "shownInUse": true,
+  "phrase": "Report findings to the Audit Committee"
+ },
+ {
+  "caseId": "c43-it-auditor-linkedin",
+  "escoId": "d0f2f8a7-d935-4a6d-8e54-dcc3e5e2cbeb",
+  "title": "present reports",
+  "shownInUse": true,
+  "phrase": "Report findings to the Audit Committee"
+ },
+ {
+  "caseId": "c44-fresh-grad-linkedin",
+  "escoId": "21c5790c-0930-4d74-b3b0-84caf5af12ea",
+  "title": "manage budgets",
+  "shownInUse": true,
+  "phrase": "Managed the society's RM18,000 budget, collected membership fees and prepared the financial report for the AGM"
+ },
+ {
+  "caseId": "c44-fresh-grad-linkedin",
+  "escoId": "e2e15494-65b9-4af5-8b86-53fb51e7e022",
+  "title": "manage accounts",
+  "shownInUse": true,
+  "phrase": "Managed the society's RM18,000 budget, collected membership fees and prepared the financial report for the AGM"
+ },
+ {
+  "caseId": "c44-fresh-grad-linkedin",
+  "escoId": "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+  "title": "check accounting records",
+  "shownInUse": true,
+  "phrase": "Prepared bank reconciliations and simple accounts for SME clients in SQL Accounting under a senior's review"
+ },
+ {
+  "caseId": "c44-fresh-grad-linkedin",
+  "escoId": "2ada2f9d-77f7-4ba0-9096-89ae285a65c5",
+  "title": "monitor financial accounts",
+  "shownInUse": true,
+  "phrase": "Prepared bank reconciliations and simple accounts for SME clients in SQL Accounting under a senior's review"
+ },
+ {
+  "caseId": "c45-ap-ocr-scan-bm",
+  "escoId": "a0d79341-8398-4019-ad1b-27888ec35aaa",
+  "title": "use accounting systems",
+  "shownInUse": true,
+  "phrase": "Key-in invois pembekaI dlm sistem SAP & attach DO / GRN"
+ },
+ {
+  "caseId": "c45-ap-ocr-scan-bm",
+  "escoId": "99b163e8-7815-43e2-83f3-a47f3076354c",
+  "title": "accounting entries",
+  "shownInUse": true,
+  "phrase": "Key-in invois pembekaI dlm sistem SAP & attach DO / GRN"
+ },
+ {
+  "caseId": "c45-ap-ocr-scan-bm",
+  "escoId": "909c2e48-262e-4ebe-be05-5324ab086c1d",
+  "title": "generate reconciliation reports",
+  "shownInUse": true,
+  "phrase": "Buat rekon penyata supplier tiap2 bulan utk 30 supplier utama , cari beza & follow up credit note"
+ },
+ {
+  "caseId": "c45-ap-ocr-scan-bm",
+  "escoId": "5a0bffcf-4ff6-49cf-a7db-4142e63f5f04",
+  "title": "answer incoming calls",
+  "shownInUse": true,
+  "phrase": "Jawab call supplier tanya status bayaran"
+ },
+ {
+  "caseId": "c45-ap-ocr-scan-bm",
+  "escoId": "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+  "title": "manage inventory",
+  "shownInUse": true,
+  "phrase": "Bantu masa stock take hujung tahun"
+ },
+ {
+  "caseId": "c45-ap-ocr-scan-bm",
+  "escoId": "b3b2547b-5c37-4d21-8ee5-f01b6bd672ae",
+  "title": "follow stock control instructions",
+  "shownInUse": true,
+  "phrase": "Bantu masa stock take hujung tahun"
+ },
+ {
+  "caseId": "c45-ap-ocr-scan-bm",
+  "escoId": "f7f56b20-8f05-4731-a1bf-79fdcffc72ce",
+  "title": "check deliveries on receipt",
+  "shownInUse": true,
+  "phrase": "Terima barang dr supplier , check dgn DO & sign GRN"
+ },
+ {
+  "caseId": "c45-ap-ocr-scan-bm",
+  "escoId": "2cae39d6-78c2-4ce3-bee8-628504371463",
+  "title": "receive goods",
+  "shownInUse": true,
+  "phrase": "Terima barang dr supplier , check dgn DO & sign GRN"
+ },
+ {
+  "caseId": "c45-ap-ocr-scan-bm",
+  "escoId": "de804504-bd5c-465d-b54f-9da299d8ee90",
+  "title": "maintain stock control systems",
+  "shownInUse": true,
+  "phrase": "Update kad stok & sistem"
+ },
+ {
+  "caseId": "c45-ap-ocr-scan-bm",
+  "escoId": "f60416d5-2d98-4401-ba0d-b92b53e01d86",
+  "title": "keep stock records",
+  "shownInUse": true,
+  "phrase": "Update kad stok & sistem"
+ },
+ {
+  "caseId": "c45-ap-ocr-scan-bm",
+  "escoId": "7e6509bd-9642-4af5-bad3-5b2cec29b6f9",
+  "title": "control reorder points",
+  "shownInUse": true,
+  "phrase": "Buat order bila stok bawah paras minimum"
+ },
+ {
+  "caseId": "c46-admin-keyword-stuffed",
+  "escoId": "31c7add0-0150-4029-bf33-47872c23fcf1",
+  "title": "maintain inventory of office supplies",
+  "shownInUse": true,
+  "phrase": "manage office admin, stationery orders, courier & filing"
+ },
+ {
+  "caseId": "c46-admin-keyword-stuffed",
+  "escoId": "6a609f8f-1451-4102-ad2d-62c5270e1237",
+  "title": "office administration",
+  "shownInUse": true,
+  "phrase": "manage office admin, stationery orders, courier & filing"
+ },
+ {
+  "caseId": "c46-admin-keyword-stuffed",
+  "escoId": "c3687b34-fe53-4db2-ad1b-5055a6c5b6fd",
+  "title": "organise project meetings",
+  "shownInUse": true,
+  "phrase": "arrange meeting rooms and prepare minutes for weekly management meeting"
+ },
+ {
+  "caseId": "c46-admin-keyword-stuffed",
+  "escoId": "5fa6cd2f-9bab-4afa-a184-2d2f1401b770",
+  "title": "write meeting reports",
+  "shownInUse": true,
+  "phrase": "arrange meeting rooms and prepare minutes for weekly management meeting"
+ },
+ {
+  "caseId": "c46-admin-keyword-stuffed",
+  "escoId": "a8fe6eae-cfc1-4580-ad12-f325e8c2b21b",
+  "title": "keep records of attendance",
+  "shownInUse": true,
+  "phrase": "update staff attendance in excel and send to HR"
+ },
+ {
+  "caseId": "c47-plantation-esg-twocol",
+  "escoId": "0d6714c6-720e-4985-9791-5ab85d28da79",
+  "title": "gather data",
+  "shownInUse": true,
+  "phrase": "Kumpul data bulanan dari 9 ladang & 2 kilang: diesel, baja, POME, elektrik ; semak data pelik dgn pengurus ladang"
+ },
+ {
+  "caseId": "c47-plantation-esg-twocol",
+  "escoId": "556be6f4-225f-46a2-a795-d3d54d98c3f7",
+  "title": "conduct workplace audits",
+  "shownInUse": true,
+  "phrase": "Prepare MSPO & RSPO internal audit checklist ; conduct internal audit at estates & report non-conformities to GM"
+ },
+ {
+  "caseId": "c47-plantation-esg-twocol",
+  "escoId": "60ab2bf7-c812-4a88-86c0-7c81a9b2f77c",
+  "title": "carry out environmental audits",
+  "shownInUse": true,
+  "phrase": "Prepare MSPO & RSPO internal audit checklist ; conduct internal audit at estates & report non-conformities to GM"
+ },
+ {
+  "caseId": "c47-plantation-esg-twocol",
+  "escoId": "f3cc52e3-a96c-4549-b841-6e41a846fa99",
+  "title": "report on environmental issues",
+  "shownInUse": true,
+  "phrase": "Draf bahagian alam sekitar dlm laporan kemampanan tahunan (ikut Bursa)"
+ },
+ {
+  "caseId": "c47-plantation-esg-twocol",
+  "escoId": "23845010-4c1e-41d3-94a3-940bcab65bce",
+  "title": "monitor nature conservation",
+  "shownInUse": true,
+  "phrase": "Monitor riparian buffer zones & HCV areas with the conservation team"
+ },
+ {
+  "caseId": "c47-plantation-esg-twocol",
+  "escoId": "e5f77488-7561-475a-9888-decd2443d37a",
+  "title": "train staff on waste management",
+  "shownInUse": true,
+  "phrase": "Train estate staff on scheduled waste & chemical handling (SOP)"
+ },
+ {
+  "caseId": "c47-plantation-esg-twocol",
+  "escoId": "2cb27e30-2be7-4a09-9502-fdd2102c046b",
+  "title": "carry out training in environmental matters",
+  "shownInUse": true,
+  "phrase": "Train estate staff on scheduled waste & chemical handling (SOP)"
+ },
+ {
+  "caseId": "c47-plantation-esg-twocol",
+  "escoId": "207f87c4-ac68-4987-990c-636ca19c2626",
+  "title": "calculate wages",
+  "shownInUse": true,
+  "phrase": "Kira gaji pekerja ladang (check roll) & daily muster"
+ },
+ {
+  "caseId": "c47-plantation-esg-twocol",
+  "escoId": "734187e4-650e-4a0a-a7f8-826cd4757229",
+  "title": "check payrolls",
+  "shownInUse": true,
+  "phrase": "Kira gaji pekerja ladang (check roll) & daily muster"
+ },
+ {
+  "caseId": "c47-plantation-esg-twocol",
+  "escoId": "880a8964-a257-4763-b0f5-e0d09d8a0cae",
+  "title": "maintain inventory of pesticides",
+  "shownInUse": true,
+  "phrase": "Rekod stok baja & racun dlm stor ladang, buat indent bulanan"
+ },
+ {
+  "caseId": "c47-plantation-esg-twocol",
+  "escoId": "f60416d5-2d98-4401-ba0d-b92b53e01d86",
+  "title": "keep stock records",
+  "shownInUse": true,
+  "phrase": "Rekod stok baja & racun dlm stor ladang, buat indent bulanan"
+ },
+ {
+  "caseId": "c48-storekeeper-manglish",
+  "escoId": "2cae39d6-78c2-4ce3-bee8-628504371463",
+  "title": "receive goods",
+  "shownInUse": true,
+  "phrase": "receive material from supplier, check with PO & DO, sign GRN"
+ },
+ {
+  "caseId": "c48-storekeeper-manglish",
+  "escoId": "f7f56b20-8f05-4731-a1bf-79fdcffc72ce",
+  "title": "check deliveries on receipt",
+  "shownInUse": true,
+  "phrase": "receive material from supplier, check with PO & DO, sign GRN"
+ },
+ {
+  "caseId": "c48-storekeeper-manglish",
+  "escoId": "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+  "title": "manage inventory",
+  "shownInUse": true,
+  "phrase": "issue barang to production ikut job order"
+ },
+ {
+  "caseId": "c48-storekeeper-manglish",
+  "escoId": "35718973-913e-447b-a968-83e66e6c8872",
+  "title": "keep inventory of goods in production",
+  "shownInUse": true,
+  "phrase": "issue barang to production ikut job order"
+ },
+ {
+  "caseId": "c48-storekeeper-manglish",
+  "escoId": "f60416d5-2d98-4401-ba0d-b92b53e01d86",
+  "title": "keep stock records",
+  "shownInUse": true,
+  "phrase": "buat stock count every month, update stock card & excel"
+ },
+ {
+  "caseId": "c48-storekeeper-manglish",
+  "escoId": "53815c73-d352-4d4d-92cb-fb7020cbd8e6",
+  "title": "carry out inventory control accuracy",
+  "shownInUse": true,
+  "phrase": "buat stock count every month, update stock card & excel"
+ },
+ {
+  "caseId": "c48-storekeeper-manglish",
+  "escoId": "210827e3-3129-45a2-8683-70399f3f561f",
+  "title": "order supplies",
+  "shownInUse": true,
+  "phrase": "order consumables (welding rod, gas, glove) bila stock low, call supplier"
+ },
+ {
+  "caseId": "c48-storekeeper-manglish",
+  "escoId": "0c8f1351-d1fe-4542-89fe-b70729679c52",
+  "title": "manage consumables stock",
+  "shownInUse": true,
+  "phrase": "order consumables (welding rod, gas, glove) bila stock low, call supplier"
+ },
+ {
+  "caseId": "c48-storekeeper-manglish",
+  "escoId": "5d2e82cc-5943-4218-a459-a1956fad2b63",
+  "title": "manage warehouse inventory",
+  "shownInUse": true,
+  "phrase": "report slow moving item to boss yearly"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23",
+  "title": "process payments",
+  "shownInUse": true,
+  "phrase": "cash deposit, withdrawal, remittance & cheque clearing for walk in customers"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "f7e7ccb6-fadc-4c35-935d-e1040be40dfe",
+  "title": "handle financial transactions",
+  "shownInUse": true,
+  "phrase": "cash deposit, withdrawal, remittance & cheque clearing for walk in customers"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "e4b6f863-fa9f-4fe7-a984-f948f8c90d24",
+  "title": "handle cash flow",
+  "shownInUse": true,
+  "phrase": "balance my teller cash end of day ; shortage/excess >RM50 report to Branch Ops Manager"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "24814e7a-70cd-47e5-98b2-d44b46be92d2",
+  "title": "maintain transaction's reports",
+  "shownInUse": true,
+  "phrase": "balance my teller cash end of day ; shortage/excess >RM50 report to Branch Ops Manager"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "603fc2c9-b1bb-4cf5-be48-e62fbcd3a12e",
+  "title": "manage bank vault",
+  "shownInUse": true,
+  "phrase": "assist with daily vault cash count & monthly surprise cash audit by Ops Manager"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "182067ac-3d4f-4919-b591-738cbd39a429",
+  "title": "manage vault access",
+  "shownInUse": true,
+  "phrase": "assist with daily vault cash count & monthly surprise cash audit by Ops Manager"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "4ab4e298-4e35-4e2e-938c-da2c1e11864c",
+  "title": "create banking accounts",
+  "shownInUse": true,
+  "phrase": "open new savings account, check MyKad & KYC documents, key in core banking system"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "84f583f4-f32a-4202-9b92-e25f0c978410",
+  "title": "core banking software",
+  "shownInUse": true,
+  "phrase": "open new savings account, check MyKad & KYC documents, key in core banking system"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "8d3deb53-3998-42eb-97f3-4e8ccb7591a5",
+  "title": "promote financial products",
+  "shownInUse": true,
+  "phrase": "promote fixed deposit & personal financing to walk in customer"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "29a50780-f81b-429c-b410-7f23a492e19d",
+  "title": "sell products",
+  "shownInUse": true,
+  "phrase": "promote fixed deposit & personal financing to walk in customer"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "28d715e3-3e5b-4fb6-8dd2-4be4919c8587",
+  "title": "handle customer complaints",
+  "shownInUse": true,
+  "phrase": "handle customer complaints at counter"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "8e105acc-e365-481b-bf6b-7e3f8ff19417",
+  "title": "handle complaints",
+  "shownInUse": true,
+  "phrase": "handle customer complaints at counter"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "d915420b-3083-4740-b196-32749111069e",
+  "title": "estimate value of used jewellery and watches",
+  "shownInUse": true,
+  "phrase": "sell gold jewellery , weigh & price items based on daily gold rate"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "81eacdc3-5f23-4236-b936-2e578b7e936c",
+  "title": "weigh merchandise",
+  "shownInUse": true,
+  "phrase": "sell gold jewellery , weigh & price items based on daily gold rate"
+ },
+ {
+  "caseId": "c49-bank-teller-messy",
+  "escoId": "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+  "title": "maintain records of financial transactions",
+  "shownInUse": true,
+  "phrase": "keep cash book & bank in collections"
+ },
+ {
+  "caseId": "c50-account-assistant-twocol",
+  "escoId": "99b163e8-7815-43e2-83f3-a47f3076354c",
+  "title": "accounting entries",
+  "shownInUse": true,
+  "phrase": "Key in purchase invoices, cash sales & payment vouchers in SQL Accounting daily"
+ },
+ {
+  "caseId": "c50-account-assistant-twocol",
+  "escoId": "24814e7a-70cd-47e5-98b2-d44b46be92d2",
+  "title": "maintain transaction's reports",
+  "shownInUse": true,
+  "phrase": "Key in purchase invoices, cash sales & payment vouchers in SQL Accounting daily"
+ },
+ {
+  "caseId": "c50-account-assistant-twocol",
+  "escoId": "2ada2f9d-77f7-4ba0-9096-89ae285a65c5",
+  "title": "monitor financial accounts",
+  "shownInUse": true,
+  "phrase": "Monthly bank reconciliation for 3 bank accounts"
+ },
+ {
+  "caseId": "c50-account-assistant-twocol",
+  "escoId": "909c2e48-262e-4ebe-be05-5324ab086c1d",
+  "title": "generate reconciliation reports",
+  "shownInUse": true,
+  "phrase": "Monthly bank reconciliation for 3 bank accounts"
+ },
+ {
+  "caseId": "c50-account-assistant-twocol",
+  "escoId": "22a173f5-868c-4d82-87e6-beed500ce070",
+  "title": "prepare tax returns forms",
+  "shownInUse": true,
+  "phrase": "Prepare SST-02 return every 2 months for review by tax agent"
+ },
+ {
+  "caseId": "c50-account-assistant-twocol",
+  "escoId": "68b51538-b056-4cb3-bb15-ab8c3e576cc9",
+  "title": "follow up accounts receivables",
+  "shownInUse": true,
+  "phrase": "Follow up customers for overdue payment & send SOA monthly"
+ },
+ {
+  "caseId": "c50-account-assistant-twocol",
+  "escoId": "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23",
+  "title": "process payments",
+  "shownInUse": true,
+  "phrase": "Prepare payment cheques & on-line transfer for boss approval"
+ },
+ {
+  "caseId": "c50-account-assistant-twocol",
+  "escoId": "095fdace-1cc3-4e80-b37b-268fe297904a",
+  "title": "prepare audit activities",
+  "shownInUse": true,
+  "phrase": "Prepare documents for external auditor & tax agent"
+ },
+ {
+  "caseId": "c50-account-assistant-twocol",
+  "escoId": "63321ecf-4fc6-44d9-88f1-5373a4f3038a",
+  "title": "handle petty cash",
+  "shownInUse": true,
+  "phrase": "Invoicing, petty cash, filing"
+ },
+ {
+  "caseId": "c50-account-assistant-twocol",
+  "escoId": "e3e42d54-78bd-4337-aa87-bb31a7670c9a",
+  "title": "issue sales invoices",
+  "shownInUse": true,
+  "phrase": "Invoicing, petty cash, filing"
+ }
+]

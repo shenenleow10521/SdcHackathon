@@ -1,0 +1,834 @@
+{
+ "startedAt": "2026-10-23T18:11:42.788Z",
+ "embedder": "BAAI/bge-m3",
+ "rules": {
+  "mentions": 15,
+  "organisations": 5,
+  "weeks": 4,
+  "duplicateCosine": 0.85
+ },
+ "precheck": [
+  {
+   "skill": "Prompting AI tools for finance",
+   "top": [
+    {
+     "escoId": "4b3ae518-6746-4487-8d3b-4cfc063a43d0",
+     "title": "use business simulation tools",
+     "score": 0.545
+    },
+    {
+     "escoId": "68a596a2-6255-42bd-b3b1-e33a2214bef6",
+     "title": "facilitate the bidding process",
+     "score": 0.541
+    },
+    {
+     "escoId": "7d10fcb2-b368-48ab-996b-7c9fafcf68ed",
+     "title": "use automatic programming",
+     "score": 0.525
+    },
+    {
+     "escoId": "edf081e4-d2dc-4a60-8c49-7b7e45b5ebe3",
+     "title": "create risk maps",
+     "score": 0.52
+    },
+    {
+     "escoId": "c0502e2a-1e12-422e-994e-cf9bf814e3b2",
+     "title": "guide learners in using assistive technologies",
+     "score": 0.519
+    },
+    {
+     "escoId": "6bf6b5bd-6658-4338-b0ee-dc143e68e6d3",
+     "title": "provide support in financial calculation",
+     "score": 0.518
+    }
+   ]
+  },
+  {
+   "skill": "Supervising AI workflows",
+   "top": [
+    {
+     "escoId": "7add3681-17b6-4027-8a9d-ee92d2b96a42",
+     "title": "manage workflow processes",
+     "score": 0.595
+    },
+    {
+     "escoId": "7a9c3fa5-a9bb-46a0-8b5b-4d87427c8b76",
+     "title": "monitor processing conditions",
+     "score": 0.589
+    },
+    {
+     "escoId": "751941a0-5645-4f8b-b97e-b252909d5edb",
+     "title": "develop ICT workflow",
+     "score": 0.579
+    },
+    {
+     "escoId": "f399a9c1-be41-4117-bf86-a64b503c4cfd",
+     "title": "supervise data entry",
+     "score": 0.57
+    },
+    {
+     "escoId": "9581639c-e521-4d12-9b4e-25faca24d34b",
+     "title": "supervise crew",
+     "score": 0.569
+    },
+    {
+     "escoId": "2966d47d-72ad-404f-bad0-b45abb2b2058",
+     "title": "monitor policy proposals",
+     "score": 0.569
+    }
+   ]
+  },
+  {
+   "skill": "AI invoice review & exceptions",
+   "top": [
+    {
+     "escoId": "e3e42d54-78bd-4337-aa87-bb31a7670c9a",
+     "title": "issue sales invoices",
+     "score": 0.511
+    },
+    {
+     "escoId": "5079319b-b12d-46ae-8ba7-78a3aa242e6e",
+     "title": "review event bills",
+     "score": 0.504
+    },
+    {
+     "escoId": "1be2bb07-dbb2-4a67-b133-30b4ff30b094",
+     "title": "monitor billing procedures",
+     "score": 0.499
+    },
+    {
+     "escoId": "0c606377-fbd6-4f66-b700-ba4524670b73",
+     "title": "screen clients",
+     "score": 0.496
+    },
+    {
+     "escoId": "1336899e-859e-4cd2-8aaf-21d2c4e6989e",
+     "title": "monitor cashiers",
+     "score": 0.495
+    },
+    {
+     "escoId": "31418b90-4ae2-4fa1-b57b-42e190c1a214",
+     "title": "enter receipt of coffee inventory",
+     "score": 0.49
+    }
+   ]
+  },
+  {
+   "skill": "GHG emissions accounting",
+   "top": [
+    {
+     "escoId": "c8b4b02c-d9ce-4e24-ab43-5dd52c6dff48",
+     "title": "advise on carbon emissions reduction",
+     "score": 0.535
+    },
+    {
+     "escoId": "ade05884-0e4c-486c-9a0d-e033dd066ffc",
+     "title": "maintain gas mileage records",
+     "score": 0.528
+    },
+    {
+     "escoId": "4300b453-9bcf-474c-9ee3-92ec2229720c",
+     "title": "global standards for sustainability reporting",
+     "score": 0.526
+    },
+    {
+     "escoId": "b55376e1-41c3-45f8-9b35-d3e7b1288a33",
+     "title": "evaluate vehicle ecological footprint",
+     "score": 0.521
+    },
+    {
+     "escoId": "b322a6f0-8c28-478e-97ca-1e593d1a20c1",
+     "title": "operate biogas meter",
+     "score": 0.503
+    },
+    {
+     "escoId": "3310562c-ed9e-43c2-a4d0-bafeed7057a4",
+     "title": "report on fuel distribution incidents",
+     "score": 0.494
+    }
+   ]
+  },
+  {
+   "skill": "Three-way matching",
+   "top": [
+    {
+     "escoId": "dae63e12-3547-493c-8e6b-809c348984fe",
+     "title": "match vehicles with routes",
+     "score": 0.569
+    },
+    {
+     "escoId": "aed3d1e7-e9f5-4298-9a51-45266a49c844",
+     "title": "match people",
+     "score": 0.544
+    },
+    {
+     "escoId": "f7779005-c640-4c5d-8d95-558c1b53b6f5",
+     "title": "match product moulds",
+     "score": 0.528
+    },
+    {
+     "escoId": "322a8b34-af40-438c-ac67-882d482b7643",
+     "title": "use color matching techniques",
+     "score": 0.527
+    },
+    {
+     "escoId": "2d2873ab-34da-49c5-ba15-218419162aa2",
+     "title": "match frames to pictures",
+     "score": 0.519
+    },
+    {
+     "escoId": "6e53fd99-b646-4327-9580-ac062ab21188",
+     "title": "3D lighting",
+     "score": 0.514
+    }
+   ]
+  }
+ ],
+ "asDesigned": {
+  "status": "ok",
+  "counts": {
+   "proposals": 0,
+   "phrases": 0,
+   "merged": 0,
+   "rejected": 0,
+   "watching": 0,
+   "provisional": 0
+  },
+  "candidates": [],
+  "pagesRead": [
+   {
+    "url": "https://techcrunch.com/2026/10/22/uber-rival-indrive-eyes-2027-robotaxi-tests-in-central-asia-with-pony-ai-and-nvidia/",
+    "date": "2026-10-23",
+    "title": "Uber rival inDrive eyes 2027 robotaxi tests in Central Asia with Pony AI and Nvidia",
+    "excerpt": "Uber rival inDrive eyes 2027 robotaxi tests in Central Asia with Pony AI and Nvidia The company plans to begin testing Pony.ai's robotaxis in Kazakhstan's capital in the first half of 2027. –:–:–:– Buy One Founder Summit Ticket, Get a Second for Free. Register now. Disrupt doors open Oct. 13. Get yo",
+    "sourceKind": "rss"
+   },
+   {
+    "url": "https://techcrunch.com/2026/10/22/left-alone-with-nothing-to-do-ai-agents-started-playing/",
+    "date": "2026-10-23",
+    "title": "Left alone with nothing to do, AI agents started playing",
+    "excerpt": "Left alone with nothing to do, AI agents started playing MIT researchers marooned 13 AIs on a virtual island, and they responded by inventing games, mourning a lost ring and, eventually, getting better at their jobs. –:–:–:– Buy One Founder Summit Ticket, Get a Second for Free. Register now. Disrupt",
+    "sourceKind": "rss"
+   },
+   {
+    "url": "https://www.theverge.com/tech/1017600/google-personal-intelligence-privacy-policy-ads-update",
+    "date": "2026-10-23",
+    "title": "Now Google says it might use your Gmail and Google Photos data to target ads",
+    "excerpt": "Now Google says it might use your Gmail and Google Photos data to target ads Google has updated its privacy policy in a way that could mean you'll start seeing targeted ads based on your personal data if you're using personalized AI features. The update, spotted by Android Authority, adds an excepti",
+    "sourceKind": "rss"
+   },
+   {
+    "url": "https://www.theverge.com/tech/1017450/meta-business-terms-delayed-ai-scraping",
+    "date": "2026-10-23",
+    "title": "Meta delays new business terms after publisher pushback on AI scraping",
+    "excerpt": "Meta delays new business terms after publisher pushback on AI scraping Meta is delaying the enforcement of its new business terms after publishers raised concerns that they could allow the company to scrape news sites for AI training, as reported earlier by Fast Company. In a statement to The Verge,",
+    "sourceKind": "rss"
+   },
+   {
+    "url": "https://www.theverge.com/ai-artificial-intelligence/1015430/ai-retro-games-decomp-recomp-port",
+    "date": "2026-10-23",
+    "title": "Retro gaming is being overrun with AI",
+    "excerpt": "Retro gaming is being overrun with AI Retro video games are everywhere lately - especially in places where they aren't supposed to be. Halo in a web browser, Wind Waker on the iPhone, Super Smash Bros. in mixed reality. Over the past month or so, these kinds of unexpected projects have gone viral wi",
+    "sourceKind": "rss"
+   },
+   {
+    "url": "https://www.bbc.co.uk/news/articles/c3qjnwye0ep5o?at_medium=RSS&at_campaign=rss",
+    "date": "2026-10-23",
+    "title": "What is PHP and why did it spark a global cyber-security scramble?",
+    "excerpt": "What is PHP and why did it spark a global cyber-security scramble? AI uncovered long-hidden programming flaws, triggering a rare global cyber-security response. What is PHP and why did it spark a global cyber-security scramble? Figure caption, How did AI discover the internet's massive cyber-securit",
+    "sourceKind": "rss"
+   },
+   {
+    "url": "https://www.bbc.co.uk/news/articles/ckvgyml6pdm9o?at_medium=RSS&at_campaign=rss",
+    "date": "2026-10-23",
+    "title": "The Indian workers filming their work to train AI",
+    "excerpt": "The Indian workers filming their work to train AI Indian workers are being paid to film themselves at work and the footage is used to train AI. The Indian workers filming their work to train AI Image source, Mohammed Ashim Image caption, Mohammed Ashim is paid to film his hands at work By Priti Gupt",
+    "sourceKind": "rss"
+   },
+   {
+    "url": "https://www.freemalaysiatoday.com/category/business/2026/10/23/ringgit-closes-lower-against-us-dollar-amid-ai-stock-concerns",
+    "date": "2026-10-23",
+    "title": "Ringgit closes lower against US dollar amid AI stock concerns",
+    "excerpt": "Ringgit closes lower against US dollar amid AI stock concerns Investors remain cautious ahead of next week’s Federal Open Market Committee statement, despite widespread expectations that interest rates will hold steady, says an analyst. KUALA LUMPUR: The ringgit closed slightly lower against the US ",
+    "sourceKind": "rss"
+   }
+  ],
+  "sources": {
+   "hn": {
+    "ok": true,
+    "items": 0,
+    "errors": [],
+    "queries": 4
+   },
+   "rss": {
+    "ok": true,
+    "items": 287,
+    "detail": {
+     "OpenAI News": "73 recent items",
+     "Ars Technica": "20 recent items",
+     "The Verge AI": "10 recent items",
+     "TechCrunch AI": "20 recent items",
+     "BBC Technology": "20 recent items",
+     "Google AI blog": "6 recent items",
+     "Malay Mail money": "50 recent items",
+     "Microsoft Research": "10 recent items",
+     "Google DeepMind blog": "12 recent items",
+     "Official Microsoft Blog": "6 recent items",
+     "Free Malaysia Today business": "50 recent items",
+     "Microsoft Dynamics 365 blog (finance & operations)": "10 recent items"
+    },
+    "errors": [],
+    "queries": 1
+   },
+   "arxiv": {
+    "ok": true,
+    "items": 16,
+    "errors": [],
+    "queries": 4
+   },
+   "openalex": {
+    "ok": false,
+    "items": 0,
+    "errors": [
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)"
+    ],
+    "queries": 4
+   }
+  },
+  "proposerCalls": 4,
+  "errors": [],
+  "cost": {
+   "llmCalls": {
+    "main": 4,
+    "reviewer": 0
+   },
+   "llmFailures": 0,
+   "tavilySearches": 0,
+   "otherFetches": 44,
+   "embedCalls": 0,
+   "embedSeconds": 0,
+   "embedTexts": 0
+  }
+ },
+ "focused": {
+  "queries": [
+   "AI skills accountants",
+   "AI agents finance teams skills",
+   "generative AI accounts payable invoice",
+   "AI audit skills",
+   "AI sustainability reporting ESG",
+   "AI carbon accounting",
+   "AI shared services finance operations",
+   "AI finance jobs new skills"
+  ],
+  "sources": {
+   "websearch": {
+    "ok": true,
+    "items": 74,
+    "queries": 8,
+    "errors": []
+   },
+   "rss": {
+    "ok": true,
+    "items": 287,
+    "queries": 1,
+    "errors": [],
+    "detail": {
+     "OpenAI News": "73 recent items",
+     "Google AI blog": "6 recent items",
+     "Google DeepMind blog": "12 recent items",
+     "Microsoft Research": "10 recent items",
+     "Microsoft Dynamics 365 blog (finance & operations)": "10 recent items",
+     "Official Microsoft Blog": "6 recent items",
+     "TechCrunch AI": "20 recent items",
+     "The Verge AI": "10 recent items",
+     "Ars Technica": "20 recent items",
+     "BBC Technology": "20 recent items",
+     "Free Malaysia Today business": "50 recent items",
+     "Malay Mail money": "50 recent items"
+    }
+   },
+   "arxiv": {
+    "ok": true,
+    "items": 32,
+    "queries": 8,
+    "errors": []
+   },
+   "openalex": {
+    "ok": false,
+    "items": 0,
+    "queries": 8,
+    "errors": [
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)"
+    ]
+   },
+   "hn": {
+    "ok": true,
+    "items": 0,
+    "queries": 8,
+    "errors": []
+   }
+  },
+  "itemsCollected": 379,
+  "itemsRelevant": 114,
+  "pageBudget": 24,
+  "pagesRead": [
+   {
+    "sourceKind": "rss",
+    "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/10/22/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-cloud-erp-finance/",
+    "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Cloud ERP Finance",
+    "date": "2026-10-22",
+    "via": "Microsoft Dynamics 365 blog (finance & operations)"
+   },
+   {
+    "sourceKind": "rss",
+    "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/09/23/build-the-future-of-agentic-erp-with-new-microsoft-dynamics-365-capabilities/",
+    "title": "Build the future of agentic ERP with new Microsoft Dynamics 365 capabilities",
+    "date": "2026-09-23",
+    "via": "Microsoft Dynamics 365 blog (finance & operations)"
+   },
+   {
+    "sourceKind": "rss",
+    "url": "https://www.microsoft.com/en-us/dynamics-365/blog/it-professional/2026/09/30/adapt-dynamics-365-commerce-faster-with-ai-assisted-extensibility/",
+    "title": "Adapt Dynamics 365 Commerce faster with AI-assisted extensibility",
+    "date": "2026-09-30",
+    "via": "Microsoft Dynamics 365 blog (finance & operations)"
+   },
+   {
+    "sourceKind": "rss",
+    "url": "https://www.microsoft.com/en-us/dynamics-365/blog/it-professional/2026/09/25/work-iq-business-and-workplace-intelligence-in-the-flow-of-work/",
+    "title": "Work IQ: Business and workplace intelligence in the flow of work",
+    "date": "2026-09-25",
+    "via": "Microsoft Dynamics 365 blog (finance & operations)"
+   },
+   {
+    "sourceKind": "rss",
+    "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/10/15/microsoft-named-a-leader-in-the-2026-idc-marketscape-for-ai-enabled-operational-erp/",
+    "title": "Microsoft named a Leader in the 2026 IDC MarketScape for AI-Enabled Operational ERP",
+    "date": "2026-10-15",
+    "via": "Microsoft Dynamics 365 blog (finance & operations)"
+   },
+   {
+    "sourceKind": "rss",
+    "url": "https://blogs.microsoft.com/blog/2026/09/25/introducing-the-new-copilot-with-home-code-and-autopilot/",
+    "title": "Introducing the new Copilot with Home, Code and Autopilot",
+    "date": "2026-09-25",
+    "via": "Official Microsoft Blog"
+   },
+   {
+    "sourceKind": "rss",
+    "url": "https://www.microsoft.com/en-us/research/blog/one-year-in-how-microsoft-research-asia-singapore-is-advancing-research-partnership-and-talent-for-real-world-impact/",
+    "title": "One year in: How Microsoft Research Asia – Singapore is advancing research, partnership and talent for real-world impact",
+    "date": "2026-09-28",
+    "via": "Microsoft Research"
+   },
+   {
+    "sourceKind": "rss",
+    "url": "https://www.microsoft.com/en-us/dynamics-365/blog/it-professional/2026/10/08/bring-microsoft-dynamics-365-into-the-flow-of-work-with-30-new-crm-skills/",
+    "title": "Bring Microsoft Dynamics 365 into the flow of work with 30 new CRM skills",
+    "date": "2026-10-08",
+    "via": "Microsoft Dynamics 365 blog (finance & operations)"
+   },
+   {
+    "sourceKind": "websearch",
+    "url": "https://www.accountingtoday.com/list/tech-news-tipalti-touts-ai-agent-to-manage-entire-ap-process",
+    "title": "Tech news: Tipalti touts AI agent to manage entire AP process - Accounting Today",
+    "date": "2026-10-23",
+    "via": "Tavily"
+   },
+   {
+    "sourceKind": "websearch",
+    "url": "https://www.salesforce.com/uk/news/stories/cfos-ai-agents-to-tame-revenue-complexity",
+    "title": "New Research: CFOs Use AI and Agents to Tame Revenue Complexity",
+    "date": "2026-10-06",
+    "via": "Tavily"
+   },
+   {
+    "sourceKind": "websearch",
+    "url": "https://learn.microsoft.com/en-us/dynamics365/business-central/ai-in-bc",
+    "title": "Business Central AI - Business Central | Microsoft Learn",
+    "date": "2026-10-02",
+    "via": "Tavily"
+   },
+   {
+    "sourceKind": "websearch",
+    "url": "https://adoption.microsoft.com/en-us/customer-hub/microsoft-copilot-in-action/session-2",
+    "title": "Smarter finance, powered by Copilot: AI in action for finance leaders – Microsoft Adoption",
+    "date": "2026-10-01",
+    "via": "Tavily"
+   },
+   {
+    "sourceKind": "websearch",
+    "url": "https://www.accountingtoday.com/list/tech-news-bizbuydata-will-pay-accounting-firms-for-data-to-train-ai",
+    "title": "Tech news: BizBuyData will pay accounting firms for data to train AI - Accounting Today",
+    "date": "2026-10-16",
+    "via": "Tavily"
+   },
+   {
+    "sourceKind": "arxiv",
+    "url": "https://arxiv.org/abs/2610.18927v1",
+    "title": "Why Static Skill Inconsistencies Do Not Equate to Runtime Risks: A Behavioral Analysis of LLM Agent Execution",
+    "date": "2026-10-13",
+    "via": "arXiv"
+   },
+   {
+    "sourceKind": "websearch",
+    "url": "https://www.ey.com/en_gl/newsroom/2026/10/ey-announces-alliance-with-watershed-to-help-organizations-measu",
+    "title": "EY announces alliance with Watershed to help organizations measure and report on sustainability transformation | EY - Global",
+    "date": "2026-10-12",
+    "via": "Tavily"
+   },
+   {
+    "sourceKind": "websearch",
+    "url": "https://www.accountingtoday.com/news/chambers-releases-latest-book-on-audit-and-ai",
+    "title": "Chambers releases latest book on audit and AI - Accounting Today",
+    "date": "2026-10-08",
+    "via": "Tavily"
+   },
+   {
+    "sourceKind": "websearch",
+    "url": "https://www.accountingtoday.com/opinion/audit-committees-need-an-ai-evidence-pack-not-just-more-ai-expertise",
+    "title": "Audit committees need an AI evidence pack, not just more AI expertise - Accounting Today",
+    "date": "2026-10-08",
+    "via": "Tavily"
+   },
+   {
+    "sourceKind": "rss",
+    "url": "https://www.microsoft.com/en-us/research/blog/agent-lightning-v1-0-a-3500-line-lightweight-agentic-rl-framework-for-training-agents-with-real-harnesses/",
+    "title": "Agent Lightning v1.0: A 3,500-Line Lightweight Agentic RL Framework for Training Agents with Real Harnesses",
+    "date": "2026-10-07",
+    "via": "Microsoft Research"
+   },
+   {
+    "sourceKind": "websearch",
+    "url": "https://careers.ey.com/ey/job/Luxembourg-Sustainability-&-AI-Consulting-Assistant-L-1855/1434028533",
+    "title": "Sustainability & AI - Consulting Assistant Job Details | EY",
+    "date": "2026-10-03",
+    "via": "Tavily"
+   },
+   {
+    "sourceKind": "websearch",
+    "url": "https://www.accountingtoday.com/news/internal-audit-leans-more-on-external-partners-and-ai",
+    "title": "Internal audit leans more on external partners and AI - Accounting Today",
+    "date": "2026-10-20",
+    "via": "Tavily"
+   },
+   {
+    "sourceKind": "arxiv",
+    "url": "https://arxiv.org/abs/2610.25705v1",
+    "title": "How Effectively Do Security Skills Guide Coding Agents in Vulnerability Detection in Linux Kernel?",
+    "date": "2026-10-19",
+    "via": "arXiv"
+   },
+   {
+    "sourceKind": "arxiv",
+    "url": "https://arxiv.org/abs/2610.24723v1",
+    "title": "Where Natural Language Ends in Agents: Executable Skill Composition with MetaSkill",
+    "date": "2026-10-17",
+    "via": "arXiv"
+   },
+   {
+    "sourceKind": "websearch",
+    "url": "https://www.accountingtoday.com/news/aicpa-releases-practice-guide-for-auditors-dealing-with-ai",
+    "title": "AICPA releases practice guide for auditors dealing with AI - Accounting Today",
+    "date": "2026-10-14",
+    "via": "Tavily"
+   },
+   {
+    "sourceKind": "websearch",
+    "url": "https://www.accountingtoday.com/news/aicpa-proposes-valuation-framework",
+    "title": "AICPA proposes valuation framework - Accounting Today",
+    "date": "2026-10-13",
+    "via": "Tavily"
+   }
+  ],
+  "unreadable": [
+   "https://www.sap.com/blogs/ai-agents-for-finance-cloud-erp",
+   "https://blogs.oracle.com/ai-data-platform/building-specialized-agents-with-skills-in-oracle-ai-data-platform"
+  ],
+  "proposerCalls": 12,
+  "proposerErrors": [],
+  "verifiedProposals": 4,
+  "phrases": 4,
+  "funnel": {
+   "duplicate_skeptic": 4
+  },
+  "candidates": [
+   {
+    "label": "managing AI use and expansion",
+    "key": "managing ai use and expansion",
+    "outcome": "duplicate_skeptic",
+    "catalogueDuplicate": null,
+    "escoTop": [
+     {
+      "escoId": "54ae8c54-2aad-46fc-bff2-9d44d0ec7a6e",
+      "title": "manage information access aids",
+      "score": 0.588
+     },
+     {
+      "escoId": "8369c2d6-c100-4cf6-bd83-9668d8678433",
+      "title": "utilise machine learning",
+      "score": 0.587
+     },
+     {
+      "escoId": "a80fb090-63f4-4b05-83a5-2f090deb7757",
+      "title": "manage data collection systems",
+      "score": 0.584
+     },
+     {
+      "escoId": "8c5d6b8a-55c9-4f5d-8d47-bf23e15ecb71",
+      "title": "manage space utilisation",
+      "score": 0.576
+     },
+     {
+      "escoId": "ab49f767-296b-47d5-af56-0b4a69515b03",
+      "title": "maintain ICT identity management",
+      "score": 0.568
+     }
+    ],
+    "skeptic": {
+     "verdict": "duplicate",
+     "reason": "The proposed skill is functionally equivalent to 'Supervising AI workflows', which already covers the oversight and management of AI implementation and operational expansion."
+    },
+    "linkedSkill": "aisup",
+    "thresholds": {
+     "mentions": 1,
+     "organisations": 1,
+     "weeks": 1,
+     "passes": {
+      "mentions": false,
+      "organisations": false,
+      "growing": false,
+      "linked": true
+     },
+     "all": false
+    },
+    "mentions": [
+     {
+      "quote": "Over three-quarters of finance leaders say the scope of their role increased in the last year — and managing AI use and expansion is the top-cited reason",
+      "url": "https://www.salesforce.com/uk/news/stories/cfos-ai-agents-to-tame-revenue-complexity",
+      "domain": "salesforce.com",
+      "date": "2026-10-06",
+      "title": "New Research: CFOs Use AI and Agents to Tame Revenue Complexity",
+      "phrase": "managing AI use and expansion"
+     }
+    ]
+   },
+   {
+    "label": "handling the entire accounts payable process",
+    "key": "handling the entire account payable proces",
+    "outcome": "duplicate_skeptic",
+    "catalogueDuplicate": null,
+    "escoTop": [
+     {
+      "escoId": "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23",
+      "title": "process payments",
+      "score": 0.612
+     },
+     {
+      "escoId": "e06f3ac6-1d3e-49c6-945d-1a61ca746986",
+      "title": "complete administration",
+      "score": 0.587
+     },
+     {
+      "escoId": "e717b036-2c0c-4c11-99e9-0cb4ce084fed",
+      "title": "perform account allocation",
+      "score": 0.587
+     },
+     {
+      "escoId": "68b51538-b056-4cb3-bb15-ab8c3e576cc9",
+      "title": "follow up accounts receivables",
+      "score": 0.584
+     },
+     {
+      "escoId": "08371fe9-c658-4f6a-966f-71dbb0ab683d",
+      "title": "accounting department processes",
+      "score": 0.583
+     }
+    ],
+    "skeptic": {
+     "verdict": "duplicate",
+     "reason": "The proposed skill is a broad description of tasks already covered by existing skills such as 'accounting department processes', 'process payments', and 'perform account allocation'."
+    },
+    "linkedSkill": "pay",
+    "thresholds": {
+     "mentions": 1,
+     "organisations": 1,
+     "weeks": 1,
+     "passes": {
+      "mentions": false,
+      "organisations": false,
+      "growing": false,
+      "linked": true
+     },
+     "all": false
+    },
+    "mentions": [
+     {
+      "quote": "Payments platform Tipalti announced the launch of a new AI agent that can handle the entire accounts payable process",
+      "url": "https://www.accountingtoday.com/list/tech-news-tipalti-touts-ai-agent-to-manage-entire-ap-process",
+      "domain": "accountingtoday.com",
+      "date": "2026-10-23",
+      "title": "Tech news: Tipalti touts AI agent to manage entire AP process - Accounting Today",
+      "phrase": "handling the entire accounts payable process"
+     }
+    ]
+   },
+   {
+    "label": "climate risk management",
+    "key": "climate risk management",
+    "outcome": "duplicate_skeptic",
+    "catalogueDuplicate": null,
+    "escoTop": [
+     {
+      "escoId": "d08c420c-d3c6-4485-af6f-f2544e9aa0ac",
+      "title": "implement risk management for outdoors",
+      "score": 0.61
+     },
+     {
+      "escoId": "a366bfc5-8d17-4792-a9f0-db0951528dda",
+      "title": "advise on environmental risk management systems",
+      "score": 0.606
+     },
+     {
+      "escoId": "707c54fb-b6b8-45a4-9abd-030a40a582c9",
+      "title": "manage currency exchange risk mitigation techniques",
+      "score": 0.606
+     },
+     {
+      "escoId": "96550830-539b-4746-96aa-92aa4959945d",
+      "title": "apply risk management processes",
+      "score": 0.597
+     },
+     {
+      "escoId": "ab1f5998-7ee8-4123-a420-7e96fb8de143",
+      "title": "develop management plans to reduce risks in aquaculture",
+      "score": 0.581
+     }
+    ],
+    "skeptic": {
+     "verdict": "duplicate",
+     "reason": "The proposed skill is a specific application of existing environmental risk management systems and ESG data management, which already cover the identification and mitigation of climate-related risks."
+    },
+    "linkedSkill": "esgdata",
+    "thresholds": {
+     "mentions": 1,
+     "organisations": 1,
+     "weeks": 1,
+     "passes": {
+      "mentions": false,
+      "organisations": false,
+      "growing": false,
+      "linked": true
+     },
+     "all": false
+    },
+    "mentions": [
+     {
+      "quote": "support clients in transforming their sustainability strategies, ESG reporting, climate risk management, sustainable finance, and decarbonization initiatives through data-driven and AI-enabled solutions.",
+      "url": "https://careers.ey.com/ey/job/Luxembourg-Sustainability-&-AI-Consulting-Assistant-L-1855/1434028533",
+      "domain": "ey.com",
+      "date": "2026-10-03",
+      "title": "Sustainability & AI - Consulting Assistant Job Details | EY",
+      "phrase": "climate risk management"
+     }
+    ]
+   },
+   {
+    "label": "evaluating AI-related risks",
+    "key": "evaluating ai related risk",
+    "outcome": "duplicate_skeptic",
+    "catalogueDuplicate": null,
+    "escoTop": [
+     {
+      "escoId": "fe1c2b32-7fe9-4668-affa-07ff658a68cf",
+      "title": "identify ICT security risks",
+      "score": 0.6
+     },
+     {
+      "escoId": "2ddb1226-1117-4eb4-ae65-3a2f5a5a3c80",
+      "title": "ICT network security risks",
+      "score": 0.599
+     },
+     {
+      "escoId": "e43cb15d-b48c-43f9-a995-0dfd87b903b9",
+      "title": "assess danger in risk areas",
+      "score": 0.598
+     },
+     {
+      "escoId": "873f205a-05f8-45f8-b544-fe963a3edc1e",
+      "title": "address identified risks",
+      "score": 0.591
+     },
+     {
+      "escoId": "69cfc5ed-6569-4aca-a4cc-fd782ba51d9c",
+      "title": "implement ICT risk management",
+      "score": 0.585
+     }
+    ],
+    "skeptic": {
+     "verdict": "duplicate",
+     "reason": "Evaluating AI-related risks is a specific application of existing ICT risk management and internal audit skills. It does not represent a distinct new skill set but rather the adaptation of established risk assessment methodologies to a new technology."
+    },
+    "linkedSkill": "audit2",
+    "thresholds": {
+     "mentions": 1,
+     "organisations": 1,
+     "weeks": 1,
+     "passes": {
+      "mentions": false,
+      "organisations": false,
+      "growing": false,
+      "linked": true
+     },
+     "all": false
+    },
+    "mentions": [
+     {
+      "quote": "The guidance will aid CPAs in evaluating AI-related risks, understanding how AI may affect controls, and determining appropriate audit responses and the auditor's use of AI tools when performing the audit.",
+      "url": "https://www.accountingtoday.com/news/aicpa-proposes-valuation-framework",
+      "domain": "accountingtoday.com",
+      "date": "2026-10-13",
+      "title": "AICPA proposes valuation framework - Accounting Today",
+      "phrase": "evaluating AI-related risks"
+     }
+    ]
+   }
+  ],
+  "cost": {
+   "llmCalls": {
+    "main": 12,
+    "reviewer": 4
+   },
+   "llmFailures": 0,
+   "tavilySearches": 8,
+   "otherFetches": 49,
+   "embedCalls": 5,
+   "embedSeconds": 7.9,
+   "embedTexts": 440
+  }
+ },
+ "totalCost": {
+  "llmCalls": {
+   "main": 16,
+   "reviewer": 4
+  },
+  "llmFailures": 0,
+  "tavilySearches": 8,
+  "otherFetches": 93,
+  "embedCalls": 6,
+  "embedSeconds": 44.556,
+  "embedTexts": 445
+ },
+ "seconds": 282
+}

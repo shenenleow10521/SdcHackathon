@@ -1,0 +1,1221 @@
+{
+  "summary": {
+    "benchmark": "HalaTuju CV reading",
+    "mode": "full",
+    "ranAt": "2026-10-23T06:11:08.394Z",
+    "cases": 14,
+    "answerKey": {
+      "file": "eval/cv/labels.json",
+      "sha256": "f44919490bd4a1da95bafc2776070b9255ef9eedb705e79aa475d59c515b8ccb",
+      "annotator": "independent annotator agent (blind to system code and outputs)",
+      "createdAt": "2026-10-23T00:00:00Z"
+    },
+    "system": {
+      "llm": {
+        "main": "gemini-3.5-flash-lite",
+        "reviewer": "gemini-3.1-flash-lite"
+      },
+      "embeddings": "runpod-bge-m3",
+      "embeddingModel": "BAAI/bge-m3"
+    },
+    "skills": {
+      "truePositives": 54,
+      "missed": 6,
+      "falsePositives": 7,
+      "recall": 90,
+      "recall95": [
+        0.799,
+        0.953
+      ],
+      "precision": 88.5,
+      "precision95": [
+        0.782,
+        0.943
+      ],
+      "f1": 89.3
+    },
+    "occupation": {
+      "correct": 11,
+      "of": 14,
+      "accuracy": 78.6
+    },
+    "levels": {
+      "inRange": 94.4,
+      "withinOne": 100,
+      "n": 54
+    },
+    "keywordStuffing": {
+      "listedSkillsIncluded": 21,
+      "ratedAboveCap": 16
+    },
+    "privacy": {
+      "planted": 146,
+      "reachedAi": 0,
+      "inStoredEvidence": 0
+    },
+    "errors": 0,
+    "medianSeconds": 6.3
+  },
+  "cases": [
+    {
+      "id": "c01-ap-messy-pdf",
+      "language": "en",
+      "ms": 59685,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "ap",
+        "got": "ap",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "inv",
+          "three",
+          "pay",
+          "recon",
+          "dispute",
+          "audit",
+          "tax"
+        ],
+        "missed": [
+          "erp"
+        ],
+        "falsePositives": [],
+        "acceptableIncluded": [
+          {
+            "skill": "process",
+            "level": 5,
+            "cap": 2
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "process",
+            "level": 5,
+            "cap": 2
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "inv",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "three",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "pay",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "recon",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "dispute",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "audit",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "tax",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "pii": [],
+      "piiPlanted": 18
+    },
+    {
+      "id": "c02-ap-bm",
+      "language": "ms",
+      "ms": 5971,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "ap",
+        "got": "ap",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "inv",
+          "three",
+          "recon",
+          "pay",
+          "tax",
+          "excel",
+          "erp"
+        ],
+        "missed": [],
+        "falsePositives": [],
+        "acceptableIncluded": [
+          {
+            "skill": "audit",
+            "level": 2,
+            "cap": 2
+          }
+        ],
+        "overratedListedSkills": []
+      },
+      "levels": [
+        {
+          "skill": "inv",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "three",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "recon",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "pay",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "tax",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "excel",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "erp",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "pii": [],
+      "piiPlanted": 14
+    },
+    {
+      "id": "c03-finance-to-esg",
+      "language": "en",
+      "ms": 6270,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "faRole",
+        "got": "faRole",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "fin",
+          "excel",
+          "esgdata",
+          "ghg",
+          "disc",
+          "audit",
+          "viz",
+          "tax"
+        ],
+        "missed": [],
+        "falsePositives": [],
+        "acceptableIncluded": [
+          {
+            "skill": "lca",
+            "level": 2,
+            "cap": 2
+          },
+          {
+            "skill": "recon",
+            "level": 3,
+            "cap": 2
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "recon",
+            "level": 3,
+            "cap": 2
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "fin",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "excel",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "esgdata",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "ghg",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "disc",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "audit",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "viz",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "tax",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "pii": [],
+      "piiPlanted": 8
+    },
+    {
+      "id": "c04-internal-audit",
+      "language": "en",
+      "ms": 9083,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "intAudit",
+        "got": "other",
+        "correct": false
+      },
+      "skills": {
+        "truePositives": [
+          "audit2",
+          "audit"
+        ],
+        "missed": [],
+        "falsePositives": [
+          "dispute",
+          "invent"
+        ],
+        "acceptableIncluded": [
+          {
+            "skill": "recon",
+            "level": 4,
+            "cap": 2
+          },
+          {
+            "skill": "erp",
+            "level": 4,
+            "cap": 2
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "recon",
+            "level": 4,
+            "cap": 2
+          },
+          {
+            "skill": "erp",
+            "level": 4,
+            "cap": 2
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "audit2",
+          "level": 5,
+          "range": [
+            4,
+            5
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "audit",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        }
+      ],
+      "pii": [],
+      "piiPlanted": 10
+    },
+    {
+      "id": "c05-treasury",
+      "language": "en",
+      "ms": 7078,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "treasuryRole",
+        "got": "other",
+        "correct": false
+      },
+      "skills": {
+        "truePositives": [
+          "treasury",
+          "pay",
+          "excel"
+        ],
+        "missed": [
+          "fin"
+        ],
+        "falsePositives": [],
+        "acceptableIncluded": [
+          {
+            "skill": "recon",
+            "level": 3,
+            "cap": 2
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "recon",
+            "level": 3,
+            "cap": 2
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "treasury",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "pay",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "excel",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        }
+      ],
+      "pii": [],
+      "piiPlanted": 7
+    },
+    {
+      "id": "c06-procurement",
+      "language": "mixed",
+      "ms": 6395,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "procRole",
+        "got": "procRole",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "procure",
+          "erp"
+        ],
+        "missed": [],
+        "falsePositives": [],
+        "acceptableIncluded": [
+          {
+            "skill": "dispute",
+            "level": 3,
+            "cap": 2
+          },
+          {
+            "skill": "invent",
+            "level": 3,
+            "cap": 2
+          },
+          {
+            "skill": "excel",
+            "level": 3,
+            "cap": 2
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "dispute",
+            "level": 3,
+            "cap": 2
+          },
+          {
+            "skill": "invent",
+            "level": 3,
+            "cap": 2
+          },
+          {
+            "skill": "excel",
+            "level": 3,
+            "cap": 2
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "procure",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "erp",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "pii": [],
+      "piiPlanted": 7
+    },
+    {
+      "id": "c07-scm-planner",
+      "language": "en",
+      "ms": 6042,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "scmRole",
+        "got": "other",
+        "correct": false
+      },
+      "skills": {
+        "truePositives": [
+          "scm",
+          "invent",
+          "erp",
+          "excel"
+        ],
+        "missed": [
+          "stats"
+        ],
+        "falsePositives": [
+          "procure"
+        ],
+        "acceptableIncluded": [],
+        "overratedListedSkills": []
+      },
+      "levels": [
+        {
+          "skill": "scm",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "invent",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "erp",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "excel",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        }
+      ],
+      "pii": [],
+      "piiPlanted": 7
+    },
+    {
+      "id": "c08-data-analyst",
+      "language": "en",
+      "ms": 4618,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "dataRole",
+        "got": "dataRole",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "sql",
+          "viz",
+          "python",
+          "excel"
+        ],
+        "missed": [
+          "stats"
+        ],
+        "falsePositives": [],
+        "acceptableIncluded": [],
+        "overratedListedSkills": []
+      },
+      "levels": [
+        {
+          "skill": "sql",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "viz",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "python",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "excel",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "pii": [],
+      "piiPlanted": 7
+    },
+    {
+      "id": "c09-fresh-grad",
+      "language": "en",
+      "ms": 4039,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "other",
+        "got": "ap",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "inv"
+        ],
+        "missed": [],
+        "falsePositives": [],
+        "acceptableIncluded": [
+          {
+            "skill": "recon",
+            "level": 1,
+            "cap": 2
+          },
+          {
+            "skill": "audit",
+            "level": 2,
+            "cap": 1
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "audit",
+            "level": 2,
+            "cap": 1
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "inv",
+          "level": 3,
+          "range": [
+            1,
+            2
+          ],
+          "inRange": false
+        }
+      ],
+      "pii": [],
+      "piiPlanted": 5
+    },
+    {
+      "id": "c10-career-changer-retail",
+      "language": "mixed",
+      "ms": 5120,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "other",
+        "got": "other",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "invent",
+          "excel"
+        ],
+        "missed": [],
+        "falsePositives": [
+          "treasury"
+        ],
+        "acceptableIncluded": [
+          {
+            "skill": "three",
+            "level": 3,
+            "cap": 2
+          },
+          {
+            "skill": "dispute",
+            "level": 3,
+            "cap": 2
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "three",
+            "level": 3,
+            "cap": 2
+          },
+          {
+            "skill": "dispute",
+            "level": 3,
+            "cap": 2
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "invent",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "excel",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "pii": [],
+      "piiPlanted": 7
+    },
+    {
+      "id": "c11-staff-nurse",
+      "language": "en",
+      "ms": 4199,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "other",
+        "got": "other",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [],
+        "missed": [],
+        "falsePositives": [],
+        "acceptableIncluded": [
+          {
+            "skill": "invent",
+            "level": 3,
+            "cap": 2
+          },
+          {
+            "skill": "audit2",
+            "level": 3,
+            "cap": 2
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "invent",
+            "level": 3,
+            "cap": 2
+          },
+          {
+            "skill": "audit2",
+            "level": 3,
+            "cap": 2
+          }
+        ]
+      },
+      "levels": [],
+      "pii": [],
+      "piiPlanted": 17
+    },
+    {
+      "id": "c12-mechanic-short",
+      "language": "mixed",
+      "ms": 5644,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "other",
+        "got": "other",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [],
+        "missed": [],
+        "falsePositives": [
+          "procure"
+        ],
+        "acceptableIncluded": [
+          {
+            "skill": "invent",
+            "level": 3,
+            "cap": 1
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "invent",
+            "level": 3,
+            "cap": 1
+          }
+        ]
+      },
+      "levels": [],
+      "pii": [],
+      "piiPlanted": 7
+    },
+    {
+      "id": "c13-ap-lead-ai-long",
+      "language": "en",
+      "ms": 9794,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "ap",
+        "got": "stayRole",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "three",
+          "pay",
+          "recon",
+          "dispute",
+          "inv",
+          "aiinv",
+          "aisup",
+          "prompt",
+          "auto",
+          "process",
+          "viz",
+          "tax"
+        ],
+        "missed": [
+          "erp",
+          "audit"
+        ],
+        "falsePositives": [
+          "esgdata"
+        ],
+        "acceptableIncluded": [
+          {
+            "skill": "excel",
+            "level": 3,
+            "cap": 3
+          },
+          {
+            "skill": "audit2",
+            "level": 3,
+            "cap": 2
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "audit2",
+            "level": 3,
+            "cap": 2
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "three",
+          "level": 5,
+          "range": [
+            4,
+            5
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "pay",
+          "level": 3,
+          "range": [
+            4,
+            5
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "recon",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "dispute",
+          "level": 3,
+          "range": [
+            4,
+            5
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "inv",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "aiinv",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "aisup",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "prompt",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "auto",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "process",
+          "level": 5,
+          "range": [
+            4,
+            5
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "viz",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "tax",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "pii": [],
+      "piiPlanted": 22
+    },
+    {
+      "id": "c14-green-finance-mixed",
+      "language": "mixed",
+      "ms": 6399,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "greenRole",
+        "got": "greenRole",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "greenfin",
+          "fin"
+        ],
+        "missed": [],
+        "falsePositives": [
+          "audit2"
+        ],
+        "acceptableIncluded": [
+          {
+            "skill": "ghg",
+            "level": 2,
+            "cap": 2
+          },
+          {
+            "skill": "disc",
+            "level": 3,
+            "cap": 2
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "disc",
+            "level": 3,
+            "cap": 2
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "greenfin",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "fin",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        }
+      ],
+      "pii": [],
+      "piiPlanted": 10
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+DANIEL LEE JUN HAO
+Data Analyst | SQL • Python • Power BI • ML • AI • Big Data • Cloud
+Kuala Lumpur · +60 12 555 6402 · daniel.leejh@example.com · github.com/daniel-ljh-example
+MyKad 960811-14-5123 · 29 · Male · Chinese · Christian · Single
+
+SUMMARY
+Data-obsessed analyst with 4+ yrs turning raw data into actionable insights. Passionate
+about AI/ML, Generative AI, LLMs, prompt engineering, ESG analytics and blockchain.
+Proven track record driving data-driven decision making across the organisation.
+Strong communicator, self-starter, growth mindset.
+
+TECHNICAL SKILLS
+Languages: SQL (MySQL, PostgreSQL, BigQuery), Python (pandas, NumPy, scikit-learn,
+TensorFlow, PyTorch), R, Scala
+BI: Power BI, Tableau, Looker, Excel (VLOOKUP, Pivot, Power Pivot)
+Big data / Cloud: Spark, Hadoop, Kafka, Airflow, AWS, Azure, GCP, Snowflake, dbt
+Other: SAP, UiPath, ChatGPT, Prompt Engineering, Six Sigma, ESG reporting,
+GHG accounting, Statistics, A/B testing, Financial modelling
+
+EXPERIENCE
+Data Analyst — PasarLaju Online Sdn Bhd (e-commerce), Bangsar South     Apr 2022 – Present
+- Write SQL (BigQuery) for weekly sales & returns reports; join orders, payments and
+  logistics tables
+- Own the Power BI "Seller Health" dashboard used by 40 account managers; refreshed daily
+- Python (pandas) scripts to clean seller product feeds & dedupe SKUs
+- Analysed free-shipping A/B test (t-test, n≈18k) — showed +3.1% conversion, no
+  significant change in AOV
+
+Junior Data Analyst — Nadi Telekom Services Sdn Bhd, Cyberjaya          2020 – 2022
+- Excel reports on call centre KPI (AHT, FCR) every Monday; pivot tables
+- Migrated 6 Excel reports to Power BI
+
+EDUCATION
+BSc (Hons) Actuarial Science, 2020, CGPA 3.45
+
+CERTIFICATIONS
+Google Data Analytics (online) · Microsoft PL-300 (in progress)
+
+PROJECTS (personal)
+Kaggle Titanic, sentiment analysis of tweets (Python)
+
+Church: worship team keyboardist

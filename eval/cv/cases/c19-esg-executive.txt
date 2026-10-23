@@ -1,0 +1,40 @@
+LEE SHU TING
+Sustainability Executive
+Kuala Lumpur | +60 12-555 7319 | shuting.lee@example.com
+Date of birth: 14 Feb 1996 | Female | Single
+
+ABOUT
+Sustainability executive at a listed property developer, responsible for ESG data and the annual
+Sustainability Statement.
+
+EXPERIENCE
+
+Sustainability Executive - Mahkota Land Berhad, Kuala Lumpur                       Aug 2022 - Present
+- Collect quarterly ESG data from 14 business units (energy, water, waste, safety incidents,
+  training hours) through an online data template; chase late submissions and query outliers
+  with data owners.
+- Built a data dictionary and an owner-and-reviewer sign-off for each ESG indicator, agreed with
+  Group Finance and Internal Audit.
+- Calculate Scope 1 and Scope 2 emissions using the GHG Protocol and published emission factors;
+  started screening Scope 3 categories (purchased goods, business travel) in 2024.
+- Draft the Sustainability Statement in the annual report against Bursa Malaysia's common
+  sustainability matters and the GRI Standards; run the materiality assessment survey with
+  management.
+- Prepare the TCFD-aligned climate disclosure with the risk team, including a qualitative
+  physical-risk screening of project sites.
+- Respond to the FTSE4Good ESG rating questionnaire and track the score gap year on year.
+- Maintain a Power BI dashboard of ESG KPIs for the Sustainability Working Committee.
+
+Environmental Officer - Cahaya Builders Sdn Bhd, Shah Alam                         Jan 2019 - Jul 2022
+- Monitored site compliance with the Environmental Quality Act (silt traps, noise, scheduled
+  waste records).
+- Prepared monthly environmental monitoring reports for the Department of Environment.
+- Conducted toolbox talks on waste segregation for site workers.
+
+EDUCATION
+BSc (Hons) Environmental Science, Universiti Putra Malaysia, 2014 - 2018
+Certified Sustainability Reporting Specialist (CSRS), 2023
+
+SKILLS
+GHG Protocol, GRI, Bursa sustainability reporting, TCFD, Excel, Power BI
+Languages: English, Bahasa Malaysia, Mandarin

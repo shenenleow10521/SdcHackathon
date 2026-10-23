@@ -1,0 +1,44 @@
+Contact
+hafiz.roslan@example.com
+www.linkedin.com/in/hafiz-roslan-example
+(LinkedIn)
+Top Skills
+SQL
+Microsoft Power BI
+Python (Programming Language)
+Languages
+English (Full Professional)
+Malay (Native or Bilingual)
+Certifications
+Google Data Analytics Professional Certificate
+Microsoft Certified: Power BI Data Analyst Associate
+Hafiz Roslan
+Data Analyst | Turning data into decisions | SQL • Power BI • Python
+Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia
+Summary
+I help teams make better decisions with data. Currently analysing customer and claims data at a
+general insurer. Always learning, always curious.
+Experience
+Bijak General Insurance Berhad
+Data Analyst
+March 2023 - Present (3 years 8 months)
+Kuala Lumpur, Malaysia
+- Write SQL in Snowflake to build the monthly motor claims dataset, joining policy, claims and
+workshop tables
+- Built the Power BI claims-ageing dashboard used by 60 claims handlers and their managers
+- Analysed repair cost by workshop and flagged 12 outlier workshops for the fraud team (z-scores,
+Python)
+Pantas Courier Sdn Bhd
+Operations Analyst
+July 2021 - February 2023 (1 year 8 months)
+Shah Alam, Selangor, Malaysia
+Weekly delivery performance reports in Excel and Google Sheets.
+  Page 1 of 2
+Pantas Courier Sdn Bhd
+Customer Service Executive
+January 2020 - June 2021 (1 year 6 months)
+Shah Alam, Selangor, Malaysia
+Education
+Universiti Teknologi Malaysia
+Bachelor of Science - BS, Mathematics · (2015 - 2019)
+  Page 2 of 2

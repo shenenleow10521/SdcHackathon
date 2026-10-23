@@ -1,0 +1,5399 @@
+{
+ "version": 1,
+ "annotator": "independent annotator agent v2 (blind to system code and outputs)",
+ "createdAt": "2026-10-23T00:00:00Z",
+ "esco": "ESCO v1.2.1 skills from db/seed/esco_full.json.gz; ids are the keys of its 'skills' map",
+ "guidelines": "eval/cv/ANNOTATION-v2.md",
+ "cases": [
+  {
+   "id": "c01-ap-messy-pdf",
+   "facts": [
+    {
+     "fact": "keys and codes supplier invoices in SAP",
+     "quote": "key in and code to GL & cost centre in SAP S/4",
+     "shownInUse": true,
+     "escoIds": [
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa",
+      "99b163e8-7815-43e2-83f3-a47f3076354c",
+      "f2d57f41-43b4-4f5b-8100-3df5c21eda50",
+      "08371fe9-c658-4f6a-966f-71dbb0ab683d"
+     ],
+     "escoTitles": [
+      "maintain records of financial transactions",
+      "use accounting systems",
+      "accounting entries",
+      "process data",
+      "accounting department processes"
+     ]
+    },
+    {
+     "fact": "three-way match of PO, GRN and invoice and handles variances",
+     "quote": "Perform 3WM (PO vs GRN vs invoice)",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e9030465-13c5-46d2-bdae-c2c1a9dbec86"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "attach accounting certificates to accounting transactions"
+     ]
+    },
+    {
+     "fact": "prepares the weekly payment proposal",
+     "quote": "Prepare weekly F110 payment proposal",
+     "shownInUse": true,
+     "escoIds": [
+      "4e756773-ae14-4981-838b-9fe27e81c0af",
+      "f7e7ccb6-fadc-4c35-935d-e1040be40dfe"
+     ],
+     "escoTitles": [
+      "carry out financial transactions",
+      "handle financial transactions"
+     ]
+    },
+    {
+     "fact": "reconciles vendor statements to the ledger",
+     "quote": "Monthly vendor statement recon-",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e717b036-2c0c-4c11-99e9-0cb4ce084fed"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "perform account allocation"
+     ]
+    },
+    {
+     "fact": "resolves vendor payment queries and agrees settlements",
+     "quote": "agree credit note or settlement with vendor",
+     "shownInUse": true,
+     "escoIds": [
+      "f70b5f39-b8b6-407b-8c08-64fd65db79e9",
+      "3cd35f5d-ce6d-4f14-9a09-53d7a28d834c"
+     ],
+     "escoTitles": [
+      "handle financial disputes",
+      "maintain relationship with suppliers"
+     ]
+    },
+    {
+     "fact": "supports external auditors with evidence and answers queries",
+     "quote": "auditors at year end (YE) and answer their PBC queries.",
+     "shownInUse": true,
+     "escoIds": [
+      "24e67151-ff7e-43e2-99c0-424a758278a4",
+      "26baf34d-6721-4bac-b7eb-add0bc566a82",
+      "cb059032-dd34-4761-a786-98cfb9d0efe3"
+     ],
+     "escoTitles": [
+      "liaise with auditors",
+      "attend to detail in preparation for audits",
+      "explain accounting records"
+     ]
+    },
+    {
+     "fact": "maintains vendor master data in the ERP",
+     "quote": "Maintain vendor master (new vendor creation, bank change)",
+     "shownInUse": true,
+     "escoIds": [
+      "f0393af3-bcd9-41af-a36e-0cfb83b60081",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa"
+     ],
+     "escoTitles": [
+      "manage standard enterprise resource planning system",
+      "use accounting systems"
+     ]
+    },
+    {
+     "fact": "prepares SST working for review",
+     "quote": "Prepare SST-02 working (service tax on imported services)",
+     "shownInUse": true,
+     "escoIds": [
+      "22a173f5-868c-4d82-87e6-beed500ce070",
+      "2ecf90f1-c511-464b-b26f-598d69182c70",
+      "d669af41-756c-48d9-a286-1443253f54b1"
+     ],
+     "escoTitles": [
+      "prepare tax returns forms",
+      "calculate tax",
+      "tax legislation"
+     ]
+    },
+    {
+     "fact": "trains new joiners",
+     "quote": "Trained 3 new joiners on MIRO & 3WM exceptions",
+     "shownInUse": true,
+     "escoIds": [
+      "e54ff029-1ce9-447d-a5b2-eb7283a23e6e",
+      "0cc9c234-f817-4f4c-908a-4d28fe3b0f4a"
+     ],
+     "escoTitles": [
+      "train employees",
+      "coach employees"
+     ]
+    },
+    {
+     "fact": "reconciles petty cash and staff claims",
+     "quote": "Reconcilation of petty cash & staff claims",
+     "shownInUse": true,
+     "escoIds": [
+      "63321ecf-4fc6-44d9-88f1-5373a4f3038a"
+     ],
+     "escoTitles": [
+      "handle petty cash"
+     ]
+    },
+    {
+     "fact": "assists month-end closing accruals",
+     "quote": "Assist in month end closing (MEC) - accruals listing",
+     "shownInUse": true,
+     "escoIds": [
+      "dc417e19-edb4-4401-883a-2375f67a162f",
+      "99b163e8-7815-43e2-83f3-a47f3076354c"
+     ],
+     "escoTitles": [
+      "manage the general ledger",
+      "accounting entries"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c02-ap-bm",
+   "facts": [
+    {
+     "fact": "keys supplier invoices into SAP with GL coding",
+     "quote": "Memasukkan invois pembekal ke dalam sistem SAP dan memastikan kod GL betul",
+     "shownInUse": true,
+     "escoIds": [
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa",
+      "99b163e8-7815-43e2-83f3-a47f3076354c",
+      "f2d57f41-43b4-4f5b-8100-3df5c21eda50",
+      "08371fe9-c658-4f6a-966f-71dbb0ab683d"
+     ],
+     "escoTitles": [
+      "maintain records of financial transactions",
+      "use accounting systems",
+      "accounting entries",
+      "process data",
+      "accounting department processes"
+     ]
+    },
+    {
+     "fact": "checks PO / GRN / invoice match before posting",
+     "quote": "Menyemak padanan PO, nota terimaan barang (GRN) dan invois sebelum posting",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e9030465-13c5-46d2-bdae-c2c1a9dbec86"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "attach accounting certificates to accounting transactions"
+     ]
+    },
+    {
+     "fact": "reconciles vendor statements to the ledger",
+     "quote": "Menyelaras penyata vendor dengan lejar setiap bulan dan menyiasat perbezaan",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e717b036-2c0c-4c11-99e9-0cb4ce084fed"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "perform account allocation"
+     ]
+    },
+    {
+     "fact": "prepares the weekly payment proposal",
+     "quote": "sediakan cadangan bayaran mingguan (F110)",
+     "shownInUse": true,
+     "escoIds": [
+      "4e756773-ae14-4981-838b-9fe27e81c0af",
+      "f7e7ccb6-fadc-4c35-935d-e1040be40dfe"
+     ],
+     "escoTitles": [
+      "carry out financial transactions",
+      "handle financial transactions"
+     ]
+    },
+    {
+     "fact": "prepares SST report and checks service tax on invoices",
+     "quote": "Sediakan laporan SST dan semak caj cukai perkhidmatan pada invois",
+     "shownInUse": true,
+     "escoIds": [
+      "22a173f5-868c-4d82-87e6-beed500ce070",
+      "2ecf90f1-c511-464b-b26f-598d69182c70",
+      "d669af41-756c-48d9-a286-1443253f54b1"
+     ],
+     "escoTitles": [
+      "prepare tax returns forms",
+      "calculate tax",
+      "tax legislation"
+     ]
+    },
+    {
+     "fact": "issues customer invoices and follows up overdue debtors",
+     "quote": "Keluarkan invois pelanggan & rekod kutipan",
+     "shownInUse": true,
+     "escoIds": [
+      "e3e42d54-78bd-4337-aa87-bb31a7670c9a",
+      "68b51538-b056-4cb3-bb15-ab8c3e576cc9",
+      "e126f782-b4e6-4f7d-8dca-8d2e6778559b",
+      "c26c7d9d-f9cf-4147-b774-c63e050ebe87"
+     ],
+     "escoTitles": [
+      "issue sales invoices",
+      "follow up accounts receivables",
+      "credit control processes",
+      "enforce customer's debt repayment"
+     ]
+    },
+    {
+     "fact": "builds AP/AR ageing report with Excel pivots",
+     "quote": "Sediakan aging report AP/AR guna Excel (pivot)",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    },
+    {
+     "fact": "prepares supporting documents for external auditors",
+     "quote": "Bantu juruaudit luar semasa audit tahunan",
+     "shownInUse": true,
+     "escoIds": [
+      "24e67151-ff7e-43e2-99c0-424a758278a4",
+      "26baf34d-6721-4bac-b7eb-add0bc566a82",
+      "cb059032-dd34-4761-a786-98cfb9d0efe3"
+     ],
+     "escoTitles": [
+      "liaise with auditors",
+      "attend to detail in preparation for audits",
+      "explain accounting records"
+     ]
+    },
+    {
+     "fact": "prepares monthly bank reconciliation",
+     "quote": "Sediakan penyesuaian bank (bank rec) bulanan",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records"
+     ]
+    },
+    {
+     "fact": "records daily sales and payment vouchers in an accounting system",
+     "quote": "Rekod jualan harian & baucer bayaran dlm UBS",
+     "shownInUse": true,
+     "escoIds": [
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa"
+     ],
+     "escoTitles": [
+      "maintain records of financial transactions",
+      "use accounting systems"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c03-finance-to-esg",
+   "facts": [
+    {
+     "fact": "prepares monthly management accounts and explains budget variances",
+     "quote": "Prepare monthly mgmt accounts pack for 6 estates + 2 mills",
+     "shownInUse": true,
+     "escoIds": [
+      "5c99d21a-9d02-4638-9b52-a6ba840dcb0a",
+      "dd7c9dfd-6e2c-46fd-aefc-369402d0200c",
+      "8a43795b-bb38-4f29-91df-a6c92ad4643c",
+      "4f060129-8b75-4d58-a8dd-515bd8fef349"
+     ],
+     "escoTitles": [
+      "synthesise financial information",
+      "create a financial report",
+      "analyse financial performance of a company",
+      "develop financial statistics reports"
+     ]
+    },
+    {
+     "fact": "builds annual budget and rolling forecast",
+     "quote": "Build annual budget & rolling forecast model for CPO / FFB yield in Excel",
+     "shownInUse": true,
+     "escoIds": [
+      "21c5790c-0930-4d74-b3b0-84caf5af12ea",
+      "147170ba-0141-4337-89af-b4513d745afe",
+      "74688c5d-2af1-4f7a-9d1c-00e808eaa1e6",
+      "4ce09e3d-ca6b-424a-a328-7f551db75e59",
+      "d37bc902-f640-48d7-9db4-544db9aa65fa",
+      "4b2db903-cd8e-48ce-97fb-a92db4def54e"
+     ],
+     "escoTitles": [
+      "manage budgets",
+      "support development of annual budget",
+      "budgetary principles",
+      "update budget",
+      "prepare financial projections",
+      "financial forecasting"
+     ]
+    },
+    {
+     "fact": "builds scenario models in Excel",
+     "quote": "Build annual budget & rolling forecast model for CPO / FFB yield in Excel",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    },
+    {
+     "fact": "reviews GL reconciliations",
+     "quote": "review GL recons submitted by estate accountants",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records"
+     ]
+    },
+    {
+     "fact": "collects ESG activity data from operating units and flags outliers",
+     "quote": "Collect diesel, electricity and fertiliser data from 8 operating units monthly;",
+     "shownInUse": true,
+     "escoIds": [
+      "d53eab76-e8ff-4e28-af26-7e012951c763",
+      "77f109c4-3107-4d2a-a512-5160ac103933",
+      "f5bf985b-ac78-4d23-881a-18a359234528"
+     ],
+     "escoTitles": [
+      "measure company's sustainability performance",
+      "analyse environmental data",
+      "corporate sustainability"
+     ]
+    },
+    {
+     "fact": "calculates Scope 1 and 2 emissions",
+     "quote": "Calculate Scope 1 & 2 emissions using GHG Protocol",
+     "shownInUse": true,
+     "escoIds": [
+      "d53eab76-e8ff-4e28-af26-7e012951c763",
+      "77f109c4-3107-4d2a-a512-5160ac103933"
+     ],
+     "escoTitles": [
+      "measure company's sustainability performance",
+      "analyse environmental data"
+     ]
+    },
+    {
+     "fact": "drafts sustainability statement climate sections",
+     "quote": "Drafted climate sections of the FY2024 Sustainability Statement",
+     "shownInUse": true,
+     "escoIds": [
+      "bbcc7e1b-3d4d-4422-9fac-efd636eb9de4",
+      "4300b453-9bcf-474c-9ee3-92ec2229720c",
+      "f3cc52e3-a96c-4549-b841-6e41a846fa99"
+     ],
+     "escoTitles": [
+      "lead the sustainability reporting process",
+      "global standards for sustainability reporting",
+      "report on environmental issues"
+     ]
+    },
+    {
+     "fact": "prepares evidence for external assurance",
+     "quote": "every number traced back to invoice/meter reading",
+     "shownInUse": true,
+     "escoIds": [
+      "24e67151-ff7e-43e2-99c0-424a758278a4",
+      "26baf34d-6721-4bac-b7eb-add0bc566a82"
+     ],
+     "escoTitles": [
+      "liaise with auditors",
+      "attend to detail in preparation for audits"
+     ]
+    },
+    {
+     "fact": "builds a Power BI page for emissions intensity",
+     "quote": "Set up a Power BI page showing monthly emissions intensity",
+     "shownInUse": true,
+     "escoIds": [
+      "65e58886-bd1e-4c5b-8ca5-8d9b353c8aa1",
+      "c3e36d05-8ae8-447f-bb2b-6f9409f85389",
+      "c0326e27-5fa8-4dca-aecb-ed89ab491513",
+      "143769cb-b61e-47d8-a61e-eedfbec1016c"
+     ],
+     "escoTitles": [
+      "data visualisation software",
+      "deliver visual presentation of data",
+      "prepare visual data",
+      "business intelligence"
+     ]
+    },
+    {
+     "fact": "prepares SST returns",
+     "quote": "Prepared SST-02 returns bi-monthly",
+     "shownInUse": true,
+     "escoIds": [
+      "22a173f5-868c-4d82-87e6-beed500ce070",
+      "2ecf90f1-c511-464b-b26f-598d69182c70",
+      "d669af41-756c-48d9-a286-1443253f54b1"
+     ],
+     "escoTitles": [
+      "prepare tax returns forms",
+      "calculate tax",
+      "tax legislation"
+     ]
+    },
+    {
+     "fact": "keeps full set of accounts for subsidiaries",
+     "quote": "Full set of accounts for 3 subsidiaries; intercompany recon",
+     "shownInUse": true,
+     "escoIds": [
+      "60f51172-37c0-4933-a27a-cbf55dcd7580",
+      "faf8943c-72ff-4736-a587-25508695d6f0",
+      "dc417e19-edb4-4401-883a-2375f67a162f"
+     ],
+     "escoTitles": [
+      "prepare financial statements",
+      "maintain financial records",
+      "manage the general ledger"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c04-internal-audit",
+   "facts": [
+    {
+     "fact": "plans and executes risk-based internal audits",
+     "quote": "plan & execute risk-based audits on procure-to-pay",
+     "shownInUse": true,
+     "escoIds": [
+      "8804d963-5a31-4609-b5df-f741b7199fb7",
+      "ed0718f6-5823-4c74-9749-2936c9c06203",
+      "6a536b36-c5c7-4d10-bf67-a4fb0f8549b2"
+     ],
+     "escoTitles": [
+      "internal auditing",
+      "develop audit plan",
+      "audit techniques"
+     ]
+    },
+    {
+     "fact": "tests design and operating effectiveness of controls",
+     "quote": "test design & operating effectivness of key controls",
+     "shownInUse": true,
+     "escoIds": [
+      "8804d963-5a31-4609-b5df-f741b7199fb7",
+      "6a536b36-c5c7-4d10-bf67-a4fb0f8549b2"
+     ],
+     "escoTitles": [
+      "internal auditing",
+      "audit techniques"
+     ]
+    },
+    {
+     "fact": "data analytics to detect duplicate vendor payments",
+     "quote": "found duplicate vendor payments RM182k by matching vendor bank acc + invoice no.",
+     "shownInUse": true,
+     "escoIds": [
+      "6a536b36-c5c7-4d10-bf67-a4fb0f8549b2",
+      "2b92a5b2-6758-4ee3-9fb4-b6387a55cc8f",
+      "541cdc23-1eec-4520-81fc-3392eaf538ed",
+      "29d80dad-95f7-440c-bda2-22fe93155260"
+     ],
+     "escoTitles": [
+      "audit techniques",
+      "perform data analysis",
+      "fraud detection",
+      "perform forensic accounting"
+     ]
+    },
+    {
+     "fact": "writes audit reports and presents to the audit committee",
+     "quote": "write audit report & present findings to Audit & Risk Mgmt Committee (ARMC)",
+     "shownInUse": true,
+     "escoIds": [
+      "3e9b580d-811b-48df-a5d1-a7bdd26f901f",
+      "d0f2f8a7-d935-4a6d-8e54-dcc3e5e2cbeb"
+     ],
+     "escoTitles": [
+      "prepare financial auditing reports",
+      "present reports"
+     ]
+    },
+    {
+     "fact": "coaches audit executives and reviews their working papers",
+     "quote": "coach 2 audit executives, review their working papers",
+     "shownInUse": true,
+     "escoIds": [
+      "9601b2a8-68e4-4906-9306-a23679b8f0b0",
+      "0cc9c234-f817-4f4c-908a-4d28fe3b0f4a",
+      "fb9c12af-ec45-498a-8e52-891371191557"
+     ],
+     "escoTitles": [
+      "supervise staff",
+      "coach employees",
+      "mentor individual employees"
+     ]
+    },
+    {
+     "fact": "performs compliance audits on SST and customs duty",
+     "quote": "Perform compliance audits on SST, customs duty & sales / purchase processes",
+     "shownInUse": true,
+     "escoIds": [
+      "b9efc4b5-0266-43e3-a7e3-064d09bcf90a",
+      "8804d963-5a31-4609-b5df-f741b7199fb7"
+     ],
+     "escoTitles": [
+      "inspect taxation documents",
+      "internal auditing"
+     ]
+    },
+    {
+     "fact": "reconciles sub-ledger to GL",
+     "quote": "reconcilation of sub-ledger to GL",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records"
+     ]
+    },
+    {
+     "fact": "assists ISO 9001 internal quality audit",
+     "quote": "Assisted in the ISO 9001 internal quality audit",
+     "shownInUse": true,
+     "escoIds": [
+      "d83cba15-8511-4d07-b89a-9fde0d1d8241"
+     ],
+     "escoTitles": [
+      "perform quality audits"
+     ]
+    },
+    {
+     "fact": "external audit vouching and stock count attendance",
+     "quote": "stock count attendance, vouching",
+     "shownInUse": true,
+     "escoIds": [
+      "89ff28d6-342c-435d-83aa-83e71dbbbc96"
+     ],
+     "escoTitles": [
+      "conduct financial audits"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c05-treasury",
+   "facts": [
+    {
+     "fact": "prepares the daily cash position",
+     "quote": "Daily cash position for 11 bank accts (4 banks) by 10am",
+     "shownInUse": true,
+     "escoIds": [
+      "658a38bd-6954-4a2a-945c-42330c5d13b9",
+      "781797f4-c2c3-49a4-a80d-eb81eb4f818c",
+      "e4b6f863-fa9f-4fe7-a984-f948f8c90d24"
+     ],
+     "escoTitles": [
+      "manage corporate bank accounts",
+      "liquidity management",
+      "handle cash flow"
+     ]
+    },
+    {
+     "fact": "rolling 13-week cash flow forecast",
+     "quote": "13-wk cash flow forecast, rolling",
+     "shownInUse": true,
+     "escoIds": [
+      "d37bc902-f640-48d7-9db4-544db9aa65fa",
+      "4b2db903-cd8e-48ce-97fb-a92db4def54e",
+      "781797f4-c2c3-49a4-a80d-eb81eb4f818c"
+     ],
+     "escoTitles": [
+      "prepare financial projections",
+      "financial forecasting",
+      "liquidity management"
+     ]
+    },
+    {
+     "fact": "places surplus cash in deposits and money market",
+     "quote": "sweep surplus to FD /",
+     "shownInUse": true,
+     "escoIds": [
+      "a05ead02-1728-4d60-929c-7e7c3a87672c",
+      "781797f4-c2c3-49a4-a80d-eb81eb4f818c"
+     ],
+     "escoTitles": [
+      "operate financial instruments",
+      "liquidity management"
+     ]
+    },
+    {
+     "fact": "builds forecast model in Excel with macros",
+     "quote": "built the forecast model in Excel (INDEX/MATCH, macros to pull bank statements)",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    },
+    {
+     "fact": "releases vendor payment batches",
+     "quote": "Release vendor payment batches in bank e-portals after checking vs approved payment list",
+     "shownInUse": true,
+     "escoIds": [
+      "4e756773-ae14-4981-838b-9fe27e81c0af",
+      "f7e7ccb6-fadc-4c35-935d-e1040be40dfe"
+     ],
+     "escoTitles": [
+      "carry out financial transactions",
+      "handle financial transactions"
+     ]
+    },
+    {
+     "fact": "manages trade lines and revolving credit, covenant monitoring",
+     "quote": "Manage trade lines: BA / TR / revolving credit drawdown & rollover, covenant monitoring",
+     "shownInUse": true,
+     "escoIds": [
+      "be252635-341e-4b1c-b94f-aef362b645ed",
+      "3556c075-eee0-4549-b730-48ae70cb5af9",
+      "66baba7d-178e-4c51-935f-03a9049ff2f6"
+     ],
+     "escoTitles": [
+      "business loans",
+      "funding methods",
+      "communicate with banking professionals"
+     ]
+    },
+    {
+     "fact": "hedges FX exposure with forward contracts",
+     "quote": "FX: book forward contracts to hedge USD receivables",
+     "shownInUse": true,
+     "escoIds": [
+      "707c54fb-b6b8-45a4-9abd-030a40a582c9",
+      "4bdbd6db-7d75-40e7-b40e-5718e2982dfb",
+      "7f7756fc-d89d-41d5-93ef-85991603f4ad"
+     ],
+     "escoTitles": [
+      "manage currency exchange risk mitigation techniques",
+      "perform financial risk management in international trade",
+      "manage financial risk"
+     ]
+    },
+    {
+     "fact": "monthly bank reconciliation",
+     "quote": "Monthly bank recon for all accounts",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records"
+     ]
+    },
+    {
+     "fact": "collections follow-up and credit limit review",
+     "quote": "Collection follow-up, customer SOA, credit limit review",
+     "shownInUse": true,
+     "escoIds": [
+      "68b51538-b056-4cb3-bb15-ab8c3e576cc9",
+      "e126f782-b4e6-4f7d-8dca-8d2e6778559b",
+      "c26c7d9d-f9cf-4147-b774-c63e050ebe87",
+      "afe9c5d2-e8bd-4377-9d2d-49b9589f05f9"
+     ],
+     "escoTitles": [
+      "follow up accounts receivables",
+      "credit control processes",
+      "enforce customer's debt repayment",
+      "analyse the credit history of potential customers"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c06-procurement",
+   "facts": [
+    {
+     "fact": "runs RFQs and compares quotations",
+     "quote": "compare min 3 quotation and recommend supplier",
+     "shownInUse": true,
+     "escoIds": [
+      "9e9a4209-c7cf-4f6e-973e-dc2ffadccc74",
+      "ae25d3a9-a85f-415c-a601-806013ea8229",
+      "8faefbc1-4745-4b3f-9889-81cd1d40b67c"
+     ],
+     "escoTitles": [
+      "perform procurement processes",
+      "compare contractors' bids",
+      "evaluate tender"
+     ]
+    },
+    {
+     "fact": "negotiates price and payment terms with suppliers",
+     "quote": "Negotiate price & payment term with suppliers",
+     "shownInUse": true,
+     "escoIds": [
+      "5f2efbdf-08a2-49cd-9c06-bd284e4f0fbf",
+      "c842be42-81b3-40f2-904c-ea8790ac88bd",
+      "fde186df-c9c4-49f5-b2a5-d66adc7c43a5",
+      "7ee9fb56-91b1-4363-b51f-ea54ae1b5761"
+     ],
+     "escoTitles": [
+      "negotiate terms with suppliers",
+      "negotiate supplier arrangements",
+      "negotiate buying conditions",
+      "negotiate price"
+     ]
+    },
+    {
+     "fact": "evaluates supplier performance quarterly",
+     "quote": "Supplier evaluation every quarter (QCD - quality, cost, delivery)",
+     "shownInUse": true,
+     "escoIds": [
+      "96ec2d53-4f41-4172-8ef2-70742c4bb540",
+      "fe1ec582-d63b-466c-9149-e7fc4fe93e22",
+      "d89f5cee-649a-44bd-9aa9-8e74bbdbd50d"
+     ],
+     "escoTitles": [
+      "assess supplier risks",
+      "supplier management",
+      "monitor contractor performance"
+     ]
+    },
+    {
+     "fact": "vets new suppliers before approval",
+     "quote": "New supplier registration: check SSM, financial report, ISO cert before approve",
+     "shownInUse": true,
+     "escoIds": [
+      "11747665-0e98-4f27-bd0d-536862cd5746",
+      "96ec2d53-4f41-4172-8ef2-70742c4bb540"
+     ],
+     "escoTitles": [
+      "identify suppliers",
+      "assess supplier risks"
+     ]
+    },
+    {
+     "fact": "issues purchase orders in SAP",
+     "quote": "Issue PO in SAP (ME21N)",
+     "shownInUse": true,
+     "escoIds": [
+      "73225018-7139-433b-bdba-2b90774761d9",
+      "c7d64df4-7af3-4269-add6-97833bd5448e",
+      "bc067d2e-e151-408f-8e34-24effd2b7fd6"
+     ],
+     "escoTitles": [
+      "issue purchase orders",
+      "manage purchasing cycle",
+      "use e-procurement"
+     ]
+    },
+    {
+     "fact": "resolves short or damaged delivery issues with suppliers",
+     "quote": "Settle issue with supplier bila barang short / rosak",
+     "shownInUse": true,
+     "escoIds": [
+      "f70b5f39-b8b6-407b-8c08-64fd65db79e9",
+      "3cd35f5d-ce6d-4f14-9a09-53d7a28d834c"
+     ],
+     "escoTitles": [
+      "handle financial disputes",
+      "maintain relationship with suppliers"
+     ]
+    },
+    {
+     "fact": "controls spare-parts stock and reorders below minimum",
+     "quote": "Kawal stok alat ganti (spare parts) & buat order bila stok bawah min level",
+     "shownInUse": true,
+     "escoIds": [
+      "44f6a65f-6be7-4818-9a66-73908797283f",
+      "7e6509bd-9642-4af5-bad3-5b2cec29b6f9",
+      "210827e3-3129-45a2-8683-70399f3f561f",
+      "015b0162-6dd3-4d46-bbfd-325086155dd5",
+      "fc1eae96-01cb-4d97-b594-d5040913675e"
+     ],
+     "escoTitles": [
+      "monitor stock level",
+      "control reorder points",
+      "order supplies",
+      "purchase supplies",
+      "maintain parts inventory"
+     ]
+    },
+    {
+     "fact": "updates the price list in Excel",
+     "quote": "update price list dlm Excel",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c07-scm-planner",
+   "facts": [
+    {
+     "fact": "runs MRP in SAP and converts planned orders",
+     "quote": "Run weekly MRP in SAP (MD04 / MD06), convert planned",
+     "shownInUse": true,
+     "escoIds": [
+      "f0393af3-bcd9-41af-a36e-0cfb83b60081",
+      "5475343c-5e75-415f-b431-17f3c20a347e",
+      "020b3c27-bae1-4b85-9d6f-eccee0f5ed99"
+     ],
+     "escoTitles": [
+      "manage standard enterprise resource planning system",
+      "use production planning software",
+      "manage supplies"
+     ]
+    },
+    {
+     "fact": "monthly statistical demand forecast",
+     "quote": "Monthly demand forecast for 120 SKUs using 12-mth moving avg + seasonality",
+     "shownInUse": true,
+     "escoIds": [
+      "68e73bf6-2838-4705-86f4-e4bda4ac8a6f",
+      "be727774-46d7-43d7-aee9-1a51b5cd8c71",
+      "146eccdc-c52a-4d61-9406-3af617caa7d6"
+     ],
+     "escoTitles": [
+      "forecast products' demand",
+      "carry out statistical forecasts",
+      "forecast sales over periods of time"
+     ]
+    },
+    {
+     "fact": "tracks forecast accuracy and bias",
+     "quote": "forecast accuracy (MAPE) and bias",
+     "shownInUse": true,
+     "escoIds": [
+      "382c11ed-20d5-4ae7-b60e-15fec527fa6c",
+      "7ee4c2ea-b349-4bd2-81a3-ec31475d4833",
+      "2b92a5b2-6758-4ee3-9fb4-b6387a55cc8f"
+     ],
+     "escoTitles": [
+      "apply statistical analysis techniques",
+      "statistics",
+      "perform data analysis"
+     ]
+    },
+    {
+     "fact": "leads S&OP alignment with sales and production",
+     "quote": "Lead S&OP pre-meeting with Sales & Production; agree constrained plan",
+     "shownInUse": true,
+     "escoIds": [
+      "05281013-f5ae-4bf2-ad23-d5d6f7573b46",
+      "020b3c27-bae1-4b85-9d6f-eccee0f5ed99",
+      "f929c89e-c363-4132-a918-e021d57b307c"
+     ],
+     "escoTitles": [
+      "carry out inventory planning",
+      "manage supplies",
+      "supply chain management"
+     ]
+    },
+    {
+     "fact": "reviews slow-moving and obsolete stock and proposes write-offs",
+     "quote": "slow-moving & obsolete (SLOB) stock",
+     "shownInUse": true,
+     "escoIds": [
+      "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+      "5aaf2780-04d7-4bbf-8b06-af36eafe8eba",
+      "e705db38-4fcf-4069-b01f-3fbdda894cc1",
+      "16594fea-3004-4730-838f-e35a432b49da"
+     ],
+     "escoTitles": [
+      "manage inventory",
+      "inventory management rules",
+      "manage stock rotation",
+      "perform stock valuation"
+     ]
+    },
+    {
+     "fact": "builds an Excel and Power Query model",
+     "quote": "Built Excel + Power Query model that pulls SAP stock & open PO",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    },
+    {
+     "fact": "daily production scheduling",
+     "quote": "Daily production schedule for 25 injection moulding machines",
+     "shownInUse": true,
+     "escoIds": [
+      "2a778aeb-f246-4f03-9a96-c60183001037",
+      "7ba8eea9-3f9c-422b-90db-1a11eb6ff904",
+      "5475343c-5e75-415f-b431-17f3c20a347e"
+     ],
+     "escoTitles": [
+      "schedule production",
+      "disaggregate the production plan",
+      "use production planning software"
+     ]
+    },
+    {
+     "fact": "stock take and variance investigation",
+     "quote": "Quarterly stock take; investigate variance > 2%",
+     "shownInUse": true,
+     "escoIds": [
+      "53815c73-d352-4d4d-92cb-fb7020cbd8e6",
+      "de804504-bd5c-465d-b54f-9da299d8ee90",
+      "f60416d5-2d98-4401-ba0d-b92b53e01d86"
+     ],
+     "escoTitles": [
+      "carry out inventory control accuracy",
+      "maintain stock control systems",
+      "keep stock records"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c08-data-analyst",
+   "facts": [
+    {
+     "fact": "writes SQL for routine reports joining several tables",
+     "quote": "Write SQL (BigQuery) for weekly sales & returns reports",
+     "shownInUse": true,
+     "escoIds": [
+      "598de5b0-5b58-4ea7-8058-a4bc4d18c742",
+      "75f839c2-fd9a-4ad3-8921-6e734608568d",
+      "9cf681c7-89ec-470c-b651-7fe03786f586",
+      "4463a721-69f3-413d-8321-43e3af13a4f1"
+     ],
+     "escoTitles": [
+      "SQL",
+      "use query languages",
+      "query languages",
+      "use databases"
+     ]
+    },
+    {
+     "fact": "owns a Power BI dashboard used by account managers",
+     "quote": "dashboard used by 40 account managers; refreshed daily",
+     "shownInUse": true,
+     "escoIds": [
+      "65e58886-bd1e-4c5b-8ca5-8d9b353c8aa1",
+      "c3e36d05-8ae8-447f-bb2b-6f9409f85389",
+      "c0326e27-5fa8-4dca-aecb-ed89ab491513",
+      "143769cb-b61e-47d8-a61e-eedfbec1016c"
+     ],
+     "escoTitles": [
+      "data visualisation software",
+      "deliver visual presentation of data",
+      "prepare visual data",
+      "business intelligence"
+     ]
+    },
+    {
+     "fact": "Python scripts to clean data",
+     "quote": "Python (pandas) scripts to clean seller product feeds",
+     "shownInUse": true,
+     "escoIds": [
+      "ccd0a1d9-afda-43d9-b901-96344886e14d",
+      "21d2f96d-35f7-4e3f-9745-c533d2dd6e97",
+      "bf4d884f-c848-402a-b130-69c266b04164",
+      "f9670490-8aa4-4540-b121-d440a8294aab",
+      "50b100ea-74fd-4706-99db-3e4ca55e51b8"
+     ],
+     "escoTitles": [
+      "Python (computer programming)",
+      "computer programming",
+      "apply basic programming skills",
+      "develop data processing applications",
+      "perform data cleansing"
+     ]
+    },
+    {
+     "fact": "runs and interprets an A/B significance test",
+     "quote": "Analysed free-shipping A/B test (t-test",
+     "shownInUse": true,
+     "escoIds": [
+      "382c11ed-20d5-4ae7-b60e-15fec527fa6c",
+      "7ee4c2ea-b349-4bd2-81a3-ec31475d4833",
+      "2b92a5b2-6758-4ee3-9fb4-b6387a55cc8f"
+     ],
+     "escoTitles": [
+      "apply statistical analysis techniques",
+      "statistics",
+      "perform data analysis"
+     ]
+    },
+    {
+     "fact": "weekly Excel pivot reports",
+     "quote": "Excel reports on call centre KPI (AHT, FCR) every Monday; pivot tables",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    },
+    {
+     "fact": "reports call-centre KPIs",
+     "quote": "Excel reports on call centre KPI (AHT, FCR) every Monday; pivot tables",
+     "shownInUse": true,
+     "escoIds": [
+      "8dcbcabe-09f7-4d11-940d-125af57bbc40",
+      "a0c4e4a2-9d7c-499d-af51-4e32dd028418"
+     ],
+     "escoTitles": [
+      "track key performance indicators",
+      "manage key performance indicators of call centres"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c09-fresh-grad",
+   "facts": [
+    {
+     "fact": "keys supplier invoices into an accounting package",
+     "quote": "Key in supplier invoices into AutoCount",
+     "shownInUse": true,
+     "escoIds": [
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa",
+      "99b163e8-7815-43e2-83f3-a47f3076354c",
+      "f2d57f41-43b4-4f5b-8100-3df5c21eda50",
+      "08371fe9-c658-4f6a-966f-71dbb0ab683d"
+     ],
+     "escoTitles": [
+      "maintain records of financial transactions",
+      "use accounting systems",
+      "accounting entries",
+      "process data",
+      "accounting department processes"
+     ]
+    },
+    {
+     "fact": "assists with bank reconciliation",
+     "quote": "Assist senior prepare bank reconciliation",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records"
+     ]
+    },
+    {
+     "fact": "files supporting documents",
+     "quote": "file supporting docs",
+     "shownInUse": true,
+     "escoIds": [
+      "3d427a49-4f85-42cd-8a92-62d4a34f41a1",
+      "e9030465-13c5-46d2-bdae-c2c1a9dbec86"
+     ],
+     "escoTitles": [
+      "file documents",
+      "attach accounting certificates to accounting transactions"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c10-career-changer-retail",
+   "facts": [
+    {
+     "fact": "supervises store staff and duty roster",
+     "quote": "Supervise 14 staff, duty roster & OT claims",
+     "shownInUse": true,
+     "escoIds": [
+      "9601b2a8-68e4-4906-9306-a23679b8f0b0",
+      "85aa1871-db96-42f7-801f-c39f924de2d7",
+      "339ac029-066a-4985-9f9d-b3d7c8fea0bb"
+     ],
+     "escoTitles": [
+      "supervise staff",
+      "plan shifts of employees",
+      "manage staff"
+     ]
+    },
+    {
+     "fact": "monthly stock take and shrinkage investigation",
+     "quote": "Monthly stock take & cycle count; investigate shrinkage",
+     "shownInUse": true,
+     "escoIds": [
+      "53815c73-d352-4d4d-92cb-fb7020cbd8e6",
+      "de804504-bd5c-465d-b54f-9da299d8ee90",
+      "f60416d5-2d98-4401-ba0d-b92b53e01d86"
+     ],
+     "escoTitles": [
+      "carry out inventory control accuracy",
+      "maintain stock control systems",
+      "keep stock records"
+     ]
+    },
+    {
+     "fact": "identifies slow-moving and near-expiry items and proposes markdowns",
+     "quote": "Weekly check slow moving & near-expiry items, propose markdown / return to supplier",
+     "shownInUse": true,
+     "escoIds": [
+      "e705db38-4fcf-4069-b01f-3fbdda894cc1",
+      "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+      "ba62c716-f9d3-49c8-a7cd-d3d8b7c8067e",
+      "2fb2d647-05c1-4e6f-9d4f-62e813db2954"
+     ],
+     "escoTitles": [
+      "manage stock rotation",
+      "manage inventory",
+      "set sales promotions",
+      "price product"
+     ]
+    },
+    {
+     "fact": "receives supplier deliveries against PO and DO",
+     "quote": "Receiving bay: check supplier delivery vs PO & DO, sign GRN",
+     "shownInUse": true,
+     "escoIds": [
+      "2cae39d6-78c2-4ce3-bee8-628504371463",
+      "57fb98c5-6862-4969-8bf4-a74ff14c4750"
+     ],
+     "escoTitles": [
+      "receive goods",
+      "handle paperwork related to warehouse stock"
+     ]
+    },
+    {
+     "fact": "handles supplier short-delivery complaints and credit notes",
+     "quote": "Handle supplier complaints bila short delivery",
+     "shownInUse": true,
+     "escoIds": [
+      "f70b5f39-b8b6-407b-8c08-64fd65db79e9",
+      "3cd35f5d-ce6d-4f14-9a09-53d7a28d834c"
+     ],
+     "escoTitles": [
+      "handle financial disputes",
+      "maintain relationship with suppliers"
+     ]
+    },
+    {
+     "fact": "end-of-day cash up for tills",
+     "quote": "End-of-day cash up for 12 tills",
+     "shownInUse": true,
+     "escoIds": [
+      "85e77619-6723-48cd-9654-2bcbe71054f9",
+      "3982571a-e9ce-442a-a4a0-fdfc97727091"
+     ],
+     "escoTitles": [
+      "carry out end of day accounts",
+      "manage cash desk"
+     ]
+    },
+    {
+     "fact": "weekly sales and shrinkage report in Excel",
+     "quote": "Weekly sales & shrinkage report in Excel (pivot table, VLOOKUP)",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535",
+      "b0565bd9-29c8-42f6-b174-702970fc2f4f"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office",
+      "produce sales reports"
+     ]
+    },
+    {
+     "fact": "cashier cash handling and refunds",
+     "quote": "Cash handling, voids, refund approval, open/close counter",
+     "shownInUse": true,
+     "escoIds": [
+      "0cb013af-6dd9-4fb2-b34e-63dda1a5cf82",
+      "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23",
+      "f7e7ccb6-fadc-4c35-935d-e1040be40dfe"
+     ],
+     "escoTitles": [
+      "operate cash register",
+      "process payments",
+      "handle financial transactions"
+     ]
+    },
+    {
+     "fact": "keeps temple committee accounts and payment vouchers",
+     "quote": "keep accounts, collections & payment vouchers",
+     "shownInUse": true,
+     "escoIds": [
+      "faf8943c-72ff-4736-a587-25508695d6f0",
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0"
+     ],
+     "escoTitles": [
+      "maintain financial records",
+      "maintain records of financial transactions"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c11-staff-nurse",
+   "facts": [
+    {
+     "fact": "provides nursing care on a medical ward",
+     "quote": "Provide nursing care for 28-bed medical ward",
+     "shownInUse": true,
+     "escoIds": [
+      "f98e06f5-a09a-4356-b6a8-d55a7d3c5356",
+      "1023ac61-250f-4eef-b7a9-238cf071685f"
+     ],
+     "escoTitles": [
+      "implement nursing care",
+      "provide professional care in nursing"
+     ]
+    },
+    {
+     "fact": "monitors vital signs",
+     "quote": "vital signs",
+     "shownInUse": true,
+     "escoIds": [
+      "d3b74d50-7fc9-4051-9335-58d129a4a064"
+     ],
+     "escoTitles": [
+      "monitor basic patients signs"
+     ]
+    },
+    {
+     "fact": "administers drugs",
+     "quote": "drug administration",
+     "shownInUse": true,
+     "escoIds": [
+      "1fd57242-267e-46df-bd8c-849fdd593a50"
+     ],
+     "escoTitles": [
+      "administer prescribed medication"
+     ]
+    },
+    {
+     "fact": "IV therapy",
+     "quote": "IV therapy",
+     "shownInUse": true,
+     "escoIds": [
+      "d09584de-57ff-450a-8e06-0d0f614f11f8"
+     ],
+     "escoTitles": [
+      "intravenous infusion"
+     ]
+    },
+    {
+     "fact": "wound care",
+     "quote": "wound care",
+     "shownInUse": true,
+     "escoIds": [
+      "1c6736c2-77de-419c-9b84-8932e15abc21",
+      "fa845322-85c4-42cb-b230-c1d43d308f02"
+     ],
+     "escoTitles": [
+      "carry out wound care",
+      "apply wound dressings"
+     ]
+    },
+    {
+     "fact": "educates diabetic and post-stroke patients",
+     "quote": "patient education for diabetic and post-stroke patients",
+     "shownInUse": true,
+     "escoIds": [
+      "60b2dd49-c677-4f47-816e-aff3b577e113",
+      "6063652e-22c4-472e-bb96-6e5ec1e7c5de"
+     ],
+     "escoTitles": [
+      "provide health education",
+      "provide nursing advice on healthcare"
+     ]
+    },
+    {
+     "fact": "documents nursing notes and care plans in EMR",
+     "quote": "Document nursing notes & care plans in EMR",
+     "shownInUse": true,
+     "escoIds": [
+      "a46743b7-ff8c-49b6-99f7-7fa5bc241771",
+      "6acf652c-33b2-4e28-8f79-1e553f255229"
+     ],
+     "escoTitles": [
+      "use electronic health records in nursing",
+      "plan nursing care"
+     ]
+    },
+    {
+     "fact": "manages ward consumables stock and expiry",
+     "quote": "weekly stock check & monthly indent to central store",
+     "shownInUse": true,
+     "escoIds": [
+      "0c8f1351-d1fe-4542-89fe-b70729679c52",
+      "44f6a65f-6be7-4818-9a66-73908797283f",
+      "f024dd81-76a9-4d84-950e-7c6d1383a403"
+     ],
+     "escoTitles": [
+      "manage consumables stock",
+      "monitor stock level",
+      "check for medication expiry terms"
+     ]
+    },
+    {
+     "fact": "hand hygiene compliance audits for infection control",
+     "quote": "Conduct monthly hand hygiene compliance audit",
+     "shownInUse": true,
+     "escoIds": [
+      "ce086892-462b-45b3-80e7-33bdb5d2db4d",
+      "6d13053b-ee35-492c-8976-8178420df398"
+     ],
+     "escoTitles": [
+      "manage infection control in the facility",
+      "infection control"
+     ]
+    },
+    {
+     "fact": "preceptor for new nurses and students",
+     "quote": "Preceptor for new nurses & student nurses",
+     "shownInUse": true,
+     "escoIds": [
+      "cf4a497e-7e4d-4dc8-9f06-31234b1510fb"
+     ],
+     "escoTitles": [
+      "mentor other health professionals"
+     ]
+    },
+    {
+     "fact": "night shift in-charge",
+     "quote": "Night shift in-charge",
+     "shownInUse": true,
+     "escoIds": [
+      "4118be70-c09d-45cd-b53e-0bcdbdc98be0",
+      "cf6ca1fc-f2be-4deb-bb35-1fffe4099023"
+     ],
+     "escoTitles": [
+      "supervise the work of staff on different shifts",
+      "leadership in nursing"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c12-mechanic-short",
+   "facts": [
+    {
+     "fact": "routine vehicle servicing, oil, brakes and suspension",
+     "quote": "servis berkala, tukar minyak hitam, brek, suspension",
+     "shownInUse": true,
+     "escoIds": [
+      "9b57ce6d-97ba-487b-9b66-41cfb15db739",
+      "0ea0b260-617b-4d04-bf00-988dd0b122e5",
+      "ba11879a-723d-4209-8ffa-008eaab9771f"
+     ],
+     "escoTitles": [
+      "maintain vehicle service",
+      "execute vehicle maintenance",
+      "maintain suspension system"
+     ]
+    },
+    {
+     "fact": "diagnoses engines with an OBD2 scanner",
+     "quote": "diagnose engine guna scanner OBD2",
+     "shownInUse": true,
+     "escoIds": [
+      "68162174-68c3-4601-840b-5e63c2dd7481",
+      "5b264a14-d4db-4352-9278-fbb63c5ebed4",
+      "187f82c7-b165-4e6b-b327-704e38e85cdd"
+     ],
+     "escoTitles": [
+      "diagnose defective engines",
+      "use automotive diagnostic equipment",
+      "automotive diagnostic equipment"
+     ]
+    },
+    {
+     "fact": "orders spare parts and keeps a stock log",
+     "quote": "check & order spare part dari supplier, update stok dlm buku log",
+     "shownInUse": true,
+     "escoIds": [
+      "74744dfc-c201-489b-a080-08539882ada2",
+      "f6f897b7-7cb2-4dd9-9b69-3016fea206e7",
+      "fc1eae96-01cb-4d97-b594-d5040913675e",
+      "f60416d5-2d98-4401-ba0d-b92b53e01d86"
+     ],
+     "escoTitles": [
+      "order supplies for vehicle maintenance and repair",
+      "maintain vehicle spare parts",
+      "maintain parts inventory",
+      "keep stock records"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c13-ap-lead-ai-long",
+   "facts": [
+    {
+     "fact": "approves and releases payment runs",
+     "quote": "Approve & release twice-weekly payment runs (F110)",
+     "shownInUse": true,
+     "escoIds": [
+      "4e756773-ae14-4981-838b-9fe27e81c0af",
+      "f7e7ccb6-fadc-4c35-935d-e1040be40dfe"
+     ],
+     "escoTitles": [
+      "carry out financial transactions",
+      "handle financial transactions"
+     ]
+    },
+    {
+     "fact": "owns the three-way-match exception queue",
+     "quote": "Own the 3WM exception queue",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e9030465-13c5-46d2-bdae-c2c1a9dbec86"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "attach accounting certificates to accounting transactions"
+     ]
+    },
+    {
+     "fact": "final escalation for vendor disputes",
+     "quote": "Final escalation point for vendor disputes",
+     "shownInUse": true,
+     "escoIds": [
+      "f70b5f39-b8b6-407b-8c08-64fd65db79e9",
+      "3cd35f5d-ce6d-4f14-9a09-53d7a28d834c"
+     ],
+     "escoTitles": [
+      "handle financial disputes",
+      "maintain relationship with suppliers"
+     ]
+    },
+    {
+     "fact": "reviews AI-extracted invoice fields and resolves exceptions",
+     "quote": "review low-confidence",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "f2d57f41-43b4-4f5b-8100-3df5c21eda50"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "process data"
+     ]
+    },
+    {
+     "fact": "decides AI confidence thresholds and which invoices stay manual",
+     "quote": "Agreed with IT the confidence threshold for straight-through posting",
+     "shownInUse": true,
+     "escoIds": [
+      "e465a154-93f7-4973-9ce1-31659fe16dd2"
+     ],
+     "escoTitles": [
+      "principles of artificial intelligence"
+     ]
+    },
+    {
+     "fact": "builds an approval-routing automation",
+     "quote": "Built a Power Automate flow that routes non-PO invoice approvals",
+     "shownInUse": true,
+     "escoIds": [
+      "f4a6e9f7-5cff-46c0-894c-59c20bb78694",
+      "f9670490-8aa4-4540-b121-d440a8294aab"
+     ],
+     "escoTitles": [
+      "automation technology",
+      "develop data processing applications"
+     ]
+    },
+    {
+     "fact": "maps and redesigns the non-PO invoice process",
+     "quote": "Mapped the non-PO invoice process with the CI team (Lean, SIPOC)",
+     "shownInUse": true,
+     "escoIds": [
+      "958b8802-ec3e-4813-97f7-6c8f48610dbd",
+      "6a7792a9-888a-46ad-afc9-2c0d94c8fde6",
+      "98301d4a-2cc3-439d-8d7f-0b6ac76302bb"
+     ],
+     "escoTitles": [
+      "identify process improvements",
+      "create business process models",
+      "business process modelling"
+     ]
+    },
+    {
+     "fact": "maintains AP KPI dashboard",
+     "quote": "Maintain weekly AP KPI dashboard (Power BI)",
+     "shownInUse": true,
+     "escoIds": [
+      "65e58886-bd1e-4c5b-8ca5-8d9b353c8aa1",
+      "c3e36d05-8ae8-447f-bb2b-6f9409f85389",
+      "c0326e27-5fa8-4dca-aecb-ed89ab491513",
+      "143769cb-b61e-47d8-a61e-eedfbec1016c",
+      "8dcbcabe-09f7-4d11-940d-125af57bbc40"
+     ],
+     "escoTitles": [
+      "data visualisation software",
+      "deliver visual presentation of data",
+      "prepare visual data",
+      "business intelligence",
+      "track key performance indicators"
+     ]
+    },
+    {
+     "fact": "prepares control evidence and answers auditors",
+     "quote": "Prepare quarterly SOX-style control evidence",
+     "shownInUse": true,
+     "escoIds": [
+      "24e67151-ff7e-43e2-99c0-424a758278a4",
+      "26baf34d-6721-4bac-b7eb-add0bc566a82",
+      "cb059032-dd34-4761-a786-98cfb9d0efe3"
+     ],
+     "escoTitles": [
+      "liaise with auditors",
+      "attend to detail in preparation for audits",
+      "explain accounting records"
+     ]
+    },
+    {
+     "fact": "reviews SST on imported services",
+     "quote": "Review monthly SST on imported services with the tax team",
+     "shownInUse": true,
+     "escoIds": [
+      "22a173f5-868c-4d82-87e6-beed500ce070",
+      "2ecf90f1-c511-464b-b26f-598d69182c70",
+      "d669af41-756c-48d9-a286-1443253f54b1"
+     ],
+     "escoTitles": [
+      "prepare tax returns forms",
+      "calculate tax",
+      "tax legislation"
+     ]
+    },
+    {
+     "fact": "manages and appraises the AP team",
+     "quote": "Conduct monthly 1-on-1s, set KPIs and do half-yearly appraisals for the team.",
+     "shownInUse": true,
+     "escoIds": [
+      "339ac029-066a-4985-9f9d-b3d7c8fea0bb",
+      "8b9332c7-2551-4527-9a64-a615713d8b02",
+      "4012e28f-1826-4024-9772-7a4183d63b7f",
+      "9601b2a8-68e4-4906-9306-a23679b8f0b0"
+     ],
+     "escoTitles": [
+      "manage staff",
+      "evaluate employees",
+      "provide feedback on job performance",
+      "supervise staff"
+     ]
+    },
+    {
+     "fact": "processes and codes invoices in SAP",
+     "quote": "Process invoices for 5 Malaysian entities in SAP ECC (MIRO / FB60)",
+     "shownInUse": true,
+     "escoIds": [
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa",
+      "99b163e8-7815-43e2-83f3-a47f3076354c",
+      "f2d57f41-43b4-4f5b-8100-3df5c21eda50",
+      "08371fe9-c658-4f6a-966f-71dbb0ab683d"
+     ],
+     "escoTitles": [
+      "maintain records of financial transactions",
+      "use accounting systems",
+      "accounting entries",
+      "process data",
+      "accounting department processes"
+     ]
+    },
+    {
+     "fact": "reconciles vendor statements",
+     "quote": "Monthly reconcilation of top-100 vendor statements",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e717b036-2c0c-4c11-99e9-0cb4ce084fed"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "perform account allocation"
+     ]
+    },
+    {
+     "fact": "mentors new clerks",
+     "quote": "Mentored 4 new clerks",
+     "shownInUse": true,
+     "escoIds": [
+      "e54ff029-1ce9-447d-a5b2-eb7283a23e6e",
+      "0cc9c234-f817-4f4c-908a-4d28fe3b0f4a",
+      "fb9c12af-ec45-498a-8e52-891371191557"
+     ],
+     "escoTitles": [
+      "train employees",
+      "coach employees",
+      "mentor individual employees"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c14-green-finance-mixed",
+   "facts": [
+    {
+     "fact": "screens financing against a climate taxonomy",
+     "quote": "Saring permohonan pembiayaan korporat berdasarkan CCPT BNM",
+     "shownInUse": true,
+     "escoIds": [
+      "203083ca-b051-4c28-8986-fc8731bacee5",
+      "12d93356-78e7-4857-99a6-f00b4ae2ec77"
+     ],
+     "escoTitles": [
+      "sustainable finance",
+      "analyse loans"
+     ]
+    },
+    {
+     "fact": "assesses flood risk of collateral",
+     "quote": "Assess climate physical risk (flood exposure) for SME property collateral",
+     "shownInUse": true,
+     "escoIds": [
+      "b7729524-6d0e-45b6-87c8-79af1e955a5b",
+      "eb8babfb-ab91-4937-a032-6a79f82e9b7f",
+      "1dd23dba-dd00-45ab-abf4-642902538317"
+     ],
+     "escoTitles": [
+      "identify risk of flooding",
+      "analyse financial risk",
+      "perform risk analysis"
+     ]
+    },
+    {
+     "fact": "challenges clients' green claims before labelling",
+     "quote": "Semak dakwaan \"hijau\" pelanggan",
+     "shownInUse": true,
+     "escoIds": [
+      "203083ca-b051-4c28-8986-fc8731bacee5"
+     ],
+     "escoTitles": [
+      "sustainable finance"
+     ]
+    },
+    {
+     "fact": "reports green portfolio to the risk committee",
+     "quote": "Sediakan laporan suku tahunan portfolio hijau kepada Jawatankuasa Risiko (RMC)",
+     "shownInUse": true,
+     "escoIds": [
+      "bd832a82-b079-4001-80d1-f59efed33688",
+      "4f060129-8b75-4d58-a8dd-515bd8fef349"
+     ],
+     "escoTitles": [
+      "create risk reports",
+      "develop financial statistics reports"
+     ]
+    },
+    {
+     "fact": "analyses SME borrower financial statements",
+     "quote": "Analyse financial statements of SME borrowers (ratios, cash flow, DSCR)",
+     "shownInUse": true,
+     "escoIds": [
+      "5f1d1319-7954-4a9b-90c7-57668e3a0d4b",
+      "99571e68-801f-49af-a897-5f75996642e1",
+      "8a43795b-bb38-4f29-91df-a6c92ad4643c",
+      "afe9c5d2-e8bd-4377-9d2d-49b9589f05f9",
+      "12d93356-78e7-4857-99a6-f00b4ae2ec77"
+     ],
+     "escoTitles": [
+      "interpret financial statements",
+      "financial analysis",
+      "analyse financial performance of a company",
+      "analyse the credit history of potential customers",
+      "analyse loans"
+     ]
+    },
+    {
+     "fact": "writes credit papers",
+     "quote": "write credit",
+     "shownInUse": true,
+     "escoIds": [
+      "42c3ffa5-d6a9-4a57-942a-6b79f0bbfcd7",
+      "12d93356-78e7-4857-99a6-f00b4ae2ec77"
+     ],
+     "escoTitles": [
+      "prepare credit reports",
+      "analyse loans"
+     ]
+    },
+    {
+     "fact": "annual account reviews and early warning",
+     "quote": "Annual review of 60+ accounts; flag early warning signs",
+     "shownInUse": true,
+     "escoIds": [
+      "c35b19ad-b06f-44e8-be9f-c20c68750346",
+      "009db49b-fcf5-4409-b4a5-232d059f3597"
+     ],
+     "escoTitles": [
+      "monitor loan portfolio",
+      "apply credit risk policy"
+     ]
+    },
+    {
+     "fact": "contributes draft text to the TCFD section",
+     "quote": "Contribute data & draft text for bank's Sustainability Report (TCFD section)",
+     "shownInUse": true,
+     "escoIds": [
+      "f3cc52e3-a96c-4549-b841-6e41a846fa99",
+      "4300b453-9bcf-474c-9ee3-92ec2229720c"
+     ],
+     "escoTitles": [
+      "report on environmental issues",
+      "global standards for sustainability reporting"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c15-ap-ar-clerk",
+   "facts": [
+    {
+     "fact": "keys and codes supplier invoices",
+     "quote": "Key in 350-400 supplier invoices a month into AutoCount",
+     "shownInUse": true,
+     "escoIds": [
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa",
+      "99b163e8-7815-43e2-83f3-a47f3076354c",
+      "f2d57f41-43b4-4f5b-8100-3df5c21eda50",
+      "08371fe9-c658-4f6a-966f-71dbb0ab683d"
+     ],
+     "escoTitles": [
+      "maintain records of financial transactions",
+      "use accounting systems",
+      "accounting entries",
+      "process data",
+      "accounting department processes"
+     ]
+    },
+    {
+     "fact": "matches invoices to PO and GRN and holds mismatches",
+     "quote": "Match supplier invoices to purchase orders and goods received notes before posting",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e9030465-13c5-46d2-bdae-c2c1a9dbec86"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "attach accounting certificates to accounting transactions"
+     ]
+    },
+    {
+     "fact": "reconciles supplier statements to the creditors ledger",
+     "quote": "Reconcile major supplier statements against the creditors ledger every month",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e717b036-2c0c-4c11-99e9-0cb4ce084fed"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "perform account allocation"
+     ]
+    },
+    {
+     "fact": "prepares payment listing and uploads approved payments",
+     "quote": "Prepare the fortnightly payment listing by due date for the Finance Manager to approve",
+     "shownInUse": true,
+     "escoIds": [
+      "4e756773-ae14-4981-838b-9fe27e81c0af",
+      "f7e7ccb6-fadc-4c35-935d-e1040be40dfe"
+     ],
+     "escoTitles": [
+      "carry out financial transactions",
+      "handle financial transactions"
+     ]
+    },
+    {
+     "fact": "bills customers and chases overdue debtors",
+     "quote": "Issue customer invoices from delivery orders, send monthly statements of account and chase",
+     "shownInUse": true,
+     "escoIds": [
+      "e3e42d54-78bd-4337-aa87-bb31a7670c9a",
+      "68b51538-b056-4cb3-bb15-ab8c3e576cc9",
+      "e126f782-b4e6-4f7d-8dca-8d2e6778559b",
+      "c26c7d9d-f9cf-4147-b774-c63e050ebe87"
+     ],
+     "escoTitles": [
+      "issue sales invoices",
+      "follow up accounts receivables",
+      "credit control processes",
+      "enforce customer's debt repayment"
+     ]
+    },
+    {
+     "fact": "builds AP/AR ageing in Excel pivots",
+     "quote": "Prepare monthly AP and AR ageing schedules in Excel using pivot tables",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    },
+    {
+     "fact": "gathers documents for external auditors",
+     "quote": "Gather invoices and payment vouchers requested by the external auditors",
+     "shownInUse": true,
+     "escoIds": [
+      "24e67151-ff7e-43e2-99c0-424a758278a4",
+      "26baf34d-6721-4bac-b7eb-add0bc566a82",
+      "cb059032-dd34-4761-a786-98cfb9d0efe3"
+     ],
+     "escoTitles": [
+      "liaise with auditors",
+      "attend to detail in preparation for audits",
+      "explain accounting records"
+     ]
+    },
+    {
+     "fact": "records cash sales and petty cash",
+     "quote": "Recorded daily cash sales and petty cash vouchers in SQL Accounting.",
+     "shownInUse": true,
+     "escoIds": [
+      "63321ecf-4fc6-44d9-88f1-5373a4f3038a",
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa"
+     ],
+     "escoTitles": [
+      "handle petty cash",
+      "maintain records of financial transactions",
+      "use accounting systems"
+     ]
+    },
+    {
+     "fact": "monthly bank reconciliation",
+     "quote": "Prepared the monthly bank reconciliation for two current accounts.",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records"
+     ]
+    },
+    {
+     "fact": "keeps association cash book and annual accounts",
+     "quote": "keep the association's cash book",
+     "shownInUse": true,
+     "escoIds": [
+      "faf8943c-72ff-4736-a587-25508695d6f0",
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+      "60f51172-37c0-4933-a27a-cbf55dcd7580"
+     ],
+     "escoTitles": [
+      "maintain financial records",
+      "maintain records of financial transactions",
+      "prepare financial statements"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c16-gl-accountant",
+   "facts": [
+    {
+     "fact": "posts month-end accruals, prepayments and depreciation journals",
+     "quote": "post accruals, prepayments and depreciation",
+     "shownInUse": true,
+     "escoIds": [
+      "dc417e19-edb4-4401-883a-2375f67a162f",
+      "99b163e8-7815-43e2-83f3-a47f3076354c",
+      "eaa9727c-df1e-407a-85d3-48cc71508bc2"
+     ],
+     "escoTitles": [
+      "manage the general ledger",
+      "accounting entries",
+      "prepare trial accounting balances"
+     ]
+    },
+    {
+     "fact": "operates SAP S/4HANA for the close",
+     "quote": "Run month-end close for 4 entities on SAP S/4HANA",
+     "shownInUse": true,
+     "escoIds": [
+      "f0393af3-bcd9-41af-a36e-0cfb83b60081",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa"
+     ],
+     "escoTitles": [
+      "manage standard enterprise resource planning system",
+      "use accounting systems"
+     ]
+    },
+    {
+     "fact": "balance sheet account reconciliations",
+     "quote": "Prepare monthly balance sheet reconciliations for 120 GL accounts",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records"
+     ]
+    },
+    {
+     "fact": "intercompany reconciliations",
+     "quote": "Perform monthly intercompany reconciliations",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records"
+     ]
+    },
+    {
+     "fact": "maintains the fixed asset register",
+     "quote": "Maintain the fixed asset register: capitalise additions, run depreciation and record disposals.",
+     "shownInUse": true,
+     "escoIds": [
+      "e0701805-94ab-4c79-9624-39a7202cbe4f",
+      "64be6a06-52e8-4f5c-b64d-caa516cfa291",
+      "585ed991-fdab-4f3c-9187-a32bfb7ab822"
+     ],
+     "escoTitles": [
+      "perform asset depreciation",
+      "depreciation",
+      "perform balance sheet operations"
+     ]
+    },
+    {
+     "fact": "prepares management accounts and explains P&L movements",
+     "quote": "Prepare quarterly management accounts and explain movements in key P&L lines",
+     "shownInUse": true,
+     "escoIds": [
+      "5c99d21a-9d02-4638-9b52-a6ba840dcb0a",
+      "dd7c9dfd-6e2c-46fd-aefc-369402d0200c",
+      "8a43795b-bb38-4f29-91df-a6c92ad4643c",
+      "4f060129-8b75-4d58-a8dd-515bd8fef349",
+      "60f51172-37c0-4933-a27a-cbf55dcd7580"
+     ],
+     "escoTitles": [
+      "synthesise financial information",
+      "create a financial report",
+      "analyse financial performance of a company",
+      "develop financial statistics reports",
+      "prepare financial statements"
+     ]
+    },
+    {
+     "fact": "prepares SST-02 returns",
+     "quote": "Prepare the bi-monthly SST-02 return",
+     "shownInUse": true,
+     "escoIds": [
+      "22a173f5-868c-4d82-87e6-beed500ce070",
+      "2ecf90f1-c511-464b-b26f-598d69182c70",
+      "d669af41-756c-48d9-a286-1443253f54b1"
+     ],
+     "escoTitles": [
+      "prepare tax returns forms",
+      "calculate tax",
+      "tax legislation"
+     ]
+    },
+    {
+     "fact": "main contact for external auditors",
+     "quote": "Act as main contact for external auditors on balance sheet items",
+     "shownInUse": true,
+     "escoIds": [
+      "24e67151-ff7e-43e2-99c0-424a758278a4",
+      "26baf34d-6721-4bac-b7eb-add0bc566a82",
+      "cb059032-dd34-4761-a786-98cfb9d0efe3"
+     ],
+     "escoTitles": [
+      "liaise with auditors",
+      "attend to detail in preparation for audits",
+      "explain accounting records"
+     ]
+    },
+    {
+     "fact": "trains junior accountants",
+     "quote": "Trained two junior accountants on journal posting and reconciliation standards.",
+     "shownInUse": true,
+     "escoIds": [
+      "e54ff029-1ce9-447d-a5b2-eb7283a23e6e",
+      "0cc9c234-f817-4f4c-908a-4d28fe3b0f4a"
+     ],
+     "escoTitles": [
+      "train employees",
+      "coach employees"
+     ]
+    },
+    {
+     "fact": "keeps full set of accounts to trial balance",
+     "quote": "Full set of accounts for two small subsidiaries up to trial balance.",
+     "shownInUse": true,
+     "escoIds": [
+      "eaa9727c-df1e-407a-85d3-48cc71508bc2",
+      "faf8943c-72ff-4736-a587-25508695d6f0",
+      "60f51172-37c0-4933-a27a-cbf55dcd7580"
+     ],
+     "escoTitles": [
+      "prepare trial accounting balances",
+      "maintain financial records",
+      "prepare financial statements"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c17-finance-analyst",
+   "facts": [
+    {
+     "fact": "monthly performance pack with variance commentary",
+     "quote": "Own the monthly performance pack for 3 business units",
+     "shownInUse": true,
+     "escoIds": [
+      "5c99d21a-9d02-4638-9b52-a6ba840dcb0a",
+      "dd7c9dfd-6e2c-46fd-aefc-369402d0200c",
+      "8a43795b-bb38-4f29-91df-a6c92ad4643c",
+      "4f060129-8b75-4d58-a8dd-515bd8fef349"
+     ],
+     "escoTitles": [
+      "synthesise financial information",
+      "create a financial report",
+      "analyse financial performance of a company",
+      "develop financial statistics reports"
+     ]
+    },
+    {
+     "fact": "builds annual budget and rolling forecast",
+     "quote": "Build and maintain the annual budget model and the quarterly rolling forecast in Excel",
+     "shownInUse": true,
+     "escoIds": [
+      "21c5790c-0930-4d74-b3b0-84caf5af12ea",
+      "147170ba-0141-4337-89af-b4513d745afe",
+      "74688c5d-2af1-4f7a-9d1c-00e808eaa1e6",
+      "4ce09e3d-ca6b-424a-a328-7f551db75e59",
+      "d37bc902-f640-48d7-9db4-544db9aa65fa",
+      "4b2db903-cd8e-48ce-97fb-a92db4def54e"
+     ],
+     "escoTitles": [
+      "manage budgets",
+      "support development of annual budget",
+      "budgetary principles",
+      "update budget",
+      "prepare financial projections",
+      "financial forecasting"
+     ]
+    },
+    {
+     "fact": "driver-based models in Excel",
+     "quote": "Build and maintain the annual budget model and the quarterly rolling forecast in Excel",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    },
+    {
+     "fact": "scenario and sensitivity analysis",
+     "quote": "Run scenario and sensitivity analysis on raw-material prices and FX",
+     "shownInUse": true,
+     "escoIds": [
+      "773e217c-8b21-4d8c-b384-68752a2243a9",
+      "eb8babfb-ab91-4937-a032-6a79f82e9b7f",
+      "d37bc902-f640-48d7-9db4-544db9aa65fa"
+     ],
+     "escoTitles": [
+      "quantitative risk analysis techniques",
+      "analyse financial risk",
+      "prepare financial projections"
+     ]
+    },
+    {
+     "fact": "builds a Power BI margin dashboard",
+     "quote": "Built a Power BI dashboard on gross margin by SKU and channel",
+     "shownInUse": true,
+     "escoIds": [
+      "65e58886-bd1e-4c5b-8ca5-8d9b353c8aa1",
+      "c3e36d05-8ae8-447f-bb2b-6f9409f85389",
+      "c0326e27-5fa8-4dca-aecb-ed89ab491513",
+      "143769cb-b61e-47d8-a61e-eedfbec1016c"
+     ],
+     "escoTitles": [
+      "data visualisation software",
+      "deliver visual presentation of data",
+      "prepare visual data",
+      "business intelligence"
+     ]
+    },
+    {
+     "fact": "writes SQL against the sales data warehouse",
+     "quote": "Wrote SQL queries against the sales data warehouse",
+     "shownInUse": true,
+     "escoIds": [
+      "598de5b0-5b58-4ea7-8058-a4bc4d18c742",
+      "75f839c2-fd9a-4ad3-8921-6e734608568d",
+      "9cf681c7-89ec-470c-b651-7fe03786f586",
+      "4463a721-69f3-413d-8321-43e3af13a4f1"
+     ],
+     "escoTitles": [
+      "SQL",
+      "use query languages",
+      "query languages",
+      "use databases"
+     ]
+    },
+    {
+     "fact": "evaluates promotion ROI",
+     "quote": "evaluate promotion ROI (uplift vs baseline)",
+     "shownInUse": true,
+     "escoIds": [
+      "2b92a5b2-6758-4ee3-9fb4-b6387a55cc8f",
+      "48b68726-0fd6-4e03-a5eb-82236516ee7a"
+     ],
+     "escoTitles": [
+      "perform data analysis",
+      "provide cost benefit analysis reports"
+     ]
+    },
+    {
+     "fact": "monthly revenue and churn reports in Excel",
+     "quote": "Prepared monthly revenue and churn reports by customer segment in Excel",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535",
+      "4f060129-8b75-4d58-a8dd-515bd8fef349"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office",
+      "develop financial statistics reports"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c18-management-accountant-bm",
+   "facts": [
+    {
+     "fact": "sets standard costs",
+     "quote": "Menyediakan kos standard bagi 60 jenis sarung tangan",
+     "shownInUse": true,
+     "escoIds": [
+      "c5b90c0c-3af0-4c8c-a06c-cc3ced02242c"
+     ],
+     "escoTitles": [
+      "perform cost accounting activities"
+     ]
+    },
+    {
+     "fact": "analyses production cost variances",
+     "quote": "Menganalisis varians kos pengeluaran",
+     "shownInUse": true,
+     "escoIds": [
+      "c5b90c0c-3af0-4c8c-a06c-cc3ced02242c",
+      "8a43795b-bb38-4f29-91df-a6c92ad4643c",
+      "e1f5c539-7c93-49ee-917d-a24e0d887686"
+     ],
+     "escoTitles": [
+      "perform cost accounting activities",
+      "analyse financial performance of a company",
+      "control of expenses"
+     ]
+    },
+    {
+     "fact": "prepares factory budget and reforecast",
+     "quote": "Menyediakan belanjawan tahunan kilang dan ramalan semula separuh tahun",
+     "shownInUse": true,
+     "escoIds": [
+      "21c5790c-0930-4d74-b3b0-84caf5af12ea",
+      "147170ba-0141-4337-89af-b4513d745afe",
+      "74688c5d-2af1-4f7a-9d1c-00e808eaa1e6",
+      "4ce09e3d-ca6b-424a-a328-7f551db75e59",
+      "d37bc902-f640-48d7-9db4-544db9aa65fa",
+      "4b2db903-cd8e-48ce-97fb-a92db4def54e"
+     ],
+     "escoTitles": [
+      "manage budgets",
+      "support development of annual budget",
+      "budgetary principles",
+      "update budget",
+      "prepare financial projections",
+      "financial forecasting"
+     ]
+    },
+    {
+     "fact": "customer and product profitability analysis",
+     "quote": "Menyediakan analisis keuntungan mengikut pelanggan dan produk menggunakan Excel",
+     "shownInUse": true,
+     "escoIds": [
+      "8a43795b-bb38-4f29-91df-a6c92ad4643c",
+      "c5b90c0c-3af0-4c8c-a06c-cc3ced02242c"
+     ],
+     "escoTitles": [
+      "analyse financial performance of a company",
+      "perform cost accounting activities"
+     ]
+    },
+    {
+     "fact": "profitability analysis in Excel",
+     "quote": "Menyediakan analisis keuntungan mengikut pelanggan dan produk menggunakan Excel",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    },
+    {
+     "fact": "month-end stock count and SAP reconciliation",
+     "quote": "Menjalankan kiraan stok akhir bulan bersama stor",
+     "shownInUse": true,
+     "escoIds": [
+      "53815c73-d352-4d4d-92cb-fb7020cbd8e6",
+      "de804504-bd5c-465d-b54f-9da299d8ee90",
+      "f60416d5-2d98-4401-ba0d-b92b53e01d86"
+     ],
+     "escoTitles": [
+      "carry out inventory control accuracy",
+      "maintain stock control systems",
+      "keep stock records"
+     ]
+    },
+    {
+     "fact": "identifies slow-moving stock and proposes provisions",
+     "quote": "Mengenal pasti stok bergerak perlahan melebihi 180 hari",
+     "shownInUse": true,
+     "escoIds": [
+      "16594fea-3004-4730-838f-e35a432b49da",
+      "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+      "5aaf2780-04d7-4bbf-8b06-af36eafe8eba"
+     ],
+     "escoTitles": [
+      "perform stock valuation",
+      "manage inventory",
+      "inventory management rules"
+     ]
+    },
+    {
+     "fact": "capital investment appraisal (payback, NPV)",
+     "quote": "Menyediakan kertas kerja penilaian pelaburan mesin baharu",
+     "shownInUse": true,
+     "escoIds": [
+      "e95058a6-e139-42e7-a470-72038a606649",
+      "48b68726-0fd6-4e03-a5eb-82236516ee7a",
+      "bf12b461-1c53-4d81-a395-8ba77f7483c4"
+     ],
+     "escoTitles": [
+      "assess financial viability",
+      "provide cost benefit analysis reports",
+      "investment analysis"
+     ]
+    },
+    {
+     "fact": "keeps full accounts to trial balance and bank reconciliation",
+     "quote": "Menyediakan akaun penuh sehingga imbangan duga dan penyesuaian bank bulanan.",
+     "shownInUse": true,
+     "escoIds": [
+      "eaa9727c-df1e-407a-85d3-48cc71508bc2",
+      "faf8943c-72ff-4736-a587-25508695d6f0",
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b"
+     ],
+     "escoTitles": [
+      "prepare trial accounting balances",
+      "maintain financial records",
+      "identify accounting errors"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c19-esg-executive",
+   "facts": [
+    {
+     "fact": "collects ESG data from business units and queries outliers",
+     "quote": "Collect quarterly ESG data from 14 business units",
+     "shownInUse": true,
+     "escoIds": [
+      "d53eab76-e8ff-4e28-af26-7e012951c763",
+      "77f109c4-3107-4d2a-a512-5160ac103933",
+      "f5bf985b-ac78-4d23-881a-18a359234528"
+     ],
+     "escoTitles": [
+      "measure company's sustainability performance",
+      "analyse environmental data",
+      "corporate sustainability"
+     ]
+    },
+    {
+     "fact": "sets ESG data definitions, owners and reviewers",
+     "quote": "Built a data dictionary and an owner-and-reviewer sign-off for each ESG indicator",
+     "shownInUse": true,
+     "escoIds": [
+      "54c9c155-9293-4329-8ed2-2e76e8b519d4",
+      "9ff9db9d-d14b-426e-83f3-e7449af6c79f"
+     ],
+     "escoTitles": [
+      "define data quality criteria",
+      "manage data"
+     ]
+    },
+    {
+     "fact": "calculates Scope 1 and 2 emissions and screens Scope 3",
+     "quote": "Calculate Scope 1 and Scope 2 emissions using the GHG Protocol",
+     "shownInUse": true,
+     "escoIds": [
+      "d53eab76-e8ff-4e28-af26-7e012951c763",
+      "77f109c4-3107-4d2a-a512-5160ac103933"
+     ],
+     "escoTitles": [
+      "measure company's sustainability performance",
+      "analyse environmental data"
+     ]
+    },
+    {
+     "fact": "drafts the Sustainability Statement",
+     "quote": "Draft the Sustainability Statement in the annual report",
+     "shownInUse": true,
+     "escoIds": [
+      "bbcc7e1b-3d4d-4422-9fac-efd636eb9de4",
+      "4300b453-9bcf-474c-9ee3-92ec2229720c",
+      "f3cc52e3-a96c-4549-b841-6e41a846fa99"
+     ],
+     "escoTitles": [
+      "lead the sustainability reporting process",
+      "global standards for sustainability reporting",
+      "report on environmental issues"
+     ]
+    },
+    {
+     "fact": "runs the materiality assessment with management",
+     "quote": "run the materiality assessment survey with",
+     "shownInUse": true,
+     "escoIds": [
+      "99c4c69a-025c-464f-adda-874c7f107a31"
+     ],
+     "escoTitles": [
+      "engage with stakeholders"
+     ]
+    },
+    {
+     "fact": "climate physical-risk screening",
+     "quote": "physical-risk screening of project sites",
+     "shownInUse": true,
+     "escoIds": [
+      "1dd23dba-dd00-45ab-abf4-642902538317",
+      "88ec9e5e-8798-475d-81a3-dd5ea7e96215"
+     ],
+     "escoTitles": [
+      "perform risk analysis",
+      "qualitative risk analysis techniques"
+     ]
+    },
+    {
+     "fact": "answers ESG rating questionnaire",
+     "quote": "Respond to the FTSE4Good ESG rating questionnaire",
+     "shownInUse": true,
+     "escoIds": [
+      "4300b453-9bcf-474c-9ee3-92ec2229720c",
+      "d53eab76-e8ff-4e28-af26-7e012951c763"
+     ],
+     "escoTitles": [
+      "global standards for sustainability reporting",
+      "measure company's sustainability performance"
+     ]
+    },
+    {
+     "fact": "maintains an ESG KPI dashboard",
+     "quote": "Maintain a Power BI dashboard of ESG KPIs",
+     "shownInUse": true,
+     "escoIds": [
+      "65e58886-bd1e-4c5b-8ca5-8d9b353c8aa1",
+      "c3e36d05-8ae8-447f-bb2b-6f9409f85389",
+      "c0326e27-5fa8-4dca-aecb-ed89ab491513",
+      "143769cb-b61e-47d8-a61e-eedfbec1016c",
+      "8dcbcabe-09f7-4d11-940d-125af57bbc40"
+     ],
+     "escoTitles": [
+      "data visualisation software",
+      "deliver visual presentation of data",
+      "prepare visual data",
+      "business intelligence",
+      "track key performance indicators"
+     ]
+    },
+    {
+     "fact": "monitors site environmental compliance",
+     "quote": "Monitored site compliance with the Environmental Quality Act",
+     "shownInUse": true,
+     "escoIds": [
+      "089ee650-297e-4716-87d1-440743b70a0d",
+      "6f5850ea-5785-4e2c-b062-743066fd5bdb",
+      "340a75f4-76e1-4ef0-8f1e-1bb78ba561ef"
+     ],
+     "escoTitles": [
+      "ensure compliance with environmental legislation",
+      "environmental legislation",
+      "inspect compliance with hazardous waste regulations"
+     ]
+    },
+    {
+     "fact": "prepares environmental monitoring reports",
+     "quote": "Prepared monthly environmental monitoring reports for the Department of Environment.",
+     "shownInUse": true,
+     "escoIds": [
+      "f3cc52e3-a96c-4549-b841-6e41a846fa99"
+     ],
+     "escoTitles": [
+      "report on environmental issues"
+     ]
+    },
+    {
+     "fact": "toolbox talks on waste segregation",
+     "quote": "Conducted toolbox talks on waste segregation for site workers.",
+     "shownInUse": true,
+     "escoIds": [
+      "f82b05a7-128b-4a72-a815-044ff6062f62",
+      "e54ff029-1ce9-447d-a5b2-eb7283a23e6e"
+     ],
+     "escoTitles": [
+      "advise on waste management procedures",
+      "train employees"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c20-carbon-lca-analyst",
+   "facts": [
+    {
+     "fact": "runs product carbon footprints / LCA models and sets boundaries",
+     "quote": "Run cradle-to-gate product carbon footprints",
+     "shownInUse": true,
+     "escoIds": [
+      "4e87c852-602a-4a0e-b8d8-20709ce14ac5",
+      "e541c69c-ea80-4b17-87cb-4001d0b9d303"
+     ],
+     "escoTitles": [
+      "assess the life cycle of resources",
+      "assess environmental impact"
+     ]
+    },
+    {
+     "fact": "gathers inventory data for footprint studies",
+     "quote": "Gather bill-of-materials, energy and scrap data from production, procurement and facilities;",
+     "shownInUse": true,
+     "escoIds": [
+      "77f109c4-3107-4d2a-a512-5160ac103933",
+      "0d6714c6-720e-4985-9791-5ab85d28da79"
+     ],
+     "escoTitles": [
+      "analyse environmental data",
+      "gather data"
+     ]
+    },
+    {
+     "fact": "explains footprint hotspots to customers",
+     "quote": "main hotspots to customers",
+     "shownInUse": true,
+     "escoIds": [
+      "dbef5042-4b99-4e6f-b2ed-1d33b07b3ed6",
+      "c8b4b02c-d9ce-4e24-ab43-5dd52c6dff48"
+     ],
+     "escoTitles": [
+      "advise on sustainability solutions",
+      "advise on carbon emissions reduction"
+     ]
+    },
+    {
+     "fact": "answers customer sustainability questionnaires",
+     "quote": "Answer customer sustainability questionnaires (EcoVadis, CDP supply chain)",
+     "shownInUse": true,
+     "escoIds": [
+      "d53eab76-e8ff-4e28-af26-7e012951c763",
+      "4300b453-9bcf-474c-9ee3-92ec2229720c"
+     ],
+     "escoTitles": [
+      "measure company's sustainability performance",
+      "global standards for sustainability reporting"
+     ]
+    },
+    {
+     "fact": "writes a Python data conversion script",
+     "quote": "Wrote a Python script that converts the SAP bill of materials export",
+     "shownInUse": true,
+     "escoIds": [
+      "ccd0a1d9-afda-43d9-b901-96344886e14d",
+      "21d2f96d-35f7-4e3f-9745-c533d2dd6e97",
+      "bf4d884f-c848-402a-b130-69c266b04164",
+      "f9670490-8aa4-4540-b121-d440a8294aab"
+     ],
+     "escoTitles": [
+      "Python (computer programming)",
+      "computer programming",
+      "apply basic programming skills",
+      "develop data processing applications"
+     ]
+    },
+    {
+     "fact": "manages scheduled waste and wastewater permit compliance",
+     "quote": "Managed scheduled waste records and the wastewater treatment plant permit conditions.",
+     "shownInUse": true,
+     "escoIds": [
+      "089ee650-297e-4716-87d1-440743b70a0d",
+      "6f5850ea-5785-4e2c-b062-743066fd5bdb",
+      "ed8dbdd1-5b40-4eaf-adaf-3b1f6d16a37b"
+     ],
+     "escoTitles": [
+      "ensure compliance with environmental legislation",
+      "environmental legislation",
+      "hazardous waste storage"
+     ]
+    },
+    {
+     "fact": "tracks plant energy use and proposes savings",
+     "quote": "Tracked monthly electricity and LPG use per production line",
+     "shownInUse": true,
+     "escoIds": [
+      "29bfe2cd-f011-4f94-a3aa-f77768e60460",
+      "83fc0b2b-6cd2-46af-b1ff-d3fc83604c26",
+      "0ad6d5e8-593f-4191-843c-439b23a468ca"
+     ],
+     "escoTitles": [
+      "analyse energy consumption",
+      "energy efficiency",
+      "conduct energy audit"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c21-internal-auditor-bm",
+   "facts": [
+    {
+     "fact": "plans and executes risk-based audits",
+     "quote": "Merancang dan melaksanakan audit berasaskan risiko",
+     "shownInUse": true,
+     "escoIds": [
+      "8804d963-5a31-4609-b5df-f741b7199fb7",
+      "ed0718f6-5823-4c74-9749-2936c9c06203",
+      "6a536b36-c5c7-4d10-bf67-a4fb0f8549b2"
+     ],
+     "escoTitles": [
+      "internal auditing",
+      "develop audit plan",
+      "audit techniques"
+     ]
+    },
+    {
+     "fact": "tests design and effectiveness of key controls",
+     "quote": "Menguji reka bentuk dan keberkesanan kawalan utama",
+     "shownInUse": true,
+     "escoIds": [
+      "8804d963-5a31-4609-b5df-f741b7199fb7",
+      "6a536b36-c5c7-4d10-bf67-a4fb0f8549b2"
+     ],
+     "escoTitles": [
+      "internal auditing",
+      "audit techniques"
+     ]
+    },
+    {
+     "fact": "uses IDEA to analyse all payments and detect duplicates",
+     "quote": "Menggunakan IDEA untuk menganalisis 100% transaksi pembayaran",
+     "shownInUse": true,
+     "escoIds": [
+      "6a536b36-c5c7-4d10-bf67-a4fb0f8549b2",
+      "2b92a5b2-6758-4ee3-9fb4-b6387a55cc8f",
+      "541cdc23-1eec-4520-81fc-3392eaf538ed"
+     ],
+     "escoTitles": [
+      "audit techniques",
+      "perform data analysis",
+      "fraud detection"
+     ]
+    },
+    {
+     "fact": "writes audit reports and presents to the audit committee",
+     "quote": "Menulis laporan audit dan membentangkan penemuan kepada Jawatankuasa Audit",
+     "shownInUse": true,
+     "escoIds": [
+      "3e9b580d-811b-48df-a5d1-a7bdd26f901f",
+      "d0f2f8a7-d935-4a6d-8e54-dcc3e5e2cbeb"
+     ],
+     "escoTitles": [
+      "prepare financial auditing reports",
+      "present reports"
+     ]
+    },
+    {
+     "fact": "supervises and reviews audit executives' working papers",
+     "quote": "Menyelia dan menyemak kertas kerja dua orang eksekutif audit.",
+     "shownInUse": true,
+     "escoIds": [
+      "9601b2a8-68e4-4906-9306-a23679b8f0b0",
+      "0cc9c234-f817-4f4c-908a-4d28fe3b0f4a",
+      "fb9c12af-ec45-498a-8e52-891371191557"
+     ],
+     "escoTitles": [
+      "supervise staff",
+      "coach employees",
+      "mentor individual employees"
+     ]
+    },
+    {
+     "fact": "compliance audits of lending and collection processes",
+     "quote": "Melaksanakan audit pematuhan ke atas proses pinjaman dan kutipan",
+     "shownInUse": true,
+     "escoIds": [
+      "8804d963-5a31-4609-b5df-f741b7199fb7",
+      "8d5ee30c-4b1c-465f-84a1-7bb7a05aaca6"
+     ],
+     "escoTitles": [
+      "internal auditing",
+      "monitor banking activities"
+     ]
+    },
+    {
+     "fact": "prepares audit programmes and checklists",
+     "quote": "Menyediakan program audit dan senarai semak bagi setiap tugasan.",
+     "shownInUse": true,
+     "escoIds": [
+      "ed0718f6-5823-4c74-9749-2936c9c06203"
+     ],
+     "escoTitles": [
+      "develop audit plan"
+     ]
+    },
+    {
+     "fact": "statutory audit fieldwork for SMEs",
+     "quote": "Audit berkanun syarikat SME: pengesahan baki bank, vouching",
+     "shownInUse": true,
+     "escoIds": [
+      "89ff28d6-342c-435d-83aa-83e71dbbbc96"
+     ],
+     "escoTitles": [
+      "conduct financial audits"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c22-risk-compliance",
+   "facts": [
+    {
+     "fact": "reviews transaction-monitoring alerts and prepares suspicious transaction reports",
+     "quote": "Review alerts from the transaction monitoring system",
+     "shownInUse": true,
+     "escoIds": [
+      "f5afbe94-c8e6-492d-9b9d-8349a417f92e",
+      "0295b2a4-fb86-495f-9547-d479532fc4c2",
+      "541cdc23-1eec-4520-81fc-3392eaf538ed",
+      "29d80dad-95f7-440c-bda2-22fe93155260"
+     ],
+     "escoTitles": [
+      "detect financial crime",
+      "trace financial transactions",
+      "fraud detection",
+      "perform forensic accounting"
+     ]
+    },
+    {
+     "fact": "enhanced due diligence and sanctions screening",
+     "quote": "Perform enhanced due diligence on high-risk merchants and agents",
+     "shownInUse": true,
+     "escoIds": [
+      "f5afbe94-c8e6-492d-9b9d-8349a417f92e",
+      "04cda8e8-e06b-4c91-bbb5-27414dc1cf14"
+     ],
+     "escoTitles": [
+      "detect financial crime",
+      "embargo regulations"
+     ]
+    },
+    {
+     "fact": "maintains operational risk register, RCSA and KRIs",
+     "quote": "Maintain the operational risk register",
+     "shownInUse": true,
+     "escoIds": [
+      "6eff134b-e34f-4d6e-a6e8-5e47cf2228d0",
+      "1dd23dba-dd00-45ab-abf4-642902538317",
+      "96a893b6-4520-4daa-89c1-b79487505da2",
+      "00920055-eb50-4cb8-a23d-3deedbf3753e",
+      "8744f28f-59a9-45af-8ef6-6944cb5a1473"
+     ],
+     "escoTitles": [
+      "risk management",
+      "perform risk analysis",
+      "key risk indicators",
+      "enterprise risk management",
+      "risk identification"
+     ]
+    },
+    {
+     "fact": "maps regulatory policy documents to procedures and tracks gaps",
+     "quote": "Map new BNM policy documents to internal procedures and track gaps until closed",
+     "shownInUse": true,
+     "escoIds": [
+      "1dae8445-12e5-423a-bb26-824010e299b9",
+      "3d3ee5c3-4286-457f-9f76-1704011f7e11",
+      "2966d47d-72ad-404f-bad0-b45abb2b2058"
+     ],
+     "escoTitles": [
+      "ensure compliance with legal requirements",
+      "comply with legal regulations",
+      "monitor policy proposals"
+     ]
+    },
+    {
+     "fact": "monthly compliance and KRI report to board committee",
+     "quote": "Prepare the monthly compliance report and KRI dashboard",
+     "shownInUse": true,
+     "escoIds": [
+      "bd832a82-b079-4001-80d1-f59efed33688"
+     ],
+     "escoTitles": [
+      "create risk reports"
+     ]
+    },
+    {
+     "fact": "delivers AML/CFT training",
+     "quote": "Conduct annual AML/CFT refresher training for 120 staff and agents.",
+     "shownInUse": true,
+     "escoIds": [
+      "e54ff029-1ce9-447d-a5b2-eb7283a23e6e",
+      "0cc9c234-f817-4f4c-908a-4d28fe3b0f4a"
+     ],
+     "escoTitles": [
+      "train employees",
+      "coach employees"
+     ]
+    },
+    {
+     "fact": "sanctions screening and KYC document checks",
+     "quote": "Screened customers against sanctions lists and verified KYC documents at onboarding.",
+     "shownInUse": true,
+     "escoIds": [
+      "a1efea8f-62a8-4f9e-bd07-7d0c193f725e",
+      "f5afbe94-c8e6-492d-9b9d-8349a417f92e",
+      "04cda8e8-e06b-4c91-bbb5-27414dc1cf14"
+     ],
+     "escoTitles": [
+      "check official documents",
+      "detect financial crime",
+      "embargo regulations"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c23-treasury-analyst",
+   "facts": [
+    {
+     "fact": "daily group cash position and inter-company funding",
+     "quote": "Prepare the group's daily cash position across 32 bank accounts",
+     "shownInUse": true,
+     "escoIds": [
+      "658a38bd-6954-4a2a-945c-42330c5d13b9",
+      "781797f4-c2c3-49a4-a80d-eb81eb4f818c",
+      "e4b6f863-fa9f-4fe7-a984-f948f8c90d24"
+     ],
+     "escoTitles": [
+      "manage corporate bank accounts",
+      "liquidity management",
+      "handle cash flow"
+     ]
+    },
+    {
+     "fact": "13-week cash flow forecast and variance explanation",
+     "quote": "Build and update the 13-week cash flow forecast",
+     "shownInUse": true,
+     "escoIds": [
+      "d37bc902-f640-48d7-9db4-544db9aa65fa",
+      "4b2db903-cd8e-48ce-97fb-a92db4def54e",
+      "781797f4-c2c3-49a4-a80d-eb81eb4f818c"
+     ],
+     "escoTitles": [
+      "prepare financial projections",
+      "financial forecasting",
+      "liquidity management"
+     ]
+    },
+    {
+     "fact": "places surplus funds in deposits and money market",
+     "quote": "Place surplus funds in fixed deposits and money market placements",
+     "shownInUse": true,
+     "escoIds": [
+      "a05ead02-1728-4d60-929c-7e7c3a87672c",
+      "781797f4-c2c3-49a4-a80d-eb81eb4f818c"
+     ],
+     "escoTitles": [
+      "operate financial instruments",
+      "liquidity management"
+     ]
+    },
+    {
+     "fact": "monitors loan drawdowns and covenant compliance",
+     "quote": "Monitor bridging loan and revolving credit drawdowns against project progress claims",
+     "shownInUse": true,
+     "escoIds": [
+      "be252635-341e-4b1c-b94f-aef362b645ed",
+      "3556c075-eee0-4549-b730-48ae70cb5af9",
+      "66baba7d-178e-4c51-935f-03a9049ff2f6"
+     ],
+     "escoTitles": [
+      "business loans",
+      "funding methods",
+      "communicate with banking professionals"
+     ]
+    },
+    {
+     "fact": "arranges a new revolving credit facility with banks",
+     "quote": "Arranged a new RM150 million Islamic revolving credit facility with two banks",
+     "shownInUse": true,
+     "escoIds": [
+      "be252635-341e-4b1c-b94f-aef362b645ed",
+      "3556c075-eee0-4549-b730-48ae70cb5af9",
+      "66baba7d-178e-4c51-935f-03a9049ff2f6",
+      "c8aae1f6-eab3-41a9-9e2f-f5bc0f8ef0bd"
+     ],
+     "escoTitles": [
+      "business loans",
+      "funding methods",
+      "communicate with banking professionals",
+      "negotiate loan agreements"
+     ]
+    },
+    {
+     "fact": "approves release of supplier payment files",
+     "quote": "Approve the release of supplier payment files in the bank portals",
+     "shownInUse": true,
+     "escoIds": [
+      "4e756773-ae14-4981-838b-9fe27e81c0af",
+      "f7e7ccb6-fadc-4c35-935d-e1040be40dfe"
+     ],
+     "escoTitles": [
+      "carry out financial transactions",
+      "handle financial transactions"
+     ]
+    },
+    {
+     "fact": "monthly bank reconciliations",
+     "quote": "Prepare monthly bank reconciliations reviewed by the Treasury Manager.",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records"
+     ]
+    },
+    {
+     "fact": "automates bank balance download in Excel Power Query",
+     "quote": "Automated the daily bank balance download with an Excel Power Query template",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    },
+    {
+     "fact": "progress billing and collection tracking",
+     "quote": "Prepared progress billing to purchasers and tracked collections from end-financiers.",
+     "shownInUse": true,
+     "escoIds": [
+      "e3e42d54-78bd-4337-aa87-bb31a7670c9a",
+      "68b51538-b056-4cb3-bb15-ab8c3e576cc9",
+      "e126f782-b4e6-4f7d-8dca-8d2e6778559b",
+      "c26c7d9d-f9cf-4147-b774-c63e050ebe87"
+     ],
+     "escoTitles": [
+      "issue sales invoices",
+      "follow up accounts receivables",
+      "credit control processes",
+      "enforce customer's debt repayment"
+     ]
+    },
+    {
+     "fact": "prepares payment vouchers and cheques",
+     "quote": "Prepared payment vouchers and cheques for contractors.",
+     "shownInUse": true,
+     "escoIds": [
+      "4e756773-ae14-4981-838b-9fe27e81c0af",
+      "f7e7ccb6-fadc-4c35-935d-e1040be40dfe"
+     ],
+     "escoTitles": [
+      "carry out financial transactions",
+      "handle financial transactions"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c24-bank-credit-analyst",
+   "facts": [
+    {
+     "fact": "analyses borrowers' financial statements",
+     "quote": "Analyse audited accounts and management accounts of borrowers",
+     "shownInUse": true,
+     "escoIds": [
+      "5f1d1319-7954-4a9b-90c7-57668e3a0d4b",
+      "99571e68-801f-49af-a897-5f75996642e1",
+      "8a43795b-bb38-4f29-91df-a6c92ad4643c",
+      "afe9c5d2-e8bd-4377-9d2d-49b9589f05f9",
+      "12d93356-78e7-4857-99a6-f00b4ae2ec77"
+     ],
+     "escoTitles": [
+      "interpret financial statements",
+      "financial analysis",
+      "analyse financial performance of a company",
+      "analyse the credit history of potential customers",
+      "analyse loans"
+     ]
+    },
+    {
+     "fact": "cash flow projections and stress tests",
+     "quote": "Build 3-year cash flow projections and stress test them",
+     "shownInUse": true,
+     "escoIds": [
+      "d37bc902-f640-48d7-9db4-544db9aa65fa",
+      "773e217c-8b21-4d8c-b384-68752a2243a9",
+      "eb8babfb-ab91-4937-a032-6a79f82e9b7f"
+     ],
+     "escoTitles": [
+      "prepare financial projections",
+      "quantitative risk analysis techniques",
+      "analyse financial risk"
+     ]
+    },
+    {
+     "fact": "writes and presents credit papers",
+     "quote": "Write credit papers for new, renewal and restructuring facilities",
+     "shownInUse": true,
+     "escoIds": [
+      "42c3ffa5-d6a9-4a57-942a-6b79f0bbfcd7",
+      "12d93356-78e7-4857-99a6-f00b4ae2ec77",
+      "872bde22-f1c4-4416-8e3e-f2813312e81b"
+     ],
+     "escoTitles": [
+      "prepare credit reports",
+      "analyse loans",
+      "manage loan applications"
+     ]
+    },
+    {
+     "fact": "assigns internal risk grades",
+     "quote": "Assign internal risk grades using the bank's rating model",
+     "shownInUse": true,
+     "escoIds": [
+      "102b6ba8-452c-4f6b-8b3f-1ab5a2d02ffe",
+      "009db49b-fcf5-4409-b4a5-232d059f3597",
+      "eb8babfb-ab91-4937-a032-6a79f82e9b7f"
+     ],
+     "escoTitles": [
+      "advise on credit rating",
+      "apply credit risk policy",
+      "analyse financial risk"
+     ]
+    },
+    {
+     "fact": "reviews collateral valuation and security documents",
+     "quote": "Review collateral valuation reports and security documentation",
+     "shownInUse": true,
+     "escoIds": [
+      "5e9add34-6725-4c70-9747-00a1d276b2d7"
+     ],
+     "escoTitles": [
+      "examine mortgage loan documents"
+     ]
+    },
+    {
+     "fact": "early-warning watchlist review of the portfolio",
+     "quote": "Run the quarterly early-warning watchlist review for a portfolio of 85 accounts",
+     "shownInUse": true,
+     "escoIds": [
+      "c35b19ad-b06f-44e8-be9f-c20c68750346",
+      "009db49b-fcf5-4409-b4a5-232d059f3597"
+     ],
+     "escoTitles": [
+      "monitor loan portfolio",
+      "apply credit risk policy"
+     ]
+    },
+    {
+     "fact": "checks facility conditions before disbursement",
+     "quote": "Checked facility conditions before disbursement",
+     "shownInUse": true,
+     "escoIds": [
+      "c35b19ad-b06f-44e8-be9f-c20c68750346",
+      "009db49b-fcf5-4409-b4a5-232d059f3597"
+     ],
+     "escoTitles": [
+      "monitor loan portfolio",
+      "apply credit risk policy"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c25-procurement-executive",
+   "facts": [
+    {
+     "fact": "runs RFQs and tenders with bid comparisons",
+     "quote": "Run RFQs and tenders for packaging materials and third-party logistics",
+     "shownInUse": true,
+     "escoIds": [
+      "9e9a4209-c7cf-4f6e-973e-dc2ffadccc74",
+      "ae25d3a9-a85f-415c-a601-806013ea8229",
+      "8faefbc1-4745-4b3f-9889-81cd1d40b67c"
+     ],
+     "escoTitles": [
+      "perform procurement processes",
+      "compare contractors' bids",
+      "evaluate tender"
+     ]
+    },
+    {
+     "fact": "negotiates annual contracts and price reviews",
+     "quote": "Negotiate annual contracts and price reviews with 20 key suppliers",
+     "shownInUse": true,
+     "escoIds": [
+      "5f2efbdf-08a2-49cd-9c06-bd284e4f0fbf",
+      "c842be42-81b3-40f2-904c-ea8790ac88bd",
+      "fde186df-c9c4-49f5-b2a5-d66adc7c43a5",
+      "7ee9fb56-91b1-4363-b51f-ea54ae1b5761"
+     ],
+     "escoTitles": [
+      "negotiate terms with suppliers",
+      "negotiate supplier arrangements",
+      "negotiate buying conditions",
+      "negotiate price"
+     ]
+    },
+    {
+     "fact": "assesses and audits new suppliers",
+     "quote": "Assess new suppliers on financial health, food safety certification",
+     "shownInUse": true,
+     "escoIds": [
+      "11747665-0e98-4f27-bd0d-536862cd5746",
+      "96ec2d53-4f41-4172-8ef2-70742c4bb540",
+      "0520d8ba-3c24-4f75-a8b0-f883ddeed82d"
+     ],
+     "escoTitles": [
+      "identify suppliers",
+      "assess supplier risks",
+      "audit contractors"
+     ]
+    },
+    {
+     "fact": "supplier scorecards and performance reviews",
+     "quote": "Track supplier on-time delivery and quality scorecards quarterly",
+     "shownInUse": true,
+     "escoIds": [
+      "96ec2d53-4f41-4172-8ef2-70742c4bb540",
+      "fe1ec582-d63b-466c-9149-e7fc4fe93e22",
+      "d89f5cee-649a-44bd-9aa9-8e74bbdbd50d"
+     ],
+     "escoTitles": [
+      "assess supplier risks",
+      "supplier management",
+      "monitor contractor performance"
+     ]
+    },
+    {
+     "fact": "dual-sourcing plan to reduce supply risk",
+     "quote": "Introduced a dual-sourcing plan for corrugated cartons",
+     "shownInUse": true,
+     "escoIds": [
+      "3c5b51d9-52c4-4f38-9c1b-3cdebe38120f",
+      "29cd7e7b-215c-483a-b67a-6bdad0647de9"
+     ],
+     "escoTitles": [
+      "implement risk management in procurement",
+      "develop procurement strategy"
+     ]
+    },
+    {
+     "fact": "drafts and maintains supply contracts",
+     "quote": "Draft and maintain contracts with the legal team",
+     "shownInUse": true,
+     "escoIds": [
+      "92721092-fe7c-4689-96bd-4f02385bc0e7"
+     ],
+     "escoTitles": [
+      "manage contracts"
+     ]
+    },
+    {
+     "fact": "creates purchase orders in an e-procurement system",
+     "quote": "Create purchase orders in SAP Ariba",
+     "shownInUse": true,
+     "escoIds": [
+      "73225018-7139-433b-bdba-2b90774761d9",
+      "c7d64df4-7af3-4269-add6-97833bd5448e",
+      "bc067d2e-e151-408f-8e34-24effd2b7fd6"
+     ],
+     "escoTitles": [
+      "issue purchase orders",
+      "manage purchasing cycle",
+      "use e-procurement"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c26-buyer-bm",
+   "facts": [
+    {
+     "fact": "negotiates price, volume discounts and credit terms",
+     "quote": "Berunding harga, diskaun volum dan syarat kredit dengan 35 pembekal",
+     "shownInUse": true,
+     "escoIds": [
+      "5f2efbdf-08a2-49cd-9c06-bd284e4f0fbf",
+      "c842be42-81b3-40f2-904c-ea8790ac88bd",
+      "fde186df-c9c4-49f5-b2a5-d66adc7c43a5",
+      "7ee9fb56-91b1-4363-b51f-ea54ae1b5761"
+     ],
+     "escoTitles": [
+      "negotiate terms with suppliers",
+      "negotiate supplier arrangements",
+      "negotiate buying conditions",
+      "negotiate price"
+     ]
+    },
+    {
+     "fact": "evaluates new product offers for the range",
+     "quote": "Menilai tawaran produk baharu daripada pembekal berdasarkan margin, data jualan dan ruang rak.",
+     "shownInUse": true,
+     "escoIds": [
+      "d1507009-2ca3-4744-98b7-751b927b3042"
+     ],
+     "escoTitles": [
+      "decide on products to be stocked"
+     ]
+    },
+    {
+     "fact": "weekly SKU sales analysis in Excel",
+     "quote": "Menganalisis jualan mingguan setiap SKU menggunakan Excel",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    },
+    {
+     "fact": "delists slow-moving products",
+     "quote": "produk bergerak perlahan untuk dikeluarkan dari senarai.",
+     "shownInUse": true,
+     "escoIds": [
+      "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+      "d1507009-2ca3-4744-98b7-751b927b3042"
+     ],
+     "escoTitles": [
+      "manage inventory",
+      "decide on products to be stocked"
+     ]
+    },
+    {
+     "fact": "sets minimum stock and order quantities",
+     "quote": "Menetapkan tahap stok minimum dan kuantiti pesanan bagi setiap cawangan",
+     "shownInUse": true,
+     "escoIds": [
+      "7e6509bd-9642-4af5-bad3-5b2cec29b6f9",
+      "05281013-f5ae-4bf2-ad23-d5d6f7573b46",
+      "44f6a65f-6be7-4818-9a66-73908797283f"
+     ],
+     "escoTitles": [
+      "control reorder points",
+      "carry out inventory planning",
+      "monitor stock level"
+     ]
+    },
+    {
+     "fact": "plans supplier-funded promotions",
+     "quote": "Merancang promosi bulanan dengan pembekal",
+     "shownInUse": true,
+     "escoIds": [
+      "fef5a450-6230-4a34-b3e3-764252dbdcec",
+      "ba62c716-f9d3-49c8-a7cd-d3d8b7c8067e",
+      "756ae350-9e1f-4cb9-9c27-6bd99806dadc"
+     ],
+     "escoTitles": [
+      "devise special promotions",
+      "set sales promotions",
+      "sales promotion techniques"
+     ]
+    },
+    {
+     "fact": "resolves late and damaged supply issues",
+     "quote": "Menyelesaikan isu bekalan lewat dan barang rosak dengan pembekal",
+     "shownInUse": true,
+     "escoIds": [
+      "f70b5f39-b8b6-407b-8c08-64fd65db79e9",
+      "3cd35f5d-ce6d-4f14-9a09-53d7a28d834c"
+     ],
+     "escoTitles": [
+      "handle financial disputes",
+      "maintain relationship with suppliers"
+     ]
+    },
+    {
+     "fact": "issues purchase orders in the ERP",
+     "quote": "Mengeluarkan pesanan belian dalam sistem ERP",
+     "shownInUse": true,
+     "escoIds": [
+      "73225018-7139-433b-bdba-2b90774761d9",
+      "c7d64df4-7af3-4269-add6-97833bd5448e",
+      "bc067d2e-e151-408f-8e34-24effd2b7fd6"
+     ],
+     "escoTitles": [
+      "issue purchase orders",
+      "manage purchasing cycle",
+      "use e-procurement"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c27-scm-demand-planner",
+   "facts": [
+    {
+     "fact": "statistical demand forecast for 300 SKUs",
+     "quote": "Produce the monthly statistical demand forecast for 300 SKUs",
+     "shownInUse": true,
+     "escoIds": [
+      "68e73bf6-2838-4705-86f4-e4bda4ac8a6f",
+      "be727774-46d7-43d7-aee9-1a51b5cd8c71",
+      "146eccdc-c52a-4d61-9406-3af617caa7d6"
+     ],
+     "escoTitles": [
+      "forecast products' demand",
+      "carry out statistical forecasts",
+      "forecast sales over periods of time"
+     ]
+    },
+    {
+     "fact": "measures forecast accuracy and bias",
+     "quote": "Measure forecast accuracy (MAPE) and bias by channel",
+     "shownInUse": true,
+     "escoIds": [
+      "382c11ed-20d5-4ae7-b60e-15fec527fa6c",
+      "7ee4c2ea-b349-4bd2-81a3-ec31475d4833",
+      "2b92a5b2-6758-4ee3-9fb4-b6387a55cc8f"
+     ],
+     "escoTitles": [
+      "apply statistical analysis techniques",
+      "statistics",
+      "perform data analysis"
+     ]
+    },
+    {
+     "fact": "runs the S&OP demand review and consensus plan",
+     "quote": "Run the monthly S&OP demand review",
+     "shownInUse": true,
+     "escoIds": [
+      "05281013-f5ae-4bf2-ad23-d5d6f7573b46",
+      "020b3c27-bae1-4b85-9d6f-eccee0f5ed99",
+      "f929c89e-c363-4132-a918-e021d57b307c"
+     ],
+     "escoTitles": [
+      "carry out inventory planning",
+      "manage supplies",
+      "supply chain management"
+     ]
+    },
+    {
+     "fact": "converts demand into production and replenishment plan",
+     "quote": "Convert the demand plan into a 12-week production and replenishment plan",
+     "shownInUse": true,
+     "escoIds": [
+      "7ba8eea9-3f9c-422b-90db-1a11eb6ff904",
+      "2a778aeb-f246-4f03-9a96-c60183001037",
+      "020b3c27-bae1-4b85-9d6f-eccee0f5ed99",
+      "05281013-f5ae-4bf2-ad23-d5d6f7573b46"
+     ],
+     "escoTitles": [
+      "disaggregate the production plan",
+      "schedule production",
+      "manage supplies",
+      "carry out inventory planning"
+     ]
+    },
+    {
+     "fact": "sets safety stock levels",
+     "quote": "Set safety stock levels by SKU class (ABC/XYZ)",
+     "shownInUse": true,
+     "escoIds": [
+      "5aaf2780-04d7-4bbf-8b06-af36eafe8eba",
+      "7e6509bd-9642-4af5-bad3-5b2cec29b6f9",
+      "05281013-f5ae-4bf2-ad23-d5d6f7573b46"
+     ],
+     "escoTitles": [
+      "inventory management rules",
+      "control reorder points",
+      "carry out inventory planning"
+     ]
+    },
+    {
+     "fact": "flags excess and near-expiry stock",
+     "quote": "Flag excess and near-expiry stock at month-end",
+     "shownInUse": true,
+     "escoIds": [
+      "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+      "e705db38-4fcf-4069-b01f-3fbdda894cc1",
+      "5aaf2780-04d7-4bbf-8b06-af36eafe8eba"
+     ],
+     "escoTitles": [
+      "manage inventory",
+      "manage stock rotation",
+      "inventory management rules"
+     ]
+    },
+    {
+     "fact": "weekly production schedule",
+     "quote": "Prepared the weekly production schedule for 4 filling lines.",
+     "shownInUse": true,
+     "escoIds": [
+      "2a778aeb-f246-4f03-9a96-c60183001037",
+      "7ba8eea9-3f9c-422b-90db-1a11eb6ff904",
+      "5475343c-5e75-415f-b431-17f3c20a347e"
+     ],
+     "escoTitles": [
+      "schedule production",
+      "disaggregate the production plan",
+      "use production planning software"
+     ]
+    },
+    {
+     "fact": "runs MRP in SAP",
+     "quote": "Ran MRP in SAP and released purchase requisitions for packaging.",
+     "shownInUse": true,
+     "escoIds": [
+      "f0393af3-bcd9-41af-a36e-0cfb83b60081",
+      "5475343c-5e75-415f-b431-17f3c20a347e",
+      "020b3c27-bae1-4b85-9d6f-eccee0f5ed99"
+     ],
+     "escoTitles": [
+      "manage standard enterprise resource planning system",
+      "use production planning software",
+      "manage supplies"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c28-inventory-controller",
+   "facts": [
+    {
+     "fact": "runs cycle counts and investigates variances",
+     "quote": "Plan and run the daily cycle count programme",
+     "shownInUse": true,
+     "escoIds": [
+      "53815c73-d352-4d4d-92cb-fb7020cbd8e6",
+      "de804504-bd5c-465d-b54f-9da299d8ee90",
+      "f60416d5-2d98-4401-ba0d-b92b53e01d86"
+     ],
+     "escoTitles": [
+      "carry out inventory control accuracy",
+      "maintain stock control systems",
+      "keep stock records"
+     ]
+    },
+    {
+     "fact": "ageing and slow-moving stock analysis with disposal recommendations",
+     "quote": "Produce the monthly ageing and slow-moving stock report",
+     "shownInUse": true,
+     "escoIds": [
+      "ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+      "5aaf2780-04d7-4bbf-8b06-af36eafe8eba",
+      "e705db38-4fcf-4069-b01f-3fbdda894cc1",
+      "16594fea-3004-4730-838f-e35a432b49da"
+     ],
+     "escoTitles": [
+      "manage inventory",
+      "inventory management rules",
+      "manage stock rotation",
+      "perform stock valuation"
+     ]
+    },
+    {
+     "fact": "reconciles WMS stock with client ERP",
+     "quote": "Reconcile WMS stock balances with each client's SAP stock every month",
+     "shownInUse": true,
+     "escoIds": [
+      "de804504-bd5c-465d-b54f-9da299d8ee90",
+      "53815c73-d352-4d4d-92cb-fb7020cbd8e6"
+     ],
+     "escoTitles": [
+      "maintain stock control systems",
+      "carry out inventory control accuracy"
+     ]
+    },
+    {
+     "fact": "Excel pivot model of days-on-hand",
+     "quote": "Built an Excel model with pivot tables",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    },
+    {
+     "fact": "trains warehouse clerks",
+     "quote": "Train new warehouse clerks on receiving and stock movement procedures.",
+     "shownInUse": true,
+     "escoIds": [
+      "e54ff029-1ce9-447d-a5b2-eb7283a23e6e",
+      "0cc9c234-f817-4f4c-908a-4d28fe3b0f4a"
+     ],
+     "escoTitles": [
+      "train employees",
+      "coach employees"
+     ]
+    },
+    {
+     "fact": "supervises pickers and forklift drivers on shifts",
+     "quote": "Supervised 18 pickers and forklift drivers on two shifts.",
+     "shownInUse": true,
+     "escoIds": [
+      "9601b2a8-68e4-4906-9306-a23679b8f0b0",
+      "4118be70-c09d-45cd-b53e-0bcdbdc98be0"
+     ],
+     "escoTitles": [
+      "supervise staff",
+      "supervise the work of staff on different shifts"
+     ]
+    },
+    {
+     "fact": "checks inbound deliveries against PO and DO",
+     "quote": "Checked inbound deliveries against purchase orders and delivery orders",
+     "shownInUse": true,
+     "escoIds": [
+      "2cae39d6-78c2-4ce3-bee8-628504371463",
+      "57fb98c5-6862-4969-8bf4-a74ff14c4750"
+     ],
+     "escoTitles": [
+      "receive goods",
+      "handle paperwork related to warehouse stock"
+     ]
+    },
+    {
+     "fact": "weekly warehouse KPI reports",
+     "quote": "Prepared weekly warehouse KPI reports",
+     "shownInUse": true,
+     "escoIds": [
+      "8dcbcabe-09f7-4d11-940d-125af57bbc40"
+     ],
+     "escoTitles": [
+      "track key performance indicators"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c29-bi-developer",
+   "facts": [
+    {
+     "fact": "designs star-schema data models",
+     "quote": "Design star-schema data models in Azure SQL and Power BI",
+     "shownInUse": true,
+     "escoIds": [
+      "fbafa41f-cd05-4109-a649-8b44d306d779",
+      "fecf8a0d-62c4-4e71-9b03-0f4fc2ad7bf5",
+      "6c08403c-a5bb-4868-b8c2-b7d039c0e511",
+      "3ec2e4d6-7000-4905-bf1a-c5b1679416de"
+     ],
+     "escoTitles": [
+      "create data models",
+      "data models",
+      "design database scheme",
+      "data warehouse"
+     ]
+    },
+    {
+     "fact": "writes T-SQL views and stored procedures",
+     "quote": "Write T-SQL views and stored procedures",
+     "shownInUse": true,
+     "escoIds": [
+      "598de5b0-5b58-4ea7-8058-a4bc4d18c742",
+      "75f839c2-fd9a-4ad3-8921-6e734608568d",
+      "9cf681c7-89ec-470c-b651-7fe03786f586",
+      "4463a721-69f3-413d-8321-43e3af13a4f1"
+     ],
+     "escoTitles": [
+      "SQL",
+      "use query languages",
+      "query languages",
+      "use databases"
+     ]
+    },
+    {
+     "fact": "schedules data loads (ETL)",
+     "quote": "loads with Azure Data Factory",
+     "shownInUse": true,
+     "escoIds": [
+      "9d0d89be-bffa-4393-b6f6-8d05bea49051",
+      "0d6714c6-720e-4985-9791-5ab85d28da79",
+      "2daec0e6-f0c1-43e8-8178-aedba99130ec"
+     ],
+     "escoTitles": [
+      "data extraction, transformation and loading tools",
+      "gather data",
+      "establish data processes"
+     ]
+    },
+    {
+     "fact": "builds and publishes Power BI dashboards",
+     "quote": "Build and publish Power BI dashboards",
+     "shownInUse": true,
+     "escoIds": [
+      "65e58886-bd1e-4c5b-8ca5-8d9b353c8aa1",
+      "c3e36d05-8ae8-447f-bb2b-6f9409f85389",
+      "c0326e27-5fa8-4dca-aecb-ed89ab491513",
+      "143769cb-b61e-47d8-a61e-eedfbec1016c"
+     ],
+     "escoTitles": [
+      "data visualisation software",
+      "deliver visual presentation of data",
+      "prepare visual data",
+      "business intelligence"
+     ]
+    },
+    {
+     "fact": "gathers reporting requirements and agrees KPI definitions",
+     "quote": "Gather reporting requirements from finance process owners",
+     "shownInUse": true,
+     "escoIds": [
+      "b04f377b-ee80-4b38-aca1-19d266a23b17",
+      "633a3637-2c6b-40ae-ac38-289eb2a62aa6",
+      "8dcbcabe-09f7-4d11-940d-125af57bbc40"
+     ],
+     "escoTitles": [
+      "analyse business requirements",
+      "business analysis",
+      "track key performance indicators"
+     ]
+    },
+    {
+     "fact": "sets up data quality checks",
+     "quote": "Set up data quality checks that flag missing vendor IDs",
+     "shownInUse": true,
+     "escoIds": [
+      "cc7370dd-69fa-4c67-a96f-d4d135d38700",
+      "50b100ea-74fd-4706-99db-3e4ca55e51b8",
+      "54c9c155-9293-4329-8ed2-2e76e8b519d4",
+      "9ff9db9d-d14b-426e-83f3-e7449af6c79f"
+     ],
+     "escoTitles": [
+      "data quality assessment",
+      "perform data cleansing",
+      "define data quality criteria",
+      "manage data"
+     ]
+    },
+    {
+     "fact": "Python scripts to load API data",
+     "quote": "Wrote Python scripts to pull currency rates from an API",
+     "shownInUse": true,
+     "escoIds": [
+      "ccd0a1d9-afda-43d9-b901-96344886e14d",
+      "21d2f96d-35f7-4e3f-9745-c533d2dd6e97",
+      "bf4d884f-c848-402a-b130-69c266b04164",
+      "f9670490-8aa4-4540-b121-d440a8294aab"
+     ],
+     "escoTitles": [
+      "Python (computer programming)",
+      "computer programming",
+      "apply basic programming skills",
+      "develop data processing applications"
+     ]
+    },
+    {
+     "fact": "coaches junior developers",
+     "quote": "Coach two junior developers and review their DAX and SQL.",
+     "shownInUse": true,
+     "escoIds": [
+      "0cc9c234-f817-4f4c-908a-4d28fe3b0f4a",
+      "fb9c12af-ec45-498a-8e52-891371191557"
+     ],
+     "escoTitles": [
+      "coach employees",
+      "mentor individual employees"
+     ]
+    },
+    {
+     "fact": "KPI reports in Excel Power Pivot",
+     "quote": "Produced weekly AP and AR KPI reports in Excel (Power Pivot)",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c30-rpa-analyst",
+   "facts": [
+    {
+     "fact": "builds and maintains RPA bots",
+     "quote": "Build and maintain 18 UiPath bots for finance",
+     "shownInUse": true,
+     "escoIds": [
+      "f4a6e9f7-5cff-46c0-894c-59c20bb78694",
+      "f9670490-8aa4-4540-b121-d440a8294aab"
+     ],
+     "escoTitles": [
+      "automation technology",
+      "develop data processing applications"
+     ]
+    },
+    {
+     "fact": "assesses processes to choose automation candidates",
+     "quote": "Run process assessments with process owners to choose which steps to automate",
+     "shownInUse": true,
+     "escoIds": [
+      "958b8802-ec3e-4813-97f7-6c8f48610dbd",
+      "b04f377b-ee80-4b38-aca1-19d266a23b17"
+     ],
+     "escoTitles": [
+      "identify process improvements",
+      "analyse business requirements"
+     ]
+    },
+    {
+     "fact": "writes process design documents and runs UAT",
+     "quote": "Write process design documents and test scripts; run user acceptance testing",
+     "shownInUse": true,
+     "escoIds": [
+      "6a7792a9-888a-46ad-afc9-2c0d94c8fde6",
+      "913e7e83-b8f8-4574-b1ca-1b38f3fd974a",
+      "78a74fd1-efc6-49dc-adb1-1b0fbe35c22c",
+      "85f46538-ae70-498a-bfbc-b8ddafe96c7d"
+     ],
+     "escoTitles": [
+      "create business process models",
+      "execute software tests",
+      "provide software testing documentation",
+      "levels of software testing"
+     ]
+    },
+    {
+     "fact": "monitors bot runs and fixes failures",
+     "quote": "Monitor bot runs in UiPath Orchestrator every morning, fix failures",
+     "shownInUse": true,
+     "escoIds": [
+      "2522a6ce-3202-4ac8-9f5b-b9cb5a3a83a1"
+     ],
+     "escoTitles": [
+      "debug software"
+     ]
+    },
+    {
+     "fact": "sets up invoice-capture AI and tunes confidence thresholds",
+     "quote": "Set up an invoice-capture model (UiPath Document Understanding)",
+     "shownInUse": true,
+     "escoIds": [
+      "e465a154-93f7-4973-9ce1-31659fe16dd2"
+     ],
+     "escoTitles": [
+      "principles of artificial intelligence"
+     ]
+    },
+    {
+     "fact": "Python to clean bank statement files",
+     "quote": "Use Python to clean bank statement files",
+     "shownInUse": true,
+     "escoIds": [
+      "ccd0a1d9-afda-43d9-b901-96344886e14d",
+      "21d2f96d-35f7-4e3f-9745-c533d2dd6e97",
+      "bf4d884f-c848-402a-b130-69c266b04164",
+      "f9670490-8aa4-4540-b121-d440a8294aab",
+      "50b100ea-74fd-4706-99db-3e4ca55e51b8"
+     ],
+     "escoTitles": [
+      "Python (computer programming)",
+      "computer programming",
+      "apply basic programming skills",
+      "develop data processing applications",
+      "perform data cleansing"
+     ]
+    },
+    {
+     "fact": "SQL checks of bot output",
+     "quote": "Write SQL queries to check bot output against SAP tables.",
+     "shownInUse": true,
+     "escoIds": [
+      "598de5b0-5b58-4ea7-8058-a4bc4d18c742",
+      "75f839c2-fd9a-4ad3-8921-6e734608568d",
+      "9cf681c7-89ec-470c-b651-7fe03786f586",
+      "4463a721-69f3-413d-8321-43e3af13a4f1"
+     ],
+     "escoTitles": [
+      "SQL",
+      "use query languages",
+      "query languages",
+      "use databases"
+     ]
+    },
+    {
+     "fact": "processes supplier invoices",
+     "quote": "Processed supplier invoices and three-way matching in Oracle for 12 hotels.",
+     "shownInUse": true,
+     "escoIds": [
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa",
+      "99b163e8-7815-43e2-83f3-a47f3076354c",
+      "f2d57f41-43b4-4f5b-8100-3df5c21eda50",
+      "08371fe9-c658-4f6a-966f-71dbb0ab683d"
+     ],
+     "escoTitles": [
+      "maintain records of financial transactions",
+      "use accounting systems",
+      "accounting entries",
+      "process data",
+      "accounting department processes"
+     ]
+    },
+    {
+     "fact": "three-way matching",
+     "quote": "Processed supplier invoices and three-way matching in Oracle for 12 hotels.",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e9030465-13c5-46d2-bdae-c2c1a9dbec86"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "attach accounting certificates to accounting transactions"
+     ]
+    },
+    {
+     "fact": "reconciles vendor statements",
+     "quote": "Reconciled vendor statements for the top 40 suppliers every month.",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e717b036-2c0c-4c11-99e9-0cb4ce084fed"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "perform account allocation"
+     ]
+    },
+    {
+     "fact": "builds Excel macros",
+     "quote": "Proposed and built Excel macros",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535",
+      "13bdd41a-2a18-441f-96db-41252c519413"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office",
+      "Visual Basic"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c31-hr-executive",
+   "facts": [
+    {
+     "fact": "end-to-end recruitment and interviews",
+     "quote": "Handle end-to-end recruitment for production and engineering roles",
+     "shownInUse": true,
+     "escoIds": [
+      "496932f1-0b6b-4f73-9432-d95c7ddcd43b",
+      "65715f7a-c791-416b-b88a-2933a1c81647",
+      "66d47084-9437-48b2-819b-c4c8214ed650"
+     ],
+     "escoTitles": [
+      "recruit employees",
+      "recruit personnel",
+      "interview people"
+     ]
+    },
+    {
+     "fact": "processes monthly payroll and statutory deductions",
+     "quote": "Process monthly payroll for 450 employees in SQL Payroll",
+     "shownInUse": true,
+     "escoIds": [
+      "9d916d7c-89b3-4084-a6d9-e2b0b3091404",
+      "734187e4-650e-4a0a-a7f8-826cd4757229"
+     ],
+     "escoTitles": [
+      "manage payroll",
+      "check payrolls"
+     ]
+    },
+    {
+     "fact": "onboarding and probation reviews",
+     "quote": "Run onboarding for new hires and track probation reviews.",
+     "shownInUse": true,
+     "escoIds": [
+      "9d9ba780-4aa2-43d2-888c-95a41a713fb9",
+      "8b9332c7-2551-4527-9a64-a615713d8b02"
+     ],
+     "escoTitles": [
+      "introduce new employees",
+      "evaluate employees"
+     ]
+    },
+    {
+     "fact": "handles disciplinary cases under employment law",
+     "quote": "Handle disciplinary cases",
+     "shownInUse": true,
+     "escoIds": [
+      "97b713f0-b9e8-4903-8dee-7e0b4019a1c0",
+      "08fe5910-8c4c-4679-a988-eb2ded3c4909"
+     ],
+     "escoTitles": [
+      "employment law",
+      "labour legislation"
+     ]
+    },
+    {
+     "fact": "plans the training calendar",
+     "quote": "Plan the annual training calendar and claim HRD Corp grants",
+     "shownInUse": true,
+     "escoIds": [
+      "4dafe480-f2ae-46b5-bd5e-8d4e538f50c7"
+     ],
+     "escoTitles": [
+      "identify training needs"
+     ]
+    },
+    {
+     "fact": "monthly HR reports in Excel pivots",
+     "quote": "Prepare monthly HR reports in Excel (pivot tables)",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    },
+    {
+     "fact": "employee engagement survey",
+     "quote": "Coordinate the annual employee engagement survey",
+     "shownInUse": true,
+     "escoIds": [
+      "6053cf28-2f42-44bb-8d27-a43920128b30"
+     ],
+     "escoTitles": [
+      "gather feedback from employees"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c32-civil-engineer",
+   "facts": [
+    {
+     "fact": "supervises building construction and subcontractors",
+     "quote": "Supervise construction of a 12-storey mixed development",
+     "shownInUse": true,
+     "escoIds": [
+      "1de548e0-9535-4d2e-9d20-d4474c1ea813",
+      "fc1a75bb-70e3-4005-881f-7709bf7b0ed4",
+      "fff5bc45-b506-4466-8977-4869079c1cb2"
+     ],
+     "escoTitles": [
+      "oversee construction project",
+      "monitor construction site",
+      "coordinate construction activities"
+     ]
+    },
+    {
+     "fact": "inspects setting-out, reinforcement and formwork before pours",
+     "quote": "Check setting-out, reinforcement and formwork before concrete pours",
+     "shownInUse": true,
+     "escoIds": [
+      "3dd3dfa7-51c0-40ef-af46-e2df300489f6",
+      "ccfbdaad-b91d-4bfe-bd0e-d30b33587f19"
+     ],
+     "escoTitles": [
+      "monitor parameters' compliance in construction projects",
+      "keep records of work progress"
+     ]
+    },
+    {
+     "fact": "construction programme scheduling in Primavera",
+     "quote": "Prepare the 3-week look-ahead programme and update the master schedule in Primavera P6",
+     "shownInUse": true,
+     "escoIds": [
+      "6181f475-110c-497c-a46d-ed2e14e7bc90",
+      "cd5efa8c-e44d-4cbc-91c6-796018dbed68",
+      "7111b95d-0ce3-441a-9d92-4c75d05c4388"
+     ],
+     "escoTitles": [
+      "ensure compliance with construction project deadline",
+      "perform project management",
+      "project management"
+     ]
+    },
+    {
+     "fact": "measures work done for progress claims",
+     "quote": "Measure work done on site for monthly progress claims",
+     "shownInUse": true,
+     "escoIds": [
+      "9be758b6-a45d-403c-8943-68390ee2c961"
+     ],
+     "escoTitles": [
+      "quantity surveying"
+     ]
+    },
+    {
+     "fact": "compares subcontractor quotations",
+     "quote": "Obtain and compare quotations from three subcontractors",
+     "shownInUse": true,
+     "escoIds": [
+      "ae25d3a9-a85f-415c-a601-806013ea8229"
+     ],
+     "escoTitles": [
+      "compare contractors' bids"
+     ]
+    },
+    {
+     "fact": "site safety walks and toolbox talks",
+     "quote": "Run weekly safety walks and toolbox talks with the safety officer",
+     "shownInUse": true,
+     "escoIds": [
+      "4f9f0410-5db0-4b3b-8de3-1ded1600c719",
+      "86df7af2-f9f3-4c06-a500-7f1fba9e78fe"
+     ],
+     "escoTitles": [
+      "inspect construction sites",
+      "follow health and safety procedures in construction"
+     ]
+    },
+    {
+     "fact": "orders site materials",
+     "quote": "Order site materials (rebar, cement, formwork plywood)",
+     "shownInUse": true,
+     "escoIds": [
+      "9f1bd2a4-91af-4b60-aeb3-0fe1f4434966"
+     ],
+     "escoTitles": [
+      "order construction supplies"
+     ]
+    },
+    {
+     "fact": "designs road drainage in CAD",
+     "quote": "Designed drainage for a 6 km rural road using AutoCAD Civil 3D.",
+     "shownInUse": true,
+     "escoIds": [
+      "b34e2ba1-9080-48c9-9b42-ee9192a4d3f1",
+      "a2b5dcf3-5b6a-453d-876c-cff540c0faf1"
+     ],
+     "escoTitles": [
+      "use CAD software",
+      "CAD software"
+     ]
+    },
+    {
+     "fact": "field density and slump tests",
+     "quote": "Carried out field density and slump tests",
+     "shownInUse": true,
+     "escoIds": [
+      "ebf40cf9-5c98-4d84-9f01-b7ca74e90682"
+     ],
+     "escoTitles": [
+      "test concrete"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c33-data-analyst-linkedin",
+   "facts": [
+    {
+     "fact": "writes SQL to build datasets",
+     "quote": "Write SQL in Snowflake to build the monthly motor claims dataset",
+     "shownInUse": true,
+     "escoIds": [
+      "598de5b0-5b58-4ea7-8058-a4bc4d18c742",
+      "75f839c2-fd9a-4ad3-8921-6e734608568d",
+      "9cf681c7-89ec-470c-b651-7fe03786f586",
+      "4463a721-69f3-413d-8321-43e3af13a4f1"
+     ],
+     "escoTitles": [
+      "SQL",
+      "use query languages",
+      "query languages",
+      "use databases"
+     ]
+    },
+    {
+     "fact": "builds a Power BI dashboard used by claims staff",
+     "quote": "Built the Power BI claims-ageing dashboard",
+     "shownInUse": true,
+     "escoIds": [
+      "65e58886-bd1e-4c5b-8ca5-8d9b353c8aa1",
+      "c3e36d05-8ae8-447f-bb2b-6f9409f85389",
+      "c0326e27-5fa8-4dca-aecb-ed89ab491513",
+      "143769cb-b61e-47d8-a61e-eedfbec1016c"
+     ],
+     "escoTitles": [
+      "data visualisation software",
+      "deliver visual presentation of data",
+      "prepare visual data",
+      "business intelligence"
+     ]
+    },
+    {
+     "fact": "statistical outlier analysis for fraud review",
+     "quote": "Analysed repair cost by workshop and flagged 12 outlier workshops",
+     "shownInUse": true,
+     "escoIds": [
+      "382c11ed-20d5-4ae7-b60e-15fec527fa6c",
+      "7ee4c2ea-b349-4bd2-81a3-ec31475d4833",
+      "2b92a5b2-6758-4ee3-9fb4-b6387a55cc8f",
+      "541cdc23-1eec-4520-81fc-3392eaf538ed"
+     ],
+     "escoTitles": [
+      "apply statistical analysis techniques",
+      "statistics",
+      "perform data analysis",
+      "fraud detection"
+     ]
+    },
+    {
+     "fact": "weekly performance reports in spreadsheets",
+     "quote": "Weekly delivery performance reports in Excel and Google Sheets.",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535",
+      "8dcbcabe-09f7-4d11-940d-125af57bbc40"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office",
+      "track key performance indicators"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c34-graphic-designer-linkedin",
+   "facts": [
+    {
+     "fact": "designs packaging and in-store campaigns",
+     "quote": "Lead designer for packaging and in-store campaigns for 140 outlets.",
+     "shownInUse": true,
+     "escoIds": [
+      "0b16ebec-1fd8-41c8-a1b9-bbe91a1cc1b8",
+      "e10d57dd-6717-4b24-961a-8a87c7e80b5d",
+      "f058bf62-70d1-4f5e-be2a-8b26fac24a96",
+      "7fb699d9-182a-430e-b7a0-6d8ed05c284b"
+     ],
+     "escoTitles": [
+      "design package",
+      "plan new packaging designs",
+      "design graphics",
+      "graphic design"
+     ]
+    },
+    {
+     "fact": "rebrands a product range",
+     "quote": "Rebranded the retail coffee",
+     "shownInUse": true,
+     "escoIds": [
+      "754690ad-6207-4e1c-9df7-9a2b58afa587"
+     ],
+     "escoTitles": [
+      "define brand identity"
+     ]
+    },
+    {
+     "fact": "manages print production with printers",
+     "quote": "manage print production with three printers",
+     "shownInUse": true,
+     "escoIds": [
+      "9542c4ec-2a56-42eb-af37-3e977df3e201"
+     ],
+     "escoTitles": [
+      "inspect printing output"
+     ]
+    },
+    {
+     "fact": "designs report infographics",
+     "quote": "Designed the infographics for the group's annual report and sustainability report.",
+     "shownInUse": true,
+     "escoIds": [
+      "f058bf62-70d1-4f5e-be2a-8b26fac24a96",
+      "c3e36d05-8ae8-447f-bb2b-6f9409f85389",
+      "c0326e27-5fa8-4dca-aecb-ed89ab491513"
+     ],
+     "escoTitles": [
+      "design graphics",
+      "deliver visual presentation of data",
+      "prepare visual data"
+     ]
+    },
+    {
+     "fact": "designs social media and print campaign material",
+     "quote": "Social media and print campaigns for FMCG and property clients.",
+     "shownInUse": true,
+     "escoIds": [
+      "b1a5d83a-e02a-449f-a68b-539b34821078",
+      "f058bf62-70d1-4f5e-be2a-8b26fac24a96"
+     ],
+     "escoTitles": [
+      "design materials for multimedia campaigns",
+      "design graphics"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c35-ap-specialist-ai-linkedin",
+   "facts": [
+    {
+     "fact": "processes and reviews vendor invoices in SAP",
+     "quote": "Process and review vendor invoices for 6 ASEAN entities in SAP",
+     "shownInUse": true,
+     "escoIds": [
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa",
+      "99b163e8-7815-43e2-83f3-a47f3076354c",
+      "f2d57f41-43b4-4f5b-8100-3df5c21eda50",
+      "08371fe9-c658-4f6a-966f-71dbb0ab683d"
+     ],
+     "escoTitles": [
+      "maintain records of financial transactions",
+      "use accounting systems",
+      "accounting entries",
+      "process data",
+      "accounting department processes"
+     ]
+    },
+    {
+     "fact": "checks and corrects AI-captured invoice fields",
+     "quote": "Since 2024 I check the fields",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "f2d57f41-43b4-4f5b-8100-3df5c21eda50"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "process data"
+     ]
+    },
+    {
+     "fact": "resolves invoice-to-PO matching exceptions",
+     "quote": "resolve the exceptions it",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e9030465-13c5-46d2-bdae-c2c1a9dbec86"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "attach accounting certificates to accounting transactions"
+     ]
+    },
+    {
+     "fact": "monthly vendor statement reconciliations",
+     "quote": "monthly statement reconciliations for my vendor",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e717b036-2c0c-4c11-99e9-0cb4ce084fed"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "perform account allocation"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c36-esg-consultant-linkedin",
+   "facts": [
+    {
+     "fact": "leads client GHG inventories and reviews activity data",
+     "quote": "Lead GHG inventories (Scope 1, 2 and selected Scope 3) for 15 manufacturing and property",
+     "shownInUse": true,
+     "escoIds": [
+      "d53eab76-e8ff-4e28-af26-7e012951c763",
+      "77f109c4-3107-4d2a-a512-5160ac103933",
+      "d84326c9-a3d3-4e22-a6a1-1ad42a356f10"
+     ],
+     "escoTitles": [
+      "measure company's sustainability performance",
+      "analyse environmental data",
+      "sustainability consulting"
+     ]
+    },
+    {
+     "fact": "drafts sustainability statements and IFRS S2 gap assessments",
+     "quote": "Draft Sustainability Statements and IFRS S2 gap assessments",
+     "shownInUse": true,
+     "escoIds": [
+      "bbcc7e1b-3d4d-4422-9fac-efd636eb9de4",
+      "4300b453-9bcf-474c-9ee3-92ec2229720c",
+      "f3cc52e3-a96c-4549-b841-6e41a846fa99",
+      "d84326c9-a3d3-4e22-a6a1-1ad42a356f10"
+     ],
+     "escoTitles": [
+      "lead the sustainability reporting process",
+      "global standards for sustainability reporting",
+      "report on environmental issues",
+      "sustainability consulting"
+     ]
+    },
+    {
+     "fact": "facilitates materiality workshops with boards",
+     "quote": "facilitate materiality",
+     "shownInUse": true,
+     "escoIds": [
+      "99c4c69a-025c-464f-adda-874c7f107a31"
+     ],
+     "escoTitles": [
+      "engage with stakeholders"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c37-esg-assurance-linkedin",
+   "facts": [
+    {
+     "fact": "performs limited assurance on emissions and ESG indicators",
+     "quote": "Perform limited assurance procedures on Scope 1 and 2 emissions",
+     "shownInUse": true,
+     "escoIds": [
+      "6a536b36-c5c7-4d10-bf67-a4fb0f8549b2",
+      "4300b453-9bcf-474c-9ee3-92ec2229720c"
+     ],
+     "escoTitles": [
+      "audit techniques",
+      "global standards for sustainability reporting"
+     ]
+    },
+    {
+     "fact": "recalculates emissions using emission factors",
+     "quote": "recalculation of emissions using the client's",
+     "shownInUse": true,
+     "escoIds": [
+      "d53eab76-e8ff-4e28-af26-7e012951c763",
+      "77f109c4-3107-4d2a-a512-5160ac103933"
+     ],
+     "escoTitles": [
+      "measure company's sustainability performance",
+      "analyse environmental data"
+     ]
+    },
+    {
+     "fact": "statutory audits testing revenue and purchase cycles",
+     "quote": "Statutory audits of manufacturing and plantation companies.",
+     "shownInUse": true,
+     "escoIds": [
+      "89ff28d6-342c-435d-83aa-83e71dbbbc96",
+      "6a536b36-c5c7-4d10-bf67-a4fb0f8549b2"
+     ],
+     "escoTitles": [
+      "conduct financial audits",
+      "audit techniques"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c38-finance-automation-lead-linkedin",
+   "facts": [
+    {
+     "fact": "builds finance automations with Power Automate and UiPath",
+     "quote": "Lead a team of 5 building Power Automate and UiPath automations for finance.",
+     "shownInUse": true,
+     "escoIds": [
+      "f4a6e9f7-5cff-46c0-894c-59c20bb78694",
+      "f9670490-8aa4-4540-b121-d440a8294aab"
+     ],
+     "escoTitles": [
+      "automation technology",
+      "develop data processing applications"
+     ]
+    },
+    {
+     "fact": "leads an automation team",
+     "quote": "Lead a team of 5 building Power Automate and UiPath automations for finance.",
+     "shownInUse": true,
+     "escoIds": [
+      "339ac029-066a-4985-9f9d-b3d7c8fea0bb",
+      "9601b2a8-68e4-4906-9306-a23679b8f0b0"
+     ],
+     "escoTitles": [
+      "manage staff",
+      "supervise staff"
+     ]
+    },
+    {
+     "fact": "redesigns the intercompany settlement process",
+     "quote": "Redesigned the intercompany settlement",
+     "shownInUse": true,
+     "escoIds": [
+      "958b8802-ec3e-4813-97f7-6c8f48610dbd",
+      "6a7792a9-888a-46ad-afc9-2c0d94c8fde6",
+      "98301d4a-2cc3-439d-8d7f-0b6ac76302bb"
+     ],
+     "escoTitles": [
+      "identify process improvements",
+      "create business process models",
+      "business process modelling"
+     ]
+    },
+    {
+     "fact": "pilots a GenAI assistant and sets review rules",
+     "quote": "Piloting a GenAI assistant that drafts variance commentary",
+     "shownInUse": true,
+     "escoIds": [
+      "e465a154-93f7-4973-9ce1-31659fe16dd2"
+     ],
+     "escoTitles": [
+      "principles of artificial intelligence"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c39-green-finance-linkedin",
+   "facts": [
+    {
+     "fact": "screens holdings against ESG exclusion criteria",
+     "quote": "Screen equity and sukuk holdings against our exclusion list",
+     "shownInUse": true,
+     "escoIds": [
+      "203083ca-b051-4c28-8986-fc8731bacee5",
+      "bf12b461-1c53-4d81-a395-8ba77f7483c4"
+     ],
+     "escoTitles": [
+      "sustainable finance",
+      "investment analysis"
+     ]
+    },
+    {
+     "fact": "scores issuers on ESG risk and engages companies",
+     "quote": "Score issuers on ESG risk and engage companies",
+     "shownInUse": true,
+     "escoIds": [
+      "203083ca-b051-4c28-8986-fc8731bacee5",
+      "99c4c69a-025c-464f-adda-874c7f107a31"
+     ],
+     "escoTitles": [
+      "sustainable finance",
+      "engage with stakeholders"
+     ]
+    },
+    {
+     "fact": "reviews green sukuk use-of-proceeds and challenges claims",
+     "quote": "use-of-proceeds reports for green sukuk we hold and challenge claims that lack evidence.",
+     "shownInUse": true,
+     "escoIds": [
+      "86f0bb12-6491-4be7-8306-c88900e91a63",
+      "203083ca-b051-4c28-8986-fc8731bacee5"
+     ],
+     "escoTitles": [
+      "green bonds",
+      "sustainable finance"
+     ]
+    },
+    {
+     "fact": "credit research on sukuk issuers",
+     "quote": "Credit research on Malaysian corporate sukuk issuers.",
+     "shownInUse": true,
+     "escoIds": [
+      "102b6ba8-452c-4f6b-8b3f-1ab5a2d02ffe",
+      "68babd52-64d1-4904-a476-173828217fd2",
+      "99571e68-801f-49af-a897-5f75996642e1",
+      "5f1d1319-7954-4a9b-90c7-57668e3a0d4b"
+     ],
+     "escoTitles": [
+      "advise on credit rating",
+      "examine credit ratings",
+      "financial analysis",
+      "interpret financial statements"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c40-category-manager-linkedin",
+   "facts": [
+    {
+     "fact": "runs tenders for services and spare parts",
+     "quote": "Ran tenders for maintenance services and spare parts",
+     "shownInUse": true,
+     "escoIds": [
+      "9e9a4209-c7cf-4f6e-973e-dc2ffadccc74",
+      "ae25d3a9-a85f-415c-a601-806013ea8229",
+      "8faefbc1-4745-4b3f-9889-81cd1d40b67c"
+     ],
+     "escoTitles": [
+      "perform procurement processes",
+      "compare contractors' bids",
+      "evaluate tender"
+     ]
+    },
+    {
+     "fact": "negotiates term contracts",
+     "quote": "negotiated term contracts",
+     "shownInUse": true,
+     "escoIds": [
+      "5f2efbdf-08a2-49cd-9c06-bd284e4f0fbf",
+      "c842be42-81b3-40f2-904c-ea8790ac88bd",
+      "fde186df-c9c4-49f5-b2a5-d66adc7c43a5",
+      "7ee9fb56-91b1-4363-b51f-ea54ae1b5761",
+      "92721092-fe7c-4689-96bd-4f02385bc0e7"
+     ],
+     "escoTitles": [
+      "negotiate terms with suppliers",
+      "negotiate supplier arrangements",
+      "negotiate buying conditions",
+      "negotiate price",
+      "manage contracts"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c41-ai-data-quality-linkedin",
+   "facts": [
+    {
+     "fact": "labels and reviews document fields for AI models",
+     "quote": "Label and review invoice, receipt and bank statement fields",
+     "shownInUse": true,
+     "escoIds": [
+      "f2d57f41-43b4-4f5b-8100-3df5c21eda50",
+      "cc7370dd-69fa-4c67-a96f-d4d135d38700"
+     ],
+     "escoTitles": [
+      "process data",
+      "data quality assessment"
+     ]
+    },
+    {
+     "fact": "writes labelling guidelines and runs agreement checks",
+     "quote": "the labelling guidelines for Malaysian invoice formats",
+     "shownInUse": true,
+     "escoIds": [
+      "54c9c155-9293-4329-8ed2-2e76e8b519d4",
+      "cc7370dd-69fa-4c67-a96f-d4d135d38700"
+     ],
+     "escoTitles": [
+      "define data quality criteria",
+      "data quality assessment"
+     ]
+    },
+    {
+     "fact": "analyses model errors and feeds examples back for retraining",
+     "quote": "Investigate fields where model accuracy drops",
+     "shownInUse": true,
+     "escoIds": [
+      "cc7370dd-69fa-4c67-a96f-d4d135d38700",
+      "e465a154-93f7-4973-9ce1-31659fe16dd2"
+     ],
+     "escoTitles": [
+      "data quality assessment",
+      "principles of artificial intelligence"
+     ]
+    },
+    {
+     "fact": "full set of accounts",
+     "quote": "Full set of accounts, AP/AR, SST returns and bank reconciliations",
+     "shownInUse": true,
+     "escoIds": [
+      "60f51172-37c0-4933-a27a-cbf55dcd7580",
+      "faf8943c-72ff-4736-a587-25508695d6f0"
+     ],
+     "escoTitles": [
+      "prepare financial statements",
+      "maintain financial records"
+     ]
+    },
+    {
+     "fact": "SST returns",
+     "quote": "Full set of accounts, AP/AR, SST returns and bank reconciliations",
+     "shownInUse": true,
+     "escoIds": [
+      "22a173f5-868c-4d82-87e6-beed500ce070",
+      "2ecf90f1-c511-464b-b26f-598d69182c70",
+      "d669af41-756c-48d9-a286-1443253f54b1"
+     ],
+     "escoTitles": [
+      "prepare tax returns forms",
+      "calculate tax",
+      "tax legislation"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c42-digital-marketing-linkedin",
+   "facts": [
+    {
+     "fact": "manages paid digital ad budget and campaigns",
+     "quote": "Manage a RM3 million yearly ad budget across Meta, Google and TikTok",
+     "shownInUse": true,
+     "escoIds": [
+      "736ef286-fbd3-4e5c-a4b4-d1e2008c9898",
+      "750f86d2-18be-4015-84b1-d4a26d9b2d88",
+      "9c6e951f-aa88-4890-983d-e7a6ee49f5bb",
+      "21c5790c-0930-4d74-b3b0-84caf5af12ea"
+     ],
+     "escoTitles": [
+      "plan digital marketing",
+      "online ads campaign techniques",
+      "plan marketing campaigns",
+      "manage budgets"
+     ]
+    },
+    {
+     "fact": "builds a Looker Studio KPI dashboard",
+     "quote": "Built the Looker Studio dashboard the founders check every morning",
+     "shownInUse": true,
+     "escoIds": [
+      "65e58886-bd1e-4c5b-8ca5-8d9b353c8aa1",
+      "c3e36d05-8ae8-447f-bb2b-6f9409f85389",
+      "8dcbcabe-09f7-4d11-940d-125af57bbc40"
+     ],
+     "escoTitles": [
+      "data visualisation software",
+      "deliver visual presentation of data",
+      "track key performance indicators"
+     ]
+    },
+    {
+     "fact": "runs A/B tests on landing pages and creatives",
+     "quote": "Run A/B tests on landing pages and ad creatives.",
+     "shownInUse": true,
+     "escoIds": [
+      "6457122e-5eed-4817-9f67-c3edb607fef6",
+      "382c11ed-20d5-4ae7-b60e-15fec527fa6c",
+      "1605025e-a179-421f-8f35-5b07d182a6b2"
+     ],
+     "escoTitles": [
+      "evaluate advertising campaign",
+      "apply statistical analysis techniques",
+      "web analytics"
+     ]
+    },
+    {
+     "fact": "social media content and email marketing",
+     "quote": "Social media content and email marketing.",
+     "shownInUse": true,
+     "escoIds": [
+      "64e09849-a7db-4d6b-a932-66264420eb97",
+      "509909a2-4a8f-4ead-8ad0-968df63b77cc",
+      "d822b4b2-26c7-4bd9-970d-229c6504f615"
+     ],
+     "escoTitles": [
+      "apply social media marketing",
+      "social media marketing techniques",
+      "create digital content"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c43-it-auditor-linkedin",
+   "facts": [
+    {
+     "fact": "plans and runs IT general control audits",
+     "quote": "Plan and run IT general control audits (access, change management, backup)",
+     "shownInUse": true,
+     "escoIds": [
+      "7e1f9657-ab4e-407c-842f-b846197060e3",
+      "8804d963-5a31-4609-b5df-f741b7199fb7",
+      "ed0718f6-5823-4c74-9749-2936c9c06203"
+     ],
+     "escoTitles": [
+      "execute ICT audits",
+      "internal auditing",
+      "develop audit plan"
+     ]
+    },
+    {
+     "fact": "SQL to test full transaction populations",
+     "quote": "Write SQL and Python scripts to test 100% of billing and procurement",
+     "shownInUse": true,
+     "escoIds": [
+      "598de5b0-5b58-4ea7-8058-a4bc4d18c742",
+      "75f839c2-fd9a-4ad3-8921-6e734608568d",
+      "9cf681c7-89ec-470c-b651-7fe03786f586",
+      "4463a721-69f3-413d-8321-43e3af13a4f1"
+     ],
+     "escoTitles": [
+      "SQL",
+      "use query languages",
+      "query languages",
+      "use databases"
+     ]
+    },
+    {
+     "fact": "Python scripts for audit testing",
+     "quote": "Write SQL and Python scripts to test 100% of billing and procurement",
+     "shownInUse": true,
+     "escoIds": [
+      "ccd0a1d9-afda-43d9-b901-96344886e14d",
+      "21d2f96d-35f7-4e3f-9745-c533d2dd6e97",
+      "bf4d884f-c848-402a-b130-69c266b04164",
+      "f9670490-8aa4-4540-b121-d440a8294aab"
+     ],
+     "escoTitles": [
+      "Python (computer programming)",
+      "computer programming",
+      "apply basic programming skills",
+      "develop data processing applications"
+     ]
+    },
+    {
+     "fact": "data-analytic control testing",
+     "quote": "Write SQL and Python scripts to test 100% of billing and procurement",
+     "shownInUse": true,
+     "escoIds": [
+      "6a536b36-c5c7-4d10-bf67-a4fb0f8549b2",
+      "2b92a5b2-6758-4ee3-9fb4-b6387a55cc8f"
+     ],
+     "escoTitles": [
+      "audit techniques",
+      "perform data analysis"
+     ]
+    },
+    {
+     "fact": "reports findings to the audit committee",
+     "quote": "report findings to the Audit Committee",
+     "shownInUse": true,
+     "escoIds": [
+      "3e9b580d-811b-48df-a5d1-a7bdd26f901f",
+      "d0f2f8a7-d935-4a6d-8e54-dcc3e5e2cbeb"
+     ],
+     "escoTitles": [
+      "prepare financial auditing reports",
+      "present reports"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c44-fresh-grad-linkedin",
+   "facts": [
+    {
+     "fact": "manages a student society budget and fees",
+     "quote": "Managed the society's RM18,000 budget, collected membership fees",
+     "shownInUse": true,
+     "escoIds": [
+      "21c5790c-0930-4d74-b3b0-84caf5af12ea",
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0"
+     ],
+     "escoTitles": [
+      "manage budgets",
+      "maintain records of financial transactions"
+     ]
+    },
+    {
+     "fact": "prepares bank reconciliations under review",
+     "quote": "Prepared bank reconciliations and simple accounts for SME clients in SQL Accounting",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records"
+     ]
+    },
+    {
+     "fact": "prepares simple accounts in an accounting package",
+     "quote": "Prepared bank reconciliations and simple accounts for SME clients in SQL Accounting",
+     "shownInUse": true,
+     "escoIds": [
+      "faf8943c-72ff-4736-a587-25508695d6f0",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa"
+     ],
+     "escoTitles": [
+      "maintain financial records",
+      "use accounting systems"
+     ]
+    },
+    {
+     "fact": "helps vouch purchases in audit fieldwork",
+     "quote": "Helped vouch purchases during year-end audit fieldwork.",
+     "shownInUse": true,
+     "escoIds": [
+      "89ff28d6-342c-435d-83aa-83e71dbbbc96",
+      "6a536b36-c5c7-4d10-bf67-a4fb0f8549b2"
+     ],
+     "escoTitles": [
+      "conduct financial audits",
+      "audit techniques"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c45-ap-ocr-scan-bm",
+   "facts": [
+    {
+     "fact": "keys supplier invoices into SAP and attaches DO/GRN",
+     "quote": "Key-in invois pembekaI dlm sistem SAP & attach DO / GRN",
+     "shownInUse": true,
+     "escoIds": [
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa",
+      "99b163e8-7815-43e2-83f3-a47f3076354c",
+      "f2d57f41-43b4-4f5b-8100-3df5c21eda50",
+      "08371fe9-c658-4f6a-966f-71dbb0ab683d",
+      "e9030465-13c5-46d2-bdae-c2c1a9dbec86"
+     ],
+     "escoTitles": [
+      "maintain records of financial transactions",
+      "use accounting systems",
+      "accounting entries",
+      "process data",
+      "accounting department processes",
+      "attach accounting certificates to accounting transactions"
+     ]
+    },
+    {
+     "fact": "checks invoice price and quantity against PO and GRN",
+     "quote": "Check harga & kuantiti invois vs PO & GRN",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e9030465-13c5-46d2-bdae-c2c1a9dbec86"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "attach accounting certificates to accounting transactions"
+     ]
+    },
+    {
+     "fact": "monthly supplier statement reconciliation",
+     "quote": "Buat rekon penyata supplier tiap2 bulan",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e717b036-2c0c-4c11-99e9-0cb4ce084fed"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "perform account allocation"
+     ]
+    },
+    {
+     "fact": "prepares weekly payment list for signing",
+     "quote": "Sediakan senarai bayaran mingguan utk sign oleh Akauntan",
+     "shownInUse": true,
+     "escoIds": [
+      "4e756773-ae14-4981-838b-9fe27e81c0af",
+      "f7e7ccb6-fadc-4c35-935d-e1040be40dfe"
+     ],
+     "escoTitles": [
+      "carry out financial transactions",
+      "handle financial transactions"
+     ]
+    },
+    {
+     "fact": "receives goods against DO and signs GRN",
+     "quote": "Terima barang dr supplier , check dgn DO & sign GRN",
+     "shownInUse": true,
+     "escoIds": [
+      "2cae39d6-78c2-4ce3-bee8-628504371463",
+      "57fb98c5-6862-4969-8bf4-a74ff14c4750"
+     ],
+     "escoTitles": [
+      "receive goods",
+      "handle paperwork related to warehouse stock"
+     ]
+    },
+    {
+     "fact": "keeps stock cards",
+     "quote": "Update kad stok & sistem",
+     "shownInUse": true,
+     "escoIds": [
+      "f60416d5-2d98-4401-ba0d-b92b53e01d86",
+      "de804504-bd5c-465d-b54f-9da299d8ee90"
+     ],
+     "escoTitles": [
+      "keep stock records",
+      "maintain stock control systems"
+     ]
+    },
+    {
+     "fact": "reorders below minimum stock level",
+     "quote": "Buat order bila stok bawah paras minimum",
+     "shownInUse": true,
+     "escoIds": [
+      "44f6a65f-6be7-4818-9a66-73908797283f",
+      "7e6509bd-9642-4af5-bad3-5b2cec29b6f9",
+      "210827e3-3129-45a2-8683-70399f3f561f",
+      "015b0162-6dd3-4d46-bbfd-325086155dd5"
+     ],
+     "escoTitles": [
+      "monitor stock level",
+      "control reorder points",
+      "order supplies",
+      "purchase supplies"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c46-admin-keyword-stuffed",
+   "facts": [
+    {
+     "fact": "office administration, stationery and filing",
+     "quote": "manage office admin, stationery orders, courier & filing",
+     "shownInUse": true,
+     "escoIds": [
+      "7c3865d1-e5a9-4043-a7a4-2e9e30468c0b",
+      "ab986bc4-df92-4351-9ac1-aa75af943cf7",
+      "3d427a49-4f85-42cd-8a92-62d4a34f41a1",
+      "31c7add0-0150-4029-bf33-47872c23fcf1"
+     ],
+     "escoTitles": [
+      "perform office routine activities",
+      "perform clerical duties",
+      "file documents",
+      "maintain inventory of office supplies"
+     ]
+    },
+    {
+     "fact": "prepares meeting minutes",
+     "quote": "prepare minutes for weekly management meeting",
+     "shownInUse": true,
+     "escoIds": [
+      "5fa6cd2f-9bab-4afa-a184-2d2f1401b770"
+     ],
+     "escoTitles": [
+      "write meeting reports"
+     ]
+    },
+    {
+     "fact": "updates attendance in Excel",
+     "quote": "update staff attendance in excel",
+     "shownInUse": true,
+     "escoIds": [
+      "1973c966-f236-40c9-b2d4-5d71a89019be",
+      "f683ae1d-cb7c-4aa1-b9fe-205e1bd23535"
+     ],
+     "escoTitles": [
+      "use spreadsheets software",
+      "use microsoft office"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c47-plantation-esg-twocol",
+   "facts": [
+    {
+     "fact": "collects monthly estate and mill sustainability data and checks anomalies",
+     "quote": "Kumpul data bulanan dari 9 ladang & 2 kilang:",
+     "shownInUse": true,
+     "escoIds": [
+      "d53eab76-e8ff-4e28-af26-7e012951c763",
+      "77f109c4-3107-4d2a-a512-5160ac103933",
+      "f5bf985b-ac78-4d23-881a-18a359234528"
+     ],
+     "escoTitles": [
+      "measure company's sustainability performance",
+      "analyse environmental data",
+      "corporate sustainability"
+     ]
+    },
+    {
+     "fact": "runs the PalmGHG calculation and traces inputs",
+     "quote": "Run PalmGHG calculator for RSPO annual",
+     "shownInUse": true,
+     "escoIds": [
+      "d53eab76-e8ff-4e28-af26-7e012951c763",
+      "77f109c4-3107-4d2a-a512-5160ac103933"
+     ],
+     "escoTitles": [
+      "measure company's sustainability performance",
+      "analyse environmental data"
+     ]
+    },
+    {
+     "fact": "conducts MSPO/RSPO internal audits at estates",
+     "quote": "conduct internal audit at",
+     "shownInUse": true,
+     "escoIds": [
+      "d83cba15-8511-4d07-b89a-9fde0d1d8241",
+      "556be6f4-225f-46a2-a795-d3d54d98c3f7",
+      "095fdace-1cc3-4e80-b37b-268fe297904a"
+     ],
+     "escoTitles": [
+      "perform quality audits",
+      "conduct workplace audits",
+      "prepare audit activities"
+     ]
+    },
+    {
+     "fact": "drafts the environmental section of the sustainability report",
+     "quote": "Draf bahagian alam sekitar dlm laporan",
+     "shownInUse": true,
+     "escoIds": [
+      "f3cc52e3-a96c-4549-b841-6e41a846fa99",
+      "4300b453-9bcf-474c-9ee3-92ec2229720c"
+     ],
+     "escoTitles": [
+      "report on environmental issues",
+      "global standards for sustainability reporting"
+     ]
+    },
+    {
+     "fact": "monitors riparian buffers and HCV areas",
+     "quote": "Monitor riparian buffer zones & HCV",
+     "shownInUse": true,
+     "escoIds": [
+      "23845010-4c1e-41d3-94a3-940bcab65bce"
+     ],
+     "escoTitles": [
+      "monitor nature conservation"
+     ]
+    },
+    {
+     "fact": "trains estate staff on scheduled waste and chemical handling",
+     "quote": "Train estate staff on scheduled waste &",
+     "shownInUse": true,
+     "escoIds": [
+      "63eee3cc-9864-485e-bb95-5daa145d0c78",
+      "e54ff029-1ce9-447d-a5b2-eb7283a23e6e"
+     ],
+     "escoTitles": [
+      "educate on hazardous waste",
+      "train employees"
+     ]
+    },
+    {
+     "fact": "calculates estate worker wages (check roll)",
+     "quote": "Kira gaji pekerja ladang (check roll) &",
+     "shownInUse": true,
+     "escoIds": [
+      "9d916d7c-89b3-4084-a6d9-e2b0b3091404",
+      "734187e4-650e-4a0a-a7f8-826cd4757229"
+     ],
+     "escoTitles": [
+      "manage payroll",
+      "check payrolls"
+     ]
+    },
+    {
+     "fact": "records fertiliser and pesticide stock",
+     "quote": "Rekod stok baja & racun dlm stor ladang,",
+     "shownInUse": true,
+     "escoIds": [
+      "f60416d5-2d98-4401-ba0d-b92b53e01d86",
+      "880a8964-a257-4763-b0f5-e0d09d8a0cae"
+     ],
+     "escoTitles": [
+      "keep stock records",
+      "maintain inventory of pesticides"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c48-storekeeper-manglish",
+   "facts": [
+    {
+     "fact": "receives material against PO and DO and signs GRN",
+     "quote": "receive material from supplier, check with PO & DO, sign GRN",
+     "shownInUse": true,
+     "escoIds": [
+      "2cae39d6-78c2-4ce3-bee8-628504371463",
+      "57fb98c5-6862-4969-8bf4-a74ff14c4750"
+     ],
+     "escoTitles": [
+      "receive goods",
+      "handle paperwork related to warehouse stock"
+     ]
+    },
+    {
+     "fact": "issues stock to production",
+     "quote": "issue barang to production ikut job order",
+     "shownInUse": true,
+     "escoIds": [
+      "5d2e82cc-5943-4218-a459-a1956fad2b63"
+     ],
+     "escoTitles": [
+      "manage warehouse inventory"
+     ]
+    },
+    {
+     "fact": "monthly stock count and stock cards",
+     "quote": "buat stock count every month, update stock card & excel",
+     "shownInUse": true,
+     "escoIds": [
+      "53815c73-d352-4d4d-92cb-fb7020cbd8e6",
+      "de804504-bd5c-465d-b54f-9da299d8ee90",
+      "f60416d5-2d98-4401-ba0d-b92b53e01d86"
+     ],
+     "escoTitles": [
+      "carry out inventory control accuracy",
+      "maintain stock control systems",
+      "keep stock records"
+     ]
+    },
+    {
+     "fact": "reorders consumables when stock is low",
+     "quote": "order consumables (welding rod, gas, glove) bila stock low, call supplier",
+     "shownInUse": true,
+     "escoIds": [
+      "44f6a65f-6be7-4818-9a66-73908797283f",
+      "7e6509bd-9642-4af5-bad3-5b2cec29b6f9",
+      "210827e3-3129-45a2-8683-70399f3f561f",
+      "015b0162-6dd3-4d46-bbfd-325086155dd5",
+      "0c8f1351-d1fe-4542-89fe-b70729679c52"
+     ],
+     "escoTitles": [
+      "monitor stock level",
+      "control reorder points",
+      "order supplies",
+      "purchase supplies",
+      "manage consumables stock"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c49-bank-teller-messy",
+   "facts": [
+    {
+     "fact": "teller cash deposits, withdrawals, remittances and cheques",
+     "quote": "cash deposit, withdrawal, remittance & cheque clearing for walk in",
+     "shownInUse": true,
+     "escoIds": [
+      "f7e7ccb6-fadc-4c35-935d-e1040be40dfe",
+      "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23",
+      "3c209873-c757-47bb-91b5-9b6dc05df116"
+     ],
+     "escoTitles": [
+      "handle financial transactions",
+      "process payments",
+      "banking activities"
+     ]
+    },
+    {
+     "fact": "balances teller cash at end of day",
+     "quote": "balance my teller cash end of day",
+     "shownInUse": true,
+     "escoIds": [
+      "85e77619-6723-48cd-9654-2bcbe71054f9",
+      "3982571a-e9ce-442a-a4a0-fdfc97727091"
+     ],
+     "escoTitles": [
+      "carry out end of day accounts",
+      "manage cash desk"
+     ]
+    },
+    {
+     "fact": "opens accounts and checks KYC documents in core banking",
+     "quote": "open new savings account, check MyKad & KYC documents, key in core",
+     "shownInUse": true,
+     "escoIds": [
+      "4ab4e298-4e35-4e2e-938c-da2c1e11864c",
+      "a1efea8f-62a8-4f9e-bd07-7d0c193f725e",
+      "84f583f4-f32a-4202-9b92-e25f0c978410"
+     ],
+     "escoTitles": [
+      "create banking accounts",
+      "check official documents",
+      "core banking software"
+     ]
+    },
+    {
+     "fact": "promotes deposits and financing products",
+     "quote": "promote fixed deposit & personal financing to walk in customer",
+     "shownInUse": true,
+     "escoIds": [
+      "8d3deb53-3998-42eb-97f3-4e8ccb7591a5",
+      "e92f4673-1dec-41ec-b6ec-36fef226359c"
+     ],
+     "escoTitles": [
+      "promote financial products",
+      "provide financial product information"
+     ]
+    },
+    {
+     "fact": "handles customer complaints",
+     "quote": "handle customer complaints at counter",
+     "shownInUse": true,
+     "escoIds": [
+      "28d715e3-3e5b-4fb6-8dd2-4be4919c8587"
+     ],
+     "escoTitles": [
+      "handle customer complaints"
+     ]
+    },
+    {
+     "fact": "keeps youth association cash book",
+     "quote": "keep cash book & bank",
+     "shownInUse": true,
+     "escoIds": [
+      "faf8943c-72ff-4736-a587-25508695d6f0",
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0"
+     ],
+     "escoTitles": [
+      "maintain financial records",
+      "maintain records of financial transactions"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c50-account-assistant-twocol",
+   "facts": [
+    {
+     "fact": "keys purchase invoices, cash sales and payment vouchers",
+     "quote": "Key in purchase invoices, cash",
+     "shownInUse": true,
+     "escoIds": [
+      "648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+      "a0d79341-8398-4019-ad1b-27888ec35aaa",
+      "99b163e8-7815-43e2-83f3-a47f3076354c",
+      "f2d57f41-43b4-4f5b-8100-3df5c21eda50",
+      "08371fe9-c658-4f6a-966f-71dbb0ab683d"
+     ],
+     "escoTitles": [
+      "maintain records of financial transactions",
+      "use accounting systems",
+      "accounting entries",
+      "process data",
+      "accounting department processes"
+     ]
+    },
+    {
+     "fact": "monthly bank reconciliation",
+     "quote": "Monthly bank reconciliation for",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records"
+     ]
+    },
+    {
+     "fact": "prepares SST-02 returns",
+     "quote": "Prepare SST-02 return every 2",
+     "shownInUse": true,
+     "escoIds": [
+      "22a173f5-868c-4d82-87e6-beed500ce070",
+      "2ecf90f1-c511-464b-b26f-598d69182c70",
+      "d669af41-756c-48d9-a286-1443253f54b1"
+     ],
+     "escoTitles": [
+      "prepare tax returns forms",
+      "calculate tax",
+      "tax legislation"
+     ]
+    },
+    {
+     "fact": "follows up overdue customers and sends statements",
+     "quote": "Follow up customers for overdue",
+     "shownInUse": true,
+     "escoIds": [
+      "68b51538-b056-4cb3-bb15-ab8c3e576cc9",
+      "e126f782-b4e6-4f7d-8dca-8d2e6778559b",
+      "c26c7d9d-f9cf-4147-b774-c63e050ebe87"
+     ],
+     "escoTitles": [
+      "follow up accounts receivables",
+      "credit control processes",
+      "enforce customer's debt repayment"
+     ]
+    },
+    {
+     "fact": "reconciles supplier statements to creditor ledger",
+     "quote": "Settle supplier statement vs",
+     "shownInUse": true,
+     "escoIds": [
+      "8a326ee1-169c-4c44-b38b-8f1bb20ec79b",
+      "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "e717b036-2c0c-4c11-99e9-0cb4ce084fed"
+     ],
+     "escoTitles": [
+      "identify accounting errors",
+      "check accounting records",
+      "perform account allocation"
+     ]
+    },
+    {
+     "fact": "prepares payment cheques and online transfers",
+     "quote": "Prepare payment cheques & on-",
+     "shownInUse": true,
+     "escoIds": [
+      "4e756773-ae14-4981-838b-9fe27e81c0af",
+      "f7e7ccb6-fadc-4c35-935d-e1040be40dfe"
+     ],
+     "escoTitles": [
+      "carry out financial transactions",
+      "handle financial transactions"
+     ]
+    },
+    {
+     "fact": "prepares documents for auditors and tax agent",
+     "quote": "Prepare documents for external",
+     "shownInUse": true,
+     "escoIds": [
+      "24e67151-ff7e-43e2-99c0-424a758278a4",
+      "26baf34d-6721-4bac-b7eb-add0bc566a82",
+      "cb059032-dd34-4761-a786-98cfb9d0efe3"
+     ],
+     "escoTitles": [
+      "liaise with auditors",
+      "attend to detail in preparation for audits",
+      "explain accounting records"
+     ]
+    },
+    {
+     "fact": "keeps full set of accounts to trial balance",
+     "quote": "set accounts until TB using",
+     "shownInUse": true,
+     "escoIds": [
+      "eaa9727c-df1e-407a-85d3-48cc71508bc2",
+      "faf8943c-72ff-4736-a587-25508695d6f0"
+     ],
+     "escoTitles": [
+      "prepare trial accounting balances",
+      "maintain financial records"
+     ]
+    },
+    {
+     "fact": "invoicing and petty cash",
+     "quote": "Invoicing, petty cash, filing",
+     "shownInUse": true,
+     "escoIds": [
+      "e3e42d54-78bd-4337-aa87-bb31a7670c9a",
+      "63321ecf-4fc6-44d9-88f1-5373a4f3038a"
+     ],
+     "escoTitles": [
+      "issue sales invoices",
+      "handle petty cash"
+     ]
+    }
+   ]
+  }
+ ]
+}

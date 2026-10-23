@@ -1,0 +1,37 @@
+AHMAD ZULHILMI BIN RASHID
+Inventory Controller
+Port Klang, Selangor | 013-555 2648 | zulhilmi.rashid@example.com
+IC: 890917-10-5165 | Male | Married
+
+SUMMARY
+Inventory controller with 8 years in third-party logistics warehouses. I keep stock accurate for
+6,000 SKUs across two bonded warehouses.
+
+EXPERIENCE
+
+Inventory Controller - Gerbang Logistics Sdn Bhd, Port Klang                       Oct 2020 - Present
+- Plan and run the daily cycle count programme (ABC classification); keep inventory record
+  accuracy above 99.5%.
+- Investigate count variances, trace them to picking or receiving errors and post approved
+  adjustments in the WMS.
+- Produce the monthly ageing and slow-moving stock report for each client and recommend disposal
+  or return of items not moved for 180 days.
+- Reconcile WMS stock balances with each client's SAP stock every month and resolve differences
+  with the client's planners.
+- Built an Excel model with pivot tables to track stock days-on-hand by client and SKU.
+- Lead the annual wall-to-wall stock take for 2 warehouses with the external auditors observing.
+- Train new warehouse clerks on receiving and stock movement procedures.
+
+Warehouse Supervisor - Laju Distribution Sdn Bhd, Shah Alam                        Mar 2016 - Sep 2020
+- Supervised 18 pickers and forklift drivers on two shifts.
+- Checked inbound deliveries against purchase orders and delivery orders and signed the goods
+  received notes.
+- Prepared weekly warehouse KPI reports (order accuracy, dispatch on time).
+
+EDUCATION
+Diploma in Logistics Management, Politeknik Ungku Omar, 2012 - 2015
+SPM 2011
+
+SKILLS
+WMS (Manhattan), SAP MM (display only), Excel (pivot tables), forklift licence
+Languages: Bahasa Malaysia, English

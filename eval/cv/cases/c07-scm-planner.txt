@@ -1,0 +1,41 @@
+TEOH KAH SENG
+Material / Supply Chain Planner
+Sungai Ara, Penang | +6016-555 8830 | kahseng.teoh@example.com
+NRIC: 870423075091 | DOB 23-04-1987 | Male | Chinese | Married
+Home: 52, Jalan Sungai Ara 7, Taman Sri Ara, 11900 Bayan Lepas, Pulau Pinang
+
+PROFESSIONAL
+EXPERIENCE
+
+Senior Planner, Supply Chain                                         2020 – Present
+Pinang Optics Manufacturing Sdn Bhd (Batu Kawan Industrial
+Park)
+* Run weekly MRP in SAP (MD04 / MD06), convert planned
+orders & release PRs to purchasing
+* Monthly demand forecast for 120 SKUs using 12-mth moving avg + seasonality; track
+forecast accuracy (MAPE) and bias by customer
+* Lead S&OP pre-meeting with Sales & Production; agree constrained plan
+and capacity at line level
+* Weekly inventory health review: days-of-supply, slow-moving & obsolete (SLOB) stock
+>180 days; proposed RM600k write-off / rework to Finance
+* Built Excel + Power Query model that pulls SAP stock & open PO, cut weekly prep from 1 day to
+2 hours
+* Expedite critical parts with suppliers during 2021 chip shortage
+
+Production Planner                                                    Jul'14 - 2020
+Kulim Precision Moulding Sdn Bhd, Kulim
+* Daily production schedule for 25 injection moulding machines
+* Quarterly stock take; investigate variance > 2%
+* Coordinate with QA, warehouse & logistics
+Part-time lecturer (weekends), Diploma in Logistics, private college Bukit
+Mertajam      2018 - 2019
+
+EDUCATION
+B.Eng (Hons) Manufacturing Engineering, 2014
+APICS CPIM Part 1 (2019)
+
+SKILLS
+SAP MM/PP, Excel, Power Query, Minitab, Kinaxis (training only)
+Languages: English, Mandarin, Hokkien, BM
+
+Interests: cycling (Penang Bridge ride), photography

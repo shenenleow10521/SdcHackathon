@@ -1,0 +1,38 @@
+MUHAMMAD IRFAN BIN ZAKARIA
+Product Carbon Footprint Analyst
+Penang | 011-5550 3382 | irfan.zakaria@example.com | linkedin.com/in/irfan-zakaria-example
+
+SUMMARY
+Environmental engineer working on life-cycle assessment (LCA) and product carbon footprints for
+electronics customers in Europe.
+
+EXPERIENCE
+
+Product Carbon Footprint Analyst - Seberang Circuits Sdn Bhd (EMS manufacturer), Bayan Lepas
+                                                                                    Mar 2023 - Present
+- Run cradle-to-gate product carbon footprints for 30+ printed circuit board assemblies in
+  SimaPro using ecoinvent data, following ISO 14067.
+- Set the system boundary, functional unit, allocation rules and cut-off criteria for each study
+  and document them in the study report.
+- Gather bill-of-materials, energy and scrap data from production, procurement and facilities;
+  follow up suppliers for primary data on laminate and solder.
+- Run sensitivity checks on electricity grid factors and component data choices, and explain the
+  main hotspots to customers.
+- Answer customer sustainability questionnaires (EcoVadis, CDP supply chain) with the quality
+  team.
+- Wrote a Python script that converts the SAP bill of materials export into a SimaPro import
+  file; cut model set-up time from two days to half a day.
+
+Environmental Engineer - Prai Metal Finishing Sdn Bhd, Prai                        Jul 2019 - Feb 2023
+- Managed scheduled waste records and the wastewater treatment plant permit conditions.
+- Tracked monthly electricity and LPG use per production line and proposed compressed-air leak
+  repairs that saved 6% of plant energy.
+- Prepared data for the corporate GHG inventory (Scope 1 and 2) compiled by head office.
+
+EDUCATION
+BEng (Hons) Environmental Engineering, Universiti Sains Malaysia, 2015 - 2019
+LCA training: SimaPro Basic & Advanced, 2023
+
+SKILLS
+SimaPro, ecoinvent, ISO 14040/14044, ISO 14067, GHG Protocol, Python (pandas), Excel
+Languages: Bahasa Malaysia, English

@@ -1,0 +1,38 @@
+PRIYA DEVI A/P RAMASAMY
+Demand & Supply Planner
+Nilai, Negeri Sembilan | +60 11-5552 9184 | priya.ramasamy@example.com
+
+PROFILE
+Supply chain planner with 6 years in FMCG. I run demand forecasting and supply planning for
+personal-care products sold in Malaysia and Singapore.
+
+EXPERIENCE
+
+Demand & Supply Planner - Sejuk Personal Care Sdn Bhd, Nilai                       Sep 2021 - Present
+- Produce the monthly statistical demand forecast for 300 SKUs in SAP IBP using exponential
+  smoothing; adjust for promotions and new launches with input from the sales team.
+- Measure forecast accuracy (MAPE) and bias by channel; cut MAPE from 42% to 31% in two years by
+  cleaning promotion history.
+- Run the monthly S&OP demand review and prepare the consensus plan for the executive S&OP
+  meeting.
+- Convert the demand plan into a 12-week production and replenishment plan, checking line
+  capacity and raw material availability.
+- Set safety stock levels by SKU class (ABC/XYZ) and review days-of-cover weekly with the
+  warehouse.
+- Flag excess and near-expiry stock at month-end and agree clearance plans with sales.
+
+Production Planning Executive - Delima Foods Sdn Bhd, Senawang                     Jan 2019 - Aug 2021
+- Prepared the weekly production schedule for 4 filling lines.
+- Ran MRP in SAP and released purchase requisitions for packaging.
+- Tracked schedule adherence and reported reasons for misses.
+
+EDUCATION
+Bachelor of Science (Hons) Industrial Statistics, Universiti Teknologi MARA, 2014 - 2018
+APICS CSCP (2023)
+
+SKILLS
+SAP IBP, SAP PP/MM, Excel, Power BI, R (basic)
+Languages: English, Bahasa Malaysia, Tamil
+
+INTERESTS
+Classical Indian dance, temple volunteer (Nilai)

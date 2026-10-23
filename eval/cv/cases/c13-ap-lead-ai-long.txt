@@ -1,0 +1,164 @@
+CHAN SIEW MEI
+Accounts Payable Team Lead | P2P | Shared Services | Process Improvement | Intelligent Automation | Gen AI Enthusiast
+
+H/P: +6012-555 3914     |     Office: 03-5555 2280 ext 4471
+E-mail: siewmei.chan@example.com   /   chansm1984@mail.example.my
+Address: 33A, Jalan Cempaka SD 12/5, Bandar Sri Damansara, 52200 Kuala Lumpur
+NRIC: 840919-10-5228        Date of Birth: 19 September 1984        Age: 41
+Sex: F     Race: Chinese     Religion: Buddhism     Marital status: Married, 2 children
+Nationality: Malaysian     Driving licence: D     Expected salary: RM7,500 (negotiable)
+                                                                         [ photo ]
+
+PROFESSIONAL SUMMARY
+
+I am a highly motivated, results-driven and passionate finance professional with more
+than 15 years of progressive experience in end-to-end Procure-to-Pay (P2P) operations
+within regional shared services environments supporting Asia Pacific and Middle East
+entities. I have a proven ability to lead high-performing teams, drive operational
+excellence and deliver measurable results in fast-paced, dynamic and multicultural
+environments.
+
+As a strong believer in continuous improvement and servant leadership, I enjoy
+challenging the status quo, embracing change and leveraging cutting-edge technology such
+as Robotic Process Automation (RPA), Artificial Intelligence (AI), Machine Learning and
+Generative AI to transform finance operations. I am passionate about people development,
+coaching and building a culture of accountability, integrity and customer centricity.
+
+Excellent interpersonal, communication and stakeholder management skills. Proficient in
+MS Office. Able to work independently and as a team player. Detail-oriented, organised,
+analytical and a quick learner with a positive attitude and strong work ethic.
+
+Career goal: to grow into a regional P2P process owner / finance transformation role
+where I can combine operational know-how with digital tools to create value for the
+organisation and its stakeholders.
+
+CORE COMPETENCIES
+• Accounts Payable        • Vendor Management       • SAP S/4HANA        • Oracle
+• Process Improvement     • Lean Six Sigma          • RPA (UiPath, Blue Prism)
+• Power BI                • Python                  • SQL                • Generative AI
+• Stakeholder Management  • People Leadership       • IFRS               • SST / GST
+• Treasury                • Budgeting               • Internal Control   • Change Management
+
+CAREER HISTORY
+
+Pelangi Business Services Asia Sdn Bhd - Global Business Services hub, Bangsar South, KL
+
+Accounts Payable Team Lead                                                  Jan'21 – now
+(Team of 9 clerks, 14 entities, ~9,000 invoices / month)
+• Lead day-to-day AP BAU: daily invoice queue, payment runs, vendor statement recon,
+  month-end close (MEC) accruals.
+• Approve & release twice-weekly payment runs (F110) after checking cash availability
+  with Treasury; handle urgent / manual payments.
+• Own the 3WM exception queue: price & qty variance above tolerance, GRN missing,
+  blocked-for-payment; train clerks on complex cases.
+• Final escalation point for vendor disputes – negotiate settlement on short-pays &
+  late payment interest claims, keep key supplier relationships healthy.
+• Business super-user for the AI invoice-capture pilot (2023-24): review low-confidence
+  fields the tool extracted, resolve exceptions it could not match, and feed corrections
+  back so vendor templates retrain.
+• Agreed with IT the confidence threshold for straight-through posting and decided which
+  invoice types stay manual (utilities, imported services with SST, credit notes).
+
+Chan Siew Mei - Curriculum Vitae                                              Page 1 of 4
+──────────────────────────────────────────────────────────────────────────────────────
+Chan Siew Mei - Curriculum Vitae                                              Page 2 of 4
+
+• Use Copilot / ChatGPT Enterprise to draft vendor replies and summarise aging
+  commentary for the MEC deck; every figure checked against SAP before sending.
+• Built a Power Automate flow that routes non-PO invoice approvals to cost-centre owners
+  and chases them after 3 days; monitor failed runs weekly.
+• Mapped the non-PO invoice process with the CI team (Lean, SIPOC); removed 2 approval
+  layers - cycle time from 9 to 4 days, adopted across 3 towers.
+• Maintain weekly AP KPI dashboard (Power BI) – on-time payment %, first-pass match rate,
+  aged items; present to Finance Director.
+• Prepare quarterly SOX-style control evidence (vendor master change log, payment
+  approvals) and answer internal & external auditor queries.
+• Review monthly SST on imported services with the tax team before SST-02 submission.
+• Conduct monthly 1-on-1s, set KPIs and do half-yearly appraisals for the team.
+
+KEY ACHIEVEMENTS
+• Reduced late payment complaints by ~40% in FY2023.
+• First-pass rnatch rate up from 61% to 78% after AI capture go-live.
+• Zero repeat audit findings in FY2022-FY2024.
+
+Accounts Payable Senior Clerk                                                 2014 - 2020
+• Process invoices for 5 Malaysian entities in SAP ECC (MIRO / FB60), GL & cost-centre
+  coding.
+• Vendor master data maintenance; bank detail change call-back verification.
+• Monthly reconcilation of top-100 vendor statements; clear aged differences with
+  buyers.
+• Mentored 4 new clerks; wrote desk procedures for the Malaysian entities.
+  [Career break: Jul 2016 - Dec 2016, maternity leave]
+  [Career break: Mar 2019 - Aug 2019, maternity leave]
+
+Accounts Clerk - Sri Harmoni Trading Sdn Bhd, Petaling Jaya                  2008 – 2014
+• Full spectrum of AP & AR: invoice keying, cheque payments, debtor follow-up.
+• Petty cash, bank reconciliation, filing, general admin.
+• Prepare monthly sales commission listing for salesmen.
+
+EDUCATION
+Bachelor of Business Administration (Accounting), 2004 - 2008, Second Class Upper
+STPM 2003 - 3 principals
+SPM 2001 - 7A 2B
+LCCI Level 3 Certificate in Accounting (2008)
+
+Chan Siew Mei - Curriculum Vitae                                              Page 2 of 4
+──────────────────────────────────────────────────────────────────────────────────────
+Chan Siew Mei - Curriculum Vitae                                              Page 3 of 4
+
+TRAINING & CERTIFICATIONS
+• Lean Six Sigma Green Belt (2022)
+• Microsoft Power BI Data Analyst Associate (in progress)
+• "Generative AI for Finance Professionals" (2024, 1-day workshop)
+• UiPath Academy: RPA Starter (2020)
+• Python for Everybody (online course, 40% completed)
+• SAP S/4HANA Finance overview (2021)
+• Effective Business Writing (2018)
+• Situational Leadership II (2021)
+• Fire Warden training (2019)
+• First Aid & CPR (2017)
+
+AWARDS & RECOGNITION
+• GBS Star Performer Award 2022
+• Best Team (P2P Tower) 2023
+• 10-year Long Service Award 2024
+
+LANGUAGES
+English (fluent) · Bahasa Malaysia (good) · Mandarin (native) · Cantonese (native) ·
+Hokkien (conversational)
+
+COMMUNITY & PERSONAL
+• Committee member (treasurer), Sri Damansara Buddhist Fellowship, 2017 - present -
+  manage donations, payment vouchers and the annual Wesak budget.
+• Volunteer, weekend community food bank, Kepong (2020 - present).
+• Parent volunteer, PIBG committee at my children's primary school.
+• Hobbies: hiking (Bukit Gasing, Gunung Datuk), travelling (visited 18 countries),
+  baking sourdough, reading self-help books, Zumba.
+
+PERSONAL STRENGTHS
+Integrity · Ownership · Resilience · Empathy · Growth mindset · Customer focus ·
+Can-do attitude · Strong work ethic · Adaptability
+
+REFEREES
+1. Mr. Ahmad Fauzi bin Rahman, Head of P2P, Pelangi Business Services Asia
+   +60 3-5555 2201, fauzi.rahman@example.com
+2. Ms. Linda Tan, former Finance Manager, Sri Harmoni Trading Sdn Bhd
+   012-555 7180
+
+Chan Siew Mei - Curriculum Vitae                                              Page 3 of 4
+──────────────────────────────────────────────────────────────────────────────────────
+Chan Siew Mei - Curriculum Vitae                                              Page 4 of 4
+
+DECLARATION
+I hereby declare that the information provided in this resume is true, complete and
+correct to the best of my knowledge and belief. I understand that any false information
+may lead to the rejection of my application or termination of employment.
+
+Notice period: 2 months (negotiable)
+Available for interview: weekdays after 5.30pm or Saturday mornings
+
+Signature: ____________________
+Name: CHAN SIEW MEI
+Date: ____________________
+
+Chan Siew Mei - Curriculum Vitae                                              Page 4 of 4

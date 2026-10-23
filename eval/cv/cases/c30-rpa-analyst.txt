@@ -1,0 +1,35 @@
+SURESH NAIR A/L GOPAL
+RPA Developer, Finance Automation
+Kuala Lumpur | +60 17-555 6205 | suresh.gopal@example.com
+
+PROFILE
+RPA developer with 4 years automating finance processes, after 3 years as an accounts payable
+executive.
+
+EXPERIENCE
+
+RPA Developer - Sentosa Finance Shared Services Sdn Bhd, Kuala Lumpur              Mar 2022 - Present
+- Build and maintain 18 UiPath bots for finance: vendor statement reconciliation, bank statement
+  upload, payment file checks and month-end journal uploads.
+- Run process assessments with process owners to choose which steps to automate; score
+  candidates on volume, rule clarity and exception rate.
+- Write process design documents and test scripts; run user acceptance testing with the AP and
+  GL teams.
+- Monitor bot runs in UiPath Orchestrator every morning, fix failures and handle change requests.
+- Set up an invoice-capture model (UiPath Document Understanding) for 6,000 invoices a month and
+  review validation results with AP to tune field confidence thresholds.
+- Use Python to clean bank statement files before bot processing.
+- Write SQL queries to check bot output against SAP tables.
+
+Accounts Payable Executive - Pantai Hospitality Group Sdn Bhd, Kuala Lumpur        Jan 2019 - Feb 2022
+- Processed supplier invoices and three-way matching in Oracle for 12 hotels.
+- Reconciled vendor statements for the top 40 suppliers every month.
+- Proposed and built Excel macros to speed up invoice listing for payment runs.
+
+EDUCATION
+Bachelor of Accounting (Hons), Universiti Malaya, 2014 - 2018
+UiPath Certified Advanced RPA Developer (UiARD), 2023
+
+SKILLS
+UiPath, Python, SQL, Excel VBA, Oracle, SAP FI
+Languages: English, Bahasa Malaysia, Malayalam

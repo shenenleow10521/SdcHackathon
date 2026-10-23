@@ -1,0 +1,2092 @@
+{
+ "version": 1,
+ "createdAt": "2026-10-23T00:00:00Z",
+ "annotator": "independent annotator agent v2 (blind to system code and outputs)",
+ "guidelines": "eval/cv/ANNOTATION.md + eval/cv/ANNOTATION-v2.md",
+ "cases": [
+  {
+   "id": "c15-ap-ar-clerk",
+   "file": "cases/c15-ap-ar-clerk.txt",
+   "tier": "clean",
+   "summary": "Accounts assistant (AP/AR) at a Seremban hardware distributor using AutoCount; previous clerk job used SQL Accounting; treasurer of a youth association.",
+   "language": "en",
+   "messiness": [
+    "trap: 'SQL Accounting' package (not SQL)",
+    "trap: association treasurer (not treasury)",
+    "AR duties mixed with AP"
+   ],
+   "expectedOccupation": "ap",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "inv",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Key in 350-400 supplier invoices a month into AutoCount",
+     "why": "Keys and codes 350-400 supplier invoices a month."
+    },
+    {
+     "skill": "three",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Match supplier invoices to purchase orders and goods received notes before posting",
+     "why": "Matches invoice to PO and GRN and holds mismatches; purchaser decides."
+    },
+    {
+     "skill": "recon",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Reconcile major supplier statements against the creditors ledger every month",
+     "why": "Monthly supplier statement to ledger reconciliation, chases missing documents."
+    },
+    {
+     "skill": "pay",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Prepare the fortnightly payment listing by due date for the Finance Manager to approve",
+     "why": "Builds the payment list for approval and uploads approved payments."
+    },
+    {
+     "skill": "excel",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Prepare monthly AP and AR ageing schedules in Excel using pivot tables",
+     "why": "Monthly pivot-table ageing schedules."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "audit",
+     "levelMax": 2,
+     "why": "Gathers invoices and vouchers for external auditors: light, like c02."
+    },
+    {
+     "skill": "erp",
+     "levelMax": 2,
+     "why": "AutoCount / SQL Accounting are small accounting packages, not SAP-class ERP."
+    },
+    {
+     "skill": "fin",
+     "levelMax": 2,
+     "why": "Ageing schedules for the management meeting are a near-neighbour of monthly reporting."
+    },
+    {
+     "skill": "dispute",
+     "levelMax": 1,
+     "why": "Follows up missing credit notes with suppliers; weak."
+    }
+   ],
+   "plantedPii": [
+    "NG MEI YEE",
+    "012-555 6143",
+    "meiyee.ng@example.com",
+    "950322-05-5218",
+    "Treasurer, Seremban Hokkien Youth Association"
+   ]
+  },
+  {
+   "id": "c16-gl-accountant",
+   "file": "cases/c16-gl-accountant.txt",
+   "tier": "clean",
+   "summary": "General ledger accountant (record-to-report) at a Port Klang logistics group; MIA chartered accountant.",
+   "language": "en",
+   "messiness": [
+    "no catalogue occupation for GL accountant",
+    "bank / GL / intercompany recons (not vendor recon)"
+   ],
+   "expectedOccupation": "other",
+   "acceptableOccupations": [
+    "faRole",
+    "ap"
+   ],
+   "required": [
+    {
+     "skill": "erp",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Run month-end close for 4 entities on SAP S/4HANA",
+     "why": "Posts close journals in SAP S/4HANA for 4 entities."
+    },
+    {
+     "skill": "fin",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Prepare quarterly management accounts and explain movements in key P&L lines",
+     "why": "Prepares management accounts and explains movements to the FC."
+    },
+    {
+     "skill": "tax",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Prepare the bi-monthly SST-02 return",
+     "why": "Prepares SST-02 returns and reconciles output tax to the GL."
+    },
+    {
+     "skill": "audit",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Act as main contact for external auditors on balance sheet items",
+     "why": "Main auditor contact; prepares PBC schedules and answers queries."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "recon",
+     "levelMax": 3,
+     "why": "Balance sheet and intercompany reconciliations are near-neighbours of vendor recon."
+    },
+    {
+     "skill": "excel",
+     "levelMax": 3,
+     "why": "Excel listed (SUMIFS, pivots); reconciliations imply it."
+    },
+    {
+     "skill": "process",
+     "levelMax": 2,
+     "why": "Trained juniors on reconciliation standards; not process redesign."
+    }
+   ],
+   "plantedPii": [
+    "RAJESH KUMAR A/L SUBRAMANIAM",
+    "+60 16-555 2871",
+    "rajesh.subra@example.com",
+    "910714-10-5763",
+    "Male | Married"
+   ]
+  },
+  {
+   "id": "c17-finance-analyst",
+   "file": "cases/c17-finance-analyst.txt",
+   "tier": "clean",
+   "summary": "FP&A analyst at a Petaling Jaya consumer-goods company; budgets, forecasts, Power BI, some SQL and Copilot use.",
+   "language": "en",
+   "messiness": [
+    "excel vs viz both genuinely shown",
+    "AI drafting with human check"
+   ],
+   "expectedOccupation": "faRole",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "fin",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Own the monthly performance pack for 3 business units",
+     "why": "Owns variance packs, budget and rolling forecast, explains variances to the CFO."
+    },
+    {
+     "skill": "excel",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Build and maintain the annual budget model and the quarterly rolling forecast in Excel",
+     "why": "Driver-based budget and forecast models in Excel."
+    },
+    {
+     "skill": "viz",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Built a Power BI dashboard on gross margin by SKU and channel",
+     "why": "Dashboard used weekly by 25 managers."
+    },
+    {
+     "skill": "sql",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Wrote SQL queries against the sales data warehouse",
+     "why": "Pulls data with SQL for post-evaluation; 'SQL (basic)'."
+    },
+    {
+     "skill": "prompt",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Use Microsoft Copilot to draft first versions of variance commentary",
+     "why": "Drafts commentary with AI and checks every number."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "stats",
+     "levelMax": 2,
+     "why": "Promotion uplift vs baseline and sensitivity analysis: light statistics."
+    },
+    {
+     "skill": "aisup",
+     "levelMax": 2,
+     "why": "Checks AI output, but no AI workflow set up."
+    }
+   ],
+   "plantedPii": [
+    "AISYAH BINTI MOHD RIDZUAN",
+    "013-555 9027",
+    "aisyah.ridzuan@example.com",
+    "linkedin.com/in/aisyah-ridzuan-example"
+   ]
+  },
+  {
+   "id": "c18-management-accountant-bm",
+   "file": "cases/c18-management-accountant-bm.txt",
+   "tier": "clean",
+   "summary": "Management accountant at an Ipoh glove maker: standard costing, variances, budgets, investment appraisal. CV in Bahasa Malaysia.",
+   "language": "ms",
+   "messiness": [
+    "Bahasa Malaysia",
+    "stock count reconciliation (not vendor recon)"
+   ],
+   "expectedOccupation": "faRole",
+   "acceptableOccupations": [
+    "other"
+   ],
+   "required": [
+    {
+     "skill": "fin",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Menganalisis varians kos pengeluaran",
+     "why": "Cost variance analysis presented monthly, budgets, NPV papers."
+    },
+    {
+     "skill": "excel",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Menyediakan analisis keuntungan mengikut pelanggan dan produk menggunakan Excel",
+     "why": "Profitability analysis with pivots and SUMIFS."
+    },
+    {
+     "skill": "invent",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Mengenal pasti stok bergerak perlahan melebihi 180 hari",
+     "why": "Identifies slow-moving stock and proposes provisions to the FC."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "erp",
+     "levelMax": 2,
+     "why": "Reconciles stock counts to SAP; SAP CO/FI listed."
+    },
+    {
+     "skill": "audit",
+     "levelMax": 2,
+     "why": "'Membantu juruaudit luar' in previous job."
+    },
+    {
+     "skill": "recon",
+     "levelMax": 2,
+     "why": "Bank reconciliation in previous job is a near-neighbour."
+    }
+   ],
+   "plantedPii": [
+    "TAN CHEE KEONG",
+    "017-555 3460",
+    "cheekeong.tan@example.my",
+    "880905-08-5531"
+   ]
+  },
+  {
+   "id": "c19-esg-executive",
+   "file": "cases/c19-esg-executive.txt",
+   "tier": "clean",
+   "summary": "Sustainability executive at a KL property developer: ESG data, Scope 1-2, Sustainability Statement, TCFD; ex-environmental officer.",
+   "language": "en",
+   "messiness": [
+    "many ESG frameworks named (GRI, TCFD, FTSE4Good)",
+    "climate-risk screening (near greenfin)"
+   ],
+   "expectedOccupation": "esgRole",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "esgdata",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Collect quarterly ESG data from 14 business units",
+     "why": "Collects data from many units, queries outliers, set data owners and reviewers."
+    },
+    {
+     "skill": "ghg",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Calculate Scope 1 and Scope 2 emissions using the GHG Protocol",
+     "why": "Calculates Scope 1-2 on her own and started Scope 3 screening."
+    },
+    {
+     "skill": "disc",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Draft the Sustainability Statement in the annual report",
+     "why": "Drafts the statement against Bursa/GRI and runs materiality with management."
+    },
+    {
+     "skill": "viz",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Maintain a Power BI dashboard of ESG KPIs",
+     "why": "Maintains an ESG KPI dashboard for a committee."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "greenfin",
+     "levelMax": 2,
+     "why": "Qualitative physical-risk screening of sites: 'assess climate risk' task, but not in finance."
+    },
+    {
+     "skill": "excel",
+     "levelMax": 2,
+     "why": "Excel listed only."
+    },
+    {
+     "skill": "audit",
+     "levelMax": 2,
+     "why": "Indicator sign-off agreed with Internal Audit; indirect."
+    }
+   ],
+   "plantedPii": [
+    "LEE SHU TING",
+    "+60 12-555 7319",
+    "shuting.lee@example.com",
+    "Date of birth: 14 Feb 1996",
+    "Female | Single"
+   ]
+  },
+  {
+   "id": "c20-carbon-lca-analyst",
+   "file": "cases/c20-carbon-lca-analyst.txt",
+   "tier": "clean",
+   "summary": "Product carbon footprint (LCA) analyst at a Penang EMS manufacturer; ex-environmental engineer.",
+   "language": "en",
+   "messiness": [
+    "LCA jargon (ISO 14067, SimaPro, ecoinvent, cradle-to-gate)",
+    "provided data to corporate GHG inventory only"
+   ],
+   "expectedOccupation": "lcaRole",
+   "acceptableOccupations": [
+    "esgRole"
+   ],
+   "required": [
+    {
+     "skill": "lca",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Run cradle-to-gate product carbon footprints",
+     "why": "Runs 30+ footprints and sets boundaries, functional unit and allocation."
+    },
+    {
+     "skill": "python",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Wrote a Python script that converts the SAP bill of materials export",
+     "why": "Wrote a data conversion script that cut set-up time."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "esgdata",
+     "levelMax": 3,
+     "why": "Gathers BOM, energy and scrap data from several functions for LCA."
+    },
+    {
+     "skill": "ghg",
+     "levelMax": 2,
+     "why": "Applies grid emission factors in footprints; only provided data to the corporate inventory."
+    },
+    {
+     "skill": "auto",
+     "levelMax": 2,
+     "why": "Script automates model set-up."
+    },
+    {
+     "skill": "disc",
+     "levelMax": 2,
+     "why": "Answers EcoVadis / CDP questionnaires."
+    },
+    {
+     "skill": "excel",
+     "levelMax": 2,
+     "why": "Excel listed."
+    }
+   ],
+   "plantedPii": [
+    "MUHAMMAD IRFAN BIN ZAKARIA",
+    "011-5550 3382",
+    "irfan.zakaria@example.com",
+    "linkedin.com/in/irfan-zakaria-example"
+   ]
+  },
+  {
+   "id": "c21-internal-auditor-bm",
+   "file": "cases/c21-internal-auditor-bm.txt",
+   "tier": "clean",
+   "summary": "Senior internal audit executive at a Shah Alam retail group; IDEA analytics, reports to audit committee. CV in Bahasa Malaysia.",
+   "language": "ms",
+   "messiness": [
+    "Bahasa Malaysia",
+    "trap: residents' association treasurer (not treasury)",
+    "stock and cash counts as audit procedures"
+   ],
+   "expectedOccupation": "intAudit",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "audit2",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Menguji reka bentuk dan keberkesanan kawalan utama",
+     "why": "Plans risk-based audits, tests controls, reports to the audit committee, reviews juniors."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "audit",
+     "levelMax": 3,
+     "why": "Reviews working papers (evidence trail) of executives."
+    },
+    {
+     "skill": "excel",
+     "levelMax": 2,
+     "why": "IDEA analytics of 100% of payments; Excel listed."
+    },
+    {
+     "skill": "erp",
+     "levelMax": 2,
+     "why": "Tests controls in SAP MM; SAP listed."
+    }
+   ],
+   "plantedPii": [
+    "SITI HAJAR BINTI OTHMAN",
+    "019-555 2214",
+    "sitihajar.othman@example.my",
+    "920618-10-5642",
+    "Perempuan | Berkahwin",
+    "Bendahari, Persatuan Penduduk Taman Bangi Perdana"
+   ]
+  },
+  {
+   "id": "c22-risk-compliance",
+   "file": "cases/c22-risk-compliance.txt",
+   "tier": "clean",
+   "summary": "Risk & compliance executive at a KL e-money issuer: AML/CFT alerts, EDD, operational risk register, BNM policy mapping.",
+   "language": "en",
+   "messiness": [
+    "out-of-catalogue specialism (AML/CFT)",
+    "trap words (dashboard, risk and control self-assessment)"
+   ],
+   "expectedOccupation": "other",
+   "acceptableOccupations": [
+    "intAudit"
+   ],
+   "required": [],
+   "acceptable": [
+    {
+     "skill": "audit2",
+     "levelMax": 3,
+     "why": "Runs risk and control self-assessments and tracks KRIs; not independent control testing."
+    },
+    {
+     "skill": "audit",
+     "levelMax": 2,
+     "why": "Kept records and assisted the BNM onsite examination."
+    },
+    {
+     "skill": "viz",
+     "levelMax": 2,
+     "why": "'KRI dashboard' for the board committee, tool not stated; Power BI (basic) listed."
+    },
+    {
+     "skill": "excel",
+     "levelMax": 2,
+     "why": "Excel listed only."
+    }
+   ],
+   "plantedPii": [
+    "JASON WONG KAR HO",
+    "016-555 4790",
+    "jason.wongkh@example.com",
+    "930411-14-5579"
+   ]
+  },
+  {
+   "id": "c23-treasury-analyst",
+   "file": "cases/c23-treasury-analyst.txt",
+   "tier": "clean",
+   "summary": "Treasury analyst at a Shah Alam property group: cash position, 13-week forecast, placements, RC facility, payment release.",
+   "language": "en",
+   "messiness": [
+    "Islamic finance terms",
+    "Power Query automation"
+   ],
+   "expectedOccupation": "treasuryRole",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "treasury",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Prepare the group's daily cash position across 32 bank accounts",
+     "why": "Daily cash position, 13-week forecast, placements, facilities and covenants."
+    },
+    {
+     "skill": "pay",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Approve the release of supplier payment files in the bank portals",
+     "why": "Second authoriser on payment releases up to RM500k."
+    },
+    {
+     "skill": "fin",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "compare actual to forecast every week and",
+     "why": "Explains forecast variances weekly."
+    },
+    {
+     "skill": "excel",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Automated the daily bank balance download with an Excel Power Query template",
+     "why": "Built a Power Query template."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "recon",
+     "levelMax": 2,
+     "why": "Bank reconciliations are a near-neighbour of vendor recon."
+    },
+    {
+     "skill": "auto",
+     "levelMax": 2,
+     "why": "Power Query template automates a daily download."
+    },
+    {
+     "skill": "erp",
+     "levelMax": 2,
+     "why": "SAP FI listed only."
+    }
+   ],
+   "plantedPii": [
+    "NORAZLINA BINTI ABU BAKAR",
+    "012-555 8064",
+    "norazlina.abubakar@example.com",
+    "900203-10-5246",
+    "Female | Married"
+   ]
+  },
+  {
+   "id": "c24-bank-credit-analyst",
+   "file": "cases/c24-bank-credit-analyst.txt",
+   "tier": "clean",
+   "summary": "Commercial-banking credit analyst in Johor Bahru: financial statement analysis, projections, credit papers, watchlist.",
+   "language": "en",
+   "messiness": [
+    "banking jargon (DSCR, watchlist, rating overrides)",
+    "no catalogue occupation for bank credit analyst"
+   ],
+   "expectedOccupation": "faRole",
+   "acceptableOccupations": [
+    "other"
+   ],
+   "required": [
+    {
+     "skill": "fin",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Analyse audited accounts and management accounts of borrowers",
+     "why": "Analyses statements, builds projections and writes credit papers."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "excel",
+     "levelMax": 3,
+     "why": "Projections and spreading template imply Excel; Excel listed."
+    },
+    {
+     "skill": "stats",
+     "levelMax": 2,
+     "why": "Stress-tests projections; light."
+    },
+    {
+     "skill": "process",
+     "levelMax": 2,
+     "why": "Built a spreading template that cut turnaround time for the team."
+    }
+   ],
+   "plantedPii": [
+    "KHAIRUL ANUAR BIN MAT ISA",
+    "+60 19-555 6620",
+    "khairul.matisa@example.com",
+    "940826-01-5427",
+    "Johor Bahru Muslim professionals' circle"
+   ]
+  },
+  {
+   "id": "c25-procurement-executive",
+   "file": "cases/c25-procurement-executive.txt",
+   "tier": "clean",
+   "summary": "Procurement executive (strategic sourcing) at a Senai food manufacturer: RFQs, negotiation, supplier scorecards, SAP Ariba.",
+   "language": "en",
+   "messiness": [
+    "procurement jargon (RFQ, 3PL, FSSC 22000, CIPS)"
+   ],
+   "expectedOccupation": "procRole",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "procure",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Negotiate annual contracts and price reviews with 20 key suppliers",
+     "why": "Runs RFQs and tenders, negotiates, vets and scores suppliers, dual-sourcing plan."
+    },
+    {
+     "skill": "erp",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Create purchase orders in SAP Ariba",
+     "why": "Creates POs in SAP Ariba."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "dispute",
+     "levelMax": 2,
+     "why": "Resolves invoice price mismatches raised by AP."
+    },
+    {
+     "skill": "three",
+     "levelMax": 2,
+     "why": "Price mismatches between PO and invoice: procurement side of a match exception."
+    },
+    {
+     "skill": "excel",
+     "levelMax": 3,
+     "why": "Bid comparison sheets; Excel listed."
+    }
+   ],
+   "plantedPii": [
+    "GOH WEI JIE",
+    "017-555 1836",
+    "weijie.goh@example.com",
+    "920130-01-5803"
+   ]
+  },
+  {
+   "id": "c26-buyer-bm",
+   "file": "cases/c26-buyer-bm.txt",
+   "tier": "clean",
+   "summary": "Supermarket category buyer (drinks and snacks) in Butterworth. CV in Bahasa Malaysia.",
+   "language": "ms",
+   "messiness": [
+    "Bahasa Malaysia",
+    "retail buying vs strategic sourcing"
+   ],
+   "expectedOccupation": "procRole",
+   "acceptableOccupations": [
+    "invRole"
+   ],
+   "required": [
+    {
+     "skill": "procure",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Berunding harga, diskaun volum dan syarat kredit dengan 35 pembekal",
+     "why": "Negotiates prices, discounts and terms with 35 suppliers; evaluates new products."
+    },
+    {
+     "skill": "excel",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Menganalisis jualan mingguan setiap SKU menggunakan Excel",
+     "why": "Weekly SKU analysis with pivots."
+    },
+    {
+     "skill": "invent",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "produk bergerak perlahan untuk dikeluarkan dari senarai.",
+     "why": "Finds slow movers to delist; sets minimum stock levels."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "dispute",
+     "levelMax": 2,
+     "why": "Settles late and damaged deliveries with credit notes."
+    },
+    {
+     "skill": "erp",
+     "levelMax": 2,
+     "why": "Issued POs in a retail ERP as an assistant."
+    },
+    {
+     "skill": "scm",
+     "levelMax": 2,
+     "why": "Sets minimum stock and order quantities with the stock planner."
+    }
+   ],
+   "plantedPii": [
+    "NUR FARHANA BINTI ZAINAL",
+    "014-555 7752",
+    "farhana.zainal@example.my",
+    "970509-07-5328",
+    "Bujang"
+   ]
+  },
+  {
+   "id": "c27-scm-demand-planner",
+   "file": "cases/c27-scm-demand-planner.txt",
+   "tier": "clean",
+   "summary": "Demand and supply planner at a Nilai personal-care FMCG company: statistical forecasting, S&OP, supply planning.",
+   "language": "en",
+   "messiness": [
+    "planning jargon (SAP IBP, MAPE, S&OP, ABC/XYZ)"
+   ],
+   "expectedOccupation": "scmRole",
+   "acceptableOccupations": [
+    "invRole"
+   ],
+   "required": [
+    {
+     "skill": "scm",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Run the monthly S&OP demand review",
+     "why": "Forecasts demand, runs S&OP review, converts to supply plan."
+    },
+    {
+     "skill": "stats",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Measure forecast accuracy (MAPE) and bias by channel",
+     "why": "Exponential smoothing, MAPE and bias; statistics degree."
+    },
+    {
+     "skill": "invent",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Flag excess and near-expiry stock at month-end",
+     "why": "Flags excess stock, sets safety stock and agrees clearance."
+    },
+    {
+     "skill": "erp",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Ran MRP in SAP and released purchase requisitions for packaging.",
+     "why": "Runs MRP in SAP; uses SAP IBP."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "excel",
+     "levelMax": 3,
+     "why": "Excel listed."
+    },
+    {
+     "skill": "viz",
+     "levelMax": 2,
+     "why": "Power BI listed only."
+    },
+    {
+     "skill": "python",
+     "levelMax": 1,
+     "why": "Only R (basic) listed; no Python."
+    }
+   ],
+   "plantedPii": [
+    "PRIYA DEVI A/P RAMASAMY",
+    "+60 11-5552 9184",
+    "priya.ramasamy@example.com",
+    "temple volunteer (Nilai)"
+   ]
+  },
+  {
+   "id": "c28-inventory-controller",
+   "file": "cases/c28-inventory-controller.txt",
+   "tier": "clean",
+   "summary": "Inventory controller at a Port Klang 3PL warehouse: cycle counts, slow-moving reports, WMS-SAP reconciliation.",
+   "language": "en",
+   "messiness": [
+    "trap: stock reconciliation (not vendor recon)",
+    "receiving check (not three-way match)"
+   ],
+   "expectedOccupation": "invRole",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "invent",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Produce the monthly ageing and slow-moving stock report",
+     "why": "Runs cycle counts, investigates variances, recommends disposal."
+    },
+    {
+     "skill": "excel",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Built an Excel model with pivot tables",
+     "why": "Pivot-table model of days-on-hand."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "three",
+     "levelMax": 2,
+     "why": "Checked deliveries against PO and DO and signed GRNs: receiving half only."
+    },
+    {
+     "skill": "audit",
+     "levelMax": 2,
+     "why": "Leads the stock take with external auditors observing."
+    },
+    {
+     "skill": "erp",
+     "levelMax": 2,
+     "why": "SAP MM display only; WMS user."
+    }
+   ],
+   "plantedPii": [
+    "AHMAD ZULHILMI BIN RASHID",
+    "013-555 2648",
+    "zulhilmi.rashid@example.com",
+    "890917-10-5165",
+    "Male | Married"
+   ]
+  },
+  {
+   "id": "c29-bi-developer",
+   "file": "cases/c29-bi-developer.txt",
+   "tier": "clean",
+   "summary": "BI developer at a Cyberjaya shared-services centre: data models, T-SQL, Power BI for 300 finance users, some Python.",
+   "language": "en",
+   "messiness": [
+    "BI jargon (star schema, DAX, RLS, ADF)"
+   ],
+   "expectedOccupation": "biRole",
+   "acceptableOccupations": [
+    "dataRole"
+   ],
+   "required": [
+    {
+     "skill": "viz",
+     "levelMin": 4,
+     "levelMax": 5,
+     "quote": "Build and publish Power BI dashboards",
+     "why": "Publishes dashboards for 300 users, defines KPIs, coaches juniors."
+    },
+    {
+     "skill": "sql",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Write T-SQL views and stored procedures",
+     "why": "Views and stored procedures joining three systems."
+    },
+    {
+     "skill": "python",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Wrote Python scripts to pull currency rates from an API",
+     "why": "API-loading scripts."
+    },
+    {
+     "skill": "excel",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Produced weekly AP and AR KPI reports in Excel (Power Pivot)",
+     "why": "Power Pivot reports in previous role."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "auto",
+     "levelMax": 3,
+     "why": "Scheduled data loads in Azure Data Factory."
+    },
+    {
+     "skill": "process",
+     "levelMax": 2,
+     "why": "Dashboard replaced 14 manual Excel reports."
+    }
+   ],
+   "plantedPii": [
+    "CHONG YI XUAN",
+    "012-555 4073",
+    "yixuan.chong@example.com",
+    "github.com/yixuan-chong-example"
+   ]
+  },
+  {
+   "id": "c30-rpa-analyst",
+   "file": "cases/c30-rpa-analyst.txt",
+   "tier": "clean",
+   "summary": "RPA developer in a KL finance shared-services centre (UiPath bots, document AI); ex-AP executive.",
+   "language": "en",
+   "messiness": [
+    "automation jargon (Orchestrator, PDD, UAT, Document Understanding)"
+   ],
+   "expectedOccupation": "opsRole",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "auto",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Build and maintain 18 UiPath bots for finance",
+     "why": "Builds, monitors and fixes 18 bots; chooses what to automate."
+    },
+    {
+     "skill": "process",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Run process assessments with process owners to choose which steps to automate",
+     "why": "Maps and scores processes, writes design documents."
+    },
+    {
+     "skill": "aisup",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Set up an invoice-capture model (UiPath Document Understanding)",
+     "why": "Set up document AI and tuned confidence thresholds with AP."
+    },
+    {
+     "skill": "python",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Use Python to clean bank statement files",
+     "why": "Cleaning scripts."
+    },
+    {
+     "skill": "sql",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Write SQL queries to check bot output against SAP tables.",
+     "why": "Routine check queries."
+    },
+    {
+     "skill": "inv",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Processed supplier invoices and three-way matching in Oracle for 12 hotels.",
+     "why": "Three years of invoice processing."
+    },
+    {
+     "skill": "three",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Processed supplier invoices and three-way matching in Oracle for 12 hotels.",
+     "why": "Three-way matching in previous AP role."
+    },
+    {
+     "skill": "recon",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Reconciled vendor statements for the top 40 suppliers every month.",
+     "why": "Monthly vendor statement recon in previous role."
+    },
+    {
+     "skill": "excel",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Proposed and built Excel macros",
+     "why": "Built Excel macros for payment listing."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "aiinv",
+     "levelMax": 3,
+     "why": "Reviews validation results with AP; does not do the reviewing himself."
+    },
+    {
+     "skill": "erp",
+     "levelMax": 3,
+     "why": "Oracle and SAP FI user."
+    },
+    {
+     "skill": "pay",
+     "levelMax": 2,
+     "why": "Macros sped up the payment-run invoice listing."
+    }
+   ],
+   "plantedPii": [
+    "SURESH NAIR A/L GOPAL",
+    "+60 17-555 6205",
+    "suresh.gopal@example.com"
+   ]
+  },
+  {
+   "id": "c31-hr-executive",
+   "file": "cases/c31-hr-executive.txt",
+   "tier": "clean",
+   "summary": "HR generalist at a Kuantan steel plant: recruitment, payroll, disciplinary, training, HR reports.",
+   "language": "en",
+   "messiness": [
+    "trap: 'SQL Payroll' package (not SQL)",
+    "payroll (not vendor payment runs)",
+    "out of catalogue"
+   ],
+   "expectedOccupation": "other",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "excel",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Prepare monthly HR reports in Excel (pivot tables)",
+     "why": "Monthly pivot-table HR reports."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "pay",
+     "levelMax": 2,
+     "why": "Submits the salary bank file for approval: payroll, not vendor payment runs."
+    }
+   ],
+   "plantedPii": [
+    "NURUL IZZATI BINTI HAMDAN",
+    "019-555 3871",
+    "izzati.hamdan@example.com",
+    "940722-06-5384",
+    "Female | Married"
+   ]
+  },
+  {
+   "id": "c32-civil-engineer",
+   "file": "cases/c32-civil-engineer.txt",
+   "tier": "clean",
+   "summary": "Site civil engineer on a Kota Kinabalu high-rise project. Out of catalogue.",
+   "language": "en",
+   "messiness": [
+    "construction jargon (setting-out, BQ, look-ahead, P6)",
+    "trap: ordering site materials (not strategic sourcing)"
+   ],
+   "expectedOccupation": "other",
+   "acceptableOccupations": [],
+   "required": [],
+   "acceptable": [
+    {
+     "skill": "procure",
+     "levelMax": 2,
+     "why": "Compares three subcontractor quotations for minor works and recommends one: incidental."
+    },
+    {
+     "skill": "excel",
+     "levelMax": 1,
+     "why": "Excel listed only."
+    }
+   ],
+   "plantedPii": [
+    "LAU KOK WAI",
+    "016-555 7408",
+    "kokwai.lau@example.com",
+    "910203-12-5521",
+    "Male | Single"
+   ]
+  },
+  {
+   "id": "c33-data-analyst-linkedin",
+   "file": "cases/c33-data-analyst-linkedin.txt",
+   "tier": "linkedin",
+   "summary": "LinkedIn export: data analyst at a general insurer (SQL, Power BI, Python outlier analysis); ex-courier ops analyst.",
+   "language": "en",
+   "messiness": [
+    "LinkedIn PDF layout (sidebar first, page footers)",
+    "Top Skills without evidence",
+    "role with no description"
+   ],
+   "expectedOccupation": "dataRole",
+   "acceptableOccupations": [
+    "biRole"
+   ],
+   "required": [
+    {
+     "skill": "sql",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Write SQL in Snowflake to build the monthly motor claims dataset",
+     "why": "Builds a monthly dataset joining three tables."
+    },
+    {
+     "skill": "viz",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Built the Power BI claims-ageing dashboard",
+     "why": "Dashboard used by 60 claims staff."
+    },
+    {
+     "skill": "stats",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Analysed repair cost by workshop and flagged 12 outlier workshops",
+     "why": "z-score outlier analysis."
+    },
+    {
+     "skill": "excel",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Weekly delivery performance reports in Excel and Google Sheets.",
+     "why": "Weekly spreadsheet reports."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "python",
+     "levelMax": 3,
+     "why": "Python mentioned for the z-score analysis (wrapped onto the next line) and in Top Skills."
+    }
+   ],
+   "plantedPii": [
+    "Hafiz Roslan",
+    "hafiz.roslan@example.com",
+    "www.linkedin.com/in/hafiz-roslan-example"
+   ]
+  },
+  {
+   "id": "c34-graphic-designer-linkedin",
+   "file": "cases/c34-graphic-designer-linkedin.txt",
+   "tier": "linkedin",
+   "summary": "LinkedIn export: senior graphic designer (packaging, branding, report infographics). Out of catalogue.",
+   "language": "en",
+   "messiness": [
+    "trap: 'Data Visualization' in Top Skills and report infographics (not dashboards)",
+    "trap: sustainability report design (not disclosure)"
+   ],
+   "expectedOccupation": "other",
+   "acceptableOccupations": [],
+   "required": [],
+   "acceptable": [
+    {
+     "skill": "viz",
+     "levelMax": 1,
+     "why": "'Data Visualization' listed; infographics are not dashboards."
+    }
+   ],
+   "plantedPii": [
+    "Melissa Tan",
+    "www.linkedin.com/in/melissa-tan-design-example",
+    "melissatan.example.com"
+   ]
+  },
+  {
+   "id": "c35-ap-specialist-ai-linkedin",
+   "file": "cases/c35-ap-specialist-ai-linkedin.txt",
+   "tier": "linkedin",
+   "summary": "LinkedIn export: AP specialist at a KL shared-services centre who now reviews AI-captured invoices.",
+   "language": "en",
+   "messiness": [
+    "first-person description",
+    "earlier roles without descriptions"
+   ],
+   "expectedOccupation": "ap",
+   "acceptableOccupations": [
+    "stayRole"
+   ],
+   "required": [
+    {
+     "skill": "inv",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Process and review vendor invoices for 6 ASEAN entities in SAP",
+     "why": "Nine years of invoice processing for 6 entities."
+    },
+    {
+     "skill": "aiinv",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Since 2024 I check the fields",
+     "why": "Checks and fixes AI-captured fields and resolves exceptions."
+    },
+    {
+     "skill": "recon",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "monthly statement reconciliations for my vendor",
+     "why": "Monthly vendor statement recon."
+    },
+    {
+     "skill": "erp",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Process and review vendor invoices for 6 ASEAN entities in SAP",
+     "why": "Processes in SAP."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "three",
+     "levelMax": 3,
+     "why": "Resolves exceptions the AI cannot match to a PO."
+    },
+    {
+     "skill": "dispute",
+     "levelMax": 2,
+     "why": "Handles vendor queries."
+    },
+    {
+     "skill": "excel",
+     "levelMax": 2,
+     "why": "Excel in Top Skills only."
+    },
+    {
+     "skill": "prompt",
+     "levelMax": 1,
+     "why": "'AI for Finance Teams' short course only."
+    }
+   ],
+   "plantedPii": [
+    "Kogila Vasudevan",
+    "www.linkedin.com/in/kogila-v-example"
+   ]
+  },
+  {
+   "id": "c36-esg-consultant-linkedin",
+   "file": "cases/c36-esg-consultant-linkedin.txt",
+   "tier": "linkedin",
+   "summary": "LinkedIn export: senior ESG consultant running client GHG inventories and sustainability statements.",
+   "language": "en",
+   "messiness": [
+    "buzzword headline with emoji",
+    "vague summary (net zero, circular economy, green finance)"
+   ],
+   "expectedOccupation": "esgRole",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "ghg",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Lead GHG inventories (Scope 1, 2 and selected Scope 3) for 15 manufacturing and property",
+     "why": "Leads inventories, sets boundaries, traces data to bills."
+    },
+    {
+     "skill": "disc",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Draft Sustainability Statements and IFRS S2 gap assessments",
+     "why": "Drafts statements and runs materiality workshops."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "esgdata",
+     "levelMax": 3,
+     "why": "Reviews client activity data back to bills and meter readings."
+    },
+    {
+     "skill": "greenfin",
+     "levelMax": 1,
+     "why": "'Green finance' only in the summary."
+    },
+    {
+     "skill": "lca",
+     "levelMax": 1,
+     "why": "'Circular economy' in the summary; no LCA shown."
+    }
+   ],
+   "plantedPii": [
+    "Daphne Ho",
+    "daphne.ho@example.com",
+    "www.linkedin.com/in/daphne-ho-esg-example"
+   ]
+  },
+  {
+   "id": "c37-esg-assurance-linkedin",
+   "file": "cases/c37-esg-assurance-linkedin.txt",
+   "tier": "linkedin",
+   "summary": "LinkedIn export: sustainability-assurance associate at an audit firm; ex-statutory auditor.",
+   "language": "en",
+   "messiness": [
+    "standards jargon (ISAE 3000, ISSA 5000)",
+    "external assurance (not internal audit)"
+   ],
+   "expectedOccupation": "assurRole",
+   "acceptableOccupations": [
+    "esgRole"
+   ],
+   "required": [
+    {
+     "skill": "ghg",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "recalculation of emissions using the client's",
+     "why": "Recalculates emissions and traces activity data to source."
+    },
+    {
+     "skill": "audit2",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Perform limited assurance procedures on Scope 1 and 2 emissions",
+     "why": "Walkthroughs, sample testing and management letter points."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "audit",
+     "levelMax": 3,
+     "why": "Works with evidence trails; supports assurance files."
+    },
+    {
+     "skill": "esgdata",
+     "levelMax": 2,
+     "why": "Tests clients' data collection process."
+    },
+    {
+     "skill": "disc",
+     "levelMax": 2,
+     "why": "Assures Bursa indicators; does not draft disclosure."
+    }
+   ],
+   "plantedPii": [
+    "Ahmad Syahmi Kamal",
+    "www.linkedin.com/in/syahmi-kamal-example"
+   ]
+  },
+  {
+   "id": "c38-finance-automation-lead-linkedin",
+   "file": "cases/c38-finance-automation-lead-linkedin.txt",
+   "tier": "linkedin",
+   "summary": "LinkedIn export: finance transformation lead at a Penang semiconductor firm (automation team, process redesign, GenAI pilot).",
+   "language": "en",
+   "messiness": [
+    "buzzword headline",
+    "single paragraph description",
+    "earlier roles without descriptions"
+   ],
+   "expectedOccupation": "opsRole",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "auto",
+     "levelMin": 4,
+     "levelMax": 5,
+     "quote": "Lead a team of 5 building Power Automate and UiPath automations for finance.",
+     "why": "Leads an automation team and prioritises ideas."
+    },
+    {
+     "skill": "process",
+     "levelMin": 4,
+     "levelMax": 5,
+     "quote": "Redesigned the intercompany settlement",
+     "why": "Redesign became the regional standard."
+    },
+    {
+     "skill": "aisup",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Piloting a GenAI assistant that drafts variance commentary",
+     "why": "Sets review rules for when finance must rewrite AI output."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "prompt",
+     "levelMax": 3,
+     "why": "GenAI assistant drafts commentary; prompting not described."
+    },
+    {
+     "skill": "fin",
+     "levelMax": 2,
+     "why": "Senior financial accountant earlier; no description."
+    }
+   ],
+   "plantedPii": [
+    "Kenneth Yap",
+    "www.linkedin.com/in/kenneth-yap-automation-example"
+   ]
+  },
+  {
+   "id": "c39-green-finance-linkedin",
+   "file": "cases/c39-green-finance-linkedin.txt",
+   "tier": "linkedin",
+   "summary": "LinkedIn export: ESG investment analyst at a KL Islamic asset manager.",
+   "language": "en",
+   "messiness": [
+    "Islamic finance terms (sukuk, SRI Sukuk framework)",
+    "short descriptions"
+   ],
+   "expectedOccupation": "greenRole",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "greenfin",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Screen equity and sukuk holdings against our exclusion list",
+     "why": "Screens holdings, scores ESG risk, challenges green claims."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "fin",
+     "levelMax": 3,
+     "why": "Credit research on sukuk issuers (one line)."
+    }
+   ],
+   "plantedPii": [
+    "Aina Sofea Ismail",
+    "ainasofea.ismail@example.com",
+    "www.linkedin.com/in/aina-sofea-example"
+   ]
+  },
+  {
+   "id": "c40-category-manager-linkedin",
+   "file": "cases/c40-category-manager-linkedin.txt",
+   "tier": "linkedin",
+   "summary": "LinkedIn export: indirect-procurement category manager at a petrochemical company; current role has no description.",
+   "language": "en",
+   "messiness": [
+    "no summary",
+    "current role without description",
+    "evidence only in an older role"
+   ],
+   "expectedOccupation": "procRole",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "procure",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Ran tenders for maintenance services and spare parts",
+     "why": "Ran tenders and negotiated term contracts as senior buyer."
+    }
+   ],
+   "acceptable": [],
+   "plantedPii": [
+    "Vimal Raj Selvam",
+    "www.linkedin.com/in/vimal-raj-procurement-example"
+   ]
+  },
+  {
+   "id": "c41-ai-data-quality-linkedin",
+   "file": "cases/c41-ai-data-quality-linkedin.txt",
+   "tier": "linkedin",
+   "summary": "LinkedIn export: AI data quality specialist labelling finance documents at a document-AI start-up; ex-accounts executive.",
+   "language": "en",
+   "messiness": [
+    "AI jargon (labelling guidelines, agreement checks)",
+    "one-line previous role"
+   ],
+   "expectedOccupation": "aiQaRole",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "aiinv",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Label and review invoice, receipt and bank statement fields",
+     "why": "Labels and reviews fields, writes guidelines, feeds errors back for retraining."
+    },
+    {
+     "skill": "tax",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Full set of accounts, AP/AR, SST returns and bank reconciliations",
+     "why": "Prepared SST returns in previous role."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "aisup",
+     "levelMax": 3,
+     "why": "Investigates where model accuracy drops; does not decide AI deployment."
+    },
+    {
+     "skill": "inv",
+     "levelMax": 3,
+     "why": "AP in the previous full-set role."
+    },
+    {
+     "skill": "recon",
+     "levelMax": 2,
+     "why": "Bank reconciliations in the previous role."
+    }
+   ],
+   "plantedPii": [
+    "Nadia Fauzi",
+    "www.linkedin.com/in/nadia-fauzi-example"
+   ]
+  },
+  {
+   "id": "c42-digital-marketing-linkedin",
+   "file": "cases/c42-digital-marketing-linkedin.txt",
+   "tier": "linkedin",
+   "summary": "LinkedIn export: digital marketing manager at a Johor Bahru skincare brand. Out of catalogue.",
+   "language": "en",
+   "messiness": [
+    "emoji headline",
+    "marketing jargon (ROAS)"
+   ],
+   "expectedOccupation": "other",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "viz",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Built the Looker Studio dashboard the founders check every morning",
+     "why": "Dashboard used daily by the founders."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "stats",
+     "levelMax": 2,
+     "why": "Runs A/B tests; analysis method not stated."
+    },
+    {
+     "skill": "fin",
+     "levelMax": 1,
+     "why": "Manages a RM3m ad budget."
+    }
+   ],
+   "plantedPii": [
+    "Ryan Teoh",
+    "www.linkedin.com/in/ryan-teoh-marketing-example"
+   ]
+  },
+  {
+   "id": "c43-it-auditor-linkedin",
+   "file": "cases/c43-it-auditor-linkedin.txt",
+   "tier": "linkedin",
+   "summary": "LinkedIn export: senior internal auditor (IT and data analytics) at a KL telco.",
+   "language": "en",
+   "messiness": [
+    "single paragraph description",
+    "earlier role without description"
+   ],
+   "expectedOccupation": "intAudit",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "audit2",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Plan and run IT general control audits (access, change management, backup)",
+     "why": "Plans and runs ITGC audits, tests full populations, reports to the audit committee."
+    },
+    {
+     "skill": "sql",
+     "levelMin": 3,
+     "levelMax": 4,
+     "quote": "Write SQL and Python scripts to test 100% of billing and procurement",
+     "why": "SQL tests over full transaction populations."
+    },
+    {
+     "skill": "python",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Write SQL and Python scripts to test 100% of billing and procurement",
+     "why": "Python test scripts."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "audit",
+     "levelMax": 2,
+     "why": "Audit evidence is implied by testing; not described."
+    }
+   ],
+   "plantedPii": [
+    "Lim Jia Wen",
+    "www.linkedin.com/in/lim-jia-wen-itaudit-example"
+   ]
+  },
+  {
+   "id": "c44-fresh-grad-linkedin",
+   "file": "cases/c44-fresh-grad-linkedin.txt",
+   "tier": "linkedin",
+   "summary": "LinkedIn export: accounting graduate whose experience is a student-society treasurer role and a 6-month audit/accounts internship.",
+   "language": "en",
+   "messiness": [
+    "trap: society treasurer (not treasury)",
+    "trap: 'SQL Accounting' in Top Skills and certification (not SQL)",
+    "stale summary ('final-semester')"
+   ],
+   "expectedOccupation": "other",
+   "acceptableOccupations": [
+    "ap"
+   ],
+   "required": [],
+   "acceptable": [
+    {
+     "skill": "recon",
+     "levelMax": 2,
+     "why": "Bank reconciliations under a senior's review."
+    },
+    {
+     "skill": "audit2",
+     "levelMax": 2,
+     "why": "Helped vouch purchases in audit fieldwork."
+    },
+    {
+     "skill": "audit",
+     "levelMax": 2,
+     "why": "Audit fieldwork support."
+    },
+    {
+     "skill": "erp",
+     "levelMax": 1,
+     "why": "SQL Accounting is a small accounting package."
+    },
+    {
+     "skill": "fin",
+     "levelMax": 2,
+     "why": "Prepared a society financial report."
+    }
+   ],
+   "plantedPii": [
+    "Nur Aqilah Zahari",
+    "aqilah.zahari02@example.com",
+    "www.linkedin.com/in/aqilah-zahari-example"
+   ]
+  },
+  {
+   "id": "c45-ap-ocr-scan-bm",
+   "file": "cases/c45-ap-ocr-scan-bm.txt",
+   "tier": "messy",
+   "summary": "AP clerk at a Taiping timber company, ex-storekeeper; scanned CV with OCR errors in BM/Manglish.",
+   "language": "mixed",
+   "messiness": [
+    "OCR errors (pembekaI, lslam, Exce1, Ofice, 819O)",
+    "CamScanner footers and page numbers",
+    "BM/Manglish abbreviations (dlm, utk, tiap2, skrg)",
+    "trap: storekeeper reordering (not sourcing)",
+    "receiving check vs three-way match"
+   ],
+   "expectedOccupation": "ap",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "inv",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Key-in invois pembekaI dlm sistem SAP",
+     "why": "Keys supplier invoices into SAP and attaches DO/GRN."
+    },
+    {
+     "skill": "three",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Check harga & kuantiti invois vs PO & GRN",
+     "why": "Checks invoice price and quantity against PO and GRN and holds mismatches."
+    },
+    {
+     "skill": "recon",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Buat rekon penyata supplier tiap2 bulan",
+     "why": "Monthly supplier statement recon for 30 suppliers."
+    },
+    {
+     "skill": "pay",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Sediakan senarai bayaran mingguan utk sign oleh Akauntan",
+     "why": "Prepares the payment list for the accountant to sign."
+    },
+    {
+     "skill": "erp",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "dlm sistem SAP",
+     "why": "Posts in SAP."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "dispute",
+     "levelMax": 2,
+     "why": "Follows up credit notes and answers supplier payment-status calls."
+    },
+    {
+     "skill": "invent",
+     "levelMax": 2,
+     "why": "Storekeeper: stock cards and reorder below minimum."
+    },
+    {
+     "skill": "excel",
+     "levelMax": 1,
+     "why": "'Exce1' listed only."
+    }
+   ],
+   "plantedPii": [
+    "MOHD SHAHRUL NIZAM B. ROSLI",
+    "No 45 , Jln Teratai 3 , Tmn Teratai , 34000 Taiping , Perak",
+    "013-5552 819O",
+    "shahrulnizam.rosli@example.my",
+    "870311-08-5417",
+    "UMUR : 38",
+    "JANTINA : Lelaki",
+    "TARAF    : Berkahwin",
+    "BANGSA : Melayu",
+    "AGAMA : lslam",
+    "En. Zulkarnain b. Hashim",
+    "05-555 8301"
+   ]
+  },
+  {
+   "id": "c46-admin-keyword-stuffed",
+   "file": "cases/c46-admin-keyword-stuffed.txt",
+   "tier": "messy",
+   "summary": "Admin executive at a Johor Bahru logistics firm whose headline and skills list stuff every finance, ESG and data keyword; very short.",
+   "language": "en",
+   "messiness": [
+    "extreme keyword stuffing (22 skills, none shown)",
+    "very short",
+    "headline not matching the job"
+   ],
+   "expectedOccupation": "other",
+   "acceptableOccupations": [],
+   "required": [],
+   "acceptable": [
+    {
+     "skill": "excel",
+     "levelMax": 2,
+     "why": "Updates staff attendance in Excel."
+    },
+    {
+     "skill": "fin",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "treasury",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "esgdata",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "ghg",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "lca",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "audit2",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "python",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "sql",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "viz",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "prompt",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "erp",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "procure",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "scm",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "invent",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "auto",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "tax",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    },
+    {
+     "skill": "greenfin",
+     "levelMax": 1,
+     "why": "Only in the stuffed headline / skills list."
+    }
+   ],
+   "plantedPii": [
+    "ALYA BALQIS",
+    "alya.balqis@example.com",
+    "011-555 30 71"
+   ]
+  },
+  {
+   "id": "c47-plantation-esg-twocol",
+   "file": "cases/c47-plantation-esg-twocol.txt",
+   "tier": "messy",
+   "summary": "Sustainability officer at a Tawau palm-oil group (ex-estate clerk); two-column PDF extraction in BM/English.",
+   "language": "mixed",
+   "messiness": [
+    "two-column interleave",
+    "repeated headers/footers ('ms 1 / 2')",
+    "OCR error (Exce1)",
+    "BM/English mixing",
+    "keyword stuffing (LCA, Python, ESG investing)",
+    "trap: MSPO internal audit (certification audit, not controls testing)"
+   ],
+   "expectedOccupation": "esgRole",
+   "acceptableOccupations": [],
+   "required": [
+    {
+     "skill": "esgdata",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Kumpul data bulanan dari 9 ladang & 2 kilang:",
+     "why": "Collects monthly data from 11 units and checks anomalies with managers."
+    },
+    {
+     "skill": "ghg",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Run PalmGHG calculator for RSPO annual",
+     "why": "Runs PalmGHG and traces inputs to fuel logs and issue notes."
+    },
+    {
+     "skill": "disc",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Draf bahagian alam sekitar dlm laporan",
+     "why": "Drafts the environmental section of the annual sustainability report."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "audit2",
+     "levelMax": 3,
+     "why": "MSPO/RSPO internal audits are certification compliance audits, not business controls testing."
+    },
+    {
+     "skill": "invent",
+     "levelMax": 2,
+     "why": "Recorded fertiliser and pesticide stock as estate clerk."
+    },
+    {
+     "skill": "excel",
+     "levelMax": 2,
+     "why": "'Exce1' listed only."
+    },
+    {
+     "skill": "viz",
+     "levelMax": 1,
+     "why": "Power BI listed only."
+    },
+    {
+     "skill": "lca",
+     "levelMax": 1,
+     "why": "Listed only."
+    },
+    {
+     "skill": "python",
+     "levelMax": 1,
+     "why": "Listed only."
+    },
+    {
+     "skill": "greenfin",
+     "levelMax": 1,
+     "why": "'ESG investing' listed only."
+    }
+   ],
+   "plantedPii": [
+    "ZAINAB BINTI HARUN",
+    "900415-12-5086",
+    "Tarikh Lahir: 15 April 1990",
+    "Lot 7, Taman Mesra,",
+    "91000 Tawau, Sabah",
+    "019-555 6127",
+    "zainab.harun@example.my",
+    "Agama: Islam | Status: Berkahwin",
+    "Setiausaha, Persatuan Ibu Bapa & Guru SK Taman Mesra",
+    "Tn. Hj. Rosli b. Abdullah",
+    "089-555 712"
+   ]
+  },
+  {
+   "id": "c48-storekeeper-manglish",
+   "file": "cases/c48-storekeeper-manglish.txt",
+   "tier": "messy",
+   "summary": "Storekeeper at a Masai fabrication shop; very short Manglish CV with no email.",
+   "language": "mixed",
+   "messiness": [
+    "very short (under 100 words)",
+    "Manglish",
+    "no email",
+    "trap: ordering consumables (not strategic sourcing)",
+    "receiving check (not three-way match)"
+   ],
+   "expectedOccupation": "other",
+   "acceptableOccupations": [
+    "invRole"
+   ],
+   "required": [],
+   "acceptable": [
+    {
+     "skill": "invent",
+     "levelMax": 2,
+     "why": "Monthly stock count, stock cards and yearly slow-moving list: basic stock keeping."
+    },
+    {
+     "skill": "three",
+     "levelMax": 1,
+     "why": "Checks material against PO and DO and signs GRN: receiving only."
+    },
+    {
+     "skill": "excel",
+     "levelMax": 1,
+     "why": "Updates stock in Excel."
+    }
+   ],
+   "plantedPii": [
+    "KUMAR A/L PERUMAL",
+    "012 555 4419",
+    "Taman Rinting, Masai, Johor"
+   ]
+  },
+  {
+   "id": "c49-bank-teller-messy",
+   "file": "cases/c49-bank-teller-messy.txt",
+   "tier": "messy",
+   "summary": "Bank teller / customer service officer in Kota Bharu aiming at treasury; messy formatting and wrapped bullets.",
+   "language": "mixed",
+   "messiness": [
+    "broken line wraps",
+    "aspiration headline ('Treasury officer') vs actual job",
+    "trap: teller cash and vault counts (not treasury)",
+    "trap: youth association treasurer",
+    "spaced punctuation"
+   ],
+   "expectedOccupation": "other",
+   "acceptableOccupations": [],
+   "required": [],
+   "acceptable": [
+    {
+     "skill": "audit",
+     "levelMax": 1,
+     "why": "Assists the Ops Manager's vault cash count and surprise cash audit."
+    }
+   ],
+   "plantedPii": [
+    "SITI NORHAYATI BT JAAFAR",
+    "950812-03-5094",
+    "umur 31 / perempuan / bujang",
+    "019 555 2263",
+    "norhayati.jaafar95@example.my",
+    "Bendahari , Persatuan Belia Kampung Sireh"
+   ]
+  },
+  {
+   "id": "c50-account-assistant-twocol",
+   "file": "cases/c50-account-assistant-twocol.txt",
+   "tier": "messy",
+   "summary": "Account assistant (full set) at a Bukit Mertajam hardware trader; two-column PDF extraction with hyphen breaks.",
+   "language": "en",
+   "messiness": [
+    "two-column interleave",
+    "hyphen breaks (Hard-/ware, on-/line)",
+    "OCR error (Exce1)",
+    "trap: 'SQL Accounting' (not SQL)",
+    "trap: chamber youth treasurer",
+    "keyword stuffing (Power BI, Python)"
+   ],
+   "expectedOccupation": "ap",
+   "acceptableOccupations": [
+    "other"
+   ],
+   "required": [
+    {
+     "skill": "inv",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Key in purchase invoices, cash",
+     "why": "Keys purchase invoices and vouchers daily."
+    },
+    {
+     "skill": "recon",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Settle supplier statement vs",
+     "why": "Reconciles supplier statements to the creditor ledger monthly."
+    },
+    {
+     "skill": "tax",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Prepare SST-02 return every 2",
+     "why": "Prepares SST-02 for the tax agent's review."
+    },
+    {
+     "skill": "pay",
+     "levelMin": 2,
+     "levelMax": 3,
+     "quote": "Prepare payment cheques & on-",
+     "why": "Prepares cheques and transfers for the boss's approval."
+    }
+   ],
+   "acceptable": [
+    {
+     "skill": "audit",
+     "levelMax": 2,
+     "why": "Prepares documents for external auditor and tax agent."
+    },
+    {
+     "skill": "erp",
+     "levelMax": 2,
+     "why": "SQL Accounting and AutoCount are small accounting packages."
+    },
+    {
+     "skill": "excel",
+     "levelMax": 2,
+     "why": "'Exce1' listed only."
+    },
+    {
+     "skill": "viz",
+     "levelMax": 1,
+     "why": "Power BI listed only."
+    },
+    {
+     "skill": "python",
+     "levelMax": 1,
+     "why": "'Python (self learn)' listed only."
+    }
+   ],
+   "plantedPii": [
+    "YEOH SIEW LAN",
+    "016-555 0384",
+    "siewlan.yeoh@example.com",
+    "12, Lorong Kenari 4, Taman",
+    "Kenari, 14000 Bukit Mertajam",
+    "960204-07-5310",
+    "Age 30 / Female / Chinese",
+    "Treasurer, Bukit Mertajam",
+    "Chinese Chamber Youth"
+   ]
+  }
+ ]
+}
