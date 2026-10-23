@@ -15,7 +15,7 @@
     },
     "baselineNearestNeighbour": {
       "pearson": 0.565,
-      "spearman": 0.591,
+      "spearman": 0.59,
       "mae": 0.176,
       "n": 3959
     },
@@ -28,7 +28,7 @@
   },
   "perOccupation": {
     "model": {
-      "pearson": 0.918,
+      "pearson": 0.919,
       "spearman": 0.916,
       "mae": 0.065,
       "n": 185
@@ -40,9 +40,9 @@
       "n": 185
     },
     "baselineNearestNeighbour": {
-      "pearson": 0.881,
-      "spearman": 0.88,
-      "mae": 0.07,
+      "pearson": 0.88,
+      "spearman": 0.879,
+      "mae": 0.071,
       "n": 185
     },
     "referenceGpt4Labels": {
@@ -53,24 +53,24 @@
     }
   },
   "run": {
-    "where": "local",
-    "runpodPodId": null,
-    "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "where": "runpod",
+    "runpodPodId": "38jijj8fe5dazu",
+    "gpu": "NVIDIA GeForce RTX 4090",
     "device": "cuda",
     "torch": "2.6.0+cu124",
-    "python": "3.12.10",
-    "host": "DESKTOP-9MP67PD",
-    "time": "2026-10-23T03:18:47+0800"
+    "python": "3.11.10",
+    "host": "runpod",
+    "time": "2026-10-23T18:22:53+0000"
   },
   "modelRun": {
-    "where": "local",
-    "runpodPodId": null,
-    "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "where": "runpod",
+    "runpodPodId": "38jijj8fe5dazu",
+    "gpu": "NVIDIA GeForce RTX 4090",
     "device": "cuda",
     "torch": "2.6.0+cu124",
-    "python": "3.12.10",
-    "host": "DESKTOP-9MP67PD",
-    "time": "2026-10-23T03:18:44+0800"
+    "python": "3.11.10",
+    "host": "runpod",
+    "time": "2026-10-23T18:22:51+0000"
   },
   "sample": null,
   "catalogue": {
@@ -79,7 +79,7 @@
         "skill": "inv",
         "task": "Capture invoice fields from PDFs",
         "sampleMode": "ai",
-        "predicted": 0.32
+        "predicted": 0.321
       },
       {
         "skill": "inv",
@@ -163,7 +163,7 @@
         "skill": "erp",
         "task": "Fix workflow errors",
         "sampleMode": "human",
-        "predicted": 0.647
+        "predicted": 0.646
       },
       {
         "skill": "dispute",
@@ -217,7 +217,7 @@
         "skill": "audit",
         "task": "Answer auditor questions",
         "sampleMode": "human",
-        "predicted": 0.793
+        "predicted": 0.792
       },
       {
         "skill": "recon",
@@ -229,19 +229,19 @@
         "skill": "recon",
         "task": "Investigate unexplained differences",
         "sampleMode": "assist",
-        "predicted": 0.539
+        "predicted": 0.538
       },
       {
         "skill": "recon",
         "task": "Trace numbers to source documents",
         "sampleMode": "human",
-        "predicted": 0.7
+        "predicted": 0.701
       },
       {
         "skill": "excel",
         "task": "Build pivot summaries",
         "sampleMode": "ai",
-        "predicted": 0.611
+        "predicted": 0.61
       },
       {
         "skill": "excel",
@@ -259,7 +259,7 @@
         "skill": "fin",
         "task": "Build forecasts",
         "sampleMode": "assist",
-        "predicted": 0.527
+        "predicted": 0.526
       },
       {
         "skill": "fin",
@@ -307,7 +307,7 @@
         "skill": "esgdata",
         "task": "Agree data owners and controls",
         "sampleMode": "human",
-        "predicted": 0.536
+        "predicted": 0.535
       },
       {
         "skill": "ghg",
@@ -319,7 +319,7 @@
         "skill": "ghg",
         "task": "Apply emission factors",
         "sampleMode": "ai",
-        "predicted": 0.359
+        "predicted": 0.358
       },
       {
         "skill": "ghg",
@@ -343,7 +343,7 @@
         "skill": "disc",
         "task": "Judge materiality with management",
         "sampleMode": "human",
-        "predicted": 0.33
+        "predicted": 0.329
       },
       {
         "skill": "aisup",
@@ -373,7 +373,7 @@
         "skill": "auto",
         "task": "Choose which steps to automate",
         "sampleMode": "human",
-        "predicted": 0.444
+        "predicted": 0.443
       },
       {
         "skill": "auto",
@@ -397,7 +397,7 @@
         "skill": "prompt",
         "task": "Check AI output for errors",
         "sampleMode": "human",
-        "predicted": 0.391
+        "predicted": 0.392
       },
       {
         "skill": "aiinv",
@@ -409,7 +409,7 @@
         "skill": "aiinv",
         "task": "Resolve exceptions AI can't match",
         "sampleMode": "human",
-        "predicted": 0.363
+        "predicted": 0.364
       },
       {
         "skill": "aiinv",
@@ -445,7 +445,7 @@
         "skill": "python",
         "task": "Automate repeat analysis",
         "sampleMode": "assist",
-        "predicted": 0.566
+        "predicted": 0.565
       },
       {
         "skill": "python",
@@ -511,13 +511,13 @@
         "skill": "audit2",
         "task": "Pull samples and evidence",
         "sampleMode": "ai",
-        "predicted": 0.331
+        "predicted": 0.33
       },
       {
         "skill": "audit2",
         "task": "Test controls",
         "sampleMode": "assist",
-        "predicted": 0.248
+        "predicted": 0.247
       },
       {
         "skill": "audit2",
@@ -559,7 +559,7 @@
         "skill": "procure",
         "task": "Negotiate contracts",
         "sampleMode": "human",
-        "predicted": 0.391
+        "predicted": 0.39
       },
       {
         "skill": "scm",
@@ -589,13 +589,13 @@
         "skill": "invent",
         "task": "Find slow-moving stock",
         "sampleMode": "assist",
-        "predicted": 0.197
+        "predicted": 0.196
       },
       {
         "skill": "invent",
         "task": "Decide what to write off or discount",
         "sampleMode": "human",
-        "predicted": 0.732
+        "predicted": 0.731
       }
     ],
     "meanByMode": {
@@ -613,18 +613,18 @@
       "process": 0.395,
       "audit": 0.55,
       "recon": 0.595,
-      "excel": 0.547,
-      "fin": 0.626,
+      "excel": 0.546,
+      "fin": 0.625,
       "viz": 0.259,
-      "esgdata": 0.406,
-      "ghg": 0.428,
+      "esgdata": 0.405,
+      "ghg": 0.427,
       "disc": 0.611,
       "aisup": 0.42,
       "auto": 0.351,
       "prompt": 0.578,
       "aiinv": 0.369,
       "sql": 0.729,
-      "python": 0.596,
+      "python": 0.595,
       "stats": 0.498,
       "lca": 0.472,
       "greenfin": 0.432,
@@ -632,7 +632,7 @@
       "treasury": 0.359,
       "procure": 0.448,
       "scm": 0.368,
-      "invent": 0.413
+      "invent": 0.412
     }
   }
 }

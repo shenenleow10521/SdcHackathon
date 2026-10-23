@@ -1,0 +1,42 @@
+{
+  "final": true,
+  "note": "Final training run of the AI-exposure model, on RunPod as the hackathon requires. exposure_model.json, eval.json, split.json and runpod_run.log come from this run. The *_local.json files are the earlier development run on a local RTX 4070 Laptop GPU, kept for comparison (same data, same split, same numbers to 3 decimals except per-occupation r 0.918 local vs 0.919 RunPod).",
+  "where": "runpod",
+  "cloud": "SECURE",
+  "podId": "38jijj8fe5dazu",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "image": "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04 (torch upgraded to 2.6.0+cu124 in the pod)",
+  "costPerHrUsd": 0.89,
+  "podStartedAt": "2026-10-23T18:20:57Z",
+  "pipelineStartedAt": "2026-10-23T18:20:59Z",
+  "pipelineFinishedAt": "2026-10-23T18:22:59Z",
+  "podTerminatedAt": "2026-10-23T18:23:28Z",
+  "podMinutes": 2.5,
+  "estimatedCostUsd": 0.04,
+  "embeddingSeconds": 3.9,
+  "failedAttempts": [
+    {
+      "podId": "uuwdb5w112cnjj",
+      "gpu": "NVIDIA A40",
+      "cloud": "SECURE",
+      "costPerHrUsd": 0.59,
+      "startedAt": "2026-10-23T18:17:54Z",
+      "reason": "image torch 2.4 too old for current transformers to load bge-m3 weights",
+      "terminated": true
+    },
+    {
+      "podId": "urxftqdjs0xm4i",
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "cloud": "SECURE",
+      "costPerHrUsd": 0.89,
+      "startedAt": "2026-10-23T18:19:20Z",
+      "reason": "image torchvision built for torch 2.4 broke transformers import after torch upgrade",
+      "terminated": true
+    }
+  ],
+  "accountBalanceUsd": {
+    "before": 22.49,
+    "after": 22.43,
+    "note": "drop of about US$0.07 covers all three pods (and any serverless embedding calls in the same minutes)"
+  }
+}

@@ -66,11 +66,13 @@ def bundle() -> str:
     return base64.b64encode(buf.getvalue()).decode()
 
 
+# torch 2.6 (same as the local run): newer transformers refuses to load .bin weights on torch < 2.6.
+# The image's torchvision/torchaudio are built for torch 2.4 and break transformers imports, so remove them (text only).
 START = r"""set -o pipefail
 mkdir -p /workspace/out && cd /workspace && echo "$ML_BUNDLE" | base64 -d | tar xz
 cd /workspace/repo/ml && mkdir -p artifacts
 ( echo "== start $(date -u)"; nvidia-smi --query-gpu=name,memory.total --format=csv;
-  pip install -q -r requirements.txt && python prepare_data.py && python embed.py && python train.py && python evaluate.py \
+  pip uninstall -y -q torchvision torchaudio && pip install -q torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124 && pip install -q -r requirements.txt && python prepare_data.py && python embed.py && python train.py && python evaluate.py \
   && echo "== DONE $(date -u)" || echo "== FAILED $(date -u)" ) 2>&1 | grep --line-buffered -v "Batches" | tee artifacts/run.log
 cd artifacts && python -m http.server 8000
 """
