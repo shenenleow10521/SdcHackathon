@@ -1,0 +1,60 @@
+{
+  "_note": "Recorded live from https://ec.europa.eu/esco/api/search?text=carbon%20accountant&type=occupation&language=en&limit=5 on 2026-10-23; preferredLabel trimmed to en.",
+  "total": 75,
+  "offset": 0,
+  "limit": 5,
+  "text": "carbon accountant",
+  "language": "en",
+  "type": [
+    "occupation"
+  ],
+  "_embedded": {
+    "results": [
+      {
+        "className": "Occupation",
+        "uri": "http://data.europa.eu/esco/occupation/6e11692c-fc72-4ef4-8bcf-6bd19a6b0ea3",
+        "searchHit": "beverage carbonation worker",
+        "title": "carbonation operator",
+        "preferredLabel": {
+          "en": "carbonation operator"
+        }
+      },
+      {
+        "className": "Occupation",
+        "uri": "http://data.europa.eu/esco/occupation/eda0d957-3c3c-4139-b89a-a18bc9e18897",
+        "searchHit": "accounting technician",
+        "title": "accountant",
+        "preferredLabel": {
+          "en": "accountant"
+        }
+      },
+      {
+        "className": "Occupation",
+        "uri": "http://data.europa.eu/esco/occupation/bfe142b9-a049-4d41-89c4-fd2f34ac56b6",
+        "searchHit": "assistant accountant",
+        "title": "accounting assistant",
+        "preferredLabel": {
+          "en": "accounting assistant"
+        }
+      },
+      {
+        "className": "Occupation",
+        "uri": "http://data.europa.eu/esco/occupation/78db356f-a96a-4456-ab29-2de62e52f830",
+        "searchHit": "finance accountant of government administration",
+        "title": "public finance accountant",
+        "preferredLabel": {
+          "en": "public finance accountant"
+        }
+      },
+      {
+        "className": "Occupation",
+        "uri": "http://data.europa.eu/esco/occupation/5e5b1b61-1351-4d3b-a293-deb3661715dd",
+        "searchHit": "accountant",
+        "title": "financial controller",
+        "preferredLabel": {
+          "en": "financial controller"
+        }
+      }
+    ]
+  }
+}

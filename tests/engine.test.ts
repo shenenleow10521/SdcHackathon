@@ -1,0 +1,163 @@
+import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { createEngine, displayWeeks, MODES, stressTest, FUTURES, PARAMS, yearOf, HAVE_LEVEL } from "../shared/engine.js";
+import { seedGraph, persona, knowledge } from "./helpers/seed-graph.ts";
+
+const golden = JSON.parse(readFileSync(new URL("./fixtures/golden.json", import.meta.url), "utf8"));
+
+describe("engine matches the prototype exactly", () => {
+  for (const c of golden.cases) {
+    const label = `${c.year} ${c.scenario}${c.signal ? " +signal" : ""}`;
+    it(label, () => {
+      const g = seedGraph(c.signal ? { e: { [golden.signalNode]: golden.signalBoost } } : {});
+      const E = createEngine(g, persona, { year: c.year, scenario: c.scenario });
+      for (const [job, m] of Object.entries(c.match)) expect(E.match(job), `match ${job}`).toBe(m);
+      for (const [job, r] of Object.entries(c.rank)) expect(Math.round(E.rankScore(job) * 1000) / 1000, `rank ${job}`).toBeCloseTo(r as number, 3);
+      expect(Object.keys(g.nodes).filter(k => E.taken(k)).sort()).toEqual([...c.taken].sort());
+      expect(E.futureScore()).toBe(c.futureScore);
+      expect(E.sectorJobs("best")).toEqual(c.best);
+      for (const [k, p] of Object.entries<any>(c.plans)) {
+        const [job, mode] = k.split(":");
+        const got = E.planFor(job, mode);
+        expect(got.route ? got.route.key : null, `route ${k}`).toBe(p.key);
+        expect(got.core, `core ${k}`).toBe(p.core);
+        expect(got.ready, `ready ${k}`).toBe(p.ready);
+        expect(got.ups.map(u => u.id)).toEqual(p.ups);
+        expect(got.extras.map(x => x.id + "/" + x.kind)).toEqual(p.extras);
+      }
+    });
+  }
+});
+
+describe("engine behaviour", () => {
+  const g = seedGraph();
+  it("ESG fastest route is recon → ghg → esgRole in 6 weeks, and reroutes after the reconciliation signal", () => {
+    const before = createEngine(g, persona).shortestPath("esgRole", "fastest")!;
+    expect(before.key).toBe("ap>recon>ghg>esgRole");
+    expect(before.weeks).toBe(6);
+    const after = createEngine(seedGraph({ e: { recon: 0.18 } }), persona).shortestPath("esgRole", "fastest")!;
+    expect(after.key).toBe("ap>audit>disc>esgRole");
+    expect(after.weeks).toBe(7);
+  });
+
+  it("never routes through a taken skill (closed road)", () => {
+    const E = createEngine(g, persona, { year: 2030, scenario: "fast" });
+    for (const job of E.allJobs()) for (const mode of MODES) {
+      const r = E.shortestPath(job, mode);
+      if (r) for (const n of r.nodes.slice(1, -1)) expect(E.taken(n), `${job} ${mode} via ${n}`).toBe(false);
+    }
+  });
+
+  it("jobs are never stopovers", () => {
+    const E = createEngine(g, persona);
+    for (const job of E.allJobs()) {
+      const r = E.shortestPath(job, "fastest");
+      if (r) expect(r.nodes.slice(1, -1).every(n => g.nodes[n].type === "skill")).toBe(true);
+    }
+  });
+
+  it("match is 0–100 and rises when a required skill level rises", () => {
+    const E = createEngine(g, persona);
+    for (const j of E.allJobs()) { const m = E.match(j); expect(m).toBeGreaterThanOrEqual(0); expect(m).toBeLessThanOrEqual(100); }
+    const better = createEngine(g, { ...persona, level: { ...persona.level, ghg: 3 } });
+    expect(better.match("esgRole")).toBeGreaterThan(E.match("esgRole"));
+  });
+
+  it("one level for every job: catalogue requirements all need level 3, and a skill counts as yours at 3", () => {
+    expect(HAVE_LEVEL).toBe(3);
+    for (const rs of Object.values<any[]>(g.req)) for (const r of rs) expect(r.need).toBe(HAVE_LEVEL);
+    const E = createEngine(g, { ...persona, level: { ...persona.level, process: 2 } });
+    expect(E.owned("process")).toBe(true);   // started: on the map and a route start
+    expect(E.has("process")).toBe(false);    // but not yet yours
+    expect(E.has("recon")).toBe(true);       // level 4
+    expect(E.coverage("process", 3)).toBeCloseTo(2 / 3, 5); // partial credit below the bar
+    expect(E.planFor("opsRole", "fastest").ups).toContainEqual({ id: "process", from: 2, to: 3, weeks: 1 });
+    expect(createEngine(g, { ...persona, level: { ...persona.level, process: 3 } }).has("process")).toBe(true);
+  });
+
+  it("unconfirmed emerging skills count at half weight", () => {
+    const E = createEngine(g, persona);
+    const prompt = E.matchBreakdown("stayRole").find(r => r.skill === "prompt")!;
+    expect(prompt.effectiveWeight).toBe(prompt.weight * 0.5);
+    const aisup = E.matchBreakdown("faRole").find(r => r.skill === "aisup")!;
+    expect(aisup.effectiveWeight).toBe(aisup.weight); // confirmed
+  });
+
+  it("alternatives are distinct from the best route", () => {
+    const E = createEngine(g, persona);
+    const best = E.shortestPath("esgRole", "fastest")!;
+    const alts = E.alternatives("esgRole", "fastest");
+    expect(alts.length).toBeGreaterThan(0);
+    for (const a of alts) expect(a.key).not.toBe(best.key);
+  });
+
+  it("a profile with no skills still works (no crash, low match)", () => {
+    const E = createEngine(g, { occupationId: "ap", level: {} });
+    expect(E.futureScore()).toBe(0);
+    expect(E.match("esgRole")).toBe(0);
+    expect(E.shortestPath("esgRole", "fastest")).toBeNull();
+  });
+
+  it("rejects unknown occupations", () => {
+    expect(() => createEngine(g, { occupationId: "nope", level: {} })).toThrow();
+  });
+
+  it("scales weeks to the user's hours", () => {
+    expect(displayWeeks(6, 6)).toBe(6);
+    expect(displayWeeks(6, 12)).toBe(3);
+    expect(displayWeeks(1, 40)).toBe(1);
+    expect(displayWeeks(0, 6)).toBe(0);
+  });
+});
+
+describe("future stress test", () => {
+  const today = yearOf("2026-10-23");
+
+  it("has 18 distinct futures: 3 AI speeds × 2 exposure estimates × 3 study paces", () => {
+    expect(FUTURES).toHaveLength(18);
+    expect(new Set(FUTURES.map(f => f.id)).size).toBe(18);
+  });
+
+  it("slow AI moves exposure half as far as Moderate by 2030", () => {
+    const g = seedGraph();
+    const [e0, e1] = g.nodes.recon.e;
+    const slow = createEngine(g, persona, { year: 2030, scenario: "slow" }).exposure("recon");
+    expect(slow).toBeCloseTo(e0 + (e1 - e0) * PARAMS.slowFactor, 6);
+    expect(createEngine(g, persona, { year: 2030, scenario: "moderate", shiftE: 0.1 }).exposure("recon")).toBeCloseTo(e1 + 0.1, 6);
+  });
+
+  it("a short plan with no deadline survives every future", () => {
+    expect(stressTest(seedGraph(), persona, "esgRole", "fastest", { startYear: today }).works).toBe(18);
+  });
+
+  it("fails 'ready' when a slower study pace misses the deadline", () => {
+    const r = stressTest(seedGraph(), persona, "dataRole", "fastest", { startYear: today, deadlineYear: yearOf("2027-04-23") });
+    expect(r.works).toBe(12);
+    expect(r.patterns).toEqual([{ check: "ready", skill: null, count: 6 }]);
+    expect(r.futures.filter((f: any) => !f.ok).every((f: any) => f.pace === 0.5)).toBe(true);
+  });
+
+  it("fails 'open' when AI takes over a route skill before you reach it, and suggests a sturdier route", () => {
+    const r = stressTest(seedGraph({ e: { recon: 0.05 } }), persona, "esgRole", "fastest", { startYear: 2029.6 });
+    expect(r.works).toBe(9);
+    expect(r.patterns).toEqual([{ check: "open", skill: "recon", count: 9 }]);
+    expect(r.sturdier[0]).toMatchObject({ kind: "mode", works: 18 });
+    expect(r.sturdier[0].route.nodes).not.toContain("recon");
+  });
+
+  it("fails 'worth' when demand for the job falls", () => {
+    const r = stressTest(seedGraph({ d: { esgRole: -100 } }), persona, "esgRole", "fastest", { startYear: today });
+    expect(r.works).toBe(0);
+    expect(r.patterns[0]).toMatchObject({ check: "worth", count: 18 });
+  });
+});
+
+describe("SDG mapping (README must-have)", () => {
+  it("every job and skill has at least one SDG tag with a reason, using a goal the app defines", () => {
+    const goals = new Set(Object.keys(knowledge.sdgs).map(Number));
+    const tags = [...knowledge.occupations.flatMap((o: any) => o.sdg), ...knowledge.skills.map((s: any) => s.sdg)];
+    expect(knowledge.occupations.every((o: any) => o.sdg.length > 0)).toBe(true);
+    expect(knowledge.skills.every((s: any) => Array.isArray(s.sdg))).toBe(true);
+    for (const [goal, why] of tags) { expect(goals.has(goal)).toBe(true); expect(String(why).trim().length).toBeGreaterThan(5); }
+  });
+});

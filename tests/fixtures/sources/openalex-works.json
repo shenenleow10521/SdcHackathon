@@ -1,0 +1,1013 @@
+{
+ "meta": {
+  "count": 365,
+  "page": 1,
+  "per_page": 2
+ },
+ "results": [
+  {
+   "id": "https://openalex.org/W7221892293",
+   "doi": "https://doi.org/10.48550/arxiv.2610.19693",
+   "title": "ReFormBench: Benchmarking the Stability of Response-Conditioned Format Correction in Large Language Models",
+   "display_name": "ReFormBench: Benchmarking the Stability of Response-Conditioned Format Correction in Large Language Models",
+   "publication_date": "2026-10-14",
+   "type": "preprint",
+   "primary_location": {
+    "landing_page_url": "https://arxiv.org/abs/2610.19693",
+    "source": {
+     "display_name": "arXiv (Cornell University)"
+    }
+   },
+   "authorships": [
+    {
+     "author": {
+      "display_name": "Tianxiang Gao"
+     },
+     "institutions": [
+      {
+       "display_name": "Jilin University"
+      }
+     ]
+    },
+    {
+     "author": {
+      "display_name": "Yahan Li"
+     },
+     "institutions": [
+      {
+       "display_name": "China Telecom"
+      }
+     ]
+    }
+   ],
+   "abstract_inverted_index": {
+    "66": [
+     84
+    ],
+    "910": [
+     79
+    ],
+    "Reliable": [
+     0
+    ],
+    "use": [
+     1
+    ],
+    "of": [
+     2,
+     99,
+     149,
+     166
+    ],
+    "large": [
+     3
+    ],
+    "language": [
+     4
+    ],
+    "models": [
+     5
+    ],
+    "requires": [
+     6
+    ],
+    "responses": [
+     7
+    ],
+    "to": [
+     8,
+     48,
+     102,
+     114
+    ],
+    "satisfy": [
+     9
+    ],
+    "formatting": [
+     10,
+     54,
+     85
+    ],
+    "requirements": [
+     11,
+     67
+    ],
+    "across": [
+     12,
+     35,
+     68,
+     160
+    ],
+    "changing": [
+     13
+    ],
+    "instructions.": [
+     14
+    ],
+    "Standard": [
+     15
+    ],
+    "compliance": [
+     16
+    ],
+    "scores": [
+     17,
+     127
+    ],
+    "do": [
+     18
+    ],
+    "not": [
+     19
+    ],
+    "distinguish": [
+     20
+    ],
+    "preserving": [
+     21
+    ],
+    "a": [
+     22,
+     40,
+     163
+    ],
+    "model's": [
+     23,
+     45
+    ],
+    "observed": [
+     24
+    ],
+    "format": [
+     25,
+     167
+    ],
+    "from": [
+     26,
+     78,
+     112
+    ],
+    "correcting": [
+     27
+    ],
+    "it,": [
+     28
+    ],
+    "or": [
+     29
+    ],
+    "reveal": [
+     30
+    ],
+    "whether": [
+     31
+    ],
+    "that": [
+     32,
+     42
+    ],
+    "correction": [
+     33,
+     98,
+     120,
+     126,
+     159
+    ],
+    "holds": [
+     34
+    ],
+    "variants.": [
+     36,
+     69
+    ],
+    "We": [
+     37
+    ],
+    "introduce": [
+     38
+    ],
+    "ReFormBench,": [
+     39
+    ],
+    "benchmark": [
+     41
+    ],
+    "uses": [
+     43
+    ],
+    "each": [
+     44
+    ],
+    "unconstrained": [
+     46
+    ],
+    "response": [
+     47
+    ],
+    "the": [
+     49,
+     103,
+     117,
+     144
+    ],
+    "same": [
+     50
+    ],
+    "question": [
+     51
+    ],
+    "as": [
+     52
+    ],
+    "its": [
+     53
+    ],
+    "baseline.": [
+     55
+    ],
+    "It": [
+     56
+    ],
+    "links": [
+     57
+    ],
+    "targets": [
+     58,
+     100
+    ],
+    "by": [
+     59
+    ],
+    "feature": [
+     60
+    ],
+    "and": [
+     61,
+     82,
+     96,
+     116,
+     125,
+     132,
+     143,
+     171
+    ],
+    "require/forbid": [
+     62
+    ],
+    "mode,": [
+     63
+    ],
+    "evaluating": [
+     64
+    ],
+    "their": [
+     65
+    ],
+    "instantiated": [
+     66
+    ],
+    "ReFormBench": [
+     70,
+     156
+    ],
+    "comprises": [
+     71
+    ],
+    "5,000": [
+     72
+    ],
+    "difficulty-screened": [
+     73
+    ],
+    "three-constraint": [
+     74
+    ],
+    "test": [
+     75
+    ],
+    "instances": [
+     76,
+     151
+    ],
+    "derived": [
+     77
+    ],
+    "source": [
+     80
+    ],
+    "questions": [
+     81
+    ],
+    "covering": [
+     83
+    ],
+    "features.": [
+     86
+    ],
+    "TCPR": [
+     87
+    ],
+    "measures": [
+     88,
+     94
+    ],
+    "complete": [
+     89
+    ],
+    "instruction": [
+     90,
+     161
+    ],
+    "compliance,": [
+     91
+    ],
+    "while": [
+     92
+    ],
+    "EMCR": [
+     93,
+     110
+    ],
+    "individual": [
+     95
+    ],
+    "joint": [
+     97
+    ],
+    "opposed": [
+     101
+    ],
+    "annotated": [
+     104
+    ],
+    "baseline": [
+     105
+    ],
+    "state.": [
+     106
+    ],
+    "Across": [
+     107
+    ],
+    "ten": [
+     108
+    ],
+    "models,": [
+     109
+    ],
+    "ranges": [
+     111
+    ],
+    "34.04%": [
+     113
+    ],
+    "64.72%,": [
+     115
+    ],
+    "highest": [
+     118
+    ],
+    "three-target": [
+     119
+    ],
+    "estimate": [
+     121
+    ],
+    "is": [
+     122
+    ],
+    "50.02%.": [
+     123
+    ],
+    "Compliance": [
+     124
+    ],
+    "yield": [
+     128
+    ],
+    "different": [
+     129
+    ],
+    "model": [
+     130
+    ],
+    "rankings": [
+     131
+    ],
+    "task-level": [
+     133
+    ],
+    "profiles.": [
+     134
+    ],
+    "A": [
+     135
+    ],
+    "prompting": [
+     136
+    ],
+    "experiment": [
+     137
+    ],
+    "on": [
+     138,
+     152
+    ],
+    "Qwen3.5-9B": [
+     139
+    ],
+    "improves": [
+     140
+    ],
+    "both": [
+     141
+    ],
+    "metrics,": [
+     142
+    ],
+    "catalog": [
+     145
+    ],
+    "covers": [
+     146
+    ],
+    "over": [
+     147
+    ],
+    "95%": [
+     148
+    ],
+    "extracted": [
+     150
+    ],
+    "four": [
+     153
+    ],
+    "additional": [
+     154
+    ],
+    "models.": [
+     155
+    ],
+    "makes": [
+     157
+    ],
+    "response-conditioned": [
+     158
+    ],
+    "variants": [
+     162
+    ],
+    "measurable": [
+     164
+    ],
+    "dimension": [
+     165
+    ],
+    "following.": [
+     168
+    ],
+    "The": [
+     169
+    ],
+    "code": [
+     170
+    ],
+    "data": [
+     172
+    ],
+    "are": [
+     173
+    ],
+    "available": [
+     174
+    ],
+    "at": [
+     175
+    ],
+    "https://anonymous.4open.science/r/ReFormBench/.": [
+     176
+    ]
+   }
+  },
+  {
+   "id": "https://openalex.org/W7220840476",
+   "doi": "https://doi.org/10.21275/sr26901122935",
+   "title": "Architectural and Governance Approaches to Controlling Large Language Model Costs in Healthcare Information Systems",
+   "display_name": "Architectural and Governance Approaches to Controlling Large Language Model Costs in Healthcare Information Systems",
+   "publication_date": "2026-10-07",
+   "type": "article",
+   "primary_location": {
+    "landing_page_url": "https://doi.org/10.21275/sr26901122935",
+    "source": {
+     "display_name": "International Journal of Science and Research (IJSR)"
+    }
+   },
+   "authorships": [
+    {
+     "author": {
+      "display_name": "Sachin Bajpai"
+     },
+     "institutions": []
+    }
+   ],
+   "abstract_inverted_index": {
+    "Large": [
+     0
+    ],
+    "language": [
+     1
+    ],
+    "models": [
+     2
+    ],
+    "are": [
+     3
+    ],
+    "entering": [
+     4
+    ],
+    "healthcare": [
+     5,
+     63,
+     154
+    ],
+    "information": [
+     6
+    ],
+    "systems": [
+     7
+    ],
+    "through": [
+     8,
+     123
+    ],
+    "documentation,": [
+     9
+    ],
+    "retrieval,": [
+     10
+    ],
+    "summarization,": [
+     11
+    ],
+    "multimodal": [
+     12
+    ],
+    "interpretation,": [
+     13
+    ],
+    "and": [
+     14,
+     36,
+     49,
+     77,
+     81,
+     100,
+     114,
+     127,
+     129,
+     139,
+     171,
+     177
+    ],
+    "administrative": [
+     15
+    ],
+    "workflows.": [
+     16
+    ],
+    "Their": [
+     17
+    ],
+    "operating": [
+     18
+    ],
+    "costs": [
+     19
+    ],
+    "depend": [
+     20
+    ],
+    "on": [
+     21
+    ],
+    "more": [
+     22
+    ],
+    "than": [
+     23
+    ],
+    "unit": [
+     24
+    ],
+    "pricing": [
+     25
+    ],
+    "because": [
+     26
+    ],
+    "repeated": [
+     27
+    ],
+    "context": [
+     28,
+     92
+    ],
+    "transfers,": [
+     29
+    ],
+    "unnecessary": [
+     30
+    ],
+    "model": [
+     31,
+     69,
+     94,
+     140
+    ],
+    "calls,": [
+     32
+    ],
+    "retries,": [
+     33
+    ],
+    "long": [
+     34
+    ],
+    "outputs,": [
+     35
+    ],
+    "reuse": [
+     37
+    ],
+    "failures": [
+     38
+    ],
+    "accumulate": [
+     39
+    ],
+    "across": [
+     40
+    ],
+    "routine": [
+     41
+    ],
+    "work.": [
+     42
+    ],
+    "This": [
+     43
+    ],
+    "article": [
+     44
+    ],
+    "examines": [
+     45
+    ],
+    "how": [
+     46
+    ],
+    "architectural": [
+     47
+    ],
+    "controls": [
+     48
+    ],
+    "enterprise": [
+     50
+    ],
+    "governance": [
+     51,
+     78
+    ],
+    "can": [
+     52
+    ],
+    "contain": [
+     53
+    ],
+    "that": [
+     54,
+     162
+    ],
+    "expenditure": [
+     55
+    ],
+    "without": [
+     56
+    ],
+    "weakening": [
+     57
+    ],
+    "workflow": [
+     58
+    ],
+    "value.": [
+     59
+    ],
+    "Fourteen": [
+     60
+    ],
+    "sources": [
+     61
+    ],
+    "covering": [
+     62
+    ],
+    "multimodality,": [
+     64
+    ],
+    "AI": [
+     65
+    ],
+    "economics,": [
+     66
+    ],
+    "payer": [
+     67
+    ],
+    "operations,": [
+     68
+    ],
+    "routing,": [
+     70
+    ],
+    "prompt": [
+     71
+    ],
+    "compression,": [
+     72
+    ],
+    "semantic": [
+     73
+    ],
+    "caching,": [
+     74
+    ],
+    "inference": [
+     75
+    ],
+    "serving,": [
+     76
+    ],
+    "were": [
+     79
+    ],
+    "compared": [
+     80
+    ],
+    "synthesized.": [
+     82
+    ],
+    "The": [
+     83,
+     150
+    ],
+    "resulting": [
+     84
+    ],
+    "framework": [
+     85
+    ],
+    "separates": [
+     86
+    ],
+    "cost": [
+     87
+    ],
+    "control": [
+     88
+    ],
+    "into": [
+     89
+    ],
+    "task": [
+     90
+    ],
+    "qualification,": [
+     91
+    ],
+    "management,": [
+     93
+    ],
+    "selection,": [
+     95
+    ],
+    "bounded": [
+     96
+    ],
+    "generation,": [
+     97
+    ],
+    "reusable": [
+     98
+    ],
+    "memory,": [
+     99
+    ],
+    "financial": [
+     101,
+     178
+    ],
+    "accountability.": [
+     102
+    ],
+    "It": [
+     103
+    ],
+    "also": [
+     104
+    ],
+    "connects": [
+     105
+    ],
+    "expected": [
+     106
+    ],
+    "returns": [
+     107
+    ],
+    "agreed": [
+     108
+    ],
+    "before": [
+     109
+    ],
+    "deployment": [
+     110
+    ],
+    "with": [
+     111
+    ],
+    "operational": [
+     112
+    ],
+    "monitoring": [
+     113
+    ],
+    "the": [
+     115,
+     146,
+     181
+    ],
+    "following": [
+     116
+    ],
+    "planning": [
+     117
+    ],
+    "cycle.": [
+     118
+    ],
+    "Payer-specific": [
+     119
+    ],
+    "application": [
+     120
+    ],
+    "is": [
+     121
+    ],
+    "examined": [
+     122
+    ],
+    "claims": [
+     124,
+     133
+    ],
+    "payment": [
+     125
+    ],
+    "integrity": [
+     126
+    ],
+    "appeals": [
+     128
+    ],
+    "grievances,": [
+     130
+    ],
+    "where": [
+     131
+    ],
+    "incremental": [
+     132
+    ],
+    "value,": [
+     134
+    ],
+    "labor": [
+     135
+    ],
+    "capacity,": [
+     136
+    ],
+    "compliance": [
+     137
+    ],
+    "performance,": [
+     138
+    ],
+    "consumption": [
+     141,
+     173
+    ],
+    "must": [
+     142
+    ],
+    "be": [
+     143
+    ],
+    "evaluated": [
+     144
+    ],
+    "against": [
+     145,
+     174
+    ],
+    "existing": [
+     147
+    ],
+    "human": [
+     148
+    ],
+    "process.": [
+     149
+    ],
+    "proposed": [
+     151
+    ],
+    "approach": [
+     152
+    ],
+    "helps": [
+     153
+    ],
+    "organizations": [
+     155
+    ],
+    "assign": [
+     156
+    ],
+    "expensive": [
+     157
+    ],
+    "reasoning": [
+     158
+    ],
+    "only": [
+     159
+    ],
+    "to": [
+     160
+    ],
+    "tasks": [
+     161
+    ],
+    "require": [
+     163
+    ],
+    "it,": [
+     164
+    ],
+    "preserve": [
+     165
+    ],
+    "validated": [
+     166
+    ],
+    "outputs": [
+     167
+    ],
+    "for": [
+     168
+    ],
+    "later": [
+     169
+    ],
+    "use,": [
+     170
+    ],
+    "evaluate": [
+     172
+    ],
+    "clinical,": [
+     175
+    ],
+    "operational,": [
+     176
+    ],
+    "objectives": [
+     179
+    ],
+    "throughout": [
+     180
+    ],
+    "year.": [
+     182
+    ]
+   }
+  }
+ ]
+}

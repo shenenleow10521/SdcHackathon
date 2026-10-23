@@ -1,0 +1,41 @@
+Priya Nair
+Accounts Payable Executive
+SYNTHETIC SAMPLE CV - fictional person created for testing HalaTuju. Not real personal data.
+Phone: +60 12-345 6789 | Email: priya.nair.sample@example.com
+linkedin.com/in/priya-nair-sample
+Address: 23, Jalan Bunga Raya 5, Taman Sri Bunga, 11900 Bayan Lepas, Pulau Pinang
+IC No: 880412-07-5566
+Date of Birth: 12 April 1988
+Gender: Female
+Race: Indian
+Religion: Hindu
+Marital Status: Married
+
+PROFESSIONAL SUMMARY
+Accounts payable professional with 11 years in a shared-services centre in Penang, handling high-volume
+invoice processing for regional entities.
+
+EXPERIENCE
+Senior Accounts Payable Executive, Example Shared Services Sdn Bhd (sample), Bayan Lepas
+Jan 2015 - Present
+- Process about 1,200 supplier invoices a month in SAP S/4HANA, including invoice data entry and GL coding.
+- Perform three-way matching of purchase orders, invoices and goods receipts; resolve price and quantity mismatches.
+- Prepare weekly payment runs and check cash before release.
+- Reconcile vendor statements to the ledger every month and investigate unexplained differences.
+- Prepare SST computations and support the quarterly SST-02 returns.
+- Handle vendor disputes and queries by email and phone.
+- Assemble audit evidence packs for external auditors and keep the document trail complete.
+- Build Excel reports with pivot tables and VLOOKUP for month-end close (RM 12,000 average daily payments tracked).
+
+Accounts Payable Clerk, Sample Trading Sdn Bhd (sample), Butterworth
+Jun 2012 - Dec 2014
+- Data entry of invoices and filing of supporting documents.
+
+EDUCATION
+Diploma in Accounting, Sample Polytechnic (2012)
+
+SKILLS
+SAP S/4HANA 2020, Microsoft Excel, SST, English, Malay, Tamil
+
+REFERENCES
+Mr. Lim Boon Huat, Finance Manager, 04-123 4567

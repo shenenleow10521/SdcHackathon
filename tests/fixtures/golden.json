@@ -1,0 +1,6257 @@
+{
+ "signalNode": "recon",
+ "signalBoost": 0.18,
+ "cases": [
+  {
+   "year": 2026,
+   "scenario": "moderate",
+   "signal": false,
+   "match": {
+    "stayRole": 80,
+    "opsRole": 63,
+    "faRole": 60,
+    "esgRole": 58,
+    "intAudit": 73,
+    "treasuryRole": 70,
+    "lcaRole": 33,
+    "greenRole": 33,
+    "assurRole": 55,
+    "dataRole": 38,
+    "biRole": 55,
+    "aiQaRole": 50,
+    "procRole": 78,
+    "scmRole": 70,
+    "invRole": 70
+   },
+   "rank": {
+    "stayRole": 64.8,
+    "opsRole": 63.56,
+    "faRole": 58.88,
+    "esgRole": 64.72,
+    "intAudit": 62.84,
+    "treasuryRole": 58.16,
+    "lcaRole": 47.64,
+    "greenRole": 44.76,
+    "assurRole": 59.72,
+    "dataRole": 42.32,
+    "biRole": 52.04,
+    "aiQaRole": 58.8,
+    "procRole": 64.72,
+    "scmRole": 61.2,
+    "invRole": 56.4
+   },
+   "taken": [],
+   "futureScore": 60,
+   "best": [
+    "stayRole",
+    "esgRole",
+    "procRole",
+    "opsRole"
+   ],
+   "plans": {
+    "stayRole:fastest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:noregret": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:safest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "opsRole:fastest": {
+     "key": "ap>erp>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:noregret": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:safest": {
+     "key": "ap>process>aisup>opsRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "auto/reskill"
+     ]
+    },
+    "faRole:fastest": {
+     "key": "ap>excel>fin>faRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "viz/reskill",
+      "aisup/reskill"
+     ]
+    },
+    "faRole:noregret": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:safest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "esgRole:fastest": {
+     "key": "ap>recon>ghg>esgRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:noregret": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:safest": {
+     "key": "ap>process>aisup>esgRole",
+     "weeks": 10,
+     "core": 10,
+     "ready": 19,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "intAudit:fastest": {
+     "key": "ap>recon>audit2>intAudit",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:noregret": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:safest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "treasuryRole:fastest": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:noregret": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:safest": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "lcaRole:fastest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:noregret": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:safest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "greenRole:fastest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:noregret": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:safest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "assurRole:fastest": {
+     "key": "ap>recon>audit2>assurRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:noregret": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:safest": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "dataRole:fastest": {
+     "key": "ap>excel>viz>dataRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "stats/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:noregret": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:safest": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "biRole:fastest": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:noregret": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:safest": {
+     "key": "ap>excel>sql>biRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "aiQaRole:fastest": {
+     "key": "ap>excel>prompt>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:noregret": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:safest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "procRole:fastest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:noregret": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:safest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "scmRole:fastest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:noregret": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:safest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "invRole:fastest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:noregret": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:safest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    }
+   }
+  },
+  {
+   "year": 2028,
+   "scenario": "moderate",
+   "signal": false,
+   "match": {
+    "stayRole": 61,
+    "opsRole": 56,
+    "faRole": 60,
+    "esgRole": 58,
+    "intAudit": 73,
+    "treasuryRole": 70,
+    "lcaRole": 33,
+    "greenRole": 33,
+    "assurRole": 55,
+    "dataRole": 38,
+    "biRole": 55,
+    "aiQaRole": 50,
+    "procRole": 60,
+    "scmRole": 70,
+    "invRole": 70
+   },
+   "rank": {
+    "stayRole": 54.12,
+    "opsRole": 61.28,
+    "faRole": 60,
+    "esgRole": 67.52,
+    "intAudit": 63.56,
+    "treasuryRole": 58.32,
+    "lcaRole": 50.36,
+    "greenRole": 47.08,
+    "assurRole": 62.44,
+    "dataRole": 42.48,
+    "biRole": 52.2,
+    "aiQaRole": 61.52,
+    "procRole": 54.56,
+    "scmRole": 61.76,
+    "invRole": 56
+   },
+   "taken": [
+    "ap",
+    "inv",
+    "three"
+   ],
+   "futureScore": 50,
+   "best": [
+    "esgRole",
+    "intAudit",
+    "assurRole",
+    "stayRole"
+   ],
+   "plans": {
+    "stayRole:fastest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:noregret": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:safest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "opsRole:fastest": {
+     "key": "ap>erp>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:noregret": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:safest": {
+     "key": "ap>process>aisup>opsRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "auto/reskill"
+     ]
+    },
+    "faRole:fastest": {
+     "key": "ap>excel>fin>faRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "viz/reskill",
+      "aisup/reskill"
+     ]
+    },
+    "faRole:noregret": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:safest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "esgRole:fastest": {
+     "key": "ap>recon>ghg>esgRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:noregret": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:safest": {
+     "key": "ap>process>aisup>esgRole",
+     "weeks": 10,
+     "core": 10,
+     "ready": 19,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "intAudit:fastest": {
+     "key": "ap>recon>audit2>intAudit",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:noregret": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:safest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "treasuryRole:fastest": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:noregret": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:safest": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "lcaRole:fastest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:noregret": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:safest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "greenRole:fastest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:noregret": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:safest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "assurRole:fastest": {
+     "key": "ap>recon>audit2>assurRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:noregret": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:safest": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "dataRole:fastest": {
+     "key": "ap>excel>viz>dataRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "stats/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:noregret": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:safest": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "biRole:fastest": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:noregret": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:safest": {
+     "key": "ap>excel>sql>biRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "aiQaRole:fastest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:noregret": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:safest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "procRole:fastest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:noregret": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:safest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "scmRole:fastest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:noregret": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:safest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "invRole:fastest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:noregret": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:safest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    }
+   }
+  },
+  {
+   "year": 2030,
+   "scenario": "moderate",
+   "signal": false,
+   "match": {
+    "stayRole": 61,
+    "opsRole": 56,
+    "faRole": 60,
+    "esgRole": 58,
+    "intAudit": 73,
+    "treasuryRole": 38,
+    "lcaRole": 33,
+    "greenRole": 33,
+    "assurRole": 55,
+    "dataRole": 38,
+    "biRole": 55,
+    "aiQaRole": 50,
+    "procRole": 60,
+    "scmRole": 70,
+    "invRole": 70
+   },
+   "rank": {
+    "stayRole": 54.84,
+    "opsRole": 63.2,
+    "faRole": 61.12,
+    "esgRole": 70.32,
+    "intAudit": 64.28,
+    "treasuryRole": 39.28,
+    "lcaRole": 53.08,
+    "greenRole": 49.4,
+    "assurRole": 65.16,
+    "dataRole": 42.64,
+    "biRole": 52.36,
+    "aiQaRole": 64.24,
+    "procRole": 55.2,
+    "scmRole": 62.32,
+    "invRole": 55.6
+   },
+   "taken": [
+    "ap",
+    "inv",
+    "three",
+    "pay"
+   ],
+   "futureScore": 40,
+   "best": [
+    "esgRole",
+    "assurRole",
+    "intAudit",
+    "stayRole"
+   ],
+   "plans": {
+    "stayRole:fastest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:noregret": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:safest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "opsRole:fastest": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:noregret": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:safest": {
+     "key": "ap>process>aisup>opsRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "auto/reskill"
+     ]
+    },
+    "faRole:fastest": {
+     "key": "ap>excel>fin>faRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "viz/reskill",
+      "aisup/reskill"
+     ]
+    },
+    "faRole:noregret": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:safest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "esgRole:fastest": {
+     "key": "ap>recon>ghg>esgRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:noregret": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:safest": {
+     "key": "ap>process>aisup>esgRole",
+     "weeks": 10,
+     "core": 10,
+     "ready": 19,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "intAudit:fastest": {
+     "key": "ap>recon>audit2>intAudit",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:noregret": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:safest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "treasuryRole:fastest": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:noregret": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:safest": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "lcaRole:fastest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:noregret": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:safest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "greenRole:fastest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:noregret": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:safest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "assurRole:fastest": {
+     "key": "ap>recon>audit2>assurRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:noregret": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:safest": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "dataRole:fastest": {
+     "key": "ap>excel>viz>dataRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "stats/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:noregret": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:safest": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "biRole:fastest": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:noregret": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:safest": {
+     "key": "ap>excel>sql>biRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "aiQaRole:fastest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:noregret": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:safest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "procRole:fastest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:noregret": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:safest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "scmRole:fastest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:noregret": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:safest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "invRole:fastest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:noregret": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:safest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    }
+   }
+  },
+  {
+   "year": 2026,
+   "scenario": "fast",
+   "signal": false,
+   "match": {
+    "stayRole": 80,
+    "opsRole": 63,
+    "faRole": 60,
+    "esgRole": 58,
+    "intAudit": 73,
+    "treasuryRole": 70,
+    "lcaRole": 33,
+    "greenRole": 33,
+    "assurRole": 55,
+    "dataRole": 38,
+    "biRole": 55,
+    "aiQaRole": 50,
+    "procRole": 78,
+    "scmRole": 70,
+    "invRole": 70
+   },
+   "rank": {
+    "stayRole": 64.8,
+    "opsRole": 63.56,
+    "faRole": 58.88,
+    "esgRole": 64.72,
+    "intAudit": 62.84,
+    "treasuryRole": 58.16,
+    "lcaRole": 47.64,
+    "greenRole": 44.76,
+    "assurRole": 59.72,
+    "dataRole": 42.32,
+    "biRole": 52.04,
+    "aiQaRole": 58.8,
+    "procRole": 64.72,
+    "scmRole": 61.2,
+    "invRole": 56.4
+   },
+   "taken": [],
+   "futureScore": 60,
+   "best": [
+    "stayRole",
+    "esgRole",
+    "procRole",
+    "opsRole"
+   ],
+   "plans": {
+    "stayRole:fastest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:noregret": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:safest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "opsRole:fastest": {
+     "key": "ap>erp>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:noregret": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:safest": {
+     "key": "ap>process>aisup>opsRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "auto/reskill"
+     ]
+    },
+    "faRole:fastest": {
+     "key": "ap>excel>fin>faRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "viz/reskill",
+      "aisup/reskill"
+     ]
+    },
+    "faRole:noregret": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:safest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "esgRole:fastest": {
+     "key": "ap>recon>ghg>esgRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:noregret": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:safest": {
+     "key": "ap>process>aisup>esgRole",
+     "weeks": 10,
+     "core": 10,
+     "ready": 19,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "intAudit:fastest": {
+     "key": "ap>recon>audit2>intAudit",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:noregret": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:safest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "treasuryRole:fastest": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:noregret": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:safest": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "lcaRole:fastest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:noregret": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:safest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "greenRole:fastest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:noregret": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:safest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "assurRole:fastest": {
+     "key": "ap>recon>audit2>assurRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:noregret": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:safest": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "dataRole:fastest": {
+     "key": "ap>excel>viz>dataRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "stats/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:noregret": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:safest": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "biRole:fastest": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:noregret": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:safest": {
+     "key": "ap>excel>sql>biRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "aiQaRole:fastest": {
+     "key": "ap>excel>prompt>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:noregret": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:safest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "procRole:fastest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:noregret": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:safest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "scmRole:fastest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:noregret": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:safest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "invRole:fastest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:noregret": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:safest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    }
+   }
+  },
+  {
+   "year": 2028,
+   "scenario": "fast",
+   "signal": false,
+   "match": {
+    "stayRole": 61,
+    "opsRole": 56,
+    "faRole": 60,
+    "esgRole": 58,
+    "intAudit": 73,
+    "treasuryRole": 38,
+    "lcaRole": 33,
+    "greenRole": 33,
+    "assurRole": 55,
+    "dataRole": 38,
+    "biRole": 55,
+    "aiQaRole": 50,
+    "procRole": 60,
+    "scmRole": 70,
+    "invRole": 70
+   },
+   "rank": {
+    "stayRole": 54.2,
+    "opsRole": 62.16,
+    "faRole": 60.08,
+    "esgRole": 68.32,
+    "intAudit": 63.64,
+    "treasuryRole": 38.64,
+    "lcaRole": 51.24,
+    "greenRole": 47.96,
+    "assurRole": 63.32,
+    "dataRole": 42,
+    "biRole": 51.72,
+    "aiQaRole": 62.8,
+    "procRole": 54.56,
+    "scmRole": 61.68,
+    "invRole": 55.12
+   },
+   "taken": [
+    "ap",
+    "inv",
+    "three",
+    "pay"
+   ],
+   "futureScore": 40,
+   "best": [
+    "esgRole",
+    "intAudit",
+    "assurRole",
+    "stayRole"
+   ],
+   "plans": {
+    "stayRole:fastest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:noregret": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:safest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "opsRole:fastest": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:noregret": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:safest": {
+     "key": "ap>process>aisup>opsRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "auto/reskill"
+     ]
+    },
+    "faRole:fastest": {
+     "key": "ap>excel>fin>faRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "viz/reskill",
+      "aisup/reskill"
+     ]
+    },
+    "faRole:noregret": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:safest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "esgRole:fastest": {
+     "key": "ap>recon>ghg>esgRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:noregret": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:safest": {
+     "key": "ap>process>aisup>esgRole",
+     "weeks": 10,
+     "core": 10,
+     "ready": 19,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "intAudit:fastest": {
+     "key": "ap>recon>audit2>intAudit",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:noregret": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:safest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "treasuryRole:fastest": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:noregret": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:safest": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "lcaRole:fastest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:noregret": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:safest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "greenRole:fastest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:noregret": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:safest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "assurRole:fastest": {
+     "key": "ap>recon>audit2>assurRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:noregret": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:safest": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "dataRole:fastest": {
+     "key": "ap>excel>viz>dataRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "stats/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:noregret": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:safest": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "biRole:fastest": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:noregret": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:safest": {
+     "key": "ap>excel>sql>biRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "aiQaRole:fastest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:noregret": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:safest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "procRole:fastest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:noregret": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:safest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "scmRole:fastest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:noregret": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:safest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "invRole:fastest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:noregret": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:safest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    }
+   }
+  },
+  {
+   "year": 2030,
+   "scenario": "fast",
+   "signal": false,
+   "match": {
+    "stayRole": 61,
+    "opsRole": 56,
+    "faRole": 60,
+    "esgRole": 46,
+    "intAudit": 58,
+    "treasuryRole": 38,
+    "lcaRole": 23,
+    "greenRole": 33,
+    "assurRole": 55,
+    "dataRole": 38,
+    "biRole": 55,
+    "aiQaRole": 50,
+    "procRole": 60,
+    "scmRole": 70,
+    "invRole": 70
+   },
+   "rank": {
+    "stayRole": 55,
+    "opsRole": 64.96,
+    "faRole": 61.28,
+    "esgRole": 64.72,
+    "intAudit": 55.44,
+    "treasuryRole": 38.32,
+    "lcaRole": 48.84,
+    "greenRole": 51.16,
+    "assurRole": 66.92,
+    "dataRole": 41.68,
+    "biRole": 51.4,
+    "aiQaRole": 66.8,
+    "procRole": 55.2,
+    "scmRole": 62.16,
+    "invRole": 53.84
+   },
+   "taken": [
+    "ap",
+    "inv",
+    "three",
+    "pay",
+    "recon"
+   ],
+   "futureScore": 40,
+   "best": [
+    "assurRole",
+    "aiQaRole",
+    "opsRole",
+    "stayRole"
+   ],
+   "plans": {
+    "stayRole:fastest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:noregret": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:safest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "opsRole:fastest": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:noregret": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:safest": {
+     "key": "ap>process>aisup>opsRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "auto/reskill"
+     ]
+    },
+    "faRole:fastest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:noregret": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:safest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "esgRole:fastest": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:noregret": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:safest": {
+     "key": "ap>process>aisup>esgRole",
+     "weeks": 10,
+     "core": 10,
+     "ready": 19,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "intAudit:fastest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:noregret": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:safest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "treasuryRole:fastest": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:noregret": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:safest": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "lcaRole:fastest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:noregret": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:safest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "greenRole:fastest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:noregret": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:safest": {
+     "key": "ap>process>aisup>fin>greenfin>greenRole",
+     "weeks": 11,
+     "core": 11,
+     "ready": 14,
+     "ups": [],
+     "extras": [
+      "disc/reskill"
+     ]
+    },
+    "assurRole:fastest": {
+     "key": "ap>tax>audit2>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:noregret": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:safest": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "dataRole:fastest": {
+     "key": "ap>excel>viz>dataRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "stats/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:noregret": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:safest": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "biRole:fastest": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:noregret": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:safest": {
+     "key": "ap>excel>sql>biRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "aiQaRole:fastest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:noregret": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:safest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "procRole:fastest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:noregret": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:safest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "scmRole:fastest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:noregret": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:safest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "invRole:fastest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:noregret": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:safest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    }
+   }
+  },
+  {
+   "year": 2026,
+   "scenario": "moderate",
+   "signal": true,
+   "match": {
+    "stayRole": 80,
+    "opsRole": 63,
+    "faRole": 60,
+    "esgRole": 58,
+    "intAudit": 73,
+    "treasuryRole": 70,
+    "lcaRole": 33,
+    "greenRole": 33,
+    "assurRole": 55,
+    "dataRole": 38,
+    "biRole": 55,
+    "aiQaRole": 50,
+    "procRole": 78,
+    "scmRole": 70,
+    "invRole": 70
+   },
+   "rank": {
+    "stayRole": 64.8,
+    "opsRole": 63.56,
+    "faRole": 58.88,
+    "esgRole": 64.72,
+    "intAudit": 62.84,
+    "treasuryRole": 58.16,
+    "lcaRole": 47.64,
+    "greenRole": 44.76,
+    "assurRole": 59.72,
+    "dataRole": 42.32,
+    "biRole": 52.04,
+    "aiQaRole": 58.8,
+    "procRole": 64.72,
+    "scmRole": 61.2,
+    "invRole": 56.4
+   },
+   "taken": [],
+   "futureScore": 60,
+   "best": [
+    "stayRole",
+    "esgRole",
+    "procRole",
+    "opsRole"
+   ],
+   "plans": {
+    "stayRole:fastest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:noregret": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:safest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "opsRole:fastest": {
+     "key": "ap>erp>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:noregret": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:safest": {
+     "key": "ap>process>aisup>opsRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "auto/reskill"
+     ]
+    },
+    "faRole:fastest": {
+     "key": "ap>excel>fin>faRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "viz/reskill",
+      "aisup/reskill"
+     ]
+    },
+    "faRole:noregret": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:safest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "esgRole:fastest": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:noregret": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:safest": {
+     "key": "ap>process>aisup>esgRole",
+     "weeks": 10,
+     "core": 10,
+     "ready": 19,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "intAudit:fastest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:noregret": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:safest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "treasuryRole:fastest": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:noregret": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:safest": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "lcaRole:fastest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:noregret": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:safest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "greenRole:fastest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:noregret": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:safest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "assurRole:fastest": {
+     "key": "ap>tax>audit2>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:noregret": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:safest": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "dataRole:fastest": {
+     "key": "ap>excel>viz>dataRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "stats/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:noregret": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:safest": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "biRole:fastest": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:noregret": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:safest": {
+     "key": "ap>excel>sql>biRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "aiQaRole:fastest": {
+     "key": "ap>excel>prompt>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:noregret": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:safest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "procRole:fastest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:noregret": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:safest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "scmRole:fastest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:noregret": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:safest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "invRole:fastest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:noregret": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:safest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    }
+   }
+  },
+  {
+   "year": 2028,
+   "scenario": "moderate",
+   "signal": true,
+   "match": {
+    "stayRole": 61,
+    "opsRole": 56,
+    "faRole": 60,
+    "esgRole": 46,
+    "intAudit": 58,
+    "treasuryRole": 70,
+    "lcaRole": 23,
+    "greenRole": 33,
+    "assurRole": 55,
+    "dataRole": 38,
+    "biRole": 55,
+    "aiQaRole": 50,
+    "procRole": 60,
+    "scmRole": 70,
+    "invRole": 70
+   },
+   "rank": {
+    "stayRole": 54.12,
+    "opsRole": 61.28,
+    "faRole": 60,
+    "esgRole": 60.32,
+    "intAudit": 54.56,
+    "treasuryRole": 58.32,
+    "lcaRole": 44.36,
+    "greenRole": 47.08,
+    "assurRole": 62.44,
+    "dataRole": 42.48,
+    "biRole": 52.2,
+    "aiQaRole": 61.52,
+    "procRole": 54.56,
+    "scmRole": 61.76,
+    "invRole": 56
+   },
+   "taken": [
+    "ap",
+    "inv",
+    "three",
+    "recon"
+   ],
+   "futureScore": 50,
+   "best": [
+    "assurRole",
+    "scmRole",
+    "aiQaRole",
+    "stayRole"
+   ],
+   "plans": {
+    "stayRole:fastest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:noregret": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:safest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "opsRole:fastest": {
+     "key": "ap>erp>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:noregret": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:safest": {
+     "key": "ap>process>aisup>opsRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "auto/reskill"
+     ]
+    },
+    "faRole:fastest": {
+     "key": "ap>excel>fin>faRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "viz/reskill",
+      "aisup/reskill"
+     ]
+    },
+    "faRole:noregret": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:safest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "esgRole:fastest": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:noregret": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:safest": {
+     "key": "ap>process>aisup>esgRole",
+     "weeks": 10,
+     "core": 10,
+     "ready": 19,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "intAudit:fastest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:noregret": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:safest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "treasuryRole:fastest": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:noregret": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:safest": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "lcaRole:fastest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:noregret": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:safest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "greenRole:fastest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:noregret": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:safest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "assurRole:fastest": {
+     "key": "ap>tax>audit2>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:noregret": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:safest": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "dataRole:fastest": {
+     "key": "ap>excel>viz>dataRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "stats/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:noregret": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:safest": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "biRole:fastest": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:noregret": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:safest": {
+     "key": "ap>excel>sql>biRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "aiQaRole:fastest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:noregret": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:safest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "procRole:fastest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:noregret": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:safest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "scmRole:fastest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:noregret": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:safest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "invRole:fastest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:noregret": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:safest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    }
+   }
+  },
+  {
+   "year": 2030,
+   "scenario": "moderate",
+   "signal": true,
+   "match": {
+    "stayRole": 61,
+    "opsRole": 56,
+    "faRole": 60,
+    "esgRole": 46,
+    "intAudit": 58,
+    "treasuryRole": 38,
+    "lcaRole": 23,
+    "greenRole": 33,
+    "assurRole": 55,
+    "dataRole": 38,
+    "biRole": 55,
+    "aiQaRole": 50,
+    "procRole": 60,
+    "scmRole": 70,
+    "invRole": 70
+   },
+   "rank": {
+    "stayRole": 54.84,
+    "opsRole": 63.2,
+    "faRole": 61.12,
+    "esgRole": 63.12,
+    "intAudit": 55.28,
+    "treasuryRole": 39.28,
+    "lcaRole": 47.08,
+    "greenRole": 49.4,
+    "assurRole": 65.16,
+    "dataRole": 42.64,
+    "biRole": 52.36,
+    "aiQaRole": 64.24,
+    "procRole": 55.2,
+    "scmRole": 62.32,
+    "invRole": 55.6
+   },
+   "taken": [
+    "ap",
+    "inv",
+    "three",
+    "pay",
+    "recon"
+   ],
+   "futureScore": 40,
+   "best": [
+    "assurRole",
+    "aiQaRole",
+    "opsRole",
+    "stayRole"
+   ],
+   "plans": {
+    "stayRole:fastest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:noregret": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:safest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "opsRole:fastest": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:noregret": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:safest": {
+     "key": "ap>process>aisup>opsRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "auto/reskill"
+     ]
+    },
+    "faRole:fastest": {
+     "key": "ap>excel>fin>faRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "viz/reskill",
+      "aisup/reskill"
+     ]
+    },
+    "faRole:noregret": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:safest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "esgRole:fastest": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:noregret": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:safest": {
+     "key": "ap>process>aisup>esgRole",
+     "weeks": 10,
+     "core": 10,
+     "ready": 19,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "intAudit:fastest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:noregret": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:safest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "treasuryRole:fastest": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:noregret": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:safest": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "lcaRole:fastest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:noregret": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:safest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "greenRole:fastest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:noregret": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:safest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "assurRole:fastest": {
+     "key": "ap>tax>audit2>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:noregret": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:safest": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "dataRole:fastest": {
+     "key": "ap>excel>viz>dataRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "stats/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:noregret": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:safest": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "biRole:fastest": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:noregret": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:safest": {
+     "key": "ap>excel>sql>biRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "aiQaRole:fastest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:noregret": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:safest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "procRole:fastest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:noregret": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:safest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "scmRole:fastest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:noregret": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:safest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "invRole:fastest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:noregret": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:safest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    }
+   }
+  },
+  {
+   "year": 2026,
+   "scenario": "fast",
+   "signal": true,
+   "match": {
+    "stayRole": 80,
+    "opsRole": 63,
+    "faRole": 60,
+    "esgRole": 58,
+    "intAudit": 73,
+    "treasuryRole": 70,
+    "lcaRole": 33,
+    "greenRole": 33,
+    "assurRole": 55,
+    "dataRole": 38,
+    "biRole": 55,
+    "aiQaRole": 50,
+    "procRole": 78,
+    "scmRole": 70,
+    "invRole": 70
+   },
+   "rank": {
+    "stayRole": 64.8,
+    "opsRole": 63.56,
+    "faRole": 58.88,
+    "esgRole": 64.72,
+    "intAudit": 62.84,
+    "treasuryRole": 58.16,
+    "lcaRole": 47.64,
+    "greenRole": 44.76,
+    "assurRole": 59.72,
+    "dataRole": 42.32,
+    "biRole": 52.04,
+    "aiQaRole": 58.8,
+    "procRole": 64.72,
+    "scmRole": 61.2,
+    "invRole": 56.4
+   },
+   "taken": [],
+   "futureScore": 60,
+   "best": [
+    "stayRole",
+    "esgRole",
+    "procRole",
+    "opsRole"
+   ],
+   "plans": {
+    "stayRole:fastest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:noregret": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:safest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "opsRole:fastest": {
+     "key": "ap>erp>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:noregret": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:safest": {
+     "key": "ap>process>aisup>opsRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "auto/reskill"
+     ]
+    },
+    "faRole:fastest": {
+     "key": "ap>excel>fin>faRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "viz/reskill",
+      "aisup/reskill"
+     ]
+    },
+    "faRole:noregret": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:safest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "esgRole:fastest": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:noregret": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:safest": {
+     "key": "ap>process>aisup>esgRole",
+     "weeks": 10,
+     "core": 10,
+     "ready": 19,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "intAudit:fastest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:noregret": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:safest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "treasuryRole:fastest": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:noregret": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:safest": {
+     "key": "ap>pay>treasury>treasuryRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "lcaRole:fastest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:noregret": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:safest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "greenRole:fastest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:noregret": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:safest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "assurRole:fastest": {
+     "key": "ap>tax>audit2>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:noregret": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:safest": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "dataRole:fastest": {
+     "key": "ap>excel>viz>dataRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "stats/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:noregret": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:safest": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "biRole:fastest": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:noregret": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:safest": {
+     "key": "ap>excel>sql>biRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "aiQaRole:fastest": {
+     "key": "ap>excel>prompt>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:noregret": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:safest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "procRole:fastest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:noregret": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:safest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "scmRole:fastest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:noregret": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:safest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "invRole:fastest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:noregret": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:safest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    }
+   }
+  },
+  {
+   "year": 2028,
+   "scenario": "fast",
+   "signal": true,
+   "match": {
+    "stayRole": 61,
+    "opsRole": 56,
+    "faRole": 60,
+    "esgRole": 46,
+    "intAudit": 58,
+    "treasuryRole": 38,
+    "lcaRole": 23,
+    "greenRole": 33,
+    "assurRole": 55,
+    "dataRole": 38,
+    "biRole": 55,
+    "aiQaRole": 50,
+    "procRole": 60,
+    "scmRole": 70,
+    "invRole": 70
+   },
+   "rank": {
+    "stayRole": 54.2,
+    "opsRole": 62.16,
+    "faRole": 60.08,
+    "esgRole": 61.12,
+    "intAudit": 54.64,
+    "treasuryRole": 38.64,
+    "lcaRole": 45.24,
+    "greenRole": 47.96,
+    "assurRole": 63.32,
+    "dataRole": 42,
+    "biRole": 51.72,
+    "aiQaRole": 62.8,
+    "procRole": 54.56,
+    "scmRole": 61.68,
+    "invRole": 55.12
+   },
+   "taken": [
+    "ap",
+    "inv",
+    "three",
+    "pay",
+    "recon"
+   ],
+   "futureScore": 40,
+   "best": [
+    "assurRole",
+    "aiQaRole",
+    "opsRole",
+    "stayRole"
+   ],
+   "plans": {
+    "stayRole:fastest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:noregret": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:safest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "opsRole:fastest": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:noregret": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:safest": {
+     "key": "ap>process>aisup>opsRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "auto/reskill"
+     ]
+    },
+    "faRole:fastest": {
+     "key": "ap>excel>fin>faRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "viz/reskill",
+      "aisup/reskill"
+     ]
+    },
+    "faRole:noregret": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:safest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "esgRole:fastest": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:noregret": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:safest": {
+     "key": "ap>process>aisup>esgRole",
+     "weeks": 10,
+     "core": 10,
+     "ready": 19,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "intAudit:fastest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:noregret": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:safest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "treasuryRole:fastest": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:noregret": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:safest": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "lcaRole:fastest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:noregret": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:safest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "greenRole:fastest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:noregret": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:safest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "assurRole:fastest": {
+     "key": "ap>tax>audit2>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:noregret": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:safest": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "dataRole:fastest": {
+     "key": "ap>excel>viz>dataRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "stats/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:noregret": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:safest": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "biRole:fastest": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:noregret": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:safest": {
+     "key": "ap>excel>sql>biRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "aiQaRole:fastest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:noregret": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:safest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "procRole:fastest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:noregret": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:safest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "scmRole:fastest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:noregret": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:safest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "invRole:fastest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:noregret": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:safest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    }
+   }
+  },
+  {
+   "year": 2030,
+   "scenario": "fast",
+   "signal": true,
+   "match": {
+    "stayRole": 61,
+    "opsRole": 56,
+    "faRole": 60,
+    "esgRole": 46,
+    "intAudit": 58,
+    "treasuryRole": 38,
+    "lcaRole": 23,
+    "greenRole": 33,
+    "assurRole": 55,
+    "dataRole": 38,
+    "biRole": 55,
+    "aiQaRole": 50,
+    "procRole": 60,
+    "scmRole": 70,
+    "invRole": 70
+   },
+   "rank": {
+    "stayRole": 55,
+    "opsRole": 64.96,
+    "faRole": 61.28,
+    "esgRole": 64.72,
+    "intAudit": 55.44,
+    "treasuryRole": 38.32,
+    "lcaRole": 48.84,
+    "greenRole": 51.16,
+    "assurRole": 66.92,
+    "dataRole": 41.68,
+    "biRole": 51.4,
+    "aiQaRole": 66.8,
+    "procRole": 55.2,
+    "scmRole": 62.16,
+    "invRole": 53.84
+   },
+   "taken": [
+    "ap",
+    "inv",
+    "three",
+    "pay",
+    "recon"
+   ],
+   "futureScore": 40,
+   "best": [
+    "assurRole",
+    "aiQaRole",
+    "opsRole",
+    "stayRole"
+   ],
+   "plans": {
+    "stayRole:fastest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:noregret": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "stayRole:safest": {
+     "key": "ap>excel>prompt>stayRole",
+     "weeks": 3,
+     "core": 3,
+     "ready": 4,
+     "ups": [],
+     "extras": [
+      "aiinv/evolve"
+     ]
+    },
+    "opsRole:fastest": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:noregret": {
+     "key": "ap>process>auto>opsRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "opsRole:safest": {
+     "key": "ap>process>aisup>opsRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 10,
+     "ups": [
+      "process"
+     ],
+     "extras": [
+      "auto/reskill"
+     ]
+    },
+    "faRole:fastest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:noregret": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "faRole:safest": {
+     "key": "ap>process>aisup>fin>faRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 9,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "esgRole:fastest": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:noregret": {
+     "key": "ap>audit>disc>esgRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "esgRole:safest": {
+     "key": "ap>process>aisup>esgRole",
+     "weeks": 10,
+     "core": 10,
+     "ready": 19,
+     "ups": [],
+     "extras": [
+      "ghg/reskill",
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "intAudit:fastest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:noregret": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "intAudit:safest": {
+     "key": "ap>tax>audit2>intAudit",
+     "weeks": 5,
+     "core": 5,
+     "ready": 7,
+     "ups": [],
+     "extras": [
+      "aisup/reskill"
+     ]
+    },
+    "treasuryRole:fastest": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:noregret": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "treasuryRole:safest": {
+     "key": null,
+     "weeks": null,
+     "core": 0,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "treasury/reskill",
+      "fin/reskill"
+     ]
+    },
+    "lcaRole:fastest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:noregret": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "lcaRole:safest": {
+     "key": "ap>audit>esgdata>lca>lcaRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "ghg/reskill"
+     ]
+    },
+    "greenRole:fastest": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:noregret": {
+     "key": "ap>audit>disc>greenfin>greenRole",
+     "weeks": 8,
+     "core": 8,
+     "ready": 12,
+     "ups": [],
+     "extras": [
+      "fin/reskill"
+     ]
+    },
+    "greenRole:safest": {
+     "key": "ap>process>aisup>fin>greenfin>greenRole",
+     "weeks": 11,
+     "core": 11,
+     "ready": 14,
+     "ups": [],
+     "extras": [
+      "disc/reskill"
+     ]
+    },
+    "assurRole:fastest": {
+     "key": "ap>tax>audit2>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "disc/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:noregret": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "assurRole:safest": {
+     "key": "ap>audit>disc>assurRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 11,
+     "ups": [],
+     "extras": [
+      "audit2/reskill",
+      "esgdata/reskill"
+     ]
+    },
+    "dataRole:fastest": {
+     "key": "ap>excel>viz>dataRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "stats/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:noregret": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "dataRole:safest": {
+     "key": "ap>excel>stats>dataRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 15,
+     "ups": [],
+     "extras": [
+      "sql/reskill",
+      "viz/reskill",
+      "python/reskill"
+     ]
+    },
+    "biRole:fastest": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:noregret": {
+     "key": "ap>excel>viz>biRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "biRole:safest": {
+     "key": "ap>excel>sql>biRole",
+     "weeks": 6,
+     "core": 6,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "viz/reskill"
+     ]
+    },
+    "aiQaRole:fastest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:noregret": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "aiQaRole:safest": {
+     "key": "ap>process>aisup>aiQaRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 6,
+     "ups": [],
+     "extras": [
+      "prompt/reskill",
+      "aiinv/evolve"
+     ]
+    },
+    "procRole:fastest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:noregret": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "procRole:safest": {
+     "key": "ap>dispute>procure>procRole",
+     "weeks": 4,
+     "core": 4,
+     "ready": 4,
+     "ups": [],
+     "extras": []
+    },
+    "scmRole:fastest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:noregret": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "scmRole:safest": {
+     "key": "ap>erp>scm>scmRole",
+     "weeks": 7,
+     "core": 7,
+     "ready": 10,
+     "ups": [],
+     "extras": [
+      "stats/reskill"
+     ]
+    },
+    "invRole:fastest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:noregret": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    },
+    "invRole:safest": {
+     "key": "ap>erp>invent>invRole",
+     "weeks": 5,
+     "core": 5,
+     "ready": 8,
+     "ups": [],
+     "extras": [
+      "sql/reskill"
+     ]
+    }
+   }
+  }
+ ]
+}

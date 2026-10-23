@@ -1,0 +1,77 @@
+{
+ "hits": [
+  {
+   "created_at": "2026-10-22T16:27:17Z",
+   "created_at_i": 1792686437,
+   "objectID": "50197593",
+   "story_id": 50197593,
+   "title": "Show HN: Flint-interactive, a language for interactive data visualizations (MSR)",
+   "url": "https://microsoft.github.io/flint-chart/#/interactions",
+   "story_text": "Since we last built Flint earlier this year (<a href=\"https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=48834924\">https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=48834924</a>), we have been wondering if interactive charts can also find they home in terms of simple high-level specifications to allow AI agents to produce them easily, reliably and with high-quality. I have always been amazed by NYT interactive stories back in school, as they can always tell a fun story without super long verbose text write-ups; thus I have been wondering what if they can just be as easily created as any basic charts to make them easier to create everywhere.<p>Despite the AI models now are more capable of creating interactive artifacts, we find creating interactive charts still kinda annoying (esp. if you are building them to serve users directly in their chat, in your data apps). Agents (especially with smaller models) quite often generate interactions with undesired effects, they are often quite slow, costly, and extremely annoying if to want to steer it to change something. Most times, I find that if I ask the agent to change interaction, it can randomly change style, layout, even the data.<p>We find the issue is that the language agents use to create interactive visualization is kinda low-level. The logic for specifying data encoding, style and interactions are all entangled (if you swap x,y axis, you are likely going to redo your interaction and layout again). Thus, despite agents have been working hard, it is essentially doing lots of stuff bottom up. We decide to design a language that can separate the visual logic and the interaction logic to make specification much cleaner, manageable, and friendly (to both human and AI). The magic here is that we are now disentangle the logic at the spec level, but make the compiler to do the heavy lifting (sorry, compiler!) to wire up logics to support easy composition and adaptation of the logics to create a expressive interactive charts. We used a trick of bidirectional transformation to help the compiler maintain the mapping between pixel&#x2F;visual space to data semantics so the specs can stay at a higher-level. We made a video to explain the ideas.<p><a href=\"https:&#x2F;&#x2F;youtu.be&#x2F;JAJy7ToczMs\" rel=\"nofollow\">https:&#x2F;&#x2F;youtu.be&#x2F;JAJy7ToczMs</a><p>Some principles we had in the design:<p>- the language should be high-level and the agents can easily user them in chats&#x2F;apps declaratively (with many presets).<p>- the language should not give up expressiveness. We also provide a programming API, so that you can use it to create charts in your app&#x2F;dashboards for external interactions. The expressive API also makes it possible to compose very cool bespoke interactions (the spinning globe in the website).<p>To try it out:<p>- You can try Flint in your agent app. Simply call your agent to create it as an MCP app in your chat! (<a href=\"https:&#x2F;&#x2F;microsoft.github.io&#x2F;flint-chart&#x2F;#&#x2F;mcp\" rel=\"nofollow\">https:&#x2F;&#x2F;microsoft.github.io&#x2F;flint-chart&#x2F;#&#x2F;mcp</a>)<p>- If you are building applications, ask the agent to use the library. Flint is especially suitable for building agentic apps where you want agents to bring up an interactive charts quickly in the user session following their asks.<p>- Btw, the flint mcp app allows you create interactive dashboard in the chat as well.<p>Finally, I&#x27;m thinking that despite AI agents are now so good at coding, that they seem to be able to create EVERYTHING. It might not just be the time to give up designing new languages to make it easy to describe and create stuff. In the end, language is still the way for us to communicate with the computer, I think the alignment of programming language between human and AI in could probably make building, steering easier.",
+   "points": 2,
+   "num_comments": 1,
+   "author": "chenglong-hn",
+   "_tags": [
+    "story",
+    "author_chenglong-hn",
+    "story_50197593",
+    "show_hn"
+   ]
+  },
+  {
+   "created_at": "2026-10-22T08:43:22Z",
+   "created_at_i": 1792658602,
+   "objectID": "50192832",
+   "story_id": 50192832,
+   "title": "Barclays cutting 5k jobs as it increases reliance on AI",
+   "url": "https://www.bbc.com/news/articles/cm4g1p347qgxo",
+   "story_text": null,
+   "points": 10,
+   "num_comments": 2,
+   "author": "haunter",
+   "_tags": [
+    "story",
+    "author_haunter",
+    "story_50192832"
+   ]
+  },
+  {
+   "created_at": "2026-10-22T01:28:14Z",
+   "created_at_i": 1792632494,
+   "objectID": "50189978",
+   "story_id": 50189978,
+   "title": "Data centers could erase decades of air quality gains",
+   "url": "https://www.theverge.com/ai-artificial-intelligence/1015958/data-center-pollution-rising-report",
+   "story_text": null,
+   "points": 29,
+   "num_comments": 1,
+   "author": "cdrnsf",
+   "_tags": [
+    "story",
+    "author_cdrnsf",
+    "story_50189978"
+   ]
+  },
+  {
+   "created_at": "2026-10-20T15:09:29Z",
+   "created_at_i": 1792508969,
+   "objectID": "50167583",
+   "story_id": 50167583,
+   "title": "Launch HN: Respan (YC W24) – Open-source Rust AI gateway built around plugins",
+   "story_text": "Hey HN, this is Andy from Respan (<a href=\"https:&#x2F;&#x2F;www.respan.ai\">https:&#x2F;&#x2F;www.respan.ai</a>). We are building an open-source Rust AI gateway. It is a decoupled gateway, so everything is a plugin, including different providers, protocols (MCP, voice), modalities (images, videos), and gateway features (fallbacks, PII redaction, smart routing).<p>Instead of packaging tons of providers and features into one gateway, Respan provides a small core and public interfaces that teams can use to assemble the AI infrastructure their application needs. That way, users can build their own features as additional plugins without having to change the gateway&#x27;s core.<p>Here’s a video demo: <a href=\"https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=pVv2ibXiTXM\" rel=\"nofollow\">https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=pVv2ibXiTXM</a><p>There are countless LLM gateways and most of them solve a common problem: calling different providers from a single endpoint. However, adding new features can become prohibitively difficult. So developers can end up building another gateway to solve a specific problem.<p>We&#x27;ve been building our gateway based on LiteLLM since 2024, and now it&#x27;s providing services for thousands of orgs. Each org needs different API key settings, routes, and limits. To support that, we kept wrapping LiteLLM, adding more features to it, and at one stage, our wrapper code exceeded 100,000 lines.<p>This January, a routine LiteLLM upgrade caused intermittent connection errors, and we had to roll back. We still haven&#x27;t figured out the cause, but since then, we no longer upgrade LiteLLM directly and instead manually backport upstream fixes. These experiences made us realize that continuing to patch LiteLLM is not a sustainable long-term solution, and we had to redesign the gateway ourselves.<p>While redesigning our gateway, we wanted to make it easier to add features without breaking existing ones. Inspired by Nginx, we think an AI gateway should have a really small core, only responsible for dispatching events.<p>We believe that everything should be a plugin in our gateway, including providers (OpenAI, Anthropic, Gemini), protocols (chat, realtime voice, MCP), modalities (images, videos), and gateway features for reliability and security (smart routing, fallbacks, and PII redaction through example plugins). Beyond that, we want developers to be able to easily extend the gateway&#x27;s capabilities by adding their own plugins, without touching the core. Adding a provider, even your own, is dead simple, because quirks are plugins too and there’s nothing magical about them. A provider is a short file, Mistral’s is 22 lines, and each quirk, like Groq putting token usage in its own field, gets its own test.<p>Respan Gateway does more than let you call Claude or Gemini models from the OpenAI SDK. It handles tools, images, and reasoning protocols automatically: an application based on the OpenAI Realtime API can also use Gemini Live through the gateway, though not every feature translates. A simple chat app can use MCP tools configured in the gateway, without implementing MCP itself.<p>We also parse requests into a shared structure. When the client and provider use the same API, we preserve provider-specific fields in their native format, even if our shared structure doesn&#x27;t have a field for them. That way, the gateway can write them back instead of dropping them.<p>Here’s how it works:<p>An adapter hands each HTTP or WebSocket connection to the first client format that recognizes it. The format exposes the request as a two-way stream of typed input and output events. The core runs plugins in registration order, allowing them to choose a provider, filter or wrap either stream, make additional calls, return a response, or refuse the request. A provider format then opens the upstream connection.<p>If the client and provider use the same format and no plugin changes the payload, the original bytes and protocol-specific fields can pass through unchanged. When formats differ, they translate through shared types for messages, tool calls, results, streams, and usage. This stream model can represent both one-shot HTTP requests and long-lived bidirectional sessions.<p>The gateway is open source at <a href=\"https:&#x2F;&#x2F;github.com&#x2F;respanai&#x2F;respan-gateway\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;respanai&#x2F;respan-gateway</a> under the MIT or Apache-2.0 license. You don&#x27;t need to use Respan&#x27;s hosted platform and can run it directly on your local machine. Build it from source, add your provider keys, and swap the base URL in a supported client. You can keep using the API your client already speaks. It&#x27;s still pre-alpha.<p>We make money from our hosted platform (<a href=\"https:&#x2F;&#x2F;www.respan.ai&#x2F;pricing\">https:&#x2F;&#x2F;www.respan.ai&#x2F;pricing</a>), which runs the gateway for you with native observability and evals, along with unified billing.<p>If you’re building routing, tools, filtering, observability, or security for agents, we&#x27;d love to see it as a plugin. PLUGINS.md in the repo explains how to write one and links to the plugins we’ve created so far. Turning that into an ecosystem is basically our roadmap, and we welcome you to contribute your own plugins. We&#x27;d love to answer any questions and hear your feedback!<p><a href=\"https:&#x2F;&#x2F;github.com&#x2F;respanai&#x2F;respan-gateway\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;respanai&#x2F;respan-gateway</a>",
+   "points": 53,
+   "num_comments": 21,
+   "author": "Andydy25",
+   "_tags": [
+    "story",
+    "author_Andydy25",
+    "story_50167583",
+    "launch_hn"
+   ]
+  }
+ ],
+ "nbHits": 4,
+ "page": 0,
+ "hitsPerPage": 20,
+ "query": "AI"
+}

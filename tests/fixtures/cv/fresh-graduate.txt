@@ -1,0 +1,20 @@
+Tan Mei Ling
+SYNTHETIC SAMPLE CV - fictional person created for testing HalaTuju. Not real personal data.
++60 17 222 3344 | meiling.sample@example.com | github.com/meiling-sample
+Female, 23 years old, Malaysian, Chinese
+
+OBJECTIVE
+Fresh graduate in Actuarial Science seeking a data analyst role.
+
+EDUCATION
+Bachelor of Science (Actuarial Science), Sample University (2026), CGPA 3.65
+
+PROJECTS AND INTERNSHIP
+Data Analytics Intern, Sample Insurance Berhad (sample), Petaling Jaya (Jun 2025 - Aug 2025)
+- Wrote SQL queries to pull claims data from several systems for routine reports.
+- Cleaned data with Python (pandas) and automated a repeat monthly analysis.
+- Built a Power BI dashboard for the claims team.
+- Final-year project: statistics on claim trends, tested whether a process change made a difference.
+
+SKILLS
+SQL, Python, Power BI, Excel, statistics, English, Mandarin, Malay
