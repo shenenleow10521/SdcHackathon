@@ -1,26 +1,26 @@
 # HalaTuju: Pitch Story
 
 > **For:** whoever records the video and answers judges' questions.
-> **Length:** 6:00 target (hard limit 7:00; every 30 s over costs a point).
-> **Numbers:** every number below was measured in the app or its data on 23 Oct 2026. Anything in _[brackets]_ must be read off the live app on recording day. Never say a number you can't point to.
+> **Length:** 6:00 target. Hard limit 7:00: every 30 s over costs a point.
+> **Numbers:** every number below was measured in the app, its data or a result file in this repo on 23–24 Oct 2026 (sources in the last column of the script). Anything in _[brackets]_ is read off the live app on recording day. Never say a number you can't point to.
 
 ---
 
 ## The one-liner
 
-> **HalaTuju is a GPS for your career: when AI closes a road, it reroutes you.**
+> **When AI closes a road, HalaTuju reroutes your career, and a person signs off on every change.**
 
-Open with it in the first minute. Close with the short form: **"Your career, rerouted the moment AI changes the road."**
+Short form for the close: **"Your career, rerouted the moment AI changes the road."**
 
 ## The story in one breath
 
-**Priya** has processed invoices in Penang for eleven years. Her company is handing that work to AI agents, and she has **six months** to move into a new role. HalaTuju turns her CV into a living map, checks any of **3,039 jobs** against her skills with real data, gives her a route that fits **six hours a week**, and **reroutes her the moment AI moves**.
+**Priya** has processed invoices in Penang for eleven years. Her company is handing that work to AI agents, and she has **six months** to move into a new role. HalaTuju reads her CV in **15 seconds**, maps her against **3,039 jobs**, gives her a route that fits **six hours a week**, tests it in **1,000 futures**, and **reroutes her the moment a person approves new evidence about AI**.
 
 ## Three moments judges must remember
 
-1. **The map:** her skills, the jobs they lead to and her route, in one picture.
-2. **Any job, real data:** type a job, and three AI-exposure studies plus our model, Malaysian wages and the national critical-jobs list appear in seconds.
-3. **The reroute:** Job Market Researcher finds new evidence, a person approves it, and her route changes in front of you.
+1. **The reroute:** dated evidence, a person clicks Approve, her route bends around a closed road.
+2. **Our own model:** trained on RunPod, r 0.919 on 185 jobs it never saw.
+3. **1,000 futures:** "Your plan works in 100% of 1,000 possible futures."
 
 If time runs short, cut detail. Never cut these three.
 
@@ -28,34 +28,34 @@ If time runs short, cut detail. Never cut these three.
 
 ## Full script (about 6 minutes)
 
-| Time | On screen | Voiceover |
-|---|---|---|
-| **0:00–0:25**<br>**Hook** | Priya at her desk. Email: *"From next year, AI agents will run invoice matching. Staff who move into new roles within six months will be redeployed."* | "This is Priya. Eleven years in accounts payable in Penang. On Monday her company said AI agents take over invoice matching next year. She has six months to find her next role. Thousands of finance staff in Malaysian shared-services centres got the same email _[verified figure, e.g. MDEC GBS headcount]_." |
-| **0:25–0:40**<br>**Problem** | Three questions appear one by one. | "She has three questions. Which of my skills still matter? Where can I realistically go? And will this plan still hold next month, when AI moves again?" |
-| **0:40–0:50**<br>**One-liner** | HalaTuju logo over the dark map. | "HalaTuju is a GPS for your career. When AI closes a road, it reroutes you." |
-| **0:50–1:20**<br>**Upload** | Drop the CV PDF. Skills appear one by one. One follow-up question. Confirm levels. | "Priya uploads her CV. HalaTuju strips her personal details, finds _[n]_ skills, and asks one question where the CV was unclear. Tested on 50 CVs: _[X]_% on clean CVs, _[X]_% on LinkedIn exports, _[X]_% on messy ones." |
-| **1:20–2:00**<br>**⭐ The map** | The constellation builds: Priya at the centre, her 10 skills on the inner ring, three turn red. Outer ring: jobs with match %. Highlight **ESG & Carbon Reporting Analyst, 58%**. | "This is her map. Red skills are the ones AI already does. Look at the outer ring: her best new fit is ESG and carbon reporting, at 58%. Eleven years of reconciling accounts carry straight into carbon accounting, a job she'd never have searched for." |
-| **2:00–2:40**<br>**Her route** | Pick ESG. The orange route flows; a grey alternative appears. Open a step: Learn → Practice → Prove, with a real course link. Footer: *Ahead of deadline · RM _[x]_*. Stress-test card: *Your plan works in 100% of 1,000 possible futures.* | "HalaTuju plots her route like a GPS: reuse reconciliation, learn emissions accounting, arrive job-ready in 11 weeks at six hours a week, 15 weeks before her deadline. Step one is a free Microsoft course. Then we stress-test the plan in 1,000 possible futures: slow AI, fast AI, busy months. Her plan works in 100% of them." |
-| **2:40–3:35**<br>**⭐ Any job, real data** | Type "accountant". ESCO results appear; one carries **Critical in Malaysia**. Open it: four exposure scores, the DOSM tiles, the task split bar. | "Now she checks any job. HalaTuju carries the whole EU job classification: 3,039 occupations and 13,939 skills. Accountant: on Malaysia's Critical Occupations List. Median wage for professionals, RM 6,124 a month, with 9.8% more of them in work since 2021. Three published studies and our own model score its AI exposure, from 35 to 59%. And its 30 tasks are marked by human experts: AI alone halves the time on 17% of them, and 13% get no real speed-up from AI at all." |
-| **3:35–4:05**<br>**Our model** | Model card: *r = 0.92 on unseen jobs · r = 0.79 vs ILO across 2,956 jobs · trained on RunPod*. | "Most skills have no published AI score, so we trained our own model on 19,265 tasks rated by researchers. On 185 jobs it had never seen, it matched the experts at r = 0.92. Across all 13,939 EU skills, it lines up with the International Labour Organization's index at r = 0.79." |
-| **4:05–5:05**<br>**⭐ The reroute** | Slide to 2030. **Check the job market now**: articles stream in, then a dated Microsoft source with its quote. **Approve.** The camera dives to *Vendor reconciliation*, now a closed road; the route bends through audit and sustainability disclosure. | "AI moves every week. Job Market Researcher reads trusted sources every day: in this run, 769 articles from 74 vetted sites in five minutes. Tonight it found Microsoft's new agent that reconciles accounts on its own, and checked the quote word for word on the page. A person approves it with one click. Watch Priya's map: reconciliation closes, and her route reroutes through audit and sustainability disclosure, with the source and date attached." |
-| **5:05–5:35**<br>**Impact** | HR view (sample team): *6 people · 5 ready on time · cost in RM*. SDG icons 8, 9, 12, 13, 16. | "Her employer sees the same picture for the whole team: who moves where, by when, at what cost. That's redeployment over retrenchment: decent work, and the green jobs Malaysia needs." |
-| **5:35–6:00**<br>**Close** | One slide: Replit · RunPod · ESCO, O\*NET, ILO, DOSM, MyCOL · 343 tests. Logo. | "Built on Replit and RunPod, grounded in five public data sources, and checked by 343 automated tests. HalaTuju. Your career, rerouted the moment AI changes the road." |
+| Time | On screen | Voiceover | Source |
+|---|---|---|---|
+| **0:00–0:20**<br>**Cold open: the reroute** | Priya's map at 2030. A Microsoft source card, 22 Oct 2026. Cursor clicks **Approve**. Camera dives to *Vendor reconciliation*, it closes, the orange route bends through audit and sustainability disclosure. | "22 October: Microsoft ships an agent that reconciles accounts on its own. One click from a person, and Priya's route to her next job bends around it in a tenth of a second. This is HalaTuju." | `docs/DEMO.md` (0.1 s, v1 → v2) |
+| **0:20–0:45**<br>**Priya** | Email: *"From next year, AI agents will run invoice matching. Staff who move into new roles within six months will be redeployed."* | "Priya. Eleven years in accounts payable in Penang. Six months to move, six hours a week to learn. Three questions: which of my skills still count, where can I realistically go, and will the plan still hold next month?" | Persona (sample) |
+| **0:45–1:15**<br>**The CV** | Drop `priya-cv.pdf`. Stage text: *Removing personal details → Matching your skills to ESCO*. Summary appears. | "She uploads her CV. Before any AI reads it, her phone, IC number, address and seven kinds of personal detail are gone. Fifteen seconds later: 11 skills, each with the line that proves it, matched against 13,939 skills in the EU's official ESCO list. On 36 test CVs we never tuned on, it named the current job 97% of the time." | Demo dry run (13.9 s, 11 skills, 7 kinds); `eval/RESULTS.md` (97.2%) |
+| **1:15–1:50**<br>**The map** | Constellation builds. Year slider plays 2026 → 2030. Skills turn into closed roads. Header: *Skills safe from AI: 64% → 45%*. | "Her map. Her skills on the inner ring, jobs on the outer ring. Today 64% of her skills are safe from AI. Watch the years: invoice entry closes in 2027, three-way matching in 2028, payment runs in 2030. By 2030, 45%." | Demo dry run |
+| **1:50–2:35**<br>**Her route** | Sustainability sector → **ESG & Carbon Reporting Analyst, 57%** → Set as my goal. Route rows: *Fastest 6 wk · Balanced 7 · Safest 10*. Next up: free GHG course. | "She wants work that matters. ESG and carbon reporting fits her at 57%: eleven years of tracing every number back to a source document carry straight into carbon accounting. Three routes: 6, 7 or 10 weeks. The fastest gets her job-ready in 11 weeks at six hours a week, 15 weeks before her deadline, on free courses." | Demo dry run |
+| **2:35–3:05**<br>**⭐ 1,000 futures** | Card: *Your plan works in 100% of 1,000 possible futures*. Open the Safest route: *88%, fails mostly when study time drops below 5 hours a week*. | "Then we test the plan in 1,000 possible futures: slow AI, fast AI, busy months, and our own AI estimates off by their measured error. Her plan works in 100% of them. The slower Safest route holds in 88%, and HalaTuju tells her exactly why: weeks when she studies under five hours." | `shared/engine.js` stressTest; README |
+| **3:05–3:50**<br>**Any job, real data** | Check any job: type "accountant". *Critical in Malaysia*. Four exposure scores, DOSM tiles, task bar. | "Any of 3,039 jobs, on real data. Accountant: on Malaysia's Critical Occupations List. Median wage for its group, RM 6,124 a month, with 9.8% more of them in work since 2021. Four sources score its AI exposure, from 35 to 59%. Its 30 tasks carry expert ratings: AI alone halves the time on 17% of them." | App, 23 Oct 2026 (ESCO, MyCOL, DOSM, O\*NET) |
+| **3:50–4:25**<br>**⭐ Our model** | Model card: *r 0.919 on 185 unseen jobs · r 0.79 vs ILO across 2,956 jobs · trained on a RunPod RTX 4090*. | "Most skills have no published AI score, so we trained our own model on 19,265 tasks rated by researchers, on a RunPod GPU in two and a half minutes. On 185 jobs it had never seen, it matched the experts at r = 0.92, closer than GPT-4's own labels at 0.85. Across all 13,939 EU skills, it lines up with the International Labour Organization's index at 0.79." | `ml/artifacts/eval.json`, `runpod_run.json` |
+| **4:25–5:15**<br>**⭐ The reroute, in full** | Review queue: the Microsoft signal (microsoft.com, 22 Oct 2026) with its quote. **Approve and apply.** "Rerouting…" Toast: *Was: Vendor reconciliation → GHG. Now: Audit trail → Sustainability disclosure (7 wk)*. | "Back to that click. Every day the Job market researcher reads 74 vetted sites: 769 articles in five and a half minutes on its last full run. It found Microsoft's agent, checked the quote word for word on the page, and a second AI reviewed the claim. Small changes with two sources apply themselves. Anything that moves a route waits for a person. One approval, and Priya's route goes through audit trail and sustainability disclosure: seven weeks instead of six, with the source and date attached. Every change can be undone." | Live run 23 Oct 2026; demo dry run |
+| **5:15–5:40**<br>**Impact** | HR view (sample team, labelled): who moves where, by when, at what RM cost. SDG icons 8, 4, 9, 12, 13. | "Her employer sees the same picture for the whole team: who moves to which role, by when, at what cost. Redeployment over retrenchment: decent work, SDG 8, and the green jobs Malaysia needs." | HR view (sample) |
+| **5:40–6:00**<br>**Close** | Slide: *Replit · RunPod · ESCO, O\*NET, ILO, DOSM, MyCOL · 419 tests · 50-CV benchmark*. Logo. | "Live on Replit, trained and served on RunPod, grounded in five public data sources, checked by 419 automated tests and a 50-CV benchmark. HalaTuju. Your career, rerouted the moment AI changes the road." | `npx vitest run` |
 
-**Word count:** about 820 spoken words, about 5:50 at a natural pace.
+**Word count:** about 830 spoken words, about 5:50 at a natural pace. Time each clip; cut the "Any job" scene to its first two sentences if the total passes 6:30.
 
 ---
 
-## The Job Market Researcher: how to present its scope
+## How to present the Job market researcher's scope
 
-Present the scale as a deliberate rollout, with the current numbers stated first and plainly:
+State the current numbers first, then the rollout:
 
-> "For the preliminary round, Job Market Researcher covers every skill on the map: 29 skills every three days, 74 vetted sites, about 770 articles a day, on free tiers. Phase 2 connects it to all 13,939 ESCO skills by matching each finding to the closest skills. Phase 3 adds licensed Malaysian job-ad data and Bahasa Melayu news."
+> "Today the Job market researcher covers every skill on the map: 29 skills every three days, 74 vetted sites, about 770 articles a run, on free tiers. Next it matches each finding to all 13,939 ESCO skills. Then licensed Malaysian job-ad data and Bahasa Melayu news."
 
 | Phase | Coverage | What unlocks it |
 |---|---|---|
-| **1. Preliminary round (live)** | 29 map skills (all every 3 days), 74 trusted sites, ~770 articles and 28 searches per run, 30 AI checks, human approval | Built and measured on 23 Oct 2026 |
-| **2. Finals** | All 13,939 ESCO skills: topic searches, each finding matched to its closest skills by embedding, then a person approves | Skill embeddings on RunPod (already computed once for scoring) |
+| **1. Preliminary round (live)** | 29 map skills (all every 3 days), 74 trusted sites, ~770 articles and 28 searches per run, 30 AI checks, human approval; emerging-skill committee checks candidates against all 13,939 ESCO skills | Built and measured on 23–24 Oct 2026 |
+| **2. Finals** | Every finding matched to its closest ESCO skills by embedding, then a person approves | Skill embeddings on RunPod (already computed once for scoring) |
 | **3. Pilot** | Licensed Malaysian job-ad feeds, BM-language news, employer-submitted requirements | Data agreements with job boards and pilot employers |
 
 ---
@@ -63,49 +63,59 @@ Present the scale as a deliberate rollout, with the current numbers stated first
 ## Delivery rules
 - **Speak to one person: Priya.** Say "she", not "users".
 - **Short sentences.** If a line needs a breath in the middle, cut it.
-- **Lead with the number.** "769 articles in five minutes" lands; "lots of sources" doesn't.
+- **Lead with the number.** "769 articles in five and a half minutes" lands.
 - **Show, then say.** Let each visual land for a second before explaining it.
-- **No jargon on camera:** "reads her CV", "a person approves", "our model", never "embedding pipeline" or "triage queue".
-- **Record each section as its own clip,** then edit. Warm up the RunPod endpoint 2 minutes before recording.
-- **Live means live.** If a step uses replayed or sample data, the screen label must say so (the HR team and employers are sample).
+- **Plain words on camera:** "reads her CV", "a person approves", "our model". Leave "embedding pipeline" and "triage queue" for Q&A.
+- **Record each scene as its own clip,** then edit. Warm up the RunPod endpoint 2 minutes before recording (`bash demo/prime.sh`).
+- **Live means live.** If a step uses replayed or sample data, the screen label must say so (the HR team, the employers and the persona are sample).
+- **The reroute needs the 2030 view.** At 2026 the Microsoft change is too small to move a route; drag the slider first.
 
 ## Lines to avoid
-| Don't say | Why | Say instead |
+| Avoid | Why | Say instead |
 |---|---|---|
-| "A career GPS for the AI era" | Word for word our closest rival's opening line | "A GPS for your career: when AI closes a road, it reroutes you" |
+| "A career GPS for the AI era" | Another entry in our domain opens with this exact line | "When AI closes a road, HalaTuju reroutes your career" |
 | "92% accurate" | 0.92 is a correlation | "matched the experts at r = 0.92 on jobs it had never seen" |
 | "Guarantees you a job" | Can't be promised | "gets you job-ready" |
-| "Predicts the future" | Overclaim | "Your plan works in 100% of 1,000 possible futures" (it tests the plan, never "you will get the job") |
-| "Fully autonomous" | People approve changes | "updates every day; a person approves each change" |
+| "Predicts the future" | Overclaim | "Your plan works in 100% of 1,000 possible futures" |
+| "Fully autonomous" | People approve changes | "updates every day; a person approves anything that moves a route" |
 | "Uses real job postings" | It doesn't (job boards are link-only) | "official job classifications, national statistics and vetted news" |
+| "Real data" about the 16-job map | Its exposure and demand curves are sample | "the map's catalogue is labelled sample; any of 3,039 ESCO jobs runs on real data" |
 | Any number not on screen or in a source | Fabrication rule | Read it from the app on the day |
 
 ---
 
 ## Judge Q&A prep
 
+**Rule for every answer:** one sentence, then stop. Offer detail only if asked.
+
 | Likely question | Short answer |
 |---|---|
-| **Where do the AI-exposure numbers come from?** | "Four sources, shown side by side: the ILO's index, Anthropic's Economic Index, the GPTs-are-GPTs study, and our own model." |
-| **How accurate is your model?** | "r = 0.92 against expert ratings on 185 jobs it never saw in training, and r = 0.79 against the ILO's independent index across 2,956 jobs." |
-| **What did you train it on?** | "19,265 O\*NET tasks rated by researchers in the GPTs-are-GPTs study, published in Science. The ILO is our independent check, so we never train on it." |
-| **How much real data is there?** | "All 3,039 ESCO occupations and 13,939 skills, ILO scores for 2,956 jobs, O\*NET tasks for 2,471, DOSM wages for every job group, and Malaysia's 66 critical occupation groups. The 16 jobs on the map run on a curated catalogue, labelled sample where it is." |
-| **How are the routes calculated?** | "Shortest-path search over skill-to-skill bridges, like a GPS. Each bridge costs learning weeks at your study pace, plus a penalty for AI exposure, giving fastest, safest and no-regret routes." |
-| **How does it stay up to date?** | "Job Market Researcher reads 74 vetted sites daily, verifies every quote on the page, and a second AI checks each claim. Small, multi-source changes apply automatically; everything else goes to a person. Every change is versioned and can be undone." |
-| **Why should we trust the AI?** | "The AI reads and explains; it never sets a number. Numbers come from fixed formulas over sourced data, and a fact checker removes any sentence without a source." |
-| **How do you know the CV reading works?** | "We tested it on 50 CVs in three tiers: _[X]_% on clean, _[X]_% on LinkedIn exports, _[X]_% on messy ones, against a hand-labelled answer key." |
-| **How is this different from other career tools?** | "Others give a forecast or a course list. We give a route to a specific job, stress-test it in 1,000 simulated futures, and reroute it when real evidence arrives." |
+| **What's new here?** | "A route that reroutes when a person approves dated evidence about AI, tested in 1,000 futures, on our own measured exposure model." |
+| **Where do the AI-exposure numbers come from?** | "Four sources side by side: the ILO index, Anthropic's Economic Index, the GPTs-are-GPTs study, and our own model." |
+| **How accurate is your model?** | "r = 0.92 and an average error of 0.065 on 185 occupations it never saw, ahead of a nearest-neighbour baseline and GPT-4's own labels." |
+| **Is it better on every measure?** | "No. Per single task, copying the nearest training task has a lower average error, 0.176 against our 0.203, so we use the model per occupation and per skill, where it wins." |
+| **What did you train it on?** | "19,265 O\*NET tasks rated by researchers in the GPTs-are-GPTs study in *Science*. The ILO index is our independent check, so we never train on it." |
+| **Was it trained on RunPod?** | "Yes: the final run was pod 38jijj8fe5dazu, an RTX 4090, 2.5 minutes, about four US cents; the log and metrics are in the repo. We tested locally first, which the organisers allowed." |
+| **How much is real data?** | "All 3,039 ESCO occupations and 13,939 skills, ILO scores for 2,956 jobs, O\*NET tasks for 2,471, DOSM wages and MyCOL. The 16-job map's exposure and demand curves are a sample catalogue, labelled in the app." |
+| **How do you know the CV reading works?** | "50 synthetic CVs labelled blind by a separate annotator; on the 36 we never tuned on, 97% current job, 72% of the ESCO skills we show are correct, 71% of the annotator's skills found." |
+| **Who judged the skills?** | "Claude agents, blind, on shuffled lists with decoys; they rejected 98.5% of random decoys. We planned a Gemini judge, but the free quota ran out, so we threw those verdicts away." |
+| **What about privacy?** | "Details are removed before any AI call: 99.4% of planted details on held-out CVs, after fixing what the blind first run found at 82.6%." |
+| **Why are synthetic CVs good enough?** | "The rules forbid real personal data; a consented real-CV pilot is our Phase 2 test." |
+| **Why does the plan work in 100%?** | "Her routes take 6 to 11 weeks and finish in 2027, before most AI takeovers in the data; the slower Safest route drops to 88%, and late or exposed routes fail more." |
+| **Does the committee find new skills?** | "ESCO has none of our five AI-era skills. Across three real runs it put six candidates on watch, three hold up by hand, and the thresholds keep the rest out until a person confirms." |
+| **How does it stay up to date?** | "Daily runs over 74 vetted sites, quotes checked word for word, a second AI reviewer, fixed rules, and a person for anything that moves a route; every change is versioned and can be undone." |
+| **Why should we trust the AI?** | "The AI reads and explains; fixed formulas set every number, and a fact checker removes any sentence without a source." |
+| **Your commits came in batches. Was this built during the hackathon?** | "Yes, from 19 October; the README's build log lists the dated evidence: the 22 October proposal, benchmark result files from 23 October, the RunPod log." |
+| **What's the hardest risk?** | "A wrong signal rerouting people; that's why anything that moves a route needs a person, and every change can be undone." |
 | **Who pays?** | "Employers redeploying staff, and universities. The worker app stays free." |
-| **Where's Replit / RunPod?** | "The app runs on Replit. Our model was trained on RunPod, and RunPod embeds every skill and CV; proof is in the declaration." |
-
-**Rule for every answer:** answer in one sentence, then stop. Offer detail only if asked.
+| **Where's Replit / RunPod?** | "The app runs on Replit; RunPod trained our model and serves the embeddings behind every CV; proof is in the declaration." |
 
 ---
 
 ## Rubric check
 | Criterion | Where the pitch covers it |
 |---|---|
-| Innovation (30%) | The map, the stress test across 1,000 simulated futures, the live reroute |
-| Problem–solution fit (25%) | Priya's three questions answered in order; any of 3,039 jobs with Malaysian data; all six must-haves appear in the demo |
-| Feasibility (25%) | Live upload, live map, live Job Market Researcher run and reroute; model results with an independent check; 343 tests |
+| Innovation (30%) | The reroute after human approval, our own measured exposure model, 1,000-future stress test |
+| Problem–solution fit (25%) | Priya's three questions answered in order; all six must-haves appear on screen; a person approves every route change |
+| Feasibility (25%) | Live upload, map and reroute; model results with baselines and an independent check; 419 tests; hardest risk and fallback in Q&A |
 | Clarity (20%) | One persona, one one-liner, three memorable moments, under 6:30 |
