@@ -11,6 +11,7 @@ import { plansForJob, statusBadge, savePlan, sendPlan, noteOf, pendingOf, routeU
 import { goal, isGoal, setGoal, setGoalMode, toggleDone, markDone, isVerified, progress } from "../features/goal.js";
 import { jobAsks, startCheck, courseMeta, isSample } from "../drawer.js";
 import { splitBar } from "./skills.js";
+import { previewRoute } from "../graph3d.js";
 
 const server = { key: "", data: null, err: null, loading: false, seq: 0 };
 const ICON = { start: "user-round", reuse: "check", upskill: "arrow-up", evolve: "refresh-cw", reskill: "plus", arrive: "flag" };
@@ -307,7 +308,16 @@ export function repaintSave() {
 }
 
 export function bind(el) {
-  el.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { if (isGoal(UI.job)) setGoalMode(b.dataset.mode); actions.setMode(b.dataset.mode); }));
+  // a re-render drops the rows without a mouseleave, so start with no preview
+  previewRoute(null);
+  el.querySelectorAll("[data-mode]").forEach(b => {
+    b.addEventListener("click", () => { previewRoute(null); if (isGoal(UI.job)) setGoalMode(b.dataset.mode); actions.setMode(b.dataset.mode); });
+    // hovering or focusing a route row previews that route on the map, like a map app's route options
+    b.addEventListener("mouseenter", () => previewRoute(b.dataset.mode));
+    b.addEventListener("focus", () => previewRoute(b.dataset.mode));
+    b.addEventListener("mouseleave", () => { if (document.activeElement !== b) previewRoute(null); });
+    b.addEventListener("blur", () => previewRoute(null));
+  });
   el.querySelectorAll("[data-quick]").forEach(b => b.addEventListener("click", () => actions.selectJob(b.dataset.quick)));
   el.querySelectorAll(".step[data-node]").forEach(b => {
     b.addEventListener("click", () => actions.openDrawer(b.dataset.node));
@@ -318,6 +328,9 @@ export function bind(el) {
     setGoal(UI.job, UI.mode);
     toast({ title: t("goal.setToast", { job: nameOf(UI.job) }), detail: t("goal.setBody"), badgeHtml: badge("b-good", t("goal.yours"), "flag") });
     actions.refresh({ animate: true });
+    // Real profiles also save the goal as a plan on the server, so a later market change can offer "keep or switch".
+    if (!S.profile?.isDemo && !S.profileFallback && !plansForJob(UI.job).some(x => (x.mode || "fastest") === UI.mode))
+      savePlan().then(() => repaintSave(), e => console.warn("Saving the goal as a plan failed", e));
   });
   el.querySelectorAll("[data-done]").forEach(b => b.addEventListener("click", () => { toggleDone(b.dataset.done); actions.refresh({ animate: true }); }));
   el.querySelectorAll("[data-open]").forEach(b => b.addEventListener("click", () => actions.openDrawer(b.dataset.open)));

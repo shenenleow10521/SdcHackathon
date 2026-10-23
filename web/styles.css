@@ -34,6 +34,7 @@
   --l-path: #f08a5d;
   --l-evolve: #9085e9;
   --l-alt: rgba(214, 224, 238, 0.55);
+  --l-preview: rgba(238, 242, 248, 0.85);
   --particle: #ffffff;
 
   --font: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -417,6 +418,8 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 .lb.hide { display: none; }
 .lb.job { flex-direction: column; gap: 0; border-radius: 10px; padding: 5px 11px; font-size: 12.5px; font-weight: 600; background: rgba(14, 20, 32, 0.88); }
 .lb.job small { display: flex; gap: 10px; font-size: 11.5px; color: #f3b08e; font-weight: 500; font-variant-numeric: tabular-nums; }
+.lb.job.dim:not(.clash) { opacity: .55; }
+.lb.stop { border-color: rgba(240, 138, 93, 0.6); }
 .lb.job.sel { border-color: #f08a5d; box-shadow: 0 0 0 1px #f08a5d, 0 0 26px rgba(240, 138, 93, 0.55); }
 .lb.you { background: #f4f6fa; color: #0c1220; border-color: transparent; font-weight: 650; }
 .lb .n { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 10.5px; font-weight: 700; border: 2px solid #199e70; color: #e9eef6; }

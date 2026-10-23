@@ -1,17 +1,19 @@
 // 3D career constellation: you at the centre, your skills on the inner ring, skills to learn in the middle, jobs outside.
-// Ported from prototype/halatuju-app.html. Nodes glide between layouts; your route is lit, other route options are grey,
-// skills AI has taken over become closed roads, and after a knowledge change the old route fades while the new one lights up.
+// Ported from prototype/halatuju-app.html. Nodes glide between layouts. By default only your route is drawn (numbered stops);
+// other routes appear while you hover a route row (like a map's route preview), a skill's links while you hover it,
+// "evolves into" links on the My skills tab. After a knowledge change the old route fades in red while the new one lights up.
 import { S, UI, D, N, kindOf, matchOf, W, nameOf } from "./state.js";
 import { MODES } from "/shared/engine.js";
 import { $, css, esc, reduce, icons, sign } from "./util.js";
 import { t } from "./i18n.js";
 import * as FX from "./fx.js";
-import { isGoal } from "./features/goal.js";
+import { isGoal, goal } from "./features/goal.js";
 
 const RING = [0, 85, 165, 245], LIFT = [0, 10, 24, 44], D2R = Math.PI / 180;
 const LAYOUT = { key: "", visible: new Set(), target: {} };
 const OBJ = {};
-let Graph = null, graphReady = false, labelEls = {}, incidentEl = null, hoverId = null;
+const LINKS = { preview: new Map() };
+let Graph = null, graphReady = false, labelEls = {}, incidentEl = null, hoverId = null, previewMode = null, styledTab = null;
 const handlers = { nodeClick: () => {}, altRoute: () => {}, scanning: () => false };
 
 export const isReady = () => !!Graph;
@@ -65,6 +67,7 @@ function computeLayout() {
 
 function graphLinks() {
   const E = S.E, vis = LAYOUT.visible, root = E.root, out = [];
+  // You-to-skill links exist only so a route's first leg can be drawn; they never show on their own
   for (const k of E.ownedSkills()) if (vis.has(k)) out.push({ source: root, target: k, key: root + ">" + k, from: root, to: k, kind: "own" });
   for (const e of S.graph.edges) if (vis.has(e.from) && vis.has(e.to)) out.push({ source: e.from, target: e.to, key: e.from + ">" + e.to, from: e.from, to: e.to, kind: e.kind });
   return out;
@@ -104,17 +107,18 @@ const posOf = id => OBJ[id] ? { x: OBJ[id].fx, y: OBJ[id].fy, z: OBJ[id].fz } : 
 function pathKeys() { const s = new Set(); const p = D.plan; if (p?.route) p.route.legs.forEach(l => s.add(l.from + ">" + l.to)); return s; }
 export const onPlan = id => { const p = D.plan; return !!p && ((p.route && p.route.nodes.includes(id)) || p.extras.some(x => x.id === id) || p.ups.some(u => u.id === id)); };
 
-/** Links on the other route options to the selected job, mapped to their mode (like grey GPS alternatives). */
-export function altKeys() {
+/** Links of the route option being previewed (a route row in My goal is hovered or focused), mapped to its mode. */
+function previewKeys() {
   const s = new Map(), p = D.plan;
-  if (!p?.route || !UI.job) return s;
-  for (const m of MODES) {
-    if (m === UI.mode) continue;
-    let r = null; try { r = S.E.shortestPath(UI.job, m); } catch { r = null; }
-    if (r && r.key !== p.route.key) r.legs.forEach(l => { const k = l.from + ">" + l.to; if (!s.has(k)) s.set(k, m); });
-  }
-  try { S.E.alternatives(UI.job, UI.mode, 2).forEach(r => r.legs.forEach(l => { const k = l.from + ">" + l.to; if (!s.has(k)) s.set(k, UI.mode); })); } catch { /* none */ }
+  if (!previewMode || !p?.route || !UI.job) return s;
+  let r = null; try { r = S.E.shortestPath(UI.job, previewMode); } catch { r = null; }
+  if (r && r.key !== p.route.key) r.legs.forEach(l => s.set(l.from + ">" + l.to, previewMode));
   return s;
+}
+/** Preview another route option on the map (null to go back to just your route). */
+export function previewRoute(m) {
+  if ((m || null) === previewMode) return;
+  previewMode = m || null; restyle();
 }
 
 function nColor(n) {
@@ -138,12 +142,15 @@ function ghostColor(alpha) { return `rgba(230, 103, 103, ${Math.max(0, alpha).to
 
 export function restyle() {
   if (!Graph || !S.E) return;
-  const pk = pathKeys(), ak = altKeys(), E = S.E, g = S.ghost;
+  const pk = pathKeys(), ak = previewKeys(), E = S.E, g = S.ghost, evolveOn = UI.tab === "skills";
+  styledTab = UI.tab; LINKS.preview = ak;
   const dead = l => E.taken(l.from) || E.taken(l.to);
   const fo = FX.focusSet(), faded = l => fo && !pk.has(l.key) && !(fo.has(l.from) && fo.has(l.to));
-  Graph.nodeColor(nColor).nodeVal(nVal)
-    .linkColor(l => faded(l) ? "rgba(170,186,212,0.05)" : pk.has(l.key) ? css("--l-path") : g && g.keys.has(l.key) ? ghostColor(g.alpha) : ak.has(l.key) ? css("--l-alt") : l.kind === "evolve" ? css("--l-evolve") : dead(l) ? css("--l-dead") : css("--l-base"))
-    .linkWidth(l => pk.has(l.key) ? 2.6 : g && g.keys.has(l.key) ? 2.4 * g.alpha : ak.has(l.key) ? 1.6 : l.kind === "evolve" ? 1.4 : dead(l) ? 0 : 0.6)
+  // Only draw what answers the current question; hidden links are removed, so they can't catch the pointer either.
+  const shown = l => pk.has(l.key) || (g && g.keys.has(l.key)) || ak.has(l.key) || (!!hoverId && l.kind !== "own" && (l.from === hoverId || l.to === hoverId) && !dead(l)) || (evolveOn && l.kind === "evolve");
+  Graph.nodeColor(nColor).nodeVal(nVal).linkVisibility(shown)
+    .linkColor(l => faded(l) ? "rgba(170,186,212,0.05)" : pk.has(l.key) ? css("--l-path") : g && g.keys.has(l.key) ? ghostColor(g.alpha) : ak.has(l.key) ? css("--l-preview") : l.kind === "evolve" ? css("--l-evolve") : dead(l) ? css("--l-dead") : css("--l-alt"))
+    .linkWidth(l => pk.has(l.key) ? 2.6 : g && g.keys.has(l.key) ? 2.4 * g.alpha : ak.has(l.key) ? 2.2 : l.kind === "evolve" ? 1.4 : dead(l) ? 0 : 0.9)
     .linkDirectionalParticles(l => !reduce && pk.has(l.key) ? 3 : !reduce && l.kind === "evolve" ? 1 : 0)
     .linkDirectionalParticleColor(l => l.kind === "evolve" ? css("--l-evolve") : css("--particle"));
   FX.styleAll();
@@ -174,10 +181,13 @@ export function init(h) {
       .nodeId("id").nodeRelSize(4).nodeOpacity(0.96).nodeResolution(small ? 12 : 28).nodeLabel(() => "")
       .linkOpacity(0.9).linkCurvature(0.12).linkDirectionalParticleWidth(2.4).linkDirectionalParticleSpeed(0.007)
       .enableNodeDrag(false).warmupTicks(0).cooldownTicks(8).onEngineTick(() => { graphReady = true; })
-      .onNodeHover(n => { el.style.cursor = n ? "pointer" : ""; hoverId = n ? n.id : null; if (!n) $("tip").hidden = true; updateLabels(); FX.focus(hoverId); })
+      .onNodeHover(n => {
+        el.style.cursor = n ? "pointer" : ""; const was = hoverId; hoverId = n ? n.id : null; if (!n) $("tip").hidden = true;
+        FX.focus(hoverId); if (hoverId !== was && !FX.isOn()) restyle(); else updateLabels();
+      })
       .onNodeClick(n => handlers.nodeClick(n.id))
-      .onLinkHover(l => { el.style.cursor = l && altKeys().has(l.key) ? "pointer" : ""; })
-      .onLinkClick(l => { const m = altKeys().get(l.key); if (m) handlers.altRoute(m, l); });
+      .onLinkHover(l => { el.style.cursor = l && LINKS.preview.has(l.key) ? "pointer" : ""; })
+      .onLinkClick(l => { const m = LINKS.preview.get(l.key); if (m) handlers.altRoute(m, l); });
   } catch (err) {
     console.warn("3D unavailable", err);
     el.innerHTML = `<div class="nograph">${esc(t("map.no3d"))}</div>`; Graph = null; return;
@@ -187,7 +197,7 @@ export function init(h) {
   const c = Graph.controls(); c.autoRotate = UI.rotating; c.autoRotateSpeed = 0.5; c.enableDamping = true;
   c.addEventListener("start", () => { if (UI.rotating) setRotate(false); });
   restyle(); requestAnimationFrame(frame);
-  setTimeout(() => FX.init({ Graph, RING, LIFT, posOf, visible: () => LAYOUT.visible, nColor, nVal, onPlan, restyle, setRotate, scanning: () => handlers.scanning() }), 150);
+  setTimeout(() => FX.init({ Graph, RING, LIFT, posOf, visible: () => LAYOUT.visible, nColor, nVal, onPlan, restyle, setRotate, home, scanning: () => handlers.scanning() }), 150);
 }
 
 /** Cinematic effects (no-ops when WebGL effects are off). */
@@ -196,10 +206,15 @@ export const intro = () => FX.intro();
 
 export function resize() { const el = $("graph"); if (!el) return; FX.setAspect(el.clientWidth / Math.max(1, el.clientHeight)); if (Graph) Graph.width(el.clientWidth).height(el.clientHeight); }
 
+/** The default view: a fairly top-down angle, so the route runs across the rings instead of over the busy centre. */
+function home() {
+  const d = $("graph").clientWidth < 700 ? 1.85 : 1.5;
+  return { pos: { x: 0, y: 520 * d, z: 300 * d }, look: { x: 0, y: 10, z: 0 } };
+}
 export function resetView(animate) {
   if (!Graph) return;
-  const d = $("graph").clientWidth < 700 ? 1.85 : 1.5;
-  Graph.cameraPosition({ x: 0, y: 440 * d, z: 420 * d }, { x: 0, y: 10, z: 0 }, animate && !reduce ? 900 : 0);
+  const v = home();
+  Graph.cameraPosition(v.pos, v.look, animate && !reduce ? 900 : 0);
 }
 export function focusNode(id) {
   if (!Graph) return;
@@ -238,10 +253,10 @@ export function updateLabels() {
     let html = "", cls = "lb";
     if (kind === "you") { cls += " you"; html = esc(t("map.you", { job: n.name })); }
     else if (kind === "job") {
-      cls += " job" + (id === UI.job ? " sel" : "");
+      cls += " job" + (id === UI.job ? " sel" : UI.job && !isGoal(id) && id !== hoverId ? " dim" : "");
       const pj = D.plans[id];
       html = `${isGoal(id) ? `<span class="tg goal">${esc(t("goal.mapTag"))}</span> ` : ""}${esc(n.name)}<small><span>${esc(t("map.jobMatch", { match: matchOf(id) }))}</span><span>${pj?.route ? `${esc(String(W(pj.ready)))} ${esc(t("common.wk"))}` : "–"}</span></small>`;
-    } else if (kind === "learn") html = `${stepOf[id] ? `<span class="n">${stepOf[id]}</span>` : ""}${esc(n.name)}${n.emerging ? ` <span class="tg new">${esc(t("map.new"))}</span>` : ""}`;
+    } else if (kind === "learn") { if (stepOf[id]) cls += " stop"; html = `${stepOf[id] ? `<span class="n">${stepOf[id]}</span>` : ""}${esc(n.name)}${n.emerging ? ` <span class="tg new">${esc(t("map.new"))}</span>` : ""}`; }
     else html = `${esc(n.name)}${tk ? ` <span class="tg taken">${esc(t("map.tookOver"))}</span>` : imp === "Declining" ? ` <span class="tg risk">${esc(t("map.atRisk"))}</span>` : imp === "Rising human skill" ? ` <span class="tg human">${esc(t("map.humanEdge"))}</span>` : ""}`;
     const show = UI.labelsAll || kind === "you" || kind === "job" || onPlan(id) || (UI.tab === "skills" && kind === "have" && (imp === "Declining" || imp === "Rising human skill")) || id === hoverId || id === S.signalNode;
     el.className = cls + (show ? "" : " hide");
@@ -256,14 +271,15 @@ export function updateLabels() {
   }
 }
 
-// Labels: place the most important first (hovered, you, selected job, path, other jobs, rest) and hide any that would collide.
+// Labels: place the most important first (numbered route stops, hovered, you, selected job, path, other jobs, rest) and hide
+// any that would collide. Route stops and the top few are always placed; everything else yields to them.
 function placeLabels() {
   const items = [];
   for (const id in labelEls) {
     const el = labelEls[id]; if (el.classList.contains("hide")) continue;
     const p = posOf(id); if (!p) continue;
     const s = Graph.graph2ScreenCoords(p.x, p.y, p.z), k = kindOf(id);
-    const pr = id === hoverId ? 0 : k === "you" ? 1 : id === UI.job ? 2 : id === S.signalNode ? 2 : onPlan(id) ? 3 : k === "job" ? 4 : 5;
+    const pr = el.classList.contains("stop") ? 0 : id === hoverId ? 1 : k === "you" ? 1 : id === UI.job ? 2 : id === S.signalNode ? 2 : onPlan(id) ? 3 : k === "job" ? 4 : 5;
     items.push({ el, s, off: k === "job" ? 20 : k === "you" ? 22 : 12, pr, w: el._w || 120, h: el._h || 22 });
   }
   items.sort((a, b) => a.pr - b.pr);
@@ -284,6 +300,7 @@ function frame(now) {
   const dt = Math.min(0.05, Math.max(0, (now - lastFrame) / 1000)); lastFrame = now;
   if (Graph) {
     try {
+      if (UI.tab !== styledTab) restyle(); // "evolves into" links follow the open tab, however it was switched
       FX.tick(dt);
       placeLabels();
       if (S.signalNode && incidentEl && !incidentEl.hidden) {
@@ -300,7 +317,8 @@ function frame(now) {
 let ringNames = "";
 export function setRingNames(names) { ringNames = names; }
 function drawRings() {
-  const names = ringNames || ["", "", "", ""];
+  // ring names help only before a route is on the map; after that they clash with the dots and get cut off
+  const names = (UI.job && UI.picked) || goal() ? ["", "", "", ""] : ringNames || ["", "", "", ""];
   let out = "";
   for (let r = 1; r <= 3; r++) {
     let d = "", best = null;
@@ -310,7 +328,7 @@ function drawRings() {
       if (!best || s.y > best.y) best = s;
     }
     if (!FX.isOn()) out += `<path d="${d}" fill="none" stroke="var(--ring)" stroke-width="1.1" ${r < 3 ? 'stroke-dasharray="3 6"' : ""}/>`;
-    out += `<text class="ring-label" x="${best.x.toFixed(1)}" y="${(best.y + 26).toFixed(1)}" text-anchor="middle">${esc(names[r])}</text>`;
+    if (names[r]) out += `<text class="ring-label" x="${best.x.toFixed(1)}" y="${(best.y + 26).toFixed(1)}" text-anchor="middle">${esc(names[r])}</text>`;
   }
   $("rings").innerHTML = out;
 }

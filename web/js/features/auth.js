@@ -1,4 +1,4 @@
-// Accounts (Supabase Auth): email + password, "Continue with Google", or the demo without an account.
+// Accounts (Supabase Auth): email + password, or the demo without an account.
 // Only active when the server says accounts are on (GET /api/config); otherwise the app is an open demo as before.
 // The Supabase client is loaded on demand from jsdelivr at a pinned version. The server checks the token on every
 // request; this module only keeps it fresh (api.js sends it) and draws the sign-in and "Delete my data" screens.
@@ -26,7 +26,7 @@ export async function initAuth(handlers) {
   } catch (e) { console.warn("Accounts unavailable", e); return AUTH; }
   AUTH.enabled = true;
   const { data } = await AUTH.client.auth.getSession();
-  // After "Continue with Google" the page returns with ?code=…; the client has used it, so tidy the address bar.
+  // An email confirmation link returns with ?code=…; the client has used it, so tidy the address bar.
   if (new URLSearchParams(location.search).has("code")) history.replaceState(null, "", location.pathname + location.hash);
   await applySession(data.session);
   AUTH.client.auth.onAuthStateChange((_event, session) => {
@@ -76,7 +76,6 @@ export function closeAuth() {
   if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
 }
 
-const GOOGLE = `<svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>`;
 
 function render() {
   const c = $("auth-card");
@@ -99,7 +98,6 @@ function render() {
       <button class="btn btn-primary auth-wide" id="auth-demo" type="button"><i data-lucide="user-round"></i>${esc(t("auth.demo"))}</button>
       <p class="rs auth-center">${esc(t("auth.demoNote"))}</p>
       <div class="auth-or"><span>${esc(t("auth.or"))}</span></div>
-      <button class="btn btn-soft auth-wide" id="auth-google" type="button" ${V.busy ? "disabled" : ""}>${GOOGLE}${esc(t("auth.google"))}</button>
       <form class="auth-form" id="auth-form" novalidate>
         <label>${esc(t("auth.email"))}<input name="email" type="email" autocomplete="email" required maxlength="200"></label>
         <label>${esc(t("auth.password"))}<input name="password" type="password" autocomplete="${up ? "new-password" : "current-password"}" required minlength="${up ? 8 : 1}" maxlength="200"></label>
@@ -112,7 +110,6 @@ function render() {
   icons();
   c.querySelector("#auth-close").addEventListener("click", chooseDemo);
   c.querySelector("#auth-demo").addEventListener("click", chooseDemo);
-  c.querySelector("#auth-google").addEventListener("click", google);
   c.querySelector("#auth-mode").addEventListener("click", () => { V.mode = up ? "signin" : "signup"; V.msg = null; render(); });
   c.querySelector("#auth-form").addEventListener("submit", submit);
 }
@@ -121,13 +118,6 @@ function chooseDemo() {
   store.set("authChoice", "demo");
   closeAuth();
   onDemo();
-}
-
-async function google() {
-  V.busy = true; V.msg = null; render();
-  const { error } = await AUTH.client.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname } });
-  if (error) { V.busy = false; V.msg = { err: true, text: `${t("auth.failed")}: ${error.message}` }; render(); }
-  // On success the browser leaves for Google and comes back here.
 }
 
 async function submit(ev) {

@@ -4,6 +4,7 @@
 // Every effect is optional: if any step fails, the plain constellation keeps working exactly as before.
 import { S, UI, kindOf } from "./state.js";
 import { $, reduce } from "./util.js";
+import { isGoal } from "./features/goal.js";
 
 let Graph = null, ctx = null;
 const FX = { on: false, K: null, scene: null, geo: null, U: { uTime: { value: 0 }, uEnc: { value: 1 } }, nodes: {}, objs: [], waves: [],
@@ -176,8 +177,10 @@ function fxNode(n) {
 function fxTarget(id) {
   const t = kindOf(id), tk = takenOf(id), sel = id === UI.job, on = ctx.onPlan(id), n = { id };
   const c = fxLin(ctx.nColor(n)), r = Math.max(2.2, Math.cbrt(ctx.nVal(n)) * 4);
-  // only "you", the chosen job and the route glow; everything else is a flat, slightly dimmed sphere so its colour reads
+  // only "you", the chosen job and the route glow; everything else is a flat, slightly dimmed sphere so its colour reads.
+  // Once a job is chosen, the other jobs sit back further and brighten while hovered.
   let hs = 0, ha = 0, glow = 0.04, ra = 0, pa = 0, fl = 0, ca = 0.65;
+  if (t === "job" && !sel && UI.job && !isGoal(id)) { if (FX.focusId === id) { glow = 0.2; ca = 1; } else { glow = 0; ca = 0.32; } }
   if (t === "you") { hs = r * 3.2; ha = 0.5; glow = 0.34; ra = 0.4; pa = 0.3; fl = 0.35; ca = 1; }
   else if (t === "job" && sel) { hs = r * 4; ha = 0.75; glow = 0.42; ra = 0.7; pa = 0.5; fl = 0.25; ca = 1; }
   else if (tk) { glow = 0; ca = 0.5; }
@@ -264,7 +267,7 @@ function fxBloom() {
 }
 
 
-/** Turn the layer on. c = { Graph, RING, LIFT, posOf, visible(), nColor, nVal, onPlan, restyle, setRotate, scanning() } */
+/** Turn the layer on. c = { Graph, RING, LIFT, posOf, visible(), nColor, nVal, onPlan, restyle, setRotate, home(), scanning() } */
 export function init(c) {
   ctx = c; Graph = c.Graph;
   if (FX.on || !Graph) return;
@@ -310,10 +313,10 @@ export function intro() {
   FX.introPending = false;
   if (reduce || !Graph) return;
   FX.intro = { t0: performance.now() / 1000 };
-  const d = $("graph").clientWidth < 700 ? 1.85 : 1.5, was = UI.rotating;
+  const d = $("graph").clientWidth < 700 ? 1.85 : 1.5, was = UI.rotating, home = ctx.home();
   if (was) ctx.setRotate(false);
   Graph.cameraPosition({ x: 300, y: 1500 * d, z: 1900 * d }, { x: 0, y: 10, z: 0 }, 0);
-  setTimeout(() => { Graph.cameraPosition({ x: 0, y: 440 * d, z: 420 * d }, { x: 0, y: 10, z: 0 }, 2600); setTimeout(() => { if (was && !UI.rotating) ctx.setRotate(true); }, 2700); }, 60);
+  setTimeout(() => { Graph.cameraPosition(home.pos, home.look, 2600); setTimeout(() => { if (was && !UI.rotating) ctx.setRotate(true); }, 2700); }, 60);
   setTimeout(() => wave(S.E?.root, "#f4f6fa", 2.2, 760), 250);
 }
 /** A shock-wave ring spreading out from a node. */
