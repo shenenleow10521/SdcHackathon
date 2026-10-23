@@ -62,7 +62,7 @@ describe("GET /employers/:id/match", () => {
     const hard = (await request(app).post("/api/employers").send(form({ name: "Hard Co (sample)", requirements: [{ occupationId: "esgRole", skillId: "python", weight: 3, levelNeeded: 4 }] }))).body.employer.id;
     const a = await request(app).get(`/api/employers/${easy}/match?job=esgRole`);
     expect(a.status).toBe(200);
-    expect(a.body.matchCatalogue).toBe(58);
+    expect(a.body.matchCatalogue).toBe(57);
     expect(a.body.match).toBeGreaterThan(a.body.matchCatalogue);
     expect(a.body.extraStops).toEqual([]); // excel is already a catalogue requirement
     const b = await request(app).get(`/api/employers/${hard}/match`); // job defaults to the employer's first requirement

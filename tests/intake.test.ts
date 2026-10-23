@@ -169,7 +169,7 @@ describe("interviewer", () => {
       expect.objectContaining({ id: "skill:aiinv", skillId: "aiinv" }),
     ]);
     const stay = await buildQuestions(svc, draft([s("three", 5, true)], "stayRole"), { hoursGiven: true });
-    expect(stay.map(q => q.id)).toEqual(["skill:aiinv", "skill:dispute", "skill:prompt"]);
+    expect(stay.map(q => q.id)).toEqual(["skill:aiinv", "skill:dispute", "skill:erp"]);
   });
 
   it("speaks Bahasa Melayu when asked", async () => {

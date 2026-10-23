@@ -17,7 +17,7 @@ export function render() {
     <div>
       <div class="h2"><h2>${esc(UI.sector === "best" ? t("jobs.bestTitle") : t("jobs.sectorTitle", { name: sectorName(sec) }))}</h2>${UI.ring.length ? `<span>${esc(t("jobs.summary", { n: UI.ring.length, m: Math.max(...UI.ring.map(matchOf)) }))}</span>` : ""}</div>
       <div class="jobs">${UI.ring.length ? UI.ring.map(jobCard).join("") : `<div class="empty">${esc(t("jobs.none"))}</div>`}</div>
-      ${UI.ring.some(j => (N(j).outlookSource || "sample") === "sample") ? `<p class="src jobs-src">${esc(t("jobs.demandSample"))}</p>` : ""}
+      ${demandNote()}
     </div>
     <details class="explore" id="explore"${open ? " open" : ""}>
       <summary><i data-lucide="compass"></i><span><b>${esc(t("jobs.explore"))}</b><small>${esc(t("jobs.exploreSub"))}</small></span><i class="chev" data-lucide="chevron-down"></i></summary>
@@ -64,6 +64,13 @@ function sdgNote() {
     <div class="num to-line">${esc(t("sdg.costs", { match: Math.abs(Math.round(td.matchDelta ?? 0)), weeks: Math.round(td.weeksDelta ?? 0) }))}</div>${top.sdgReason ? `<div class="rs">${esc(top.sdgReason)}</div>` : ""}</div></div>`;
 }
 
+// One note for the list: demand is sample data unless the job is on MyCOL (or has a real outlook).
+function demandNote() {
+  const sample = UI.ring.filter(j => !N(j).mycol && (N(j).outlookSource || "sample") === "sample");
+  if (!sample.length) return "";
+  return `<p class="src jobs-src">${esc(t(UI.ring.some(j => N(j).mycol) ? "jobs.demandSampleMycol" : "jobs.demandSample"))}</p>`;
+}
+
 // Demand direction in words and shape (not colour alone); within ±3 counts as steady.
 function demandDir(d) { return d > 3 ? ["up", "trending-up", "jobs.demUp"] : d < -3 ? ["down", "trending-down", "jobs.demDown"] : ["flat", "minus", "jobs.demFlat"]; }
 
@@ -89,7 +96,8 @@ function jobCard(j) {
       <div class="job-pct"><b>${m}%</b><span>${esc(t("jobs.matchWord"))}</span></div>
     </div>
     <div class="job-row"><span>${esc(p?.route ? t("jobs.readyLine", { w: W(p.ready) }) : t("path.noRouteShort"))}</span>
-      <span class="dem d-${dm[0]}"><i data-lucide="${dm[1]}"></i>${esc(t(dm[2]))}</span></div>
+      ${n.mycol ? `<span class="dem d-up" title="${esc(t("jobs.mycolTip", { title: n.mycol.title, code: n.mycol.code }))}"><i data-lucide="trending-up"></i>${esc(t("jobs.mycol"))}</span>`
+        : `<span class="dem d-${dm[0]}"><i data-lucide="${dm[1]}"></i>${esc(t(dm[2]))}</span>`}</div>
     ${risk === "High" ? `<div class="job-risk">${esc(t("jobs.risk.High"))}</div>` : ""}
     ${tags.length ? `<div class="job-tags">${tags.join("")}</div>` : ""}
   </div>`;

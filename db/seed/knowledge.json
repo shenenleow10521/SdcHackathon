@@ -2126,35 +2126,30 @@
     "stayRole": [
       {
         "skill": "aiinv",
-        "weight": 3,
         "need": 3,
         "share": 68,
         "status": "emerging"
       },
       {
         "skill": "prompt",
-        "weight": 2,
         "need": 3,
         "share": 46,
         "status": "emerging"
       },
       {
         "skill": "three",
-        "weight": 2,
         "need": 3,
         "share": 55,
         "status": "essential"
       },
       {
         "skill": "dispute",
-        "weight": 2,
         "need": 3,
         "share": 38,
         "status": "optional"
       },
       {
         "skill": "erp",
-        "weight": 1,
         "need": 3,
         "share": 40,
         "status": "optional"
@@ -2163,35 +2158,30 @@
     "opsRole": [
       {
         "skill": "auto",
-        "weight": 3,
         "need": 3,
         "share": 74,
         "status": "essential"
       },
       {
         "skill": "aisup",
-        "weight": 2,
         "need": 3,
         "share": 44,
         "status": "emerging"
       },
       {
         "skill": "erp",
-        "weight": 2,
         "need": 3,
         "share": 52,
         "status": "essential"
       },
       {
         "skill": "process",
-        "weight": 2,
         "need": 3,
         "share": 49,
         "status": "essential"
       },
       {
         "skill": "three",
-        "weight": 1,
         "need": 3,
         "share": 30,
         "status": "optional"
@@ -2200,35 +2190,30 @@
     "faRole": [
       {
         "skill": "fin",
-        "weight": 3,
         "need": 3,
         "share": 81,
         "status": "essential"
       },
       {
         "skill": "viz",
-        "weight": 2,
         "need": 3,
         "share": 62,
         "status": "optional"
       },
       {
         "skill": "excel",
-        "weight": 2,
         "need": 3,
         "share": 77,
         "status": "essential"
       },
       {
         "skill": "erp",
-        "weight": 1,
         "need": 3,
         "share": 35,
         "status": "optional"
       },
       {
         "skill": "aisup",
-        "weight": 1,
         "need": 3,
         "share": 22,
         "status": "emerging"
@@ -2237,35 +2222,30 @@
     "esgRole": [
       {
         "skill": "ghg",
-        "weight": 3,
         "need": 3,
         "share": 72,
         "status": "essential"
       },
       {
         "skill": "disc",
-        "weight": 2,
         "need": 3,
         "share": 58,
         "status": "essential"
       },
       {
         "skill": "esgdata",
-        "weight": 2,
         "need": 3,
         "share": 41,
         "status": "optional"
       },
       {
         "skill": "audit",
-        "weight": 2,
         "need": 3,
         "share": 47,
         "status": "essential"
       },
       {
         "skill": "excel",
-        "weight": 1,
         "need": 3,
         "share": 65,
         "status": "optional"
@@ -2274,35 +2254,30 @@
     "intAudit": [
       {
         "skill": "audit2",
-        "weight": 3,
         "need": 3,
         "share": 70,
         "status": "essential"
       },
       {
         "skill": "audit",
-        "weight": 2,
         "need": 3,
         "share": 55,
         "status": "essential"
       },
       {
         "skill": "recon",
-        "weight": 2,
         "need": 3,
         "share": 40,
         "status": "optional"
       },
       {
         "skill": "tax",
-        "weight": 1,
         "need": 3,
         "share": 30,
         "status": "optional"
       },
       {
         "skill": "aisup",
-        "weight": 1,
         "need": 3,
         "share": 26,
         "status": "emerging"
@@ -2311,28 +2286,24 @@
     "treasuryRole": [
       {
         "skill": "treasury",
-        "weight": 3,
         "need": 3,
         "share": 76,
         "status": "essential"
       },
       {
         "skill": "pay",
-        "weight": 2,
         "need": 3,
         "share": 48,
         "status": "essential"
       },
       {
         "skill": "excel",
-        "weight": 2,
         "need": 3,
         "share": 62,
         "status": "essential"
       },
       {
         "skill": "fin",
-        "weight": 1,
         "need": 3,
         "share": 40,
         "status": "optional"
@@ -2341,28 +2312,24 @@
     "lcaRole": [
       {
         "skill": "lca",
-        "weight": 3,
         "need": 3,
         "share": 70,
         "status": "essential"
       },
       {
         "skill": "ghg",
-        "weight": 2,
         "need": 3,
         "share": 64,
         "status": "essential"
       },
       {
         "skill": "esgdata",
-        "weight": 2,
         "need": 3,
         "share": 45,
         "status": "optional"
       },
       {
         "skill": "excel",
-        "weight": 1,
         "need": 3,
         "share": 50,
         "status": "optional"
@@ -2371,28 +2338,24 @@
     "greenRole": [
       {
         "skill": "greenfin",
-        "weight": 3,
         "need": 3,
         "share": 72,
         "status": "essential"
       },
       {
         "skill": "fin",
-        "weight": 2,
         "need": 3,
         "share": 60,
         "status": "essential"
       },
       {
         "skill": "disc",
-        "weight": 2,
         "need": 3,
         "share": 44,
         "status": "optional"
       },
       {
         "skill": "excel",
-        "weight": 1,
         "need": 3,
         "share": 55,
         "status": "optional"
@@ -2401,28 +2364,24 @@
     "assurRole": [
       {
         "skill": "disc",
-        "weight": 3,
         "need": 3,
         "share": 68,
         "status": "essential"
       },
       {
         "skill": "audit2",
-        "weight": 2,
         "need": 3,
         "share": 52,
         "status": "essential"
       },
       {
         "skill": "audit",
-        "weight": 2,
         "need": 3,
         "share": 50,
         "status": "essential"
       },
       {
         "skill": "esgdata",
-        "weight": 1,
         "need": 3,
         "share": 36,
         "status": "optional"
@@ -2431,35 +2390,30 @@
     "dataRole": [
       {
         "skill": "sql",
-        "weight": 3,
         "need": 3,
         "share": 82,
         "status": "essential"
       },
       {
         "skill": "stats",
-        "weight": 2,
         "need": 3,
         "share": 58,
         "status": "essential"
       },
       {
         "skill": "viz",
-        "weight": 2,
         "need": 3,
         "share": 66,
         "status": "essential"
       },
       {
         "skill": "python",
-        "weight": 2,
         "need": 3,
         "share": 54,
         "status": "optional"
       },
       {
         "skill": "excel",
-        "weight": 1,
         "need": 3,
         "share": 60,
         "status": "optional"
@@ -2468,28 +2422,24 @@
     "biRole": [
       {
         "skill": "viz",
-        "weight": 3,
         "need": 3,
         "share": 80,
         "status": "essential"
       },
       {
         "skill": "sql",
-        "weight": 3,
         "need": 3,
         "share": 74,
         "status": "essential"
       },
       {
         "skill": "excel",
-        "weight": 1,
         "need": 3,
         "share": 50,
         "status": "optional"
       },
       {
         "skill": "erp",
-        "weight": 1,
         "need": 3,
         "share": 30,
         "status": "optional"
@@ -2498,28 +2448,24 @@
     "aiQaRole": [
       {
         "skill": "aisup",
-        "weight": 3,
         "need": 3,
         "share": 70,
         "status": "emerging"
       },
       {
         "skill": "prompt",
-        "weight": 2,
         "need": 3,
         "share": 50,
         "status": "emerging"
       },
       {
         "skill": "aiinv",
-        "weight": 2,
         "need": 3,
         "share": 40,
         "status": "emerging"
       },
       {
         "skill": "audit",
-        "weight": 1,
         "need": 3,
         "share": 35,
         "status": "optional"
@@ -2528,28 +2474,24 @@
     "procRole": [
       {
         "skill": "procure",
-        "weight": 3,
         "need": 3,
         "share": 78,
         "status": "essential"
       },
       {
         "skill": "dispute",
-        "weight": 2,
         "need": 3,
         "share": 60,
         "status": "essential"
       },
       {
         "skill": "three",
-        "weight": 2,
         "need": 3,
         "share": 45,
         "status": "optional"
       },
       {
         "skill": "erp",
-        "weight": 1,
         "need": 3,
         "share": 50,
         "status": "optional"
@@ -2558,28 +2500,24 @@
     "scmRole": [
       {
         "skill": "scm",
-        "weight": 3,
         "need": 3,
         "share": 80,
         "status": "essential"
       },
       {
         "skill": "erp",
-        "weight": 2,
         "need": 3,
         "share": 58,
         "status": "essential"
       },
       {
         "skill": "excel",
-        "weight": 2,
         "need": 3,
         "share": 62,
         "status": "essential"
       },
       {
         "skill": "stats",
-        "weight": 1,
         "need": 3,
         "share": 34,
         "status": "optional"
@@ -2588,28 +2526,24 @@
     "invRole": [
       {
         "skill": "invent",
-        "weight": 3,
         "need": 3,
         "share": 74,
         "status": "essential"
       },
       {
         "skill": "erp",
-        "weight": 2,
         "need": 3,
         "share": 50,
         "status": "essential"
       },
       {
         "skill": "excel",
-        "weight": 2,
         "need": 3,
         "share": 60,
         "status": "essential"
       },
       {
         "skill": "sql",
-        "weight": 1,
         "need": 3,
         "share": 30,
         "status": "optional"

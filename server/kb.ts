@@ -2,6 +2,7 @@
 // (minus changes undone by a 'revert' change at or before V). Versions are immutable, so snapshots are cached.
 import type { Db } from "./lib/db.ts";
 import { HAVE_LEVEL } from "../shared/engine.js";
+import { escoReq, ESCO_REQ_WEIGHT, catalogueIsco, mycolFor, dosmFor, type EscoReq } from "./lib/esco-labels.ts";
 
 export interface KbChange {
   kind: "delta" | "emerging_status" | "add_skill" | "revert";
@@ -19,7 +20,7 @@ export interface FullGraph {
   kbCreatedAt: string;
   nodes: Record<string, any>;
   edges: { from: string; to: string; weeks: number; why: string; kind: string }[];
-  req: Record<string, { skill: string; weight: number; need: number; share: number | null; status: string; source: string }[]>;
+  req: Record<string, { skill: string; weight: number; need: number; share: number | null; status: string; source: string; esco?: EscoReq | null }[]>;
   sectors: { id: string; name: string; icon: string | null; note: string | null; jobs: string[] | null }[];
   courses: Record<string, any[]>;
   deltas: { e: Record<string, number>; d: Record<string, number> };
@@ -74,10 +75,13 @@ async function buildGraph(db: Db, v: number): Promise<FullGraph> {
   const dArr = (id: string) => { const o = ol[id]; return o ? [o.d2026, o.d2030m, o.d2030f].map(Number) : [0, 0, 0]; };
 
   const nodes: Record<string, any> = {};
-  for (const o of occs.rows as any[])
+  for (const o of occs.rows as any[]) {
+    const isco = o.isco_code || catalogueIsco(o.id);
     nodes[o.id] = { name: o.title, type: o.is_destination ? "job" : "occupation", e: eArr(o.id), d: dArr(o.id), stay: o.stay,
       blurb: o.blurb, postings: o.postings, conf: o.conf, split: o.split, sdg: o.sdg || [], source: o.source, sourceUri: o.source_uri,
-      iscoCode: o.isco_code, onetCode: o.onet_code, outlookSource: ol[o.id]?.source || "sample" };
+      iscoCode: isco, onetCode: o.onet_code, outlookSource: ol[o.id]?.source || "sample",
+      mycol: mycolFor(isco), malaysia: dosmFor(isco) }; // MyCOL (4-digit group) and DOSM wages (major group), from the ISCO code
+  }
   for (const s of skills.rows as any[])
     nodes[s.id] = { name: s.label, type: "skill", e: eArr(s.id), d: dArr(s.id), description: s.description,
       emerging: s.emerging ? { ...s.emerging } : null, sdg: s.sdg, angle: s.angle, source: s.source, sourceUri: s.source_uri,
@@ -97,8 +101,14 @@ async function buildGraph(db: Db, v: number): Promise<FullGraph> {
     deltas: { e: {}, d: {} },
     appliedChanges: [],
   };
-  for (const r of req.rows as any[])
-    (graph.req[r.occupation_id] ||= []).push({ skill: r.skill_id, weight: r.weight, need: r.level_needed, share: r.evidence_share, status: r.status, source: r.evidence_source });
+  // Catalogue requirements: ESCO status and weight computed from ESCO (server/lib/esco-labels.ts), so existing
+  // databases follow the rule too; the stored weight is used only when the job has no ESCO mapping.
+  for (const r of req.rows as any[]) {
+    const esco = escoReq(r.occupation_id, r.skill_id);
+    (graph.req[r.occupation_id] ||= []).push({ skill: r.skill_id, weight: esco ? ESCO_REQ_WEIGHT[esco] : r.weight, need: r.level_needed, share: r.evidence_share,
+      status: r.status, source: r.evidence_source, esco });
+  }
+  for (const rs of Object.values(graph.req)) rs.sort((a, b) => b.weight - a.weight || a.skill.localeCompare(b.skill));
   for (const c of courses.rows as any[])
     (graph.courses[c.skill_id] ||= []).push({ id: c.id, title: c.title, provider: c.provider, url: c.url, format: c.format, formatText: c.format_text,
       hours: c.hours, costRm: c.cost_rm === null ? null : Number(c.cost_rm), hrdClaimable: c.hrd_claimable, practice: c.practice_task, prove: c.prove_check, source: c.source });

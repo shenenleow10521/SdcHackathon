@@ -78,13 +78,14 @@ export function jobAsks(j) {
   const sample = reqSrc.includes("sample");
   // A skill counts as yours at level 3 for every job, so rows say how much the job leans on it, not a level.
   // Requirements an employer entered keep that employer's own level.
+  // Catalogue rows say what ESCO lists for the job (r.esco, computed on the server); README explains the labels and weights.
   const label = r => r.status === "employer" ? (r.need ? t("req.employerLvl", { n: r.need }) : t("req.employerAsks"))
-    : t({ essential: "req.essential", emerging: "req.new" }[r.status] || "req.optional");
+    : r.esco ? t("req.esco." + r.esco) : t({ essential: "req.essential", emerging: "req.new" }[r.status] || "req.optional");
   const rows = [...(S.graph.req[j] || []), ...extra.map(r => ({ ...r, status: "employer" }))].map(r => {
     const cov = E.coverage(r.skill, r.need);
     const ci = cov >= 1 ? ["full", "check", t("cov.full")] : cov > 0 ? ["part", "minus", t("cov.part")] : ["none", "plus", t("cov.none")];
-    // Sample shares are illustrative: say it in words, not as a precise posting percentage.
-    const share = r.share == null ? "" : sample ? `<div class="rs">${esc(t(r.share >= 60 ? "req.often" : "req.sometimes"))}</div>` : `<span class="num">${esc(r.share)}%</span><div class="rs">${esc(t("req.ofPostings"))}</div>`;
+    // Share of postings only when it comes from real postings; sample shares are not shown.
+    const share = r.share == null || isSample(r.source) ? "" : `<span class="num">${esc(r.share)}%</span><div class="rs">${esc(t("req.ofPostings"))}</div>`;
     return `<div class="req-row" data-skill="${esc(r.skill)}" role="button" tabindex="0"><div><div class="rn">${esc(nameOf(r.skill))}</div><div class="rs">${esc(label(r))}</div></div>
       <div class="share">${share}</div><span class="cov ${ci[0]}" role="img" aria-label="${esc(ci[2])}"><i data-lucide="${ci[1]}"></i></span></div>`;
   }).join("");

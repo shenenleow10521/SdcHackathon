@@ -21,7 +21,7 @@ describe("fact sheet", () => {
     const s = await sheetFor();
     const ids = s.records.map(r => r.id);
     expect(ids).toEqual(expect.arrayContaining(["ctx", "esgRole", "recon", "ghg", "disc", "esgdata", "audit", "excel", "src1"]));
-    expect(s.records.find(r => r.id === "esgRole")).toMatchObject({ matchPct: 58, routeWeeksAtYourPace: 6 });
+    expect(s.records.find(r => r.id === "esgRole")).toMatchObject({ matchPct: 57, routeWeeksAtYourPace: 6 });
     expect(s.records.find(r => r.id === "ghg")).toMatchObject({ onRoute: true, legFrom: "recon" });
     expect(new Set(ids).size).toBe(ids.length);
   });
@@ -36,7 +36,7 @@ describe("fact checker", () => {
   it("keeps cited, supported sentences and removes the rest", async () => {
     const s = await sheetFor();
     const { kept, removed } = factCheck([
-      { text: "Your match for this job is 58%.", cites: ["esgRole"] },               // ok
+      { text: "Your match for this job is 57%.", cites: ["esgRole"] },               // ok
       { text: "GHG accounting is the next stop [ghg].", cites: [] },                  // ok: inline citation
       { text: "You will earn RM 9,000 a month.", cites: ["esgRole"] },                // invented number
       { text: "Carbon jobs are booming.", cites: [] },                                // no citation
@@ -45,7 +45,7 @@ describe("fact checker", () => {
       { text: "It takes ninety years.", cites: ["esgRole"] },                            // number word not in the records
       { text: "Learning GHG accounting takes four weeks.", cites: ["ghg"] },          // number word backed by the record (4)
     ], s);
-    expect(kept.map(k => k.text)).toEqual(["Your match for this job is 58%.", "GHG accounting is the next stop.", "Learning GHG accounting takes four weeks."]);
+    expect(kept.map(k => k.text)).toEqual(["Your match for this job is 57%.", "GHG accounting is the next stop.", "Learning GHG accounting takes four weeks."]);
     expect(kept[1].cites).toEqual(["ghg"]);
     expect(removed).toBe(5);
   });
@@ -61,7 +61,7 @@ describe("fact checker", () => {
 describe("GET /api/explain", () => {
   it("uses the LLM with only the fact sheet, and reports removed sentences", async () => {
     const svc = await testServices({ llmHandler: () => ({ sentences: [
-      { text: "Your match is 58%.", cites: ["esgRole"] },
+      { text: "Your match is 57%.", cites: ["esgRole"] },
       { text: "Your route reuses vendor reconciliation.", cites: ["recon"] },
       { text: "This job pays well.", cites: ["salary"] },
       { text: "It takes 3 years.", cites: ["esgRole"] },
@@ -70,7 +70,7 @@ describe("GET /api/explain", () => {
     expect(res.status).toBe(200);
     expect(res.body).toMatchObject({ node: "esgRole", removed: 2, model: "mock-main", cached: false });
     expect(res.body.citations).toEqual(["esgRole", "recon"]);
-    expect(res.body.text).toBe("Your match is 58%. [esgRole] Your route reuses vendor reconciliation. [recon]");
+    expect(res.body.text).toBe("Your match is 57%. [esgRole] Your route reuses vendor reconciliation. [recon]");
     const call = (svc.llm as ReturnType<typeof createMockLlm>).calls[0];
     const sent = JSON.parse(call.user);
     expect(sent.subject).toBe("esgRole");
@@ -82,7 +82,7 @@ describe("GET /api/explain", () => {
     const res = await request(createApp(svc)).get("/api/explain?node=esgRole");
     expect(res.status).toBe(200);
     expect(res.body.model).toBe("template");
-    expect(res.body.text).toContain("58%");
+    expect(res.body.text).toContain("57%");
     expect(res.body.citations).toContain("esgRole");
     expect(res.body.removed).toBe(0);
   });

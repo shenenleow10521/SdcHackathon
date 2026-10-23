@@ -35,7 +35,7 @@ interface EscoData {
 let cache: EscoData | null | undefined;
 
 // ISCO-08 / MASCO 2020 major group (first digit of the code) -> DOSM occupation category.
-const DOSM_GROUP: Record<string, string> = { "1": "managers", "2": "professionals", "3": "technicians", "4": "clerical", "5": "service_sales", "6": "agriculture", "7": "craft", "8": "operators", "9": "elementary" };
+export const DOSM_GROUP: Record<string, string> = { "1": "managers", "2": "professionals", "3": "technicians", "4": "clerical", "5": "service_sales", "6": "agriculture", "7": "craft", "8": "operators", "9": "elementary" };
 
 /** Malaysian salaries & wages by MASCO major group (both sexes): latest year, and change in wage earners since the first year. */
 function loadDosm() {

@@ -34,7 +34,7 @@ describe("buildPlan", () => {
     expect(ghg.practice).toBeTruthy();
     expect(ghg.prove).toBeTruthy();
     expect(p.alternatives.map(a => a!.key)).toContain("ap>audit>disc>esgRole");
-    expect(p.match).toBe(58);
+    expect(p.match).toBe(57);
   });
 
   it("classifies every step by the documented rule, and all four types occur", () => {
@@ -233,7 +233,7 @@ describe("saved plans and advisor approval", () => {
     expect((await request(app).get("/api/advisor/queue")).status).toBe(401);
     const q = await request(app).get("/api/advisor/queue").set(admin);
     const item = q.body.plans.find((p: any) => p.id === plan.id);
-    expect(item.profile).toMatchObject({ id: 1, occupationId: "ap", matchNow: 58 });
+    expect(item.profile).toMatchObject({ id: 1, occupationId: "ap", matchNow: 57 });
     expect((await request(app).post(`/api/plans/${plan.id}/decision`).send({ decision: "approve" })).status).toBe(401);
     const ok = await request(app).post(`/api/plans/${plan.id}/decision`).set(admin).send({ decision: "approve", note: "Good plan" });
     expect(ok.body.plan).toMatchObject({ status: "approved", advisorNote: "Good plan", decidedBy: "advisor:Encik Faiz (sample)" });

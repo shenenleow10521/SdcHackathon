@@ -6,6 +6,7 @@ import path from "node:path";
 import type { Db } from "./db.ts";
 import { projectRoot } from "./db.ts";
 import { seedExtensions } from "./seed-extensions.ts";
+import { escoWeight } from "./esco-labels.ts";
 
 const seedFile = (name: string) => path.join(projectRoot, "db", "seed", name);
 const readJson = (name: string) => (existsSync(seedFile(name)) ? JSON.parse(readFileSync(seedFile(name), "utf8")) : null);
@@ -49,7 +50,8 @@ export async function seed(db: Db, opts: { force?: boolean } = {}) {
     }
     for (const e of K.edges) await t.query("insert into edges values ($1,$2,$3,$4,$5)", [e.from, e.to, e.kind, e.weeks, e.why]);
     for (const [job, reqs] of Object.entries<any[]>(K.requirements))
-      for (const r of reqs) await t.query("insert into occupation_skills values ($1,$2,$3,$4,$5,$6,'sample')", [job, r.skill, r.weight, r.need, r.status, r.share]);
+      // Weight from the requirement's ESCO status (server/lib/esco-labels.ts), not set by hand. kb.ts applies the same rule.
+      for (const r of reqs) await t.query("insert into occupation_skills values ($1,$2,$3,$4,$5,$6,'sample')", [job, r.skill, escoWeight(job, r.skill, 1), r.need, r.status, r.share]);
     let ord = 0;
     for (const s of K.sectors) await t.query("insert into sectors values ($1,$2,$3,$4,$5,$6)", [s.id, s.name, s.icon, s.note, s.jobs ? JSON.stringify(s.jobs) : null, ord++]);
 

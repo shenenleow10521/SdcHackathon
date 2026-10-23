@@ -74,7 +74,7 @@ function progressHtml(p) {
 function nextHtml(nx, p) {
   const k = nx.id, co = (S.graph.courses?.[k] || [])[0];
   const leg = p.route.legs.find(l => l.to === k), up = p.ups.find(u => u.id === k);
-  const share = (S.graph.req[UI.job] || []).find(r => r.skill === k)?.share;
+  const rq = (S.graph.req[UI.job] || []).find(r => r.skill === k), share = rq && !isSample(rq.source) ? rq.share : null; // no sample shares
   const why = [(leg?.why || "").replace(/\.\s*$/, "") || (up ? t("path.upTitle", { name: nameOf(k), from: up.from, to: up.to }) : ""), share != null ? t("next.share", { n: share, job: nameOf(UI.job) }) : ""].filter(Boolean).join(". ");
   const meta = co ? [courseMeta(co), co.provider ? t("next.by", { provider: co.provider }) : ""].filter(Boolean).join(" ") : "";
   const ver = isVerified(k), noServer = S.profileFallback;
@@ -112,6 +112,7 @@ function aboutHtml(j) {
         <div class="msec"><h4>${esc(t("drawer.whoWork", { year: S.year }))}</h4>${splitBar(j, "job")}
           <p class="note">${esc(t("drawer.expLine", { e: Math.round(E.exposure(j) * 100), d: sign(E.demand(j)), year: S.year }))} ${srcBadge(n.outlookSource)}</p></div>
         <div class="msec"><h4>${esc(t("drawer.asks"))}</h4>${jobAsks(j)}</div>
+        ${n.malaysia ? `<p class="note">${esc(t("path.dosm", { group: t("esco.my.g." + n.malaysia.group), rm: rm(n.malaysia.medianWageRm), year: n.malaysia.year }))} ${extLink(n.malaysia.url, "OpenDOSM")}</p>` : ""}
         <button class="btn btn-soft" type="button" data-open="${esc(j)}"><i data-lucide="briefcase"></i>${esc(t("path.aboutAll"))}</button>
       </div>
     </details>`;
