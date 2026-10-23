@@ -57,6 +57,7 @@ You can't control the future, but you can choose the plan that survives most of 
 |---|---|---|---|
 | CV / LinkedIn-PDF intake | Text extraction, personal-detail scrubbing, skills matched to ESCO with bge-m3 embeddings (RunPod Serverless) | 🧪 Built; accuracy evaluation in progress | Real (ESCO) |
 | Paste-text intake | Paste CV text instead of uploading a PDF | 🧪 Built | Real (ESCO) |
+| Scan and photo intake | Scanned PDFs and JPG/PNG photos (up to 3 pages) read by local OCR on our server (tesseract.js, English + Malay); unsure text goes back to the user to check before any AI sees it | 🧪 Built | Real (ESCO) |
 | Interviewer | Up to 3 follow-up questions where the CV is unclear (fixed question templates, in English and Malay; no AI model) | 🧪 Built | n/a |
 | Skill levels with confidence | 1–5 scale with plain descriptions; *From CV / Self-rated / Verified* (a short quiz verifies a skill) | ✅ Works | Quiz questions are Sample |
 | Career constellation (3D) | You, your skills, skills to learn, jobs, with your route lit up; closed roads for skills AI has taken over | ✅ Works | Sample catalogue |
@@ -121,6 +122,7 @@ flowchart LR
 **Core formulas** (full list in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#7-formulas-and-parameters-single-source-of-truth)):
 - **Match %** = Σ(skill weight × coverage) ÷ Σ weight. Coverage = your level ÷ level needed (max 1); a skill you can bridge to from one you have counts 0.4.
 - **Level needed:** which skills a job needs comes from the job's requirements; how well you need them is one rule for every job: a skill counts as yours at level 3 of 5 (you can do it on your own). We don't estimate a level per job; ESCO doesn't publish proficiency levels. A skill you rate 1 or 2 still gives partial credit (1/3 or 2/3) and adds a level-up step to your plan. The one exception is an employer's own requirements, which keep the level the employer entered.
+- **Skill labels and weights:** each skill a catalogue job asks for is checked against the job's ESCO occupation when the knowledge base is built (`server/lib/esco-labels.ts`), not set by hand. *Essential (ESCO)*: ESCO lists it as essential for that job (weight 2). *Optional (ESCO)*: ESCO lists it as optional (weight 1). *Added by HalaTuju*: the skill is in ESCO but ESCO doesn't list it for that job; we added it (weight 1). *New skill, not in ESCO yet*: no ESCO equivalent, such as prompting AI tools for finance or GHG emissions accounting (weight 1). Our own additions never outweigh ESCO's essential skills. Of the 66 catalogue requirements: 10 essential, 9 optional, 34 added by us, 13 not in ESCO. Skills added later by the emerging-skill committee and an employer's own requirements keep their own weights.
 - **Routes:** Dijkstra over skill bridges. Edge cost = weeks of learning plus a penalty that depends on the route type (traffic from AI exposure, AI risk, or worst-case exposure in the Fast AI 2030 scenario).
 - **Taken over** = AI exposure above a threshold that falls over time, *and* demand falling. These skills become closed roads.
 
@@ -258,7 +260,7 @@ Page text is treated as **data, never as instructions** (protection against prom
 | Embeddings (GPU) | **BAAI/bge-m3 on RunPod Serverless** (worker-infinity-embedding); a local Infinity server or Gemini embeddings as fallbacks |
 | Web search | Tavily (Job Market Researcher only, limited to trusted domains; ~30 searches a day fits the free tier) |
 | Database | PostgreSQL; embedded PGlite when no `DATABASE_URL` is set |
-| Backend libraries | zod, multer, unpdf (PDF text), fast-xml-parser |
+| Backend libraries | zod, multer, unpdf (PDF text), tesseract.js (local OCR, eng + msa data vendored in `server/lib/tessdata`), fast-xml-parser |
 | Frontend | Vanilla JS, 3d-force-graph (three.js), GSAP, Lucide icons, Geist font |
 
 ### Sponsor tools
