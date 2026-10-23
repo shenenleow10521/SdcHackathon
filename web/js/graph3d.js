@@ -283,7 +283,7 @@ function placeLabels() {
     items.push({ el, s, off: k === "job" ? 20 : k === "you" ? 22 : 12, pr, w: el._w || 120, h: el._h || 22 });
   }
   items.sort((a, b) => a.pr - b.pr);
-  const placed = [], hit = r => placed.some(q => r.x < q.x + q.w && r.x + r.w > q.x && r.y < q.y + q.h && r.y + r.h > q.y);
+  const placed = placedLabels = [], hit = r => placed.some(q => r.x < q.x + q.w && r.x + r.w > q.x && r.y < q.y + q.h && r.y + r.h > q.y);
   for (const it of items) {
     let y = null;
     for (const cy of [it.s.y + it.off, it.s.y - it.off - it.h]) { const r = { x: it.s.x - it.w / 2 - 4, y: cy - 2, w: it.w + 8, h: it.h + 4 }; if (!hit(r)) { y = cy; placed.push(r); break; } }
@@ -294,6 +294,8 @@ function placeLabels() {
   }
 }
 
+// label boxes from the last placeLabels(), so ring names can step aside for them
+let placedLabels = [];
 let lastFrame = performance.now();
 function frame(now) {
   now = now || performance.now();
@@ -328,7 +330,9 @@ function drawRings() {
       if (!best || s.y > best.y) best = s;
     }
     if (!FX.isOn()) out += `<path d="${d}" fill="none" stroke="var(--ring)" stroke-width="1.1" ${r < 3 ? 'stroke-dasharray="3 6"' : ""}/>`;
-    if (names[r]) out += `<text class="ring-label" x="${best.x.toFixed(1)}" y="${(best.y + 26).toFixed(1)}" text-anchor="middle">${esc(names[r])}</text>`;
+    // a ring name sits under its ring; skip it when a node label covers that spot
+    const nw = names[r] ? names[r].length * 6.6 + 8 : 0, nr = { x: best.x - nw / 2, y: best.y + 12, w: nw, h: 18 };
+    if (names[r] && !placedLabels.some(q => nr.x < q.x + q.w && nr.x + nr.w > q.x && nr.y < q.y + q.h && nr.y + nr.h > q.y)) out += `<text class="ring-label" x="${best.x.toFixed(1)}" y="${(best.y + 26).toFixed(1)}" text-anchor="middle">${esc(names[r])}</text>`;
   }
   $("rings").innerHTML = out;
 }
