@@ -15,10 +15,20 @@ export function safeUrl(u) {
   if (!u || typeof u !== "string") return null;
   try { const x = new URL(u, location.origin); return x.protocol === "http:" || x.protocol === "https:" ? x.href : null; } catch { return null; }
 }
+// Site icons for the external sources we link to, saved once from each site's own favicon (web/assets/logos/README.md).
+// They only show where a link goes. Matched by domain; other links get no icon.
+const LOGOS = { "myfuturejobs.gov.my": "myfuturejobs", "jobstreet.com": "jobstreet", "coursera.org": "coursera", "microsoft.com": "microsoft",
+  "ghgprotocol.org": "ghgprotocol", "ifrs.org": "ifrs", "bsigroup.com": "bsi", "wanfahprosper.com": "wanfah", "dosm.gov.my": "opendosm",
+  "esco.ec.europa.eu": "esco", "ilo.org": "ilo", "onetcenter.org": "onet" };
+export function logoOf(url) {
+  const h = hostOf(url);
+  const k = Object.keys(LOGOS).find(d => h === d || h.endsWith("." + d));
+  return k ? `<img class="logo-ic" src="/assets/logos/${LOGOS[k]}.png" alt="" width="16" height="16" loading="lazy">` : "";
+}
 export function extLink(url, text, cls = "") {
   const u = safeUrl(url);
   if (!u) return esc(text);
-  return `<a class="ext ${cls}" href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(text || hostOf(u))}<i data-lucide="external-link"></i></a>`;
+  return `<a class="ext ${cls}" href="${esc(u)}" target="_blank" rel="noopener noreferrer">${logoOf(u)}${esc(text || hostOf(u))}<i data-lucide="external-link"></i></a>`;
 }
 export function hostOf(u) { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return u; } }
 
