@@ -1,0 +1,2816 @@
+{
+  "summary": {
+    "benchmark": "HalaTuju CV reading",
+    "mode": "full",
+    "ranAt": "2026-10-23T18:42:08.717Z",
+    "cases": 14,
+    "headline": {
+      "all": {
+        "cases": 14,
+        "currentJob": {
+          "k": 14,
+          "n": 14,
+          "pct": 100,
+          "ci95": [
+            0.785,
+            1
+          ]
+        },
+        "escoRecallStrict": {
+          "k": 75,
+          "n": 120,
+          "pct": 62.5,
+          "ci95": [
+            0.536,
+            0.706
+          ]
+        },
+        "escoRecallLenient": {
+          "k": 79,
+          "n": 120,
+          "pct": 65.8,
+          "ci95": [
+            0.57,
+            0.737
+          ]
+        },
+        "personalDetailsRemoved": {
+          "k": 146,
+          "n": 146,
+          "pct": 100,
+          "ci95": [
+            0.974,
+            1
+          ]
+        },
+        "escoSuggested": 306,
+        "escoShownInUse": 227,
+        "coreSkills": {
+          "recall": {
+            "k": 56,
+            "n": 60,
+            "pct": 93.3,
+            "ci95": [
+              0.841,
+              0.974
+            ]
+          },
+          "precision": {
+            "k": 56,
+            "n": 68,
+            "pct": 82.4,
+            "ci95": [
+              0.716,
+              0.896
+            ]
+          },
+          "levelInRange": {
+            "k": 41,
+            "n": 56,
+            "pct": 73.2,
+            "ci95": [
+              0.604,
+              0.83
+            ]
+          }
+        }
+      },
+      "heldout": {
+        "cases": 0,
+        "currentJob": {
+          "k": 0,
+          "n": 0,
+          "pct": null,
+          "ci95": null
+        },
+        "escoRecallStrict": {
+          "k": 0,
+          "n": 0,
+          "pct": null,
+          "ci95": null
+        },
+        "escoRecallLenient": {
+          "k": 0,
+          "n": 0,
+          "pct": null,
+          "ci95": null
+        },
+        "personalDetailsRemoved": {
+          "k": 0,
+          "n": 0,
+          "pct": null,
+          "ci95": null
+        },
+        "escoSuggested": 0,
+        "escoShownInUse": 0,
+        "coreSkills": {
+          "recall": {
+            "k": 0,
+            "n": 0,
+            "pct": null,
+            "ci95": null
+          },
+          "precision": {
+            "k": 0,
+            "n": 0,
+            "pct": null,
+            "ci95": null
+          },
+          "levelInRange": {
+            "k": 0,
+            "n": 0,
+            "pct": null,
+            "ci95": null
+          }
+        }
+      },
+      "tuning": {
+        "cases": 14,
+        "currentJob": {
+          "k": 14,
+          "n": 14,
+          "pct": 100,
+          "ci95": [
+            0.785,
+            1
+          ]
+        },
+        "escoRecallStrict": {
+          "k": 75,
+          "n": 120,
+          "pct": 62.5,
+          "ci95": [
+            0.536,
+            0.706
+          ]
+        },
+        "escoRecallLenient": {
+          "k": 79,
+          "n": 120,
+          "pct": 65.8,
+          "ci95": [
+            0.57,
+            0.737
+          ]
+        },
+        "personalDetailsRemoved": {
+          "k": 146,
+          "n": 146,
+          "pct": 100,
+          "ci95": [
+            0.974,
+            1
+          ]
+        },
+        "escoSuggested": 306,
+        "escoShownInUse": 227,
+        "coreSkills": {
+          "recall": {
+            "k": 56,
+            "n": 60,
+            "pct": 93.3,
+            "ci95": [
+              0.841,
+              0.974
+            ]
+          },
+          "precision": {
+            "k": 56,
+            "n": 68,
+            "pct": 82.4,
+            "ci95": [
+              0.716,
+              0.896
+            ]
+          },
+          "levelInRange": {
+            "k": 41,
+            "n": 56,
+            "pct": 73.2,
+            "ci95": [
+              0.604,
+              0.83
+            ]
+          }
+        }
+      },
+      "all:messy": {
+        "cases": 14,
+        "currentJob": {
+          "k": 14,
+          "n": 14,
+          "pct": 100,
+          "ci95": [
+            0.785,
+            1
+          ]
+        },
+        "escoRecallStrict": {
+          "k": 75,
+          "n": 120,
+          "pct": 62.5,
+          "ci95": [
+            0.536,
+            0.706
+          ]
+        },
+        "escoRecallLenient": {
+          "k": 79,
+          "n": 120,
+          "pct": 65.8,
+          "ci95": [
+            0.57,
+            0.737
+          ]
+        },
+        "personalDetailsRemoved": {
+          "k": 146,
+          "n": 146,
+          "pct": 100,
+          "ci95": [
+            0.974,
+            1
+          ]
+        },
+        "escoSuggested": 306,
+        "escoShownInUse": 227,
+        "coreSkills": {
+          "recall": {
+            "k": 56,
+            "n": 60,
+            "pct": 93.3,
+            "ci95": [
+              0.841,
+              0.974
+            ]
+          },
+          "precision": {
+            "k": 56,
+            "n": 68,
+            "pct": 82.4,
+            "ci95": [
+              0.716,
+              0.896
+            ]
+          },
+          "levelInRange": {
+            "k": 41,
+            "n": 56,
+            "pct": 73.2,
+            "ci95": [
+              0.604,
+              0.83
+            ]
+          }
+        }
+      }
+    },
+    "embeddingCalls": {
+      "calls": 29,
+      "texts": 567,
+      "failures": 0,
+      "ms": 68044,
+      "lastError": null
+    },
+    "aiCalls": 28,
+    "aiInputChars": 240466,
+    "totalSeconds": 171,
+    "answerKey": {
+      "sha256": {
+        "labels.json": "f44919490bd4a1da95bafc2776070b9255ef9eedb705e79aa475d59c515b8ccb",
+        "labels-v2.json": "8a563ba8ac172faded7883d004ee906f2e5a435bb4ec8116095154ff4c22519b",
+        "esco-labels.json": "9782603d193d47368852c381888d50b156005dc0b7c3f15a78e0a3004252fb49"
+      },
+      "annotator": "independent annotator agent (blind to system code and outputs)",
+      "createdAt": "2026-10-23T00:00:00Z"
+    },
+    "byTier": {
+      "messy": {
+        "cases": 14,
+        "recall": 93.3,
+        "precision": 82.4,
+        "occupation": 100
+      }
+    },
+    "esco": {
+      "factsFound": 75,
+      "facts": 120,
+      "recall": 62.5,
+      "recall95": [
+        0.536,
+        0.706
+      ],
+      "suggestions": 306,
+      "precision": "judged separately: scripts/eval-esco-judge (blind judge with decoys)"
+    },
+    "system": {
+      "llm": {
+        "main": "gemini-3.5-flash-lite",
+        "reviewer": "gemini-3.1-flash-lite"
+      },
+      "embeddings": "runpod-bge-m3",
+      "embeddingModel": "BAAI/bge-m3"
+    },
+    "skills": {
+      "truePositives": 56,
+      "missed": 4,
+      "falsePositives": 12,
+      "recall": 93.3,
+      "recall95": [
+        0.841,
+        0.974
+      ],
+      "precision": 82.4,
+      "precision95": [
+        0.716,
+        0.896
+      ],
+      "f1": 87.5
+    },
+    "occupation": {
+      "correct": 14,
+      "of": 14,
+      "accuracy": 100
+    },
+    "levels": {
+      "inRange": 73.2,
+      "withinOne": 92.9,
+      "n": 56
+    },
+    "keywordStuffing": {
+      "acceptableIncluded": 42,
+      "acceptableAboveCap": 23,
+      "listedOnlyIncluded": 25,
+      "listedOnlyAboveCap": 10,
+      "listedOnlyAboveLevel2": 0,
+      "listedOnlyMarkedSure": 2
+    },
+    "privacy": {
+      "planted": 146,
+      "reachedAi": 0,
+      "inStoredEvidence": 0
+    },
+    "errors": 0,
+    "medianSeconds": 12.6
+  },
+  "cases": [
+    {
+      "id": "c01-ap-messy-pdf",
+      "language": "en",
+      "ms": 15923,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "ap",
+        "got": "ap",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "inv",
+          "three",
+          "pay",
+          "recon",
+          "dispute",
+          "erp",
+          "audit",
+          "tax"
+        ],
+        "missed": [],
+        "falsePositives": [
+          "audit2"
+        ],
+        "acceptableIncluded": [
+          {
+            "skill": "excel",
+            "level": 2,
+            "cap": 3,
+            "sure": false,
+            "evidence": "MS Exce1 (VLOOKUP, pivot)",
+            "listedOnly": true,
+            "note": "Only in skills list (OCR 'Exce1'), though VLOOKUP/pivot use is plausible for AP."
+          },
+          {
+            "skill": "viz",
+            "level": 2,
+            "cap": 2,
+            "sure": false,
+            "evidence": "Power BI dashboards",
+            "listedOnly": true,
+            "note": "Power BI only in skills list."
+          },
+          {
+            "skill": "python",
+            "level": 1,
+            "cap": 2,
+            "sure": false,
+            "evidence": "Python (basic)",
+            "listedOnly": true,
+            "note": "'Python (basic)' only in skills list."
+          }
+        ],
+        "overratedListedSkills": []
+      },
+      "levels": [
+        {
+          "skill": "inv",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "three",
+          "level": 5,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "pay",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "recon",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "dispute",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "erp",
+          "level": 2,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "audit",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "tax",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 29,
+        "shownInUse": 19,
+        "facts": [
+          {
+            "fact": "keys and codes supplier invoices in SAP",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "three-way match of PO, GRN and invoice and handles variances",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "prepares the weekly payment proposal",
+            "found": false,
+            "lenient": true,
+            "lenientVia": "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23"
+          },
+          {
+            "fact": "reconciles vendor statements to the ledger",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "resolves vendor payment queries and agrees settlements",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "supports external auditors with evidence and answers queries",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "maintains vendor master data in the ERP",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "prepares SST working for review",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "trains new joiners",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "reconciles petty cash and staff claims",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "assists month-end closing accruals",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 18,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 20983
+    },
+    {
+      "id": "c02-ap-bm",
+      "language": "ms",
+      "ms": 10413,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "ap",
+        "got": "ap",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "inv",
+          "three",
+          "recon",
+          "pay",
+          "tax",
+          "excel",
+          "erp"
+        ],
+        "missed": [],
+        "falsePositives": [],
+        "acceptableIncluded": [
+          {
+            "skill": "audit",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Bantu juruaudit luar semasa audit tahunan - sediakan dokumen sokongan",
+            "listedOnly": false,
+            "note": "'Bantu juruaudit luar ... sediakan dokumen sokongan' = assisted auditors with support documents; light evidence."
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "audit",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Bantu juruaudit luar semasa audit tahunan - sediakan dokumen sokongan",
+            "listedOnly": false,
+            "note": "'Bantu juruaudit luar ... sediakan dokumen sokongan' = assisted auditors with support documents; light evidence."
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "inv",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "three",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "recon",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "pay",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "tax",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "excel",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "erp",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 27,
+        "shownInUse": 24,
+        "facts": [
+          {
+            "fact": "keys supplier invoices into SAP with GL coding",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "checks PO / GRN / invoice match before posting",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "reconciles vendor statements to the ledger",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "prepares the weekly payment proposal",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "prepares SST report and checks service tax on invoices",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "issues customer invoices and follows up overdue debtors",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "builds AP/AR ageing report with Excel pivots",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "prepares supporting documents for external auditors",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "prepares monthly bank reconciliation",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "records daily sales and payment vouchers in an accounting system",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 14,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 13279
+    },
+    {
+      "id": "c03-finance-to-esg",
+      "language": "en",
+      "ms": 16055,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "faRole",
+        "got": "esgRole",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "fin",
+          "excel",
+          "esgdata",
+          "ghg",
+          "disc",
+          "audit",
+          "viz",
+          "tax"
+        ],
+        "missed": [],
+        "falsePositives": [],
+        "acceptableIncluded": [
+          {
+            "skill": "lca",
+            "level": 2,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Supported consultant in a cradle-to-gate carbon footprint pilot for crude palm oil (provided mill data only)",
+            "listedOnly": true,
+            "note": "Only provided data to a consultant's cradle-to-gate footprint pilot; LCA also in skills list."
+          },
+          {
+            "skill": "recon",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Coordinate MEC timetable; review GL recons submitted by estate accountants",
+            "listedOnly": false,
+            "note": "GL / intercompany recons are a near-neighbour of vendor reconciliation."
+          },
+          {
+            "skill": "greenfin",
+            "level": 2,
+            "cap": 1,
+            "sure": true,
+            "evidence": "Part of CSR committee - organised tree planting at Taman Tasik Shah Alam (2019)",
+            "listedOnly": true,
+            "note": "'Green bonds' only in skills list."
+          },
+          {
+            "skill": "erp",
+            "level": 1,
+            "cap": 2,
+            "sure": false,
+            "evidence": null,
+            "listedOnly": true,
+            "note": "SAP only in skills list."
+          },
+          {
+            "skill": "python",
+            "level": 1,
+            "cap": 1,
+            "sure": false,
+            "evidence": null,
+            "listedOnly": true,
+            "note": "Python only in skills list."
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "recon",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Coordinate MEC timetable; review GL recons submitted by estate accountants",
+            "listedOnly": false,
+            "note": "GL / intercompany recons are a near-neighbour of vendor reconciliation."
+          },
+          {
+            "skill": "greenfin",
+            "level": 2,
+            "cap": 1,
+            "sure": true,
+            "evidence": "Part of CSR committee - organised tree planting at Taman Tasik Shah Alam (2019)",
+            "listedOnly": true,
+            "note": "'Green bonds' only in skills list."
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "fin",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "excel",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "esgdata",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "ghg",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "disc",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "audit",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "viz",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "tax",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 36,
+        "shownInUse": 23,
+        "facts": [
+          {
+            "fact": "prepares monthly management accounts and explains budget variances",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "builds annual budget and rolling forecast",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "builds scenario models in Excel",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "reviews GL reconciliations",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "collects ESG activity data from operating units and flags outliers",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "calculates Scope 1 and 2 emissions",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "drafts sustainability statement climate sections",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "prepares evidence for external assurance",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "builds a Power BI page for emissions intensity",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "prepares SST returns",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "keeps full set of accounts for subsidiaries",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 8,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 27466
+    },
+    {
+      "id": "c04-internal-audit",
+      "language": "en",
+      "ms": 12902,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "intAudit",
+        "got": "intAudit",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "audit2",
+          "audit"
+        ],
+        "missed": [],
+        "falsePositives": [
+          "aisup",
+          "stats"
+        ],
+        "acceptableIncluded": [
+          {
+            "skill": "recon",
+            "level": 4,
+            "cap": 2,
+            "sure": true,
+            "evidence": "found duplicate vendor payments RM182k by matching vendor bank acc + invoice no. across 3 yrs AP data; recovered RM140k from vendors",
+            "listedOnly": false,
+            "note": "'reconcilation of sub-ledger to GL' is a near-neighbour of vendor reconciliation."
+          },
+          {
+            "skill": "erp",
+            "level": 2,
+            "cap": 2,
+            "sure": false,
+            "evidence": null,
+            "listedOnly": true,
+            "note": "Pulls samples from SAP; SAP in skills list."
+          },
+          {
+            "skill": "excel",
+            "level": 2,
+            "cap": 3,
+            "sure": false,
+            "evidence": "MS Office",
+            "listedOnly": true,
+            "note": "Listed; data matching across AP data implies spreadsheet / ACL work."
+          },
+          {
+            "skill": "sql",
+            "level": 2,
+            "cap": 2,
+            "sure": false,
+            "evidence": null,
+            "listedOnly": true,
+            "note": "Listed only; ACL data analytics is related."
+          },
+          {
+            "skill": "python",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": null,
+            "listedOnly": true,
+            "note": "Listed only."
+          },
+          {
+            "skill": "viz",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": "Power BI",
+            "listedOnly": true,
+            "note": "Power BI listed only."
+          },
+          {
+            "skill": "process",
+            "level": 2,
+            "cap": 2,
+            "sure": false,
+            "evidence": null,
+            "listedOnly": false,
+            "note": "Follows up management action plans; indirect."
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "recon",
+            "level": 4,
+            "cap": 2,
+            "sure": true,
+            "evidence": "found duplicate vendor payments RM182k by matching vendor bank acc + invoice no. across 3 yrs AP data; recovered RM140k from vendors",
+            "listedOnly": false,
+            "note": "'reconcilation of sub-ledger to GL' is a near-neighbour of vendor reconciliation."
+          },
+          {
+            "skill": "python",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": null,
+            "listedOnly": true,
+            "note": "Listed only."
+          },
+          {
+            "skill": "viz",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": "Power BI",
+            "listedOnly": true,
+            "note": "Power BI listed only."
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "audit2",
+          "level": 5,
+          "range": [
+            4,
+            5
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "audit",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        }
+      ],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 37,
+        "shownInUse": 23,
+        "facts": [
+          {
+            "fact": "plans and executes risk-based internal audits",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "tests design and operating effectiveness of controls",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "data analytics to detect duplicate vendor payments",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "writes audit reports and presents to the audit committee",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "coaches audit executives and reviews their working papers",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "performs compliance audits on SST and customs duty",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "reconciles sub-ledger to GL",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "assists ISO 9001 internal quality audit",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "external audit vouching and stock count attendance",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 10,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 17383
+    },
+    {
+      "id": "c05-treasury",
+      "language": "en",
+      "ms": 13655,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "treasuryRole",
+        "got": "treasuryRole",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "treasury",
+          "pay",
+          "excel"
+        ],
+        "missed": [
+          "fin"
+        ],
+        "falsePositives": [],
+        "acceptableIncluded": [
+          {
+            "skill": "recon",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Monthly bank recon for all accounts",
+            "listedOnly": false,
+            "note": "Bank reconciliation is a near-neighbour of vendor reconciliation."
+          },
+          {
+            "skill": "erp",
+            "level": 2,
+            "cap": 2,
+            "sure": false,
+            "evidence": null,
+            "listedOnly": true,
+            "note": "SAP FI only in skills list."
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "recon",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Monthly bank recon for all accounts",
+            "listedOnly": false,
+            "note": "Bank reconciliation is a near-neighbour of vendor reconciliation."
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "treasury",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "pay",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "excel",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        }
+      ],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 22,
+        "shownInUse": 16,
+        "facts": [
+          {
+            "fact": "prepares the daily cash position",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "rolling 13-week cash flow forecast",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "places surplus cash in deposits and money market",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "builds forecast model in Excel with macros",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "releases vendor payment batches",
+            "found": false,
+            "lenient": true,
+            "lenientVia": "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23"
+          },
+          {
+            "fact": "manages trade lines and revolving credit, covenant monitoring",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "hedges FX exposure with forward contracts",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "monthly bank reconciliation",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "collections follow-up and credit limit review",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 7,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 11614
+    },
+    {
+      "id": "c06-procurement",
+      "language": "mixed",
+      "ms": 12638,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "procRole",
+        "got": "procRole",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "procure",
+          "erp"
+        ],
+        "missed": [],
+        "falsePositives": [],
+        "acceptableIncluded": [
+          {
+            "skill": "dispute",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Settle issue with supplier bila barang short / rosak - arrange replacement or credit note",
+            "listedOnly": false,
+            "note": "Settles short/damaged delivery issues with suppliers via replacement or credit note: procurement-side, not AP payment disputes."
+          },
+          {
+            "skill": "invent",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Kawal stok alat ganti (spare parts) & buat order bila stok bawah min level",
+            "listedOnly": false,
+            "note": "Previous job: controlled spare-parts stock and reordered below minimum level."
+          },
+          {
+            "skill": "excel",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Raise PR/PO, filing, update price list dlm Excel",
+            "listedOnly": false,
+            "note": "'update price list dlm Excel': basic use."
+          },
+          {
+            "skill": "viz",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": "Power BI",
+            "listedOnly": true,
+            "note": "Power BI / Tableau only named in summary."
+          },
+          {
+            "skill": "prompt",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": "AI tools (ChatGPT)",
+            "listedOnly": true,
+            "note": "'AI tools (ChatGPT)' only named in summary."
+          },
+          {
+            "skill": "esgdata",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": "ESG supplier scoring",
+            "listedOnly": true,
+            "note": "'ESG supplier scoring' only named in summary."
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "dispute",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Settle issue with supplier bila barang short / rosak - arrange replacement or credit note",
+            "listedOnly": false,
+            "note": "Settles short/damaged delivery issues with suppliers via replacement or credit note: procurement-side, not AP payment disputes."
+          },
+          {
+            "skill": "invent",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Kawal stok alat ganti (spare parts) & buat order bila stok bawah min level",
+            "listedOnly": false,
+            "note": "Previous job: controlled spare-parts stock and reordered below minimum level."
+          },
+          {
+            "skill": "excel",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Raise PR/PO, filing, update price list dlm Excel",
+            "listedOnly": false,
+            "note": "'update price list dlm Excel': basic use."
+          },
+          {
+            "skill": "viz",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": "Power BI",
+            "listedOnly": true,
+            "note": "Power BI / Tableau only named in summary."
+          },
+          {
+            "skill": "prompt",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": "AI tools (ChatGPT)",
+            "listedOnly": true,
+            "note": "'AI tools (ChatGPT)' only named in summary."
+          },
+          {
+            "skill": "esgdata",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": "ESG supplier scoring",
+            "listedOnly": true,
+            "note": "'ESG supplier scoring' only named in summary."
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "procure",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "erp",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 32,
+        "shownInUse": 23,
+        "facts": [
+          {
+            "fact": "runs RFQs and compares quotations",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "negotiates price and payment terms with suppliers",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "evaluates supplier performance quarterly",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "vets new suppliers before approval",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "issues purchase orders in SAP",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "resolves short or damaged delivery issues with suppliers",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "controls spare-parts stock and reorders below minimum",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "updates the price list in Excel",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 7,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 14437
+    },
+    {
+      "id": "c07-scm-planner",
+      "language": "en",
+      "ms": 11339,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "scmRole",
+        "got": "scmRole",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "scm",
+          "invent",
+          "erp",
+          "excel"
+        ],
+        "missed": [
+          "stats"
+        ],
+        "falsePositives": [
+          "procure"
+        ],
+        "acceptableIncluded": [],
+        "overratedListedSkills": []
+      },
+      "levels": [
+        {
+          "skill": "scm",
+          "level": 5,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "invent",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "erp",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "excel",
+          "level": 4,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        }
+      ],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 26,
+        "shownInUse": 25,
+        "facts": [
+          {
+            "fact": "runs MRP in SAP and converts planned orders",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "monthly statistical demand forecast",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "tracks forecast accuracy and bias",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "leads S&OP alignment with sales and production",
+            "found": false,
+            "lenient": true,
+            "lenientVia": "96d549bb-3e62-4c45-92a7-f114df089581"
+          },
+          {
+            "fact": "reviews slow-moving and obsolete stock and proposes write-offs",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "builds an Excel and Power Query model",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "daily production scheduling",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "stock take and variance investigation",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 7,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 13251
+    },
+    {
+      "id": "c08-data-analyst",
+      "language": "en",
+      "ms": 10141,
+      "error": null,
+      "providers": {
+        "llm": "unavailable",
+        "embed": "runpod-bge-m3",
+        "matching": "basic"
+      },
+      "occupation": {
+        "expected": "dataRole",
+        "got": "dataRole",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "sql",
+          "viz",
+          "python",
+          "stats",
+          "excel"
+        ],
+        "missed": [],
+        "falsePositives": [
+          "invent",
+          "pay"
+        ],
+        "acceptableIncluded": [
+          {
+            "skill": "erp",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": "Other: SAP, UiPath, ChatGPT, Prompt Engineering, Six Sigma, ESG reporting",
+            "listedOnly": true,
+            "note": "SAP only listed."
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "erp",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": "Other: SAP, UiPath, ChatGPT, Prompt Engineering, Six Sigma, ESG reporting",
+            "listedOnly": true,
+            "note": "SAP only listed."
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "sql",
+          "level": 2,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "viz",
+          "level": 2,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "python",
+          "level": 2,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "stats",
+          "level": 2,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "excel",
+          "level": 2,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 0,
+        "shownInUse": 0,
+        "facts": [
+          {
+            "fact": "writes SQL for routine reports joining several tables",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "owns a Power BI dashboard used by account managers",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "Python scripts to clean data",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "runs and interprets an A/B significance test",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "weekly Excel pivot reports",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "reports call-centre KPIs",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 7,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 26320
+    },
+    {
+      "id": "c09-fresh-grad",
+      "language": "en",
+      "ms": 8106,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "other",
+        "got": "ap",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "inv"
+        ],
+        "missed": [],
+        "falsePositives": [],
+        "acceptableIncluded": [
+          {
+            "skill": "recon",
+            "level": 1,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Assist senior prepare bank reconciliation",
+            "listedOnly": false,
+            "note": "Assisted on bank reconciliation (near-neighbour, with help)."
+          },
+          {
+            "skill": "excel",
+            "level": 1,
+            "cap": 2,
+            "sure": false,
+            "evidence": "MS Office",
+            "listedOnly": false,
+            "note": "'MS Office' only."
+          }
+        ],
+        "overratedListedSkills": []
+      },
+      "levels": [
+        {
+          "skill": "inv",
+          "level": 2,
+          "range": [
+            1,
+            2
+          ],
+          "inRange": true
+        }
+      ],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 8,
+        "shownInUse": 5,
+        "facts": [
+          {
+            "fact": "keys supplier invoices into an accounting package",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "assists with bank reconciliation",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "files supporting documents",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 5,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 5917
+    },
+    {
+      "id": "c10-career-changer-retail",
+      "language": "mixed",
+      "ms": 11600,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "other",
+        "got": "other",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "invent",
+          "excel"
+        ],
+        "missed": [],
+        "falsePositives": [
+          "treasury",
+          "pay"
+        ],
+        "acceptableIncluded": [
+          {
+            "skill": "three",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Receiving bay: check supplier delivery vs PO & DO, sign GRN, reject damaged goods",
+            "listedOnly": false,
+            "note": "Checks deliveries vs PO and DO and signs GRN: the receiving half of a match, no invoice."
+          },
+          {
+            "skill": "dispute",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Handle supplier complaints bila short delivery - call supplier, arrange credit note",
+            "listedOnly": false,
+            "note": "Handles supplier short-delivery complaints and arranges credit notes."
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "three",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Receiving bay: check supplier delivery vs PO & DO, sign GRN, reject damaged goods",
+            "listedOnly": false,
+            "note": "Checks deliveries vs PO and DO and signs GRN: the receiving half of a match, no invoice."
+          },
+          {
+            "skill": "dispute",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Handle supplier complaints bila short delivery - call supplier, arrange credit note",
+            "listedOnly": false,
+            "note": "Handles supplier short-delivery complaints and arranges credit notes."
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "invent",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "excel",
+          "level": 3,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 20,
+        "shownInUse": 18,
+        "facts": [
+          {
+            "fact": "supervises store staff and duty roster",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "monthly stock take and shrinkage investigation",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "identifies slow-moving and near-expiry items and proposes markdowns",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "receives supplier deliveries against PO and DO",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "handles supplier short-delivery complaints and credit notes",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "end-of-day cash up for tills",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "weekly sales and shrinkage report in Excel",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "cashier cash handling and refunds",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "keeps temple committee accounts and payment vouchers",
+            "found": false,
+            "lenient": true,
+            "lenientVia": "ecc18804-a466-40d9-98b4-fba5cd67dd4b"
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 7,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 11109
+    },
+    {
+      "id": "c11-staff-nurse",
+      "language": "en",
+      "ms": 14052,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "other",
+        "got": "other",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [],
+        "missed": [],
+        "falsePositives": [
+          "audit",
+          "erp"
+        ],
+        "acceptableIncluded": [
+          {
+            "skill": "invent",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "In charge of ward consumables: weekly stock check & monthly indent to central store, check expiry dates",
+            "listedOnly": false,
+            "note": "Weekly ward consumables stock check and monthly indent: incidental stock tracking."
+          },
+          {
+            "skill": "audit2",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Conduct monthly hand hygiene compliance audit for the ward & submit to Infection Control Unit",
+            "listedOnly": false,
+            "note": "Monthly hand hygiene compliance audit is a clinical compliance check, not business controls testing; arguable."
+          },
+          {
+            "skill": "excel",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": null,
+            "listedOnly": true,
+            "note": "Excel only listed."
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "invent",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "In charge of ward consumables: weekly stock check & monthly indent to central store, check expiry dates",
+            "listedOnly": false,
+            "note": "Weekly ward consumables stock check and monthly indent: incidental stock tracking."
+          },
+          {
+            "skill": "audit2",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Conduct monthly hand hygiene compliance audit for the ward & submit to Infection Control Unit",
+            "listedOnly": false,
+            "note": "Monthly hand hygiene compliance audit is a clinical compliance check, not business controls testing; arguable."
+          },
+          {
+            "skill": "excel",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": null,
+            "listedOnly": true,
+            "note": "Excel only listed."
+          }
+        ]
+      },
+      "levels": [],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 25,
+        "shownInUse": 19,
+        "facts": [
+          {
+            "fact": "provides nursing care on a medical ward",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "monitors vital signs",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "administers drugs",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "IV therapy",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "wound care",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "educates diabetic and post-stroke patients",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "documents nursing notes and care plans in EMR",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "manages ward consumables stock and expiry",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "hand hygiene compliance audits for infection control",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "preceptor for new nurses and students",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "night shift in-charge",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 17,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 10980
+    },
+    {
+      "id": "c12-mechanic-short",
+      "language": "mixed",
+      "ms": 7396,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "other",
+        "got": "other",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [],
+        "missed": [],
+        "falsePositives": [],
+        "acceptableIncluded": [
+          {
+            "skill": "invent",
+            "level": 3,
+            "cap": 1,
+            "sure": true,
+            "evidence": "check & order spare part dari supplier, update stok dlm buku log",
+            "listedOnly": false,
+            "note": "Updates a parts stock log book: incidental."
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "invent",
+            "level": 3,
+            "cap": 1,
+            "sure": true,
+            "evidence": "check & order spare part dari supplier, update stok dlm buku log",
+            "listedOnly": false,
+            "note": "Updates a parts stock log book: incidental."
+          }
+        ]
+      },
+      "levels": [],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 9,
+        "shownInUse": 9,
+        "facts": [
+          {
+            "fact": "routine vehicle servicing, oil, brakes and suspension",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "diagnoses engines with an OBD2 scanner",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "orders spare parts and keeps a stock log",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 7,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 4882
+    },
+    {
+      "id": "c13-ap-lead-ai-long",
+      "language": "en",
+      "ms": 14812,
+      "error": null,
+      "providers": {
+        "llm": "unavailable",
+        "embed": "runpod-bge-m3",
+        "matching": "basic"
+      },
+      "occupation": {
+        "expected": "ap",
+        "got": "ap",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "three",
+          "pay",
+          "recon",
+          "dispute",
+          "inv",
+          "erp",
+          "aiinv",
+          "aisup",
+          "auto",
+          "process",
+          "audit",
+          "tax"
+        ],
+        "missed": [
+          "prompt",
+          "viz"
+        ],
+        "falsePositives": [
+          "invent"
+        ],
+        "acceptableIncluded": [
+          {
+            "skill": "audit2",
+            "level": 2,
+            "cap": 2,
+            "sure": false,
+            "evidence": "Treasury • Budgeting • Internal Control • Change Management",
+            "listedOnly": true,
+            "note": "'Internal Control' listed; she supports auditors (that is audit, not audit2)."
+          },
+          {
+            "skill": "treasury",
+            "level": 2,
+            "cap": 2,
+            "sure": false,
+            "evidence": "Petty cash, bank reconciliation, filing, general admin",
+            "listedOnly": true,
+            "note": "'Treasury' listed; checks cash availability with Treasury before release."
+          },
+          {
+            "skill": "fin",
+            "level": 2,
+            "cap": 2,
+            "sure": false,
+            "evidence": "I am a highly motivated, results-driven and passionate finance professional with more",
+            "listedOnly": true,
+            "note": "'Budgeting' listed; temple Wesak budget."
+          },
+          {
+            "skill": "python",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": "Power BI • Python • SQL • Generative AI",
+            "listedOnly": true,
+            "note": "Listed; online course 40% completed."
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "python",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": "Power BI • Python • SQL • Generative AI",
+            "listedOnly": true,
+            "note": "Listed; online course 40% completed."
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "three",
+          "level": 2,
+          "range": [
+            4,
+            5
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "pay",
+          "level": 2,
+          "range": [
+            4,
+            5
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "recon",
+          "level": 2,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "dispute",
+          "level": 2,
+          "range": [
+            4,
+            5
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "inv",
+          "level": 2,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "erp",
+          "level": 2,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "aiinv",
+          "level": 2,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "aisup",
+          "level": 2,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "auto",
+          "level": 2,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "process",
+          "level": 2,
+          "range": [
+            4,
+            5
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "audit",
+          "level": 2,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": false
+        },
+        {
+          "skill": "tax",
+          "level": 2,
+          "range": [
+            2,
+            3
+          ],
+          "inRange": true
+        }
+      ],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 0,
+        "shownInUse": 0,
+        "facts": [
+          {
+            "fact": "approves and releases payment runs",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "owns the three-way-match exception queue",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "final escalation for vendor disputes",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "reviews AI-extracted invoice fields and resolves exceptions",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "decides AI confidence thresholds and which invoices stay manual",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "builds an approval-routing automation",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "maps and redesigns the non-PO invoice process",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "maintains AP KPI dashboard",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "prepares control evidence and answers auditors",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "reviews SST on imported services",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "manages and appraises the AP team",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "processes and codes invoices in SAP",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "reconciles vendor statements",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          },
+          {
+            "fact": "mentors new clerks",
+            "found": false,
+            "lenient": false,
+            "lenientVia": null
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 22,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 48681
+    },
+    {
+      "id": "c14-green-finance-mixed",
+      "language": "mixed",
+      "ms": 12141,
+      "error": null,
+      "providers": {
+        "llm": "gemini-3.5-flash-lite",
+        "embed": "runpod-bge-m3",
+        "matching": "semantic"
+      },
+      "occupation": {
+        "expected": "greenRole",
+        "got": "greenRole",
+        "correct": true
+      },
+      "skills": {
+        "truePositives": [
+          "greenfin",
+          "fin"
+        ],
+        "missed": [],
+        "falsePositives": [
+          "audit2"
+        ],
+        "acceptableIncluded": [
+          {
+            "skill": "ghg",
+            "level": 2,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Bantu team anggarkan financed emissions (PCAF) utk sektor sawit & janakuasa - kumpul data pelanggan, consultant run the model",
+            "listedOnly": false,
+            "note": "Helped collect data for financed-emissions estimate; consultant ran the model."
+          },
+          {
+            "skill": "disc",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Sediakan laporan suku tahunan portfolio hijau kepada Jawatankuasa Risiko (RMC)",
+            "listedOnly": false,
+            "note": "Contributed data and draft text to the TCFD section."
+          },
+          {
+            "skill": "excel",
+            "level": 2,
+            "cap": 3,
+            "sure": false,
+            "evidence": "Excel modelling",
+            "listedOnly": true,
+            "note": "'Excel modelling' listed; credit analysis implies it but not shown."
+          },
+          {
+            "skill": "python",
+            "level": 1,
+            "cap": 1,
+            "sure": false,
+            "evidence": "Python (learning)",
+            "listedOnly": true,
+            "note": "'Python (learning)' listed."
+          },
+          {
+            "skill": "prompt",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": null,
+            "listedOnly": true,
+            "note": "ChatGPT listed only."
+          }
+        ],
+        "overratedListedSkills": [
+          {
+            "skill": "disc",
+            "level": 3,
+            "cap": 2,
+            "sure": true,
+            "evidence": "Sediakan laporan suku tahunan portfolio hijau kepada Jawatankuasa Risiko (RMC)",
+            "listedOnly": false,
+            "note": "Contributed data and draft text to the TCFD section."
+          },
+          {
+            "skill": "prompt",
+            "level": 2,
+            "cap": 1,
+            "sure": false,
+            "evidence": null,
+            "listedOnly": true,
+            "note": "ChatGPT listed only."
+          }
+        ]
+      },
+      "levels": [
+        {
+          "skill": "greenfin",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        },
+        {
+          "skill": "fin",
+          "level": 3,
+          "range": [
+            3,
+            4
+          ],
+          "inRange": true
+        }
+      ],
+      "tier": "messy",
+      "split": "tuning",
+      "esco": {
+        "suggested": 35,
+        "shownInUse": 23,
+        "facts": [
+          {
+            "fact": "screens financing against a climate taxonomy",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "assesses flood risk of collateral",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "challenges clients' green claims before labelling",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "reports green portfolio to the risk committee",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "analyses SME borrower financial statements",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "writes credit papers",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "annual account reviews and early warning",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          },
+          {
+            "fact": "contributes draft text to the TCFD section",
+            "found": true,
+            "lenient": true,
+            "lenientVia": null
+          }
+        ]
+      },
+      "pii": [],
+      "piiPlanted": 10,
+      "piiLeakedToAi": 0,
+      "aiCalls": 2,
+      "aiChars": 14164
+    }
+  ]
+}
