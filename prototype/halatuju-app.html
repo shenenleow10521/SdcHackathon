@@ -2276,6 +2276,17 @@ new ResizeObserver(() => { const g = $("graph"); FX.aspect = g.clientWidth / Mat
 computeRing(); computePlans(); applyLayout(false);
 renderHead(); renderPanel(); renderAgents();
 initGraph(); drawStars(); obRender(); updateAdminCount(); renderGuide(); icons();
+// arriving from the landing page's log-in: a demo or returning user skips first-time setup; a reviewer lands on the review queue
+(function () {
+  let who = null;
+  try { who = JSON.parse(sessionStorage.getItem("ht-login") || "null"); sessionStorage.removeItem("ht-login"); } catch (e) {}
+  if (!who) return;
+  const name = String(who.name || "").replace(/[<>&"]/g, "").slice(0, 40);
+  if (who.mode === "signup" && who.role !== "reviewer") return; // new accounts start with the CV upload
+  finishOnboarding();
+  if (who.role === "reviewer") setTimeout(() => { setAdmin(true); toast(`Signed in${name ? " as " + name : ""} · reviewer`, "These changes are waiting for a person. Nothing reaches users' maps until it is approved.", '<span class="badge b-info">Review</span>'); }, reduce ? 50 : 600);
+  else if (who.mode === "login") setTimeout(() => toast(`Welcome back${name ? ", " + name : ""}`, "Showing the sample profile (Aisyah) for this prototype. Follow the demo guide to see a live reroute.", '<span class="badge b-good">Signed in</span>'), reduce ? 50 : 2600);
+})();
 </script>
 <div class="spot" id="spot" aria-hidden="true"><div class="spot-ring"></div><div class="spot-tip" id="spot-tip"></div></div>
 </body>
