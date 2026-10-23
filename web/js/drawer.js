@@ -94,6 +94,13 @@ export function jobAsks(j) {
 }
 
 const hasReq = j => (S.graph.req[j] || []).length > 0 || (j === UI.job && (UI.employerReq || []).length > 0);
+/** Live job searches for a job title on Malaysia's official portal (PERKESO MYFutureJobs) and JobStreet. */
+export function openingsHtml(title) {
+  const q = String(title || "").trim(); if (!q) return "";
+  const slug = q.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return `<p class="openings"><span>${esc(t("jobs.findOpenings"))}</span>${extLink(`https://candidates.myfuturejobs.gov.my/search-jobs?what=${encodeURIComponent(q)}`, "MYFutureJobs")}${extLink(`https://my.jobstreet.com/${slug}-jobs`, "JobStreet")}</p>`;
+}
+
 export const isSample = s => !s || ["sample", "seed"].includes(String(s).toLowerCase());
 
 /** A course's format, length and price as plain sentences, e.g. "Online course, 18 hours. Paid; may be claimable from HRD Corp." */
@@ -115,6 +122,7 @@ function jobDetail(j) {
       <div style="text-align:right"><div class="num big-wk">${p.route ? W(p.ready) : "–"} ${esc(t("common.wk"))}</div><div class="note">${esc(t("drawer.toReady"))}</div></div></div>
       <div class="dr-meta">${howLink("match", j)}${isSample(n.outlookSource) ? `<span class="src">${esc(t("drawer.sampleNote"))}</span>` : ""}</div></div>
     ${n.blurb ? `<p class="note">${esc(n.blurb)}</p>` : ""}
+    ${openingsHtml(n.name)}
     ${splitBlock(j)}
     <div class="sec" id="emp-sec"><h3><i data-lucide="building-2"></i>${esc(t("emp.title"))}</h3><div id="emp-box">${loadingBox()}</div></div>
     ${hasReq(j) ? `<div class="sec"><h3><i data-lucide="list-checks"></i>${esc(t("drawer.asks"))}</h3>${jobAsks(j)}</div>` : ""}
@@ -240,10 +248,10 @@ function skillDetail(k) {
     ...needs.map(j => `<button class="chip" type="button" data-skill="${esc(j)}"><i data-lucide="briefcase"></i>${esc(nameOf(j))}</button>`),
   ].join("");
   const step = course && lvl < HAVE_LEVEL ? fold("footprints", have ? t("skill.nextLevel") : t("skill.howBuild"), `<div class="lpp">
-      <div class="lpp-item"><span class="ic" style="background:var(--accent-wash);color:var(--accent)"><i data-lucide="book-open"></i></span><div><div class="k">${esc(t("lpp.learn"))}</div><div class="v">${esc(course.title)}</div>${courseMeta(course) ? `<div class="m">${esc(courseMeta(course))}</div>` : ""}${course.url || course.provider ? `<div class="m">${course.url ? extLink(course.url, course.provider || t("plan.open")) : esc(course.provider)}</div>` : ""}</div></div>
+      <div class="lpp-item"><span class="ic" style="background:var(--accent-wash);color:var(--accent)"><i data-lucide="book-open"></i></span><div><div class="k">${esc(t("lpp.learn"))}</div><div class="v">${course.url ? extLink(course.url, course.title) : esc(course.title)}</div>${courseMeta(course) ? `<div class="m">${esc(courseMeta(course))}</div>` : ""}${course.provider ? `<div class="m">${esc(t("next.by", { provider: course.provider }))}</div>` : ""}</div></div>
       ${course.practice ? `<div class="lpp-item"><span class="ic" style="background:var(--warn-wash);color:var(--warn)"><i data-lucide="hammer"></i></span><div><div class="k">${esc(t("lpp.practice"))}</div><div class="v">${esc(course.practice)}</div><div class="m">${esc(t("lpp.practiceSub"))}</div></div></div>` : ""}
       ${course.prove ? `<div class="lpp-item"><span class="ic" style="background:var(--good-wash);color:var(--good)"><i data-lucide="badge-check"></i></span><div><div class="k">${esc(t("lpp.prove"))}</div><div class="v">${esc(course.prove)}</div><div class="m">${esc(t("lpp.proveSub"))}</div></div></div>` : ""}
-    </div>${isSample(course.source) ? `<p class="src" style="margin-top:8px">${esc(t("skill.courseSample"))}</p>` : ""}`) : "";
+    </div>${isSample(course.source) ? `<p class="src" style="margin-top:8px">${esc(t("skill.courseSample"))}</p>` : course.practice ? `<p class="src" style="margin-top:8px">${esc(t("next.samplePractice"))}</p>` : ""}`) : "";
   const check = have ? `<div class="sec" id="check-sec"><button class="btn btn-soft" id="prove" type="button" style="width:100%" ${verified || S.profileFallback ? "disabled" : ""}><i data-lucide="badge-check"></i>${esc(verified ? t("check.already") : t("check.take"))}</button></div>` : "";
   const sdg = Array.isArray(n.sdg) && n.sdg.length === 2 && !Array.isArray(n.sdg[0]) ? `<div class="sec"><h3><i data-lucide="globe"></i>${esc(t("skill.sdg"))}</h3>${sdgRows([n.sdg])}</div>` : Array.isArray(n.sdg?.[0]) ? `<div class="sec"><h3><i data-lucide="globe"></i>${esc(t("skill.sdg"))}</h3>${sdgRows(n.sdg)}</div>` : "";
   return `${drHead(have ? t("drawer.yourSkill") : t("drawer.toLearn"), have ? "check-circle" : "plus-circle", n.name, sub)}

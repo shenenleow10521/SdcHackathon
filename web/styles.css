@@ -1106,3 +1106,5 @@ sup.cite { font-size: 10px; font-weight: 700; color: var(--accent); margin-left:
 .study-row .k { padding-left: 14px; }
 .goals .goals-wide { grid-column: 1 / -1; }
 .check-form .check-close { display: block; margin: 8px auto 0; }
+.openings { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 12.5px; color: var(--ink-2); }
+.openings > span { font-weight: 600; }

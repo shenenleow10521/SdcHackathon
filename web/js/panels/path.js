@@ -9,7 +9,7 @@ import { $, esc, icons, badge, srcBadge, errorBox, loadingBox, rm, fmtDate, extL
 import { whyBtn } from "../features/why.js";
 import { plansForJob, statusBadge, savePlan, sendPlan, noteOf, pendingOf, routeUpdate, routeText, plansState } from "../features/plans.js";
 import { goal, isGoal, setGoal, setGoalMode, toggleDone, markDone, isVerified, progress } from "../features/goal.js";
-import { jobAsks, startCheck, courseMeta, isSample } from "../drawer.js";
+import { jobAsks, startCheck, courseMeta, isSample, openingsHtml } from "../drawer.js";
 import { splitBar } from "./skills.js";
 import { previewRoute } from "../graph3d.js";
 
@@ -78,7 +78,8 @@ function nextHtml(nx, p) {
   const why = [(leg?.why || "").replace(/\.\s*$/, "") || (up ? t("path.upTitle", { name: nameOf(k), from: up.from, to: up.to }) : ""), share != null ? t("next.share", { n: share, job: nameOf(UI.job) }) : ""].filter(Boolean).join(". ");
   const meta = co ? [courseMeta(co), co.provider ? t("next.by", { provider: co.provider }) : ""].filter(Boolean).join(" ") : "";
   const ver = isVerified(k), noServer = S.profileFallback;
-  const sample = co && isSample(co.source) ? t(co.practice ? "next.sample" : "next.sampleCourse") : "";
+  // real provider listings are not sample; their practice tasks still are
+  const sample = co && isSample(co.source) ? t(co.practice ? "next.sample" : "next.sampleCourse") : co?.practice ? t("next.samplePractice") : "";
   const item = (key, body) => `<li><span class="todo-k">${esc(t(key))}</span><div>${body}</div></li>`;
   return `<div class="next">
       <div class="next-k">${esc(t("goal.next"))}</div>
@@ -109,6 +110,7 @@ function aboutHtml(j) {
       <summary><span>${esc(t("path.about"))}</span><i class="chev" data-lucide="chevron-down"></i></summary>
       <div class="more-in">
         ${n.blurb ? `<p class="note">${esc(n.blurb)}</p>` : ""}
+        ${openingsHtml(n.name)}
         <div class="msec"><h4>${esc(t("drawer.whoWork", { year: S.year }))}</h4>${splitBar(j, "job")}
           <p class="note">${esc(t("drawer.expLine", { e: Math.round(E.exposure(j) * 100), d: sign(E.demand(j)), year: S.year }))} ${srcBadge(n.outlookSource)}</p></div>
         <div class="msec"><h4>${esc(t("drawer.asks"))}</h4>${jobAsks(j)}</div>
