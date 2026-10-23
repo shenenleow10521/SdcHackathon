@@ -168,6 +168,16 @@ export function apiTerms(url: string) {
   return host ? API_TERMS[host] || null : null;
 }
 
+/** The same page under small URL variations (www., trailing slash, #fragment, utm_ tracking) gets one key. */
+export function urlKey(url: string): string {
+  try {
+    const u = new URL(url);
+    for (const k of [...u.searchParams.keys()]) if (/^utm_/i.test(k)) u.searchParams.delete(k);
+    const q = u.searchParams.toString();
+    return `${u.hostname.toLowerCase().replace(/^www\./, "")}${u.pathname.replace(/\/+$/, "")}${q ? "?" + q : ""}`;
+  } catch { return url; }
+}
+
 /** Organisation key for "independent sources": the registrable-ish domain (last two labels, three for .com.my etc.). */
 export function domainKey(url: string): string {
   const host = hostOf(url) || url;

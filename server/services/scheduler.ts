@@ -1,12 +1,14 @@
 // Scheduled market scout: first run ~2 minutes after boot, then every SCOUT_INTERVAL_HOURS.
 // Runs never overlap; a failed run is recorded in `runs` (by the scout itself) and the schedule carries on.
-// The emerging-skill committee runs after a scout when its last run is over a week old.
+// The emerging-skill committee runs after each scheduled scout (at most once every 20 hours), so its evidence
+// (mentions, organisations, weeks) builds up day by day towards the thresholds.
 // Disabled with SCOUT_SCHEDULE=off (and always in tests).
 import type { Services } from "../context.ts";
 import { runScout, isScoutRunning } from "../agents/scout.ts";
 import { runCommittee } from "../agents/committee.ts";
 
 export const FIRST_RUN_DELAY_MS = 2 * 60_000;
+export const COMMITTEE_MIN_GAP_MS = 20 * 3600_000;
 
 export function startScheduler(svc: Services, opts: { firstDelayMs?: number; log?: (msg: string) => void } = {}): () => void {
   if (!svc.config.schedulerEnabled) return () => {};
@@ -21,7 +23,7 @@ export function startScheduler(svc: Services, opts: { firstDelayMs?: number; log
       const r = await runScout(svc, { trigger: "schedule" });
       log(`scout run ${r.runId}: ${r.status} ${JSON.stringify(r.counts)}${r.error ? ` (${r.error})` : ""}`);
       const last = (await svc.db.query(`select started_at from runs where kind='committee' and status in ('ok','replayed') order by id desc limit 1`)).rows[0] as any;
-      if (!last || svc.now().getTime() - new Date(last.started_at).getTime() > 7 * 86_400_000) {
+      if (!last || svc.now().getTime() - new Date(last.started_at).getTime() > COMMITTEE_MIN_GAP_MS) {
         const c = await runCommittee(svc, { trigger: "schedule" });
         log(`committee run ${c.runId}: ${c.status} ${JSON.stringify(c.counts)}`);
       }

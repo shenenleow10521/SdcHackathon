@@ -183,10 +183,13 @@ describe("emerging-skill committee", () => {
   ]);
   const llm = (req: any) => {
     if (req.role === "reviewer") return /Copilot Studio/.test(req.user) ? { verdict: "product_name", reason: "A Microsoft product" } : { verdict: "keep", reason: "A distinct ability" };
+    // Pages are read in relevance order, so find each quote's document number instead of assuming it.
+    const parts: string[] = req.user.split(/\nDocument (\d+): /); // [skills, "1", doc 1, "2", doc 2]
+    const docOf = (text: string, fallback: number) => { const i = parts.findIndex((p, j) => j > 0 && j % 2 === 0 && p.includes(text)); return i > 0 ? Number(parts[i - 1]) : fallback; };
     if (req.user.includes("Document 2")) return { proposals: [
-      { phrase: "Reviewing AI-generated journal entries", doc: 1, quote: Q, linkedSkill: "audit" },
-      { phrase: "Copilot Studio", doc: 2, quote: "Teams are learning Copilot Studio to automate approvals.", linkedSkill: "auto" },
-      { phrase: "Prompt writing", doc: 2, quote: "Prompt writing is also in demand for finance staff using generative AI.", linkedSkill: "prompt" },
+      { phrase: "Reviewing AI-generated journal entries", doc: docOf(Q, 1), quote: Q, linkedSkill: "audit" },
+      { phrase: "Copilot Studio", doc: docOf("Copilot Studio", 2), quote: "Teams are learning Copilot Studio to automate approvals.", linkedSkill: "auto" },
+      { phrase: "Prompt writing", doc: docOf("Prompt writing", 2), quote: "Prompt writing is also in demand for finance staff using generative AI.", linkedSkill: "prompt" },
       { phrase: "Quantum ledger design", doc: 2, quote: "Quantum ledgers are the future.", linkedSkill: "erp" },
     ] };
     return { proposals: [] };

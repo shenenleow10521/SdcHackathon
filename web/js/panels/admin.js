@@ -175,7 +175,9 @@ function signalCard(s) {
 
 function emergingCard(c) {
   const th = S.graph.thresholds || { postings: 15, employers: 5, weeks: 4 };
-  const rows = [["skill.th.postings", c.postings, th.postings], ["skill.th.employers", c.employers, th.employers], ["skill.th.weeks", c.weeks, th.weeks]]
+  const live = c.evidenceBasis === "trusted_source_mentions"; // counted from trusted-source mentions, not job postings
+  const watching = c.state === "watching";
+  const rows = [[live ? "admin.th.mentions" : "skill.th.postings", c.postings, th.postings], [live ? "admin.th.orgs" : "skill.th.employers", c.employers, th.employers], ["skill.th.weeks", c.weeks, th.weeks]]
     .map(([l, v, tv]) => `<li><i data-lucide="${v >= tv ? "circle-check" : "circle-x"}" style="color:${v >= tv ? "var(--good)" : "var(--crit)"}"></i><span>${esc(t(l))}</span><b class="num">${esc(v ?? "–")}</b><span class="rs">${esc(t("skill.th.need", { n: tv }))}</span></li>`).join("");
   const linked = c.linkedSkill || c.linked_skill;
   const cm = c.committee || {};
@@ -183,12 +185,17 @@ function emergingCard(c) {
   const ev = Array.isArray(c.evidence) ? c.evidence : [];
   const busy = A.busy.has("e" + c.id);
   const verdict = v => typeof v === "string" ? v : v && typeof v === "object" ? (v.verdict || v.reason || v.note || (v.ok === false ? "✗" : "✓")) : "✓";
-  return `<div class="rv"><div class="rv-top">${badge("b-violet", t("admin.emerging"), "sparkles")}</div>
-    <div class="rv-t">${esc(c.label || nameOf(c.skillId))}</div><div class="rv-m">${esc(t("admin.halfWeight"))}.${syn.length ? " " + esc(t("skill.merged", { list: syn.join(", ") })) : ""}</div>
+  const p = c.progress || {};
+  const status = watching
+    ? t("admin.watchingLine", { m: p.mentions?.have ?? c.postings ?? 0, mn: th.postings, o: p.organisations?.have ?? c.employers ?? 0, on: th.employers, w: p.weeks?.have ?? c.weeks ?? 0, wn: th.weeks })
+    : t("admin.halfWeight") + ".";
+  return `<div class="rv"><div class="rv-top">${watching ? badge("b-info", t("admin.watching"), "eye") : badge("b-violet", t("admin.emerging"), "sparkles")}</div>
+    <div class="rv-t">${esc(c.label || nameOf(c.skillId))}</div><div class="rv-m">${esc(status)}${syn.length ? " " + esc(t("skill.merged", { list: syn.join(", ") })) : ""}</div>
     <ul class="checks">${rows}${linked ? `<li><i data-lucide="circle-check" style="color:var(--good)"></i><span>${esc(t("admin.linked"))}</span><b>${esc(nameOf(linked))}</b><span></span></li>` : ""}</ul>
     ${cm && Object.keys(cm).length ? `<div class="rv-s"><i data-lucide="bot"></i>${esc(t("admin.committee", { p: verdict(cm.proposer), s: verdict(cm.skeptic), d: verdict(cm.duplicate) }))}</div>` : ""}
     ${ev.slice(0, 2).map(e => sourceLine(e.url, e.quote ? "“" + String(e.quote).slice(0, 90) + "”" : "", e.date)).join("")}
-    <div class="rv-actions"><button class="btn btn-primary" type="button" data-confirm="${esc(c.id)}" ${busy ? "disabled" : ""}><i data-lucide="badge-check"></i>${esc(t("admin.confirm"))}</button>
+    ${watching ? `<div class="rv-m">${esc(t("admin.watchingHint"))}</div>` : ""}
+    <div class="rv-actions">${watching ? "" : `<button class="btn btn-primary" type="button" data-confirm="${esc(c.id)}" ${busy ? "disabled" : ""}><i data-lucide="badge-check"></i>${esc(t("admin.confirm"))}</button>`}
       <button class="btn btn-soft" type="button" data-ereject="${esc(c.id)}" ${busy ? "disabled" : ""}>${esc(t("admin.rejectSkill"))}</button></div></div>`;
 }
 

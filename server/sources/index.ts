@@ -2,7 +2,7 @@
 // pages on demand (hydrate) through fetchApproved.
 import type { Services } from "../context.ts";
 import { fetchApproved } from "./fetch.ts";
-import { isApproved } from "./policy.ts";
+import { isApproved, urlKey } from "./policy.ts";
 import { searchGdelt } from "./gdelt.ts";
 import { searchHn } from "./hn.ts";
 import { searchArxiv } from "./arxiv.ts";
@@ -54,7 +54,8 @@ export async function collectItems(svc: Services, opts: { sources?: SourceName[]
     return items;
   }));
   const seen = new Set<string>();
-  const items = all.flat().filter(i => isApproved(i.url) && !seen.has(i.url) && (seen.add(i.url), true))
+  // One item per page: the same article under a URL variant (trailing slash, www., utm_ tags) is kept once.
+  const items = all.flat().filter(i => isApproved(i.url) && !seen.has(urlKey(i.url)) && (seen.add(urlKey(i.url)), true))
     .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
   return { items, status, since };
 }
