@@ -24,7 +24,7 @@ The AI-exposure **model** in `ml/` has its own sources and licences. They are li
 | Courses | 30 listed courses covering all 29 skills; 26 with a published or free price; 26 with stated hours | Practice and prove tasks for each course | These are our own learning design, not provider data |
 | HRD Corp claimable | none marked claimable | — | No course could be confirmed on an official HRD Corp page. Two providers say they are claimable on their own pages (see Courses) |
 | Employers | none | both employers in `employers.json` | They are fictional, so no real company has requirements attributed to it |
-| Malaysian labour context | 4 DOSM extracts, 125 rows | — | Not yet used by the app code |
+| Malaysian labour context | 4 DOSM extracts, 125 rows; median wage and wage earners by MASCO major group shown for every ESCO job and catalogue job | — | — |
 | Persona, skill routes and weights, posting shares, sector notes | — | everything in `knowledge.json` | Prototype values, labelled *Sample* in the UI |
 
 ---

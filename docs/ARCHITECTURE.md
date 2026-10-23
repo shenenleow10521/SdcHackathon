@@ -81,7 +81,7 @@ Pure functions, no I/O. **Unit-test these first** (`tests/engine.test.ts`), usin
 | **CV extractor** | `POST /api/profile/upload` | pdf-parse → PII scrub → LLM → embeddings | `{ currentOccupationId, skills: [{ skillId, level, evidence }] }` | LLM picks only from the top-5 embedding candidates per phrase; unknown IDs are rejected |
 | **Interviewer** | After upload | LLM + profile gaps | ≤ 3 questions, each `{ id, text, options[] }`; answers become level/hour updates | Questions come only from low-confidence skills |
 | **Explainer** | Plan/drawer requests | LLM | Short "why" text that cites record IDs | Fact checker removes any sentence citing an unknown ID |
-| **Market scout** | `POST /api/scout/run` (on demand; daily job later) | arXiv, OpenAlex, RSS → LLM extraction → embeddings for dedupe | Signal candidates (see §5) | Exact quote required; source URL required |
+| **Market scout** (shown in the app as "Job market researcher") | `POST /api/scout/run` (on demand; daily job later) | arXiv, OpenAlex, RSS → LLM extraction → embeddings for dedupe | Signal candidates (see §5) | Exact quote required; source URL required |
 | **AI reviewer** | Each signal candidate | A second LLM call with a *different system prompt* (ideally a different model) | `{ supports: bool, confidence: 0–1, issue? }` | Checks the claim against the quote only |
 | **Emerging-skill committee** | Weekly / on demand | Proposer → skeptic → duplicate check (LLM + embeddings) | `emerging_candidates` rows | Evidence thresholds (§5.3); provisional until a person confirms |
 
@@ -210,7 +210,7 @@ llm_cache(key text pk, response jsonb, created_at timestamptz)
 | Taken over | `exposure ≥ 0.85 − 0.2 × tide AND demand < 0` |
 | Edge cost: fastest | `weeks + 0.01 + 30 × max(0, e − 0.5)²` |
 | Edge cost: safest | `0.3 × weeks + 0.01 + 10 × e²` |
-| Edge cost: no-regret | `weeks + 0.01 + 6 × e_fast2030²` |
+| Edge cost: Balanced | `weeks + 0.01 + 6 × e_fast2030²` |
 | Match coverage | owned: `min(1, level/needed)`, taken: 0.3; missing but bridged: 0.4; else 0 |
 | Emerging weight | × 0.5 until confirmed |
 | Rank | `0.6 × match + 0.4 × clamp(50 + demand − 40 × exposure)` |

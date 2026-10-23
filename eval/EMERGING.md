@@ -1,6 +1,6 @@
 # Emerging-skill benchmark
 
-Can the Job Market Researcher's emerging-skill committee find work skills that ESCO does not have? We ran it for real, on a separate database, and checked every result by hand.
+Can the Job market researcher's emerging-skill committee find work skills that ESCO does not have? We ran it for real, on a separate database, and checked every result by hand.
 
 This file has two parts: **After the fix** (24 Oct 2026, 04:00, the shipped committee after the changes below) and the original benchmark (24 Oct 2026, 02:11), which found the problems.
 

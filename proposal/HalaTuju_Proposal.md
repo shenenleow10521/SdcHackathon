@@ -1,4 +1,4 @@
-# HalaTuju: A Career GPS for the AI Era
+# HalaTuju: A Live Career Map That Reroutes as AI Changes Work
 
 **SDC Hackathon 2026 · Preliminary Round · Domain 1: Aiversecity Future-Ready Workforce**
 Team: _[team name]_ · Members: _[names]_ · Draft v0.1 · 22 Oct 2026
@@ -9,7 +9,7 @@ Team: _[team name]_ · Members: _[names]_ · Draft v0.1 · 22 Oct 2026
 
 ## 1. Summary
 
-*HalaTuju* means "direction" in Malay. It is a career GPS for workers whose jobs are being changed by AI.
+*HalaTuju* means "direction" in Malay. It is a live career map for workers whose jobs are being changed by AI.
 
 You give it your CV or LinkedIn profile. It shows which of your skills AI is taking over, which jobs you can realistically move into, and a step-by-step learning path to get there. When AI or the job market changes, it **reroutes you automatically** and shows you exactly which news caused the change.
 
@@ -75,7 +75,7 @@ She types *"ESG analyst"*. The constellation focuses on that job. Two of the ski
 | Route | Path | Weeks | AI risk |
 |---|---|---|---|
 | **Fastest** | Vendor reconciliation → GHG emissions accounting → ESG Analyst | 6 | Medium |
-| **No-regret** (still good if AI moves fast) | Audit trail → Sustainability disclosure → ESG Analyst | 7 | Low |
+| **Balanced** (still good if AI moves fast) | Audit trail → Sustainability disclosure → ESG Analyst | 7 | Low |
 | **Safest** | Process improvement → Supervising AI workflows → ESG Analyst | 10 | Low |
 
 Each step shows *why* it works ("both trace every number back to a source document"), a course, its hours, whether it's free, and a reminder to ask HR about HRD Corp claims for paid courses.
@@ -152,7 +152,7 @@ All scoring is plain code, so the same input always gives the same result.
 - **Routes:** a shortest-path search over the skill-bridge network, the same kind of algorithm a GPS uses. Each road costs the weeks of learning (course hours ÷ your weekly hours), plus a penalty that depends on the route type:
   - *Fastest:* learning weeks plus "traffic" (a penalty for passing through AI-exposed skills).
   - *Safest:* mostly avoids AI-exposed skills, even if it takes longer.
-  - *No-regret:* scored against the *Fast AI, 2030* scenario, so it holds up even in the worse future.
+  - *Balanced:* scored against the *Fast AI, 2030* scenario, so it holds up even in the worse future.
   - Skills AI has taken over are **closed roads**; no route goes through them.
 - **Future-proof score** = share of your skills that are in demand and not taken over by AI, in the selected year and scenario.
 
@@ -189,9 +189,9 @@ No one can *guarantee* what an employer will ask for. What we guarantee is that 
 | **1. Skills profile intake** | CV / LinkedIn PDF upload, Interviewer agent follow-up questions, confirm-and-rate checklist | Sign-up flow |
 | **2. AI-trend signal layer (updatable, dated source)** | Daily market scout, human-approved dated signals, versioned knowledge base, "updated 3 days ago · 214 sources" | Agents panel, freshness indicator, signal notifications |
 | **3. Future-role matching + skills gap** | Match % per job from evidence-weighted skills; skills you have vs. missing, with distance in weeks | "Where you can go" list, constellation |
-| **4. Personalised reskilling pathway** | Shortest-path routes (Fastest / No-regret / Safest) fitted to the user's weekly hours, with courses and reasons | Path panel, step-by-step directions |
+| **4. Personalised reskilling pathway** | Shortest-path routes (Fastest / Balanced / Safest) fitted to the user's weekly hours, with courses and reasons | Path panel, step-by-step directions |
 | **5. SDG mapping** | Every skill and job is tagged with the SDGs it supports, with a one-line reason (e.g. ESG Analyst → SDG 13 Climate Action: measures company emissions) | Skill and job details |
-| **6. More than one future scenario** | *Moderate* vs *Fast* AI adoption, a 2026–2030 year slider, and a **No-regret** route that holds in both | Timeline controls, route options |
+| **6. More than one future scenario** | *Moderate* vs *Fast* AI adoption, a 2026–2030 year slider, and a **Balanced** route that holds in both | Timeline controls, route options |
 
 ---
 
