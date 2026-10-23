@@ -36,7 +36,7 @@ Upload a CV or LinkedIn PDF. HalaTuju builds your career map: the skills you hav
 
 **1. A living map, not a dashboard.** A 3D constellation: you at the centre, your skills on the inner ring, skills to learn on the middle ring, jobs on the outer ring. Real route-finding offers **Fastest**, **Balanced** (still good if AI moves fast) and **Safest** routes. Skills that AI has taken over become **closed roads**, and routes go around them.
 
-**2. Knowledge that updates itself, under human control.** An agent called **Road Watch** reads vetted sources every day. Fixed rules apply small, well-sourced changes automatically. Anything big, uncertain or new goes to a person. When a change is approved, affected users' routes are re-checked and visibly **rerouted**, with the source shown.
+**2. Knowledge that updates itself, under human control.** An agent called the **Job Market Researcher** reads vetted sources every day. Fixed rules apply small, well-sourced changes automatically. Anything big, uncertain or new goes to a person. When a change is approved, affected users' routes are re-checked and visibly **rerouted**, with the source shown.
 
 **3. Routes to a specific employer.** The same job title differs by company. HalaTuju shows your match per employer, using requirements that employers enter themselves (or that an admin extracts from an approved careers page), and adds that employer's extra skills as stops on your route. The demo uses fictional sample employers.
 
@@ -67,7 +67,7 @@ You can't control the future, but you can choose the plan that survives most of 
 | Human edge | Task split (AI does / AI assists / still needs you) and rising human skills | ✅ Works | Sample |
 | Sector exploration | Finance, Sustainability, Tech & data, Operations; the map rebuilds | ✅ Works | Sample |
 | Job search | Catalogue jobs added to the map; unknown jobs flagged as low confidence, with nearest catalogue jobs and live ESCO matches | ✅ Works | Real (ESCO lookup) |
-| Road Watch (daily agent) | Daily searches of 74 vetted sites (Tavily web search limited to them, RSS, GDELT, Hacker News, arXiv, OpenAlex): 10 skills a day so every map skill is covered every 3 days, plus 10 broad "AI at work" topics. Live run, 23 Oct 2026: 769 articles and 28 searches in 5.5 minutes, 7 new pieces of evidence for review. Quotes checked word for word | ✅ Works | Real |
+| Job Market Researcher (daily agent) | Daily searches of 74 vetted sites (Tavily web search limited to them, RSS, GDELT, Hacker News, arXiv, OpenAlex): 10 skills a day so every map skill is covered every 3 days, plus 10 broad "AI at work" topics. Live run, 23 Oct 2026: 769 articles and 28 searches in 5.5 minutes, 7 new pieces of evidence for review. Quotes checked word for word | ✅ Works | Real |
 | Rule-based triage + AI reviewer | A second model checks each claim; fixed rules auto-apply small, well-sourced changes and flag the rest | ✅ Works | Real |
 | Admin review queue | Approve / reject flagged changes; confirm emerging skills; spot-checks; run history | ✅ Works | Real + labelled samples |
 | Versioned knowledge base | Every change is a new version; any version can be undone | ✅ Works | Real |
@@ -76,14 +76,14 @@ You can't control the future, but you can choose the plan that survives most of 
 | Company-level requirements | Per-employer match % and extra route stops | ✅ Works | Sample (fictional employers) |
 | Employer requirements form | Employers enter their own requirements; stored as unverified | ✅ Works | Employer-entered |
 | Advisor approval | A plan goes into a learning plan only after an advisor approves it (or asks for changes) | ✅ Works | n/a |
-| Accounts and roles | Sign in with email/password or Google (Supabase Auth), or try the demo as Priya with no account. Each account sees only its own profile, plans and confirmed skills; admin and advisor screens need a role; **Delete my data** | 🧪 Built (ownership and role checks tested; live browser sign-in not yet checked) | n/a |
+| Accounts and roles | Sign in with email and password (Supabase Auth), or try the demo as Priya with no account. Each account sees only its own profile, plans and confirmed skills; admin and advisor screens need a role; **Delete my data** | 🧪 Built (ownership and role checks tested; live browser sign-in not yet checked) | n/a |
 | Deadline tracking | Target date + weekly hours → *Ahead / On track / Behind*, e.g. a six-month redeployment window | ✅ Works | n/a |
 | Costed route | Course cost in RM per step and in total, with the HRD Corp-claimable share | ✅ Works (no HRD Corp-claimable course is loaded yet, so that share shows RM 0) | Real (30 course listings with links) |
 | SDG-aware ranking | Choose an SDG priority (e.g. climate); jobs re-rank and the trade-off in match % and weeks is shown | ✅ Works | Sample tags on a Sample catalogue |
 | "Studies disagree" view | AI exposure from ILO WP140, the Anthropic Economic Index and Eloundou et al., side by side | ✅ Works (shown next to our values; scores still use the catalogue) | Real |
 | HR redeployment view | For an employer's team: who can move to which open role, at what match, by when, and at what total cost | ✅ Works | Sample (fictional team) |
 | Bahasa Melayu interface | BM toggle for all interface text | ✅ Works (job, skill and source text stays in English) | n/a |
-| AI-exposure estimator (self-trained) | A model trained on published human ratings of task exposure; scores any new task. Evaluated on held-out occupations | ✅ Works (shown next to catalogue values; final training run on RunPod still to do) | Real labels |
+| AI-exposure estimator (self-trained) | A model trained on published human ratings of task exposure; scores any new task. Evaluated on held-out occupations | ✅ Works (shown next to catalogue values; final training run done on a RunPod RTX 4090 pod) | Real labels |
 | Future stress test | Your plan is replayed in 18 possible futures; shows how many it survives, why it fails, and what would make it sturdier | ✅ Works | Mixed: ranges Real, catalogue Sample |
 | Check any job (full ESCO) | Search all 3,039 ESCO occupations; match % and skill gap from each job's essential skills; confirm skills you have ("I have this") and the match updates | ✅ Works | Real (ESCO v1.2.1) |
 | AI exposure for every job and skill | ILO WP140 for each occupation's group; our model's estimate for all 13,939 skills (embedded with bge-m3 on RunPod); GPTs-are-GPTs and Anthropic Economic Index for the closest US occupation | ✅ Works | Real (model scores are labelled estimates) |
@@ -112,7 +112,7 @@ flowchart LR
 | Agent | Job |
 |---|---|
 | Interviewer | Turns a CV into a confirmed skill profile; asks about gaps (fixed question templates, no AI model) |
-| Road Watch | Finds new AI-capability, adoption and demand signals, skill by skill and by topic |
+| Job Market Researcher | Finds new AI-capability, adoption and demand signals, skill by skill and by topic |
 | AI reviewer | A second model checks each claim against its evidence quote |
 | Emerging-skill committee | Proposes, challenges and de-duplicates new skills |
 | Career planner / explainer | Explains routes, citing records only |
@@ -134,7 +134,7 @@ flowchart LR
 
 A fixed 5% of automatic changes (chosen by hash, so it can't be gamed) is also queued for a person to spot-check. Accuracy of automatic changes: not yet measured.
 
-**Example from a live run (23 Oct 2026):** Road Watch found Microsoft's Dynamics 365 page (22 Oct 2026) saying its "Account Reconciliation Agent can help identify exceptions between subledgers and the general ledger". The quote was verified on the page, the reviewer agreed, and with a single source it went to a person. When approved, *Vendor reconciliation* becomes a closed road in the 2030 view, and Priya's route to ESG & Carbon Reporting Analyst reroutes from *Vendor reconciliation → GHG emissions accounting* to *Audit trail documentation → Sustainability disclosure*. (At the 2026 view, single small signals like this one don't change routes yet.)
+**Example from a live run (23 Oct 2026):** The Job Market Researcher found Microsoft's Dynamics 365 page (22 Oct 2026) saying its "Account Reconciliation Agent can help identify exceptions between subledgers and the general ledger". The quote was verified on the page, the reviewer agreed, and with a single source it went to a person. When approved, *Vendor reconciliation* becomes a closed road in the 2030 view, and Priya's route to ESG & Carbon Reporting Analyst reroutes from *Vendor reconciliation → GHG emissions accounting* to *Audit trail documentation → Sustainability disclosure*. (At the 2026 view, single small signals like this one don't change routes yet.)
 
 ### How sturdy is my plan? (future stress test)
 
@@ -185,7 +185,7 @@ All three yes = the plan **works** in that future. The result is a count, e.g. *
 | **"GPTs are GPTs"** task labels (Eloundou et al. 2024, MIT) | Training labels for the self-trained exposure model | Reuse, with citation |
 | **Course provider listings** | 30 real courses with price, hours and link, for costed routes | Facts and link only |
 | **DOSM / OpenDOSM** | Median wage and wage earners by MASCO major group, 2021–2025, shown for every ESCO job's group | Reuse (open government data, CC BY 4.0) |
-| Tavily web search (trusted domains only), RSS feeds, GDELT, Hacker News | AI-capability, adoption and demand news for Road Watch | Read and extract |
+| Tavily web search (trusted domains only), RSS feeds, GDELT, Hacker News | AI-capability, adoption and demand news for Job Market Researcher | Read and extract |
 | arXiv, OpenAlex | AI-capability signals | Read and extract |
 | Approved company careers pages | Company-specific requirements | Read and extract (facts, a short quote and the link only) |
 | Job boards (JobStreet, LinkedIn, Indeed and similar) | "See openings" | **Link only.** Their terms forbid automated access, so our agents never open them |
@@ -200,7 +200,7 @@ All three yes = the plan **works** in that future. The result is a count, e.g. *
 
 Page text is treated as **data, never as instructions** (protection against prompt injection). No single page can change a user's route on its own.
 
-**Sample data:** where real data is not yet loaded, values are labelled *Sample* in the UI. Sample today: the demo persona (Priya Nair), the job and skill catalogue's exposure and demand outlook, task splits, skill bridges and job requirements, posting shares, Practice/Prove tasks, the employers and the HR team. Real today: the full ESCO taxonomy and the catalogue's ESCO mappings, the exposure studies (ILO WP140 for every ESCO occupation group; GPTs-are-GPTs and the Anthropic Economic Index through the crosswalk), O\*NET tasks with human ratings, DOSM wages, MyCOL, course listings, Road Watch signals and the exposure model's training labels.
+**Sample data:** where real data is not yet loaded, values are labelled *Sample* in the UI. Sample today: the demo persona (Priya Nair), the job and skill catalogue's exposure and demand outlook, task splits, skill bridges and job requirements, posting shares, Practice/Prove tasks, the employers and the HR team. Real today: the full ESCO taxonomy and the catalogue's ESCO mappings, the exposure studies (ILO WP140 for every ESCO occupation group; GPTs-are-GPTs and the Anthropic Economic Index through the crosswalk), O\*NET tasks with human ratings, DOSM wages, MyCOL, course listings, Job Market Researcher signals and the exposure model's training labels.
 
 ---
 
@@ -209,7 +209,7 @@ Page text is treated as **data, never as instructions** (protection against prom
 | Must-have | Where |
 |---|---|
 | Skills profile intake | CV/LinkedIn upload, interviewer, confirm-and-rate |
-| AI-trend signal layer (updatable, dated) | Road Watch, dated signals, versioned knowledge base |
+| AI-trend signal layer (updatable, dated) | Job Market Researcher, dated signals, versioned knowledge base |
 | Future-role matching + skills gap | Match % per job and per employer; skills you have vs. need |
 | Personalised reskilling pathway | Routes fitted to weekly hours; Reuse / Upskill / Evolve / Reskill steps |
 | SDG mapping | Every job (16) and skill (29) tagged with an SDG and a one-line reason, checked by a test; SDG-aware ranking |
@@ -256,23 +256,23 @@ Page text is treated as **data, never as instructions** (protection against prom
 | App and hosting | **Replit** (Node 20, TypeScript, Express 5; `.replit` runs `npm start` with PostgreSQL 16) |
 | AI models | **Google Gemini API**: gemini-3.5-flash-lite (main), gemini-3.1-flash-lite (reviewer) |
 | Embeddings (GPU) | **BAAI/bge-m3 on RunPod Serverless** (worker-infinity-embedding); a local Infinity server or Gemini embeddings as fallbacks |
-| Web search | Tavily (Road Watch only, limited to trusted domains; ~30 searches a day fits the free tier) |
+| Web search | Tavily (Job Market Researcher only, limited to trusted domains; ~30 searches a day fits the free tier) |
 | Database | PostgreSQL; embedded PGlite when no `DATABASE_URL` is set |
 | Backend libraries | zod, multer, unpdf (PDF text), fast-xml-parser |
 | Frontend | Vanilla JS, 3d-force-graph (three.js), GSAP, Lucide icons, Geist font |
 
 ### Sponsor tools
 
-**Replit.** The app is set up to build and deploy on Replit (`.replit`: Node 20, PostgreSQL 16, `npm start`). The in-app AI agents (Road Watch, AI reviewer, emerging-skill committee, explainer) call the **Google Gemini API**.
+**Replit.** The app is set up to build and deploy on Replit (`.replit`: Node 20, PostgreSQL 16, `npm start`). The in-app AI agents (Job Market Researcher, AI reviewer, emerging-skill committee, explainer) call the **Google Gemini API**.
 Proof: deployment URL _[link]_, project history, `submission/Replit_POU.pdf`.
 
 **RunPod.** With `EMBED_PROVIDER=runpod` (the deployed setting), the **BAAI/bge-m3** embedding model runs on **RunPod Serverless** and:
 1. matches CV and LinkedIn text to ESCO skills,
-2. removes duplicate Road Watch signals,
+2. removes duplicate Job Market Researcher signals,
 3. merges synonyms when new skills emerge (e.g. "vibe coding" and "AI-assisted coding"), and
 4. embeds new tasks for the self-trained exposure model (checked live on 23 Oct 2026).
 
-The exposure model has so far been trained on a local GPU, which the organisers allow for testing. The final training run on a RunPod GPU pod is still to do (see [Train the AI-exposure model](#train-the-ai-exposure-model)).
+The exposure model's final training run happened on a **RunPod GPU pod** (NVIDIA GeForce RTX 4090, pod `38jijj8fe5dazu`, 23 Oct 2026, about 2.5 minutes, about US$0.04); see [Train the AI-exposure model](#train-the-ai-exposure-model). Earlier development runs used a local GPU, which the organisers allow for testing.
 
 Proof: endpoint ID _[id]_, GPU type _[type]_, runtime screenshot in `submission/Runpod_POU.pdf`. Both are also listed in the Tech & Tools Declaration _[link]_.
 
@@ -283,31 +283,33 @@ npm install
 cp .env.example .env    # GEMINI_API_KEY is required; everything else is optional (see below)
 npm run db:setup        # schema + seed; add --reset to wipe a local database first
 npm run dev             # http://localhost:3000
-npm test                # 343 tests: engine, stress test, triage, Road Watch sources, PII scrubbing, fairness, prompt injection, API, HR, web client
+npm test                # 385 tests: engine, stress test, triage, Job Market Researcher sources, PII scrubbing, fairness, prompt injection, API, accounts, HR, web client
 ```
+
+The tests use an in-memory database. To run them on real PostgreSQL, set `TEST_DATABASE_URL` (each test file gets its own throwaway `test_*` schema; use a local Postgres, since every query is a network round trip). On 24 Oct 2026 all 385 passed on PostgreSQL 17.11, the version Supabase runs. `npx tsx scripts/smoke-api.ts <url>` checks every non-CV API feature against a running server; add `--write` only on a fresh database (it approves and undoes knowledge changes and creates plans). It passed 54/54 with `--write` on a fresh PostgreSQL database and 34/34 read-only against Supabase.
 
 Environment (all in `.env.example`):
 - **AI:** `GEMINI_API_KEY` (required), `GEMINI_API_KEY_2`, `GEMINI_MODEL`, `GEMINI_REVIEWER_MODEL`.
 - **Database:** `DATABASE_URL` for PostgreSQL (production: the Supabase pooler connection string); leave it empty to use an embedded PGlite database in `./data`.
-- **Accounts:** `SUPABASE_URL` and `SUPABASE_ANON_KEY` switch on sign-in (email/password and Google, via Supabase Auth); leave them empty for an open demo without accounts. `ADMIN_EMAILS` and `ADVISOR_EMAILS` (comma-separated) give staff roles. Google sign-in also needs the Google provider enabled in the Supabase dashboard, and the app's `/app` URL added to Auth → URL Configuration → Redirect URLs.
+- **Accounts:** `SUPABASE_URL` and `SUPABASE_ANON_KEY` switch on sign-in (email and password, via Supabase Auth); leave them empty for an open demo without accounts. `ADMIN_EMAILS` and `ADVISOR_EMAILS` (comma-separated) give staff roles. If email confirmation is on in Supabase, set Auth → URL Configuration → Site URL to the app's `/app` URL so the confirmation link lands in the app.
 - **Embeddings:** `EMBED_PROVIDER` (`runpod` / `local` / `gemini` / `none`), `RUNPOD_API_KEY`, `RUNPOD_EMBED_ENDPOINT_ID`, `LOCAL_EMBED_URL`, `LOCAL_EMBED_MODEL`.
-- **Road Watch web search:** `TAVILY_API_KEY` (free tier is enough) or `BRAVE_API_KEY`.
-- **Other:** `DEMO_MODE` (replay the last recorded Road Watch run if a live source fails, labelled "replayed"), `ADMIN_TOKEN` (header `x-admin-token` opens staff routes for scripts), `SCOUT_SCHEDULE`, `SCOUT_INTERVAL_HOURS`, `PORT`.
+- **Job Market Researcher web search:** `TAVILY_API_KEY` (free tier is enough) or `BRAVE_API_KEY`.
+- **Other:** `DEMO_MODE` (replay the last recorded Job Market Researcher run if a live source fails, labelled "replayed"), `ADMIN_TOKEN` (header `x-admin-token` opens staff routes for scripts), `SCOUT_SCHEDULE`, `SCOUT_INTERVAL_HOURS`, `PORT`.
 
 The UI prototype runs on its own: open [`prototype/halatuju-app.html`](prototype/halatuju-app.html) in a browser (internet needed for its libraries).
 
 ## Train the AI-exposure model
 
-> **Status:** trained and evaluated on a local GPU (RTX 4070 Laptop, 23 Oct 2026); the app serves it at `/api/exposure/*` and shows it next to the catalogue values (it does not drive the scores yet). **The final training run on RunPod is still to do.** Scripts live in `ml/`; sources and licences are in [`ml/SOURCES.md`](ml/SOURCES.md).
+> **Status:** final training run **on RunPod** (NVIDIA GeForce RTX 4090, Secure Cloud, pod `38jijj8fe5dazu`, 23 Oct 2026, about 2.5 minutes of pod time, about US$0.04; details in `ml/artifacts/runpod_run.json`). The app serves it at `/api/exposure/*` and shows it next to the catalogue values (it does not drive the scores yet). The earlier local development run (RTX 4070 Laptop) is kept as `ml/artifacts/*_local.json`. Scripts live in `ml/`; sources and licences are in [`ml/SOURCES.md`](ml/SOURCES.md).
 
 **What it is:** a small model that predicts *how much of a task AI can do* (0–1) from the task's text. Each task is turned into an embedding with **BAAI/bge-m3**, and a **ridge regression** is trained on human ratings of task exposure. The trained weights are exported as a small JSON file, so the app scores a new task with one dot product. No GPU is needed for the model itself, but each new task needs a bge-m3 embedding (RunPod Serverless, or a local embedding server).
 
-**Results so far** (local run; split by occupation, so test occupations were never seen in training):
+**Results** (final RunPod run; split by occupation, so test occupations were never seen in training. The local run used the same split and matched to 3 decimals, except per-occupation r 0.918 there):
 
 | Held-out set | Model | Always predict the average | Copy the nearest training task | GPT-4's own labels (reference) |
 |---|---|---|---|---|
-| Per task (n = 3,959) | r 0.671 · ρ 0.689 · MAE 0.203 | MAE 0.328 | r 0.565 · ρ 0.591 · **MAE 0.176** | r 0.587 · ρ 0.629 · MAE 0.189 |
-| Per occupation (n = 185) | **r 0.918 · ρ 0.916 · MAE 0.065** | MAE 0.170 | r 0.881 · ρ 0.880 · MAE 0.070 | r 0.853 · ρ 0.879 · MAE 0.089 |
+| Per task (n = 3,959) | r 0.671 · ρ 0.689 · MAE 0.203 | MAE 0.328 | r 0.565 · ρ 0.590 · **MAE 0.176** | r 0.587 · ρ 0.629 · MAE 0.189 |
+| Per occupation (n = 185) | **r 0.919 · ρ 0.916 · MAE 0.065** | MAE 0.170 | r 0.880 · ρ 0.879 · MAE 0.071 | r 0.853 · ρ 0.879 · MAE 0.089 |
 
 The model ranks tasks and occupations best (highest r and ρ), and is the most accurate per occupation. Per single task, copying the nearest training task has a lower average error (MAE 0.176 vs 0.203).
 
@@ -334,22 +336,23 @@ python evaluate.py --sample
 - To force CPU only: `export CUDA_VISIBLE_DEVICES=""` (Windows PowerShell: `$env:CUDA_VISIBLE_DEVICES=""`).
 - Get the whole pipeline and the evaluation working here before spending any credit. **The final training run and the published model must come from RunPod** (step 3).
 
-### 3. Final run on RunPod (about 30–60 minutes, about US$1)
-1. In the RunPod console, deploy a **GPU pod**: RTX 4090 (Community Cloud) or A40, using the **RunPod PyTorch** template, with about 30 GB of container disk. A network volume isn't needed.
-2. Open the pod's terminal or Jupyter, then:
-   ```bash
-   git clone <repo-url> && cd <repo>/ml
-   pip install -r requirements.txt
-   python prepare_data.py && python embed.py && python train.py && python evaluate.py
-   ```
-3. **Take the proof screenshots** while the pod is running: pod ID, GPU type, and the runtime or billing view. Save them into `submission/Runpod_POU.pdf`.
-4. Copy the outputs back: `ml/artifacts/exposure_model.json` (weights) and `ml/artifacts/eval.json` (metrics). Commit both; they are small.
-5. **Terminate the pod immediately.** Stopping it isn't enough if a disk is still attached.
+### 3. Final run on RunPod (a few minutes, a few US cents)
+`ml/runpod_train.py` does the whole run with the RunPod API (key `RUNPOD_API_KEY` in `.env`):
+```bash
+python ml/runpod_train.py launch      # one GPU pod (RTX 4090 / A5000 / L4 / A40 / A4500); RUNPOD_CLOUD=SECURE if Community Cloud is sold out
+python ml/runpod_train.py status      # pod state and pipeline log
+python ml/runpod_train.py fetch       # copies exposure_model.json, eval.json, split.json and runpod_run.log into ml/artifacts/
+python ml/runpod_train.py terminate   # always run this; stopping isn't enough
+```
+1. **Take the proof screenshots** while the pod is running: pod ID, GPU type, and the runtime or billing view. Save them into `submission/Runpod_POU.pdf`.
+2. Commit the outputs in `ml/artifacts/`; they are small.
+
+The final run (23 Oct 2026): pod `38jijj8fe5dazu`, NVIDIA GeForce RTX 4090, embedding all 19,265 tasks took 3.9 s, the whole pipeline about 2 minutes, and the pod was terminated right after.
 
 ### 4. Evaluate honestly
 - Split the data **by occupation**, so no occupation's tasks appear in both training and test data. This stops the model from simply memorising jobs.
 - Report **Pearson r, Spearman ρ and mean absolute error** on the held-out tasks, against two baselines: always predicting the average, and copying the nearest neighbour.
-- `ml/evaluate.py` writes all of these to `ml/artifacts/eval.json`, with where it ran (machine, GPU, time). The numbers in the results table above are copied from that file; after the RunPod run, replace them with the new ones. Never round up and never estimate.
+- `ml/evaluate.py` writes all of these to `ml/artifacts/eval.json`, with where it ran (machine, GPU, time). The numbers in the results table above are copied from that file (the RunPod run). Never round up and never estimate.
 
 ### 5. Embedding endpoint for the app (RunPod Serverless)
 - Worker: `runpod/worker-infinity-embedding`, with `MODEL_NAMES=BAAI/bge-m3`.
@@ -369,7 +372,7 @@ Expected total spend: about US$3–8, covering development, the demo and judging
 ## Repository layout
 
 ```
-server/                   Express API: agents/ (scout = Road Watch, reviewer, committee, CV, interviewer, explainer),
+server/                   Express API: agents/ (scout = Job Market Researcher, reviewer, committee, CV, interviewer, explainer),
                           routes/, services/ (planning, ranking, rescore, HR, scheduler), sources/ (fetch policy, search)
 shared/engine.js          scoring engine and stress test, used by both server and browser
 web/                      browser app (vanilla JS, 3D map, en/ms translations)
@@ -389,14 +392,14 @@ competitors/              competitor notes
 
 | Check | What it covers | Status |
 |---|---|---|
-| Automated tests (`npm test`) | Scoring engine, stress test, SDG coverage, full ESCO data and "check any job", O\*NET/DOSM/MyCOL layers, triage rules, Road Watch sources, personal-detail scrubbing, fairness, prompt injection, API shapes, source policy, HR, web client. 343 tests (23 Oct 2026); network and AI are mocked | ✅ |
+| Automated tests (`npm test`) | Scoring engine, stress test, SDG coverage, full ESCO data and "check any job", O\*NET/DOSM/MyCOL layers, triage rules, Job Market Researcher sources, personal-detail scrubbing, fairness, prompt injection, API shapes, source policy, HR, web client. 343 tests (23 Oct 2026); network and AI are mocked | ✅ |
 | Continuous integration | Type-check and tests on Node 20 and 22, on every push and pull request (`.github/workflows/ci.yml`); no linter yet | ✅ |
 | Fairness check | The same CV with a different name, gender, age or religion gives identical results (`tests/fairness.test.ts`) | ✅ |
 | CV-reading benchmark | 14 messy synthetic CVs (broken PDF text, typos, Bahasa Melayu, keyword stuffing, out-of-catalogue jobs), answer key written blind. First run: skills found **90%**, skills correct **88.5%**, levels in range **94%**, job mapped **79%**; no-AI baseline 78% / 63% / 45% / 71%. Method, failures and caveats: [`eval/RESULTS.md`](eval/RESULTS.md) | ✅ |
 | Prompt-injection check | Hostile page text cannot change extraction, invent IDs or skip triage (`tests/injection.test.ts`) | ✅ |
 | Confidence and "Why this number?" | Figures show their basis, sources and dates; explanations cite records, and a fact checker drops uncited sentences | ✅ |
-| Health and demo safety | `/api/health` (database, AI, embeddings, scheduler); replayed Road Watch runs are labelled "replayed" | ✅ |
-| Live end-to-end check | Road Watch → review → approve → reroute in a real browser, plus every other non-CV feature through the API on a fresh database (23 Oct 2026) | ✅ |
+| Health and demo safety | `/api/health` (database, AI, embeddings, scheduler); replayed Job Market Researcher runs are labelled "replayed" | ✅ |
+| Live end-to-end check | Job Market Researcher → review → approve → reroute in a real browser, plus every other non-CV feature through the API on a fresh database (23 Oct 2026) | ✅ |
 
 ## Known limitations
 
@@ -441,7 +444,7 @@ Declared in full in the Tech & Tools Declaration. The hackathon rules require ev
 | Tool | Used for |
 |---|---|
 | Claude Code (Anthropic) | Writing and reviewing code and tests, debugging, documentation |
-| Google Gemini API (gemini-3.5-flash-lite, gemini-3.1-flash-lite) | In-app agents: Road Watch, AI reviewer, emerging-skill committee, explainer |
+| Google Gemini API (gemini-3.5-flash-lite, gemini-3.1-flash-lite) | In-app agents: Job Market Researcher, AI reviewer, emerging-skill committee, explainer |
 | _[any other AI tool the team used]_ | _[what for]_ |
 
 ## Team
