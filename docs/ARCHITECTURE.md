@@ -70,6 +70,7 @@ Port the `LOGIC` section of `prototype/halatuju-app.html` into `scoring.ts`, unc
 | `planFor(job, mode)` | Route + upskill steps + remaining gaps → core weeks and job-ready weeks |
 | `rankScore(job)` | 0.6 × match + 0.4 × outlook (for "Best matches") |
 | `futureScore()` | Share of the user's skills that are safe in the selected year/scenario |
+| `stressTest(graph, profile, job, mode)` | Monte Carlo: replays the plan in 1,000 seeded random futures (AI speed, exposure error, study hours, step lengths; ranges in `MONTE_CARLO`) and returns the share where the route stays open, you are ready by the deadline and the job is still in demand, plus failure patterns and sturdier alternatives |
 
 Pure functions, no I/O. **Unit-test these first** (`tests/engine.test.ts`), using the prototype's known outputs as expected values. For example, at 2026 moderate the ESG Fastest route is `recon → ghg → esgRole`, 6 weeks; after the reconciliation signal it becomes `audit → disc → esgRole`, 7 weeks.
 

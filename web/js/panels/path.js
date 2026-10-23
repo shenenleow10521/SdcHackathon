@@ -176,29 +176,45 @@ export function render() {
   </div>`;
 }
 
-// ---------- future stress test: the plan replayed in 18 futures ----------
+// ---------- future stress test: the plan replayed in 1,000 simulated futures ----------
+// 1,000 runs take a few milliseconds, so they run on the main thread; results are cached per plan.
+const stressCache = new Map();
 function stressHtml(j) {
   let r;
   try {
     const p = S.profile;
-    r = stressTest(S.graph, { occupationId: S.E.root, level: p.level, hours: p.hours }, j, UI.mode, {
-      view: { year: S.year, scenario: S.scenario }, startYear: yearOf(new Date()),
+    const profile = { occupationId: S.E.root, level: p.level, hours: p.hours };
+    const opts = {
+      view: { year: S.year, scenario: S.scenario }, startYear: yearOf(new Date().toISOString().slice(0, 10)),
       deadlineYear: p.targetDate ? yearOf(p.targetDate) : undefined, extraReq: UI.employerReq,
-    });
+    };
+    const key = JSON.stringify([profile, j, UI.mode, opts, S.graph.kbVersion, S.graph.deltas || null]);
+    r = stressCache.get(key);
+    if (!r) {
+      r = stressTest(S.graph, profile, j, UI.mode, opts);
+      if (stressCache.size > 50) stressCache.clear();
+      stressCache.set(key, r);
+    }
   } catch (e) { console.warn("stress test failed", e); return ""; }
   if (!r.route) return "";
-  const tone = r.works === r.total ? "good" : r.works >= r.total * 2 / 3 ? "warn" : "crit";
-  const label = f => t("stress.future", { speed: t("stress.speed." + f.speed), est: t("stress.est." + f.estimate), h: f.hours });
-  const failText = x => t("stress.fail." + x.check, { skill: x.skill ? nameOf(x.skill) : "", year: x.year, weeks: x.weeks, available: x.available });
-  const cells = r.futures.map(f => `<span class="sf ${f.ok ? "ok" : "no"}" title="${esc(label(f) + " · " + (f.ok ? t("stress.works1") : f.fails.map(failText).join("; ")))}"></span>`).join("");
-  const pats = r.patterns.map(x => `<li>${esc(t("stress.pattern", { n: x.count, why: t("stress.why." + x.check, { skill: x.skill ? nameOf(x.skill) : "" }) }))}</li>`).join("");
-  const fixes = r.sturdier.map(s => `<li>${esc(s.kind === "hours" ? t("stress.fixHours", { h: s.hours, n: s.works, total: r.total }) : t("stress.fixMode", { mode: t("mode." + s.mode), n: s.works, total: r.total }))}</li>`).join("");
+  const tone = r.rate >= 90 ? "good" : r.rate >= 67 ? "warn" : "crit";
+  const pctOf = share => (share < 1 ? t("stress.under1") : Math.round(share) + "%");
+  const skillName = x => (x.skill ? nameOf(x.skill) : "");
+  const whenText = (c, x) => t("stress.when." + c.factor + "." + c.dir + (c.factor === "hours" && c.dir === "low" && c.below === undefined ? "Any" : ""), { h: c.below, skill: skillName(x) });
+  const pats = r.patterns.slice(0, 3).map(x => {
+    const why = t("stress.why." + x.check, { skill: skillName(x) }), share = pctOf(x.share);
+    return `<li>${esc(x.when.length ? t("stress.patternWhen", { why, share, when: x.when.map(c => whenText(c, x)).join(t("stress.and")) }) : t("stress.pattern", { why, share }))}</li>`;
+  }).join("");
+  const fixes = r.sturdier.map(s => `<li>${esc(s.kind === "hours" ? t("stress.fixHours", { h: s.hours, pct: s.rate + "%" }) : t("stress.fixMode", { mode: t("mode." + s.mode), pct: s.rate + "%" }))}</li>`).join("");
+  const runs = r.runs.toLocaleString("en-US");
+  const head = esc(t("stress.works", { pct: "%PCT%", n: runs })).replace("%PCT%", `<strong class="stress-pct">${r.rate}%</strong>`);
+  const inputs = ["speed", "estimate", "hours", "weeks", "deadline"].map(k => `<li>${esc(t("stress.in." + k, { h: S.profile.hours }))}</li>`).join("");
   return `<section class="stress"><h3 class="sec-h">${esc(t("stress.title"))}</h3>
-    <p class="stress-v t-${tone}">${esc(t("stress.works", { n: r.works, total: r.total }))}</p>
-    <div class="sf-grid" role="img" aria-label="${esc(t("stress.works", { n: r.works, total: r.total }))}">${cells}</div>
+    <p class="stress-v t-${tone}">${head}</p>
+    <div class="stress-bar t-${tone}" aria-hidden="true"><span style="width:${r.rate}%"></span></div>
     ${pats ? `<div class="sub-h">${esc(t("stress.patterns"))}</div><ul class="alt-list">${pats}</ul>` : ""}
     ${fixes ? `<div class="sub-h">${esc(t("stress.sturdier"))}</div><ul class="alt-list">${fixes}</ul>` : ""}
-    <details class="src-details"><summary>${esc(t("stress.how"))}</summary><p class="src">${esc(t("stress.axes"))}</p><p class="src">${esc(t("stress.method"))}</p></details></section>`;
+    <details class="src-details"><summary>${esc(t("stress.how"))}</summary><p class="src">${esc(t("stress.intro", { n: runs }))}</p><ul class="src stress-in">${inputs}</ul><p class="src">${esc(t("stress.method"))}</p></details></section>`;
 }
 
 // ---------- server plan: deadline + cost ----------

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { createEngine, displayWeeks, MODES, stressTest, FUTURES, PARAMS, yearOf, HAVE_LEVEL } from "../shared/engine.js";
+import { createEngine, displayWeeks, MODES, stressTest, MONTE_CARLO, PARAMS, yearOf, HAVE_LEVEL, aiInterp, aiTide } from "../shared/engine.js";
 import { seedGraph, persona, knowledge } from "./helpers/seed-graph.ts";
 
 const golden = JSON.parse(readFileSync(new URL("./fixtures/golden.json", import.meta.url), "utf8"));
@@ -110,45 +110,99 @@ describe("engine behaviour", () => {
   });
 });
 
-describe("future stress test", () => {
+describe("future stress test (Monte Carlo)", () => {
   const today = yearOf("2026-10-23");
+  const sum = (xs: any[]) => xs.reduce((a, x) => a + x.count, 0);
 
-  it("has 18 distinct futures: 3 AI speeds × 2 exposure estimates × 3 study paces", () => {
-    expect(FUTURES).toHaveLength(18);
-    expect(new Set(FUTURES.map(f => f.id)).size).toBe(18);
-  });
-
-  it("slow AI moves exposure half as far as Moderate by 2030", () => {
+  it("the AI speed scale reproduces the Slow, Moderate and Fast scenarios at -1, 0 and 1", () => {
     const g = seedGraph();
-    const [e0, e1] = g.nodes.recon.e;
+    const [e0, e1, e2] = g.nodes.recon.e;
     const slow = createEngine(g, persona, { year: 2030, scenario: "slow" }).exposure("recon");
     expect(slow).toBeCloseTo(e0 + (e1 - e0) * PARAMS.slowFactor, 6);
-    expect(createEngine(g, persona, { year: 2030, scenario: "moderate", shiftE: 0.1 }).exposure("recon")).toBeCloseTo(e1 + 0.1, 6);
+    expect(aiInterp([e0, e1, e2], 1, -1)).toBeCloseTo(slow, 9);
+    expect(aiInterp([e0, e1, e2], 1, 0)).toBeCloseTo(e1, 9);
+    expect(aiInterp([e0, e1, e2], 1, 1)).toBeCloseTo(e2, 9);
+    expect(aiTide(1, 1)).toBe(1);
+    expect(aiTide(1, 0)).toBeCloseTo(PARAMS.moderateTide, 9);
   });
 
-  it("a short plan with no deadline survives every future", () => {
-    expect(stressTest(seedGraph(), persona, "esgRole", "fastest", { startYear: today }).works).toBe(18);
+  it("uses 1,000 futures by default, and the number of runs is configurable", () => {
+    expect(MONTE_CARLO.runs).toBe(1000);
+    expect(stressTest(seedGraph(), persona, "esgRole", "fastest", { startYear: today }).runs).toBe(1000);
+    expect(stressTest(seedGraph(), persona, "esgRole", "fastest", { startYear: today, runs: 250 }).runs).toBe(250);
   });
 
-  it("fails 'ready' when a slower study pace misses the deadline", () => {
+  it("a short plan with no deadline works in every future", () => {
+    const r = stressTest(seedGraph(), persona, "esgRole", "noregret", { startYear: today });
+    expect(r.works).toBe(r.runs);
+    expect(r.rate).toBe(100);
+    expect(r.patterns).toEqual([]);
+  });
+
+  it("is deterministic: same plan, same number; another seed gives other draws", () => {
+    const opts = { startYear: today, deadlineYear: yearOf("2027-04-23") };
+    const a = stressTest(seedGraph(), persona, "dataRole", "fastest", opts);
+    const b = stressTest(seedGraph(), persona, "dataRole", "fastest", opts);
+    expect(b).toEqual(a);
+    const c = stressTest(seedGraph(), persona, "dataRole", "fastest", { ...opts, seed: a.seed + 1 });
+    expect(c.works).not.toBe(a.works);
+  });
+
+  it("fails 'ready' when study time drops and the deadline is tight, and says so", () => {
     const r = stressTest(seedGraph(), persona, "dataRole", "fastest", { startYear: today, deadlineYear: yearOf("2027-04-23") });
-    expect(r.works).toBe(12);
-    expect(r.patterns).toEqual([{ check: "ready", skill: null, count: 6 }]);
-    expect(r.futures.filter((f: any) => !f.ok).every((f: any) => f.pace === 0.5)).toBe(true);
+    expect(r.works).toBeGreaterThan(0);
+    expect(r.works).toBeLessThan(r.runs);
+    expect(r.patterns[0]).toMatchObject({ check: "ready", skill: null });
+    expect(r.patterns[0].when[0]).toMatchObject({ factor: "hours", dir: "low" });
+    expect((r.patterns[0].when[0] as any).below).toBeLessThan(persona.hours);
   });
 
   it("fails 'open' when AI takes over a route skill before you reach it, and suggests a sturdier route", () => {
     const r = stressTest(seedGraph({ e: { recon: 0.05 } }), persona, "esgRole", "fastest", { startYear: 2029.6 });
-    expect(r.works).toBe(9);
-    expect(r.patterns).toEqual([{ check: "open", skill: "recon", count: 9 }]);
-    expect(r.sturdier[0]).toMatchObject({ kind: "mode", works: 18 });
-    expect(r.sturdier[0].route.nodes).not.toContain("recon");
+    expect(r.patterns[0]).toMatchObject({ check: "open", skill: "recon" });
+    expect(r.sturdier[0]).toMatchObject({ kind: "mode" });
+    expect(r.sturdier[0].rate).toBeGreaterThan(r.rate);
+    expect(r.sturdier[0].route?.nodes).not.toContain("recon");
   });
 
   it("fails 'worth' when demand for the job falls", () => {
     const r = stressTest(seedGraph({ d: { esgRole: -100 } }), persona, "esgRole", "fastest", { startYear: today });
     expect(r.works).toBe(0);
-    expect(r.patterns[0]).toMatchObject({ check: "worth", count: 18 });
+    expect(r.rate).toBe(0);
+    expect(r.patterns[0]).toMatchObject({ check: "worth", count: r.runs, share: 100 });
+  });
+
+  it("keeps the rate in 0..100, counts each failing future once, and only suggests changes that raise the rate", () => {
+    const cases: [any, string, string, any][] = [
+      [seedGraph(), "dataRole", "fastest", { startYear: today, deadlineYear: yearOf("2027-04-23") }],
+      [seedGraph(), "esgRole", "safest", { startYear: today, deadlineYear: yearOf("2027-04-24") }],
+      [seedGraph({ e: { recon: 0.05 } }), "esgRole", "fastest", { startYear: 2029.6 }],
+    ];
+    for (const [g, job, mode, opts] of cases) {
+      const r = stressTest(g, persona, job, mode, opts);
+      expect(r.rate).toBeGreaterThanOrEqual(0);
+      expect(r.rate).toBeLessThanOrEqual(100);
+      expect(sum(r.patterns)).toBe(r.runs - r.works);
+      expect(r.patterns.every((p: any) => p.share > 0 && p.share <= 100 && p.when.length <= 2)).toBe(true);
+      expect(r.sturdier.every((s: any) => s.rate > r.rate)).toBe(true);
+    }
+  });
+
+  it("a tip's rate is exactly what you get after making that change (same futures)", () => {
+    const opts = { startYear: today, deadlineYear: yearOf("2027-04-24") };
+    const r = stressTest(seedGraph(), persona, "esgRole", "safest", opts);
+    const hoursTip = r.sturdier.find((s: any) => s.kind === "hours");
+    expect(hoursTip).toBeTruthy();
+    expect(stressTest(seedGraph(), { ...persona, hours: hoursTip!.hours }, "esgRole", "safest", opts).works).toBe(hoursTip!.works);
+    for (const s of r.sturdier.filter((x: any) => x.kind === "mode"))
+      expect(stressTest(seedGraph(), persona, "esgRole", s.mode, opts).works).toBe(s.works);
+  });
+
+  it("is fast: 10,000 futures well under a second in Node", () => {
+    const t0 = performance.now();
+    const r = stressTest(seedGraph(), persona, "dataRole", "fastest", { startYear: today, deadlineYear: yearOf("2027-04-23"), runs: 10000 });
+    expect(r.runs).toBe(10000);
+    expect(performance.now() - t0).toBeLessThan(1000);
   });
 });
 

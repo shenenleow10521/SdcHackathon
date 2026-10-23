@@ -51,6 +51,8 @@ describe("i18n", () => {
       "scout.c.": ["fetched", "candidates", "rejected", "duplicates", "auto", "flagged"], "status.aria.": ["ok", "partial", "down"],
       "sheet.": ["advisor", "hr", "employer", "advisor.kicker", "hr.kicker", "employer.kicker"], "plan.status.": ["draft", "sent", "approved", "changes"],
       "split.": ["you", "youShort"],
+      "stress.why.": ["open", "ready", "worth"], "stress.in.": ["speed", "estimate", "hours", "weeks", "deadline"],
+      "stress.when.": ["speed.high", "speed.low", "hours.low", "hours.lowAny", "hours.high", "weeks.high", "weeks.low", "estimate.high", "estimate.low"],
       "guide.t.": ["job", "mode", "future", "scout", "signal"], "guide.d.": ["job", "mode", "future", "scout", "signal"],
     };
     const missing = Object.entries(fam).flatMap(([p, ks]) => ks.map(k => p + k)).filter(k => !(k in en));

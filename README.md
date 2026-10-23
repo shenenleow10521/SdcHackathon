@@ -45,9 +45,9 @@ Upload a CV or LinkedIn PDF. HalaTuju builds your career map: the skills you hav
 | Question | What you see | What it means |
 |---|---|---|
 | **How close are you?** | ▓▓▓▓▓▓░░░░ *about halfway: 2 skills done, 3 close* | Measured today from your skills. You can improve it by learning. |
-| **How sturdy is your plan?** | *works in 12 of 18 futures* | Nobody knows how fast AI will change work, so we test your plan against many versions of the future and count how many it survives. |
+| **How sturdy is your plan?** | *Your plan works in 88% of 1,000 possible futures* | Nobody knows how fast AI will change work, so we simulate 1,000 versions of the future and count the share your plan works in. |
 
-You can't control the future, but you can choose the plan that survives most of it. HalaTuju also shows *why* a plan fails ("6× not ready before your deadline at a slower study pace", "AI takes over Vendor reconciliation before you reach it") and what would make it sturdier (another route type, or one more study hour a week). See [How sturdy is my plan?](#how-sturdy-is-my-plan-future-stress-test).
+You can't control the future, but you can choose the plan that survives most of it. HalaTuju also shows *why* a plan fails ("Not ready before your deadline (12% of futures), mostly when your study time drops below 5 hours a week") and what would make it sturdier (another route type, or one more study hour a week). See [How sturdy is my plan?](#how-sturdy-is-my-plan-future-stress-test).
 
 ---
 
@@ -55,7 +55,7 @@ You can't control the future, but you can choose the plan that survives most of 
 
 | Feature | What it does | Status | Data |
 |---|---|---|---|
-| CV / LinkedIn-PDF intake | Text extraction, personal-detail scrubbing, skills matched to ESCO with bge-m3 embeddings (RunPod Serverless) | 🧪 Built; accuracy evaluation in progress | Real (ESCO) |
+| CV / LinkedIn-PDF intake | Text extraction, personal-detail scrubbing, skills matched to ESCO with bge-m3 embeddings (RunPod Serverless) | 🧪 Built; benchmarked on 50 synthetic CVs ([`eval/RESULTS.md`](eval/RESULTS.md)) | Real (ESCO) |
 | Paste-text intake | Paste CV text instead of uploading a PDF | 🧪 Built | Real (ESCO) |
 | Scan and photo intake | Scanned PDFs and JPG/PNG photos (up to 3 pages) read by local OCR on our server (tesseract.js, English + Malay); unsure text goes back to the user to check before any AI sees it | 🧪 Built | Real (ESCO) |
 | Interviewer | Up to 3 follow-up questions where the CV is unclear (fixed question templates, in English and Malay; no AI model) | 🧪 Built | n/a |
@@ -85,7 +85,7 @@ You can't control the future, but you can choose the plan that survives most of 
 | HR redeployment view | For an employer's team: who can move to which open role, at what match, by when, and at what total cost | ✅ Works | Sample (fictional team) |
 | Bahasa Melayu interface | BM toggle for all interface text | ✅ Works (job, skill and source text stays in English) | n/a |
 | AI-exposure estimator (self-trained) | A model trained on published human ratings of task exposure; scores any new task. Evaluated on held-out occupations | ✅ Works (shown next to catalogue values; final training run done on a RunPod RTX 4090 pod) | Real labels |
-| Future stress test | Your plan is replayed in 18 possible futures; shows how many it survives, why it fails, and what would make it sturdier | ✅ Works | Mixed: ranges Real, catalogue Sample |
+| Future stress test | Your plan is replayed in 1,000 simulated futures; shows the share it works in, why it fails, and what would make it sturdier | ✅ Works | Mixed: ranges Real, catalogue Sample |
 | Check any job (full ESCO) | Search all 3,039 ESCO occupations; match % and skill gap from each job's essential skills; confirm skills you have ("I have this") and the match updates | ✅ Works | Real (ESCO v1.2.1) |
 | AI exposure for every job and skill | ILO WP140 for each occupation's group; our model's estimate for all 13,939 skills (embedded with bge-m3 on RunPod); GPTs-are-GPTs and Anthropic Economic Index for the closest US occupation | ✅ Works | Real (model scores are labelled estimates) |
 | Task list for any job | The closest O\*NET occupation's tasks (via the official ESCO–O\*NET crosswalk), each with the human rating of whether AI could halve its time | ✅ Works | Real |
@@ -140,38 +140,42 @@ A fixed 5% of automatic changes (chosen by hash, so it can't be gamed) is also q
 
 ### How sturdy is my plan? (future stress test)
 
-> ✅ Built (`stressTest` in [`shared/engine.js`](shared/engine.js), shown on the Path tab, tests in [`tests/engine.test.ts`](tests/engine.test.ts)).
+> ✅ Built (`stressTest` in [`shared/engine.js`](shared/engine.js), with every range in `MONTE_CARLO` in the same file; shown on the Path tab; tests in [`tests/engine.test.ts`](tests/engine.test.ts)).
 
-**The idea in one line:** the match bar shows how close you are today; the stress test counts how many possible futures your plan survives.
+**The idea in one line:** the match bar shows how close you are today; the stress test runs your plan through 1,000 simulated futures and reports the share it works in: *"Your plan works in 88% of 1,000 possible futures."*
 
-**1. What changes from one future to the next**
+**1. What is random in each future**
 
-| Assumption | Range | Where the range comes from |
+| Input | Range | Where the range comes from |
 |---|---|---|
-| How fast AI arrives | slow · moderate · fast | Moderate and Fast are our two scenarios. **Slow is our assumption:** half of Moderate's change by 2030 |
-| How much AI can do each skill | our estimate −0.085 or +0.085 | Half the average gap (0.17) between ILO WP140 and the Anthropic Economic Index across the 13 jobs where we have both ([`db/seed/studies.json`](db/seed/studies.json)) |
-| How many hours a week you really study | your plan · 75% · 50% | real life: busy weeks happen |
-
-That gives a grid of **3 × 2 × 3 = 18 futures**, shown as 18 squares; hover a square to see that future (e.g. *"Fast AI · high estimate · 3 h a week"*) and which check failed.
+| How fast AI arrives | Anywhere from Slow to Fast, most likely Moderate (triangular) | Moderate and Fast are our two scenarios. **Slow is our assumption:** half of Moderate's change by 2030. Speeds in between blend the two nearest scenarios |
+| Error in our AI-exposure estimate | Added to each skill's exposure: normal, SD 0.081 on the 0 to 1 scale, then clamped | Our exposure model's measured error on 185 held-out occupations it never saw: MAE 0.065 ([`ml/artifacts/eval.json`](ml/artifacts/eval.json), `perOccupation.model.mae`); for normal errors SD = MAE × 1.2533. Half of the variance is shared by all skills in a future, half is each skill's own (our assumption: when the model is off, it tends to be off the same way for related skills) |
+| Hours you really study each week | Your hours × 0.5 to 1.5, most likely 1 (triangular) | Our assumption: busy weeks and keen weeks |
+| Weeks each step takes | Our estimate × 0.8 to 1.2 (uniform), drawn per step | Our assumption: courses and people vary by about a fifth |
+| Your deadline | Fixed | Your target date, or the end of 2030 if you set none |
 
 **2. Three yes/no checks in every future** (the engine replays your route with that future's numbers)
 
 1. **Is the road still open?** No skill on your route is taken over by AI by the time you reach it.
-2. **Are you ready in time?** All your steps, at that future's study pace, fit before your target date (or the end of 2030 if you set none).
+2. **Are you ready in time?** All your steps, at that future's study pace and step lengths, fit before your deadline.
 3. **Is the job still worth having?** Demand for the job is not falling when you arrive, nor at the end of 2030.
 
-All three yes = the plan **works** in that future. The result is a count, e.g. *"works in 12 of 18 futures"*.
+All three yes = the plan **works** in that future. The result is the share of futures it works in.
 
-**3. Patterns and what to do about them.** Failures are grouped by cause (*"6× not ready before your deadline at a slower study pace"*). The test is then re-run with one change at a time (each other route type, and one more study hour a week), and any change that survives more futures is shown.
+**3. Why it fails, and what would make it sturdier.** Each failing future is counted once, under its first failed check, so the shares add up to the failure rate. For each cause seen in at least 10 futures, HalaTuju names the random inputs that stand out among those failures (their average sits at least half a standard deviation away from the average over all futures), for example *"Not ready before your deadline (12% of futures), mostly when your study time drops below 5 hours a week"*. The top three are shown. The test is then re-run with one change at a time (each other route type, and one more study hour a week) in the same 1,000 futures, and any change that raises the rate is shown: *"Take the Balanced route: 100%"*, *"Study 1 more hour a week (7 hours): 96%"*.
 
-**What we see with the current data:** most routes in the catalogue take 4–15 weeks, so they finish in 2027, before the engine's AI takeovers (mostly 2029–30). Most plans therefore survive all 18 futures, and the failures that do appear come from tight deadlines at a slower study pace (Priya's Data Analyst route with a six-month deadline: 12 of 18). Routes that start late or pass through a skill AI is about to take over fail the "road open" check, and the test then suggests the Balanced or Safest route.
+**Same plan, same number.** The random numbers come from a seeded generator (mulberry32). The seed is built from your skills and levels, the job, the year and scenario on screen, and your deadline. Today's date, route type and study hours are left out of the seed on purpose: the number does not reshuffle from one day to the next, and a tip's number is exactly what you see after making that change. Each draw is tied to its run and to what it is for (one skill's error, one step's length), so two routes that share a step also share its luck, and the comparison between them is fair.
+
+**Precision and speed.** At 1,000 runs (configurable: `MONTE_CARLO.runs`, or `runs` per call) the rate is accurate to about ±2 percentage points at 95% confidence for plans near 85 to 90% (±3 near 50%; the margin is 1.96 × √(p(1 − p) / 1,000)). That covers the sampling only: the ranges above matter more than the run count. The whole test, tips included, takes about 5 ms in Node (10,000 runs: about 12 ms), so the browser runs it directly and keeps the result per plan.
+
+**What we see with the current data:** most routes in the catalogue take 4 to 15 weeks, so they finish in 2027, before the engine's AI takeovers (mostly 2029 to 2030). For Priya (6 hours a week, deadline 24 Apr 2027, 2026 view, Moderate AI), the ESG & Carbon Reporting Analyst plan works in **100%** of futures on the Fastest and Balanced routes; the Safest route (19 weeks) works in 88% and fails mostly when her study time drops below 5 hours a week (12% of futures). Routes that start late or pass through a skill AI is about to take over fail the "road open" check, and the test then suggests the Balanced or Safest route.
 
 **What it is, and what it isn't**
-- ✅ A **stress test** of your plan: how many of these possible futures it survives.
-- ❌ Not a probability that you'll be hired. ❌ Not a new version of the match %. ❌ Not a prediction of which future will happen.
+- ✅ A **stress test** of your plan: the share of 1,000 simulated futures it works in.
+- ❌ Not a probability that you'll be hired. ❌ Not a new version of the match %. ❌ Not a forecast: the % is only as good as the ranges above, several of which are our assumptions.
 - Even a fully prepared person with a sturdy plan isn't guaranteed a job: hiring also depends on competition, interviews and the economy, which we don't model. We help you pick the plan that works in the most futures, and we reroute you when real signals show which future is arriving.
 
-**Method:** this follows *Robust Decision Making* (RAND) and the wider *Decision Making under Deep Uncertainty* approach: when nobody knows the true odds, choose the plan that holds up across the most plausible futures instead of betting on one forecast. The same idea is behind "your plan succeeds in X of Y scenarios" in retirement planning and schedule-risk analysis in project management. The ranges are only as good as their sources: the exposure range is sourced, the slow-AI speed is our assumption, and the catalogue values it runs on are sample data (labelled in the app).
+**Method:** this follows *Robust Decision Making* (RAND) and the wider *Decision Making under Deep Uncertainty* approach: when nobody knows the true odds, choose the plan that holds up across the most plausible futures instead of betting on one forecast. Sampling those futures at random (Monte Carlo) is the same tool retirement planners use for "your plan succeeds in X% of simulations", and project managers use for schedule risk. The ranges are only as good as their sources: the exposure error is measured, the slow-AI speed and the study-time and step-length ranges are our assumptions, and the catalogue values it runs on are sample data (labelled in the app).
 
 ---
 
@@ -215,7 +219,7 @@ Page text is treated as **data, never as instructions** (protection against prom
 | Future-role matching + skills gap | Match % per job and per employer; skills you have vs. need |
 | Personalised reskilling pathway | Routes fitted to weekly hours; Reuse / Upskill / Evolve / Reskill steps |
 | SDG mapping | Every job (16) and skill (29) tagged with an SDG and a one-line reason, checked by a test; SDG-aware ranking |
-| More than one future scenario | Moderate vs Fast AI, year slider, Balanced route, and the future stress test (each plan replayed in 18 futures) |
+| More than one future scenario | Moderate vs Fast AI, year slider, Balanced route, and the future stress test (each plan replayed in 1,000 simulated futures) |
 
 **SDGs:** 8 Decent Work (primary: redeployment instead of retrenchment, productivity through technology), plus 9 Industry & innovation (data and AI skills), 12 Responsible production and 13 Climate action (green-job routes) and 16 Strong institutions (controls, audit and tax compliance). The product as a whole serves SDG 4 target 4.4 (adults with skills for employment).
 
@@ -397,7 +401,7 @@ competitors/              competitor notes
 | Automated tests (`npm test`) | Scoring engine, stress test, SDG coverage, full ESCO data and "check any job", O\*NET/DOSM/MyCOL layers, triage rules, Job Market Researcher sources, personal-detail scrubbing, fairness, prompt injection, API shapes, source policy, HR, web client. 343 tests (23 Oct 2026); network and AI are mocked | ✅ |
 | Continuous integration | Type-check and tests on Node 20 and 22, on every push and pull request (`.github/workflows/ci.yml`); no linter yet | ✅ |
 | Fairness check | The same CV with a different name, gender, age or religion gives identical results (`tests/fairness.test.ts`) | ✅ |
-| CV-reading benchmark | 14 messy synthetic CVs (broken PDF text, typos, Bahasa Melayu, keyword stuffing, out-of-catalogue jobs), answer key written blind. First run: skills found **90%**, skills correct **88.5%**, levels in range **94%**, job mapped **79%**; no-AI baseline 78% / 63% / 45% / 71%. Method, failures and caveats: [`eval/RESULTS.md`](eval/RESULTS.md) | ✅ |
+| CV-reading benchmark | 50 synthetic CVs and LinkedIn profiles (messy PDF text, OCR typos, Bahasa Melayu, keyword stuffing), labelled by an independent annotator before we ran. On the 36 CVs we never tuned on: current job identified **97%**; **72%** of the ESCO skills we show are correct (blind judge); finds **71%** of the skills the annotator listed (79% counting close ESCO neighbours); removes **99%** of personal details before any AI sees the CV (82.6% on the blind first run, before we fixed the gaps it found). 95% intervals, per-tier results, failures and caveats: [`eval/RESULTS.md`](eval/RESULTS.md) | 🧪 |
 | Prompt-injection check | Hostile page text cannot change extraction, invent IDs or skip triage (`tests/injection.test.ts`) | ✅ |
 | Confidence and "Why this number?" | Figures show their basis, sources and dates; explanations cite records, and a fact checker drops uncited sentences | ✅ |
 | Health and demo safety | `/api/health` (database, AI, embeddings, scheduler); replayed Job Market Researcher runs are labelled "replayed" | ✅ |
