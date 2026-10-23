@@ -148,3 +148,50 @@ describe("short marital-status lines", () => {
     expect(out).toContain("Project status: completed");
   });
 });
+
+describe("gaps found by the 50-CV benchmark (eval/cv v2)", () => {
+  const s = (t: string) => scrubPii(t, { dropFirstLineName: true }).text;
+  it("finds the name in a LinkedIn 'Save to PDF' export (after the sidebar, above the headline)", () => {
+    const li = "Contact\naminah.r@example.com\nwww.linkedin.com/in/aminah-rahim-example\n(LinkedIn)\nTop Skills\nAdobe Photoshop\nFinancial Reporting\nLanguages\nEnglish\nAminah Rahim\nFinance Executive | Month-end close | SAP\nShah Alam, Selangor, Malaysia\nSummary\nAminah Rahim leads the close.";
+    const out = s(li);
+    expect(out).not.toMatch(/aminah/i);
+    for (const keep of ["Adobe Photoshop", "Financial Reporting", "Finance Executive | Month-end close"]) expect(out).toContain(keep);
+    // No name-like profile link: the headline below the name still gives it away.
+    expect(s("Contact\n(LinkedIn)\nTop Skills\nSQL\nOoi Boon Keat\nData Engineer | ETL | Airflow\nExperience")).not.toContain("Boon Keat");
+  });
+  it("finds a name beside a heading ('NAME  --  CV', two-column 'NAME     RESUME')", () => {
+    expect(s("AHMAD FAIZ BIN OMAR  --  CV\nClerk")).not.toContain("AHMAD FAIZ");
+    expect(s("WONG MEI LING                          RESUME\nAccount Assistant             CONTACT")).not.toContain("WONG MEI LING");
+  });
+  it("removes personal websites", () => {
+    expect(s("Contact\njtan.example.com (Portfolio)\nDesigner")).not.toContain("jtan.example.com");
+    expect(scrubPii("Website: www.jtan-design.my").text).not.toContain("jtan-design");
+  });
+  it.each(["013-5551 82O", "019-555 12 34", "+60 12-555 l234", "011-555 30 71", "012-555 I234"])("OCR'd or oddly grouped phone %s", p => {
+    expect(scrubPii(`Tel: ${p}`).text).toBe("Tel: [phone]");
+  });
+  it("removes abbreviated and stacked Malay honorifics with names", () => {
+    expect(scrubPii("En. Kamal b. Yusof - Pengurus, 05-555 1234").text).toBe("[name] - Pengurus, [phone]");
+    expect(scrubPii("Tn. Hj. Ahmad b. Ali, Pengurus Besar").text).toBe("[name], Pengurus Besar");
+    expect(scrubPii("Pn. Siti bt. Musa (HR)").text).toBe("[name] (HR)");
+    expect(scrubPii("Referee: Datin Rosnah Hassan").text).toBe("Referee: [name]");
+  });
+  it("splits slash-separated attribute lines but leaves other slashes alone", () => {
+    expect(s("Clerk\nAge 29 / Male / Malay")).toBe("Clerk");
+    const ic = s("Clerk\nIC 950812-03-5094 / umur 31 / perempuan / bujang");
+    for (const w of ["950812", "umur", "perempuan", "bujang"]) expect(ic).not.toContain(w);
+    expect(s("Clerk\nPO / GRN / invoice matching\nLanguages: English / Malay / Mandarin")).toBe("Clerk\nPO / GRN / invoice matching\nLanguages: English / Malay / Mandarin");
+  });
+  it("removes community groups that reveal ethnicity or where someone lives", () => {
+    const out = s("Clerk\nTreasurer, Klang Hakka Association (2020 - now)\nBendahari, Persatuan Penduduk Taman Sentosa (2021 - kini)\nSetiausaha, PIBG SK Taman Ria\nAJK, Persatuan Belia Kampung Jawa\nKeep accounts       Chinese Chamber Youth");
+    expect(out).toBe("Clerk\nKeep accounts");
+  });
+  it("keeps professional bodies, workplace committees and job locations", () => {
+    for (const t of ["Member, Malaysian Institute of Accountants (MIA)", "Part of CSR committee - tree planting at Taman Tasik Shah Alam",
+      "Kerteh, Terengganu, Malaysia", "Designed drainage for a 6 km rural road using AutoCAD", "ACCA Society committee member", "Islamic finance and sukuk reporting"])
+      expect(scrubPii(`Clerk\n${t}`).text).toBe(`Clerk\n${t}`);
+  });
+  it("removes a neighbourhood, town and state line without a house number", () => {
+    expect(s("Clerk\nH/P 012 555 4419\nTaman Seri Indah, Kluang, Johor\nStore")).toBe("Clerk\nH/P [phone]\nStore");
+  });
+});

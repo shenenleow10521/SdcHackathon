@@ -18,8 +18,11 @@ import {
 } from "../services/matching.ts";
 
 export const MAX_CV_CHARS = 30000;
-const MAX_PHRASES = 40;
+const MAX_PHRASES = 40; // more phrases make the per-phrase enum schema too large for Gemini (HTTP 400)
 const MAX_EVIDENCE = 200;
+/** ESCO skills the model may pick per phrase (one duty often shows two or three ESCO skills). */
+export const MAX_ESCO_PER_PHRASE = 3;
+const PICK_CHUNK = 20;
 
 export interface DraftSkill {
   skillId: string; label: string; level: number; confidence: "cv";
@@ -49,6 +52,8 @@ export interface DraftResult {
 const SPLIT_SYSTEM = `You read a CV and list the person's work experience as short phrases.
 Rules:
 - Each phrase describes one thing the person did or can do, using the CV's own words (at most 25 words).
+- After the experience phrases, also list each skill or tool named only in a skills, tools or certifications list, a summary or a headline,
+  one per phrase, copied as written (e.g. "Power BI dashboards (basic)"). Leave out spoken languages and personal traits.
 - skillHints[i] (same order as phrases): the general skill behind phrase i, in the plain style of a skills taxonomy,
   e.g. "Calculated Scope 2 emissions from electricity bills" -> "measure sustainability performance; analyse environmental data";
   "Matched POs, GRNs and invoices" -> "check invoices against purchase orders and deliveries; accounts payable". English, at most 15 words.
@@ -63,8 +68,9 @@ level (1-5), based only on what the CV says (scope, volume, years, responsibilit
 1 = did it with help, 2 = did it a few times, 3 = does it regularly on their own, 4 = handles complex cases or high volume, 5 = leads or teaches others.
 evidence: a short quote (at most 200 characters) copied word-for-word from the CV that shows this skill.
 sure: false if the phrase is vague or the level is a guess.
-escoIds: up to 2 codes from the phrase's "ESCO skills" list that the phrase clearly shows the person has; [] if none fit.
+escoIds: up to 3 codes from the phrase's "ESCO skills" list that the phrase clearly shows the person has; [] if none fit.
   Choose a skill only for what the phrase actually says, not because words overlap. Prefer the most specific skill.
+  Give more than one only when the phrase shows more than one distinct skill (for example a task and the tool used for it).
 shownInUse: true only if the phrase shows the person actually doing it (a duty, task, project or result in a job, internship or study).
   false if the skill is only listed or claimed (a skills or tools list, a headline, a summary, "proficient in ...", certifications alone).
 occupationId: the job the person does NOW, from the occupation list. If their current job is one of the listed jobs
@@ -97,6 +103,36 @@ export function verifyEvidence(cv: string, quote: string): string | null {
   // Return the CV's own wording (original letter case) when lower-casing kept the length the same.
   const found = (lower.length === kept.length ? kept : lower).slice(at, at + q.length);
   return found.length > MAX_EVIDENCE ? found.slice(0, MAX_EVIDENCE - 1).trimEnd() + "…" : found;
+}
+
+// Section headings. Text under a summary or headline, or a list under a skills or certifications heading, only claims a skill.
+const SUMMARY_HEADING = /^(?:(?:professional|career|personal|executive)\s+)?(?:summary|profile|profil|ringkasan(?:\s+diri)?|about(?:\s+me)?|objective|objektif(?:\s+kerjaya)?)\s*:?$/i;
+const LIST_HEADING = /^(?:(?:top|key|core|technical|professional|it|computer|soft)\s+)?(?:skills?|competenc(?:y|ies)|kemahiran(?:\s+\w+)?|certifications?|languages?|bahasa|tools|software|expertise|kepakaran)(?:\s*&\s*\w+)?\s*:?$/i;
+// Any other section heading ends the search (loose on purpose: "WORKING EXPERIENCE", "AKTIVITI LUAR", "EMPLOYMENT HISTORY").
+const OTHER_HEADING_WORD = /\b(?:experience|employment|pengalaman|history|projects?|projek|education|pendidikan|achievements?|pencapaian|activities|aktiviti|referees?|references?|rujukan|interests|hobbies|declaration|contact|internships?|kerjaya)\b/i;
+const isOtherHeading = (t: string) => t.length <= 40 && !/^[-•*▪●]/.test(t) && !/\d/.test(t) && t.split(/\s+/).length <= 5 && OTHER_HEADING_WORD.test(t);
+const LIST_LABEL = /^\s*[-•*]?\s*(?:(?:top|key|core|technical|it|computer|soft)\s+)?(?:skills?|kemahiran|tools|software|competencies)\s*:/i;
+
+/** Is this evidence quote inside a skills list, summary or headline (a claim), rather than in a job, project or study? */
+export function inListedSection(cv: string, evidence: string | null): boolean {
+  if (!evidence) return false;
+  const head = normForQuote(evidence).replace(/…$/, "").slice(0, 30);
+  const lines = cv.split("\n");
+  const at = lines.findIndex(l => normForQuote(l).includes(head));
+  if (at < 0) return false;
+  if (LIST_LABEL.test(lines[at])) return true;
+  // Under a skills heading only list-like lines count: PDF text from two-column CVs can put duty bullets there too.
+  const items = lines[at].replace(/^\s*[-•*▪●]\s*/, "").split(/\s*[,;·|•▪]\s*/).filter(Boolean);
+  // List-like: a few words, a list of short items, or a short item with a note such as "(basic)".
+  const words = items.join(" ").split(/\s+/).length;
+  const listLike = words <= 3 || (items.length >= 3 && words / items.length <= 4) || (words <= 8 && /\([^)]*\)\s*$/.test(lines[at].trim()));
+  for (let i = at - 1; i >= 0; i--) {
+    const t = lines[i].trim();
+    if (SUMMARY_HEADING.test(t)) return true;
+    if (LIST_HEADING.test(t)) return listLike;
+    if (isOtherHeading(t)) return false;
+  }
+  return false;
 }
 
 const cleanPhrases = (ps: string[]) =>
@@ -150,31 +186,38 @@ async function aiDraft(svc: Services, cv: string, catalog: SkillInfo[], occs: { 
     .catch(() => items.map(() => [] as EscoCandidate[]));
 
   // LLM #2: pick from each phrase's own candidates only. The enum makes any other id impossible.
+  // Long CVs are sent in chunks of PICK_CHUNK phrases: one schema with ~40 per-phrase enums is rejected by Gemini (HTTP 400).
   const occIds = occs.map(o => o.id) as [string, ...string[]];
-  const shape: Record<string, z.ZodType> = { occupationId: z.enum(occIds) };
-  items.forEach((it, i) => {
-    shape[`p${i}`] = z.object({
-      skillId: z.enum(["none", ...it.candidates.map(c => c.skillId)] as [string, ...string[]]),
-      level: z.number().int().min(1).max(5),
-      evidence: z.string().max(400),
-      sure: z.boolean(),
-      shownInUse: z.boolean(),
-      ...(esco[i].length ? { escoIds: z.array(z.enum(esco[i].map((_, j) => `e${i}_${j}`) as [string, ...string[]])).max(2) } : {}),
+  const pickChunk = async (from: number, to: number) => {
+    const shape: Record<string, z.ZodType> = { occupationId: z.enum(occIds) };
+    items.forEach((it, i) => {
+      if (i < from || i >= to) return;
+      shape[`p${i}`] = z.object({
+        skillId: z.enum(["none", ...it.candidates.map(c => c.skillId)] as [string, ...string[]]),
+        level: z.number().int().min(1).max(5),
+        evidence: z.string().max(400),
+        sure: z.boolean(),
+        shownInUse: z.boolean(),
+        ...(esco[i].length ? { escoIds: z.array(z.enum(esco[i].map((_, j) => `e${i}_${j}`) as [string, ...string[]])).max(MAX_ESCO_PER_PHRASE) } : {}),
+      });
     });
-  });
-  const pickSchema = z.object(shape);
-  const user = [
-    fenced, "",
-    `Current job title (from the CV): ${jobTitle || "(not stated)"}`, "",
-    "Occupations (id: title):", ...occs.map(o => `- ${o.id}: ${o.title}`), "",
-    "Phrases and their candidate skills (id: name):",
-    ...items.flatMap((it, i) => [
-      `p${i}: "${it.phrase}"`, ...it.candidates.map(c => `  - ${c.skillId}: ${c.label}`),
-      ...(esco[i].length ? ["  ESCO skills:", ...esco[i].map((c, j) => `    - e${i}_${j}: ${c.title}`)] : []),
-    ]),
-  ].join("\n");
-  const pick = await svc.llm.complete({ system: PICK_SYSTEM, user, schema: pickSchema, maxOutputTokens: 8192 });
-  const data = pick.data as Record<string, any>;
+    const pickSchema = z.object(shape);
+    const user = [
+      fenced, "",
+      `Current job title (from the CV): ${jobTitle || "(not stated)"}`, "",
+      "Occupations (id: title):", ...occs.map(o => `- ${o.id}: ${o.title}`), "",
+      "Phrases and their candidate skills (id: name):",
+      ...items.flatMap((it, i) => i < from || i >= to ? [] : [
+        `p${i}: "${it.phrase}"`, ...it.candidates.map(c => `  - ${c.skillId}: ${c.label}`),
+        ...(esco[i].length ? ["  ESCO skills:", ...esco[i].map((c, j) => `    - e${i}_${j}: ${c.title}`)] : []),
+      ]),
+    ].join("\n");
+    return svc.llm.complete({ system: PICK_SYSTEM, user, schema: pickSchema, maxOutputTokens: 8192 });
+  };
+  const picks = await Promise.all(Array.from({ length: Math.max(1, Math.ceil(items.length / PICK_CHUNK)) }, (_, k) => pickChunk(k * PICK_CHUNK, (k + 1) * PICK_CHUNK)));
+  const pick = picks[0];
+  // Phrase keys (p0, p1, ...) are global, so the chunks merge directly; the occupation comes from the first chunk.
+  const data = Object.assign({}, ...picks.map(p => p.data), { occupationId: (pick.data as any).occupationId }) as Record<string, any>;
 
   // Validate again (defence in depth) and merge picks per skill: keep the highest level.
   const known = new Set(catalog.map(s => s.id));
@@ -190,7 +233,8 @@ async function aiDraft(svc: Services, cv: string, catalog: SkillInfo[], occs: { 
       const m = /^e(\d+)_(\d+)$/.exec(code);
       const c = m && Number(m[1]) === i ? esco[i][Number(m[2])] : null;
       if (!c || escoById.has(c.escoId)) continue;
-      escoById.set(c.escoId, { escoId: c.escoId, title: c.title, evidence: verifyEvidence(cv, it.phrase), shownInUse: p.shownInUse !== false, phrase: it.phrase });
+      const ev = verifyEvidence(cv, it.phrase);
+      escoById.set(c.escoId, { escoId: c.escoId, title: c.title, evidence: ev, shownInUse: p.shownInUse !== false && !inListedSection(cv, ev), phrase: it.phrase });
     }
     const allowed = new Set(it.candidates.map(c => c.skillId));
     if (!p || p.skillId === "none" || !allowed.has(p.skillId) || !known.has(p.skillId)) {
@@ -201,7 +245,8 @@ async function aiDraft(svc: Services, cv: string, catalog: SkillInfo[], occs: { 
     const evidence = verifyEvidence(cv, p.evidence || "");
     // A skill that is only listed (never shown in use) is capped at level 2 and marked "not sure",
     // so keyword-stuffed skills lists can't inflate the match %; the interviewer asks about them instead.
-    const listedOnly = p.shownInUse === false;
+    // The model's shownInUse flag is not trusted alone: a quote from a skills list, summary or headline is a claim.
+    const listedOnly = p.shownInUse === false || inListedSection(cv, evidence);
     const s: DraftSkill = {
       skillId: p.skillId, label: label.get(p.skillId)!, level: listedOnly ? Math.min(p.level, 2) : p.level, confidence: "cv", evidence,
       ...(evidence ? {} : { evidenceDropped: true }), sure: !!p.sure && !!evidence && !listedOnly,

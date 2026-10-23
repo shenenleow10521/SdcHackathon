@@ -306,3 +306,96 @@ describe("skills that are only listed", () => {
     for (const s of r.draft.skills) { expect(s.level).toBeLessThanOrEqual(2); expect(s.sure).toBe(false); }
   });
 });
+
+describe("skills only claimed in a skills list, summary or headline (benchmark fix)", () => {
+  it("finds quotes under a summary or a skills list, but not duty bullets", async () => {
+    const { inListedSection } = await import("../server/agents/cv.ts");
+    const text = "SUMMARY\nAnalyst with 5 years in AP, strong in SAP.\nSKILLS\nPython, SQL, Tableau, Excel\n• Reconciled 40 vendor statements every month for the regional team\nEXPERIENCE\n- Built SQL reports for finance every month";
+    expect(inListedSection(text, "strong in SAP")).toBe(true);
+    expect(inListedSection(text, "Python, SQL, Tableau")).toBe(true);
+    expect(inListedSection(text, "Reconciled 40 vendor statements every month")).toBe(false); // long duty line (two-column PDF text)
+    expect(inListedSection(text, "Built SQL reports for finance")).toBe(false);
+    expect(inListedSection("Clerk\nSkills: SAP, AutoCount", "SAP, AutoCount")).toBe(true);
+    expect(inListedSection(text, null)).toBe(false);
+    // Any other heading ends the section, even when worded differently ("WORKING EXPERIENCE").
+    const priya = "CAREER SUMMARY\n11 yrs in accounts payable.\n\nWORKING EXPERIENCE\n - Monthly vendor statement reconciliation to the ledger\nSKILLS\n - Power BI dashboards (basic)\n - Python for data analysis (beginner, online course)";
+    expect(inListedSection(priya, "Monthly vendor statement reconciliation")).toBe(false);
+    expect(inListedSection(priya, "Power BI dashboards (basic)")).toBe(true);
+    expect(inListedSection(priya, "Python for data analysis")).toBe(true);
+    expect(inListedSection(priya, "11 yrs in accounts payable")).toBe(true);
+  });
+
+  it("caps a skill at level 2 when the quote comes from a skills list, even if the model says it was shown in use", async () => {
+    const { extractDraft } = await import("../server/agents/cv.ts");
+    const svc = await testServices({
+      embed: createMockEmbedder(512),
+      llmHandler: (req: any) => {
+        if (req.user.includes("Phrases and their candidate skills")) {
+          const out: any = { occupationId: "dataRole" };
+          for (const m of req.user.matchAll(/^(p\d+): "(.*)"\n {2}- ([\w-]+):/gm))
+            out[m[1]] = { skillId: m[3], level: 4, evidence: m[2], sure: true, shownInUse: true };
+          return out;
+        }
+        return { jobTitle: "Data Analyst", phrases: ["Python, SQL, Tableau, Power BI dashboards"] };
+      },
+    });
+    const r = await extractDraft(svc, "Data Analyst\nTOP SKILLS\nPython, SQL, Tableau, Power BI dashboards\nEXPERIENCE\nData Analyst, 2021 - now");
+    expect(r.draft.skills.length).toBeGreaterThan(0);
+    for (const s of r.draft.skills) { expect(s.level).toBeLessThanOrEqual(2); expect(s.sure).toBe(false); }
+  });
+});
+
+describe("ESCO skills per phrase", () => {
+  it("the model may pick up to MAX_ESCO_PER_PHRASE (3) ESCO skills for one phrase, and no more", async () => {
+    const { extractDraft, MAX_ESCO_PER_PHRASE } = await import("../server/agents/cv.ts");
+    expect(MAX_ESCO_PER_PHRASE).toBe(3);
+    // A stand-in with the same model name as the stored ESCO vectors, so ESCO retrieval runs (no network).
+    const fakeBge: Embedder = {
+      provider: "runpod-bge-m3", model: "BAAI/bge-m3",
+      embed: async ts => ts.map(t => Array.from({ length: 1024 }, (_, d) => Math.sin(d * 0.37 + t.length))),
+      status: () => ({ provider: "runpod-bge-m3", model: "BAAI/bge-m3", configured: true, lastError: null }),
+    };
+    let schema: any = null;
+    const svc = await testServices({
+      embed: fakeBge,
+      llmHandler: (req: any) => {
+        if (req.user.includes("Phrases and their candidate skills")) {
+          schema = req.schema;
+          return { occupationId: "ap", p0: { skillId: "none", level: 3, evidence: "", sure: true, shownInUse: true, escoIds: ["e0_0", "e0_1", "e0_2"] } };
+        }
+        return { jobTitle: "AP Clerk", phrases: ["Matched supplier invoices to purchase orders and goods received notes"] };
+      },
+    });
+    const r = await extractDraft(svc, "AP Clerk\nEXPERIENCE\n- Matched supplier invoices to purchase orders and goods received notes");
+    expect(r.draft.escoSkills).toHaveLength(3);
+    const p0 = schema.shape.p0;
+    const base = { skillId: "none", level: 3, evidence: "", sure: true, shownInUse: true };
+    expect(p0.safeParse({ ...base, escoIds: ["e0_0", "e0_1", "e0_2"] }).success).toBe(true);
+    expect(p0.safeParse({ ...base, escoIds: ["e0_0", "e0_1", "e0_2", "e0_3"] }).success).toBe(false);
+  }, 30000);
+});
+
+describe("long CVs", () => {
+  it("send the skill picks in chunks of 20 phrases (one large schema is rejected by Gemini) and merge them", async () => {
+    const { extractDraft } = await import("../server/agents/cv.ts");
+    const phrases = Array.from({ length: 25 }, (_, i) => `Reconciled vendor statements batch ${i} against the ledger`);
+    let pickCalls = 0;
+    const svc = await testServices({
+      embed: createMockEmbedder(512),
+      llmHandler: (req: any) => {
+        if (req.user.includes("Phrases and their candidate skills")) {
+          pickCalls++;
+          const out: any = { occupationId: "ap" };
+          for (const m of req.user.matchAll(/^(p\d+): "(.*)"\n {2}- ([\w-]+):/gm))
+            out[m[1]] = { skillId: m[3], level: m[1] === "p22" ? 5 : 2, evidence: m[2], sure: true, shownInUse: true };
+          return out;
+        }
+        return { jobTitle: "AP Clerk", phrases };
+      },
+    });
+    const r = await extractDraft(svc, "AP Clerk\nEXPERIENCE\n" + phrases.map(p => `- ${p}`).join("\n"));
+    expect(pickCalls).toBe(2);
+    expect(Math.max(...r.draft.skills.map(s => s.level))).toBe(5); // p22 came from the second chunk
+    expect(r.draft.occupation.id).toBe("ap");
+  });
+});

@@ -5,8 +5,21 @@ import { createMockLlm, type Llm, type LlmRequest } from "../../server/lib/llm.t
 import { createMockEmbedder, type Embedder } from "../../server/lib/embed.ts";
 import type { Services, Config } from "../../server/context.ts";
 
+/** In-memory PGlite, or real PostgreSQL when TEST_DATABASE_URL is set (each call gets its own throwaway schema test_*). */
+async function testDb() {
+  const url = process.env.TEST_DATABASE_URL;
+  if (!url) return openDb({ memory: true });
+  const schema = `test_${process.pid}_${Math.random().toString(36).slice(2, 10)}`;
+  const admin = await openDb({ url });
+  await admin.exec(`create schema ${schema}`);
+  await admin.close();
+  const u = new URL(url);
+  u.searchParams.set("options", `-c search_path=${schema}`);
+  return openDb({ url: u.toString() });
+}
+
 export async function testServices(over: Partial<Omit<Services, "config">> & { config?: Partial<Config>; llmHandler?: (req: LlmRequest<any>) => unknown } = {}): Promise<Services> {
-  const db = over.db || (await openDb({ memory: true }));
+  const db = over.db || (await testDb());
   if (!over.db) { await migrate(db); await seed(db); }
   const llm: Llm = over.llm || createMockLlm(over.llmHandler || (() => new Error("LLM not expected in this test")));
   const embed: Embedder = over.embed || createMockEmbedder();
