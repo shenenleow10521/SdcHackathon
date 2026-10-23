@@ -124,9 +124,9 @@ export function render() {
     <div class="quick">${UI.ring.slice(0, 3).map(x => `<button type="button" data-quick="${esc(x)}"><span>${esc(nameOf(x))}</span><span class="num">${matchOf(x)}%</span></button>`).join("")}</div></div>`;
   const p = D.plan, n = N(j), mine = isGoal(j), req = (S.graph.req[j] || []).filter(r => E.isSkill(r.skill));
   const head = `<header class="goal-head">
-      <div class="goal-k">${mine ? `<i data-lucide="flag"></i>${esc(t("goal.yours"))}` : esc(t("goal.preview"))}</div>
+      <div class="goal-k"><span>${mine ? `<i data-lucide="flag"></i>${esc(t("goal.yours"))}` : esc(t("goal.preview"))}</span><span class="goal-kind">${esc(n.stay ? t("jobs.stay") : t("jobs.change"))}</span></div>
       <h2>${esc(n.name)}</h2>
-      <p class="goal-sub">${esc(n.stay ? t("jobs.stay") : t("jobs.change"))} · ${esc(t("path.matchToday", { n: matchOf(j) }))}${whyBtn("match", j)}</p>
+      <p class="goal-sub">${esc(t("path.matchToday", { n: matchOf(j) }))}${whyBtn("match", j)}</p>
       <p class="goal-have">${esc(t("jobs.haveSkills", { a: req.filter(r => E.has(r.skill)).length, b: req.length }))}</p>
       ${UI.employer ? `<div class="emp-chip">${badge("b-info", t("emp.at", { name: UI.employer.name }), "building-2")}<button class="ghost sm" type="button" id="emp-clear"><i data-lucide="x"></i>${esc(t("emp.clear"))}</button></div>` : ""}
       ${mine ? "" : `<button class="btn btn-primary goal-set" id="goal-set" type="button" ${p?.route ? "" : "disabled"}><i data-lucide="flag"></i>${esc(t(g ? "goal.switch" : "goal.set"))}</button>
@@ -245,9 +245,9 @@ function serverHtml() {
     </dl>
     ${c.unknownCount ? `<p class="note">${esc(t("plan.unknown", { n: c.unknownCount }))}</p>` : ""}
     ${S.profile.budgetRm != null && c.totalRm != null ? `<p class="note">${esc(t(c.outOfPocketRm > S.profile.budgetRm ? "plan.overBudget" : "plan.inBudget", { b: rm(S.profile.budgetRm) }))}</p>` : ""}
-    ${items.length ? `<ul class="course-list">${items.map(it => { const co = courseOf(it.skillId); const url = it.url || co?.url; return `<li><div><b>${esc(it.title || co?.title || nameOf(it.skillId))}</b><div class="rs">${esc(nameOf(it.skillId))}${co?.provider ? " · " + esc(co.provider) : ""}</div></div>
+    ${items.length ? `<ul class="course-list">${items.map(it => { const co = courseOf(it.skillId); const url = it.url || co?.url; return `<li><div><b>${esc(it.title || co?.title || nameOf(it.skillId))}</b><div class="rs">${esc(nameOf(it.skillId))}</div>${co?.provider ? `<div class="rs">${esc(co.provider)}</div>` : ""}</div>
       <div class="ci-r"><span class="num">${it.costRm == null ? esc(t("plan.costUnknown")) : it.costRm === 0 ? esc(t("plan.free")) : rm(it.costRm)}</span>${it.hrdClaimable ? badge("b-good", "HRD Corp") : ""}${srcBadge(it.source || co?.source)}${url ? extLink(url, t("plan.open")) : ""}</div></li>`; }).join("")}</ul>` : ""}
-    ${Array.isArray(d.sources) && d.sources.length ? `<details class="src-details"><summary>${esc(t("plan.sourcesN", { n: d.sources.length }))}</summary><ul>${d.sources.map(s => `<li>${s.kind ? badge(s.kind === "sample" ? "b-warn" : "b-mute", s.kind === "sample" ? t("src.sample") : s.kind) + " " : ""}${s.url ? extLink(s.url, s.label) : esc(s.label)}${s.date ? " · " + esc(fmtDate(s.date)) : ""}</li>`).join("")}</ul></details>` : ""}
+    ${Array.isArray(d.sources) && d.sources.length ? `<details class="src-details"><summary>${esc(t("plan.sourcesN", { n: d.sources.length }))}</summary><ul>${d.sources.map(s => `<li>${s.kind ? badge(s.kind === "sample" ? "b-warn" : "b-mute", s.kind === "sample" ? t("src.sample") : s.kind) + " " : ""}${s.url ? extLink(s.url, s.label) : esc(s.label)}${s.date ? ", " + esc(fmtDate(s.date)) : ""}</li>`).join("")}</ul></details>` : ""}
     <p class="src">${esc(t("plan.serverNote", { v: d.kbVersion ?? S.graph.kbVersion }))}</p>
   </div>`;
 }

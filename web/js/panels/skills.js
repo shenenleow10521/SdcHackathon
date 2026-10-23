@@ -26,7 +26,7 @@ const confText = k => { const c = confOf(k); return c ? t("conf." + c) : ""; };
 function skillRow(k) {
   const E = S.E;
   const evolves = S.graph.edges.some(e => e.from === k && e.kind === "evolve");
-  const meta = [confText(k), evolves ? t("skills.evolves") : ""].filter(Boolean).join(" · ");
+  const meta = [confText(k), evolves ? t("skills.evolves") : ""].filter(Boolean).join(". ");
   return `<button class="skill" type="button" data-skill="${esc(k)}">
     <span class="sn">${esc(nameOf(k))}${meta ? `<small>${esc(meta)}</small>` : ""}</span>
     <span class="dots" role="img" aria-label="${esc(t("skills.levelAria", { n: E.lvl(k) }))}">${[1, 2, 3, 4, 5].map(i => `<i class="${i <= E.lvl(k) ? "on" : ""}"></i>`).join("")}</span></button>`;

@@ -339,6 +339,10 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 .rv-q { margin: 0; padding: 8px 10px; border-radius: 8px; background: var(--panel-2); font-size: 12.5px; color: var(--ink-2); font-style: italic; }
 .rv-s { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--muted); }
 .rv-s svg { width: 13px; height: 13px; }
+.rv-src { align-items: flex-start; }
+.rv-src > svg { margin-top: 2px; flex: none; }
+.rv-src a.ext { display: inline; }
+.rv-src a.ext svg { vertical-align: -1px; margin-left: 3px; }
 .rv-actions { display: flex; gap: 8px; margin-top: 2px; flex-wrap: wrap; }
 .rv-actions .btn { height: 34px; font-size: 13px; }
 .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
@@ -491,6 +495,8 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 .toast .tt { font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 13.5px; }
 .toast .td { font-size: 12.5px; color: var(--ink-2); }
+.toast .td a.ext { display: inline; }
+.toast .td a.ext svg { vertical-align: -1px; margin-left: 3px; }
 .rerouting { position: absolute; z-index: var(--z-toast); left: calc(50% - 120px); top: 50%; transform: translate(-50%, -50%); padding: 10px 16px; font-weight: 600; display: inline-flex; gap: 10px; align-items: center; opacity: 0; pointer-events: none; transition: opacity .2s ease-out; }
 .rerouting.show { opacity: 1; }
 .tip { position: absolute; z-index: var(--z-tip); pointer-events: none; padding: 10px 12px; min-width: 220px; font-size: 12.5px; }
@@ -838,6 +844,7 @@ label.drop { cursor: pointer; }
   .ob { padding: 0; place-items: end stretch; }
   .ob-card { max-height: 94svh; border-radius: var(--r-lg) var(--r-lg) 0 0; }
   .ob-top, .ob-body { padding-left: 16px; padding-right: 16px; }
+  .ob-top { padding-right: 52px; }
   .ob-foot { padding-left: 16px; padding-right: 16px; flex-wrap: wrap; }
   .ob-foot .left { flex-basis: 100%; }
   .timeline { gap: 6px; padding: 6px 8px; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
@@ -945,7 +952,9 @@ sup.cite { font-size: 10px; font-weight: 700; color: var(--accent); margin-left:
 
 /* My goal */
 .goal-head { display: grid; gap: 3px; }
-.goal-k { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+.goal-k { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+.goal-k > span:first-child { display: inline-flex; align-items: center; gap: 6px; }
+.goal-kind { font-weight: 500; color: var(--muted); }
 .goal-k svg { width: 14px; height: 14px; color: var(--good); }
 .goal-head h2 { margin: 0; font-size: 19px; font-weight: 650; letter-spacing: -0.01em; line-height: 1.25; text-wrap: balance; }
 .goal-sub { margin: 0; font-size: 13px; color: var(--ink-2); display: flex; align-items: center; flex-wrap: wrap; gap: 2px; }
@@ -1095,3 +1104,5 @@ sup.cite { font-size: 10px; font-weight: 700; color: var(--accent); margin-left:
 .cites { margin: 6px 0 0; padding-left: 18px; font-size: 12px; color: var(--ink-2); }
 .sig-meta { display: flex; justify-content: space-between; gap: 8px; }
 .study-row .k { padding-left: 14px; }
+.goals .goals-wide { grid-column: 1 / -1; }
+.check-form .check-close { display: block; margin: 8px auto 0; }

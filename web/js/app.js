@@ -26,7 +26,8 @@ function initials(name) { return (name || "?").replace(/\(.*?\)/g, "").trim().sp
 function renderHead() {
   const E = S.E, p = S.profile;
   $("avatar").textContent = initials(p.displayName);
-  $("me-name").textContent = p.displayName || t("me.you");
+  // the server names an unnamed CV profile "My profile" or "Profil saya"; show that in the interface language
+  $("me-name").textContent = ["My profile", "Profil saya"].includes(p.displayName) ? t("me.myProfile") : p.displayName || t("me.you");
   $("me-meta").textContent = t("me.meta", { job: nameOf(E.root), h: p.hours });
   $("sample-badge").hidden = !isSampleProfile();
   // Goal line: the job you committed to and how far along you are (or a nudge to set one).
@@ -145,7 +146,7 @@ async function knowledgeChanged({ reason = "change", signal = null, rerouted = n
     if (flyTo) { G.focusNode(flyTo); G.wave(flyTo, "#f2b33d", 1.9, 560); }
     G.fadeOldRoute(oldRoute, flyTo ? () => G.resetView(true) : undefined);
   } else G.restyle();
-  const src = signal ? `${signal.title ? `<b>${esc(signal.title)}</b><br>` : ""}${extLink(signal.sourceUrl, signal.sourceTitle || t("why.source"))}${signal.sourceDate ? ", " + esc(fmtDate(signal.sourceDate)) : ""}${signal.isSample ? " " + badge("b-warn", t("src.sample")) : ""}` : "";
+  const src = signal ? `${signal.title && signal.title !== signal.sourceTitle ? `<b>${esc(signal.title)}</b><br>` : ""}${extLink(signal.sourceUrl, signal.sourceTitle || t("why.source"))}${signal.sourceDate ? ", " + esc(fmtDate(signal.sourceDate)) : ""}${signal.isSample ? " " + badge("b-warn", t("src.sample")) : ""}` : "";
   const others = Array.isArray(rerouted) && rerouted.length ? `<br>${esc(t("reroute.others", { n: rerouted.length }))}` : "";
   const newMatch = job && N(job) ? matchOf(job) : null;
   if (routeChanged) {

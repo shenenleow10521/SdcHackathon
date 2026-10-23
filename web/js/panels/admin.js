@@ -155,8 +155,8 @@ const reasonList = rs => rs.map((x, i) => i === 0 ? String(x) : String(x).charAt
 
 // The source on its own line: link, then date (and source count, live mark) in plain text.
 function sourceLine(url, title, date, { n, live } = {}) {
-  const meta = [live ? t("src.live") : "", date ? fmtDate(date) : "", n ? t("admin.nSources", { n }) : ""].filter(Boolean).join(", ");
-  return `<div class="rv-s"><i data-lucide="link"></i>${extLink(url, title || t("why.source"))}${meta ? `<span>${esc(meta)}</span>` : ""}</div>`;
+  const meta = [live ? t("src.live") : "", date ? fmtDate(date) : "", n ? (n === 1 ? t("admin.oneSource") : t("admin.nSources", { n })) : ""].filter(Boolean).join(", ");
+  return `<div class="rv-s rv-src"><i data-lucide="link"></i><div>${extLink(url, title || t("why.source"))}${meta ? `<div>${esc(meta)}</div>` : ""}</div></div>`;
 }
 
 function signalCard(s) {

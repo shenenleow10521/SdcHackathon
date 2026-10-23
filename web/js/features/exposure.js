@@ -68,7 +68,7 @@ export function modelCardHtml(m) {
       ${ev.split ? `<li>${esc(t("xp.split", { split: ev.split }))}</li>` : ""}
       ${m.trainedOn ? `<li>${esc(t("xp.trainedOn", { tasks: m.trainedOn.tasks ?? "–", occ: m.trainedOn.occupations ?? "–" }))}</li>` : ""}
       ${m.target ? `<li>${esc(t("xp.target", { target: m.target }))}</li>` : ""}
-      <li>${esc(modelLabel(m))}${m.run?.time ? " · " + esc(fmtDate(m.run.time)) : ""}</li>
+      <li>${esc(modelLabel(m))}${m.run?.time ? ", " + esc(fmtDate(m.run.time)) : ""}</li>
     </ul>
     <p class="formula">${esc(t("xp.caveat"))} ${m.measures ? esc(m.measures) : ""}</p>`;
 }

@@ -37,7 +37,7 @@ export function render() {
           <label for="sdg-sel"><i data-lucide="globe"></i>${esc(t("sdg.label"))}</label>
           <select id="sdg-sel" class="select">
             <option value="">${esc(t("sdg.none"))}</option>
-            ${Object.entries(sdgs).map(([k, v]) => `<option value="${esc(k)}" ${String(UI.sdg) === k ? "selected" : ""}>SDG ${esc(k)} · ${esc(v.name)}</option>`).join("")}
+            ${Object.entries(sdgs).map(([k, v]) => `<option value="${esc(k)}" ${String(UI.sdg) === k ? "selected" : ""}>SDG ${esc(k)}: ${esc(v.name)}</option>`).join("")}
           </select>
           <div id="sdg-note">${sdgNote()}</div>
         </div>
@@ -114,12 +114,12 @@ function resultRow(r) {
   const known = S.E.isJob(r.job), on = UI.ring.includes(r.job);
   if (!known) return "";
   return `<button class="result" type="button" data-pick="${esc(r.job)}"><span class="ic"><i data-lucide="${on ? "map-pin" : "plus"}"></i></span>
-    <span><div class="rn">${esc(nameOf(r.job))}</div><div class="rm">${esc(on ? t("search.onMap") : t("search.add"))}${N(r.job).conf ? " · " + esc(t("jobs.confShort", { conf: t("conf." + N(r.job).conf) })) : ""}</div></span><span class="rp num">${matchOf(r.job)}%</span></button>`;
+    <span><div class="rn">${esc(nameOf(r.job))}</div><div class="rm">${esc(on ? t("search.onMap") : t("search.add"))}${N(r.job).conf ? ", " + esc(t("jobs.confShort", { conf: t("conf." + N(r.job).conf) })) : ""}</div></span><span class="rp num">${matchOf(r.job)}%</span></button>`;
 }
 
 function escoHtml() {
   return search.esco.length ? `<div class="sub-h">${esc(t("esco.searchHead"))} ${badge("b-info", "ESCO", "database")}</div><div class="results">${search.esco.map(e => `<button class="result" type="button" data-esco="${esc(e.id)}"><span class="ic"><i data-lucide="search-check"></i></span>
-      <span><div class="rn">${esc(e.title)}${e.critical ? " " + badge("b-good", t("esco.critical"), "star") : ""}</div><div class="rm">${esc(t("esco.searchRow", { n: e.essential }))}${e.iloExposure !== null ? " · " + esc(t("esco.ai", { n: Math.round(e.iloExposure * 100) })) : ""}</div></span></button>`).join("")}</div>` : "";
+      <span><div class="rn">${esc(e.title)}${e.critical ? " " + badge("b-good", t("esco.critical"), "star") : ""}</div><div class="rm">${esc(t("esco.searchRow", { n: e.essential }))}${e.iloExposure !== null ? ". " + esc(t("esco.ai", { n: Math.round(e.iloExposure * 100) })) : ""}</div></span></button>`).join("")}</div>` : "";
 }
 
 function resultsHtml() {
