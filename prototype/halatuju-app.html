@@ -117,7 +117,8 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 .ghost { border: 1px solid var(--line); background: var(--panel); border-radius: var(--r-sm); height: 30px; padding: 0 9px; display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 550; color: var(--ink-2); transition: background-color .15s ease-out, border-color .15s ease-out; }
 .ghost:hover { background: var(--panel-2); border-color: var(--line-2); color: var(--ink); }
 
-.me { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+.me-card { display: grid; gap: 10px; background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--r-md); padding: 12px; }
+.me { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; }
 .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-wash); color: var(--accent); display: grid; place-items: center; font-weight: 650; font-size: 14px; }
 .me .name { font-weight: 600; }
 .me .meta { color: var(--ink-2); font-size: 12.5px; }
@@ -125,16 +126,21 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 .score-mini .v { font-size: 22px; font-weight: 600; line-height: 1; }
 .score-mini .v small { font-size: 12px; color: var(--ink-2); }
 .score-mini .l { font-size: 11px; color: var(--muted); margin-top: 3px; }
-.scorebar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 12px; }
-.scorebar .t { font-size: 12.5px; color: var(--ink-2); }
-.scorebar .t b { color: var(--ink); font-weight: 600; }
-.scorebar .t .up { color: var(--good); font-weight: 600; }
-.scorebar svg.spark { width: 92px; height: 28px; }
+.scorebar { display: grid; gap: 7px; }
+.fp-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.fp-t { font-size: 12.5px; color: var(--ink-2); line-height: 1.35; }
+.fp-t b { color: var(--ink); font-weight: 600; }
+.fp-v { display: inline-flex; align-items: baseline; gap: 6px; white-space: nowrap; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+.fp-v b { font-size: 20px; font-weight: 600; color: var(--ink); line-height: 1; }
+.fp-v b.up { color: var(--good); }
+.fp-bar { position: relative; height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 10%, transparent); overflow: hidden; }
+.fp-bar i { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 3px; background: var(--accent); transition: width .5s ease-out, left .5s ease-out; }
+.fp-bar i.gain { background: repeating-linear-gradient(135deg, var(--good) 0 4px, color-mix(in srgb, var(--good) 55%, transparent) 4px 7px); border-radius: 0 3px 3px 0; }
 
 .tabs { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 3px; gap: 2px; }
 .tab { border: 0; background: transparent; border-radius: 7px; height: 32px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 550; color: var(--ink-2); transition: background-color .15s ease-out, color .15s ease-out; }
 .tab:hover { color: var(--ink); }
-.tab[aria-selected="true"] { background: var(--panel); color: var(--ink); box-shadow: var(--shadow-1); }
+.tab[aria-selected="true"] { background: var(--accent-wash); color: var(--accent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent); font-weight: 650; }
 
 /* ---------- sidebar body ---------- */
 .h2 { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0 0 10px; }
@@ -240,6 +246,25 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 .dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line-2); }
 .dots i.on { background: var(--accent); }
 
+.explore { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--panel); }
+.explore > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 11px 12px; border-radius: var(--r-md); }
+.explore > summary::-webkit-details-marker { display: none; }
+.explore > summary:hover { background: var(--panel-2); }
+.explore > summary svg { width: 16px; height: 16px; color: var(--ink-2); }
+.explore > summary b { display: block; font-size: 13.5px; font-weight: 600; }
+.explore > summary small { display: block; font-size: 12px; color: var(--muted); }
+.explore > summary .chev { transition: transform .2s ease-out; }
+.explore[open] > summary .chev { transform: rotate(180deg); }
+.explore-in { display: grid; gap: 16px; padding: 4px 12px 14px; }
+.empty { border: 1px dashed var(--line-2); border-radius: var(--r-md); padding: 18px 16px; display: grid; gap: 12px; text-align: center; justify-items: center; }
+.empty .em-ic { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-wash); color: var(--accent); }
+.empty .em-ic svg { width: 20px; height: 20px; }
+.empty h3 { margin: 0; font-size: 15px; font-weight: 650; }
+.empty p { margin: 0; font-size: 12.5px; color: var(--ink-2); max-width: 34ch; }
+.quick { display: grid; gap: 6px; width: 100%; }
+.quick button { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; text-align: left; border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 9px 12px; font-size: 13px; font-weight: 600; color: var(--ink); transition: border-color .15s ease-out, background-color .15s ease-out; }
+.quick button:hover { border-color: var(--n-job); background: var(--panel-2); }
+.quick button .num { color: var(--n-job); font-size: 14px; }
 .sectors { display: flex; flex-wrap: wrap; gap: 6px; }
 .sector { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 5px 11px; font-size: 12.5px; font-weight: 550; display: inline-flex; gap: 6px; align-items: center; color: var(--ink-2); transition: background-color .15s ease-out, color .15s ease-out, border-color .15s ease-out; }
 .sector svg { width: 14px; height: 14px; }
@@ -268,6 +293,39 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 .g-go:hover { filter: brightness(1.06); }
 .guide.min .g-row { display: none; }
 .linkish { border: 0; background: none; padding: 0; color: var(--good); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; font-size: inherit; }
+.g-ok { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--good); animation: gOk .5s ease-out both; }
+.g-ok svg { width: 14px; height: 14px; flex: none; }
+@keyframes gOk { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.g-acts { display: flex; align-items: center; gap: 10px; }
+.g-where { border: 0; background: none; padding: 0; font-size: 12px; font-weight: 600; color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.g-sum { display: grid; gap: 8px; }
+.g-ba { display: flex; align-items: center; gap: 10px; font-family: var(--mono); }
+.g-ba .b, .g-ba .a { white-space: nowrap; flex: none; }
+.g-ba svg { flex: none; }
+.g-ba small { flex: 1; min-width: 0; line-height: 1.3; }
+.g-ba .b { font-size: 20px; font-weight: 600; color: var(--muted); text-decoration: line-through; text-decoration-thickness: 2px; }
+.g-ba .a { font-size: 26px; font-weight: 700; color: var(--ink); }
+.g-ba svg { width: 18px; height: 18px; color: var(--good); }
+.g-ba small { font-family: var(--font); font-size: 12px; color: var(--ink-2); font-weight: 500; }
+.g-why { font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
+.g-why b { color: var(--ink); font-weight: 600; }
+.g-route { display: grid; gap: 4px; font-size: 12px; }
+.g-route div { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 8px; align-items: baseline; }
+.g-route span { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.g-route s { color: var(--muted); }
+.g-route em { font-style: normal; color: var(--ink); font-weight: 600; }
+/* spotlight: dims the page a little and rings the control the demo guide wants you to use */
+.spot { position: fixed; left: 0; top: 0; width: 0; height: 0; z-index: calc(var(--z-modal) - 1); pointer-events: none; border-radius: 12px; box-shadow: 0 0 0 200vmax rgba(3, 6, 14, .26); opacity: 0; transition: opacity .3s ease-out; }
+.spot.on { opacity: 1; }
+.spot.move { transition: opacity .3s ease-out, left .45s cubic-bezier(.22, 1, .36, 1), top .45s cubic-bezier(.22, 1, .36, 1), width .45s cubic-bezier(.22, 1, .36, 1), height .45s cubic-bezier(.22, 1, .36, 1); }
+.spot-ring { position: absolute; inset: -3px; border-radius: inherit; border: 2px solid var(--accent); animation: spotPulse 1.6s ease-out infinite; }
+@keyframes spotPulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 65%, transparent); } 100% { box-shadow: 0 0 0 16px transparent; } }
+.spot-tip { position: absolute; left: 50%; top: calc(100% + 12px); transform: translateX(-50%); background: var(--accent); color: var(--accent-ink); font-size: 12.5px; font-weight: 650; padding: 6px 11px; border-radius: 8px; white-space: nowrap; box-shadow: var(--shadow-2); display: inline-flex; align-items: center; gap: 6px; }
+.spot-tip::before { content: ""; position: absolute; left: 50%; top: -5px; width: 10px; height: 10px; margin-left: -5px; background: inherit; transform: rotate(45deg); border-radius: 2px; }
+.spot-tip svg { width: 14px; height: 14px; }
+.spot.above .spot-tip { top: auto; bottom: calc(100% + 12px); }
+.spot.above .spot-tip::before { top: auto; bottom: -5px; }
+@media (prefers-reduced-motion: reduce) { .spot-ring { animation: none; } .spot.move { transition: opacity .3s ease-out; } }
 .guide.done { background: var(--good-wash); border-color: color-mix(in srgb, var(--good) 30%, var(--line)); }
 .guide.done .g-k { color: var(--good); }
 .hint { animation: hint 1.1s ease-out 3; position: relative; z-index: 1; }
@@ -495,15 +553,16 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
           <button class="ghost" id="replay" type="button" title="Replay first-time setup" aria-label="Replay first-time setup"><i data-lucide="rotate-ccw"></i></button>
         </div>
       </div>
-      <div class="me">
-        <div class="avatar" aria-hidden="true">AS</div>
-        <div>
-          <div class="name">Aisyah binti Salleh</div>
-          <div class="meta">Accounts payable clerk · 9 yrs · Cyberjaya</div>
+      <div class="me-card">
+        <div class="me">
+          <div class="avatar" aria-hidden="true">AS</div>
+          <div>
+            <div class="name">Aisyah binti Salleh</div>
+            <div class="meta">Accounts payable clerk · 9 yrs · Cyberjaya</div>
+          </div>
         </div>
-        <div class="score-mini"><div class="v num" id="score-now">60<small>%</small></div><div class="l">Future-proof</div></div>
+        <div class="scorebar" id="scorebar"></div>
       </div>
-      <div class="scorebar" id="scorebar"></div>
       <div class="guide" id="guide" role="region" aria-label="Demo guide"></div>
       <div class="tabs" role="tablist" aria-label="Planner sections">
         <button class="tab" role="tab" id="tab-jobs" aria-selected="true" aria-controls="panel"><i data-lucide="briefcase"></i>Jobs</button>
@@ -929,7 +988,7 @@ function sectorJobs(sector) {
 /*LOGIC-END*/
 
 // ============ UI state ============
-const UI = { tab: "jobs", sector: "best", pinned: null, ring: [], job: "esgRole", mode: "fastest", labelsAll: false, rotating: true, drawer: null, search: "", found: null, approved: false, admin: false };
+const UI = { tab: "jobs", sector: "best", pinned: null, ring: [], job: "esgRole", mode: "fastest", labelsAll: false, rotating: true, drawer: null, search: "", found: null, approved: false, admin: false, picked: false, explore: false, reroute: null };
 const MODE = { fastest: "Fastest", noregret: "No-regret", safest: "Safest" };
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 if (reduce) UI.rotating = false;
@@ -954,36 +1013,40 @@ function renderHead() {
   const now = futureScore();
   const learned = plan && plan.route ? plan.route.nodes.filter(k => NODES[k].type === "learn") : [];
   const after = futureScore([...learned, ...(plan ? plan.extras.map(x => x.id) : [])]);
-  $("score-now").innerHTML = `${now}<small>%</small>`;
-  const hist = [now + 7, now + 6, now + 4, now + 3, now + 1, now];
-  const w = 92, h = 28, mx = Math.max(...hist) + 1, mn = Math.min(...hist) - 1;
-  const px = i => 2 + i * (w - 4) / (hist.length - 1), py = v => h - 3 - (v - mn) / (mx - mn) * (h - 6);
-  const d = hist.map((v, i) => `${i ? "L" : "M"}${px(i).toFixed(1)},${py(v).toFixed(1)}`).join("");
-  $("scorebar").innerHTML = `<div class="t">Share of your skills safe from AI in <b class="num">${S.year}</b>. After your path to ${NODES[UI.job].name}: <span class="up num">${after}%</span></div>
-    <svg class="spark" viewBox="0 0 ${w} ${h}" aria-label="Last 6 months, sample history"><path d="${d}L${px(5)},${h}L${px(0)},${h}Z" fill="var(--accent)" opacity=".1"/><path d="${d}" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/><circle cx="${px(5)}" cy="${py(now)}" r="3" fill="var(--accent)" stroke="var(--panel)" stroke-width="1.5"/></svg>`;
+  const target = NODES[UI.job].name;
+  $("scorebar").innerHTML = `<div class="fp-row"><div class="fp-t">Skills safe from AI in <b class="num">${S.year}</b></div>
+      <div class="fp-v"><b>${now}%</b>today<span aria-hidden="true">→</span><b class="up">${after}%</b></div></div>
+    <div class="fp-bar" role="img" aria-label="${now}% of your skills are safe from AI today, ${after}% after your path"><i style="width:${now}%"></i><i class="gain" style="left:${now}%;width:${Math.max(0, after - now)}%"></i></div>
+    <div class="fp-t">After your path to ${target}</div>`;
 }
 function renderJobs() {
   const sec = SECTORS[UI.sector];
+  const open = UI.explore || UI.search || UI.sector !== "best";
   return `<div class="stack">
     <div>
-      <div class="search"><i data-lucide="search"></i><label class="sr" for="q">Search any job</label>
-        <input id="q" type="search" placeholder="Where do you want to go?" value="${UI.search.replace(/"/g, "&quot;")}" autocomplete="off"></div>
-      <div class="try">Try: ${["Data Analyst", "Internal Auditor", "Procurement", "Green finance", "Prompt engineer"].map(t => `<button type="button" data-try="${t}">${t}</button>`).join("")}</div>
-      <div class="results" id="results">${searchResults(UI.search)}</div>
-    </div>
-    <div>
-      <div class="sectors" role="group" aria-label="Explore by sector">${Object.entries(SECTORS).map(([k, s]) => `<button class="sector" type="button" data-sector="${k}" aria-pressed="${UI.sector === k}"><i data-lucide="${s.icon}"></i>${s.name}</button>`).join("")}</div>
-      <p class="sector-note">${sec.note}</p>
-    </div>
-    <div>
-      <div class="h2"><h2>${UI.sector === "best" ? "Best matches for you" : sec.name + " jobs"}</h2><span>on your map now</span></div>
+      <div class="h2"><h2>${UI.sector === "best" ? "Best matches for you" : sec.name + " jobs"}</h2><span>click one to see its path</span></div>
       <div class="jobs">${UI.ring.map(j => jobCard(j)).join("")}</div>
     </div>
+    <details class="explore" id="explore"${open ? " open" : ""}>
+      <summary><i data-lucide="compass"></i><span><b>Find other jobs</b><small>Search any job, or browse by sector</small></span><i class="chev" data-lucide="chevron-down"></i></summary>
+      <div class="explore-in">
+        <div>
+          <div class="search"><i data-lucide="search"></i><label class="sr" for="q">Search any job</label>
+            <input id="q" type="search" placeholder="Where do you want to go?" value="${UI.search.replace(/"/g, "&quot;")}" autocomplete="off"></div>
+          <div class="try">Try: ${["Data Analyst", "Procurement", "Green finance"].map(t => `<button type="button" data-try="${t}">${t}</button>`).join("")}</div>
+          <div class="results" id="results">${searchResults(UI.search)}</div>
+        </div>
+        <div>
+          <div class="sectors" role="group" aria-label="Explore by sector">${Object.entries(SECTORS).map(([k, s]) => `<button class="sector" type="button" data-sector="${k}" aria-pressed="${UI.sector === k}"><i data-lucide="${s.icon}"></i>${s.name}</button>`).join("")}</div>
+          <p class="sector-note">${sec.note}</p>
+        </div>
+      </div>
+    </details>
   </div>`;
 }
 function jobCard(j) {
   const p = plans[j], m = match(j), meta = JOBMETA[j], [, , hYou] = humanSplit(j), [rl, rc] = p.route ? riskOf(p.route.avgE) : ["High", "b-crit"];
-  return `<button class="job" type="button" data-job="${j}" aria-pressed="${UI.job === j}">
+  return `<button class="job" type="button" data-job="${j}" aria-pressed="${UI.picked && UI.job === j}">
     <div class="job-top">
       <div><div class="job-name">${NODES[j].name}</div>
         <div class="job-tags">${meta.move ? '<span class="badge b-mute"><i data-lucide="arrow-right"></i>Move</span>' : '<span class="badge b-violet"><i data-lucide="repeat"></i>Stay & adapt</span>'}<span class="badge ${rc}">${rl} AI risk</span>${j === UI.pinned ? '<span class="badge b-info"><i data-lucide="search"></i>Searched</span>' : ""}</div></div>
@@ -1039,6 +1102,10 @@ function stepRow(kind, title, sub, weeks, node, n) {
     <span class="w">${weeks === null ? "" : `<span class="num">${W(weeks)}</span> wk`}</span></li>`;
 }
 function renderPath() {
+  if (!UI.picked) return `<div class="empty"><span class="em-ic"><i data-lucide="route"></i></span>
+    <h3>Pick a job to see your path</h3>
+    <p>Choose one of your best matches, or click any orange star on the map.</p>
+    <div class="quick">${UI.ring.slice(0, 3).map(j => `<button type="button" data-quick="${j}"><span>${NODES[j].name}</span><span class="num">${match(j)}%</span></button>`).join("")}</div></div>`;
   const p = plan, j = UI.job;
   if (!p.route) return `<div class="card"><h3>No open path</h3><p>Every road to this job passes through skills AI has taken over in ${S.year}. Try another job or year.</p></div>`;
   const [rl, rc] = riskOf(p.route.avgE);
@@ -1160,6 +1227,7 @@ function reviewAction(id, action) {
   const r = REVIEW.find(x => x.id === id);
   if (action === "approve") {
     r.status = "approved";
+    const before = r.id === "s1" && plan && plan.route ? { core: W(plan.core), via: plan.route.nodes.filter(k => NODES[k].type !== "you" && NODES[k].type !== "job") } : null;
     if (r.id === "s1") {
       S.signal = true; scoutState = "done"; TOUR_DONE.signal = true;
       $("fresh-when").textContent = "just now"; $("fresh-n").textContent = "220";
@@ -1168,7 +1236,8 @@ function reviewAction(id, action) {
     if (r.boostE) S.extraE[r.node] = r.boostE;
     if (r.boostD) S.extraD[r.node] = r.boostD;
     refresh(true);
-    if (r.id === "s1") fxWave(SIGNAL.node, "#f2b33d", 1.9, 560);
+    if (before) UI.reroute = { job: UI.job, mode: UI.mode, before: before.core, after: plan && plan.route ? W(plan.core) : null, from: before.via, to: plan && plan.route ? plan.route.nodes.filter(k => NODES[k].type !== "you" && NODES[k].type !== "job") : [] };
+    if (r.id === "s1") { fxWave(SIGNAL.node, "#f2b33d", 1.9, 560); renderGuide(); }
     renderAgents(r.id === "s1" ? { scout: "Signal approved and applied", plan: `Path to ${NODES[UI.job].name} re-checked`, fact: "20 of 20 claims have a source" } : {});
     toast("Approved and applied", `${NODES[r.node].name}: ${r.change}. ${r.reasons.find(x => /reroute/.test(x)) ? "Affected users' routes were re-checked." : ""}`, '<span class="badge b-good">Applied</span>');
   } else if (action === "reject") { r.status = "rejected"; refresh(); toast("Rejected", "Nothing changes. The scout will not propose this source again.", '<span class="badge b-mute">Rejected</span>'); }
@@ -1196,6 +1265,8 @@ function bindPanel() {
   el.querySelectorAll("[data-sector]").forEach(b => b.addEventListener("click", () => setSector(b.dataset.sector)));
   el.querySelectorAll("[data-try]").forEach(b => b.addEventListener("click", () => { UI.search = b.dataset.try; UI.found = null; renderPanel(); const q = $("q"); q.focus(); q.setSelectionRange(q.value.length, q.value.length); }));
   const ap = $("approve"); if (ap) ap.addEventListener("click", () => { UI.approved = true; renderPanel(); toast("Sent to your advisor", "Nothing changes in your plan until it is approved.", '<span class="badge b-info">Review</span>'); });
+  const exp = $("explore"); if (exp) exp.addEventListener("toggle", () => { UI.explore = exp.open; });
+  el.querySelectorAll("[data-quick]").forEach(b => b.addEventListener("click", () => selectJob(b.dataset.quick)));
   const q = $("q");
   if (q) q.addEventListener("input", e => { UI.search = e.target.value; UI.found = null; $("results").innerHTML = searchResults(UI.search); bindResults(); icons(); });
   bindResults();
@@ -1211,19 +1282,19 @@ function buildJob(q) {
   setTimeout(() => { UI.found.loading = false; $("results").innerHTML = searchResults(UI.search); bindResults(); icons(); }, reduce ? 300 : 1400);
 }
 function setSector(s) {
-  UI.sector = s; UI.pinned = null;
+  UI.sector = s; UI.pinned = null; UI.explore = true;
   computeRing(); refresh(false, true);
   toast(`${SECTORS[s].name}: ${UI.ring.length} jobs on your map`, `Best fit here: ${NODES[UI.ring[0]].name} (${match(UI.ring[0])}% match). Your skills stay the same; only the destinations change.`, '<span class="badge b-info">Map updated</span>');
 }
 function pinJob(j) {
   const added = !UI.ring.includes(j);
   if (added) UI.pinned = j;
-  UI.job = j; UI.search = ""; UI.found = null;
+  UI.job = j; UI.search = ""; UI.found = null; UI.picked = true;
   computeRing(); refresh(false, true);
   if (added) toast(`${NODES[j].name} added to your map`, `${match(j)}% match · about ${W(plans[j].ready)} weeks to be job-ready.`, '<span class="badge b-info">Added</span>');
   openDrawer(j);
 }
-function selectJob(j) { UI.job = j; UI.approved = false; UI.tab = "path"; TOUR_DONE.job = true; refresh(false, true); openDrawer(j); fxWave(j, "#f08a5d", 1.2, 240); }
+function selectJob(j) { UI.job = j; UI.approved = false; UI.tab = "path"; UI.picked = true; TOUR_DONE.job = true; refresh(false, true); openDrawer(j); fxWave(j, "#f08a5d", 1.2, 240); }
 
 // ============ drawer ============
 function openDrawer(id, quiet) {
@@ -1234,7 +1305,7 @@ function openDrawer(id, quiet) {
   d.querySelector("#dr-close").addEventListener("click", closeDrawer);
   d.querySelectorAll("[data-skill]").forEach(b => b.addEventListener("click", () => openDrawer(b.dataset.skill)));
   const pv = d.querySelector("#prove"); if (pv) pv.addEventListener("click", () => takeCheck(id, pv));
-  const sp = d.querySelector("#show-path"); if (sp) sp.addEventListener("click", () => { if (!UI.ring.includes(id)) { UI.pinned = id; computeRing(); } UI.job = id; UI.tab = "path"; refresh(); closeDrawer(); });
+  const sp = d.querySelector("#show-path"); if (sp) sp.addEventListener("click", () => { if (!UI.ring.includes(id)) { UI.pinned = id; computeRing(); } UI.job = id; UI.tab = "path"; UI.picked = true; TOUR_DONE.job = true; refresh(); closeDrawer(); });
   icons();
   if (Graph && !quiet) focusNode(id);
 }
@@ -1437,7 +1508,7 @@ function initGraph() {
       .linkOpacity(0.9).linkCurvature(0.12).linkDirectionalParticleWidth(2.4).linkDirectionalParticleSpeed(0.007)
       .enableNodeDrag(false).warmupTicks(0).cooldownTicks(8).onEngineTick(() => { graphReady = true; })
       .onNodeHover(n => { el.style.cursor = n ? "pointer" : ""; hoverId = n ? n.id : null; if (!n) $("tip").hidden = true; fxFocus(hoverId); })
-      .onNodeClick(n => { if (NODES[n.id].type === "job") { UI.job = n.id; UI.approved = false; UI.tab = "path"; TOUR_DONE.job = true; refresh(); } openDrawer(n.id); })
+      .onNodeClick(n => { if (NODES[n.id].type === "job") { UI.job = n.id; UI.approved = false; UI.tab = "path"; UI.picked = true; TOUR_DONE.job = true; refresh(); } openDrawer(n.id); })
       .onLinkHover(l => { el.style.cursor = l && altKeys().has(l.key) ? "pointer" : ""; })
       .onLinkClick(l => {
         const m = altKeys().get(l.key);
@@ -1967,7 +2038,7 @@ $("reset").addEventListener("click", () => {
   S.signal = false; S.extraE = {}; S.extraD = {}; scoutState = "idle";
   REVIEW.forEach((r, i) => r.status = REVIEW_INIT[i]);
   Object.keys(EMERGING).forEach(k => EMERGING[k].status = EMERGING_INIT[k]);
-  TOUR_DONE.scout = false; TOUR_DONE.signal = false;
+  TOUR_DONE.scout = false; TOUR_DONE.signal = false; UI.reroute = null;
   $("reset").hidden = true; $("log").hidden = true; $("scout").disabled = false; $("scout").innerHTML = '<i data-lucide="radar"></i>Run market scout';
   $("fresh-when").textContent = "3 days ago"; $("fresh-n").textContent = "214"; $("ag-fresh").textContent = "Scout ran 3 days ago";
   renderAgents({}); updateAdminCount(); refresh();
@@ -2038,7 +2109,7 @@ function obRender() {
   });
 }
 function finishOnboarding() {
-  const done = () => { $("ob").hidden = true; refresh(false, true); fxIntro(); toast("Your career map is ready", `${UI.ring.length} jobs found. Best match: ${NODES[UI.ring[0]].name}. Follow the demo guide to see a live reroute.`, '<span class="badge b-good">Ready</span>'); const g = $("guide"); if (g && !g.hidden) { g.classList.remove("hint"); void g.offsetWidth; g.classList.add("hint"); } };
+  const done = () => { $("ob").hidden = true; refresh(false, true); fxIntro(); toast("Your career map is ready", `${UI.ring.length} jobs found. Best match: ${NODES[UI.ring[0]].name}. Follow the demo guide to see a live reroute.`, '<span class="badge b-good">Ready</span>'); setTimeout(() => showStep(tourNext()), reduce ? 300 : 2200); };
   if (window.gsap && !reduce) gsap.to("#ob", { opacity: 0, duration: 0.3, ease: "power2.out", onComplete: () => { done(); gsap.set("#ob", { opacity: 1 }); } });
   else done();
 }
@@ -2056,43 +2127,130 @@ function hint(el) {
   el.classList.remove("hint"); void el.offsetWidth; el.classList.add("hint");
   setTimeout(() => el.classList.remove("hint"), 3600);
 }
+
+// ---- spotlight: rings the control the current step needs and dims the rest a little ----
+const SPOT = { get: null, el: null, raf: 0, shown: false };
+function spotOn(get) {
+  const s = $("spot"); if (!s) return;
+  SPOT.get = get; SPOT.el = null; SPOT.shown = false;
+  cancelAnimationFrame(SPOT.raf);
+  s.classList.remove("move");
+  const track = () => {
+    if (!SPOT.get) return;
+    if (!SPOT.el || !SPOT.el.isConnected) {
+      const t = SPOT.get(); SPOT.el = t && t[0];
+      if (SPOT.el) { $("spot-tip").innerHTML = `<i data-lucide="mouse-pointer-click"></i>${t[1]}`; icons(); if (!SPOT.shown) SPOT.el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); }
+    }
+    const r = SPOT.el && SPOT.el.getBoundingClientRect();
+    if (!r || !r.width || $("ob") && !$("ob").hidden) { s.classList.remove("on"); }
+    else {
+      const pad = 6;
+      s.style.left = (r.left - pad) + "px"; s.style.top = (r.top - pad) + "px";
+      s.style.width = (r.width + pad * 2) + "px"; s.style.height = (r.height + pad * 2) + "px";
+      s.classList.toggle("above", r.bottom + 64 > innerHeight);
+      if (!SPOT.shown) { SPOT.shown = true; s.classList.add("on"); requestAnimationFrame(() => s.classList.add("move")); }
+    }
+    SPOT.raf = requestAnimationFrame(track);
+  };
+  track();
+}
+function spotOff() { SPOT.get = null; SPOT.el = null; cancelAnimationFrame(SPOT.raf); const s = $("spot"); if (s) s.classList.remove("on", "move"); }
+// any click or key outside the guide puts the spotlight away; the step's own control still works underneath
+document.addEventListener("pointerdown", e => { if (SPOT.get && !(e.target.closest && e.target.closest("#guide"))) spotOff(); }, true);
+document.addEventListener("keydown", e => { if (e.key === "Escape" && SPOT.get) spotOff(); });
+
+// set up the case where the approved signal visibly changes the route: Aisyah's fastest route to ESG analyst in 2026
+function tourSetupSignal() {
+  S.year = 2026; S.scenario = "moderate"; stopPlay();
+  document.querySelectorAll(".seg [data-scn]").forEach(o => o.setAttribute("aria-pressed", String(o.dataset.scn === "moderate")));
+  if (!sectorJobs(UI.sector).includes("esgRole")) UI.pinned = "esgRole";
+  UI.job = "esgRole"; UI.mode = "fastest"; UI.approved = false; UI.picked = true;
+}
+const bestJob = () => UI.ring.includes("esgRole") ? "esgRole" : UI.ring[0];
 const TOUR = [
-  { id: "job", t: "Open a job's path", d: "Pick any job card to see its route, step by step.",
-    go: () => { if (UI.admin) setAdmin(false); UI.tab = "jobs"; renderPanel(); updateLabels(); hint($("panel").querySelector(".job")); } },
+  { id: "job", t: "Open a job's path", d: "Click a job. The map flies to it and the route appears, step by step.",
+    target: () => UI.admin ? [$("admin-btn"), "Back to your planner"] : UI.tab !== "jobs" ? [$("tab-jobs"), "Open Jobs"] : [$("panel").querySelector(`.job[data-job="${bestJob()}"]`) || $("panel").querySelector(".job"), "Click this job"],
+    act: () => { if (UI.admin) setAdmin(false); selectJob(bestJob()); },
+    ok: () => `Opened ${NODES[UI.job].name} · ${plan && plan.route ? W(plan.core) + "-week path" : "no open path"}` },
   { id: "mode", t: "Compare the three route types", d: "Fastest, No-regret and Safest can take different roads to the same job.",
-    go: () => { if (UI.admin) setAdmin(false); UI.tab = "path"; renderPanel(); updateLabels(); hint($("panel").querySelector('.seg[aria-label="Route type"]')); } },
-  { id: "future", t: "Look ahead to 2030", d: "Drag the year or press play, and switch to Fast AI. Watch skills fade as AI takes them over.",
-    go: () => hint(document.querySelector(".timeline")) },
-  { id: "scout", t: "Run the market scout", d: "It reads new AI news and job signals. Big changes wait for a person to approve.",
-    go: () => { const a = $("agents"); if (a.classList.contains("collapsed")) $("ag-toggle").click(); hint($("scout")); } },
-  { id: "signal", t: "Approve the change and watch the reroute", d: "We'll follow Aisyah's fastest route to ESG analyst in 2026. It runs through reconciliation, the skill this signal is about.",
-    go: () => {
-      // set up the case where the signal visibly changes the route
-      S.year = 2026; S.scenario = "moderate"; stopPlay();
-      document.querySelectorAll(".seg [data-scn]").forEach(o => o.setAttribute("aria-pressed", String(o.dataset.scn === "moderate")));
-      if (!sectorJobs(UI.sector).includes("esgRole")) UI.pinned = "esgRole";
-      UI.job = "esgRole"; UI.mode = "fastest"; UI.approved = false;
-      refresh(); setAdmin(true); hint($("panel").querySelector('[data-approve="s1"]'));
-    } }
+    prep: () => { if (UI.drawer && innerWidth < 980) closeDrawer(); },
+    target: () => UI.admin ? [$("admin-btn"), "Back to your planner"] : UI.tab !== "path" ? [$("tab-path"), "Open Path"] : [$("panel").querySelector('.seg[aria-label="Route type"]'), "Try another route type"],
+    act: () => { if (UI.admin) setAdmin(false); if (!UI.picked) selectJob(bestJob()); UI.tab = "path"; UI.mode = UI.mode === "noregret" ? "fastest" : "noregret"; UI.approved = false; TOUR_DONE.mode = true; refresh(); },
+    ok: () => `Switched to ${MODE[UI.mode]} · ${plan && plan.route ? W(plan.core) + " weeks" : "no open path"} to the same job` },
+  { id: "future", t: "Look ahead to 2030", d: "Press play or drag the year. Skills fade as AI takes them over, and the route avoids them.",
+    prep: () => { if (UI.drawer) closeDrawer(); },
+    target: () => [document.querySelector(".timeline"), "Press play or drag the year"],
+    act: () => { if (UI.drawer) closeDrawer(); if (!playT) $("play").click(); },
+    ok: () => "Played the forecast to 2030" },
+  { id: "scout", t: "Run the market scout", d: "It reads new AI news and job postings. Small changes apply on their own; big ones wait for a person.",
+    prep: () => { if (UI.drawer) closeDrawer(); const a = $("agents"); if (a.classList.contains("collapsed")) $("ag-toggle").click(); },
+    target: () => [$("scout"), "Run the scout"],
+    act: () => { const a = $("agents"); if (a.classList.contains("collapsed")) $("ag-toggle").click(); if (scoutState === "idle") $("scout").click(); },
+    ok: () => "The scout flagged 1 big change for a person to review" },
+  { id: "signal", t: "Approve the change and watch the reroute", d: "We follow Aisyah's fastest route to ESG analyst in 2026. It runs through reconciliation, the skill this change is about.",
+    prep: () => { if (UI.drawer) closeDrawer(); if (!UI.admin) { tourSetupSignal(); refresh(); } },
+    target: () => UI.admin ? [$("panel").querySelector('[data-approve="s1"]'), "Approve and apply"] : [scoutState === "flagged" ? $("scout") : $("admin-btn"), "Open the flagged change"],
+    act: () => {
+      if (UI.drawer) closeDrawer(); tourSetupSignal(); refresh(); setAdmin(true);
+      const btn = $("panel").querySelector('[data-approve="s1"]'); if (btn) btn.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+      setTimeout(() => { if (!TOUR_DONE.signal) reviewAction("s1", "approve"); }, reduce ? 100 : 900);
+    },
+    ok: () => "Approved · the route was recalculated" }
 ];
+let guideLast = null, guideOk = "", guideT = 0;
+function tourNext() { return TOUR.find(s => !TOUR_DONE[s.id]); }
+function showStep(step) {
+  if (!step || guideMin || ($("ob") && !$("ob").hidden)) return;
+  if (step.prep) step.prep();
+  spotOn(step.target);
+}
+function seeNewRoute() { spotOff(); if (UI.admin) setAdmin(false); UI.tab = "path"; renderPanel(true); updateLabels(); hint($("panel").querySelector(".steps")); }
+function rerouteSummary() {
+  const r = UI.reroute;
+  const names = ids => ids.map(k => NODES[k].name);
+  if (!r || r.before === null || r.after === null) return `<div class="g-why">The change was applied and every route through <b>${NODES[SIGNAL.node].name}</b> was re-checked.</div>`;
+  const same = r.before === r.after && r.from.join() === r.to.join();
+  return `<div class="g-ba"><span class="b">${r.before} wk</span><i data-lucide="arrow-right"></i><span class="a">${r.after} wk</span><small>${MODE[r.mode]} route to ${NODES[r.job].name}</small></div>
+    <div class="g-why"><b>${NODES[SIGNAL.node].name}</b>: AI exposure +18 points, so it is no longer a safe step. ${same ? "Your route still holds." : "Your route now goes a different way:"}</div>
+    ${same ? "" : `<div class="g-route"><div><span>Before</span><s>${names(r.from).join(" → ")}</s></div><div><span>Now</span><em>${names(r.to).join(" → ")}</em></div></div>`}`;
+}
 function renderGuide() {
   const g = $("guide"); if (!g) return;
-  const next = TOUR.find(s => !TOUR_DONE[s.id]);
+  const next = tourNext();
   const n = TOUR.filter(s => TOUR_DONE[s.id]).length;
+  // a step was just completed: say so, then point at the next one
+  if (guideLast && guideLast !== next && TOUR_DONE[guideLast.id]) {
+    guideOk = guideLast.ok(); clearTimeout(guideT);
+    spotOff();
+    if (next) guideT = setTimeout(() => { if (tourNext() === next) showStep(next); }, reduce ? 200 : 1400);
+  }
+  if (!next && guideLast) spotOff();
+  guideLast = next;
   const dots = TOUR.map(s => `<i class="${TOUR_DONE[s.id] ? "on" : s === next ? "now" : ""}"></i>`).join("");
   g.classList.toggle("min", guideMin);
   g.classList.toggle("done", !next);
-  const top = `<div class="g-top"><span class="g-k"><i data-lucide="${next ? "map" : "circle-check"}"></i>${next ? `Demo guide · step ${TOUR.indexOf(next) + 1} of ${TOUR.length}` : "Demo complete"}</span>
+  const top = `<div class="g-top"><span class="g-k"><i data-lucide="${next ? "map" : "circle-check"}"></i>${next ? `Demo guide · step ${TOUR.indexOf(next) + 1} of ${TOUR.length}` : "Demo complete · the route changed"}</span>
     <span class="g-dots" aria-label="${n} of ${TOUR.length} steps done">${dots}</span>
     <button class="g-x" id="g-min" type="button" aria-expanded="${!guideMin}" aria-label="${guideMin ? "Show" : "Hide"} demo guide"><i data-lucide="${guideMin ? "chevron-down" : "chevron-up"}"></i></button></div>`;
+  const ok = guideOk && next ? `<div class="g-ok" role="status"><i data-lucide="circle-check"></i>${guideOk}</div>` : "";
   const row = next
-    ? `<div class="g-row"><div class="g-t">${next.t}<small>${next.d}</small></div><button class="btn g-go" id="g-go" type="button">Show me</button></div>`
-    : `<div class="g-row"><div class="g-t">You've seen the full loop<small>The scout found a signal, a person approved it, and the route changed with its source. <button class="linkish" id="g-again" type="button">Start over</button></small></div><button class="btn g-go" id="g-see" type="button">See the new route</button></div>`;
-  g.innerHTML = top + row;
-  $("g-min").addEventListener("click", () => { guideMin = !guideMin; try { localStorage.setItem("ht-guide-min", guideMin ? "1" : "0"); } catch (e) {} renderGuide(); });
-  const go = $("g-go"); if (go) go.addEventListener("click", () => next.go());
-  const see = $("g-see"); if (see) see.addEventListener("click", () => { if (UI.admin) setAdmin(false); UI.tab = "path"; renderPanel(true); updateLabels(); hint($("panel").querySelector(".steps")); });
-  const again = $("g-again"); if (again) again.addEventListener("click", () => { Object.keys(TOUR_DONE).forEach(k => TOUR_DONE[k] = false); $("reset").click(); S.year = 2026; S.scenario = "moderate"; document.querySelectorAll(".seg [data-scn]").forEach(o => o.setAttribute("aria-pressed", String(o.dataset.scn === "moderate"))); refresh(); });
+    ? `${ok}<div class="g-row"><div class="g-t">${next.t}<small>${next.d}</small><span class="g-acts"><button class="g-where" id="g-where" type="button">Where do I click?</button></span></div><button class="btn g-go" id="g-go" type="button">Show me</button></div>`
+    : `<div class="g-row" style="grid-template-columns:minmax(0,1fr)"><div class="g-sum">${rerouteSummary()}</div></div>
+       <div class="g-row"><div class="g-t"><small>A scout found the change, a person approved it, and the route updated with its source. <button class="linkish" id="g-again" type="button">Start over</button></small></div><button class="btn g-go" id="g-see" type="button">See my new route</button></div>`;
+  g.innerHTML = top + `<div class="g-body">${row}</div>`;
+  $("g-min").addEventListener("click", () => { guideMin = !guideMin; try { localStorage.setItem("ht-guide-min", guideMin ? "1" : "0"); } catch (e) {} if (guideMin) spotOff(); renderGuide(); });
+  const go = $("g-go"); if (go) go.addEventListener("click", () => {
+    // point at the control first, then do the step
+    showStep(next);
+    setTimeout(() => { spotOff(); next.act(); }, reduce ? 150 : 750);
+  });
+  const where = $("g-where"); if (where) where.addEventListener("click", () => showStep(next));
+  const see = $("g-see"); if (see) see.addEventListener("click", seeNewRoute);
+  const again = $("g-again"); if (again) again.addEventListener("click", () => {
+    Object.keys(TOUR_DONE).forEach(k => TOUR_DONE[k] = false); guideOk = ""; guideLast = null; UI.picked = false; UI.tab = "jobs";
+    $("reset").click(); S.year = 2026; S.scenario = "moderate"; document.querySelectorAll(".seg [data-scn]").forEach(o => o.setAttribute("aria-pressed", String(o.dataset.scn === "moderate"))); refresh();
+    setTimeout(() => showStep(tourNext()), 300);
+  });
   icons();
 }
 
@@ -2119,5 +2277,6 @@ computeRing(); computePlans(); applyLayout(false);
 renderHead(); renderPanel(); renderAgents();
 initGraph(); drawStars(); obRender(); updateAdminCount(); renderGuide(); icons();
 </script>
+<div class="spot" id="spot" aria-hidden="true"><div class="spot-ring"></div><div class="spot-tip" id="spot-tip"></div></div>
 </body>
 </html>
