@@ -268,9 +268,12 @@ export async function startCheck(k, sec = document.getElementById("check-sec"), 
   const qs = q.questions || [];
   sec.innerHTML = `<form class="check-form" novalidate><h3><i data-lucide="badge-check"></i>${esc(t("check.title", { name: nameOf(k) }))}${q.isSample ? " " + badge("b-warn", t("src.sample")) : ""}</h3>
     ${qs.map((x, i) => `<fieldset><legend>${i + 1}. ${esc(x.text)}</legend>${(x.options || []).map((o, oi) => `<label class="opt"><input type="radio" name="q${esc(x.id)}" value="${oi}" required> <span>${esc(o)}</span></label>`).join("")}</fieldset>`).join("")}
-    <button class="btn btn-primary" type="submit" style="width:100%"><i data-lucide="send"></i>${esc(t("check.submit"))}</button></form>`;
+    <button class="btn btn-primary" type="submit" style="width:100%"><i data-lucide="send"></i>${esc(t("check.submit"))}</button>
+    <button class="link-btn check-close" type="button">${esc(t("next.checkClose"))}</button></form>`;
   icons();
   const form = sec.querySelector("form");
+  // close without answering: nothing is sent, and the check can be started again
+  form.querySelector(".check-close").addEventListener("click", () => { sec.innerHTML = ""; document.querySelectorAll("[data-check], #prove").forEach(b => { b.disabled = false; }); });
   form.addEventListener("submit", async ev => {
     ev.preventDefault();
     const answers = {};
