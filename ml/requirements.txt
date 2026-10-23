@@ -1,0 +1,7 @@
+# AI-exposure model pipeline. torch is preinstalled on RunPod PyTorch templates;
+# locally install the CUDA build from https://pytorch.org first.
+sentence-transformers>=3.0,<4
+scikit-learn>=1.4,<1.7
+scipy>=1.11
+pandas>=2.0,<2.3
+numpy>=1.24,<2

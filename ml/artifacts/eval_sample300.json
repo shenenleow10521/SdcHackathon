@@ -1,0 +1,638 @@
+{
+  "split": "by occupation (held-out occupations never seen in training)",
+  "perTask": {
+    "model": {
+      "pearson": 0.658,
+      "spearman": 0.679,
+      "mae": 0.197,
+      "n": 1242
+    },
+    "baselineMean": {
+      "pearson": null,
+      "spearman": null,
+      "mae": 0.33,
+      "n": 1242
+    },
+    "baselineNearestNeighbour": {
+      "pearson": 0.522,
+      "spearman": 0.555,
+      "mae": 0.187,
+      "n": 1242
+    },
+    "referenceGpt4Labels": {
+      "pearson": 0.611,
+      "spearman": 0.661,
+      "mae": 0.173,
+      "n": 1242
+    }
+  },
+  "perOccupation": {
+    "model": {
+      "pearson": 0.906,
+      "spearman": 0.897,
+      "mae": 0.073,
+      "n": 60
+    },
+    "baselineMean": {
+      "pearson": NaN,
+      "spearman": NaN,
+      "mae": 0.188,
+      "n": 60
+    },
+    "baselineNearestNeighbour": {
+      "pearson": 0.868,
+      "spearman": 0.873,
+      "mae": 0.07,
+      "n": 60
+    },
+    "referenceGpt4Labels": {
+      "pearson": 0.857,
+      "spearman": 0.887,
+      "mae": 0.084,
+      "n": 60
+    }
+  },
+  "run": {
+    "where": "local",
+    "runpodPodId": null,
+    "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "device": "cuda",
+    "torch": "2.6.0+cu124",
+    "python": "3.12.10",
+    "host": "DESKTOP-9MP67PD",
+    "time": "2026-10-23T03:17:47+0800"
+  },
+  "modelRun": {
+    "where": "local",
+    "runpodPodId": null,
+    "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "device": "cuda",
+    "torch": "2.6.0+cu124",
+    "python": "3.12.10",
+    "host": "DESKTOP-9MP67PD",
+    "time": "2026-10-23T03:17:44+0800"
+  },
+  "sample": 300,
+  "catalogue": {
+    "tasks": [
+      {
+        "skill": "inv",
+        "task": "Capture invoice fields from PDFs",
+        "sampleMode": "ai",
+        "predicted": 0.417
+      },
+      {
+        "skill": "inv",
+        "task": "Code invoices to GL accounts",
+        "sampleMode": "ai",
+        "predicted": 0.635
+      },
+      {
+        "skill": "inv",
+        "task": "Chase missing PO numbers",
+        "sampleMode": "assist",
+        "predicted": 0.353
+      },
+      {
+        "skill": "three",
+        "task": "Match PO, invoice and goods receipt",
+        "sampleMode": "ai",
+        "predicted": 0.194
+      },
+      {
+        "skill": "three",
+        "task": "Flag price or quantity mismatches",
+        "sampleMode": "ai",
+        "predicted": 0.231
+      },
+      {
+        "skill": "three",
+        "task": "Decide on tolerance exceptions",
+        "sampleMode": "human",
+        "predicted": 0.423
+      },
+      {
+        "skill": "pay",
+        "task": "Build the payment proposal",
+        "sampleMode": "ai",
+        "predicted": 0.662
+      },
+      {
+        "skill": "pay",
+        "task": "Check cash before release",
+        "sampleMode": "assist",
+        "predicted": 0.01
+      },
+      {
+        "skill": "pay",
+        "task": "Approve and release payments",
+        "sampleMode": "human",
+        "predicted": 0.328
+      },
+      {
+        "skill": "tax",
+        "task": "Calculate SST on invoices",
+        "sampleMode": "ai",
+        "predicted": 0.302
+      },
+      {
+        "skill": "tax",
+        "task": "Interpret rule changes",
+        "sampleMode": "assist",
+        "predicted": 0.56
+      },
+      {
+        "skill": "tax",
+        "task": "Sign off on returns",
+        "sampleMode": "human",
+        "predicted": 0.43
+      },
+      {
+        "skill": "erp",
+        "task": "Post and adjust entries",
+        "sampleMode": "assist",
+        "predicted": 0.484
+      },
+      {
+        "skill": "erp",
+        "task": "Maintain vendor master data",
+        "sampleMode": "assist",
+        "predicted": 0.58
+      },
+      {
+        "skill": "erp",
+        "task": "Fix workflow errors",
+        "sampleMode": "human",
+        "predicted": 0.544
+      },
+      {
+        "skill": "dispute",
+        "task": "Draft replies to vendors",
+        "sampleMode": "assist",
+        "predicted": 0.103
+      },
+      {
+        "skill": "dispute",
+        "task": "Negotiate settlements",
+        "sampleMode": "human",
+        "predicted": 0.427
+      },
+      {
+        "skill": "dispute",
+        "task": "Judge the relationship impact",
+        "sampleMode": "human",
+        "predicted": 0.441
+      },
+      {
+        "skill": "process",
+        "task": "Map the current workflow",
+        "sampleMode": "assist",
+        "predicted": 0.397
+      },
+      {
+        "skill": "process",
+        "task": "Find bottlenecks",
+        "sampleMode": "assist",
+        "predicted": 0.465
+      },
+      {
+        "skill": "process",
+        "task": "Get the team to adopt the change",
+        "sampleMode": "human",
+        "predicted": 0.16
+      },
+      {
+        "skill": "audit",
+        "task": "Assemble evidence packs",
+        "sampleMode": "assist",
+        "predicted": 0.282
+      },
+      {
+        "skill": "audit",
+        "task": "Keep the document trail complete",
+        "sampleMode": "assist",
+        "predicted": 0.594
+      },
+      {
+        "skill": "audit",
+        "task": "Answer auditor questions",
+        "sampleMode": "human",
+        "predicted": 0.788
+      },
+      {
+        "skill": "recon",
+        "task": "Match statements to the ledger",
+        "sampleMode": "ai",
+        "predicted": 0.548
+      },
+      {
+        "skill": "recon",
+        "task": "Investigate unexplained differences",
+        "sampleMode": "assist",
+        "predicted": 0.438
+      },
+      {
+        "skill": "recon",
+        "task": "Trace numbers to source documents",
+        "sampleMode": "human",
+        "predicted": 0.763
+      },
+      {
+        "skill": "excel",
+        "task": "Build pivot summaries",
+        "sampleMode": "ai",
+        "predicted": 0.6
+      },
+      {
+        "skill": "excel",
+        "task": "Clean and merge data",
+        "sampleMode": "assist",
+        "predicted": 0.43
+      },
+      {
+        "skill": "excel",
+        "task": "Decide which numbers matter",
+        "sampleMode": "human",
+        "predicted": 0.52
+      },
+      {
+        "skill": "fin",
+        "task": "Build forecasts",
+        "sampleMode": "assist",
+        "predicted": 0.528
+      },
+      {
+        "skill": "fin",
+        "task": "Prepare monthly reports",
+        "sampleMode": "ai",
+        "predicted": 0.912
+      },
+      {
+        "skill": "fin",
+        "task": "Explain variances to managers",
+        "sampleMode": "human",
+        "predicted": 0.508
+      },
+      {
+        "skill": "viz",
+        "task": "Build dashboards",
+        "sampleMode": "assist",
+        "predicted": 0.349
+      },
+      {
+        "skill": "viz",
+        "task": "Refresh data feeds",
+        "sampleMode": "ai",
+        "predicted": 0.469
+      },
+      {
+        "skill": "viz",
+        "task": "Choose the right view for the audience",
+        "sampleMode": "human",
+        "predicted": 0.008
+      },
+      {
+        "skill": "esgdata",
+        "task": "Collect data from many systems",
+        "sampleMode": "assist",
+        "predicted": 0.467
+      },
+      {
+        "skill": "esgdata",
+        "task": "Flag gaps and outliers",
+        "sampleMode": "ai",
+        "predicted": 0.269
+      },
+      {
+        "skill": "esgdata",
+        "task": "Agree data owners and controls",
+        "sampleMode": "human",
+        "predicted": 0.721
+      },
+      {
+        "skill": "ghg",
+        "task": "Collect activity data from bills",
+        "sampleMode": "assist",
+        "predicted": 0.348
+      },
+      {
+        "skill": "ghg",
+        "task": "Apply emission factors",
+        "sampleMode": "ai",
+        "predicted": 0.3
+      },
+      {
+        "skill": "ghg",
+        "task": "Check data quality and trace to source",
+        "sampleMode": "human",
+        "predicted": 0.5
+      },
+      {
+        "skill": "disc",
+        "task": "Draft disclosure text",
+        "sampleMode": "assist",
+        "predicted": 0.628
+      },
+      {
+        "skill": "disc",
+        "task": "Map data to disclosure items",
+        "sampleMode": "assist",
+        "predicted": 0.625
+      },
+      {
+        "skill": "disc",
+        "task": "Judge materiality with management",
+        "sampleMode": "human",
+        "predicted": 0.355
+      },
+      {
+        "skill": "aisup",
+        "task": "Set up AI agents for routine steps",
+        "sampleMode": "assist",
+        "predicted": 0.358
+      },
+      {
+        "skill": "aisup",
+        "task": "Review AI output for errors",
+        "sampleMode": "human",
+        "predicted": 0.446
+      },
+      {
+        "skill": "aisup",
+        "task": "Decide when AI should not act",
+        "sampleMode": "human",
+        "predicted": 0.362
+      },
+      {
+        "skill": "auto",
+        "task": "Build simple automations",
+        "sampleMode": "assist",
+        "predicted": 0.401
+      },
+      {
+        "skill": "auto",
+        "task": "Choose which steps to automate",
+        "sampleMode": "human",
+        "predicted": 0.304
+      },
+      {
+        "skill": "auto",
+        "task": "Monitor automations",
+        "sampleMode": "assist",
+        "predicted": 0.208
+      },
+      {
+        "skill": "prompt",
+        "task": "Write instructions for AI tools",
+        "sampleMode": "human",
+        "predicted": 0.822
+      },
+      {
+        "skill": "prompt",
+        "task": "Draft summaries with AI",
+        "sampleMode": "assist",
+        "predicted": 0.462
+      },
+      {
+        "skill": "prompt",
+        "task": "Check AI output for errors",
+        "sampleMode": "human",
+        "predicted": 0.423
+      },
+      {
+        "skill": "aiinv",
+        "task": "Check AI-captured invoice fields",
+        "sampleMode": "assist",
+        "predicted": 0.364
+      },
+      {
+        "skill": "aiinv",
+        "task": "Resolve exceptions AI can't match",
+        "sampleMode": "human",
+        "predicted": 0.496
+      },
+      {
+        "skill": "aiinv",
+        "task": "Feed corrections back to the AI tool",
+        "sampleMode": "assist",
+        "predicted": 0.463
+      },
+      {
+        "skill": "sql",
+        "task": "Write queries for routine reports",
+        "sampleMode": "assist",
+        "predicted": 1.0
+      },
+      {
+        "skill": "sql",
+        "task": "Join data from several systems",
+        "sampleMode": "assist",
+        "predicted": 0.429
+      },
+      {
+        "skill": "sql",
+        "task": "Decide what question to ask",
+        "sampleMode": "human",
+        "predicted": 0.664
+      },
+      {
+        "skill": "python",
+        "task": "Write scripts to clean data",
+        "sampleMode": "assist",
+        "predicted": 0.695
+      },
+      {
+        "skill": "python",
+        "task": "Automate repeat analysis",
+        "sampleMode": "assist",
+        "predicted": 0.36
+      },
+      {
+        "skill": "python",
+        "task": "Check results make sense",
+        "sampleMode": "human",
+        "predicted": 0.575
+      },
+      {
+        "skill": "stats",
+        "task": "Calculate summaries and trends",
+        "sampleMode": "ai",
+        "predicted": 0.627
+      },
+      {
+        "skill": "stats",
+        "task": "Test whether a change made a difference",
+        "sampleMode": "assist",
+        "predicted": 0.209
+      },
+      {
+        "skill": "stats",
+        "task": "Explain uncertainty to managers",
+        "sampleMode": "human",
+        "predicted": 0.565
+      },
+      {
+        "skill": "lca",
+        "task": "Gather material and energy data",
+        "sampleMode": "assist",
+        "predicted": 0.423
+      },
+      {
+        "skill": "lca",
+        "task": "Run the footprint model",
+        "sampleMode": "ai",
+        "predicted": 0.119
+      },
+      {
+        "skill": "lca",
+        "task": "Set the boundaries and assumptions",
+        "sampleMode": "human",
+        "predicted": 0.499
+      },
+      {
+        "skill": "greenfin",
+        "task": "Screen investments against criteria",
+        "sampleMode": "ai",
+        "predicted": 0.284
+      },
+      {
+        "skill": "greenfin",
+        "task": "Assess climate risk",
+        "sampleMode": "assist",
+        "predicted": 0.452
+      },
+      {
+        "skill": "greenfin",
+        "task": "Challenge green claims",
+        "sampleMode": "human",
+        "predicted": 0.574
+      },
+      {
+        "skill": "audit2",
+        "task": "Pull samples and evidence",
+        "sampleMode": "ai",
+        "predicted": 0.342
+      },
+      {
+        "skill": "audit2",
+        "task": "Test controls",
+        "sampleMode": "assist",
+        "predicted": 0.204
+      },
+      {
+        "skill": "audit2",
+        "task": "Judge findings and report to management",
+        "sampleMode": "human",
+        "predicted": 0.619
+      },
+      {
+        "skill": "treasury",
+        "task": "Build the daily cash position",
+        "sampleMode": "ai",
+        "predicted": 0.268
+      },
+      {
+        "skill": "treasury",
+        "task": "Forecast cash for 13 weeks",
+        "sampleMode": "assist",
+        "predicted": 0.338
+      },
+      {
+        "skill": "treasury",
+        "task": "Decide funding and bank relationships",
+        "sampleMode": "human",
+        "predicted": 0.547
+      },
+      {
+        "skill": "procure",
+        "task": "Compare supplier quotes",
+        "sampleMode": "ai",
+        "predicted": 0.552
+      },
+      {
+        "skill": "procure",
+        "task": "Assess supplier risk",
+        "sampleMode": "assist",
+        "predicted": 0.455
+      },
+      {
+        "skill": "procure",
+        "task": "Negotiate contracts",
+        "sampleMode": "human",
+        "predicted": 0.445
+      },
+      {
+        "skill": "scm",
+        "task": "Forecast demand",
+        "sampleMode": "ai",
+        "predicted": 0.426
+      },
+      {
+        "skill": "scm",
+        "task": "Balance supply and demand",
+        "sampleMode": "assist",
+        "predicted": 0.339
+      },
+      {
+        "skill": "scm",
+        "task": "Agree plans with sales and production",
+        "sampleMode": "human",
+        "predicted": 0.634
+      },
+      {
+        "skill": "invent",
+        "task": "Track stock levels",
+        "sampleMode": "ai",
+        "predicted": 0.216
+      },
+      {
+        "skill": "invent",
+        "task": "Find slow-moving stock",
+        "sampleMode": "assist",
+        "predicted": 0.09
+      },
+      {
+        "skill": "invent",
+        "task": "Decide what to write off or discount",
+        "sampleMode": "human",
+        "predicted": 0.584
+      }
+    ],
+    "meanByMode": {
+      "ai": 0.419,
+      "assist": 0.414,
+      "human": 0.499
+    },
+    "bySkill": {
+      "inv": 0.468,
+      "three": 0.283,
+      "pay": 0.333,
+      "tax": 0.431,
+      "erp": 0.536,
+      "dispute": 0.324,
+      "process": 0.341,
+      "audit": 0.555,
+      "recon": 0.583,
+      "excel": 0.517,
+      "fin": 0.649,
+      "viz": 0.275,
+      "esgdata": 0.486,
+      "ghg": 0.383,
+      "disc": 0.536,
+      "aisup": 0.389,
+      "auto": 0.304,
+      "prompt": 0.569,
+      "aiinv": 0.441,
+      "sql": 0.698,
+      "python": 0.543,
+      "stats": 0.467,
+      "lca": 0.347,
+      "greenfin": 0.437,
+      "audit2": 0.388,
+      "treasury": 0.384,
+      "procure": 0.484,
+      "scm": 0.466,
+      "invent": 0.297
+    }
+  }
+}
