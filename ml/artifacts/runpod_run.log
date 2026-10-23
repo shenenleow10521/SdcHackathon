@@ -1,0 +1,26 @@
+== start Fri Oct 23 18:20:59 UTC 2026
+name, memory.total [MiB]
+NVIDIA GeForce RTX 4090, 24564 MiB
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 24.2 -> 26.2.2
+[notice] To update, run: python -m pip install --upgrade pip
+Downloading https://raw.githubusercontent.com/openai/GPTs-are-GPTs/36af7ac78d218158fd2070bd8775c86a99f222da/data/full_labelset.tsv
+Wrote /workspace/repo/ml/data/train.csv : 19265 tasks, 923 occupations, skipped 0. source sha256 094378905e1f3349
+Embedded 19265 tasks (923 occupations) on NVIDIA GeForce RTX 4090 in 3.9s -> dims 1024
+Trained on 15306 tasks / 738 occupations; alpha=1.0; held out 3959 tasks / 185 occupations
+                             pearson spearman    MAE      n
+per task
+  model                        0.671    0.689  0.203   3959
+  baselineMean                  None     None  0.328   3959
+  baselineNearestNeighbour     0.565     0.59  0.176   3959
+  referenceGpt4Labels          0.587    0.629  0.189   3959
+per occupation
+  model                        0.919    0.916  0.065    185
+  baselineMean                  None     None   0.17    185
+  baselineNearestNeighbour      0.88    0.879  0.071    185
+  referenceGpt4Labels          0.853    0.879  0.089    185
+HalaTuju catalogue, mean predicted exposure by sample tag: {'ai': 0.416, 'assist': 0.441, 'human': 0.511}
+== DONE Fri Oct 23 18:22:59 UTC 2026

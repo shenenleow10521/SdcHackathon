@@ -1,0 +1,1200 @@
+{
+ "startedAt": "2026-10-23T20:10:33.839Z",
+ "embedder": "BAAI/bge-m3",
+ "rules": {
+  "mentions": 15,
+  "organisations": 5,
+  "weeks": 4,
+  "duplicateCosine": 0.85
+ },
+ "settings": {
+  "maxPages": 24,
+  "perCall": 2,
+  "maxProposerCalls": 12,
+  "maxSkepticCalls": 8,
+  "queriesPerRun": 4,
+  "maxPagesPerOrg": 4,
+  "nearest": 5,
+  "embedTimeoutMs": 90000
+ },
+ "precheck": [
+  {
+   "skill": "Prompting AI tools for finance",
+   "top": [
+    {
+     "escoId": "4b3ae518-6746-4487-8d3b-4cfc063a43d0",
+     "title": "use business simulation tools",
+     "score": 0.545
+    },
+    {
+     "escoId": "68a596a2-6255-42bd-b3b1-e33a2214bef6",
+     "title": "facilitate the bidding process",
+     "score": 0.541
+    },
+    {
+     "escoId": "7d10fcb2-b368-48ab-996b-7c9fafcf68ed",
+     "title": "use automatic programming",
+     "score": 0.525
+    },
+    {
+     "escoId": "edf081e4-d2dc-4a60-8c49-7b7e45b5ebe3",
+     "title": "create risk maps",
+     "score": 0.52
+    },
+    {
+     "escoId": "c0502e2a-1e12-422e-994e-cf9bf814e3b2",
+     "title": "guide learners in using assistive technologies",
+     "score": 0.519
+    },
+    {
+     "escoId": "6bf6b5bd-6658-4338-b0ee-dc143e68e6d3",
+     "title": "provide support in financial calculation",
+     "score": 0.518
+    }
+   ]
+  },
+  {
+   "skill": "Supervising AI workflows",
+   "top": [
+    {
+     "escoId": "7add3681-17b6-4027-8a9d-ee92d2b96a42",
+     "title": "manage workflow processes",
+     "score": 0.595
+    },
+    {
+     "escoId": "7a9c3fa5-a9bb-46a0-8b5b-4d87427c8b76",
+     "title": "monitor processing conditions",
+     "score": 0.589
+    },
+    {
+     "escoId": "751941a0-5645-4f8b-b97e-b252909d5edb",
+     "title": "develop ICT workflow",
+     "score": 0.579
+    },
+    {
+     "escoId": "f399a9c1-be41-4117-bf86-a64b503c4cfd",
+     "title": "supervise data entry",
+     "score": 0.57
+    },
+    {
+     "escoId": "9581639c-e521-4d12-9b4e-25faca24d34b",
+     "title": "supervise crew",
+     "score": 0.569
+    },
+    {
+     "escoId": "2966d47d-72ad-404f-bad0-b45abb2b2058",
+     "title": "monitor policy proposals",
+     "score": 0.569
+    }
+   ]
+  },
+  {
+   "skill": "AI invoice review & exceptions",
+   "top": [
+    {
+     "escoId": "e3e42d54-78bd-4337-aa87-bb31a7670c9a",
+     "title": "issue sales invoices",
+     "score": 0.511
+    },
+    {
+     "escoId": "5079319b-b12d-46ae-8ba7-78a3aa242e6e",
+     "title": "review event bills",
+     "score": 0.504
+    },
+    {
+     "escoId": "1be2bb07-dbb2-4a67-b133-30b4ff30b094",
+     "title": "monitor billing procedures",
+     "score": 0.499
+    },
+    {
+     "escoId": "0c606377-fbd6-4f66-b700-ba4524670b73",
+     "title": "screen clients",
+     "score": 0.496
+    },
+    {
+     "escoId": "1336899e-859e-4cd2-8aaf-21d2c4e6989e",
+     "title": "monitor cashiers",
+     "score": 0.495
+    },
+    {
+     "escoId": "31418b90-4ae2-4fa1-b57b-42e190c1a214",
+     "title": "enter receipt of coffee inventory",
+     "score": 0.49
+    }
+   ]
+  },
+  {
+   "skill": "GHG emissions accounting",
+   "top": [
+    {
+     "escoId": "c8b4b02c-d9ce-4e24-ab43-5dd52c6dff48",
+     "title": "advise on carbon emissions reduction",
+     "score": 0.535
+    },
+    {
+     "escoId": "ade05884-0e4c-486c-9a0d-e033dd066ffc",
+     "title": "maintain gas mileage records",
+     "score": 0.528
+    },
+    {
+     "escoId": "4300b453-9bcf-474c-9ee3-92ec2229720c",
+     "title": "global standards for sustainability reporting",
+     "score": 0.526
+    },
+    {
+     "escoId": "b55376e1-41c3-45f8-9b35-d3e7b1288a33",
+     "title": "evaluate vehicle ecological footprint",
+     "score": 0.521
+    },
+    {
+     "escoId": "b322a6f0-8c28-478e-97ca-1e593d1a20c1",
+     "title": "operate biogas meter",
+     "score": 0.503
+    },
+    {
+     "escoId": "3310562c-ed9e-43c2-a4d0-bafeed7057a4",
+     "title": "report on fuel distribution incidents",
+     "score": 0.494
+    }
+   ]
+  },
+  {
+   "skill": "Three-way matching",
+   "top": [
+    {
+     "escoId": "dae63e12-3547-493c-8e6b-809c348984fe",
+     "title": "match vehicles with routes",
+     "score": 0.569
+    },
+    {
+     "escoId": "aed3d1e7-e9f5-4298-9a51-45266a49c844",
+     "title": "match people",
+     "score": 0.544
+    },
+    {
+     "escoId": "f7779005-c640-4c5d-8d95-558c1b53b6f5",
+     "title": "match product moulds",
+     "score": 0.528
+    },
+    {
+     "escoId": "322a8b34-af40-438c-ac67-882d482b7643",
+     "title": "use color matching techniques",
+     "score": 0.527
+    },
+    {
+     "escoId": "2d2873ab-34da-49c5-ba15-218419162aa2",
+     "title": "match frames to pictures",
+     "score": 0.519
+    },
+    {
+     "escoId": "6e53fd99-b646-4327-9580-ac062ab21188",
+     "title": "3D lighting",
+     "score": 0.514
+    }
+   ]
+  }
+ ],
+ "committee": {
+  "runId": 67,
+  "status": "ok",
+  "counts": {
+   "proposals": 6,
+   "phrases": 6,
+   "accumulated": 0,
+   "merged": 2,
+   "mergedCatalogue": 0,
+   "mergedEsco": 0,
+   "mergedSkeptic": 2,
+   "rejected": 2,
+   "watching": 2,
+   "provisional": 0
+  },
+  "funnel": {
+   "merged": 2,
+   "phrases": 6,
+   "rejected": 2,
+   "watching": 2,
+   "pagesRead": 24,
+   "proposals": 6,
+   "mergedEsco": 0,
+   "unreadable": 3,
+   "accumulated": 0,
+   "provisional": 0,
+   "rawProposals": 9,
+   "skepticCalls": 6,
+   "itemsRelevant": 129,
+   "mergedSkeptic": 2,
+   "proposerCalls": 12,
+   "itemsCollected": 329,
+   "mergedCatalogue": 0,
+   "skippedReadBefore": 19,
+   "verifiedProposals": 6,
+   "droppedQuoteNotOnPage": 0,
+   "droppedWordsNotInText": 3
+  },
+  "escoCheck": {
+   "mode": "vector",
+   "model": "BAAI/bge-m3"
+  },
+  "notes": [],
+  "queries": [
+   "AI CFO finance talent",
+   "AI tax accountants",
+   "AI procurement skills",
+   "AI governance finance controls"
+  ],
+  "sources": {
+   "hn": {
+    "ok": true,
+    "items": 0,
+    "errors": [],
+    "queries": 4
+   },
+   "rss": {
+    "ok": true,
+    "items": 288,
+    "detail": {
+     "OpenAI News": "74 recent items",
+     "Ars Technica": "20 recent items",
+     "The Verge AI": "10 recent items",
+     "TechCrunch AI": "20 recent items",
+     "BBC Technology": "20 recent items",
+     "Google AI blog": "6 recent items",
+     "Malay Mail money": "50 recent items",
+     "Microsoft Research": "10 recent items",
+     "Google DeepMind blog": "12 recent items",
+     "Official Microsoft Blog": "6 recent items",
+     "Free Malaysia Today business": "50 recent items",
+     "Microsoft Dynamics 365 blog (finance & operations)": "10 recent items"
+    },
+    "errors": [],
+    "queries": 1
+   },
+   "arxiv": {
+    "ok": true,
+    "items": 1,
+    "errors": [],
+    "queries": 4
+   },
+   "openalex": {
+    "ok": false,
+    "items": 0,
+    "errors": [
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)",
+     "OpenAlex: rate limited (HTTP 429)"
+    ],
+    "queries": 4
+   },
+   "websearch": {
+    "ok": true,
+    "items": 40,
+    "errors": [],
+    "queries": 4
+   }
+  },
+  "pagesRead": [
+   {
+    "url": "https://www.microsoft.com/en-us/dynamics-365/blog/it-professional/2026/09/25/work-iq-business-and-workplace-intelligence-in-the-flow-of-work/",
+    "via": "Microsoft Dynamics 365 blog (finance & operations)",
+    "date": "2026-09-25",
+    "title": "Work IQ: Business and workplace intelligence in the flow of work",
+    "excerpt": "Work IQ: Business and workplace intelligence in the flow of work Work IQ now grounds Microsoft Copilot and agents in your core business data from Microsoft Dynamics 365 and Microsoft Power Platform. The post Work IQ: Business and workplace intelligence in the flow of work appeared first on Microsoft",
+    "relevance": 34,
+    "sourceKind": "rss",
+    "organisation": "microsoft.com"
+   },
+   {
+    "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/10/15/microsoft-named-a-leader-in-the-2026-idc-marketscape-for-ai-enabled-operational-erp/",
+    "via": "Microsoft Dynamics 365 blog (finance & operations)",
+    "date": "2026-10-15",
+    "title": "Microsoft named a Leader in the 2026 IDC MarketScape for AI-Enabled Operational ERP",
+    "excerpt": "Microsoft named a Leader in the 2026 IDC MarketScape for AI-Enabled Operational ERP Microsoft Dynamics 365 is named a Leader for operational ERP, helping organizations connect people, data, and business systems to drive more agile operations. The post Microsoft named a Leader in the 2026 IDC MarketS",
+    "relevance": 33,
+    "sourceKind": "rss",
+    "organisation": "microsoft.com"
+   },
+   {
+    "url": "https://blogs.microsoft.com/blog/2026/09/25/introducing-the-new-copilot-with-home-code-and-autopilot/",
+    "via": "Official Microsoft Blog",
+    "date": "2026-09-25",
+    "title": "Introducing the new Copilot with Home, Code and Autopilot",
+    "excerpt": "Introducing the new Copilot with Home, Code and Autopilot We’re reimagining Microsoft Copilot to enable work as it evolves and to help expand what every individual and every organization can accomplish in the flow of human ambition. Today we’re introducing the new Copilot to connect the tools people",
+    "relevance": 33,
+    "sourceKind": "rss",
+    "organisation": "microsoft.com"
+   },
+   {
+    "url": "https://www.microsoft.com/en-us/research/blog/one-year-in-how-microsoft-research-asia-singapore-is-advancing-research-partnership-and-talent-for-real-world-impact/",
+    "via": "Microsoft Research",
+    "date": "2026-09-28",
+    "title": "One year in: How Microsoft Research Asia – Singapore is advancing research, partnership and talent for real-world impact",
+    "excerpt": "One year in: How Microsoft Research Asia – Singapore is advancing research, partnership and talent for real-world impact Since launching a year ago, the Microsoft Research Asia — Singapore lab has established a strong foundation, deepened collaboration across government, academia, and industry, and ",
+    "relevance": 32,
+    "sourceKind": "rss",
+    "organisation": "microsoft.com"
+   },
+   {
+    "url": "https://kpmg.com/ke/en/insights/ai/intelligent-industries-series/Global-AI-Pulse-Q3-2026.html",
+    "via": "Tavily",
+    "date": "2026-10-21",
+    "title": "Global AI Pulse Q3 2026",
+    "excerpt": "KPMG Global AI in finance report Skip to main content person_outline Login person_outline format_indent_increase Submit RFP language Kenya (EN) expand_more close Search close menu expand_less Industries expand_less Insights Featured topics 2026 KPMG Africa CEO Outlook\",\"xdm:linkURL\":\"https://kpmg.co",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "kpmg.com"
+   },
+   {
+    "url": "https://www.deloitte.com/us/en/programs/center-for-controllership/blogs/taming-ai-in-finance.html",
+    "via": "Tavily",
+    "date": "2026-10-14",
+    "title": "AI in Finance: What Controllers Need to Know | Deloitte US",
+    "excerpt": "AI in Finance: What Controllers Need to Know Link opens in a new tab opens in new window Skip to main content What we do Blockchain & Digital Assets Service Blockchain & Digital Assets Service Blockchain & Digital Assets Service Blockchain & Digital Assets Service Our Thinking Careers Who we are Mai",
+    "relevance": 38,
+    "sourceKind": "websearch",
+    "organisation": "deloitte.com"
+   },
+   {
+    "url": "https://arxiv.org/html/2608.12320v2",
+    "via": "Tavily",
+    "date": "2026-10-04",
+    "title": "The AI Accountability Ecosystem in the Era of Large Language Models",
+    "excerpt": "The AI Accountability Ecosystem in the Era of Large Language Models The AI Accountability Ecosystem in the Era of Large Language Models Chris Percy † † thanks: University of Warwick, Coventry, CV4 7AL, UK Artur d’Avila Garcez † † thanks: City St George’s, University of London, London, EC1V 0HB, UK A",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "arxiv.org"
+   },
+   {
+    "url": "https://www.accountingtoday.com/opinion/how-cfos-are-designing-a-new-finance-workforce",
+    "via": "Tavily",
+    "date": "2026-10-23",
+    "title": "How CFOs are designing a new finance workforce - Accounting Today",
+    "excerpt": "How CFOs are designing a new finance workforce Accounting AT Think How CFOs are designing a new finance workforce By Megan Weis Published October 23, 2026, 9:41 a.m. EDT | Updated October 23, 2026, 10:25 a.m. EDT 5 Min Read Facebook Twitter LinkedIn Email After watching talent get scarcer over the p",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "accountingtoday.com"
+   },
+   {
+    "url": "https://www.accountingtoday.com/news/aicpa-proposes-valuation-framework",
+    "via": "Tavily",
+    "date": "2026-10-13",
+    "title": "AICPA proposes valuation framework - Accounting Today",
+    "excerpt": "AICPA proposes valuation framework Accounting AICPA proposes valuation framework By Michael Cohn CloseText About Michael twitter mikecohnat mailto michael.cohn@arizent.com linkedin micohn Published October 13, 2026, 11:58 a.m. EDT | Updated October 13, 2026, 4:17 p.m. EDT 5 Min Read Facebook Twitter",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "accountingtoday.com"
+   },
+   {
+    "url": "https://www.accountingtoday.com/opinion/why-machine-speed-finance-needs-autonomous-oversight",
+    "via": "Tavily",
+    "date": "2026-10-19",
+    "title": "The automation paradox in finance - Accounting Today",
+    "excerpt": "The automation paradox in finance Technology AT Think The automation paradox in finance By Matthias Steinberg Published October 19, 2026, 1:46 p.m. EDT | Updated October 19, 2026, 5:19 p.m. EDT 3 Min Read Facebook Twitter LinkedIn Email The results are in after the Q2 earnings season: It's clear tha",
+    "relevance": 31,
+    "sourceKind": "websearch",
+    "organisation": "accountingtoday.com"
+   },
+   {
+    "url": "https://arxiv.org/abs/2609.32476v1",
+    "via": "arXiv",
+    "date": "2026-09-26",
+    "title": "Economic Governance of Autonomous Agents and Robots: Factor-Origin Accounting and Social Automation Funds",
+    "excerpt": "Economic Governance of Autonomous Agents and Robots: Factor-Origin Accounting and Social Automation Funds Contemporary fiscal architectures rely overwhelmingly on human labor income and payroll withholdings to finance social insurance and public infrastructure. The rapid diffusion of autonomous soft",
+    "relevance": 25,
+    "sourceKind": "arxiv",
+    "organisation": "arxiv.org"
+   },
+   {
+    "url": "https://aws.amazon.com/blogs/machine-learning/from-data-to-decisions-conversational-supply-chain-intelligence-with-amazon-quick-and-amazon-bedrock-agentcore",
+    "via": "Tavily",
+    "date": "2026-10-20",
+    "title": "From data to decisions: Conversational supply chain intelligence with Amazon Quick and Amazon Bedrock AgentCore | Artificial Intelligence",
+    "excerpt": "From data to decisions: Conversational supply chain intelligence with Amazon Quick and Amazon Bedrock AgentCore | Amazon Web Services From data to decisions: Conversational supply chain intelligence with Amazon Quick and Amazon Bedrock AgentCore Giving supply chain teams direct access to the systems",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "amazon.com"
+   },
+   {
+    "url": "https://www.deloitte.com/us/en/dbriefs-webcasts/ai-compliance-governance-frameworks-finance-leaders.html",
+    "via": "Tavily",
+    "date": "2026-10-20",
+    "title": "AI compliance and governance frameworks for finance leaders: Dbriefs webcast | Deloitte US",
+    "excerpt": "AI compliance and governance frameworks for finance leaders: Dbriefs webcast Link opens in a new tab opens in new window Skip to main content What we do Blockchain & Digital Assets Service Blockchain & Digital Assets Service Blockchain & Digital Assets Service Blockchain & Digital Assets Service Our",
+    "relevance": 36,
+    "sourceKind": "websearch",
+    "organisation": "deloitte.com"
+   },
+   {
+    "url": "https://kpmg.com/sg/en/services/advisory/alerts/mas-guidelines-artificial-intelligence-risk-management-airg.html",
+    "via": "Tavily",
+    "date": "2026-10-22",
+    "title": "MAS Guidelines: Artificial Intelligence Risk Management (AIRG)",
+    "excerpt": "MAS Guidelines: Artificial Intelligence Risk Management (AIRG) 2025 Skip to main content mail_outline Submit RFP language Singapore (EN) expand_more close Search close menu expand_less Services expand_less Industries expand_less Careers Featured Career recruitment brochure\",\"xdm:linkURL\":\"https://la",
+    "relevance": 32,
+    "sourceKind": "websearch",
+    "organisation": "kpmg.com"
+   },
+   {
+    "url": "https://careers.ey.com/ey/job/Chicago-US-Supply-Chain-Digital-and-AI_Procurement_Manager-IL-60606/1448254733",
+    "via": "Tavily",
+    "date": "2026-10-16",
+    "title": "US Supply Chain-Digital and AI_Procurement_Manager Job Details | EY",
+    "excerpt": "US Supply Chain-Digital and AI_Procurement_Manager Cookie information Welcome to the EY careers job search site. This website is based on the SuccessFactors software provided by SAP. On this page, functional and optional cookies are used to improve your experience and design our careers site more us",
+    "relevance": 35,
+    "sourceKind": "websearch",
+    "organisation": "ey.com"
+   },
+   {
+    "url": "https://usijobs.deloitte.com/en_US/careersUSI/JobDetail/USI-EH27-Consulting-Services-EP-EO-AI-Architect/361267",
+    "via": "Tavily",
+    "date": "2026-10-08",
+    "title": "AI Architect - - 361267",
+    "excerpt": "Check out this job at Deloitte, AI Architect Position Summary AI Architect – ERP Integration and Agentic AI Our Enterprise Performance team helps organizations modernize and extend enterprise platforms by embedding cloud-native artificial intelligence into core business processes. As an AI Architect",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "deloitte.com"
+   },
+   {
+    "url": "https://usijobs.deloitte.com/en_US/careersUSI/JobDetail/USI-EH27-Consulting-P-P-ZORA-Manager-Product-Management-Sourcing-Procurement/369386",
+    "via": "Tavily",
+    "date": "2026-10-01",
+    "title": "Manager, Product Management — Sourcing & Procurement - - 369386",
+    "excerpt": "Check out this job at Deloitte, Manager, Product Management — Sourcing &amp; Procurement Position Summary Manager, Product Management — Sourcing & Procurement Zora AI&trade; by Deloitte | Deloitte Consulting Products (USI) About the Role Zora AI&trade; by Deloitte is Deloitte's agentic AI platform, ",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "deloitte.com"
+   },
+   {
+    "url": "https://www.accountingtoday.com/news/ai-beats-human-accountants-at-monthly-close-transaction-categorization",
+    "via": "Tavily",
+    "date": "2026-10-16",
+    "title": "AI beats human accountants at monthly close, transaction categorization - Accounting Today",
+    "excerpt": "AI beats human accountants at monthly close, transaction categorization Technology AI beats human accountants at monthly close, transaction categorization By Chris Gaetano CloseText About Chris linkedin chris-gaetano-870989232/ Published October 16, 2026, 4:59 p.m. EDT | Updated October 16, 2026, 5:",
+    "relevance": 36,
+    "sourceKind": "websearch",
+    "organisation": "accountingtoday.com"
+   },
+   {
+    "url": "https://kpmg.com/ca/en/media/2026/10/canadian-ai-procurement-a-public-sector-priority.html",
+    "via": "Tavily",
+    "date": "2026-10-13",
+    "title": "Canadian AI procurement a priority as public sector pushes ahead with adoption | KPMG Canada",
+    "excerpt": "Canadian AI procurement a priority as public sector pushes ahead with adoption error Subscriptions are not available for this site while you are logged into your current account. close Skip to main content article Submit RFP perm_identity Login perm_identity mail_outline Contact us language Canada (",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "kpmg.com"
+   },
+   {
+    "url": "https://www.ey.com/en_us/cro-risk/trustworthy-ai-5-steps-to-scale-with-confidence",
+    "via": "Tavily",
+    "date": "2026-10-13",
+    "title": "Trustworthy AI: five steps to scale with confidence | EY - US",
+    "excerpt": "Trustworthy AI: five steps to scale with confidence EY Homepage Services</h3>\\r\\n\"}}\" id=\"rich-text-bdb7ae91ea2a\" data-up-is=\"rich-text\" data-up-translation-read-more=\"Read more\" data-up-translation-read-less=\"Read less\" data-up-translation-aria-label-read-more=\"Read more button, press enter to acti",
+    "relevance": 40,
+    "sourceKind": "websearch",
+    "organisation": "ey.com"
+   },
+   {
+    "url": "https://www.freemalaysiatoday.com/category/business/2026/10/23/ringgit-opens-higher-as-ai-investment-concerns-weigh-on-greenback",
+    "via": "Free Malaysia Today business",
+    "date": "2026-10-23",
+    "title": "Ringgit opens higher as AI investment concerns weigh on greenback",
+    "excerpt": "Ringgit opens higher as AI investment concerns weigh on greenback The local note rises to 4.0785/4.0855 against the US dollar from Thursday’s close of 4.0815/4.0850. KUALA LUMPUR: The ringgit opened higher on Friday as the greenback weakened after equity prices fell amid heightened concern over arti",
+    "relevance": 18,
+    "sourceKind": "rss",
+    "organisation": "freemalaysiatoday.com"
+   },
+   {
+    "url": "https://www.freemalaysiatoday.com/category/business/2026/10/23/s-p-500-nasdaq-end-sharply-lower-as-revived-ai-doubts-ignite-tech-selloff",
+    "via": "Free Malaysia Today business",
+    "date": "2026-10-22",
+    "title": "S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff",
+    "excerpt": "S&P 500, Nasdaq end sharply lower as revived AI doubts ignite tech selloff Investors are worried that ongoing Middle East tensions could keep inflation high and force the US Federal Reserve to continue raising interest rates. The tech-heavy Nasdaq fell 2.6%, dragged down by chipmakers following a se",
+    "relevance": 18,
+    "sourceKind": "rss",
+    "organisation": "freemalaysiatoday.com"
+   },
+   {
+    "url": "https://www.freemalaysiatoday.com/category/business/2026/10/23/asian-shares-wobble-as-tech-rout-boosts-bonds-dents-rate-hike-bets",
+    "via": "Free Malaysia Today business",
+    "date": "2026-10-23",
+    "title": "Asian shares wobble as tech rout boosts bonds, dents rate hike bets",
+    "excerpt": "Asian shares wobble as tech rout boosts bonds, dents rate hike bets Markets pared back Federal Reserve tightening expectations amid fears an AI bubble could derail data-centre investment and hobble the US economy. South Korea's KOSPI skidded 1.7%, heading for a 4.3% weekly decline, with memory chipm",
+    "relevance": 17,
+    "sourceKind": "rss",
+    "organisation": "freemalaysiatoday.com"
+   },
+   {
+    "url": "https://www.malaymail.com/news/money/2026/10/21/ai-stocks-roar-back-across-asia-lifting-seoul-and-tokyo-markets/239988",
+    "via": "Malay Mail money",
+    "date": "2026-10-21",
+    "title": "AI stocks roar back across Asia, lifting Seoul and Tokyo markets",
+    "excerpt": "AI stocks roar back across Asia, lifting Seoul and Tokyo markets HONG KONG, Oct 21 — Asian markets rallied today as tech firms enjoyed a much-needed rebound, with investors taking... HONG KONG, Oct 21 — Asian markets rallied today as tech firms enjoyed a much-needed rebound, with investors taking he",
+    "relevance": 17,
+    "sourceKind": "rss",
+    "organisation": "malaymail.com"
+   }
+  ],
+  "proposerErrors": [],
+  "candidates": [
+   {
+    "label": "managing ERP operations",
+    "state": "merged",
+    "status": "merged",
+    "wordings": [
+     "managing ERP operations"
+    ],
+    "committee": {
+     "esco": {
+      "check": "vector",
+      "match": {
+       "id": "f0393af3-bcd9-41af-a36e-0cfb83b60081",
+       "how": "vector",
+       "name": "manage standard enterprise resource planning system",
+       "score": 0.689,
+       "source": "esco",
+       "description": "Collect, manage and interpret data relevant for companies related to shipping, payment, inventory, resources and manufacturing using specific business managemen"
+      },
+      "nearest": [
+       {
+        "id": "f0393af3-bcd9-41af-a36e-0cfb83b60081",
+        "how": "vector",
+        "name": "manage standard enterprise resource planning system",
+        "score": 0.689,
+        "source": "esco"
+       },
+       {
+        "id": "435d1751-8667-41ec-8b32-865b7cd3c684",
+        "how": "vector",
+        "name": "manage production enterprise",
+        "score": 0.629,
+        "source": "esco"
+       },
+       {
+        "id": "20697183-d42a-45fc-b8ad-03e49bdb7d9e",
+        "how": "vector",
+        "name": "manage front operations",
+        "score": 0.614,
+        "source": "esco"
+       }
+      ]
+     },
+     "skeptic": "duplicate: The proposed skill is functionally identical to the existing ESCO skill 'manage standard enterprise resource planning system', which covers the management of data and processes within ERP systems.",
+     "proposer": "Seen in 1 trusted source from 1 organisation: \"Managing that complexity is what Microsoft Dynamics 365 is built for, and Microsoft has been named a Leader in the IDC MarketScape: Worldwide AI-Enabled Operati\"",
+     "wordings": [
+      "managing ERP operations"
+     ],
+     "catalogue": {
+      "match": null,
+      "nearest": [
+       {
+        "id": "erp",
+        "how": "embedding",
+        "name": "ERP operation (SAP)",
+        "score": 0.761,
+        "source": "catalogue"
+       },
+       {
+        "id": "scm",
+        "how": "embedding",
+        "name": "Supply chain planning",
+        "score": 0.663,
+        "source": "catalogue"
+       },
+       {
+        "id": "invent",
+        "how": "embedding",
+        "name": "Inventory analytics",
+        "score": 0.662,
+        "source": "catalogue"
+       }
+      ]
+     },
+     "duplicate": "Skeptic: same as ESCO skill 'manage standard enterprise resource planning system' (ESCO f0393af3-bcd9-41af-a36e-0cfb83b60081), vector 0.689: alias",
+     "thresholds": {
+      "weeks": 4,
+      "passes": {
+       "linked": true,
+       "growing": false,
+       "mentions": false,
+       "earlierRun": false,
+       "organisations": false
+      },
+      "mentions": 15,
+      "organisations": 5,
+      "duplicateCosine": 0.85
+     }
+    },
+    "evidence": [
+     {
+      "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/10/15/microsoft-named-a-leader-in-the-2026-idc-marketscape-for-ai-enabled-operational-erp/",
+      "date": "2026-10-15",
+      "quote": "Managing that complexity is what Microsoft Dynamics 365 is built for, and Microsoft has been named a Leader in the IDC MarketScape: Worldwide AI-Enabled Operational ERP 2026 Vendor Assessment",
+      "organisation": "microsoft.com"
+     }
+    ],
+    "progress": {
+     "mentions": {
+      "have": 1,
+      "need": 15
+     },
+     "organisations": {
+      "have": 1,
+      "need": 5
+     },
+     "weeks": {
+      "have": 1,
+      "need": 4
+     }
+    },
+    "linkedSkill": "erp"
+   },
+   {
+    "label": "evaluating AI-related risks",
+    "state": "watching",
+    "status": "pending",
+    "wordings": [
+     "evaluating AI-related risks"
+    ],
+    "committee": {
+     "esco": {
+      "check": "vector",
+      "match": null,
+      "nearest": [
+       {
+        "id": "fe1c2b32-7fe9-4668-affa-07ff658a68cf",
+        "how": "vector",
+        "name": "identify ICT security risks",
+        "score": 0.6,
+        "source": "esco"
+       },
+       {
+        "id": "2ddb1226-1117-4eb4-ae65-3a2f5a5a3c80",
+        "how": "vector",
+        "name": "ICT network security risks",
+        "score": 0.599,
+        "source": "esco"
+       },
+       {
+        "id": "e43cb15d-b48c-43f9-a995-0dfd87b903b9",
+        "how": "vector",
+        "name": "assess danger in risk areas",
+        "score": 0.598,
+        "source": "esco"
+       }
+      ]
+     },
+     "skeptic": "keep: Evaluating AI-related risks involves specific considerations regarding algorithmic bias, data privacy, and model reliability that are distinct from general ICT risk management or existing AI workflow supervision.",
+     "proposer": "Seen in 1 trusted source from 1 organisation: \"The guidance will aid CPAs in evaluating AI-related risks, understanding how AI may affect controls, and determining appropriate audit responses and the auditor\"",
+     "wordings": [
+      "evaluating AI-related risks"
+     ],
+     "catalogue": {
+      "match": null,
+      "nearest": [
+       {
+        "id": "procure",
+        "how": "embedding",
+        "name": "Strategic sourcing",
+        "score": 0.708,
+        "source": "catalogue"
+       },
+       {
+        "id": "aisup",
+        "how": "embedding",
+        "name": "Supervising AI workflows",
+        "score": 0.69,
+        "source": "catalogue"
+       },
+       {
+        "id": "aiinv",
+        "how": "embedding",
+        "name": "AI invoice review & exceptions",
+        "score": 0.62,
+        "source": "catalogue"
+       }
+      ]
+     },
+     "duplicate": "No match in ESCO (13,939 skills; nearest 'identify ICT security risks' (ESCO fe1c2b32-7fe9-4668-affa-07ff658a68cf), vector 0.6) or our catalogue (nearest 'Strategic sourcing', embedding 0.708)",
+     "thresholds": {
+      "weeks": 4,
+      "passes": {
+       "linked": true,
+       "growing": false,
+       "mentions": false,
+       "earlierRun": false,
+       "organisations": false
+      },
+      "mentions": 15,
+      "organisations": 5,
+      "duplicateCosine": 0.85
+     }
+    },
+    "evidence": [
+     {
+      "url": "https://www.accountingtoday.com/news/aicpa-proposes-valuation-framework",
+      "date": "2026-10-13",
+      "quote": "The guidance will aid CPAs in evaluating AI-related risks, understanding how AI may affect controls, and determining appropriate audit responses and the auditor's use of AI tools when performing the audit.",
+      "organisation": "accountingtoday.com"
+     }
+    ],
+    "progress": {
+     "mentions": {
+      "have": 1,
+      "need": 15
+     },
+     "organisations": {
+      "have": 1,
+      "need": 5
+     },
+     "weeks": {
+      "have": 1,
+      "need": 4
+     }
+    },
+    "linkedSkill": "audit2"
+   },
+   {
+    "label": "attributing economic value across mixed workflows",
+    "state": "watching",
+    "status": "pending",
+    "wordings": [
+     "attributing economic value across mixed workflows"
+    ],
+    "committee": {
+     "esco": {
+      "check": "vector",
+      "match": null,
+      "nearest": [
+       {
+        "id": "751941a0-5645-4f8b-b97e-b252909d5edb",
+        "how": "vector",
+        "name": "develop ICT workflow",
+        "score": 0.564,
+        "source": "esco"
+       },
+       {
+        "id": "988f4ac3-a37c-4b0a-a40f-4e0e56b5919e",
+        "how": "vector",
+        "name": "promote the transfer of knowledge",
+        "score": 0.557,
+        "source": "esco"
+       },
+       {
+        "id": "56042303-972b-41be-9310-58467599ff7e",
+        "how": "vector",
+        "name": "analyse business processes",
+        "score": 0.547,
+        "source": "esco"
+       }
+      ]
+     },
+     "skeptic": "keep: This skill describes a specific analytical ability to quantify the economic contribution of human versus machine inputs in hybrid processes, which is not covered by existing workflow or asset recognition skills.",
+     "proposer": "Seen in 1 trusted source from 1 organisation: \"attributing economic value across mixed human-machine workflows\"",
+     "wordings": [
+      "attributing economic value across mixed workflows"
+     ],
+     "catalogue": {
+      "match": null,
+      "nearest": [
+       {
+        "id": "auto",
+        "how": "embedding",
+        "name": "Workflow automation",
+        "score": 0.674,
+        "source": "catalogue"
+       },
+       {
+        "id": "aisup",
+        "how": "embedding",
+        "name": "Supervising AI workflows",
+        "score": 0.667,
+        "source": "catalogue"
+       },
+       {
+        "id": "lca",
+        "how": "embedding",
+        "name": "Life-cycle assessment",
+        "score": 0.605,
+        "source": "catalogue"
+       }
+      ]
+     },
+     "duplicate": "No match in ESCO (13,939 skills; nearest 'develop ICT workflow' (ESCO 751941a0-5645-4f8b-b97e-b252909d5edb), vector 0.564) or our catalogue (nearest 'Workflow automation', embedding 0.674)",
+     "thresholds": {
+      "weeks": 4,
+      "passes": {
+       "linked": true,
+       "growing": false,
+       "mentions": false,
+       "earlierRun": false,
+       "organisations": false
+      },
+      "mentions": 15,
+      "organisations": 5,
+      "duplicateCosine": 0.85
+     }
+    },
+    "evidence": [
+     {
+      "url": "https://arxiv.org/abs/2609.32476v1",
+      "date": "2026-09-26",
+      "quote": "attributing economic value across mixed human-machine workflows",
+      "organisation": "arxiv.org"
+     }
+    ],
+    "progress": {
+     "mentions": {
+      "have": 1,
+      "need": 15
+     },
+     "organisations": {
+      "have": 1,
+      "need": 5
+     },
+     "weeks": {
+      "have": 1,
+      "need": 4
+     }
+    },
+    "linkedSkill": "process"
+   },
+   {
+    "label": "conversational supply chain intelligence",
+    "state": "rejected",
+    "status": "rejected",
+    "wordings": [
+     "conversational supply chain intelligence"
+    ],
+    "committee": {
+     "esco": {
+      "check": "vector",
+      "match": null,
+      "nearest": [
+       {
+        "id": "f263da7f-0708-42c2-b1a9-39083416f632",
+        "how": "vector",
+        "name": "communicate analytical insights",
+        "score": 0.588,
+        "source": "esco"
+       },
+       {
+        "id": "b7e57889-a84f-440c-9e60-459aa69979e9",
+        "how": "vector",
+        "name": "analyse supply chain trends",
+        "score": 0.547,
+        "source": "esco"
+       },
+       {
+        "id": "97d9da44-c76f-4d91-be11-48956e520619",
+        "how": "vector",
+        "name": "cooperate to resolve information issues",
+        "score": 0.536,
+        "source": "esco"
+       }
+      ]
+     },
+     "skeptic": "product_name: The proposed skill refers to a specific feature or marketing term for Amazon's cloud services rather than a distinct professional competency.",
+     "proposer": "Seen in 1 trusted source from 1 organisation: \"Conversational supply chain intelligence with Amazon Quick and Amazon Bedrock AgentCore\"",
+     "wordings": [
+      "conversational supply chain intelligence"
+     ],
+     "catalogue": {
+      "match": null,
+      "nearest": [
+       {
+        "id": "scm",
+        "how": "embedding",
+        "name": "Supply chain planning",
+        "score": 0.668,
+        "source": "catalogue"
+       },
+       {
+        "id": "invent",
+        "how": "embedding",
+        "name": "Inventory analytics",
+        "score": 0.639,
+        "source": "catalogue"
+       },
+       {
+        "id": "procure",
+        "how": "embedding",
+        "name": "Strategic sourcing",
+        "score": 0.625,
+        "source": "catalogue"
+       }
+      ]
+     },
+     "duplicate": "No match in ESCO (13,939 skills; nearest 'communicate analytical insights' (ESCO f263da7f-0708-42c2-b1a9-39083416f632), vector 0.588) or our catalogue (nearest 'Supply chain planning', embedding 0.668)",
+     "thresholds": {
+      "weeks": 4,
+      "passes": {
+       "linked": true,
+       "growing": false,
+       "mentions": false,
+       "earlierRun": false,
+       "organisations": false
+      },
+      "mentions": 15,
+      "organisations": 5,
+      "duplicateCosine": 0.85
+     }
+    },
+    "evidence": [
+     {
+      "url": "https://aws.amazon.com/blogs/machine-learning/from-data-to-decisions-conversational-supply-chain-intelligence-with-amazon-quick-and-amazon-bedrock-agentcore",
+      "date": "2026-10-20",
+      "quote": "Conversational supply chain intelligence with Amazon Quick and Amazon Bedrock AgentCore",
+      "organisation": "amazon.com"
+     }
+    ],
+    "progress": {
+     "mentions": {
+      "have": 1,
+      "need": 15
+     },
+     "organisations": {
+      "have": 1,
+      "need": 5
+     },
+     "weeks": {
+      "have": 1,
+      "need": 4
+     }
+    },
+    "linkedSkill": "scm"
+   },
+   {
+    "label": "digital procurement solutioning",
+    "state": "merged",
+    "status": "merged",
+    "wordings": [
+     "digital procurement solutioning"
+    ],
+    "committee": {
+     "esco": {
+      "check": "vector",
+      "match": {
+       "id": "bc067d2e-e151-408f-8e34-24effd2b7fd6",
+       "how": "vector",
+       "name": "use e-procurement",
+       "score": 0.649,
+       "source": "esco",
+       "description": "Use digital procurement technologies and e-procurement applications and tools in order to reduce administrative burden, improve efficiency, and strengthen trans"
+      },
+      "nearest": [
+       {
+        "id": "bc067d2e-e151-408f-8e34-24effd2b7fd6",
+        "how": "vector",
+        "name": "use e-procurement",
+        "score": 0.649,
+        "source": "esco"
+       },
+       {
+        "id": "9bbe0d37-822c-4096-8b56-8729e5783b4b",
+        "how": "vector",
+        "name": "implement procurement of innovation",
+        "score": 0.624,
+        "source": "esco"
+       },
+       {
+        "id": "9e9a4209-c7cf-4f6e-973e-dc2ffadccc74",
+        "how": "vector",
+        "name": "perform procurement processes",
+        "score": 0.607,
+        "source": "esco"
+       }
+      ]
+     },
+     "skeptic": "duplicate: The proposed skill describes the application of digital tools to procurement workflows, which is functionally identical to the ESCO skill 'use e-procurement'.",
+     "proposer": "Seen in 1 trusted source from 1 organisation: \"Lead digital procurement solutioning and delivery workstreams, with accountability for scope, quality, milestones, risks, dependencies and client outcomes.\"",
+     "wordings": [
+      "digital procurement solutioning"
+     ],
+     "catalogue": {
+      "match": null,
+      "nearest": [
+       {
+        "id": "procure",
+        "how": "embedding",
+        "name": "Strategic sourcing",
+        "score": 0.655,
+        "source": "catalogue"
+       },
+       {
+        "id": "process",
+        "how": "embedding",
+        "name": "Process improvement",
+        "score": 0.612,
+        "source": "catalogue"
+       },
+       {
+        "id": "scm",
+        "how": "embedding",
+        "name": "Supply chain planning",
+        "score": 0.596,
+        "source": "catalogue"
+       }
+      ]
+     },
+     "duplicate": "Skeptic: same as ESCO skill 'use e-procurement' (ESCO bc067d2e-e151-408f-8e34-24effd2b7fd6), vector 0.649: alias",
+     "thresholds": {
+      "weeks": 4,
+      "passes": {
+       "linked": true,
+       "growing": false,
+       "mentions": false,
+       "earlierRun": false,
+       "organisations": false
+      },
+      "mentions": 15,
+      "organisations": 5,
+      "duplicateCosine": 0.85
+     }
+    },
+    "evidence": [
+     {
+      "url": "https://careers.ey.com/ey/job/Chicago-US-Supply-Chain-Digital-and-AI_Procurement_Manager-IL-60606/1448254733",
+      "date": "2026-10-16",
+      "quote": "Lead digital procurement solutioning and delivery workstreams, with accountability for scope, quality, milestones, risks, dependencies and client outcomes.",
+      "organisation": "ey.com"
+     }
+    ],
+    "progress": {
+     "mentions": {
+      "have": 1,
+      "need": 15
+     },
+     "organisations": {
+      "have": 1,
+      "need": 5
+     },
+     "weeks": {
+      "have": 1,
+      "need": 4
+     }
+    },
+    "linkedSkill": "procure"
+   },
+   {
+    "label": "Agentic AI architectures",
+    "state": "rejected",
+    "status": "rejected",
+    "wordings": [
+     "Agentic AI architectures"
+    ],
+    "committee": {
+     "esco": {
+      "check": "vector",
+      "match": null,
+      "nearest": [
+       {
+        "id": "e465a154-93f7-4973-9ce1-31659fe16dd2",
+        "how": "vector",
+        "name": "principles of artificial intelligence",
+        "score": 0.593,
+        "source": "esco"
+       },
+       {
+        "id": "f0163b63-6794-4eb7-b17b-f91d11b2602d",
+        "how": "vector",
+        "name": "implement cryptographic constructs",
+        "score": 0.529,
+        "source": "esco"
+       },
+       {
+        "id": "3e2ab38a-4519-4bef-b762-a8bf4836a775",
+        "how": "vector",
+        "name": "perform dimensionality reduction",
+        "score": 0.51,
+        "source": "esco"
+       }
+      ]
+     },
+     "skeptic": "not_a_person_skill: The proposed skill describes a technical architecture or system design rather than a specific professional competency or task performed by a person in a finance or accounting role.",
+     "proposer": "Seen in 1 trusted source from 1 organisation: \"Design and implement scalable, secure, and cloud-native solutions leveraging AWS and Agentic AI architectures.\"",
+     "wordings": [
+      "Agentic AI architectures"
+     ],
+     "catalogue": {
+      "match": null,
+      "nearest": [
+       {
+        "id": "aisup",
+        "how": "embedding",
+        "name": "Supervising AI workflows",
+        "score": 0.674,
+        "source": "catalogue"
+       },
+       {
+        "id": "prompt",
+        "how": "embedding",
+        "name": "Prompting AI tools for finance",
+        "score": 0.638,
+        "source": "catalogue"
+       },
+       {
+        "id": "aiinv",
+        "how": "embedding",
+        "name": "AI invoice review & exceptions",
+        "score": 0.585,
+        "source": "catalogue"
+       }
+      ]
+     },
+     "duplicate": "No match in ESCO (13,939 skills; nearest 'principles of artificial intelligence' (ESCO e465a154-93f7-4973-9ce1-31659fe16dd2), vector 0.593) or our catalogue (nearest 'Supervising AI workflows', embedding 0.674)",
+     "thresholds": {
+      "weeks": 4,
+      "passes": {
+       "linked": true,
+       "growing": false,
+       "mentions": false,
+       "earlierRun": false,
+       "organisations": false
+      },
+      "mentions": 15,
+      "organisations": 5,
+      "duplicateCosine": 0.85
+     }
+    },
+    "evidence": [
+     {
+      "url": "https://usijobs.deloitte.com/en_US/careersUSI/JobDetail/USI-EH27-Consulting-Services-EP-EO-AI-Architect/361267",
+      "date": "2026-10-08",
+      "quote": "Design and implement scalable, secure, and cloud-native solutions leveraging AWS and Agentic AI architectures.",
+      "organisation": "deloitte.com"
+     }
+    ],
+    "progress": {
+     "mentions": {
+      "have": 1,
+      "need": 15
+     },
+     "organisations": {
+      "have": 1,
+      "need": 5
+     },
+     "weeks": {
+      "have": 1,
+      "need": 4
+     }
+    },
+    "linkedSkill": "aisup"
+   }
+  ],
+  "cost": {
+   "llmCalls": {
+    "main": 12,
+    "reviewer": 6
+   },
+   "llmFailures": 0,
+   "tavilySearches": 4,
+   "otherFetches": 68,
+   "embedCalls": 2,
+   "embedSeconds": 27,
+   "embedTexts": 131
+  }
+ },
+ "seconds": 185
+}
