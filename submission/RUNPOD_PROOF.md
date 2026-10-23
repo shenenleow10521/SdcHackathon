@@ -49,4 +49,4 @@ Account balance on 24 Oct 2026, 04:30 MYT: **US$20.96** of the US$25 team credit
 1. _[screenshot: Billing → usage or pod history showing pod `38jijj8fe5dazu`, RTX 4090, its runtime on 23 Oct 2026]_ → `runpod-pod-38jijj8fe5dazu.png`
 2. _[screenshot: Serverless → `halatuju-bge-m3` (`a7ipau1nmqogxs`): GPU type, workers 0–1, the Requests/Metrics tab with recent requests]_ → `runpod-endpoint-a7ipau1nmqogxs.png`
 3. _[screenshot: Billing page showing total spend against the US$25 credit]_ → `runpod-billing.png`
-4. _[screenshot: the organisers' Discord message allowing local GPU testing before the final RunPod run]_ → `runpod-local-testing-ok.png`
+4. _[only if it exists: the organisers' message confirming that testing on a local GPU before the final RunPod run is allowed. If there is no such message, ask on Discord before submitting; the final training run was on RunPod either way]_ → `runpod-local-testing-ok.png`
