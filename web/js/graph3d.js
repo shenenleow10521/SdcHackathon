@@ -284,6 +284,11 @@ function placeLabels() {
   }
   items.sort((a, b) => a.pr - b.pr);
   const placed = placedLabels = [], hit = r => placed.some(q => r.x < q.x + q.w && r.x + r.w > q.x && r.y < q.y + q.h && r.y + r.h > q.y);
+  // the "new AI signal" badge sits above its node; other labels step around it
+  if (incidentEl && !incidentEl.hidden && S.signalNode) {
+    const ip = posOf(S.signalNode);
+    if (ip) { const s = Graph.graph2ScreenCoords(ip.x, ip.y, ip.z), w = incidentEl.offsetWidth, h = incidentEl.offsetHeight; placed.push({ x: s.x - w / 2 - 4, y: s.y - 14 - h - 2, w: w + 8, h: h + 4 }); }
+  }
   for (const it of items) {
     let y = null;
     for (const cy of [it.s.y + it.off, it.s.y - it.off - it.h]) { const r = { x: it.s.x - it.w / 2 - 4, y: cy - 2, w: it.w + 8, h: it.h + 4 }; if (!hit(r)) { y = cy; placed.push(r); break; } }
