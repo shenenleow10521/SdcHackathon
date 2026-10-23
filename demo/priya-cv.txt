@@ -1,0 +1,51 @@
+PRIYA NAIR
+Senior Accounts Payable Executive  |  Penang
+
+H/P: +60 12-000 0000   |   Email: priya.sample@example.com   |   linkedin.com/in/priya-sample
+Address: No. 8, Jalan Contoh 3, Taman Contoh, 11900 Bayan Lepas, Pulau Pinang
+IC No: 000000-07-0000      D.O.B: 01/01/1988
+Female · Indian · Married
+
+CAREER SUMMARY
+11 yrs in accounts payable at a shared-services centre in Penang. Handle high volume invoice
+processing for 6 regional entities (MY, SG, TH). Looking for a new role in finance / sustainability
+reporting where my reconciliation and audit experience is useful.
+
+WORKING EXPERIENCE
+
+Senior Accounts Payable Executive
+Seri Mutiara Shared Services Sdn Bhd (fictional), Bayan Lepas          Jan 2015 - present
+ - Process approx. 1,200 supplier invoices / month in SAP S/4HANA (MIRO, FB60): invoice data entry,
+   GL coding and cost centre checks.
+ - 3-way matching of PO, invoice and GRN; resolve price & quantity mismatches with buyers and warehouse.
+ - Prepare weekly payment runs (F110) for about RM 2.4 mil a week, check cash position before release.
+ - Monthly vendor statement reconciliation to the ledger, investigate and clear unexplained differences.
+ - Prepare SST computation and support the quarterly SST-02 return with the tax team.
+ - Handle vendor disputes & queries (email / phone), avg 40 cases a month, escalations to buyers.
+ - Prepare audit evidence packs for external auditors every year end; keep the document trail complete,
+   zero repeat audit findings for AP in FY2023 and FY2024.
+ - Build month-end AP ageing and accruals reports in Excel (pivot tables, VLOOKUP / XLOOKUP).
+ - Key user for SAP S/4HANA FI-AP: vendor master changes, posting rules, user testing for the 2022 upgrade.
+ - Learning Power BI on my own; built a first AP ageing dashboard for my team lead (pilot only).
+ - Led small project to redesign the payment-run checklist, cut payment errors from ~15 to 3 a quarter.
+
+Accounts Payable Clerk
+Kedai Contoh Trading Sdn Bhd (fictional), Butterworth                  06/2012 - 12/2014
+ - Data entry of invoices into accounting system, filing of supporting documents.
+ - Recieved and checked supplier statements.
+
+EDUCATION
+Diploma in Accounting - Politeknik Contoh (fictional), 2012
+SPM 2008
+
+SKILLS
+ - SAP S/4HANA (FI-AP), MS Excel (advanced), SST
+ - Power BI dashboards (basic)
+ - Python for data analysis (beginner, online course)
+ - Teamwork, attention to detail
+Languages: Bahasa Malaysia (fasih), English, Tamil
+
+REFERENCES
+Mr. Lim, Finance Manager, Seri Mutiara Shared Services - Tel: 04-000 0000
+
+Sample CV for the HalaTuju demo. Fictional person and fictional employers; contact details are not real.
