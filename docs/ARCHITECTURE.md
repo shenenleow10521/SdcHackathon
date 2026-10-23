@@ -19,7 +19,7 @@
 | Skill data | **ESCO** (essential/optional skills per job) + **O\*NET** (tasks, importance) | Free to reuse with credit (see §12) |
 | Trend sources | **arXiv API, OpenAlex, curated RSS feeds** (AI lab/vendor blogs) | Free, legal, no scraping |
 | Job-board data | **Not used.** JobStreet's and LinkedIn's terms forbid scraping or copying content | Use framework weights; posting shares stay labelled "sample" until a licensed source exists |
-| Accounts | One demo user (sample persona "Aisyah") plus an admin toggle. No login for the prelim | Time; "no real personal data" rule |
+| Accounts | One demo user (sample persona "Priya") plus an admin toggle. No login for the prelim | Time; "no real personal data" rule |
 
 ---
 
@@ -51,7 +51,7 @@ flowchart LR
   AG --> TRI --> DB
 ```
 
-**Design rule:** *agents do the reading and talking; the scoring engine does the maths.* Every number on screen comes from the engine (plain code, fixed formulas) using database records that have a source. LLMs may only output IDs that exist in the database.
+**Quality plan:** see §14. **Design rule:** *agents do the reading and talking; the scoring engine does the maths.* Every number on screen comes from the engine (plain code, fixed formulas) using database records that have a source. LLMs may only output IDs that exist in the database.
 
 ---
 
@@ -311,16 +311,62 @@ Roles: **A** backend/engine/DB · **B** agents/LLM/RunPod · **C** frontend · *
 
 | Block | A | B | C | D |
 |---|---|---|---|---|
-| **Fri, first 3 h** | Repo (Apache-2.0, committee as collaborators), Replit project, Postgres, `schema.sql` | Enable Replit AI Integrations; deploy the RunPod bge-m3 endpoint; `llm.ts`, `embed.ts` | Split the prototype into `web/`; `api.js` stub | Ask the Discord questions; pick the seeded jobs; start ESCO/O\*NET subset CSVs |
-| **Fri, next 6 h** | Port engine + tests; `/api/graph`, `/api/map`, `/api/plan` | CV extractor (+ PII scrub); `embed-skills` script | Load the graph from the API; job list/path from the API | Seed data + courses + persona CV; README credits |
-| **Fri night** | Review endpoints + KB versioning + re-score | Scout (arXiv/OpenAlex/RSS) + reviewer + triage | Admin view wired to the API; upload flow | PRD draft on the official template |
-| **Sat day** | Caching, `DEMO_MODE`, health, deploy | Interviewer + explainer + committee run | Polish, phone layout, error/empty states | Pitch deck; Tech Declaration; Replit and RunPod proof-of-use PDFs |
-| **Sat evening** | Freeze features; bug fixes only | Record a cached demo run | Final deploy | **Record the 5–7 min video**; upload to YouTube |
+| **Fri, first 3 h** | Repo (Apache-2.0, committee as collaborators), Replit project, Postgres, `schema.sql`; **GitHub Actions CI (type-check, lint, test)** | Enable Replit AI Integrations; deploy the RunPod bge-m3 endpoint; `llm.ts`, `embed.ts` | Split the prototype into `web/`; `api.js` stub | Ask the Discord questions; pick the seeded jobs; start ESCO/O\*NET subset CSVs |
+| **Fri, next 6 h** | Port engine + **`engine.test.ts`**; `/api/graph`, `/api/map`, `/api/plan` | CV extractor (+ PII scrub, **`pii.test.ts`**); `embed-skills` script; **start the scheduled scout early** | Load the graph from the API; job list/path from the API | Seed data + courses + persona CV + `sources.md`; README credits |
+| **Fri night** | Review endpoints + KB versioning + re-score; **`triage.test.ts`, `api.test.ts`** | Scout + reviewer + triage; **`injection.test.ts`, `sources.test.ts`** | Admin view wired to the API (run history); upload flow; **confidence labels** | PRD draft on the official template; **`docs/EXPLAIN.md` owners** |
+| **Sat day** | Caching, `DEMO_MODE`, health, rate limits, deploy; **`fairness.test.ts`** | Interviewer + explainer + committee run | **"Why this number?" panel**, "Insufficient evidence" state, error/empty states, phone layout | Pitch deck; Tech Declaration; Replit and RunPod proof-of-use PDFs |
+| **Sat evening** | Freeze features; bug fixes only; **CI green; update README statuses and test count** | Record a cached demo run | Final deploy | **Record the 5–7 min video**; upload to YouTube |
 | **Sat 23:00** | **Submit.** Open every link in an incognito window. Make the repo public. Stop committing | | | |
 
 ---
 
-## 14. Open items
+## 14. Quality and maturity plan
+
+Judges look for signs that the build is real and trustworthy. Aim for **meaningful coverage of the parts that decide outcomes**, not a big test count.
+
+### 14.1 Automated tests (`tests/`, run with `npm test`)
+
+| Suite | What it proves | Target |
+|---|---|---|
+| `engine.test.ts` | Match %, routes, flooding, plans and scenarios give the known results from the prototype (e.g. ESG Fastest = `recon → ghg → esgRole`, 6 wk; after the reconciliation signal = `audit → disc → esgRole`, 7 wk) | ~30 cases |
+| `triage.test.ts` | Every triage rule: reject / auto-apply / flag, including edge cases (single source, big change, reroutes users, new skill) | ~15 cases |
+| `pii.test.ts` | Emails, phone numbers, MyKad numbers, addresses and names are removed before any AI call | ~10 cases |
+| `fairness.test.ts` | The same CV with a different name or gender, or with an age or religion line, gives **identical** skills, matches and routes | ~5 cases |
+| `injection.test.ts` | Pages containing "ignore your instructions…" style text can't change the extraction schema, invent IDs, or skip triage | ~5 cases |
+| `api.test.ts` | Each endpoint returns the documented shape; unknown IDs are rejected | ~10 cases |
+| `sources.test.ts` | The fetcher refuses link-only and unlisted domains and respects robots.txt | ~5 cases |
+
+**Target: ~80 focused tests.** Report the real number in the README; don't round it up.
+
+### 14.2 CI and code health
+- **GitHub Actions** on every push: type-check (`tsc --noEmit`), lint, and `npm test`. Put the badge in the README.
+- Fixed versions in `package-lock.json`; secrets only in Replit Secrets; `.env.example` lists every variable.
+- Small, clearly described commits throughout the build.
+
+### 14.3 Trust features users can see
+- **Confidence on every number:** e.g. *High: 3 sources agree · Medium: 1 source · Sample*. Never show a bare figure without its basis.
+- **"Why this number?"** Clicking any match %, exposure or demand figure shows the records and formula behind it, with source links and dates.
+- **"Insufficient evidence" state:** if a job has too few sourced requirements, show that instead of a match %.
+- **Freshness and run history** in the Admin view: every scout run, its counts, and every knowledge-base version, with undo.
+
+### 14.4 Reliability
+- `GET /api/health` shows the database, LLM and embedding status, plus the last scout run.
+- `DEMO_MODE` replays the last recorded run if a live source fails, and **labels it "replayed"**.
+- Friendly error and empty states for upload failure, no route found, and services offline.
+- Basic rate limiting on upload and scout endpoints.
+
+### 14.5 Explainability for judges' questions
+- **`docs/EXPLAIN.md`:** one section per part (engine, each agent, triage, data, UI): what it does, the key file, and **which team member owns it and can explain it**. The rules allow any member to be questioned on any part.
+- Seed data includes a `sources.md` listing every dataset, its licence and the date it was loaded.
+
+### 14.6 What we will not claim
+- No accuracy figures until measured (e.g. the spot-check rate).
+- No backtest of forecasts (there isn't enough history yet). Our outlook values are scenarios, labelled as such.
+- No "live" label on anything replayed or sample.
+
+---
+
+## 15. Open items
 
 - [ ] Confirm on Discord that "API Premium sponsor" = Replit, and confirm the deadline
 - [ ] Check that Replit PostgreSQL is available on your plan (otherwise SQLite)

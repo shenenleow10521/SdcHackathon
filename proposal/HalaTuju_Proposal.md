@@ -19,11 +19,11 @@ You give it your CV or LinkedIn profile. It shows which of your skills AI is tak
 
 ## 2. The problem
 
-**Meet Aisyah** (sample persona). She is 34 and has worked in accounts payable at a shared-services centre in Cyberjaya for 9 years. Her company has just announced it will use AI to process invoices. She has 90 days to decide what to do, and about 6 hours a week to learn.
+**Meet Priya** (sample persona). She is 36 and has worked in accounts payable at a shared-services centre in Penang for 11 years. Her centre has announced that AI agents will take over month-end close and invoice matching next year. Staff who can move into new roles within six months will be **redeployed, not retrenched**. She has about 6 hours a week to learn, and her HR team needs to know who can move where.
 
 She has three questions, and today nothing answers them well:
 
-1. **Which of my skills are still worth something?** Job titles hide the detail. AI rarely replaces a whole job at once; it takes over specific *tasks*. Aisyah can't see which of hers are affected.
+1. **Which of my skills are still worth something?** Job titles hide the detail. AI rarely replaces a whole job at once; it takes over specific *tasks*. Priya can't see which of hers are affected.
 2. **Where can I go from here?** Career tests and job sites suggest roles from keywords. They miss real transfers, such as her reconciliation experience being useful in carbon accounting (both trace every number back to a source document).
 3. **Will the advice still be right next month?** Career assessments are one-off snapshots, and course lists go stale. AI is moving faster than any static plan.
 
@@ -39,7 +39,7 @@ She has three questions, and today nothing answers them well:
 | **Secondary: career advisors and HR teams** | Help many people make good, evidence-based plans | Review and approve paths; correct skill data |
 | **Later: universities, TVET centres, TalentCorp / HRD Corp programmes** | Guide students and reskilling cohorts at scale | Use anonymised, aggregate views (future scope) |
 
-We start narrow on purpose: **one sector (finance and admin) and one clear user moment** ("my company just announced AI"). The same engine extends to other sectors by adding data, not code.
+We start narrow on purpose: **one sector (finance and admin) and one clear user moment** ("my centre is moving this work to AI agents, and I have six months to be redeployed"). The same engine extends to other sectors by adding data, not code.
 
 ---
 
@@ -55,10 +55,10 @@ We start narrow on purpose: **one sector (finance and admin) and one clear user 
 
 ---
 
-## 5. User flow example: Aisyah's first week
+## 5. User flow example: Priya's first week
 
 **Step 1. Sign up (about 2 minutes).**
-Aisyah uploads her LinkedIn profile PDF. The **Interviewer agent** reads it, notices gaps, and asks three short questions, for example: *"You mention SAP. Do you also run the weekly payment batch?"* She confirms a checklist of 10 skills and rates each from 1 to 5.
+Priya uploads her LinkedIn profile PDF. The **Interviewer agent** reads it, notices gaps, and asks three short questions, for example: *"You mention SAP. Do you also run the weekly payment batch?"* She confirms a checklist of 10 skills and rates each from 1 to 5.
 
 **Step 2. See where she stands.**
 Her home screen shows a **Future-proof score: 60%** (the share of her skills that remain safe from AI in 2026). Three skills are flagged: *Invoice data entry* (AI has largely taken over), *Three-way matching* and *Payment runs* (at risk).
@@ -173,7 +173,7 @@ All scoring is plain code, so the same input always gives the same result.
 No one can *guarantee* what an employer will ask for. What we guarantee is that **every requirement is backed by evidence we can show, with a confidence level.**
 
 1. **Official skill frameworks as the base.** ESCO lists the essential and optional skills for about 3,000 jobs. O\*NET rates skill importance from surveys of real workers. MASCO 2020 keeps job titles and duties true to Malaysia.
-2. **Live job postings for what employers want now.** We collect public Malaysian postings for each job. AI extracts the skills mentioned and maps each one to an ESCO/O\*NET skill ID (it may not invent skill names). The share of postings mentioning a skill becomes its weight, e.g. *"GHG accounting: in 72% of 30 postings, last 90 days."*
+2. **What employers want now, from sources we are allowed to read.** Company careers pages (via public job-board APIs such as Greenhouse and Lever) and employers who enter their own requirements. AI extracts the skills mentioned and maps each one to an ESCO/O\*NET skill ID (it may not invent skill names). Job boards such as JobStreet and LinkedIn are link-only, because their terms forbid automated collection. Malaysian demand trends come from DOSM / OpenDOSM.
 3. **Visible evidence and confidence** on every skill: *high* when the framework and postings agree, *medium* when only one source supports it, *low* when there are few postings.
 4. **Measured accuracy.** We hand-check the skills extracted from a sample of postings and report the real accuracy.
 5. **Human correction.** Advisors or HR can confirm or correct a job's skill list. Later, user outcomes (e.g. "got an interview") feed back in.
