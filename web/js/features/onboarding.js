@@ -44,7 +44,7 @@ function seedLevels() {
   const p = S.profile;
   OB.levels = Object.fromEntries((p?.skills || []).filter(s => s.level > 0).map(s => [s.skillId, s.level]));
   OB.conf = Object.fromEntries((p?.skills || []).map(s => [s.skillId, s.confidence]));
-  OB.goals = { hours: p?.hours || 6, targetDate: p?.targetDate || "", budgetRm: p?.budgetRm ?? "", displayName: p?.displayName || "" };
+  OB.goals = { occupationId: p?.occupationId || "", hours: p?.hours || 6, targetDate: p?.targetDate || "", budgetRm: p?.budgetRm ?? "", displayName: p?.displayName || "" };
 }
 
 const confNote = c => `<span class="rn-src">${esc(t(c === "verified" ? "conf.verified" : c === "cv" ? "conf.cv" : "conf.self"))}</span>`;
@@ -67,7 +67,7 @@ function render() {
       : `${OB.review ? `<div class="ob-review" role="status"><b>${esc(t("ob.reviewTitle"))}</b><p class="note">${esc(t("ob.reviewNote", { n: OB.review.confidence }))}</p></div>` : ""}
          <label class="sr" for="cv-text">${esc(t("ob.pasteLabel"))}</label><textarea id="cv-text" class="textarea" rows="8" maxlength="30000" placeholder="${esc(t("ob.pastePh"))}">${esc(OB.text)}</textarea>
          <div class="rs">${esc(t("ob.chars", { n: OB.text.length }))}</div>`}
-      ${OB.busy ? `<div class="loading" role="status"><span class="spin"></span>${esc(stageText(OB.stage))}</div><ul class="stages">${STAGES.map((k, i) => `<li class="${i < OB.stage ? "done" : i === OB.stage ? "on" : ""}"><i data-lucide="${i < OB.stage ? "circle-check" : "circle"}"></i>${esc(stageText(i))}</li>`).join("")}</ul>` : ""}
+      ${OB.busy ? `<ul class="stages" role="status">${STAGES.map((k, i) => `<li class="${i < OB.stage ? "done" : i === OB.stage ? "on" : ""}">${i === OB.stage ? '<span class="spin"></span>' : `<i data-lucide="${i < OB.stage ? "circle-check" : "circle"}"></i>`}${esc(stageText(i))}</li>`).join("")}</ul>` : ""}
       ${OB.err ? errorBox(OB.err) : ""}`;
     const ready = OB.mode === "upload" ? OB.files.length > 0 : OB.text.trim().length >= 40;
     foot = `<span class="left"><i data-lucide="lock"></i>${esc(t("ob.private"))}</span>
@@ -86,6 +86,7 @@ function render() {
     const ids = Object.keys(OB.levels);
     const options = Object.entries(S.graph.nodes).filter(([k, n]) => n.type === "skill" && !OB.levels[k]).sort((a, b) => a[1].name.localeCompare(b[1].name));
     const demo = !!S.profile?.isDemo || S.profileFallback;
+    const jobs = Object.entries(S.graph.nodes).filter(([, n]) => n.type === "job").sort((a, b) => a[1].name.localeCompare(b[1].name));
     head = `<div class="ob-kicker">${esc(t("ob.k3"))}</div><h2 id="ob-title">${esc(t("ob.h3"))}</h2><p>${esc(t("ob.p3"))}</p>`;
     body = `${demo ? `<p class="note">${badge("b-warn", t("src.sample"))} ${esc(t("ob.demoLocal"))}</p>` : ""}
       <div class="rate">${ids.length ? ids.map(k => `<div class="rate-row"><div class="rn">${esc(nameOf(k))} ${confNote(OB.conf[k])}</div>
@@ -95,6 +96,7 @@ function render() {
       <div class="add-skill"><label for="add-skill">${esc(t("ob.addSkill"))}</label><div class="row"><select id="add-skill" class="select"><option value="">${esc(t("ob.pickSkill"))}</option>${options.map(([k, n]) => `<option value="${esc(k)}">${esc(n.name)}</option>`).join("")}</select>
         <button class="btn btn-soft" type="button" id="add-skill-btn"><i data-lucide="plus"></i>${esc(t("ob.add"))}</button></div></div>
       <fieldset class="goals"><legend>${esc(t("ob.goals"))}</legend>
+        <label class="goals-wide">${esc(t("ob.currentJob"))}<select id="g-job" class="select">${jobs.map(([k, n]) => `<option value="${esc(k)}" ${k === OB.goals.occupationId ? "selected" : ""}>${esc(n.name)}</option>`).join("")}</select></label>
         <label>${esc(t("ob.hours"))}<input id="g-hours" type="number" min="1" max="40" step="1" value="${esc(OB.goals.hours)}" inputmode="numeric"></label>
         <label>${esc(t("ob.target"))}<input id="g-target" type="date" value="${esc(OB.goals.targetDate || "")}"></label>
         <label>${esc(t("ob.budget"))}<input id="g-budget" type="number" min="0" step="50" value="${esc(OB.goals.budgetRm ?? "")}" inputmode="numeric" placeholder="${esc(t("ob.budgetPh"))}"></label>
@@ -123,7 +125,7 @@ function intakeSummary() {
   return `<ul class="found-list">
       ${occ ? `<li><i data-lucide="circle-check"></i><span>${esc(t("ob.occ", { title: occ.title || nameOf(occ.id) }))}${occ.confidence == null ? "" : ` <span class="found-sub">(${esc(typeof occ.confidence === "number" ? t("ob.conf", { n: Math.round(occ.confidence * (occ.confidence <= 1 ? 100 : 1)) }) : tOr("ob.confLevel." + occ.confidence, occ.confidence))})</span>`}</span></li>` : ""}
       ${r.ocr ? `<li><i data-lucide="scan-text"></i><span>${esc(t("ob.ocrRead", { n: r.ocr.confidence }))}${r.ocr.pagesTotal > r.ocr.pagesRead ? ` ${esc(t("ob.ocrPages", { n: r.ocr.pagesRead, m: r.ocr.pagesTotal }))}` : ""}</span></li>` : ""}
-      <li><i data-lucide="circle-check"></i><span>${esc(t("ob.skillsFound", { n: skills.length, m: un.length }))}</span></li>
+      <li><i data-lucide="circle-check"></i><span>${esc(un.length ? t("ob.skillsFound", { n: skills.length, m: un.length }) : t("ob.skillsFoundAll", { n: skills.length }))}</span></li>
       ${removed.length ? `<li><i data-lucide="shield-check"></i><span>${esc(t("ob.scrubbed", { list: [...new Set(removed)].map(k => tOr("pii." + k, k)).join(", ") }))}</span></li>` : `<li><i data-lucide="shield-check"></i><span>${esc(t("ob.scrubbedNone"))}</span></li>`}
       ${(r.questions || []).length ? `<li class="warn"><i data-lucide="circle-help"></i><span>${esc(t("ob.unclear", { n: r.questions.length }))}</span></li>` : ""}
     </ul>
@@ -168,7 +170,7 @@ function bind(c) {
 
 function keepGoals(c) {
   const h = c.querySelector("#g-hours"); if (!h) return;
-  OB.goals.hours = h.value; OB.goals.targetDate = c.querySelector("#g-target").value; OB.goals.budgetRm = c.querySelector("#g-budget").value;
+  OB.goals.hours = h.value; OB.goals.occupationId = c.querySelector("#g-job")?.value || OB.goals.occupationId; OB.goals.targetDate = c.querySelector("#g-target").value; OB.goals.budgetRm = c.querySelector("#g-budget").value;
 }
 
 // One PDF, or up to 3 photos (one per page, in the order chosen).
@@ -248,6 +250,7 @@ async function finish(c) {
   const hours = Math.max(1, Math.min(40, Math.round(Number(OB.goals.hours) || 6)));
   const budget = OB.goals.budgetRm === "" || OB.goals.budgetRm == null ? null : Math.max(0, Number(OB.goals.budgetRm) || 0);
   const target = OB.goals.targetDate || null;
+  const occupationId = OB.goals.occupationId || null;
   const p = S.profile;
   const before = Object.fromEntries((p.skills || []).map(s => [s.skillId, s.level]));
   const changes = [...new Set([...Object.keys(before), ...Object.keys(OB.levels)])]
@@ -255,7 +258,7 @@ async function finish(c) {
   const demo = !!p.isDemo || S.profileFallback;
   const local = () => {
     const skills = Object.entries(OB.levels).map(([skillId, level]) => ({ skillId, level, confidence: OB.conf[skillId] || "self", evidence: null }));
-    return normaliseProfile({ ...p, skills, level: undefined, hours, budgetRm: budget, targetDate: target });
+    return normaliseProfile({ ...p, skills, level: undefined, hours, budgetRm: budget, targetDate: target, ...(occupationId ? { occupationId } : {}) });
   };
   if (demo) {
     actions.profileUpdated(local(), { localOnly: true });
@@ -265,7 +268,7 @@ async function finish(c) {
   let prof = null;
   try {
     if (changes.length) prof = (await put(`/profile/${p.id}/skills`, { skills: changes })).profile;
-    prof = (await put(`/profile/${p.id}`, { hours, budgetRm: budget, targetDate: target })).profile || prof;
+    prof = (await put(`/profile/${p.id}`, { hours, budgetRm: budget, targetDate: target, ...(occupationId && occupationId !== p.occupationId ? { occupationId } : {}) })).profile || prof;
   } catch (e) {
     toast({ title: t("ob.saveFailed"), detail: e.notAvailable ? t("ob.savedLocal") : e.message, badgeHtml: badge("b-warn", t("state.error")) });
     prof = null;
