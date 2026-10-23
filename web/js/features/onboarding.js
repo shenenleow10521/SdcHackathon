@@ -86,7 +86,9 @@ function render() {
     const ids = Object.keys(OB.levels);
     const options = Object.entries(S.graph.nodes).filter(([k, n]) => n.type === "skill" && !OB.levels[k]).sort((a, b) => a[1].name.localeCompare(b[1].name));
     const demo = !!S.profile?.isDemo || S.profileFallback;
-    const jobs = Object.entries(S.graph.nodes).filter(([, n]) => n.type === "job").sort((a, b) => a[1].name.localeCompare(b[1].name));
+    // current-job choices: the occupations people start from first ("Other job" last), then the catalogue jobs
+    const rank = ([k, n]) => (n.type === "occupation" ? (k === "other" ? 1 : 0) : 2);
+    const jobs = Object.entries(S.graph.nodes).filter(([, n]) => n.type === "occupation" || n.type === "job").sort((a, b) => rank(a) - rank(b) || a[1].name.localeCompare(b[1].name));
     head = `<div class="ob-kicker">${esc(t("ob.k3"))}</div><h2 id="ob-title">${esc(t("ob.h3"))}</h2><p>${esc(t("ob.p3"))}</p>`;
     body = `${demo ? `<p class="note">${badge("b-warn", t("src.sample"))} ${esc(t("ob.demoLocal"))}</p>` : ""}
       <div class="rate">${ids.length ? ids.map(k => `<div class="rate-row"><div class="rn">${esc(nameOf(k))} ${confNote(OB.conf[k])}</div>

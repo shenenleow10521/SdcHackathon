@@ -78,6 +78,29 @@ A bug fixed on the way: the address rule removed "Designed drainage for a 6 km r
 
 Precision before the fixes is unknown: the blind judge had never been run.
 
+## Confidence cut-off (24 Oct): tried, not shipped
+
+We tried to raise precision by showing only the more confident ESCO picks, offline, with no new reader or judge calls (`scripts/esco-cutoff.ts`). It uses the saved suggestions, the blind verdicts above and the same precision and recall rules. The run had not saved the retrieval score (its query was the phrase plus an AI "skill hint" that was not saved), so we computed the bge-m3 cosine between the phrase alone and each suggested skill on RunPod (deterministic; `eval/results/esco-suggestions-cosine.json`).
+
+- **Rules tried (29):** keep the AI's first 1 or 2 picks per phrase; drop skills marked "listed"; mixes of these; cosine of at least t (t = 0.40 to 0.60, step 0.02); cosine of at least t or the phrase's first pick.
+- **How the rule was chosen, fixed before any held-out number was printed:** on the tuning set (c01-c14) only, the highest precision whose lenient recall is at most 5 points below the current system's.
+- **Chosen on the tuning set:** cosine at least 0.48, or the phrase's first pick. Tuning precision 67.1% to 69.2%, lenient recall 81.7% to 76.7%.
+
+| | Precision (blind judge) | Recall, strict | Recall, lenient |
+|---|---|---|---|
+| Held-out, current | **71.7%** (511/713) · 68.3 to 74.9 | 71.0% (169/238) · 64.9 to 76.4 | 79.4% (189/238) · 73.8 to 84.1 |
+| Held-out, with cut-off | 71.0% (453/638) · 67.4 to 74.4 | 69.3% (165/238) · 63.2 to 74.8 | 78.6% (187/238) · 72.9 to 83.3 |
+| All 50, current | 69.9% (805/1151) · 67.2 to 72.5 | 73.2% (262/358) · 68.4 to 77.5 | 80.2% (287/358) · 75.7 to 84.0 |
+| All 50, with cut-off | 70.3% (711/1011) · 67.4 to 73.1 | 70.1% (251/358) · 65.2 to 74.6 | 77.9% (279/358) · 73.4 to 81.9 |
+
+The tuning gain did not carry over to the held-out set. Precision stayed the same and recall fell, so the app is unchanged. No rule moved held-out precision by more than about 1 point, which is inside the noise (`npx tsx scripts/esco-cutoff.ts --all-rules`, read after the choice and not used to pick). The judge's rejections are mostly a word match with the wrong meaning (see "Where it fails"), and those often score a high cosine. A cut-off on confidence cannot remove them. The next fix to try is a better pick prompt or ESCO descriptions in the pick list.
+
+**Published numbers for context (not comparable).** Work on ESCO skill linking scores job-ad sentences, not CVs. It ranks all ~14k ESCO skills per sentence and reports ranking metrics such as RP@5: R-precision over the top 5 ranked skills, normalised by the number of gold skills. Our metric is the precision of a short shown set, judged by an AI with near-equivalents accepted.
+- Decorte et al. 2023, "Extreme Multi-Label Skill Extraction Training using Large Language Models" (https://arxiv.org/abs/2307.10778, read via https://ar5iv.labs.arxiv.org/html/2307.10778): best RP@5 54.6 (TECH), 45.7 (HOUSE), 54.6 (TECHWOLF), on job-ad sentences annotated with ESCO skills.
+- "ConTeXT-match" 2025 (https://arxiv.org/html/2505.24640v1), Table II, test sets: ConTeXT-match RP@5 64.0 (TECH), 51.1 (HOUSE), 57.7 (TECHWOLF). It also lists GPT-4 re-ranking (Clavié et al.) at RP@5 61.5 (TECH) and 53.3 (HOUSE). On its new Skill-XL set (111 job ads, 8,471 ESCO labels) it reports F1 of about 0.40.
+
+So published systems put a correct ESCO skill in the top 5 for about half to two thirds of sentences. That is a different measure from ours, on job ads rather than CVs, so it neither confirms nor contradicts our 71.7%.
+
 ## Where it fails
 
 **Skills shown (713 on the held-out CVs):** 351 shown as used and judged used; 89 shown as "listed" that the judge says the CV does show in use (we under-claimed, counted correct); 71 shown as listed and judged listed. Wrong: **165 shown as used that the judge rejects**, 34 shown as listed that the judge rejects, and 3 shown as used that are only listed.
