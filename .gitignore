@@ -18,3 +18,6 @@ coverage/
 ml/data/
 ml/.venv/
 __pycache__/
+
+# notes on other teams (keep private)
+competitors/
