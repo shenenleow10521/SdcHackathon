@@ -195,3 +195,22 @@ describe("gaps found by the 50-CV benchmark (eval/cv v2)", () => {
     expect(s("Clerk\nH/P 012 555 4419\nTaman Seri Indah, Kluang, Johor\nStore")).toBe("Clerk\nH/P [phone]\nStore");
   });
 });
+
+describe("OCR'd text from scanned or photographed CVs", () => {
+  const s = (t: string) => scrubPii(t, { dropFirstLineName: true }).text;
+  it("attribute lines with OCR separators (· read as -, /, | or plain spaces)", () => {
+    for (const line of ["Female - Indian - Married", "Female – Indian – Married", "Female / Indian / Married", "Female | Indian | Married", "Female Indian Married"])
+      expect(s(`Clerk\n${line}\nExcel`)).toBe("Clerk\nExcel");
+    expect(s("Clerk\nSingle source of truth - vendor master")).toBe("Clerk\nSingle source of truth - vendor master");
+  });
+  it("emails and profile links where a dot was read as a space", () => {
+    expect(scrubPii("Email: priya sample@example.com").text).toBe("Email: [email]");
+    expect(scrubPii("Email: priya.sample@example com").text).toBe("Email: [email]");
+    expect(scrubPii("Write to me at priya@example.com").text).toBe("Write to me at [email]");
+    expect(scrubPii("linkedin com/in/pnya-sample").text).toBe("[profile link]");
+  });
+  it("MyKad numbers with a stray space", () => {
+    expect(scrubPii("IC 8804 12-07-5566 issued").text).toBe("IC [id] issued");
+    expect(scrubPii("KP 88 0412 07 5566").text).toBe("KP [id]");
+  });
+});

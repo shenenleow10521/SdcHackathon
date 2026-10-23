@@ -61,7 +61,8 @@ const SLASH_ATTR = /\b(?:male|female|lelaki|perempuan|married|single|divorced|be
  */
 function dropSensitiveSegments(line: string, removed: Set<string>): string | null {
   const religious = (t: string) => (RELIGIOUS.test(t) && !FINANCE_NOT_RELIGION.test(t)) || sensitiveOrg(t);
-  const parts = line.split(SLASH_ATTR.test(line) ? /\s*(?:[·|•;▪]|\s{2,}|\s\/\s)\s*/ : /\s*(?:[·|•;▪]|\s{2,})\s*/);
+  // OCR often reads "·" as "-", so a spaced dash also separates pieces on lines that state an attribute.
+  const parts = line.split(SLASH_ATTR.test(line) ? /\s*(?:[·|•;▪]|\s{2,}|\s[/\-–]\s)\s*/ : /\s*(?:[·|•;▪]|\s{2,})\s*/);
   if (parts.length < 2) {
     if (religious(line)) { removed.add("protected_attribute"); return null; }
     return line;
@@ -103,13 +104,18 @@ function isAddressLine(line: string) {
 
 const digits = (m: string) => m.replace(/\D/g, "").length;
 const INLINE: [string, RegExp, string | ((m: string) => string)][] = [
-  ["email", /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g, "[email]"],
-  ["profile_link", /\b(?:https?:\/\/)?(?:[a-z]{2,3}\.)?(?:linkedin\.com\/(?:in|pub|profile)|github\.com|gitlab\.com|facebook\.com|fb\.com|instagram\.com|x\.com|twitter\.com|tiktok\.com|wa\.me|t\.me)\/[^\s,;)|]+/gi, "[profile link]"],
+  // Emails, also as OCR reads them: a dot read as a space ("priya sample@example.com", "x@example com").
+  // A lower-case word just before the address is taken as part of it, unless it is a word like "at" or "email".
+  ["email", /(?:\b[a-z0-9]+ )?[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*(?:\.[A-Za-z]{2,}|(?: (?:com|my|net|org|edu|gov|io)\b)+)/g, m => {
+    const first = m.slice(0, m.indexOf(" ") + 1).trim(); // the captured word before the address, if any
+    return first && m.indexOf(" ") < m.indexOf("@") && /^(?:at|to|email|emel|mail|or|and|me|via|is|on)$/.test(first) ? `${first} [email]` : "[email]";
+  }],
+  ["profile_link", /\b(?:https?:\/\/)?(?:[a-z]{2,3}\.)?(?:linkedin[. ]com\/(?:in|pub|profile)|github[. ]com|gitlab[. ]com|facebook[. ]com|fb\.com|instagram[. ]com|x\.com|twitter[. ]com|tiktok[. ]com|wa\.me|t\.me)\/[^\s,;)|]+/gi, "[profile link]"],
   // Personal websites: LinkedIn exports label them "site.com (Portfolio)"; CVs write "Website: site.com".
   ["profile_link", /(?:https?:\/\/)?(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)+(?:\/[^\s)]*)?(?=\s*\((?:portfolio|personal|blog|other|website)\))/gi, "[profile link]"],
   ["profile_link", /(?<=\b(?:website|portfolio|blog|laman web)\s*:\s*)(?:https?:\/\/)?[a-z0-9-]+(?:\.[a-z0-9-]+)+(?:\/\S*)?/gi, "[profile link]"],
-  // MyKad: YYMMDD-PB-###G, with dashes, spaces or none (12 digits).
-  ["id", /(?<![\d-])\d{6}[\s-]?\d{2}[\s-]?\d{4}(?![\d-])/g, "[id]"],
+  // MyKad: YYMMDD-PB-###G, with dashes, spaces or none (12 digits); OCR may add a stray space ("8804 12-07-5566").
+  ["id", /(?<![\d-])\d(?: ?\d){5}[\s-]?\d{2}[\s-]?\d{4}(?![\d-])/g, "[id]"],
   // Passport-style and old IC numbers, e.g. A12345678, K1234567.
   ["id", /\b[A-Z]{1,2}\d{7,8}\b/g, "[id]"],
   // Landlines written with brackets: (03) 2123 4567.
@@ -173,7 +179,7 @@ export function scrubPii(input: string, opts: { dropFirstLineName?: boolean } = 
           .replace(/^\s*(?:curriculum vitae|resume|résumé|cv)\s*[-–:|]*\s*/i, "")
           .replace(/(?:\s*[-–:|]+\s*|\s{2,})(?:curriculum vitae|resume|résumé|cv)\s*$/i, "")
           .replace(/\s{2,}page \d+ of \d+\s*$/i, "").replace(/\s+page \d+ of \d+\s*$/i, "").trim();
-        if (core && NAME_RE.test(core) && !NOT_A_NAME.test(core)) { nameAt(core, i); break; }
+        if (core && NAME_RE.test(core) && !NOT_A_NAME.test(core) && !isAttributeOnlyLine(core)) { nameAt(core, i); break; }
       }
     }
   }
