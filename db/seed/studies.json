@@ -1,0 +1,515 @@
+[
+  {
+    "occupationId": "ap",
+    "study": "ILO WP140 (2025)",
+    "value": 0.64,
+    "rawValue": "mean 0.64 (SD 0.07); Gradient 4",
+    "note": "ISCO-08 4311 'Accounting and Bookkeeping Clerks' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "ap",
+    "study": "Anthropic Economic Index: observed exposure (2026)",
+    "value": 0.3104,
+    "rawValue": "0.3104",
+    "note": "SOC 43-3031 'Bookkeeping, Accounting, and Auditing Clerks'. Share of the occupation's time-weighted O*NET tasks that are LLM-feasible and seen in work-related Claude usage (Aug and Nov 2025); 0-1 as published.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/labor_market_impacts/job_exposure.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "ap",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "0.32% of Claude.ai conversations",
+    "note": "O*NET-SOC 43-3031.00 'Bookkeeping, Accounting, and Auditing Clerks', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.89. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "ap",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.314,
+    "rawValue": "beta 0.314 (human annotators)",
+    "note": "O*NET-SOC 43-3031.00 'Bookkeeping, Accounting, and Auditing Clerks'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  },
+  {
+    "occupationId": "stayRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.64,
+    "rawValue": "mean 0.64 (SD 0.07); Gradient 4",
+    "note": "ISCO-08 4311 'Accounting and Bookkeeping Clerks' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "stayRole",
+    "study": "Anthropic Economic Index: observed exposure (2026)",
+    "value": 0.3104,
+    "rawValue": "0.3104",
+    "note": "SOC 43-3031 'Bookkeeping, Accounting, and Auditing Clerks'. Share of the occupation's time-weighted O*NET tasks that are LLM-feasible and seen in work-related Claude usage (Aug and Nov 2025); 0-1 as published.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/labor_market_impacts/job_exposure.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "stayRole",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "0.32% of Claude.ai conversations",
+    "note": "O*NET-SOC 43-3031.00 'Bookkeeping, Accounting, and Auditing Clerks', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.89. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "stayRole",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.314,
+    "rawValue": "beta 0.314 (human annotators)",
+    "note": "O*NET-SOC 43-3031.00 'Bookkeeping, Accounting, and Auditing Clerks'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  },
+  {
+    "occupationId": "opsRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.49,
+    "rawValue": "mean 0.49 (SD 0.05); Gradient 2",
+    "note": "ISCO-08 2511 'Systems Analysts' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "faRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.62,
+    "rawValue": "mean 0.62 (SD 0.06); Gradient 4",
+    "note": "ISCO-08 2413 'Financial Analysts' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "faRole",
+    "study": "Anthropic Economic Index: observed exposure (2026)",
+    "value": 0.5716,
+    "rawValue": "0.5716",
+    "note": "SOC 13-2051 'Financial and Investment Analysts'. Share of the occupation's time-weighted O*NET tasks that are LLM-feasible and seen in work-related Claude usage (Aug and Nov 2025); 0-1 as published.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/labor_market_impacts/job_exposure.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "faRole",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "0.21% of Claude.ai conversations",
+    "note": "O*NET-SOC 13-2051.00 'Financial and Investment Analysts', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.86. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "faRole",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.5,
+    "rawValue": "beta 0.500 (human annotators)",
+    "note": "O*NET-SOC 13-2051.00 'Financial and Investment Analysts'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  },
+  {
+    "occupationId": "esgRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.36,
+    "rawValue": "mean 0.36 (SD 0.04); Not Exposed",
+    "note": "ISCO-08 1213 'Policy and Planning Managers' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "esgRole",
+    "study": "Anthropic Economic Index: observed exposure (2026)",
+    "value": 0.1846,
+    "rawValue": "0.1846",
+    "note": "SOC 13-1199 'Business Operations Specialists, All Other'. Share of the occupation's time-weighted O*NET tasks that are LLM-feasible and seen in work-related Claude usage (Aug and Nov 2025); 0-1 as published.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/labor_market_impacts/job_exposure.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "esgRole",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "0.01% of Claude.ai conversations",
+    "note": "O*NET-SOC 13-1199.05 'Sustainability Specialists', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.39. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "esgRole",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.679,
+    "rawValue": "beta 0.679 (human annotators)",
+    "note": "O*NET-SOC 13-1199.05 'Sustainability Specialists'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  },
+  {
+    "occupationId": "intAudit",
+    "study": "ILO WP140 (2025)",
+    "value": 0.51,
+    "rawValue": "mean 0.51 (SD 0.08); Gradient 3",
+    "note": "ISCO-08 2411 'Accountants' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "intAudit",
+    "study": "Anthropic Economic Index: observed exposure (2026)",
+    "value": 0.3478,
+    "rawValue": "0.3478",
+    "note": "SOC 13-2011 'Accountants and Auditors'. Share of the occupation's time-weighted O*NET tasks that are LLM-feasible and seen in work-related Claude usage (Aug and Nov 2025); 0-1 as published.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/labor_market_impacts/job_exposure.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "intAudit",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "0.12% of Claude.ai conversations",
+    "note": "O*NET-SOC 13-2011.00 'Accountants and Auditors', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.79. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "intAudit",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.52,
+    "rawValue": "beta 0.520 (human annotators)",
+    "note": "O*NET-SOC 13-2011.00 'Accountants and Auditors'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  },
+  {
+    "occupationId": "treasuryRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.37,
+    "rawValue": "mean 0.37 (SD 0.04); Minimal",
+    "note": "ISCO-08 1211 'Finance Managers' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "treasuryRole",
+    "study": "Anthropic Economic Index: observed exposure (2026)",
+    "value": 0.3907,
+    "rawValue": "0.3907",
+    "note": "SOC 11-3031 'Financial Managers'. Share of the occupation's time-weighted O*NET tasks that are LLM-feasible and seen in work-related Claude usage (Aug and Nov 2025); 0-1 as published.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/labor_market_impacts/job_exposure.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "treasuryRole",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "0.09% of Claude.ai conversations",
+    "note": "O*NET-SOC 11-3031.01 'Treasurers and Controllers', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.75. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "treasuryRole",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.408,
+    "rawValue": "beta 0.408 (human annotators)",
+    "note": "O*NET-SOC 11-3031.01 'Treasurers and Controllers'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  },
+  {
+    "occupationId": "lcaRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.38,
+    "rawValue": "mean 0.38 (SD 0.07); Minimal",
+    "note": "ISCO-08 2143 'Environmental Engineers' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "lcaRole",
+    "study": "Anthropic Economic Index: observed exposure (2026)",
+    "value": 0.0548,
+    "rawValue": "0.0548",
+    "note": "SOC 19-2041 'Environmental Scientists and Specialists, Including Health'. Share of the occupation's time-weighted O*NET tasks that are LLM-feasible and seen in work-related Claude usage (Aug and Nov 2025); 0-1 as published.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/labor_market_impacts/job_exposure.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "lcaRole",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "0.0% of Claude.ai conversations",
+    "note": "O*NET-SOC 19-2041.03 'Industrial Ecologists', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.15. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "lcaRole",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.713,
+    "rawValue": "beta 0.713 (human annotators)",
+    "note": "O*NET-SOC 19-2041.03 'Industrial Ecologists'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  },
+  {
+    "occupationId": "greenRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.62,
+    "rawValue": "mean 0.62 (SD 0.06); Gradient 4",
+    "note": "ISCO-08 2413 'Financial Analysts' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "greenRole",
+    "study": "Anthropic Economic Index: observed exposure (2026)",
+    "value": 0.5716,
+    "rawValue": "0.5716",
+    "note": "SOC 13-2051 'Financial and Investment Analysts'. Share of the occupation's time-weighted O*NET tasks that are LLM-feasible and seen in work-related Claude usage (Aug and Nov 2025); 0-1 as published.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/labor_market_impacts/job_exposure.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "greenRole",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "0.21% of Claude.ai conversations",
+    "note": "O*NET-SOC 13-2051.00 'Financial and Investment Analysts', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.86. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "greenRole",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.5,
+    "rawValue": "beta 0.500 (human annotators)",
+    "note": "O*NET-SOC 13-2051.00 'Financial and Investment Analysts'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  },
+  {
+    "occupationId": "assurRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.51,
+    "rawValue": "mean 0.51 (SD 0.08); Gradient 3",
+    "note": "ISCO-08 2411 'Accountants' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "assurRole",
+    "study": "Anthropic Economic Index: observed exposure (2026)",
+    "value": 0.3478,
+    "rawValue": "0.3478",
+    "note": "SOC 13-2011 'Accountants and Auditors'. Share of the occupation's time-weighted O*NET tasks that are LLM-feasible and seen in work-related Claude usage (Aug and Nov 2025); 0-1 as published.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/labor_market_impacts/job_exposure.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "assurRole",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "0.12% of Claude.ai conversations",
+    "note": "O*NET-SOC 13-2011.00 'Accountants and Auditors', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.79. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "assurRole",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.52,
+    "rawValue": "beta 0.520 (human annotators)",
+    "note": "O*NET-SOC 13-2011.00 'Accountants and Auditors'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  },
+  {
+    "occupationId": "dataRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.49,
+    "rawValue": "mean 0.49 (SD 0.05); Gradient 2",
+    "note": "ISCO-08 2511 'Systems Analysts' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "dataRole",
+    "study": "Anthropic Economic Index: observed exposure (2026)",
+    "value": 0.4605,
+    "rawValue": "0.4605",
+    "note": "SOC 15-2051 'Data Scientists'. Share of the occupation's time-weighted O*NET tasks that are LLM-feasible and seen in work-related Claude usage (Aug and Nov 2025); 0-1 as published.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/labor_market_impacts/job_exposure.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "dataRole",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "0.61% of Claude.ai conversations",
+    "note": "O*NET-SOC 15-2051.00 'Data Scientists', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.95. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "dataRole",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.594,
+    "rawValue": "beta 0.594 (human annotators)",
+    "note": "O*NET-SOC 15-2051.00 'Data Scientists'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  },
+  {
+    "occupationId": "biRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.57,
+    "rawValue": "mean 0.57 (SD 0.08); Gradient 3",
+    "note": "ISCO-08 2521 'Database Designers and Administrators' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "biRole",
+    "study": "Anthropic Economic Index: observed exposure (2026)",
+    "value": 0.5787,
+    "rawValue": "0.5787",
+    "note": "SOC 15-1243 'Database Architects'. Share of the occupation's time-weighted O*NET tasks that are LLM-feasible and seen in work-related Claude usage (Aug and Nov 2025); 0-1 as published.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/labor_market_impacts/job_exposure.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "biRole",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "1.65% of Claude.ai conversations",
+    "note": "O*NET-SOC 15-1243.01 'Data Warehousing Specialists', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.99. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "biRole",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.694,
+    "rawValue": "beta 0.694 (human annotators)",
+    "note": "O*NET-SOC 15-1243.01 'Data Warehousing Specialists'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  },
+  {
+    "occupationId": "aiQaRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.55,
+    "rawValue": "mean 0.55 (SD 0.16); Gradient 3",
+    "note": "ISCO-08 2519 'Software and Applications Developers and Analysts Not Elsewhere Classified' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "procRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.39,
+    "rawValue": "mean 0.39 (SD 0.08); Minimal",
+    "note": "ISCO-08 3323 'Buyers' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "procRole",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "0.08% of Claude.ai conversations",
+    "note": "O*NET-SOC 13-1023.00 'Purchasing Agents, Except Wholesale, Retail, and Farm Products', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.73. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "procRole",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.368,
+    "rawValue": "beta 0.368 (human annotators)",
+    "note": "O*NET-SOC 13-1023.00 'Purchasing Agents, Except Wholesale, Retail, and Farm Products'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  },
+  {
+    "occupationId": "scmRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.39,
+    "rawValue": "mean 0.39 (SD 0.08); Minimal",
+    "note": "ISCO-08 3323 'Buyers' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "scmRole",
+    "study": "Anthropic Economic Index: observed exposure (2026)",
+    "value": 0.1571,
+    "rawValue": "0.1571",
+    "note": "SOC 13-1081 'Logisticians'. Share of the occupation's time-weighted O*NET tasks that are LLM-feasible and seen in work-related Claude usage (Aug and Nov 2025); 0-1 as published.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/labor_market_impacts/job_exposure.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "scmRole",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "0.03% of Claude.ai conversations",
+    "note": "O*NET-SOC 13-1081.02 'Logistics Analysts', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.59. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "scmRole",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.651,
+    "rawValue": "beta 0.651 (human annotators)",
+    "note": "O*NET-SOC 13-1081.02 'Logistics Analysts'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  },
+  {
+    "occupationId": "invRole",
+    "study": "ILO WP140 (2025)",
+    "value": 0.37,
+    "rawValue": "mean 0.37 (SD 0.06); Minimal",
+    "note": "ISCO-08 4321 'Stock Clerks' (whole unit group, mapped via ESCO). Mean task-level GenAI exposure score, 0-1; Annex Table A1.",
+    "sourceUrl": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf",
+    "source": "ilo_wp140"
+  },
+  {
+    "occupationId": "invRole",
+    "study": "Anthropic Economic Index: observed exposure (2026)",
+    "value": 0.0,
+    "rawValue": "0.0",
+    "note": "SOC 43-5071 'Shipping, Receiving, and Inventory Clerks'. Share of the occupation's time-weighted O*NET tasks that are LLM-feasible and seen in work-related Claude usage (Aug and Nov 2025); 0-1 as published.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/labor_market_impacts/job_exposure.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "invRole",
+    "study": "Anthropic Economic Index: Claude usage share (2026-05)",
+    "value": null,
+    "rawValue": "0.0% of Claude.ai conversations",
+    "note": "O*NET-SOC 43-5071.00 'Shipping, Receiving, and Inventory Clerks', global, month starting 2026-05-01. A usage share, not an exposure score, so it is not put on the 0-1 scale; percentile rank among the 718 occupations published that month = 0.15. Values are rounded to 0.01 percentage points.",
+    "sourceUrl": "https://huggingface.co/datasets/Anthropic/EconomicIndex/resolve/4e5f69fab13a9c3f7d0dcc31a6f893a9818738f6/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "anthropic_economic_index"
+  },
+  {
+    "occupationId": "invRole",
+    "study": "Eloundou et al. (2024) GPTs are GPTs",
+    "value": 0.357,
+    "rawValue": "beta 0.357 (human annotators)",
+    "note": "O*NET-SOC 43-5071.00 'Shipping, Receiving, and Inventory Clerks'. Share of tasks exposed to LLMs, beta = E1 + 0.5*E2, human ratings; 0-1 as published.",
+    "sourceUrl": "https://raw.githubusercontent.com/openai/GPTs-are-GPTs/0471612fef3cc22b74fb884d27bff9dbd3770582/data/occ_level.csv",
+    "source": "eloundou_gpts_are_gpts"
+  }
+]

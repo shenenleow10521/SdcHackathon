@@ -1,0 +1,60 @@
+{
+ "_note": "ESCO skills the CV reader extracted from the sample persona's CV (tests/fixtures/cv/priya-nair.txt) with gemini-3.5-flash-lite + bge-m3 on RunPod, 23 Oct 2026. Seeded for the demo persona as source 'cv'.",
+ "skills": [
+  {
+   "escoId": "bb99af26-71ff-4dca-bde7-1eb1f6194426",
+   "title": "SAP R3",
+   "phrase": "Process about 1,200 supplier invoices a month in SAP S/4HANA, including invoice data entry and GL coding."
+  },
+  {
+   "escoId": "bdcac0c8-b77a-4640-9eaf-c0cf3efd1e23",
+   "title": "process payments",
+   "phrase": "Prepare weekly payment runs and check cash before release."
+  },
+  {
+   "escoId": "909c2e48-262e-4ebe-be05-5324ab086c1d",
+   "title": "generate reconciliation reports",
+   "phrase": "Reconcile vendor statements to the ledger every month and investigate unexplained differences."
+  },
+  {
+   "escoId": "5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+   "title": "check accounting records",
+   "phrase": "Reconcile vendor statements to the ledger every month and investigate unexplained differences."
+  },
+  {
+   "escoId": "22a173f5-868c-4d82-87e6-beed500ce070",
+   "title": "prepare tax returns forms",
+   "phrase": "Prepare SST computations and support the quarterly SST-02 returns."
+  },
+  {
+   "escoId": "6bf6b5bd-6658-4338-b0ee-dc143e68e6d3",
+   "title": "provide support in financial calculation",
+   "phrase": "Prepare SST computations and support the quarterly SST-02 returns."
+  },
+  {
+   "escoId": "afbc401c-cad8-43b6-8d61-775d2c7b58d5",
+   "title": "prepare compliance documents",
+   "phrase": "Assemble audit evidence packs for external auditors and keep the document trail complete."
+  },
+  {
+   "escoId": "26baf34d-6721-4bac-b7eb-add0bc566a82",
+   "title": "attend to detail in preparation for audits",
+   "phrase": "Assemble audit evidence packs for external auditors and keep the document trail complete."
+  },
+  {
+   "escoId": "1973c966-f236-40c9-b2d4-5d71a89019be",
+   "title": "use spreadsheets software",
+   "phrase": "Build Excel reports with pivot tables and VLOOKUP for month-end close (RM 12,000 average daily payments tracked)."
+  },
+  {
+   "escoId": "3d427a49-4f85-42cd-8a92-62d4a34f41a1",
+   "title": "file documents",
+   "phrase": "Data entry of invoices and filing of supporting documents."
+  },
+  {
+   "escoId": "99b163e8-7815-43e2-83f3-a47f3076354c",
+   "title": "accounting entries",
+   "phrase": "Data entry of invoices and filing of supporting documents."
+  }
+ ]
+}

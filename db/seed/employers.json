@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Sample Green Reporting Co. (sample)",
+    "sector": "Sustainability reporting",
+    "careersUrl": null,
+    "source": "sample",
+    "verified": false,
+    "_note": "Fictional employer. Requirements are invented variations on the catalogue requirements for demo purposes only; they are not taken from any real company.",
+    "requirements": [
+      { "occupationId": "esgRole", "skillId": "lca", "weight": 2, "levelNeeded": 2, "quote": null, "sourceUrl": null },
+      { "occupationId": "esgRole", "skillId": "stats", "weight": 1, "levelNeeded": 2, "quote": null, "sourceUrl": null },
+      { "occupationId": "lcaRole", "skillId": "disc", "weight": 1, "levelNeeded": 2, "quote": null, "sourceUrl": null }
+    ]
+  },
+  {
+    "name": "Sample Finance Analytics Hub (sample)",
+    "sector": "Finance shared services",
+    "careersUrl": null,
+    "source": "sample",
+    "verified": false,
+    "_note": "Fictional employer. Requirements are invented variations on the catalogue requirements for demo purposes only; they are not taken from any real company.",
+    "requirements": [
+      { "occupationId": "faRole", "skillId": "sql", "weight": 2, "levelNeeded": 2, "quote": null, "sourceUrl": null },
+      { "occupationId": "faRole", "skillId": "python", "weight": 1, "levelNeeded": 2, "quote": null, "sourceUrl": null },
+      { "occupationId": "stayRole", "skillId": "recon", "weight": 2, "levelNeeded": 3, "quote": null, "sourceUrl": null }
+    ]
+  }
+]

@@ -1,0 +1,285 @@
+{
+ "_note": "A real market-scout run recorded live on 2026-10-22T19:35:35.749Z (HalaTuju knowledge pipeline). Source items, verified quotes and reviewer verdicts are as found; replaying it goes through the same triage rules and is labelled replayed.",
+ "recordedAt": "2026-10-22T19:35:35.749Z",
+ "runId": null,
+ "liveRunId": 166,
+ "counts": {
+  "auto": 0,
+  "fetched": 351,
+  "flagged": 5,
+  "rejected": 0,
+  "candidates": 7,
+  "duplicates": 0
+ },
+ "sources": {
+  "hn": {
+   "ok": true,
+   "items": 0,
+   "errors": []
+  },
+  "rss": {
+   "ok": true,
+   "items": 288,
+   "errors": []
+  },
+  "arxiv": {
+   "ok": true,
+   "items": 9,
+   "errors": []
+  },
+  "gdelt": {
+   "ok": false,
+   "items": 0,
+   "errors": [
+    "GDELT: Request failed: fetch failed",
+    "GDELT: Request failed: fetch failed"
+   ]
+  },
+  "openalex": {
+   "ok": true,
+   "items": 54,
+   "errors": []
+  },
+  "websearch": {
+   "ok": false,
+   "items": 0,
+   "errors": [],
+   "skipped": "Gemini grounding: no quota (HTTP 429), disabled for 6 hours"
+  }
+ },
+ "items": [
+  {
+   "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/10/22/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-cloud-erp-finance/",
+   "via": "Microsoft Dynamics 365 blog (finance & operations)",
+   "date": "2026-10-22",
+   "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Cloud ERP Finance",
+   "domain": "microsoft.com",
+   "excerpt": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Cloud ERP Finance Microsoft has been named a Leader in the 2026 Gartner® Magic Quadrant™ for Cloud ERP Finance.¹ We believe this recognition reflects something finance leaders are seeing as AI moves into their work: the financial syst",
+   "sourceKind": "rss"
+  },
+  {
+   "url": "https://openalex.org/W7223111074",
+   "via": "OpenAlex (https://doi.org/10.1007/s10614-026-11455-z)",
+   "date": "2026-10-21",
+   "title": "Leveraging Machine Learning for Profit Forecasting and Cost Optimization Using Public Financial Data",
+   "domain": "openalex.org",
+   "excerpt": "Leveraging Machine Learning for Profit Forecasting and Cost Optimization Using Public Financial Data Corporate finance depends significantly on the correctness of financial forecasting and cost control in strategic decision-making. The complexity and nonlinearity of financial data are often not full",
+   "sourceKind": "openalex"
+  },
+  {
+   "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/09/23/build-the-future-of-agentic-erp-with-new-microsoft-dynamics-365-capabilities/",
+   "via": "Microsoft Dynamics 365 blog (finance & operations)",
+   "date": "2026-09-23",
+   "title": "Build the future of agentic ERP with new Microsoft Dynamics 365 capabilities",
+   "domain": "microsoft.com",
+   "excerpt": "Build the future of agentic ERP with new Microsoft Dynamics 365 capabilities Discover what’s next for Microsoft Dynamics 365 ERP, from new capabilities across Finance, Supply Chain Management, Commerce, and more to the foundation for agentic ERP. Explore how AI, agents, and connected business proces",
+   "sourceKind": "rss"
+  },
+  {
+   "url": "https://openalex.org/W7222951349",
+   "via": "OpenAlex (https://doi.org/10.59141/jist.v7i8.9240)",
+   "date": "2026-10-19",
+   "title": "N8n Based Digital Marketing Workflow Automation for the Operational Efficiency of a Service Company",
+   "domain": "openalex.org",
+   "excerpt": "N8n Based Digital Marketing Workflow Automation for the Operational Efficiency of a Service Company Digital marketing teams in service companies still spend much of their day on manual operational work, from consolidating leads that arrive through multiple channels and forwarding each one to the sal",
+   "sourceKind": "openalex"
+  },
+  {
+   "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/10/15/microsoft-named-a-leader-in-the-2026-idc-marketscape-for-ai-enabled-operational-erp/",
+   "via": "Microsoft Dynamics 365 blog (finance & operations)",
+   "date": "2026-10-15",
+   "title": "Microsoft named a Leader in the 2026 IDC MarketScape for AI-Enabled Operational ERP",
+   "domain": "microsoft.com",
+   "excerpt": "Microsoft named a Leader in the 2026 IDC MarketScape for AI-Enabled Operational ERP Microsoft Dynamics 365 is named a Leader for operational ERP, helping organizations connect people, data, and business systems to drive more agile operations. The post Microsoft named a Leader in the 2026 IDC MarketS",
+   "sourceKind": "rss"
+  },
+  {
+   "url": "https://openalex.org/W7223036640",
+   "via": "OpenAlex (https://doi.org/10.70382/hijaerd.v13i6.073)",
+   "date": "2026-10-20",
+   "title": "AI-ASSISTED FINANCIAL JOURNALISM AND THE CREDIBILITY OF CORPORATE FINANCIAL INFORMATION IN NIGERIA",
+   "domain": "openalex.org",
+   "excerpt": "AI-ASSISTED FINANCIAL JOURNALISM AND THE CREDIBILITY OF CORPORATE FINANCIAL INFORMATION IN NIGERIA The rapid development of artificial intelligence (AI), including generative AI, natural language processing, machine learning and automated data-analysis systems, is transforming the production and dis",
+   "sourceKind": "openalex"
+  },
+  {
+   "url": "https://openalex.org/W7222783958",
+   "via": "OpenAlex (https://doi.org/10.30574/wjarr.2026.32.1.2020)",
+   "date": "2026-10-18",
+   "title": "MAPPING FORENSIC ACCOUNTING’S SCHOLARLY LANDSCAPE IN NIGERIA: A BIBLIOMETRIC ANALYSIS OF FRAUD DETECTION AND PREVENTION RESEARCH",
+   "domain": "openalex.org",
+   "excerpt": "MAPPING FORENSIC ACCOUNTING’S SCHOLARLY LANDSCAPE IN NIGERIA: A BIBLIOMETRIC ANALYSIS OF FRAUD DETECTION AND PREVENTION RESEARCH Nigeria’s persistent exposure to financial fraud and systemic corruption has intensified the demand for robust investigative tools, with forensic accounting emerging as a ",
+   "sourceKind": "openalex"
+  },
+  {
+   "url": "https://arxiv.org/abs/2610.19240v1",
+   "via": "arXiv",
+   "date": "2026-10-13",
+   "title": "FinGREAT: Evaluating LLMs on Financial Graph-guided Retrieval And Typing",
+   "domain": "arxiv.org",
+   "excerpt": "FinGREAT: Evaluating LLMs on Financial Graph-guided Retrieval And Typing Financial disclosures express the underlying relationships of double-entry accounting through unstructured text. While financial LLM benchmarks predominantly emphasize question answering and classification, schema-guided eviden",
+   "sourceKind": "arxiv"
+  },
+  {
+   "url": "https://arxiv.org/abs/2610.03174v1",
+   "via": "arXiv",
+   "date": "2026-10-02",
+   "title": "FinNextAssist: Towards Professional Financial Deep Research Assistant",
+   "domain": "arxiv.org",
+   "excerpt": "FinNextAssist: Towards Professional Financial Deep Research Assistant Deep Research (DR) agents have demonstrated strong capabilities in complex, research-oriented tasks through autonomous planning, iterative retrieval, multi-step reasoning, and structured reporting. However, adapting DR agents to f",
+   "sourceKind": "arxiv"
+  },
+  {
+   "url": "https://arxiv.org/abs/2610.00969v1",
+   "via": "arXiv",
+   "date": "2026-10-01",
+   "title": "A Citation-Grounded Benchmark for Trustworthy Earnings Call Transcript Analysis with Large Language Models",
+   "domain": "arxiv.org",
+   "excerpt": "A Citation-Grounded Benchmark for Trustworthy Earnings Call Transcript Analysis with Large Language Models Large language models (LLMs) have been increasingly used for financial document analysis, including earnings call transcripts (ECTs). Beyond generating standalone claims, users increasingly pre",
+   "sourceKind": "arxiv"
+  },
+  {
+   "url": "https://arxiv.org/abs/2609.38523v1",
+   "via": "arXiv",
+   "date": "2026-09-29",
+   "title": "MM-FinEval: A Multi-Task Multimodal Benchmark for Real-World Financial Forecasting",
+   "domain": "arxiv.org",
+   "excerpt": "MM-FinEval: A Multi-Task Multimodal Benchmark for Real-World Financial Forecasting Financial forecasting from earnings conference calls requires models to reason over complex corporate disclosures, market expectations, and subtle communication signals. However, existing financial benchmarks are ofte",
+   "sourceKind": "arxiv"
+  },
+  {
+   "url": "https://arxiv.org/abs/2609.28771v1",
+   "via": "arXiv",
+   "date": "2026-09-23",
+   "title": "Agent Memory with Episodic Retrieval for Financial Decision-Making",
+   "domain": "arxiv.org",
+   "excerpt": "Agent Memory with Episodic Retrieval for Financial Decision-Making Large language models (LLMs) have demonstrated strong capabilities in financial analysis and reasoning, inspiring recent advances in agent-based trading frameworks. While these systems show promise, prior approaches either emphasize ",
+   "sourceKind": "arxiv"
+  }
+ ],
+ "candidates": [
+  {
+   "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/10/22/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-cloud-erp-finance/",
+   "date": "2026-10-22",
+   "kind": "adoption",
+   "claim": "Organizations are adopting account reconciliation agents to identify and resolve exceptions between subledgers and the general ledger.",
+   "quote": "In Dynamics 365 Finance , the Account Reconciliation Agent can help identify exceptions between subledgers and the general ledger and suggest how to resolve them, with finance teams able to define which legal entities and modules it covers, how much it processes, and when they are notified.",
+   "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Cloud ERP Finance",
+   "nodeId": "recon",
+   "direction": "up",
+   "magnitude": "medium",
+   "quoteFound": true,
+   "sourceKind": "rss"
+  },
+  {
+   "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/10/22/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-cloud-erp-finance/",
+   "date": "2026-10-22",
+   "kind": "adoption",
+   "claim": "Intelligent invoice recognition and suggestions are adopted to automate accounts payable invoice processing.",
+   "quote": "In accounts payable, intelligent invoice recognition and suggestions to complete finance entries help more invoices move through processing without manual handling.",
+   "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Cloud ERP Finance",
+   "nodeId": "inv",
+   "direction": "up",
+   "magnitude": "medium",
+   "quoteFound": true,
+   "sourceKind": "rss"
+  },
+  {
+   "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/10/22/microsoft-named-a-leader-in-the-2026-gartner-magic-quadrant-for-cloud-erp-finance/",
+   "date": "2026-10-22",
+   "kind": "capability",
+   "claim": "AI agents have the capability to assist in processing supplier invoices in different formats and investigating exceptions.",
+   "quote": "Agents add the most value where finance teams need to interpret information, such as matching transactions that do not quite line up, processing supplier invoices in different formats, and investigating exceptions.",
+   "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Cloud ERP Finance",
+   "nodeId": "aiinv",
+   "direction": "up",
+   "magnitude": "medium",
+   "quoteFound": true,
+   "sourceKind": "rss"
+  },
+  {
+   "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/09/23/build-the-future-of-agentic-erp-with-new-microsoft-dynamics-365-capabilities/",
+   "date": "2026-09-23",
+   "kind": "adoption",
+   "claim": "Organizations are adopting the Account Reconciliation Agent to resolve reconciliation exceptions in bulk.",
+   "quote": "The Account Reconciliation Agent is also evolving to resolve exceptions in bulk, enabled by legal entity and module, addition of limits and notifications, and expanded agent suggestion summaries.",
+   "title": "Build the future of agentic ERP with new Microsoft Dynamics 365 capabilities",
+   "nodeId": "recon",
+   "direction": "up",
+   "magnitude": "medium",
+   "quoteFound": true,
+   "sourceKind": "rss"
+  },
+  {
+   "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/09/23/build-the-future-of-agentic-erp-with-new-microsoft-dynamics-365-capabilities/",
+   "date": "2026-09-23",
+   "kind": "capability",
+   "claim": "Generative AI capabilities provide demand planning insights on seasonality, trends, and external signals.",
+   "quote": "In demand planning, generative insights for seasonality, trends, and signal correlations have been generally available since August, along with external signals such as inflation, pricing, and weather.",
+   "title": "Build the future of agentic ERP with new Microsoft Dynamics 365 capabilities",
+   "nodeId": "scm",
+   "direction": "up",
+   "magnitude": "medium",
+   "quoteFound": true,
+   "sourceKind": "rss"
+  },
+  {
+   "url": "https://www.microsoft.com/en-us/dynamics-365/blog/business-leader/2026/10/15/microsoft-named-a-leader-in-the-2026-idc-marketscape-for-ai-enabled-operational-erp/",
+   "date": "2026-10-15",
+   "kind": "adoption",
+   "claim": "Organizations are deploying automated account reconciliation agents in operational ERP systems.",
+   "quote": "Dynamics 365 delivers agents for quick deployment including the Procurement Agent, Account Reconciliation Agent, Time Entry Agent, Expense Agent, and the Activity Approvals Agent (all in production-ready preview).",
+   "title": "Microsoft named a Leader in the 2026 IDC MarketScape for AI-Enabled Operational ERP",
+   "nodeId": "recon",
+   "direction": "up",
+   "magnitude": "medium",
+   "quoteFound": true,
+   "sourceKind": "rss"
+  },
+  {
+   "url": "https://arxiv.org/abs/2609.28771v1",
+   "date": "2026-09-23",
+   "kind": "capability",
+   "claim": "LLMs show strong capability in financial analysis and reasoning tasks.",
+   "quote": "Large language models (LLMs) have demonstrated strong capabilities in financial analysis and reasoning, inspiring recent advances in agent-based trading frameworks.",
+   "title": "Agent Memory with Episodic Retrieval for Financial Decision-Making",
+   "nodeId": "fin",
+   "direction": "up",
+   "magnitude": "large",
+   "quoteFound": true,
+   "sourceKind": "arxiv"
+  }
+ ],
+ "reviews": {
+  "inv|adoption|up": {
+   "issue": null,
+   "model": "gemini-3.1-flash-lite",
+   "supports": true,
+   "confidence": 0.9
+  },
+  "fin|capability|up": {
+   "issue": "The quote mentions financial analysis generally but does not specify the ability to perform the specific tasks of building forecasts, preparing reports, or explaining variances.",
+   "model": "gemini-3.1-flash-lite",
+   "supports": false,
+   "confidence": 0.6
+  },
+  "recon|adoption|up": {
+   "issue": null,
+   "model": "gemini-3.5-flash-lite",
+   "supports": true,
+   "confidence": 0.9
+  },
+  "scm|capability|up": {
+   "issue": null,
+   "model": "gemini-3.1-flash-lite",
+   "supports": true,
+   "confidence": 0.9
+  },
+  "aiinv|capability|up": {
+   "issue": null,
+   "model": "gemini-3.1-flash-lite",
+   "supports": true,
+   "confidence": 0.9
+  }
+ }
+}

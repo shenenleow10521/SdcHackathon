@@ -1,0 +1,409 @@
+{
+  "_meta": {
+    "source": "TalentCorp & ILMIA (Critical Skills Monitoring Committee), MyMahir Malaysia Critical Occupations List (MyCOL) 2024/2025, Table 7 (PDF pp. 85-87), Tables 8-9 (p. 88)",
+    "url": "https://www.talentcorp.com.my/images/uploads/publication/204/MyMahir-Malaysia-Critical-Occupations-List-MyCOL20242025-1773385490.pdf",
+    "page": "https://www.talentcorp.com.my/mycol/",
+    "accessed": "2026-10-23",
+    "transcription": "Copied by hand from the table images (the PDF has no text layer for them) and checked against OCR (scripts/data/check_mycol.py, 23 Oct 2026): 65 of 66 codes identical; the one difference (OCR '7311' vs '1311', row 8) was checked on the page image: it is 1311, which matches the description and ISCO-08 1311. Facts only: MASCO 2020 4-digit code, the published description, and two flags.",
+    "flags": "new = new in the 2024/2025 edition (Table 8); everyEdition = in all eight editions (Table 9).",
+    "masco": "MASCO 2020 is based on ISCO-08; most 4-digit codes are the same unit group. Codes MASCO added for Malaysia (e.g. 2531, 2541-2543) have no ISCO-08 equivalent, so they match no ESCO occupation."
+  },
+  "occupations": [
+    {
+      "masco": "1121",
+      "title": "Managing Directors and Chief Executives",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "1211",
+      "title": "Finance Managers",
+      "new": false,
+      "everyEdition": true
+    },
+    {
+      "masco": "1212",
+      "title": "Human Resource Managers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "1213",
+      "title": "Policy and Planning Managers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "1214",
+      "title": "Business Services Managers",
+      "new": false,
+      "everyEdition": true
+    },
+    {
+      "masco": "1216",
+      "title": "Quality Managers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "1221",
+      "title": "Sales and Marketing Managers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "1311",
+      "title": "Agricultural, Forestry, and Livestock Production Managers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "1321",
+      "title": "Manufacturing Managers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "1324",
+      "title": "Supply, Distribution, and Related Managers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "1511",
+      "title": "Information and Communications Technology Managers",
+      "new": false,
+      "everyEdition": true
+    },
+    {
+      "masco": "2113",
+      "title": "Chemists",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2121",
+      "title": "Mathematicians, Actuaries, and Statisticians",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2141",
+      "title": "Industrial and Production Engineers",
+      "new": false,
+      "everyEdition": true
+    },
+    {
+      "masco": "2142",
+      "title": "Civil Engineers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2144",
+      "title": "Mechanical Engineers",
+      "new": false,
+      "everyEdition": true
+    },
+    {
+      "masco": "2145",
+      "title": "Chemical Engineers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2146",
+      "title": "Mining Engineers, Metallurgists, and Related Professionals",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2149",
+      "title": "Engineering Professionals (Excluding Electrotechnology) Not Elsewhere Classified",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2151",
+      "title": "Electrical Engineers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2152",
+      "title": "Electronic Engineers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2166",
+      "title": "Graphic and Multimedia Designers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2171",
+      "title": "Ship Engineers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2182",
+      "title": "Manufacturing Professionals",
+      "new": false,
+      "everyEdition": true
+    },
+    {
+      "masco": "2212",
+      "title": "Specialist Medical Practitioners",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2221",
+      "title": "Nursing Professionals",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2262",
+      "title": "Pharmacists",
+      "new": true,
+      "everyEdition": false
+    },
+    {
+      "masco": "2263",
+      "title": "Environmental and Occupational Health and Hygiene Professionals",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2264",
+      "title": "Physiotherapists",
+      "new": true,
+      "everyEdition": false
+    },
+    {
+      "masco": "2311",
+      "title": "University and Higher Education Teaching Professionals",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2411",
+      "title": "Accountants and Auditors",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2412",
+      "title": "Financial and Investment Advisers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2413",
+      "title": "Financial Analysts",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2426",
+      "title": "Research and Development Professionals",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2431",
+      "title": "Advertising and Marketing Professionals",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2511",
+      "title": "Computer Systems Analysts",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2512",
+      "title": "Software Developers",
+      "new": false,
+      "everyEdition": true
+    },
+    {
+      "masco": "2514",
+      "title": "Application Programmers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2519",
+      "title": "Software and Application Developers and Analysts Not Elsewhere Classified",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2521",
+      "title": "Database Designers and Administrators",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2522",
+      "title": "Information Technology System Administrators",
+      "new": false,
+      "everyEdition": true
+    },
+    {
+      "masco": "2523",
+      "title": "Computer Network Professionals",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2524",
+      "title": "Data Professionals",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2531",
+      "title": "Cyber Security Professionals",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2541",
+      "title": "Animation and Visual Effects Professionals",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2542",
+      "title": "Digital Games and E-Sport Professionals",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "2543",
+      "title": "Creative Contents Designer Professionals",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "3111",
+      "title": "Chemical and Physical Science Technicians",
+      "new": true,
+      "everyEdition": false
+    },
+    {
+      "masco": "3112",
+      "title": "Civil Engineering Technicians",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "3113",
+      "title": "Electrical Engineering Technicians",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "3114",
+      "title": "Electronics Engineering Technicians",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "3115",
+      "title": "Mechanical Engineering Technicians",
+      "new": false,
+      "everyEdition": true
+    },
+    {
+      "masco": "3118",
+      "title": "Draughtspersons and Surveying Technicians",
+      "new": true,
+      "everyEdition": false
+    },
+    {
+      "masco": "3119",
+      "title": "Industrial and Production Technicians",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "3122",
+      "title": "Manufacturing Supervisors",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "3151",
+      "title": "Aircraft Technicians",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "7212",
+      "title": "Welders and Flame Cutters",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "7231",
+      "title": "Motor Vehicle Mechanics and Repairers",
+      "new": true,
+      "everyEdition": false
+    },
+    {
+      "masco": "7233",
+      "title": "Agricultural and Industrial Machinery Mechanics and Repairers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "7412",
+      "title": "Electrical Mechanics and Fitters",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "8141",
+      "title": "Rubber Products Machine Operators",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "8182",
+      "title": "Steam Engine and Boiler Operators",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "8189",
+      "title": "Stationary Plant and Machine Operators Not Elsewhere Classified",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "8332",
+      "title": "Heavy Truck and Lorry Drivers",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "8341",
+      "title": "Mobile Farm and Forestry Plant Operators",
+      "new": false,
+      "everyEdition": false
+    },
+    {
+      "masco": "8343",
+      "title": "Crane, Hoist and Related Plant Operators",
+      "new": false,
+      "everyEdition": false
+    }
+  ]
+}

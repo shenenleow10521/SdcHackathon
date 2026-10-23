@@ -1,0 +1,3106 @@
+{
+  "_note": "Sample values from the HalaTuju prototype. Illustrative, not research results.",
+  "root": "ap",
+  "occupations": [
+    {
+      "id": "ap",
+      "title": "Accounts Payable Clerk",
+      "isDestination": false,
+      "stay": false,
+      "blurb": null,
+      "postings": null,
+      "conf": null,
+      "split": [
+        [
+          35,
+          25,
+          40
+        ],
+        [
+          48,
+          24,
+          28
+        ],
+        [
+          58,
+          22,
+          20
+        ]
+      ],
+      "sdg": [
+        [
+          8,
+          "A job highly exposed to AI; the aim is redeployment, not retrenchment (target 8.5)"
+        ]
+      ],
+      "e": [
+        0.8,
+        0.88,
+        0.93
+      ],
+      "d": [
+        -10,
+        -30,
+        -42
+      ]
+    },
+    {
+      "id": "stayRole",
+      "title": "AI-Assisted AP Specialist",
+      "isDestination": true,
+      "stay": true,
+      "blurb": "Stay in AP, but run the AI tools instead of typing invoices.",
+      "postings": 18,
+      "conf": "Medium",
+      "split": [
+        [
+          20,
+          45,
+          35
+        ],
+        [
+          26,
+          44,
+          30
+        ],
+        [
+          30,
+          44,
+          26
+        ]
+      ],
+      "sdg": [
+        [
+          8,
+          "Keeps an experienced worker employed through the AI shift"
+        ]
+      ],
+      "e": [
+        0.4,
+        0.46,
+        0.5
+      ],
+      "d": [
+        8,
+        14,
+        16
+      ]
+    },
+    {
+      "id": "opsRole",
+      "title": "Finance Automation Specialist",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Design and run the automations that take over routine finance steps.",
+      "postings": 30,
+      "conf": "High",
+      "split": [
+        [
+          18,
+          42,
+          40
+        ],
+        [
+          22,
+          44,
+          34
+        ],
+        [
+          25,
+          45,
+          30
+        ]
+      ],
+      "sdg": [
+        [
+          8,
+          "Productive, higher-skilled roles"
+        ],
+        [
+          9,
+          "Modernises finance operations"
+        ]
+      ],
+      "e": [
+        0.34,
+        0.4,
+        0.44
+      ],
+      "d": [
+        28,
+        40,
+        46
+      ]
+    },
+    {
+      "id": "faRole",
+      "title": "AI-Augmented Finance Analyst",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Use AI to build analysis, then explain what the numbers mean.",
+      "postings": 30,
+      "conf": "High",
+      "split": [
+        [
+          20,
+          40,
+          40
+        ],
+        [
+          26,
+          42,
+          32
+        ],
+        [
+          30,
+          42,
+          28
+        ]
+      ],
+      "sdg": [
+        [
+          8,
+          "A growing analytical role"
+        ]
+      ],
+      "e": [
+        0.42,
+        0.48,
+        0.52
+      ],
+      "d": [
+        24,
+        32,
+        34
+      ]
+    },
+    {
+      "id": "esgRole",
+      "title": "ESG & Carbon Reporting Analyst",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Measure and report a company's emissions and sustainability data.",
+      "postings": 30,
+      "conf": "High",
+      "split": [
+        [
+          15,
+          35,
+          50
+        ],
+        [
+          20,
+          38,
+          42
+        ],
+        [
+          24,
+          38,
+          38
+        ]
+      ],
+      "sdg": [
+        [
+          13,
+          "Measures company emissions"
+        ],
+        [
+          12,
+          "Supports sustainability disclosure"
+        ]
+      ],
+      "e": [
+        0.28,
+        0.33,
+        0.38
+      ],
+      "d": [
+        36,
+        52,
+        58
+      ]
+    },
+    {
+      "id": "intAudit",
+      "title": "Internal Auditor",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Test whether the company's controls actually work, and find what slips through.",
+      "postings": 30,
+      "conf": "High",
+      "split": [
+        [
+          18,
+          37,
+          45
+        ],
+        [
+          23,
+          39,
+          38
+        ],
+        [
+          26,
+          40,
+          34
+        ]
+      ],
+      "sdg": [
+        [
+          16,
+          "Strong controls against fraud and error"
+        ]
+      ],
+      "e": [
+        0.36,
+        0.42,
+        0.46
+      ],
+      "d": [
+        12,
+        18,
+        20
+      ]
+    },
+    {
+      "id": "treasuryRole",
+      "title": "Treasury Analyst",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Forecast and manage the company's cash so bills and payroll are always covered.",
+      "postings": 24,
+      "conf": "Medium",
+      "split": [
+        [
+          25,
+          40,
+          35
+        ],
+        [
+          32,
+          40,
+          28
+        ],
+        [
+          36,
+          40,
+          24
+        ]
+      ],
+      "sdg": [
+        [
+          8,
+          "Keeps businesses financially healthy"
+        ]
+      ],
+      "e": [
+        0.44,
+        0.52,
+        0.58
+      ],
+      "d": [
+        8,
+        12,
+        12
+      ]
+    },
+    {
+      "id": "lcaRole",
+      "title": "Product Carbon Footprint Analyst",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Work out the carbon footprint of individual products, from raw material to disposal.",
+      "postings": 16,
+      "conf": "Medium",
+      "split": [
+        [
+          15,
+          35,
+          50
+        ],
+        [
+          19,
+          37,
+          44
+        ],
+        [
+          22,
+          38,
+          40
+        ]
+      ],
+      "sdg": [
+        [
+          12,
+          "Shows which products pollute most"
+        ],
+        [
+          13,
+          "Targets emission cuts"
+        ]
+      ],
+      "e": [
+        0.26,
+        0.32,
+        0.36
+      ],
+      "d": [
+        30,
+        46,
+        52
+      ]
+    },
+    {
+      "id": "greenRole",
+      "title": "Green Finance Analyst",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Check whether loans and investments really fund green projects.",
+      "postings": 20,
+      "conf": "Medium",
+      "split": [
+        [
+          18,
+          37,
+          45
+        ],
+        [
+          23,
+          39,
+          38
+        ],
+        [
+          26,
+          40,
+          34
+        ]
+      ],
+      "sdg": [
+        [
+          13,
+          "Moves money towards climate solutions"
+        ],
+        [
+          8,
+          "Sustainable growth"
+        ]
+      ],
+      "e": [
+        0.34,
+        0.4,
+        0.44
+      ],
+      "d": [
+        26,
+        40,
+        46
+      ]
+    },
+    {
+      "id": "assurRole",
+      "title": "ESG Assurance Associate",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Check that sustainability claims are backed by real evidence.",
+      "postings": 22,
+      "conf": "Medium",
+      "split": [
+        [
+          14,
+          34,
+          52
+        ],
+        [
+          18,
+          36,
+          46
+        ],
+        [
+          21,
+          37,
+          42
+        ]
+      ],
+      "sdg": [
+        [
+          12,
+          "Makes green claims trustworthy"
+        ],
+        [
+          16,
+          "Accountable institutions"
+        ]
+      ],
+      "e": [
+        0.28,
+        0.34,
+        0.38
+      ],
+      "d": [
+        28,
+        44,
+        50
+      ]
+    },
+    {
+      "id": "dataRole",
+      "title": "Data Analyst",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Turn messy business data into answers people can act on.",
+      "postings": 30,
+      "conf": "High",
+      "split": [
+        [
+          25,
+          40,
+          35
+        ],
+        [
+          32,
+          42,
+          26
+        ],
+        [
+          36,
+          42,
+          22
+        ]
+      ],
+      "sdg": [
+        [
+          9,
+          "Data-driven businesses"
+        ]
+      ],
+      "e": [
+        0.48,
+        0.56,
+        0.62
+      ],
+      "d": [
+        18,
+        22,
+        22
+      ]
+    },
+    {
+      "id": "biRole",
+      "title": "BI Developer",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Build the dashboards and data models a whole company reports from.",
+      "postings": 28,
+      "conf": "High",
+      "split": [
+        [
+          24,
+          42,
+          34
+        ],
+        [
+          30,
+          44,
+          26
+        ],
+        [
+          34,
+          44,
+          22
+        ]
+      ],
+      "sdg": [
+        [
+          9,
+          "Better decisions from shared data"
+        ]
+      ],
+      "e": [
+        0.46,
+        0.54,
+        0.6
+      ],
+      "d": [
+        16,
+        20,
+        20
+      ]
+    },
+    {
+      "id": "aiQaRole",
+      "title": "AI Data Quality Specialist",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Check AI output for mistakes and teach the tools to do better.",
+      "postings": 14,
+      "conf": "Medium",
+      "split": [
+        [
+          12,
+          38,
+          50
+        ],
+        [
+          15,
+          40,
+          45
+        ],
+        [
+          17,
+          41,
+          42
+        ]
+      ],
+      "sdg": [
+        [
+          8,
+          "New human work created by AI"
+        ],
+        [
+          9,
+          "Safer AI in industry"
+        ]
+      ],
+      "e": [
+        0.3,
+        0.36,
+        0.4
+      ],
+      "d": [
+        34,
+        50,
+        58
+      ]
+    },
+    {
+      "id": "procRole",
+      "title": "Procurement Specialist",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Choose suppliers and negotiate what the company buys.",
+      "postings": 30,
+      "conf": "High",
+      "split": [
+        [
+          20,
+          35,
+          45
+        ],
+        [
+          25,
+          37,
+          38
+        ],
+        [
+          28,
+          38,
+          34
+        ]
+      ],
+      "sdg": [
+        [
+          12,
+          "Responsible sourcing"
+        ]
+      ],
+      "e": [
+        0.38,
+        0.45,
+        0.5
+      ],
+      "d": [
+        10,
+        16,
+        18
+      ]
+    },
+    {
+      "id": "scmRole",
+      "title": "Supply Chain Planner",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Plan what to make and buy so stock arrives when it's needed.",
+      "postings": 26,
+      "conf": "High",
+      "split": [
+        [
+          24,
+          40,
+          36
+        ],
+        [
+          30,
+          42,
+          28
+        ],
+        [
+          34,
+          42,
+          24
+        ]
+      ],
+      "sdg": [
+        [
+          9,
+          "Resilient supply chains"
+        ]
+      ],
+      "e": [
+        0.4,
+        0.48,
+        0.54
+      ],
+      "d": [
+        14,
+        20,
+        22
+      ]
+    },
+    {
+      "id": "invRole",
+      "title": "Inventory Analyst",
+      "isDestination": true,
+      "stay": false,
+      "blurb": "Track stock levels and cut waste from slow-moving inventory.",
+      "postings": 20,
+      "conf": "Medium",
+      "split": [
+        [
+          32,
+          38,
+          30
+        ],
+        [
+          40,
+          38,
+          22
+        ],
+        [
+          45,
+          37,
+          18
+        ]
+      ],
+      "sdg": [
+        [
+          12,
+          "Less waste"
+        ]
+      ],
+      "e": [
+        0.5,
+        0.6,
+        0.66
+      ],
+      "d": [
+        6,
+        8,
+        6
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "id": "inv",
+      "label": "Invoice data entry",
+      "e": [
+        0.84,
+        0.93,
+        0.97
+      ],
+      "d": [
+        -14,
+        -42,
+        -55
+      ],
+      "angle": 350,
+      "emerging": null,
+      "sdg": [
+        8,
+        "Routine office work that AI is taking over first; where reskilling for redeployment starts (target 8.5)"
+      ],
+      "tasks": [
+        {
+          "text": "Capture invoice fields from PDFs",
+          "mode": "ai"
+        },
+        {
+          "text": "Code invoices to GL accounts",
+          "mode": "ai"
+        },
+        {
+          "text": "Chase missing PO numbers",
+          "mode": "assist"
+        }
+      ]
+    },
+    {
+      "id": "three",
+      "label": "Three-way matching",
+      "e": [
+        0.74,
+        0.84,
+        0.91
+      ],
+      "d": [
+        -4,
+        -30,
+        -44
+      ],
+      "angle": 318,
+      "emerging": null,
+      "sdg": [
+        16,
+        "Matching invoice, order and receipt stops false or duplicate payments (target 16.5)"
+      ],
+      "tasks": [
+        {
+          "text": "Match PO, invoice and goods receipt",
+          "mode": "ai"
+        },
+        {
+          "text": "Flag price or quantity mismatches",
+          "mode": "ai"
+        },
+        {
+          "text": "Decide on tolerance exceptions",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "pay",
+      "label": "Payment runs",
+      "e": [
+        0.64,
+        0.78,
+        0.86
+      ],
+      "d": [
+        -12,
+        -28,
+        -38
+      ],
+      "angle": 286,
+      "emerging": null,
+      "sdg": [
+        8,
+        "Paying suppliers correctly and on time keeps small businesses and their jobs going"
+      ],
+      "tasks": [
+        {
+          "text": "Build the payment proposal",
+          "mode": "ai"
+        },
+        {
+          "text": "Check cash before release",
+          "mode": "assist"
+        },
+        {
+          "text": "Approve and release payments",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "tax",
+      "label": "SST compliance",
+      "e": [
+        0.33,
+        0.45,
+        0.52
+      ],
+      "d": [
+        -2,
+        -4,
+        -8
+      ],
+      "angle": 252,
+      "emerging": null,
+      "sdg": [
+        16,
+        "Correct sales and service tax filing keeps public revenue accountable (target 16.6)"
+      ],
+      "tasks": [
+        {
+          "text": "Calculate SST on invoices",
+          "mode": "ai"
+        },
+        {
+          "text": "Interpret rule changes",
+          "mode": "assist"
+        },
+        {
+          "text": "Sign off on returns",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "erp",
+      "label": "ERP operation (SAP)",
+      "e": [
+        0.42,
+        0.54,
+        0.61
+      ],
+      "d": [
+        4,
+        -2,
+        -8
+      ],
+      "angle": 218,
+      "emerging": null,
+      "sdg": [
+        8,
+        "Using business systems well raises productivity through technology (target 8.2)"
+      ],
+      "tasks": [
+        {
+          "text": "Post and adjust entries",
+          "mode": "assist"
+        },
+        {
+          "text": "Maintain vendor master data",
+          "mode": "assist"
+        },
+        {
+          "text": "Fix workflow errors",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "dispute",
+      "label": "Vendor dispute resolution",
+      "e": [
+        0.22,
+        0.3,
+        0.35
+      ],
+      "d": [
+        6,
+        10,
+        12
+      ],
+      "angle": 184,
+      "emerging": null,
+      "sdg": [
+        8,
+        "Fair, human-led supplier relationships"
+      ],
+      "tasks": [
+        {
+          "text": "Draft replies to vendors",
+          "mode": "assist"
+        },
+        {
+          "text": "Negotiate settlements",
+          "mode": "human"
+        },
+        {
+          "text": "Judge the relationship impact",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "process",
+      "label": "Process improvement",
+      "e": [
+        0.16,
+        0.21,
+        0.24
+      ],
+      "d": [
+        16,
+        24,
+        28
+      ],
+      "angle": 150,
+      "emerging": null,
+      "sdg": [
+        9,
+        "Better, more productive processes"
+      ],
+      "tasks": [
+        {
+          "text": "Map the current workflow",
+          "mode": "assist"
+        },
+        {
+          "text": "Find bottlenecks",
+          "mode": "assist"
+        },
+        {
+          "text": "Get the team to adopt the change",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "audit",
+      "label": "Audit trail documentation",
+      "e": [
+        0.38,
+        0.49,
+        0.56
+      ],
+      "d": [
+        18,
+        26,
+        30
+      ],
+      "angle": 116,
+      "emerging": null,
+      "sdg": [
+        16,
+        "Clear records make every payment traceable and accountable (target 16.6)"
+      ],
+      "tasks": [
+        {
+          "text": "Assemble evidence packs",
+          "mode": "assist"
+        },
+        {
+          "text": "Keep the document trail complete",
+          "mode": "assist"
+        },
+        {
+          "text": "Answer auditor questions",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "recon",
+      "label": "Vendor reconciliation",
+      "e": [
+        0.54,
+        0.68,
+        0.77
+      ],
+      "d": [
+        2,
+        -14,
+        -24
+      ],
+      "angle": 82,
+      "emerging": null,
+      "sdg": [
+        16,
+        "Catches errors and duplicate payments before money is lost (target 16.6)"
+      ],
+      "tasks": [
+        {
+          "text": "Match statements to the ledger",
+          "mode": "ai"
+        },
+        {
+          "text": "Investigate unexplained differences",
+          "mode": "assist"
+        },
+        {
+          "text": "Trace numbers to source documents",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "excel",
+      "label": "Spreadsheet analysis",
+      "e": [
+        0.48,
+        0.61,
+        0.69
+      ],
+      "d": [
+        12,
+        6,
+        0
+      ],
+      "angle": 46,
+      "emerging": null,
+      "sdg": [
+        8,
+        "A basic digital skill used across office jobs; raises productivity (target 8.2)"
+      ],
+      "tasks": [
+        {
+          "text": "Build pivot summaries",
+          "mode": "ai"
+        },
+        {
+          "text": "Clean and merge data",
+          "mode": "assist"
+        },
+        {
+          "text": "Decide which numbers matter",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "fin",
+      "label": "Financial analysis",
+      "e": [
+        0.4,
+        0.46,
+        0.5
+      ],
+      "d": [
+        28,
+        36,
+        38
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        8,
+        "Moves work from routine processing to decisions, a higher-value job (target 8.2)"
+      ],
+      "tasks": [
+        {
+          "text": "Build forecasts",
+          "mode": "assist"
+        },
+        {
+          "text": "Prepare monthly reports",
+          "mode": "ai"
+        },
+        {
+          "text": "Explain variances to managers",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "viz",
+      "label": "Dashboard reporting",
+      "e": [
+        0.46,
+        0.57,
+        0.64
+      ],
+      "d": [
+        22,
+        26,
+        22
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        8,
+        "Makes business data visible so teams act on it faster (target 8.2)"
+      ],
+      "tasks": [
+        {
+          "text": "Build dashboards",
+          "mode": "assist"
+        },
+        {
+          "text": "Refresh data feeds",
+          "mode": "ai"
+        },
+        {
+          "text": "Choose the right view for the audience",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "esgdata",
+      "label": "ESG data management",
+      "e": [
+        0.35,
+        0.45,
+        0.52
+      ],
+      "d": [
+        24,
+        40,
+        46
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        13,
+        "Reliable climate data is the base of climate action"
+      ],
+      "tasks": [
+        {
+          "text": "Collect data from many systems",
+          "mode": "assist"
+        },
+        {
+          "text": "Flag gaps and outliers",
+          "mode": "ai"
+        },
+        {
+          "text": "Agree data owners and controls",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "ghg",
+      "label": "GHG emissions accounting",
+      "e": [
+        0.3,
+        0.38,
+        0.45
+      ],
+      "d": [
+        34,
+        50,
+        56
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        13,
+        "Measures emissions so companies can cut them"
+      ],
+      "tasks": [
+        {
+          "text": "Collect activity data from bills",
+          "mode": "assist"
+        },
+        {
+          "text": "Apply emission factors",
+          "mode": "ai"
+        },
+        {
+          "text": "Check data quality and trace to source",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "disc",
+      "label": "Sustainability disclosure",
+      "e": [
+        0.22,
+        0.31,
+        0.38
+      ],
+      "d": [
+        26,
+        44,
+        50
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        12,
+        "Makes company sustainability claims checkable"
+      ],
+      "tasks": [
+        {
+          "text": "Draft disclosure text",
+          "mode": "assist"
+        },
+        {
+          "text": "Map data to disclosure items",
+          "mode": "assist"
+        },
+        {
+          "text": "Judge materiality with management",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "aisup",
+      "label": "Supervising AI workflows",
+      "e": [
+        0.12,
+        0.16,
+        0.18
+      ],
+      "d": [
+        30,
+        44,
+        54
+      ],
+      "angle": null,
+      "emerging": {
+        "postings": 24,
+        "employers": 9,
+        "weeks": 7,
+        "synonyms": [
+          "AI agent oversight",
+          "Human-in-the-loop review"
+        ],
+        "status": "confirmed"
+      },
+      "sdg": [
+        8,
+        "Keeps people in control of AI at work"
+      ],
+      "tasks": [
+        {
+          "text": "Set up AI agents for routine steps",
+          "mode": "assist"
+        },
+        {
+          "text": "Review AI output for errors",
+          "mode": "human"
+        },
+        {
+          "text": "Decide when AI should not act",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "auto",
+      "label": "Workflow automation",
+      "e": [
+        0.3,
+        0.36,
+        0.4
+      ],
+      "d": [
+        30,
+        44,
+        50
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        8,
+        "Automates routine steps while people keep oversight (target 8.2)"
+      ],
+      "tasks": [
+        {
+          "text": "Build simple automations",
+          "mode": "assist"
+        },
+        {
+          "text": "Choose which steps to automate",
+          "mode": "human"
+        },
+        {
+          "text": "Monitor automations",
+          "mode": "assist"
+        }
+      ]
+    },
+    {
+      "id": "prompt",
+      "label": "Prompting AI tools for finance",
+      "e": [
+        0.35,
+        0.45,
+        0.5
+      ],
+      "d": [
+        32,
+        46,
+        50
+      ],
+      "angle": null,
+      "emerging": {
+        "postings": 31,
+        "employers": 12,
+        "weeks": 9,
+        "synonyms": [
+          "Prompt writing",
+          "Using generative AI tools"
+        ],
+        "status": "provisional"
+      },
+      "sdg": [
+        8,
+        "Using AI tools well keeps workers productive as AI arrives (target 8.2)"
+      ],
+      "tasks": [
+        {
+          "text": "Write instructions for AI tools",
+          "mode": "human"
+        },
+        {
+          "text": "Draft summaries with AI",
+          "mode": "assist"
+        },
+        {
+          "text": "Check AI output for errors",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "aiinv",
+      "label": "AI invoice review & exceptions",
+      "e": [
+        0.3,
+        0.38,
+        0.44
+      ],
+      "d": [
+        18,
+        30,
+        34
+      ],
+      "angle": null,
+      "emerging": {
+        "postings": 18,
+        "employers": 6,
+        "weeks": 6,
+        "synonyms": [
+          "AI-assisted invoice processing",
+          "Invoice exception handling"
+        ],
+        "status": "provisional"
+      },
+      "sdg": [
+        8,
+        "Moves the clerk from typing invoices to checking AI work, keeping the job (target 8.5)"
+      ],
+      "tasks": [
+        {
+          "text": "Check AI-captured invoice fields",
+          "mode": "assist"
+        },
+        {
+          "text": "Resolve exceptions AI can't match",
+          "mode": "human"
+        },
+        {
+          "text": "Feed corrections back to the AI tool",
+          "mode": "assist"
+        }
+      ]
+    },
+    {
+      "id": "sql",
+      "label": "SQL for business data",
+      "e": [
+        0.4,
+        0.5,
+        0.56
+      ],
+      "d": [
+        30,
+        38,
+        40
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        9,
+        "Data skills that build a business’s technological capability (target 9.5)"
+      ],
+      "tasks": [
+        {
+          "text": "Write queries for routine reports",
+          "mode": "assist"
+        },
+        {
+          "text": "Join data from several systems",
+          "mode": "assist"
+        },
+        {
+          "text": "Decide what question to ask",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "python",
+      "label": "Python for data work",
+      "e": [
+        0.45,
+        0.55,
+        0.62
+      ],
+      "d": [
+        26,
+        32,
+        30
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        9,
+        "Programming skills that build technological capability (target 9.5)"
+      ],
+      "tasks": [
+        {
+          "text": "Write scripts to clean data",
+          "mode": "assist"
+        },
+        {
+          "text": "Automate repeat analysis",
+          "mode": "assist"
+        },
+        {
+          "text": "Check results make sense",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "label": "Statistics basics",
+      "e": [
+        0.35,
+        0.42,
+        0.48
+      ],
+      "d": [
+        18,
+        24,
+        26
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        9,
+        "Sound statistics make data-driven decisions reliable (target 9.5)"
+      ],
+      "tasks": [
+        {
+          "text": "Calculate summaries and trends",
+          "mode": "ai"
+        },
+        {
+          "text": "Test whether a change made a difference",
+          "mode": "assist"
+        },
+        {
+          "text": "Explain uncertainty to managers",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "lca",
+      "label": "Life-cycle assessment",
+      "e": [
+        0.25,
+        0.32,
+        0.38
+      ],
+      "d": [
+        28,
+        44,
+        50
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        12,
+        "Shows which products pollute most"
+      ],
+      "tasks": [
+        {
+          "text": "Gather material and energy data",
+          "mode": "assist"
+        },
+        {
+          "text": "Run the footprint model",
+          "mode": "ai"
+        },
+        {
+          "text": "Set the boundaries and assumptions",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "greenfin",
+      "label": "Green finance & ESG investing",
+      "e": [
+        0.28,
+        0.35,
+        0.4
+      ],
+      "d": [
+        30,
+        46,
+        52
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        13,
+        "Moves money towards climate solutions"
+      ],
+      "tasks": [
+        {
+          "text": "Screen investments against criteria",
+          "mode": "ai"
+        },
+        {
+          "text": "Assess climate risk",
+          "mode": "assist"
+        },
+        {
+          "text": "Challenge green claims",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "audit2",
+      "label": "Internal audit & controls",
+      "e": [
+        0.32,
+        0.4,
+        0.46
+      ],
+      "d": [
+        16,
+        22,
+        24
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        16,
+        "Strong controls against fraud"
+      ],
+      "tasks": [
+        {
+          "text": "Pull samples and evidence",
+          "mode": "ai"
+        },
+        {
+          "text": "Test controls",
+          "mode": "assist"
+        },
+        {
+          "text": "Judge findings and report to management",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "treasury",
+      "label": "Cash & treasury management",
+      "e": [
+        0.36,
+        0.45,
+        0.5
+      ],
+      "d": [
+        10,
+        14,
+        14
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        8,
+        "Managing cash well keeps a business able to pay its staff and suppliers"
+      ],
+      "tasks": [
+        {
+          "text": "Build the daily cash position",
+          "mode": "ai"
+        },
+        {
+          "text": "Forecast cash for 13 weeks",
+          "mode": "assist"
+        },
+        {
+          "text": "Decide funding and bank relationships",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "procure",
+      "label": "Strategic sourcing",
+      "e": [
+        0.3,
+        0.38,
+        0.44
+      ],
+      "d": [
+        14,
+        20,
+        22
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        12,
+        "Responsible sourcing"
+      ],
+      "tasks": [
+        {
+          "text": "Compare supplier quotes",
+          "mode": "ai"
+        },
+        {
+          "text": "Assess supplier risk",
+          "mode": "assist"
+        },
+        {
+          "text": "Negotiate contracts",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "scm",
+      "label": "Supply chain planning",
+      "e": [
+        0.38,
+        0.46,
+        0.52
+      ],
+      "d": [
+        16,
+        22,
+        24
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        12,
+        "Better planning cuts overproduction and waste (target 12.5)"
+      ],
+      "tasks": [
+        {
+          "text": "Forecast demand",
+          "mode": "ai"
+        },
+        {
+          "text": "Balance supply and demand",
+          "mode": "assist"
+        },
+        {
+          "text": "Agree plans with sales and production",
+          "mode": "human"
+        }
+      ]
+    },
+    {
+      "id": "invent",
+      "label": "Inventory analytics",
+      "e": [
+        0.45,
+        0.55,
+        0.62
+      ],
+      "d": [
+        14,
+        18,
+        18
+      ],
+      "angle": null,
+      "emerging": null,
+      "sdg": [
+        12,
+        "Less excess stock means less waste (target 12.5)"
+      ],
+      "tasks": [
+        {
+          "text": "Track stock levels",
+          "mode": "ai"
+        },
+        {
+          "text": "Find slow-moving stock",
+          "mode": "assist"
+        },
+        {
+          "text": "Decide what to write off or discount",
+          "mode": "human"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "recon",
+      "to": "ghg",
+      "weeks": 4,
+      "why": "Both trace every number back to a source document.",
+      "kind": "build"
+    },
+    {
+      "from": "recon",
+      "to": "esgdata",
+      "weeks": 3,
+      "why": "Reconciliation habits carry over to checking ESG data.",
+      "kind": "build"
+    },
+    {
+      "from": "excel",
+      "to": "esgdata",
+      "weeks": 3,
+      "why": "Cleaning and merging data is the core of ESG data work.",
+      "kind": "build"
+    },
+    {
+      "from": "audit",
+      "to": "esgdata",
+      "weeks": 2,
+      "why": "Evidence trails are what ESG data needs most.",
+      "kind": "build"
+    },
+    {
+      "from": "esgdata",
+      "to": "ghg",
+      "weeks": 3,
+      "why": "Clean activity data is the input to emissions accounting.",
+      "kind": "build"
+    },
+    {
+      "from": "audit",
+      "to": "disc",
+      "weeks": 3,
+      "why": "Disclosures need the same complete evidence trail.",
+      "kind": "build"
+    },
+    {
+      "from": "disc",
+      "to": "ghg",
+      "weeks": 3,
+      "why": "Disclosure work shows you which emissions to count.",
+      "kind": "build"
+    },
+    {
+      "from": "process",
+      "to": "aisup",
+      "weeks": 2,
+      "why": "You already redesign workflows; now some steps run on AI.",
+      "kind": "build"
+    },
+    {
+      "from": "excel",
+      "to": "viz",
+      "weeks": 2,
+      "why": "Moves your spreadsheet summaries onto shared dashboards.",
+      "kind": "build"
+    },
+    {
+      "from": "viz",
+      "to": "fin",
+      "weeks": 3,
+      "why": "Dashboards are where analysis gets read.",
+      "kind": "build"
+    },
+    {
+      "from": "excel",
+      "to": "fin",
+      "weeks": 4,
+      "why": "Turns spreadsheet skill into forecasts managers act on.",
+      "kind": "build"
+    },
+    {
+      "from": "aisup",
+      "to": "fin",
+      "weeks": 3,
+      "why": "Analysts now review AI-built forecasts.",
+      "kind": "build"
+    },
+    {
+      "from": "process",
+      "to": "auto",
+      "weeks": 3,
+      "why": "Automation is process improvement done with software.",
+      "kind": "build"
+    },
+    {
+      "from": "erp",
+      "to": "auto",
+      "weeks": 3,
+      "why": "You know the ERP screens the automations will run on.",
+      "kind": "build"
+    },
+    {
+      "from": "inv",
+      "to": "aiinv",
+      "weeks": 1,
+      "why": "Same work, new version: you check what AI captured and fix the exceptions.",
+      "kind": "evolve"
+    },
+    {
+      "from": "three",
+      "to": "aiinv",
+      "weeks": 1,
+      "why": "Your matching rules become the checks you apply to AI output.",
+      "kind": "evolve"
+    },
+    {
+      "from": "excel",
+      "to": "prompt",
+      "weeks": 1,
+      "why": "You already structure data; now you instruct AI tools to do the first pass.",
+      "kind": "build"
+    },
+    {
+      "from": "excel",
+      "to": "sql",
+      "weeks": 3,
+      "why": "You already think in tables; SQL asks the same questions of bigger data.",
+      "kind": "build"
+    },
+    {
+      "from": "sql",
+      "to": "python",
+      "weeks": 4,
+      "why": "Python picks up where SQL stops: cleaning, automating, modelling.",
+      "kind": "build"
+    },
+    {
+      "from": "excel",
+      "to": "stats",
+      "weeks": 3,
+      "why": "Averages and trends in your reports are the start of statistics.",
+      "kind": "build"
+    },
+    {
+      "from": "ghg",
+      "to": "lca",
+      "weeks": 3,
+      "why": "Life-cycle assessment counts emissions product by product.",
+      "kind": "build"
+    },
+    {
+      "from": "esgdata",
+      "to": "lca",
+      "weeks": 4,
+      "why": "LCA runs on the same activity data, in more detail.",
+      "kind": "build"
+    },
+    {
+      "from": "fin",
+      "to": "greenfin",
+      "weeks": 4,
+      "why": "Green finance is financial analysis with climate risk added.",
+      "kind": "build"
+    },
+    {
+      "from": "disc",
+      "to": "greenfin",
+      "weeks": 3,
+      "why": "Investors read the disclosures you would help prepare.",
+      "kind": "build"
+    },
+    {
+      "from": "audit",
+      "to": "audit2",
+      "weeks": 3,
+      "why": "Evidence trails are the core of internal audit.",
+      "kind": "build"
+    },
+    {
+      "from": "recon",
+      "to": "audit2",
+      "weeks": 2,
+      "why": "Finding unexplained differences is what auditors do all day.",
+      "kind": "build"
+    },
+    {
+      "from": "tax",
+      "to": "audit2",
+      "weeks": 3,
+      "why": "Compliance work teaches you how controls are tested.",
+      "kind": "build"
+    },
+    {
+      "from": "pay",
+      "to": "treasury",
+      "weeks": 3,
+      "why": "Payment runs are the daily face of cash management.",
+      "kind": "build"
+    },
+    {
+      "from": "three",
+      "to": "procure",
+      "weeks": 3,
+      "why": "Matching POs teaches you how buying really works.",
+      "kind": "build"
+    },
+    {
+      "from": "dispute",
+      "to": "procure",
+      "weeks": 2,
+      "why": "Negotiating with vendors is half of sourcing.",
+      "kind": "build"
+    },
+    {
+      "from": "erp",
+      "to": "scm",
+      "weeks": 4,
+      "why": "You know how orders and receipts flow through SAP.",
+      "kind": "build"
+    },
+    {
+      "from": "erp",
+      "to": "invent",
+      "weeks": 3,
+      "why": "Stock data lives in the same ERP you use daily.",
+      "kind": "build"
+    },
+    {
+      "from": "excel",
+      "to": "invent",
+      "weeks": 3,
+      "why": "Inventory analytics is spreadsheet analysis on stock levels.",
+      "kind": "build"
+    },
+    {
+      "from": "ghg",
+      "to": "esgRole",
+      "weeks": 2,
+      "why": "Portfolio project: a sample emissions report.",
+      "kind": "build"
+    },
+    {
+      "from": "disc",
+      "to": "esgRole",
+      "weeks": 4,
+      "why": "Portfolio project: a sample climate disclosure.",
+      "kind": "build"
+    },
+    {
+      "from": "aisup",
+      "to": "esgRole",
+      "weeks": 8,
+      "why": "Lead AI-assisted ESG reporting; a longer on-the-job ramp.",
+      "kind": "build"
+    },
+    {
+      "from": "fin",
+      "to": "faRole",
+      "weeks": 2,
+      "why": "Portfolio project: a sample monthly variance report.",
+      "kind": "build"
+    },
+    {
+      "from": "viz",
+      "to": "faRole",
+      "weeks": 5,
+      "why": "Portfolio project: a finance dashboard.",
+      "kind": "build"
+    },
+    {
+      "from": "auto",
+      "to": "opsRole",
+      "weeks": 2,
+      "why": "Portfolio project: automate one AP workflow end to end.",
+      "kind": "build"
+    },
+    {
+      "from": "aisup",
+      "to": "opsRole",
+      "weeks": 4,
+      "why": "Portfolio project: a review checklist for AI agents.",
+      "kind": "build"
+    },
+    {
+      "from": "aiinv",
+      "to": "stayRole",
+      "weeks": 1,
+      "why": "On the job: run AI invoice capture for one vendor group for a month.",
+      "kind": "build"
+    },
+    {
+      "from": "prompt",
+      "to": "stayRole",
+      "weeks": 2,
+      "why": "On the job: build a prompt library for your team's AP tasks.",
+      "kind": "build"
+    },
+    {
+      "from": "audit2",
+      "to": "intAudit",
+      "weeks": 2,
+      "why": "Portfolio project: audit one month of AP payments.",
+      "kind": "build"
+    },
+    {
+      "from": "treasury",
+      "to": "treasuryRole",
+      "weeks": 2,
+      "why": "Portfolio project: a 13-week cash forecast.",
+      "kind": "build"
+    },
+    {
+      "from": "lca",
+      "to": "lcaRole",
+      "weeks": 2,
+      "why": "Portfolio project: the footprint of one product.",
+      "kind": "build"
+    },
+    {
+      "from": "greenfin",
+      "to": "greenRole",
+      "weeks": 2,
+      "why": "Portfolio project: screen 5 bonds against green criteria.",
+      "kind": "build"
+    },
+    {
+      "from": "disc",
+      "to": "assurRole",
+      "weeks": 3,
+      "why": "Portfolio project: check a disclosure against its evidence.",
+      "kind": "build"
+    },
+    {
+      "from": "audit2",
+      "to": "assurRole",
+      "weeks": 3,
+      "why": "Assurance is audit applied to sustainability claims.",
+      "kind": "build"
+    },
+    {
+      "from": "sql",
+      "to": "dataRole",
+      "weeks": 3,
+      "why": "Portfolio project: analyse a public dataset end to end.",
+      "kind": "build"
+    },
+    {
+      "from": "viz",
+      "to": "dataRole",
+      "weeks": 3,
+      "why": "Portfolio project: a dashboard that answers one business question.",
+      "kind": "build"
+    },
+    {
+      "from": "stats",
+      "to": "dataRole",
+      "weeks": 3,
+      "why": "Portfolio project: test whether a process change really helped.",
+      "kind": "build"
+    },
+    {
+      "from": "viz",
+      "to": "biRole",
+      "weeks": 3,
+      "why": "Portfolio project: a self-service finance dashboard.",
+      "kind": "build"
+    },
+    {
+      "from": "sql",
+      "to": "biRole",
+      "weeks": 3,
+      "why": "Portfolio project: a clean reporting data model.",
+      "kind": "build"
+    },
+    {
+      "from": "aisup",
+      "to": "aiQaRole",
+      "weeks": 2,
+      "why": "Portfolio project: an error log for 200 AI outputs.",
+      "kind": "build"
+    },
+    {
+      "from": "prompt",
+      "to": "aiQaRole",
+      "weeks": 3,
+      "why": "Portfolio project: a test set that catches AI mistakes.",
+      "kind": "build"
+    },
+    {
+      "from": "procure",
+      "to": "procRole",
+      "weeks": 2,
+      "why": "Portfolio project: a sourcing plan for one category.",
+      "kind": "build"
+    },
+    {
+      "from": "scm",
+      "to": "scmRole",
+      "weeks": 3,
+      "why": "Portfolio project: a monthly demand and supply plan.",
+      "kind": "build"
+    },
+    {
+      "from": "invent",
+      "to": "invRole",
+      "weeks": 2,
+      "why": "Portfolio project: find slow-moving stock in sample data.",
+      "kind": "build"
+    }
+  ],
+  "requirements": {
+    "stayRole": [
+      {
+        "skill": "aiinv",
+        "weight": 3,
+        "need": 3,
+        "share": 68,
+        "status": "emerging"
+      },
+      {
+        "skill": "prompt",
+        "weight": 2,
+        "need": 3,
+        "share": 46,
+        "status": "emerging"
+      },
+      {
+        "skill": "three",
+        "weight": 2,
+        "need": 3,
+        "share": 55,
+        "status": "essential"
+      },
+      {
+        "skill": "dispute",
+        "weight": 2,
+        "need": 3,
+        "share": 38,
+        "status": "optional"
+      },
+      {
+        "skill": "erp",
+        "weight": 1,
+        "need": 3,
+        "share": 40,
+        "status": "optional"
+      }
+    ],
+    "opsRole": [
+      {
+        "skill": "auto",
+        "weight": 3,
+        "need": 3,
+        "share": 74,
+        "status": "essential"
+      },
+      {
+        "skill": "aisup",
+        "weight": 2,
+        "need": 3,
+        "share": 44,
+        "status": "emerging"
+      },
+      {
+        "skill": "erp",
+        "weight": 2,
+        "need": 3,
+        "share": 52,
+        "status": "essential"
+      },
+      {
+        "skill": "process",
+        "weight": 2,
+        "need": 3,
+        "share": 49,
+        "status": "essential"
+      },
+      {
+        "skill": "three",
+        "weight": 1,
+        "need": 3,
+        "share": 30,
+        "status": "optional"
+      }
+    ],
+    "faRole": [
+      {
+        "skill": "fin",
+        "weight": 3,
+        "need": 3,
+        "share": 81,
+        "status": "essential"
+      },
+      {
+        "skill": "viz",
+        "weight": 2,
+        "need": 3,
+        "share": 62,
+        "status": "optional"
+      },
+      {
+        "skill": "excel",
+        "weight": 2,
+        "need": 3,
+        "share": 77,
+        "status": "essential"
+      },
+      {
+        "skill": "erp",
+        "weight": 1,
+        "need": 3,
+        "share": 35,
+        "status": "optional"
+      },
+      {
+        "skill": "aisup",
+        "weight": 1,
+        "need": 3,
+        "share": 22,
+        "status": "emerging"
+      }
+    ],
+    "esgRole": [
+      {
+        "skill": "ghg",
+        "weight": 3,
+        "need": 3,
+        "share": 72,
+        "status": "essential"
+      },
+      {
+        "skill": "disc",
+        "weight": 2,
+        "need": 3,
+        "share": 58,
+        "status": "essential"
+      },
+      {
+        "skill": "esgdata",
+        "weight": 2,
+        "need": 3,
+        "share": 41,
+        "status": "optional"
+      },
+      {
+        "skill": "audit",
+        "weight": 2,
+        "need": 3,
+        "share": 47,
+        "status": "essential"
+      },
+      {
+        "skill": "excel",
+        "weight": 1,
+        "need": 3,
+        "share": 65,
+        "status": "optional"
+      }
+    ],
+    "intAudit": [
+      {
+        "skill": "audit2",
+        "weight": 3,
+        "need": 3,
+        "share": 70,
+        "status": "essential"
+      },
+      {
+        "skill": "audit",
+        "weight": 2,
+        "need": 3,
+        "share": 55,
+        "status": "essential"
+      },
+      {
+        "skill": "recon",
+        "weight": 2,
+        "need": 3,
+        "share": 40,
+        "status": "optional"
+      },
+      {
+        "skill": "tax",
+        "weight": 1,
+        "need": 3,
+        "share": 30,
+        "status": "optional"
+      },
+      {
+        "skill": "aisup",
+        "weight": 1,
+        "need": 3,
+        "share": 26,
+        "status": "emerging"
+      }
+    ],
+    "treasuryRole": [
+      {
+        "skill": "treasury",
+        "weight": 3,
+        "need": 3,
+        "share": 76,
+        "status": "essential"
+      },
+      {
+        "skill": "pay",
+        "weight": 2,
+        "need": 3,
+        "share": 48,
+        "status": "essential"
+      },
+      {
+        "skill": "excel",
+        "weight": 2,
+        "need": 3,
+        "share": 62,
+        "status": "essential"
+      },
+      {
+        "skill": "fin",
+        "weight": 1,
+        "need": 3,
+        "share": 40,
+        "status": "optional"
+      }
+    ],
+    "lcaRole": [
+      {
+        "skill": "lca",
+        "weight": 3,
+        "need": 3,
+        "share": 70,
+        "status": "essential"
+      },
+      {
+        "skill": "ghg",
+        "weight": 2,
+        "need": 3,
+        "share": 64,
+        "status": "essential"
+      },
+      {
+        "skill": "esgdata",
+        "weight": 2,
+        "need": 3,
+        "share": 45,
+        "status": "optional"
+      },
+      {
+        "skill": "excel",
+        "weight": 1,
+        "need": 3,
+        "share": 50,
+        "status": "optional"
+      }
+    ],
+    "greenRole": [
+      {
+        "skill": "greenfin",
+        "weight": 3,
+        "need": 3,
+        "share": 72,
+        "status": "essential"
+      },
+      {
+        "skill": "fin",
+        "weight": 2,
+        "need": 3,
+        "share": 60,
+        "status": "essential"
+      },
+      {
+        "skill": "disc",
+        "weight": 2,
+        "need": 3,
+        "share": 44,
+        "status": "optional"
+      },
+      {
+        "skill": "excel",
+        "weight": 1,
+        "need": 3,
+        "share": 55,
+        "status": "optional"
+      }
+    ],
+    "assurRole": [
+      {
+        "skill": "disc",
+        "weight": 3,
+        "need": 3,
+        "share": 68,
+        "status": "essential"
+      },
+      {
+        "skill": "audit2",
+        "weight": 2,
+        "need": 3,
+        "share": 52,
+        "status": "essential"
+      },
+      {
+        "skill": "audit",
+        "weight": 2,
+        "need": 3,
+        "share": 50,
+        "status": "essential"
+      },
+      {
+        "skill": "esgdata",
+        "weight": 1,
+        "need": 3,
+        "share": 36,
+        "status": "optional"
+      }
+    ],
+    "dataRole": [
+      {
+        "skill": "sql",
+        "weight": 3,
+        "need": 3,
+        "share": 82,
+        "status": "essential"
+      },
+      {
+        "skill": "stats",
+        "weight": 2,
+        "need": 3,
+        "share": 58,
+        "status": "essential"
+      },
+      {
+        "skill": "viz",
+        "weight": 2,
+        "need": 3,
+        "share": 66,
+        "status": "essential"
+      },
+      {
+        "skill": "python",
+        "weight": 2,
+        "need": 3,
+        "share": 54,
+        "status": "optional"
+      },
+      {
+        "skill": "excel",
+        "weight": 1,
+        "need": 3,
+        "share": 60,
+        "status": "optional"
+      }
+    ],
+    "biRole": [
+      {
+        "skill": "viz",
+        "weight": 3,
+        "need": 3,
+        "share": 80,
+        "status": "essential"
+      },
+      {
+        "skill": "sql",
+        "weight": 3,
+        "need": 3,
+        "share": 74,
+        "status": "essential"
+      },
+      {
+        "skill": "excel",
+        "weight": 1,
+        "need": 3,
+        "share": 50,
+        "status": "optional"
+      },
+      {
+        "skill": "erp",
+        "weight": 1,
+        "need": 3,
+        "share": 30,
+        "status": "optional"
+      }
+    ],
+    "aiQaRole": [
+      {
+        "skill": "aisup",
+        "weight": 3,
+        "need": 3,
+        "share": 70,
+        "status": "emerging"
+      },
+      {
+        "skill": "prompt",
+        "weight": 2,
+        "need": 3,
+        "share": 50,
+        "status": "emerging"
+      },
+      {
+        "skill": "aiinv",
+        "weight": 2,
+        "need": 3,
+        "share": 40,
+        "status": "emerging"
+      },
+      {
+        "skill": "audit",
+        "weight": 1,
+        "need": 3,
+        "share": 35,
+        "status": "optional"
+      }
+    ],
+    "procRole": [
+      {
+        "skill": "procure",
+        "weight": 3,
+        "need": 3,
+        "share": 78,
+        "status": "essential"
+      },
+      {
+        "skill": "dispute",
+        "weight": 2,
+        "need": 3,
+        "share": 60,
+        "status": "essential"
+      },
+      {
+        "skill": "three",
+        "weight": 2,
+        "need": 3,
+        "share": 45,
+        "status": "optional"
+      },
+      {
+        "skill": "erp",
+        "weight": 1,
+        "need": 3,
+        "share": 50,
+        "status": "optional"
+      }
+    ],
+    "scmRole": [
+      {
+        "skill": "scm",
+        "weight": 3,
+        "need": 3,
+        "share": 80,
+        "status": "essential"
+      },
+      {
+        "skill": "erp",
+        "weight": 2,
+        "need": 3,
+        "share": 58,
+        "status": "essential"
+      },
+      {
+        "skill": "excel",
+        "weight": 2,
+        "need": 3,
+        "share": 62,
+        "status": "essential"
+      },
+      {
+        "skill": "stats",
+        "weight": 1,
+        "need": 3,
+        "share": 34,
+        "status": "optional"
+      }
+    ],
+    "invRole": [
+      {
+        "skill": "invent",
+        "weight": 3,
+        "need": 3,
+        "share": 74,
+        "status": "essential"
+      },
+      {
+        "skill": "erp",
+        "weight": 2,
+        "need": 3,
+        "share": 50,
+        "status": "essential"
+      },
+      {
+        "skill": "excel",
+        "weight": 2,
+        "need": 3,
+        "share": 60,
+        "status": "essential"
+      },
+      {
+        "skill": "sql",
+        "weight": 1,
+        "need": 3,
+        "share": 30,
+        "status": "optional"
+      }
+    ]
+  },
+  "courses": [
+    {
+      "skill": "ghg",
+      "title": "GHG Protocol corporate accounting basics",
+      "format": "Online course",
+      "hours": 24,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 24 h · free",
+      "practice": "Calculate Scope 2 emissions from a sample electricity bill",
+      "prove": "10-question check + a one-page emissions summary"
+    },
+    {
+      "skill": "disc",
+      "title": "Sustainability reporting basics",
+      "format": "Online course",
+      "hours": 18,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 18 h · free",
+      "practice": "Map one company's data to 5 climate disclosure items",
+      "prove": "Short check + a draft disclosure paragraph"
+    },
+    {
+      "skill": "esgdata",
+      "title": "ESG data management",
+      "format": "Workshop",
+      "hours": 18,
+      "free": false,
+      "hrdClaimable": true,
+      "formatText": "Workshop · 18 h · paid · may be HRD Corp-claimable",
+      "practice": "Clean a sample utility-bill dataset and flag the gaps",
+      "prove": "Data-quality checklist on a new sample"
+    },
+    {
+      "skill": "viz",
+      "title": "Power BI dashboards for finance",
+      "format": "Online course",
+      "hours": 12,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 12 h · free",
+      "practice": "Build a one-page AP ageing dashboard from sample data",
+      "prove": "Dashboard reviewed against a rubric"
+    },
+    {
+      "skill": "fin",
+      "title": "Financial analysis and forecasting",
+      "format": "Online course",
+      "hours": 24,
+      "free": false,
+      "hrdClaimable": false,
+      "formatText": "Online course · 24 h · paid",
+      "practice": "Explain 3 variances in a sample monthly report",
+      "prove": "Mini case: forecast next quarter's costs"
+    },
+    {
+      "skill": "aisup",
+      "title": "Supervising AI agents in finance",
+      "format": "Online course",
+      "hours": 12,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 12 h · free",
+      "practice": "Review 20 AI-processed invoices and log every error",
+      "prove": "Error-spotting check: find 8 planted mistakes"
+    },
+    {
+      "skill": "auto",
+      "title": "Automating finance workflows",
+      "format": "Online course",
+      "hours": 18,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 18 h · free",
+      "practice": "Automate one approval email flow in a sandbox",
+      "prove": "Working automation demo + short check"
+    },
+    {
+      "skill": "prompt",
+      "title": "Prompting AI tools for finance work",
+      "format": "Online course",
+      "hours": 6,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 6 h · free",
+      "practice": "Get an AI tool to draft a reconciliation summary, then correct it",
+      "prove": "5 prompt-and-review tasks"
+    },
+    {
+      "skill": "aiinv",
+      "title": "Hands-on with AI invoice capture",
+      "format": "Workshop",
+      "hours": 6,
+      "free": false,
+      "hrdClaimable": true,
+      "formatText": "Workshop · 6 h · may be HRD Corp-claimable",
+      "practice": "Fix the exceptions in 30 AI-captured sample invoices",
+      "prove": "Exception-handling check: 10 cases"
+    },
+    {
+      "skill": "sql",
+      "title": "SQL for business analysts",
+      "format": "Online course",
+      "hours": 18,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 18 h · free",
+      "practice": "Answer 10 questions about a sample sales database",
+      "prove": "Timed query check"
+    },
+    {
+      "skill": "python",
+      "title": "Python for data analysis",
+      "format": "Online course",
+      "hours": 24,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 24 h · free",
+      "practice": "Clean and summarise a messy CSV file",
+      "prove": "Notebook reviewed against a rubric"
+    },
+    {
+      "skill": "stats",
+      "title": "Business statistics basics",
+      "format": "Online course",
+      "hours": 18,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 18 h · free",
+      "practice": "Check whether a sample process change cut processing time",
+      "prove": "10-question check"
+    },
+    {
+      "skill": "lca",
+      "title": "Life-cycle assessment fundamentals",
+      "format": "Online course",
+      "hours": 18,
+      "free": false,
+      "hrdClaimable": false,
+      "formatText": "Online course · 18 h · paid",
+      "practice": "Footprint a simple product from sample data",
+      "prove": "Short check + one-page LCA summary"
+    },
+    {
+      "skill": "greenfin",
+      "title": "Green and sustainable finance",
+      "format": "Online course",
+      "hours": 24,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 24 h · free",
+      "practice": "Screen 5 sample bonds against green criteria",
+      "prove": "Mini case review"
+    },
+    {
+      "skill": "audit2",
+      "title": "Internal audit and controls",
+      "format": "Online course",
+      "hours": 18,
+      "free": false,
+      "hrdClaimable": true,
+      "formatText": "Online course · 18 h · paid · may be HRD Corp-claimable",
+      "practice": "Test 3 controls on a sample AP process",
+      "prove": "Audit working paper reviewed"
+    },
+    {
+      "skill": "treasury",
+      "title": "Cash and treasury management",
+      "format": "Online course",
+      "hours": 18,
+      "free": false,
+      "hrdClaimable": false,
+      "formatText": "Online course · 18 h · paid",
+      "practice": "Build a 13-week cash forecast from sample data",
+      "prove": "Forecast reviewed against actuals"
+    },
+    {
+      "skill": "procure",
+      "title": "Strategic sourcing basics",
+      "format": "Workshop",
+      "hours": 12,
+      "free": false,
+      "hrdClaimable": true,
+      "formatText": "Workshop · 12 h · may be HRD Corp-claimable",
+      "practice": "Compare 3 sample supplier quotes and pick one",
+      "prove": "Sourcing case check"
+    },
+    {
+      "skill": "scm",
+      "title": "Supply chain planning fundamentals",
+      "format": "Online course",
+      "hours": 24,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 24 h · free",
+      "practice": "Build a monthly supply plan from sample demand",
+      "prove": "Plan reviewed against a rubric"
+    },
+    {
+      "skill": "invent",
+      "title": "Inventory analytics",
+      "format": "Online course",
+      "hours": 12,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 12 h · free",
+      "practice": "Find slow-moving stock in a sample dataset",
+      "prove": "Short check"
+    },
+    {
+      "skill": "excel",
+      "title": "Advanced Excel: Power Query and data models",
+      "format": "Online course",
+      "hours": 8,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 8 h · free",
+      "practice": "Rebuild your monthly AP report with Power Query",
+      "prove": "Timed task check"
+    },
+    {
+      "skill": "process",
+      "title": "Lean process improvement basics",
+      "format": "Workshop",
+      "hours": 6,
+      "free": false,
+      "hrdClaimable": true,
+      "formatText": "Workshop · 6 h · may be HRD Corp-claimable",
+      "practice": "Map your team's approval flow and find 2 bottlenecks",
+      "prove": "Advisor reviews your process map"
+    },
+    {
+      "skill": "erp",
+      "title": "SAP S/4HANA finance essentials",
+      "format": "Online course",
+      "hours": 10,
+      "free": false,
+      "hrdClaimable": false,
+      "formatText": "Online course · 10 h · paid",
+      "practice": "Run a full vendor-to-payment cycle in a training system",
+      "prove": "Scenario check: 6 tasks"
+    },
+    {
+      "skill": "three",
+      "title": "Controls for AI-assisted matching",
+      "format": "Online course",
+      "hours": 4,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 4 h · free",
+      "practice": "Set tolerance rules for 20 sample mismatches",
+      "prove": "Short check"
+    },
+    {
+      "skill": "dispute",
+      "title": "Negotiation for finance teams",
+      "format": "Workshop",
+      "hours": 6,
+      "free": false,
+      "hrdClaimable": true,
+      "formatText": "Workshop · 6 h · may be HRD Corp-claimable",
+      "practice": "Role-play two vendor disputes",
+      "prove": "Advisor-scored role-play"
+    },
+    {
+      "skill": "audit",
+      "title": "Audit evidence and documentation",
+      "format": "Online course",
+      "hours": 8,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 8 h · free",
+      "practice": "Prepare an evidence pack for one month's payments",
+      "prove": "Checklist review"
+    },
+    {
+      "skill": "pay",
+      "title": "Payment controls and fraud prevention",
+      "format": "Online course",
+      "hours": 6,
+      "free": true,
+      "hrdClaimable": false,
+      "formatText": "Online course · 6 h · free",
+      "practice": "Spot 5 red flags in a sample payment batch",
+      "prove": "Short check"
+    }
+  ],
+  "sectors": [
+    {
+      "id": "best",
+      "name": "Best matches",
+      "icon": "sparkles",
+      "jobs": null,
+      "note": "The jobs that fit your skills best, across all sectors."
+    },
+    {
+      "id": "finance",
+      "name": "Finance",
+      "icon": "landmark",
+      "jobs": [
+        "stayRole",
+        "faRole",
+        "intAudit",
+        "treasuryRole"
+      ],
+      "note": "Stay close to accounting, with more judgement and less data entry."
+    },
+    {
+      "id": "sustain",
+      "name": "Sustainability",
+      "icon": "leaf",
+      "jobs": [
+        "esgRole",
+        "lcaRole",
+        "greenRole",
+        "assurRole"
+      ],
+      "note": "Fast-growing roles as climate reporting becomes mandatory."
+    },
+    {
+      "id": "data",
+      "name": "Tech & data",
+      "icon": "database",
+      "jobs": [
+        "dataRole",
+        "biRole",
+        "aiQaRole",
+        "opsRole"
+      ],
+      "note": "Work with the data and the AI tools themselves."
+    },
+    {
+      "id": "ops",
+      "name": "Operations",
+      "icon": "truck",
+      "jobs": [
+        "procRole",
+        "scmRole",
+        "invRole",
+        "opsRole"
+      ],
+      "note": "Use your vendor and ERP know-how in buying and supply chain."
+    }
+  ],
+  "sdgs": {
+    "8": {
+      "color": "#a21942",
+      "name": "Decent work"
+    },
+    "9": {
+      "color": "#fd6925",
+      "name": "Industry & innovation"
+    },
+    "12": {
+      "color": "#bf8b2e",
+      "name": "Responsible production"
+    },
+    "13": {
+      "color": "#3f7e44",
+      "name": "Climate action"
+    },
+    "16": {
+      "color": "#00689d",
+      "name": "Strong institutions"
+    }
+  },
+  "thresholds": {
+    "postings": 15,
+    "employers": 5,
+    "weeks": 4
+  },
+  "reviewQueue": [
+    {
+      "id": "s1",
+      "kind": "signal",
+      "status": "hidden",
+      "node": "recon",
+      "title": "AI agents now close the month-end books",
+      "change": "AI exposure +18 points",
+      "reasons": [
+        "Big change",
+        "Would reroute 1,240 users"
+      ],
+      "quote": "“…agents now match statements, post adjustments and draft the reconciliation pack for sign-off…”",
+      "source": "Sample product announcement · 21 Oct 2026 · 3 independent sources",
+      "verdict": "AI reviewer agrees · confidence 0.91",
+      "boostE": 0.18,
+      "boostD": 0
+    },
+    {
+      "id": "s2",
+      "kind": "signal",
+      "status": "pending",
+      "node": "pay",
+      "boostE": 0.12,
+      "title": "ERP vendors add AI agents that prepare payment runs",
+      "change": "AI exposure +12 points",
+      "reasons": [
+        "Big change",
+        "Would reroute 310 users"
+      ],
+      "quote": "“…the agent prepares the payment proposal and routes it for approval…”",
+      "source": "Sample ERP release notes · 19 Oct 2026 · 2 sources",
+      "verdict": "AI reviewer agrees · confidence 0.86",
+      "boostD": 0
+    },
+    {
+      "id": "s3",
+      "kind": "signal",
+      "status": "pending",
+      "node": "tax",
+      "boostD": -8,
+      "title": "Fewer postings ask for SST specialists",
+      "change": "Demand −8 points",
+      "reasons": [
+        "Single source"
+      ],
+      "quote": "“…SST-focused roles fell for the second quarter in a row…”",
+      "source": "Sample job-board report · 17 Oct 2026 · 1 source",
+      "verdict": "AI reviewer unsure · confidence 0.58",
+      "boostE": 0
+    },
+    {
+      "id": "e1",
+      "kind": "emerging",
+      "status": "pending",
+      "node": "prompt"
+    },
+    {
+      "id": "e2",
+      "kind": "emerging",
+      "status": "pending",
+      "node": "aiinv"
+    }
+  ],
+  "autoLog": [
+    [
+      "check",
+      "Applied automatically",
+      "Dashboard reporting: demand +2 points (3 sources, small change)"
+    ],
+    [
+      "check",
+      "Applied automatically",
+      "GHG emissions accounting: demand +3 points (4 sources, small change)"
+    ],
+    [
+      "x",
+      "Rejected by rules",
+      "“Excel will disappear by 2027”: the quote was not found on the source page"
+    ],
+    [
+      "x",
+      "Rejected by the skeptic agent",
+      "“Copilot Studio” proposed as a new skill: a product name, not a skill. Mapped to Workflow automation"
+    ]
+  ],
+  "persona": {
+    "displayName": "Priya Nair (sample persona)",
+    "occupation": "ap",
+    "hours": 6,
+    "level": {
+      "inv": 5,
+      "three": 5,
+      "pay": 4,
+      "tax": 3,
+      "erp": 4,
+      "dispute": 3,
+      "process": 2,
+      "audit": 4,
+      "recon": 4,
+      "excel": 4
+    },
+    "conf": {
+      "inv": "cv",
+      "three": "cv",
+      "pay": "self",
+      "tax": "self",
+      "erp": "cv",
+      "dispute": "self",
+      "process": "self",
+      "audit": "verified",
+      "recon": "cv",
+      "excel": "verified"
+    }
+  }
+}

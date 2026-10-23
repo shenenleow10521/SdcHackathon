@@ -1,0 +1,495 @@
+{
+  "_meta": {
+    "generatedBy": "scripts/data/build_esco_map.py",
+    "generated": "2026-10-23",
+    "esco": "ESCO v1.2.1 via https://ec.europa.eu/esco/api (European Commission). This service uses the ESCO classification of the European Commission.",
+    "onet": "O*NET-SOC 2019 codes; matches from the ESCO-O*NET crosswalk (https://esco.ec.europa.eu/system/files/2023-08/ONET_%28Occupations%29_0_updated.csv) or O*NET OnLine search (onetBasis).",
+    "match": "exact = same concept; close = ESCO concept or its alt label covers the role/skill; nearest = best available, imperfect; none = no ESCO equivalent (uri null).",
+    "modifications": "Aliases are a hand-picked subset of ESCO altLabels; isco derived from the ESCO record (broaderIscoGroup, else the ISCO prefix of the ESCO code)."
+  },
+  "occupations": {
+    "ap": {
+      "uri": "http://data.europa.eu/esco/occupation/bafbc672-0ad9-41af-9de8-db0c91a24f9b",
+      "title": "billing clerk",
+      "isco": "4311",
+      "escoCode": "4311.1",
+      "onet": "43-3031.00",
+      "onetTitle": "Bookkeeping, Accounting, and Auditing Clerks",
+      "onetBasis": "onetonline_search",
+      "crosswalkMatch": "broadMatch",
+      "match": "close",
+      "note": "ESCO has no 'accounts payable clerk'; 'billing clerk' (ISCO 4311 Accounting and bookkeeping clerks) lists 'accounts payable officer' as an alternative label. O*NET: top O*NET OnLine result for 'accounts payable clerk' (crosswalk: billing clerk -> 43-3031 broadMatch)."
+    },
+    "stayRole": {
+      "uri": "http://data.europa.eu/esco/occupation/bafbc672-0ad9-41af-9de8-db0c91a24f9b",
+      "title": "billing clerk",
+      "isco": "4311",
+      "escoCode": "4311.1",
+      "onet": "43-3031.00",
+      "onetTitle": "Bookkeeping, Accounting, and Auditing Clerks",
+      "onetBasis": "onetonline_search",
+      "crosswalkMatch": "broadMatch",
+      "match": "nearest",
+      "note": "AI-assisted variant of the AP role; no separate ESCO/O*NET occupation exists, so it shares the AP clerk mapping."
+    },
+    "opsRole": {
+      "uri": "http://data.europa.eu/esco/occupation/fe0fa514-b48d-4a53-9757-a283c0baacf0",
+      "title": "ICT business analyst",
+      "isco": "2511",
+      "escoCode": "2511.9",
+      "onet": null,
+      "onetTitle": null,
+      "onetBasis": null,
+      "crosswalkMatch": null,
+      "match": "nearest",
+      "note": "Nearest ESCO concept: 'ICT business analyst' (alt label 'business process specialist'). Not in the ESCO-O*NET crosswalk and O*NET search gave no credible match, so O*NET is left empty."
+    },
+    "faRole": {
+      "uri": "http://data.europa.eu/esco/occupation/8d586ee9-0ab1-4155-a3b0-2ca786c8e48c",
+      "title": "financial analyst",
+      "isco": "2413",
+      "escoCode": "2413.1",
+      "onet": "13-2051.00",
+      "onetTitle": "Financial and Investment Analysts",
+      "onetBasis": "crosswalk",
+      "crosswalkMatch": "broadMatch",
+      "match": "exact",
+      "note": null
+    },
+    "esgRole": {
+      "uri": "http://data.europa.eu/esco/occupation/2cf2b905-3308-4b5d-8e8d-633fc7a3f3ce",
+      "title": "sustainability manager",
+      "isco": "1213",
+      "escoCode": "1213.8",
+      "onet": "13-1199.05",
+      "onetTitle": "Sustainability Specialists",
+      "onetBasis": "crosswalk",
+      "crosswalkMatch": "closeMatch",
+      "match": "close",
+      "note": "ESCO v1.2 'sustainability manager' lists 'sustainability analyst' as an alternative label; it sits in ISCO 1213 (policy and planning managers)."
+    },
+    "intAudit": {
+      "uri": "http://data.europa.eu/esco/occupation/1ad59946-d13e-441e-9b36-56e1df055e21",
+      "title": "financial auditor",
+      "isco": "2411",
+      "escoCode": "2411.1.7",
+      "onet": "13-2011.00",
+      "onetTitle": "Accountants and Auditors",
+      "onetBasis": "crosswalk",
+      "crosswalkMatch": "broadMatch",
+      "match": "close",
+      "note": "ESCO 'financial auditor' lists 'internal auditor' as an alternative label."
+    },
+    "treasuryRole": {
+      "uri": "http://data.europa.eu/esco/occupation/3e1a2f3c-20d6-4d33-aa6f-63cd2a32698d",
+      "title": "corporate treasurer",
+      "isco": "1211",
+      "escoCode": "1211.1.4",
+      "onet": "11-3031.01",
+      "onetTitle": "Treasurers and Controllers",
+      "onetBasis": "crosswalk",
+      "crosswalkMatch": "exactMatch",
+      "match": "close",
+      "note": "ESCO 'corporate treasurer' lists 'treasury analyst' as an alternative label (ISCO 1211 is a manager group)."
+    },
+    "lcaRole": {
+      "uri": "http://data.europa.eu/esco/occupation/a7358961-46d4-4715-ac1e-6148fd042510",
+      "title": "environmental expert",
+      "isco": "2143",
+      "escoCode": "2143.2",
+      "onet": "19-2041.03",
+      "onetTitle": "Industrial Ecologists",
+      "onetBasis": "crosswalk",
+      "crosswalkMatch": "closeMatch",
+      "match": "nearest",
+      "note": "No product-carbon-footprint occupation in ESCO or O*NET; nearest are ESCO 'environmental expert' (alt 'climate change specialist') and O*NET 'Industrial Ecologists' (crosswalk closeMatch)."
+    },
+    "greenRole": {
+      "uri": "http://data.europa.eu/esco/occupation/b7f47c25-bdf3-42fa-a68e-ad32754b2dba",
+      "title": "investment analyst",
+      "isco": "2413",
+      "escoCode": "2413.1.2",
+      "onet": "13-2051.00",
+      "onetTitle": "Financial and Investment Analysts",
+      "onetBasis": "crosswalk",
+      "crosswalkMatch": "broadMatch",
+      "match": "nearest",
+      "note": "No green-finance occupation in ESCO; nearest is 'investment analyst'."
+    },
+    "assurRole": {
+      "uri": "http://data.europa.eu/esco/occupation/1ad59946-d13e-441e-9b36-56e1df055e21",
+      "title": "financial auditor",
+      "isco": "2411",
+      "escoCode": "2411.1.7",
+      "onet": "13-2011.00",
+      "onetTitle": "Accountants and Auditors",
+      "onetBasis": "crosswalk",
+      "crosswalkMatch": "broadMatch",
+      "match": "nearest",
+      "note": "No sustainability-assurance occupation in ESCO; assurance engagements are done by auditors, so this shares the 'financial auditor' mapping."
+    },
+    "dataRole": {
+      "uri": "http://data.europa.eu/esco/occupation/d3edb8f8-3a06-47a0-8fb9-9b212c006aa2",
+      "title": "data analyst",
+      "isco": "2511",
+      "escoCode": "2511.3",
+      "onet": "15-2051.00",
+      "onetTitle": "Data Scientists",
+      "onetBasis": "crosswalk",
+      "crosswalkMatch": "closeMatch",
+      "match": "exact",
+      "note": null
+    },
+    "biRole": {
+      "uri": "http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84",
+      "title": "data warehouse designer",
+      "isco": "2521",
+      "escoCode": "2521.5",
+      "onet": "15-1243.01",
+      "onetTitle": "Data Warehousing Specialists",
+      "onetBasis": "crosswalk",
+      "crosswalkMatch": "exactMatch",
+      "match": "close",
+      "note": "ESCO 'data warehouse designer' lists 'data warehouse developer'; it covers ETL and reporting applications."
+    },
+    "aiQaRole": {
+      "uri": "http://data.europa.eu/esco/occupation/7086d0ca-1e77-4690-89c9-7ed1a0478fa3",
+      "title": "data quality specialist",
+      "isco": "2519",
+      "escoCode": "2519.1",
+      "onet": null,
+      "onetTitle": null,
+      "onetBasis": null,
+      "crosswalkMatch": null,
+      "match": "close",
+      "note": "Not in the ESCO-O*NET crosswalk and O*NET has no data-quality occupation, so O*NET is left empty."
+    },
+    "procRole": {
+      "uri": "http://data.europa.eu/esco/occupation/29fa406d-de89-4515-be8d-0fe7bda993f1",
+      "title": "purchaser",
+      "isco": "3323",
+      "escoCode": "3323.2",
+      "onet": "13-1023.00",
+      "onetTitle": "Purchasing Agents, Except Wholesale, Retail, and Farm Products",
+      "onetBasis": "crosswalk",
+      "crosswalkMatch": "exactMatch",
+      "match": "close",
+      "note": "ESCO 'purchaser' lists 'procurement officer' as an alternative label."
+    },
+    "scmRole": {
+      "uri": "http://data.europa.eu/esco/occupation/dbdc9f7b-31c6-4f21-a9c5-48253bb69c08",
+      "title": "purchase planner",
+      "isco": "3323",
+      "escoCode": "3323.2.3",
+      "onet": "13-1081.02",
+      "onetTitle": "Logistics Analysts",
+      "onetBasis": "onetonline_search",
+      "crosswalkMatch": null,
+      "match": "close",
+      "note": "ESCO 'purchase planner' lists 'senior supply chain planner' and 'demand planner'. O*NET: top O*NET OnLine result for 'supply chain planner' (crosswalk gives the clerical 43-5061 closeMatch instead)."
+    },
+    "invRole": {
+      "uri": "http://data.europa.eu/esco/occupation/d7a9f9e0-e2f5-4804-a0e0-b21ebb1403ee",
+      "title": "inventory coordinator",
+      "isco": "4321",
+      "escoCode": "4321.1",
+      "onet": "43-5071.00",
+      "onetTitle": "Shipping, Receiving, and Inventory Clerks",
+      "onetBasis": "crosswalk",
+      "crosswalkMatch": "exactMatch",
+      "match": "close",
+      "note": "ESCO 'inventory coordinator' lists 'inventory specialist' and 'inventory controller'."
+    }
+  },
+  "skills": {
+    "inv": {
+      "uri": "http://data.europa.eu/esco/skill/648782e0-b5e5-4e59-bed0-627aa8ac29f0",
+      "preferredLabel": "maintain records of financial transactions",
+      "description": "Collate all the financial transactions done in the daily operations of a business and record them in their respective accounts.",
+      "aliases": [
+        "maintain a record of financial transactions",
+        "manage records of financial transactions"
+      ],
+      "match": "close",
+      "note": null
+    },
+    "three": {
+      "uri": null,
+      "match": "none",
+      "note": "No ESCO concept for three-way matching (PO / invoice / goods receipt); kept as sample."
+    },
+    "pay": {
+      "uri": "http://data.europa.eu/esco/skill/4e756773-ae14-4981-838b-9fe27e81c0af",
+      "preferredLabel": "carry out financial transactions",
+      "description": "Make payments by cheque, electronic transfer or at the bank. Make sure the account number is correct and that all the information is accurately filled in.",
+      "aliases": [
+        "make financial transactions",
+        "perform financial transactions"
+      ],
+      "match": "close",
+      "note": null
+    },
+    "tax": {
+      "uri": "http://data.europa.eu/esco/skill/2ecf90f1-c511-464b-b26f-598d69182c70",
+      "preferredLabel": "calculate tax",
+      "description": "Calculate the taxes which have to be paid by an individual or organisation, or paid back by a governmental institution, compliant with specific legislation.",
+      "aliases": [],
+      "match": "close",
+      "note": "Generic ESCO tax skill; Malaysian SST specifics are not in ESCO."
+    },
+    "erp": {
+      "uri": "http://data.europa.eu/esco/skill/f0393af3-bcd9-41af-a36e-0cfb83b60081",
+      "preferredLabel": "manage standard enterprise resource planning system",
+      "description": "Collect, manage and interpret data relevant for companies related to shipping, payment, inventory, resources and manufacturing using specific business management software. Such software as Microsoft Dynamics, SAP ERP, Oracle ERP.",
+      "aliases": [
+        "maintain standard enterprise resource planning system",
+        "manage standard enterprise resource planning systems"
+      ],
+      "match": "close",
+      "note": null
+    },
+    "dispute": {
+      "uri": "http://data.europa.eu/esco/skill/f70b5f39-b8b6-407b-8c08-64fd65db79e9",
+      "preferredLabel": "handle financial disputes",
+      "description": "Handle disputes between individuals or organisations, either public or corporate, which deal with financial matters, accounts, and taxation.",
+      "aliases": [
+        "manage financial disputes",
+        "mediate in financial disputes"
+      ],
+      "match": "close",
+      "note": null
+    },
+    "process": {
+      "uri": "http://data.europa.eu/esco/skill/958b8802-ec3e-4813-97f7-6c8f48610dbd",
+      "preferredLabel": "identify process improvements",
+      "description": "Identify possible improvements to operational and financial performance, in order to increase productivity, efficiency, quality, and streamline procedures.",
+      "aliases": [
+        "identify improvement opportunities",
+        "identify business improvement opportunities",
+        "process improvement identification",
+        "develop improvement actions"
+      ],
+      "match": "exact",
+      "note": null
+    },
+    "audit": {
+      "uri": "http://data.europa.eu/esco/skill/faf8943c-72ff-4736-a587-25508695d6f0",
+      "preferredLabel": "maintain financial records",
+      "description": "Keep track of and finalise all formal documents representing the financial transactions of a business or project.",
+      "aliases": [
+        "keep financial records",
+        "update financial records"
+      ],
+      "match": "nearest",
+      "note": "Nearest ESCO concept for keeping the document/audit trail complete."
+    },
+    "recon": {
+      "uri": "http://data.europa.eu/esco/skill/5f1ebff6-98ec-411f-a1d4-0bf04bd03bdf",
+      "preferredLabel": "check accounting records",
+      "description": "Revise the accounting records of the quarter and year and ensure that the accounting information reflects with accuracy the financial transactions of the company.",
+      "aliases": [
+        "review accounting records",
+        "monitor accounting records"
+      ],
+      "match": "close",
+      "note": null
+    },
+    "excel": {
+      "uri": "http://data.europa.eu/esco/skill/1973c966-f236-40c9-b2d4-5d71a89019be",
+      "preferredLabel": "use spreadsheets software",
+      "description": "Use software tools to create and edit tabular data to carry out mathematical calculations, organise data and information, create diagrams based on data and to retrieve them.",
+      "aliases": [
+        "MS Excel",
+        "Microsoft Office Excel",
+        "Google Sheets",
+        "LibreOffice Calc",
+        "design spreadsheets",
+        "use spreadsheets program"
+      ],
+      "match": "exact",
+      "note": null
+    },
+    "fin": {
+      "uri": "http://data.europa.eu/esco/skill/99571e68-801f-49af-a897-5f75996642e1",
+      "preferredLabel": "financial analysis",
+      "description": "The process of assessing the financial possibilities, means, and status of an organisation or individual by analysing financial statements and reports in order to make well informed business or financial decisions.",
+      "aliases": [
+        "fiscal analysis",
+        "commercial analysis"
+      ],
+      "match": "exact",
+      "note": null
+    },
+    "viz": {
+      "uri": "http://data.europa.eu/esco/skill/c3e36d05-8ae8-447f-bb2b-6f9409f85389",
+      "preferredLabel": "deliver visual presentation of data",
+      "description": "Create visual representations of data such as charts or diagrams for easier understanding.",
+      "aliases": [
+        "create data visualisation",
+        "visualise data"
+      ],
+      "match": "close",
+      "note": null
+    },
+    "esgdata": {
+      "uri": "http://data.europa.eu/esco/skill/d53eab76-e8ff-4e28-af26-7e012951c763",
+      "preferredLabel": "measure company's sustainability performance",
+      "description": "Keep track of sustainability indicators and analyse how well the company is doing in sustainability performance, in relation to the Sustainable Development Goals or the global standards for sustainability reporting.",
+      "aliases": [
+        "assess sustainability performance"
+      ],
+      "match": "nearest",
+      "note": "Nearest ESCO concept (tracking sustainability indicators); ESCO has no ESG-data-management skill."
+    },
+    "ghg": {
+      "uri": null,
+      "match": "none",
+      "note": "ESCO v1.2.1 has no GHG emissions accounting skill; nearest 'advise on carbon emissions reduction' (http://data.europa.eu/esco/skill/c8b4b02c-d9ce-4e24-ab43-5dd52c6dff48) is advisory, not accounting, so it is not mapped."
+    },
+    "disc": {
+      "uri": "http://data.europa.eu/esco/skill/bbcc7e1b-3d4d-4422-9fac-efd636eb9de4",
+      "preferredLabel": "lead the sustainability reporting process",
+      "description": "Oversee the process of reporting on the sustainability performance of the organisation, according to established guidelines and standards.",
+      "aliases": [
+        "lead sustainability reporting",
+        "oversee sustainability reporting"
+      ],
+      "match": "close",
+      "note": null
+    },
+    "aisup": {
+      "uri": null,
+      "match": "none",
+      "note": "Emerging skill; no ESCO equivalent (nearest knowledge concept 'principles of artificial intelligence', http://data.europa.eu/esco/skill/e465a154-93f7-4973-9ce1-31659fe16dd2, is not equivalent)."
+    },
+    "auto": {
+      "uri": "http://data.europa.eu/esco/skill/751941a0-5645-4f8b-b97e-b252909d5edb",
+      "preferredLabel": "develop ICT workflow",
+      "description": "Create repeatable patterns of ICT activity within an organisation which enhances the systematic transformations of products, informational processes and services through their production.",
+      "aliases": [
+        "design ICT workflows"
+      ],
+      "match": "nearest",
+      "note": "Nearest ESCO concept; ESCO has no business/robotic process automation skill (its 'automation technology' is industrial control systems)."
+    },
+    "prompt": {
+      "uri": null,
+      "match": "none",
+      "note": "Emerging skill; no ESCO equivalent for prompting generative-AI tools."
+    },
+    "aiinv": {
+      "uri": null,
+      "match": "none",
+      "note": "Emerging skill; no ESCO equivalent for reviewing AI-captured invoice data."
+    },
+    "sql": {
+      "uri": "http://data.europa.eu/esco/skill/75f839c2-fd9a-4ad3-8921-6e734608568d",
+      "preferredLabel": "use query languages",
+      "description": "Retrieve information from a database or information system using computer languages designed for the retrieval of data.",
+      "aliases": [
+        "use structured query language",
+        "retrieve data using a structured query language",
+        "use database query language"
+      ],
+      "match": "close",
+      "note": null
+    },
+    "python": {
+      "uri": "http://data.europa.eu/esco/skill/ccd0a1d9-afda-43d9-b901-96344886e14d",
+      "preferredLabel": "Python (computer programming)",
+      "description": "The techniques and principles of software development, such as analysis, algorithms, coding, testing and compiling of programming paradigms in Python.",
+      "aliases": [
+        "Python"
+      ],
+      "match": "exact",
+      "note": null
+    },
+    "stats": {
+      "uri": "http://data.europa.eu/esco/skill/7ee4c2ea-b349-4bd2-81a3-ec31475d4833",
+      "preferredLabel": "statistics",
+      "description": "The study of statistical theory, methods and practices such as collection, organisation, analysis, interpretation and presentation of data. It deals with all aspects of data including the planning of data collection in terms of the design of surveys and experiments in order to forecast and plan work-related activities.",
+      "aliases": [
+        "statistical analysis",
+        "stats",
+        "use of statistics"
+      ],
+      "match": "exact",
+      "note": null
+    },
+    "lca": {
+      "uri": "http://data.europa.eu/esco/skill/4e87c852-602a-4a0e-b8d8-20709ce14ac5",
+      "preferredLabel": "assess the life cycle of resources",
+      "description": "Evaluate the use and possible recycling of raw materials in the whole product life cycle. Consider applicable regulations, such as the European Commission's Circular Economy Policy Package.",
+      "aliases": [
+        "assess resource life cycles",
+        "analyse the life cycle of resources"
+      ],
+      "match": "nearest",
+      "note": "Nearest ESCO concept; it is framed around resource use/recycling, not ISO 14040 life-cycle assessment as such."
+    },
+    "greenfin": {
+      "uri": "http://data.europa.eu/esco/skill/203083ca-b051-4c28-8986-fc8731bacee5",
+      "preferredLabel": "sustainable finance",
+      "description": "The process of integrating environmental, social and governance (ESG) considerations when making business or investment decisions, leading to increased longer-term investments into sustainable economic activities and projects.",
+      "aliases": [
+        "responsible investment",
+        "sustainable investment"
+      ],
+      "match": "close",
+      "note": null
+    },
+    "audit2": {
+      "uri": "http://data.europa.eu/esco/skill/8804d963-5a31-4609-b5df-f741b7199fb7",
+      "preferredLabel": "internal auditing",
+      "description": "The practice of observing, testing, and evaluating in a systematic manner the processes of the organisation in order to improve effectivity, reduce risks, and add value to the organisation by installing a preventive culture.",
+      "aliases": [
+        "internal audits"
+      ],
+      "match": "exact",
+      "note": null
+    },
+    "treasury": {
+      "uri": "http://data.europa.eu/esco/skill/781797f4-c2c3-49a4-a80d-eb81eb4f818c",
+      "preferredLabel": "liquidity management",
+      "description": "The theory and practices around the management of liquidity in a company with the aim of facilitating meeting obligations with thirds parties without compromising the smooth functioning of the company nor incurring in substantial losses.",
+      "aliases": [
+        "management of liquidity"
+      ],
+      "match": "close",
+      "note": null
+    },
+    "procure": {
+      "uri": "http://data.europa.eu/esco/skill/96ec2d53-4f41-4172-8ef2-70742c4bb540",
+      "preferredLabel": "assess supplier risks",
+      "description": "Evaluate supplier performance in order to assess if suppliers follow the agreed contracts, meet the standard requirements and provide the desired quality.",
+      "aliases": [
+        "assessing supplier risks",
+        "check supplier risks"
+      ],
+      "match": "nearest",
+      "note": "Covers the supplier-risk part of strategic sourcing; ESCO has no 'strategic sourcing' skill."
+    },
+    "scm": {
+      "uri": "http://data.europa.eu/esco/skill/f929c89e-c363-4132-a918-e021d57b307c",
+      "preferredLabel": "supply chain management",
+      "description": "The flow of goods in the supply chain, movement and storage of raw materials, work-in-process inventory, and finished goods from point of origin to point of consumption.",
+      "aliases": [
+        "manage a supply chain",
+        "management of a supply chain"
+      ],
+      "match": "close",
+      "note": null
+    },
+    "invent": {
+      "uri": "http://data.europa.eu/esco/skill/ab6265f2-a9bf-49e8-a9a5-67cbab4de38b",
+      "preferredLabel": "manage inventory",
+      "description": "Control product inventory in balance of availability and storage costs.",
+      "aliases": [
+        "manage inventories",
+        "maintain inventory"
+      ],
+      "match": "close",
+      "note": null
+    }
+  }
+}

@@ -1,0 +1,978 @@
+{
+  "note": "Small extracts of official DOSM labour statistics via the data.gov.my open API: national salaries & wages (and number of wage recipients, in thousands) by MASCO major occupation group, skills-related underemployment of tertiary-educated workers, and Pulau Pinang's quarterly labour force and annual wage figures. In HalaTuju they can serve only as a coarse demand/context prior, e.g. the multi-year trend in recipients and median wage for the 'clerical' group (where an accounts-payable clerk sits) versus 'professionals'/'technicians' (where analyst roles sit), plus Penang wage and unemployment context for the demo persona. Limits: MASCO major groups are far coarser than our 16 catalogue occupations (e.g. ESG analyst, data analyst and procurement roles all fall inside broad groups), wage-recipient counts are employment stocks of citizen employees, not vacancies or hiring demand, and no occupation-by-state breakdown is published in these datasets.",
+  "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0) - each dataset page states: 'This data is made open under the Creative Commons Attribution 4.0 International License (CC BY 4.0).' Licence: https://creativecommons.org/licenses/by/4.0/ (statement shown on e.g. https://open.dosm.gov.my/data-catalogue/wages_occupation). Source: Department of Statistics Malaysia (DOSM), via OpenDOSM / data.gov.my.",
+  "datasets": [
+    {
+      "id": "wages_occupation",
+      "title": "Annual Salaries & Wages by Occupation & Sex",
+      "url": "https://api.data.gov.my/data-catalogue/?id=wages_occupation&filter=both@sex&date_start=2021-01-01@date&sort=-date,occupation&limit=60",
+      "page": "https://open.dosm.gov.my/data-catalogue/wages_occupation",
+      "accessed": "2026-10-23",
+      "frequency": "YEARLY",
+      "columns": {
+        "date": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency",
+        "sex": "[Categorical] Either both sexes ('both'), male ('male') or female ('female')",
+        "occupation": "[Categorical] All occupations ('overall') or one of the 9 MASCO major groups: managers ('managers'), professionals ('professionals'), technicians and associate professionals ('technicians'), clerical support workers ('clerical'), service and sales workers ('service_sales'), skilled agricultural, forestry, livestock and fishery workers ('agriculture'), craft and related trades workers ('craft'), plant and machine operators and assemblers ('operators'), or elementary occupations ('elementary')",
+        "recipients": "[Float] Number of salaries & wages recipients, in thousands",
+        "wages_median": "[Integer, RM] Median monthly salaries & wages; half of employees earn less than this amount",
+        "wages_mean": "[Integer, RM] Mean monthly salaries & wages, i.e. total salaries & wages divided by the number of recipients"
+      },
+      "rows": [
+        {
+          "sex": "both",
+          "date": "2025-01-01",
+          "occupation": "agriculture",
+          "recipients": 87.7,
+          "wages_mean": 2658,
+          "wages_median": 1992
+        },
+        {
+          "sex": "both",
+          "date": "2025-01-01",
+          "occupation": "clerical",
+          "recipients": 1360.1,
+          "wages_mean": 3029,
+          "wages_median": 2693
+        },
+        {
+          "sex": "both",
+          "date": "2025-01-01",
+          "occupation": "craft",
+          "recipients": 723.9,
+          "wages_mean": 2619,
+          "wages_median": 2173
+        },
+        {
+          "sex": "both",
+          "date": "2025-01-01",
+          "occupation": "elementary",
+          "recipients": 809.7,
+          "wages_mean": 2184,
+          "wages_median": 1758
+        },
+        {
+          "sex": "both",
+          "date": "2025-01-01",
+          "occupation": "managers",
+          "recipients": 330.5,
+          "wages_mean": 7344,
+          "wages_median": 6186
+        },
+        {
+          "sex": "both",
+          "date": "2025-01-01",
+          "occupation": "operators",
+          "recipients": 1290.8,
+          "wages_mean": 2488,
+          "wages_median": 2083
+        },
+        {
+          "sex": "both",
+          "date": "2025-01-01",
+          "occupation": "overall",
+          "recipients": 10381.6,
+          "wages_mean": 3803,
+          "wages_median": 2940
+        },
+        {
+          "sex": "both",
+          "date": "2025-01-01",
+          "occupation": "professionals",
+          "recipients": 1945.4,
+          "wages_mean": 6747,
+          "wages_median": 6124
+        },
+        {
+          "sex": "both",
+          "date": "2025-01-01",
+          "occupation": "service_sales",
+          "recipients": 2305.7,
+          "wages_mean": 2687,
+          "wages_median": 2035
+        },
+        {
+          "sex": "both",
+          "date": "2025-01-01",
+          "occupation": "technicians",
+          "recipients": 1527.9,
+          "wages_mean": 4256,
+          "wages_median": 3852
+        },
+        {
+          "sex": "both",
+          "date": "2024-01-01",
+          "occupation": "agriculture",
+          "recipients": 88.3,
+          "wages_mean": 2460,
+          "wages_median": 1762
+        },
+        {
+          "sex": "both",
+          "date": "2024-01-01",
+          "occupation": "clerical",
+          "recipients": 1334.5,
+          "wages_mean": 2931,
+          "wages_median": 2550
+        },
+        {
+          "sex": "both",
+          "date": "2024-01-01",
+          "occupation": "craft",
+          "recipients": 725.3,
+          "wages_mean": 2510,
+          "wages_median": 1959
+        },
+        {
+          "sex": "both",
+          "date": "2024-01-01",
+          "occupation": "elementary",
+          "recipients": 830.5,
+          "wages_mean": 2128,
+          "wages_median": 1654
+        },
+        {
+          "sex": "both",
+          "date": "2024-01-01",
+          "occupation": "managers",
+          "recipients": 323.6,
+          "wages_mean": 7121,
+          "wages_median": 5990
+        },
+        {
+          "sex": "both",
+          "date": "2024-01-01",
+          "occupation": "operators",
+          "recipients": 1280.6,
+          "wages_mean": 2404,
+          "wages_median": 1947
+        },
+        {
+          "sex": "both",
+          "date": "2024-01-01",
+          "occupation": "overall",
+          "recipients": 10238.4,
+          "wages_mean": 3652,
+          "wages_median": 2793
+        },
+        {
+          "sex": "both",
+          "date": "2024-01-01",
+          "occupation": "professionals",
+          "recipients": 1895.8,
+          "wages_mean": 6524,
+          "wages_median": 5821
+        },
+        {
+          "sex": "both",
+          "date": "2024-01-01",
+          "occupation": "service_sales",
+          "recipients": 2243.6,
+          "wages_mean": 2561,
+          "wages_median": 1947
+        },
+        {
+          "sex": "both",
+          "date": "2024-01-01",
+          "occupation": "technicians",
+          "recipients": 1516.1,
+          "wages_mean": 4077,
+          "wages_median": 3541
+        },
+        {
+          "sex": "both",
+          "date": "2023-01-01",
+          "occupation": "agriculture",
+          "recipients": 86.0,
+          "wages_mean": 2259,
+          "wages_median": 1729
+        },
+        {
+          "sex": "both",
+          "date": "2023-01-01",
+          "occupation": "clerical",
+          "recipients": 1321.9,
+          "wages_mean": 2789,
+          "wages_median": 2360
+        },
+        {
+          "sex": "both",
+          "date": "2023-01-01",
+          "occupation": "craft",
+          "recipients": 738.7,
+          "wages_mean": 2385,
+          "wages_median": 1916
+        },
+        {
+          "sex": "both",
+          "date": "2023-01-01",
+          "occupation": "elementary",
+          "recipients": 801.3,
+          "wages_mean": 1982,
+          "wages_median": 1599
+        },
+        {
+          "sex": "both",
+          "date": "2023-01-01",
+          "occupation": "managers",
+          "recipients": 318.2,
+          "wages_mean": 6640,
+          "wages_median": 5825
+        },
+        {
+          "sex": "both",
+          "date": "2023-01-01",
+          "occupation": "operators",
+          "recipients": 1261.5,
+          "wages_mean": 2311,
+          "wages_median": 1845
+        },
+        {
+          "sex": "both",
+          "date": "2023-01-01",
+          "occupation": "overall",
+          "recipients": 10105.4,
+          "wages_mean": 3441,
+          "wages_median": 2602
+        },
+        {
+          "sex": "both",
+          "date": "2023-01-01",
+          "occupation": "professionals",
+          "recipients": 1842.5,
+          "wages_mean": 6139,
+          "wages_median": 5741
+        },
+        {
+          "sex": "both",
+          "date": "2023-01-01",
+          "occupation": "service_sales",
+          "recipients": 2225.7,
+          "wages_mean": 2421,
+          "wages_median": 1818
+        },
+        {
+          "sex": "both",
+          "date": "2023-01-01",
+          "occupation": "technicians",
+          "recipients": 1509.6,
+          "wages_mean": 3854,
+          "wages_median": 3472
+        },
+        {
+          "sex": "both",
+          "date": "2022-01-01",
+          "occupation": "agriculture",
+          "recipients": 85.2,
+          "wages_mean": 2052,
+          "wages_median": 1634
+        },
+        {
+          "sex": "both",
+          "date": "2022-01-01",
+          "occupation": "clerical",
+          "recipients": 1292.2,
+          "wages_mean": 2617,
+          "wages_median": 2148
+        },
+        {
+          "sex": "both",
+          "date": "2022-01-01",
+          "occupation": "craft",
+          "recipients": 735.4,
+          "wages_mean": 2266,
+          "wages_median": 1760
+        },
+        {
+          "sex": "both",
+          "date": "2022-01-01",
+          "occupation": "elementary",
+          "recipients": 796.8,
+          "wages_mean": 1835,
+          "wages_median": 1558
+        },
+        {
+          "sex": "both",
+          "date": "2022-01-01",
+          "occupation": "managers",
+          "recipients": 327.4,
+          "wages_mean": 6319,
+          "wages_median": 5568
+        },
+        {
+          "sex": "both",
+          "date": "2022-01-01",
+          "occupation": "operators",
+          "recipients": 1278.8,
+          "wages_mean": 2219,
+          "wages_median": 1781
+        },
+        {
+          "sex": "both",
+          "date": "2022-01-01",
+          "occupation": "overall",
+          "recipients": 9996.4,
+          "wages_mean": 3219,
+          "wages_median": 2429
+        },
+        {
+          "sex": "both",
+          "date": "2022-01-01",
+          "occupation": "professionals",
+          "recipients": 1833.7,
+          "wages_mean": 5609,
+          "wages_median": 5486
+        },
+        {
+          "sex": "both",
+          "date": "2022-01-01",
+          "occupation": "service_sales",
+          "recipients": 2176.9,
+          "wages_mean": 2270,
+          "wages_median": 1770
+        },
+        {
+          "sex": "both",
+          "date": "2022-01-01",
+          "occupation": "technicians",
+          "recipients": 1470.0,
+          "wages_mean": 3644,
+          "wages_median": 3384
+        },
+        {
+          "sex": "both",
+          "date": "2021-01-01",
+          "occupation": "agriculture",
+          "recipients": 78.2,
+          "wages_mean": 1754,
+          "wages_median": 1552
+        },
+        {
+          "sex": "both",
+          "date": "2021-01-01",
+          "occupation": "clerical",
+          "recipients": 1226.8,
+          "wages_mean": 2389,
+          "wages_median": 2086
+        },
+        {
+          "sex": "both",
+          "date": "2021-01-01",
+          "occupation": "craft",
+          "recipients": 728.9,
+          "wages_mean": 1999,
+          "wages_median": 1742
+        },
+        {
+          "sex": "both",
+          "date": "2021-01-01",
+          "occupation": "elementary",
+          "recipients": 790.4,
+          "wages_mean": 1760,
+          "wages_median": 1533
+        },
+        {
+          "sex": "both",
+          "date": "2021-01-01",
+          "occupation": "managers",
+          "recipients": 323.5,
+          "wages_mean": 6396,
+          "wages_median": 5413
+        },
+        {
+          "sex": "both",
+          "date": "2021-01-01",
+          "occupation": "operators",
+          "recipients": 1256.6,
+          "wages_mean": 2011,
+          "wages_median": 1679
+        },
+        {
+          "sex": "both",
+          "date": "2021-01-01",
+          "occupation": "overall",
+          "recipients": 9769.0,
+          "wages_mean": 3049,
+          "wages_median": 2256
+        },
+        {
+          "sex": "both",
+          "date": "2021-01-01",
+          "occupation": "professionals",
+          "recipients": 1772.3,
+          "wages_mean": 5667,
+          "wages_median": 5383
+        },
+        {
+          "sex": "both",
+          "date": "2021-01-01",
+          "occupation": "service_sales",
+          "recipients": 2132.0,
+          "wages_mean": 1939,
+          "wages_median": 1544
+        },
+        {
+          "sex": "both",
+          "date": "2021-01-01",
+          "occupation": "technicians",
+          "recipients": 1460.4,
+          "wages_mean": 3488,
+          "wages_median": 3260
+        }
+      ]
+    },
+    {
+      "id": "lfs_qtr_sru_age",
+      "title": "Quarterly Skills-Related Underemployment by Age",
+      "url": "https://api.data.gov.my/data-catalogue/?id=lfs_qtr_sru_age&date_start=2025-01-01@date&sort=-date,variable,age&limit=60",
+      "page": "https://open.dosm.gov.my/data-catalogue/lfs_qtr_sru_age",
+      "accessed": "2026-10-23",
+      "frequency": "QUARTERLY",
+      "columns": {
+        "date": "[Date] The date in YYYY-MM-DD format, with DD set to 01 since the data is at quarterly frequency",
+        "variable": "[Categorical] Rate (%) or persons ('000)",
+        "age": "[Categorical] 10-year age groups, or overall",
+        "sru": "[Float] The number or proportion of employed individuals with tertiary education but who were working in a semi-skilled or low-skilled job as classified under MASCO"
+      },
+      "rows": [
+        {
+          "age": "15-24",
+          "sru": 476.3,
+          "date": "2026-04-01",
+          "variable": "persons"
+        },
+        {
+          "age": "25-34",
+          "sru": 751.1,
+          "date": "2026-04-01",
+          "variable": "persons"
+        },
+        {
+          "age": "35-44",
+          "sru": 464.7,
+          "date": "2026-04-01",
+          "variable": "persons"
+        },
+        {
+          "age": "45+",
+          "sru": 256.2,
+          "date": "2026-04-01",
+          "variable": "persons"
+        },
+        {
+          "age": "overall",
+          "sru": 1948.2,
+          "date": "2026-04-01",
+          "variable": "persons"
+        },
+        {
+          "age": "15-24",
+          "sru": 74.3,
+          "date": "2026-04-01",
+          "variable": "rate"
+        },
+        {
+          "age": "25-34",
+          "sru": 40.7,
+          "date": "2026-04-01",
+          "variable": "rate"
+        },
+        {
+          "age": "35-44",
+          "sru": 25.8,
+          "date": "2026-04-01",
+          "variable": "rate"
+        },
+        {
+          "age": "45+",
+          "sru": 20.5,
+          "date": "2026-04-01",
+          "variable": "rate"
+        },
+        {
+          "age": "overall",
+          "sru": 35.2,
+          "date": "2026-04-01",
+          "variable": "rate"
+        },
+        {
+          "age": "15-24",
+          "sru": 513.9,
+          "date": "2026-01-01",
+          "variable": "persons"
+        },
+        {
+          "age": "25-34",
+          "sru": 739.3,
+          "date": "2026-01-01",
+          "variable": "persons"
+        },
+        {
+          "age": "35-44",
+          "sru": 433.0,
+          "date": "2026-01-01",
+          "variable": "persons"
+        },
+        {
+          "age": "45+",
+          "sru": 248.5,
+          "date": "2026-01-01",
+          "variable": "persons"
+        },
+        {
+          "age": "overall",
+          "sru": 1934.7,
+          "date": "2026-01-01",
+          "variable": "persons"
+        },
+        {
+          "age": "15-24",
+          "sru": 80.9,
+          "date": "2026-01-01",
+          "variable": "rate"
+        },
+        {
+          "age": "25-34",
+          "sru": 39.7,
+          "date": "2026-01-01",
+          "variable": "rate"
+        },
+        {
+          "age": "35-44",
+          "sru": 24.1,
+          "date": "2026-01-01",
+          "variable": "rate"
+        },
+        {
+          "age": "45+",
+          "sru": 20.7,
+          "date": "2026-01-01",
+          "variable": "rate"
+        },
+        {
+          "age": "overall",
+          "sru": 35.2,
+          "date": "2026-01-01",
+          "variable": "rate"
+        },
+        {
+          "age": "15-24",
+          "sru": 413.1,
+          "date": "2025-10-01",
+          "variable": "persons"
+        },
+        {
+          "age": "25-34",
+          "sru": 789.3,
+          "date": "2025-10-01",
+          "variable": "persons"
+        },
+        {
+          "age": "35-44",
+          "sru": 474.5,
+          "date": "2025-10-01",
+          "variable": "persons"
+        },
+        {
+          "age": "45+",
+          "sru": 253.3,
+          "date": "2025-10-01",
+          "variable": "persons"
+        },
+        {
+          "age": "overall",
+          "sru": 1930.2,
+          "date": "2025-10-01",
+          "variable": "persons"
+        },
+        {
+          "age": "15-24",
+          "sru": 70.3,
+          "date": "2025-10-01",
+          "variable": "rate"
+        },
+        {
+          "age": "25-34",
+          "sru": 42.0,
+          "date": "2025-10-01",
+          "variable": "rate"
+        },
+        {
+          "age": "35-44",
+          "sru": 26.0,
+          "date": "2025-10-01",
+          "variable": "rate"
+        },
+        {
+          "age": "45+",
+          "sru": 21.4,
+          "date": "2025-10-01",
+          "variable": "rate"
+        },
+        {
+          "age": "overall",
+          "sru": 35.3,
+          "date": "2025-10-01",
+          "variable": "rate"
+        },
+        {
+          "age": "15-24",
+          "sru": 453.9,
+          "date": "2025-07-01",
+          "variable": "persons"
+        },
+        {
+          "age": "25-34",
+          "sru": 771.2,
+          "date": "2025-07-01",
+          "variable": "persons"
+        },
+        {
+          "age": "35-44",
+          "sru": 436.5,
+          "date": "2025-07-01",
+          "variable": "persons"
+        },
+        {
+          "age": "45+",
+          "sru": 270.8,
+          "date": "2025-07-01",
+          "variable": "persons"
+        },
+        {
+          "age": "overall",
+          "sru": 1932.4,
+          "date": "2025-07-01",
+          "variable": "persons"
+        },
+        {
+          "age": "15-24",
+          "sru": 74.2,
+          "date": "2025-07-01",
+          "variable": "rate"
+        },
+        {
+          "age": "25-34",
+          "sru": 41.3,
+          "date": "2025-07-01",
+          "variable": "rate"
+        },
+        {
+          "age": "35-44",
+          "sru": 24.8,
+          "date": "2025-07-01",
+          "variable": "rate"
+        },
+        {
+          "age": "45+",
+          "sru": 22.9,
+          "date": "2025-07-01",
+          "variable": "rate"
+        },
+        {
+          "age": "overall",
+          "sru": 35.6,
+          "date": "2025-07-01",
+          "variable": "rate"
+        },
+        {
+          "age": "15-24",
+          "sru": 446.0,
+          "date": "2025-04-01",
+          "variable": "persons"
+        },
+        {
+          "age": "25-34",
+          "sru": 800.2,
+          "date": "2025-04-01",
+          "variable": "persons"
+        },
+        {
+          "age": "35-44",
+          "sru": 480.4,
+          "date": "2025-04-01",
+          "variable": "persons"
+        },
+        {
+          "age": "45+",
+          "sru": 227.1,
+          "date": "2025-04-01",
+          "variable": "persons"
+        },
+        {
+          "age": "overall",
+          "sru": 1953.7,
+          "date": "2025-04-01",
+          "variable": "persons"
+        },
+        {
+          "age": "15-24",
+          "sru": 77.4,
+          "date": "2025-04-01",
+          "variable": "rate"
+        },
+        {
+          "age": "25-34",
+          "sru": 40.9,
+          "date": "2025-04-01",
+          "variable": "rate"
+        },
+        {
+          "age": "35-44",
+          "sru": 28.1,
+          "date": "2025-04-01",
+          "variable": "rate"
+        },
+        {
+          "age": "45+",
+          "sru": 18.4,
+          "date": "2025-04-01",
+          "variable": "rate"
+        },
+        {
+          "age": "overall",
+          "sru": 35.7,
+          "date": "2025-04-01",
+          "variable": "rate"
+        },
+        {
+          "age": "15-24",
+          "sru": 406.9,
+          "date": "2025-01-01",
+          "variable": "persons"
+        },
+        {
+          "age": "25-34",
+          "sru": 772.8,
+          "date": "2025-01-01",
+          "variable": "persons"
+        },
+        {
+          "age": "35-44",
+          "sru": 489.3,
+          "date": "2025-01-01",
+          "variable": "persons"
+        },
+        {
+          "age": "45+",
+          "sru": 283.9,
+          "date": "2025-01-01",
+          "variable": "persons"
+        },
+        {
+          "age": "overall",
+          "sru": 1952.9,
+          "date": "2025-01-01",
+          "variable": "persons"
+        },
+        {
+          "age": "15-24",
+          "sru": 70.1,
+          "date": "2025-01-01",
+          "variable": "rate"
+        },
+        {
+          "age": "25-34",
+          "sru": 40.3,
+          "date": "2025-01-01",
+          "variable": "rate"
+        },
+        {
+          "age": "35-44",
+          "sru": 27.9,
+          "date": "2025-01-01",
+          "variable": "rate"
+        },
+        {
+          "age": "45+",
+          "sru": 23.3,
+          "date": "2025-01-01",
+          "variable": "rate"
+        },
+        {
+          "age": "overall",
+          "sru": 35.7,
+          "date": "2025-01-01",
+          "variable": "rate"
+        }
+      ]
+    },
+    {
+      "id": "lfs_qtr_state",
+      "title": "Quarterly Principal Labour Force Statistics by State",
+      "url": "https://api.data.gov.my/data-catalogue/?id=lfs_qtr_state&contains=Pinang@state&date_start=2024-01-01@date&sort=-date&limit=60",
+      "page": "https://open.dosm.gov.my/data-catalogue/lfs_qtr_state",
+      "accessed": "2026-10-23",
+      "frequency": "QUARTERLY",
+      "columns": {
+        "date": "[Date] The date in YYYY-MM-DD format, with DD set to 01 since the data is at quarterly frequency",
+        "state": "[Categorical] One of 16 states",
+        "lf": "[Float] The number (in thousands) of employed and unemployed individuals. This figure also represents the number of people participating in the labour force.",
+        "lf_employed": "[Float] The number (in thousands) of people who worked at least one hour for pay, profit or family gain, in thousands of people",
+        "lf_unemployed": "[Float] The number (in thousands) of people who did not work but were looking for work or available to work",
+        "lf_outside": "[Float] The number (in thousands) of people not classified as employed or unemployed, including housewives, students, early retired, disabled persons and those not interested in looking for a job",
+        "u_rate": "[Float] Ratio of unemployed to labour force size",
+        "p_rate": "[Float] Ratio of the labour force size to the working-age (15-64) population"
+      },
+      "rows": [
+        {
+          "lf": 950.7,
+          "date": "2026-04-01",
+          "state": "Pulau Pinang",
+          "p_rate": 72.0,
+          "u_rate": 2.6,
+          "lf_outside": 369.5,
+          "lf_employed": 925.6,
+          "lf_unemployed": 25.1
+        },
+        {
+          "lf": 947.8,
+          "date": "2026-01-01",
+          "state": "Pulau Pinang",
+          "p_rate": 71.8,
+          "u_rate": 2.7,
+          "lf_outside": 373.0,
+          "lf_employed": 922.3,
+          "lf_unemployed": 25.5
+        },
+        {
+          "lf": 953.3,
+          "date": "2025-10-01",
+          "state": "Pulau Pinang",
+          "p_rate": 71.6,
+          "u_rate": 2.3,
+          "lf_outside": 378.1,
+          "lf_employed": 930.9,
+          "lf_unemployed": 22.4
+        },
+        {
+          "lf": 949.4,
+          "date": "2025-07-01",
+          "state": "Pulau Pinang",
+          "p_rate": 71.8,
+          "u_rate": 2.4,
+          "lf_outside": 373.7,
+          "lf_employed": 926.8,
+          "lf_unemployed": 22.5
+        },
+        {
+          "lf": 943.5,
+          "date": "2025-04-01",
+          "state": "Pulau Pinang",
+          "p_rate": 71.5,
+          "u_rate": 2.3,
+          "lf_outside": 376.6,
+          "lf_employed": 921.3,
+          "lf_unemployed": 22.1
+        },
+        {
+          "lf": 947.9,
+          "date": "2025-01-01",
+          "state": "Pulau Pinang",
+          "p_rate": 71.7,
+          "u_rate": 2.6,
+          "lf_outside": 374.1,
+          "lf_employed": 923.3,
+          "lf_unemployed": 24.6
+        },
+        {
+          "lf": 946.0,
+          "date": "2024-10-01",
+          "state": "Pulau Pinang",
+          "p_rate": 71.8,
+          "u_rate": 2.3,
+          "lf_outside": 371.8,
+          "lf_employed": 924.5,
+          "lf_unemployed": 21.5
+        },
+        {
+          "lf": 946.3,
+          "date": "2024-07-01",
+          "state": "Pulau Pinang",
+          "p_rate": 71.7,
+          "u_rate": 2.0,
+          "lf_outside": 373.8,
+          "lf_employed": 927.1,
+          "lf_unemployed": 19.1
+        },
+        {
+          "lf": 955.1,
+          "date": "2024-04-01",
+          "state": "Pulau Pinang",
+          "p_rate": 72.3,
+          "u_rate": 1.9,
+          "lf_outside": 366.1,
+          "lf_employed": 937.4,
+          "lf_unemployed": 17.7
+        },
+        {
+          "lf": 958.2,
+          "date": "2024-01-01",
+          "state": "Pulau Pinang",
+          "p_rate": 72.3,
+          "u_rate": 2.1,
+          "lf_outside": 367.5,
+          "lf_employed": 938.4,
+          "lf_unemployed": 19.8
+        }
+      ]
+    },
+    {
+      "id": "wages_state",
+      "title": "Annual Salaries & Wages by State & Sex",
+      "url": "https://api.data.gov.my/data-catalogue/?id=wages_state&filter=both@sex&contains=Pinang@state&date_start=2021-01-01@date&sort=-date&limit=60",
+      "page": "https://open.dosm.gov.my/data-catalogue/wages_state",
+      "accessed": "2026-10-23",
+      "frequency": "YEARLY",
+      "columns": {
+        "state": "[Categorical] One of 16 states, or 'Malaysia' for the national figure",
+        "date": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency",
+        "sex": "[Categorical] Either both sexes ('both'), male ('male') or female ('female')",
+        "recipients": "[Float] Number of salaries & wages recipients, in thousands",
+        "wages_median": "[Integer, RM] Median monthly salaries & wages; half of employees earn less than this amount",
+        "wages_mean": "[Integer, RM] Mean monthly salaries & wages, i.e. total salaries & wages divided by the number of recipients"
+      },
+      "rows": [
+        {
+          "sex": "both",
+          "date": "2025-01-01",
+          "state": "Pulau Pinang",
+          "recipients": 648.8,
+          "wages_mean": 3912,
+          "wages_median": 3107
+        },
+        {
+          "sex": "both",
+          "date": "2024-01-01",
+          "state": "Pulau Pinang",
+          "recipients": 642.2,
+          "wages_mean": 3787,
+          "wages_median": 2934
+        },
+        {
+          "sex": "both",
+          "date": "2023-01-01",
+          "state": "Pulau Pinang",
+          "recipients": 635.8,
+          "wages_mean": 3557,
+          "wages_median": 2715
+        },
+        {
+          "sex": "both",
+          "date": "2022-01-01",
+          "state": "Pulau Pinang",
+          "recipients": 641.6,
+          "wages_mean": 3315,
+          "wages_median": 2477
+        },
+        {
+          "sex": "both",
+          "date": "2021-01-01",
+          "state": "Pulau Pinang",
+          "recipients": 604.7,
+          "wages_mean": 3089,
+          "wages_median": 2414
+        }
+      ]
+    }
+  ]
+}
