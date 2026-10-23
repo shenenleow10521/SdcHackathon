@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HalaTuju</title>
+<meta name="description" content="A live map of your career that updates itself as AI changes work.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<a class="skip" href="#panel" data-i18n="a11y.skip">Skip to the planner</a>
+<div class="app">
+  <aside class="side" id="side" aria-label="Career planner" data-i18n-aria="a11y.planner">
+    <div class="side-head">
+      <div class="brand">
+        <a class="logo" href="/" data-i18n-title="head.home" title="HalaTuju home page"><span class="logo-mark" aria-hidden="true"><i data-lucide="compass"></i></span>HalaTuju</a>
+        <div class="brand-right">
+          <button class="ghost" id="signin-btn" type="button" hidden><i data-lucide="log-in"></i><span data-i18n="head.signin">Sign in</span></button>
+          <button class="ghost" id="admin-btn" type="button" hidden aria-pressed="false" data-i18n-title="head.reviewTitle" title="Admin view: knowledge review queue"><i data-lucide="shield-check"></i><span class="hide-sm" data-i18n="head.review">Review</span><span class="count" id="admin-count" hidden></span></button>
+          <div class="menu-wrap">
+            <button class="ghost" id="menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="menu" data-i18n-aria="menu.aria" aria-label="More views"><i data-lucide="ellipsis"></i></button>
+            <div class="menu glass" id="menu" role="menu" hidden>
+              <button type="button" role="menuitem" data-menu="onboard"><i data-lucide="upload"></i><span data-i18n="menu.onboard">Set up my profile</span></button>
+              <button type="button" role="menuitem" data-menu="sample"><i data-lucide="user-round"></i><span data-i18n="menu.sample">Use the sample persona</span></button>
+              <button type="button" role="menuitem" data-menu="tour"><i data-lucide="map"></i><span data-i18n="menu.tour">Take the demo tour</span></button>
+              <button type="button" role="menuitem" data-menu="lang" id="lang-btn"><i data-lucide="languages"></i><span id="lang-label">Bahasa Melayu</span></button>
+              <button type="button" role="menuitem" data-menu="employer"><i data-lucide="building-2"></i><span data-i18n="menu.employer">For employers: publish requirements</span></button>
+              <hr data-staff="advisor" hidden>
+              <button type="button" role="menuitem" data-menu="review" data-staff="admin" hidden><i data-lucide="shield-check"></i><span data-i18n="menu.review">Knowledge review (admin)</span></button>
+              <button type="button" role="menuitem" data-menu="advisor" data-staff="advisor" hidden><i data-lucide="graduation-cap"></i><span data-i18n="menu.advisor">Advisor approvals</span></button>
+              <button type="button" role="menuitem" data-menu="hr" data-staff="advisor" hidden><i data-lucide="users"></i><span data-i18n="menu.hr">HR redeployment</span></button>
+              <hr data-account hidden>
+              <div class="menu-who" id="menu-who" data-account="in" hidden></div>
+              <button type="button" role="menuitem" data-menu="signin" data-account="out" hidden><i data-lucide="log-in"></i><span data-i18n="menu.signin">Sign in or create an account</span></button>
+              <button type="button" role="menuitem" data-menu="signout" data-account="in" hidden><i data-lucide="log-out"></i><span data-i18n="menu.signout">Sign out</span></button>
+              <button type="button" role="menuitem" data-menu="delete" data-account="in" hidden><i data-lucide="trash-2"></i><span data-i18n="menu.delete">Delete my data</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="notice" id="notice" role="status" hidden></div>
+      <div class="me-card">
+        <div class="me">
+          <div class="avatar" id="avatar" aria-hidden="true">·</div>
+          <div class="me-text">
+            <div class="name"><span id="me-name">…</span><span class="badge b-warn" id="sample-badge" data-i18n-title="head.sampleTitle" title="Values labelled Sample are illustrative" hidden><span data-i18n="head.sample">Sample</span></span></div>
+            <div class="meta" id="me-meta"></div>
+          </div>
+        </div>
+        <div class="scorebar" id="scorebar"></div>
+      </div>
+      <div class="guide" id="guide" role="region" aria-label="Demo guide" data-i18n-aria="guide.aria" hidden></div>
+      <div class="tabs" id="tabs" role="tablist" aria-label="Planner sections" data-i18n-aria="tabs.aria">
+        <button class="tab" role="tab" id="tab-jobs" aria-selected="true" aria-controls="panel"><i data-lucide="compass"></i><span data-i18n="tabs.jobs">Explore</span></button>
+        <button class="tab" role="tab" id="tab-path" aria-selected="false" aria-controls="panel" tabindex="-1"><i data-lucide="flag"></i><span data-i18n="tabs.path">My goal</span></button>
+        <button class="tab" role="tab" id="tab-skills" aria-selected="false" aria-controls="panel" tabindex="-1"><i data-lucide="layers"></i><span data-i18n="tabs.skills">My skills</span></button>
+      </div>
+    </div>
+    <div class="side-body">
+      <div id="panel" role="tabpanel" tabindex="-1" aria-live="off"></div>
+      <footer class="credits">
+        <p class="ai-note"><i data-lucide="calculator"></i><span data-i18n="foot.ai">AI is used for reading and explaining; every number comes from fixed formulas.</span></p>
+        <p><span data-i18n="foot.credits">Data:</span> <a href="https://esco.ec.europa.eu/" target="_blank" rel="noopener noreferrer">ESCO</a> (European Commission; <span data-i18n="foot.modified">modifications made</span>), <a href="https://www.onetcenter.org/" target="_blank" rel="noopener noreferrer">O*NET</a> (USDOL/ETA, CC BY 4.0), <a href="https://www.ilo.org/publications/generative-ai-and-jobs-refined-global-index-occupational-exposure" target="_blank" rel="noopener noreferrer">ILO WP140</a> (CC BY 4.0) and OpenDOSM.</p>
+        <p><span data-i18n="foot.libs">Built with</span> 3d-force-graph, three.js, GSAP, Lucide, Geist and BAAI/bge-m3. <span data-i18n="foot.licence">Apache 2.0.</span></p>
+        <p data-i18n="foot.sample">Values labelled Sample are illustrative, not research results. The demo persona is synthetic.</p>
+      </footer>
+    </div>
+  </aside>
+
+  <main class="stage" id="stage" aria-label="Career constellation" data-i18n-aria="a11y.stage">
+    <canvas id="stars" aria-hidden="true"></canvas>
+    <div class="scene">
+      <svg id="rings" aria-hidden="true"></svg>
+      <div id="graph" aria-hidden="true"></div>
+      <div id="labels" aria-hidden="true"></div>
+    </div>
+    <div class="topbar">
+      <div class="pill glass status-pill">
+        <button class="status-dot" id="status-dot" type="button" aria-expanded="false" aria-controls="status-pop" aria-label="System status"></button>
+        <span id="fresh" data-i18n="status.loading">Loading market data…</span>
+      </div>
+      <div class="status-pop glass" id="status-pop" role="dialog" aria-label="System status" data-i18n-aria="status.title" hidden></div>
+      <div class="legend glass" aria-label="Legend" data-i18n-aria="legend.aria">
+        <div class="map-sum" id="map-sum"></div>
+        <div class="lg-row">
+          <span><i class="lg" style="background:var(--n-you)"></i><span data-i18n="legend.you">You</span></span>
+          <span><i class="lg" style="background:var(--n-have)"></i><span data-i18n="legend.have">Your skills</span></span>
+          <span><i class="lg" style="background:var(--n-learn)"></i><span data-i18n="legend.learn">Skills to learn</span></span>
+          <span><i class="lg" style="background:var(--n-job)"></i><span data-i18n="legend.jobs">Jobs</span></span>
+          <span><i class="lg line" style="background:var(--l-path)"></i><span data-i18n="legend.path">Your route</span></span>
+          <button class="lg-more" id="legend-more" type="button" aria-expanded="false" aria-controls="legend-extra" data-i18n="legend.more">More</button>
+        </div>
+        <div class="lg-row" id="legend-extra" hidden>
+          <span><i class="lg" style="background:var(--n-risk)"></i><span data-i18n="legend.risk">At risk</span></span>
+          <span><i class="lg" style="background:var(--n-taken)"></i><span data-i18n="legend.taken">AI took over</span></span>
+          <span><i class="lg line" style="background:var(--l-alt)"></i><span data-i18n="legend.alt">Other routes</span></span>
+          <span><i class="lg line" style="background:var(--l-evolve)"></i><span data-i18n="legend.evolve">Evolves into</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="toast glass" id="toast" role="status" aria-live="polite"></div>
+    <div class="prompt glass" id="prompt" role="region" aria-live="polite" hidden></div>
+    <div class="rerouting glass" id="rerouting" aria-hidden="true"><span class="spin"></span><span data-i18n="map.rerouting">Finding a new path…</span></div>
+    <div class="tip glass" id="tip" hidden></div>
+    <aside class="drawer glass" id="drawer" aria-label="Details"></aside>
+    <div class="timeline glass" role="group" aria-label="Forecast" data-i18n-aria="time.aria">
+      <button class="icon-btn" id="play" type="button" aria-label="Play the forecast" data-i18n-aria="time.play"><i data-lucide="play"></i></button>
+      <label class="sr" for="year" data-i18n="time.year">Forecast year</label>
+      <input type="range" id="year" min="2026" max="2030" step="1" value="2026">
+      <span class="year" id="year-out" aria-hidden="true">2026</span>
+      <div class="seg" role="group" aria-label="AI adoption speed" data-i18n-aria="scn.aria">
+        <button type="button" data-scn="moderate" aria-pressed="true" data-i18n="scn.moderateBtn">Moderate AI</button>
+        <button type="button" data-scn="fast" aria-pressed="false" data-i18n="scn.fastBtn">Fast AI</button>
+      </div>
+    </div>
+    <div class="viewctl glass" role="group" aria-label="View" data-i18n-aria="map.viewAria">
+      <button class="icon-btn" id="rotate" type="button" aria-pressed="true" aria-label="Stop rotating"><i data-lucide="rotate-3d"></i></button>
+      <button class="icon-btn" id="labels-btn" type="button" aria-pressed="false" aria-label="Show all labels" data-i18n-aria="map.labels"><i data-lucide="type"></i></button>
+      <button class="icon-btn" id="reset-view" type="button" aria-label="Reset view" data-i18n-aria="map.reset"><i data-lucide="locate-fixed"></i></button>
+    </div>
+  </main>
+
+  <section class="agents glass collapsed" id="agents" aria-label="AI agents" data-i18n-aria="agent.aria">
+    <div class="ag-head">
+      <h3><i data-lucide="bot"></i><span data-i18n="agent.title">Agents</span></h3>
+      <div class="ag-head-r"><span class="ag-fresh" id="ag-fresh"></span>
+        <button class="ag-toggle" id="ag-toggle" type="button" aria-expanded="false" aria-controls="ag-body" aria-label="Show agents"><i data-lucide="chevron-down"></i></button></div>
+    </div>
+    <div class="ag-body" id="ag-body">
+      <ul class="ag-list" id="ag-list"></ul>
+      <ul class="log" id="log" hidden></ul>
+      <div class="ag-actions" hidden>
+        <button class="btn btn-primary" id="scout" type="button"><i data-lucide="radar"></i><span data-i18n="scout.run">Run Road Watch</span></button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- First-use onboarding -->
+<div class="ob" id="ob" role="dialog" aria-modal="true" aria-labelledby="ob-title" hidden>
+  <div class="ob-card" id="ob-card"></div>
+</div>
+
+<!-- Sign in (Supabase Auth) and "Delete my data"; only used when accounts are on -->
+<div class="ob" id="auth" role="dialog" aria-modal="true" aria-labelledby="auth-title" hidden>
+  <div class="ob-card auth-card" id="auth-card"></div>
+</div>
+
+<!-- Advisor / HR / employer sheets -->
+<div class="sheet-wrap" id="sheet" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <div class="sheet-head"><div><div class="ob-kicker" id="sheet-kicker"></div><h2 id="sheet-title"></h2></div>
+      <button class="icon-btn" id="sheet-close" type="button" aria-label="Close" data-i18n-aria="common.close"><i data-lucide="x"></i></button></div>
+    <div class="sheet-body" id="sheet-body"></div>
+  </div>
+</div>
+
+<div class="spot" id="spot" aria-hidden="true"><div class="spot-ring"></div><div class="spot-tip" id="spot-tip"></div></div>
+
+<noscript><p style="padding:24px">HalaTuju needs JavaScript to draw your career map.</p></noscript>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.79.0/dist/3d-force-graph.min.js"></script>
+<script type="module" src="/js/app.js"></script>
+</body>
+</html>
