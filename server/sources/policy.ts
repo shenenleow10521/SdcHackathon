@@ -44,7 +44,7 @@ export const TRUSTED: TrustedSource[] = [
   { domain: "weforum.org", kind: "government", why: "World Economic Forum (Future of Jobs)" },
   { domain: "mdec.my", kind: "government", why: "Malaysia Digital Economy Corporation" },
   { domain: "hrdcorp.gov.my", kind: "government", why: "HRD Corp (training funding)" },
-  // Added for the prelim-round scale-up (Road Watch): Malaysian institutions and news
+  // Added for the prelim-round scale-up (Job Market Researcher): Malaysian institutions and news
   { domain: "bernama.com", kind: "news", why: "Malaysia's national news agency" },
   { domain: "mida.gov.my", kind: "government", why: "Malaysian Investment Development Authority" },
   { domain: "talentcorp.com.my", kind: "government", why: "TalentCorp (Critical Occupations List, workforce studies)" },

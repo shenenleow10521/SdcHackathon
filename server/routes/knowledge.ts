@@ -82,7 +82,7 @@ export default function knowledgeRoutes(svc: Services) {
     const out = await runScout(svc, { sources: b.sources as any, nodes: b.nodes, replay: b.replay, trigger: "manual" });
     await audit(svc.db, actorOf(req), "scout.run", `run:${out.runId}`, { status: out.status, counts: out.counts });
     // A run that failed outright is an error (502, run summary in details); partial source failures stay 200.
-    if (out.status === "failed") return void res.status(502).json({ error: { code: "scout_failed", message: out.error || "Road Watch run failed", details: { runId: out.runId, summary: await runSummary(svc, out.runId) } } });
+    if (out.status === "failed") return void res.status(502).json({ error: { code: "scout_failed", message: out.error || "Job market check failed", details: { runId: out.runId, summary: await runSummary(svc, out.runId) } } });
     res.json(out);
   });
 
