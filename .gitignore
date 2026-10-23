@@ -8,3 +8,13 @@ SDC Hackathon 2026 - Participant Resources*/
 node_modules/
 .env
 .DS_Store
+
+# Local database (PGlite) and test artefacts
+data/
+coverage/
+*.log
+
+# ML pipeline: large downloads and embeddings (artifacts/ is committed)
+ml/data/
+ml/.venv/
+__pycache__/

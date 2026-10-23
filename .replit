@@ -1,0 +1,11 @@
+run = "npm start"
+entrypoint = "server/index.ts"
+modules = ["nodejs-20", "postgresql-16"]
+
+[deployment]
+run = ["sh", "-c", "npm start"]
+deploymentTarget = "vm"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
