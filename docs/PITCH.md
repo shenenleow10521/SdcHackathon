@@ -44,7 +44,7 @@ Numbers in _[brackets]_ are read off the app on recording day (the demo script `
 | **4:45–5:15**<br>**Her employer** | HR view (sample team, labelled): who moves where, by when, at what cost. SDG icons on screen (no voiceover for them). | "Her employer sees the same picture for the whole team: who can move to which role, by when, and what it costs. That's the difference between redeploying people and letting them go." | HR view (sample) |
 | **5:15–5:45**<br>**Close** | Slide: *Replit · RunPod · ESCO, ILO, DOSM, MyCOL · 419 tests · 50-CV benchmark*. Logo. | _[Say "running on Replit" only once the deployment works; until then "built for Replit".]_ "HalaTuju runs on Replit, trains and serves its model on RunPod, uses five public data sources, and is checked by 419 automated tests and a 50-CV benchmark. When AI changes the road, your route changes with it." | `npx vitest run` |
 
-**Word count:** about 790 spoken words, about 5:30 at a natural pace, plus pauses. If a take runs long, shorten "Beyond four jobs" first.
+**Length:** 626 spoken words, 4:24 read by a generated voice at normal speed (measured 24 Oct). With visual-only beats the video runs about 6:00; see `docs/VIDEO_PLAN.md` for the per-scene budget. If a take runs long, shorten "Beyond four jobs" first.
 
 ---
 
