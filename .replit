@@ -1,6 +1,6 @@
 run = "npm start"
 entrypoint = "server/index.ts"
-modules = ["nodejs-20", "postgresql-16"]
+modules = ["nodejs-22", "postgresql-16"]
 
 [deployment]
 run = ["sh", "-c", "npm start"]

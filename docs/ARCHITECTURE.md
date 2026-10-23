@@ -13,7 +13,7 @@
 | Hosting | **Replit** (deploy from Replit) | Compulsory. Likely the "API Premium sponsor" on the submit form (confirm on Discord) |
 | LLM | **Replit AI Integrations**: OpenAI, Anthropic or Gemini models, no API key, billed to Replit credits | Uses the sponsor's technology; no extra accounts |
 | Embeddings (GPU) | **BAAI/bge-m3** (MIT) on **RunPod Serverless** with the official `worker-infinity-embedding` worker | Real semantic matching; satisfies RunPod's "GPU work goes through RunPod" rule; scales to zero |
-| Backend | **Node 20 + TypeScript + Express** | The prototype's scoring and routing code is already JavaScript and is reused as-is |
+| Backend | **Node 22 + TypeScript + Express** | The prototype's scoring and routing code is already JavaScript and is reused as-is |
 | Database | **Replit PostgreSQL** (`DATABASE_URL`). If unavailable, SQLite file | Durable profiles, signals, review queue |
 | Frontend | The existing prototype UI (vanilla JS + 3d-force-graph + GSAP + Lucide), with hard-coded data replaced by API calls | Already built and tested |
 | Skill data | **ESCO** (essential/optional skills per job) + **O\*NET** (tasks, importance) | Free to reuse with credit (see §12) |
