@@ -26,7 +26,7 @@
 | Pitch video (5–7 min, YouTube) | _[YouTube link]_ |
 | Product Requirement Doc (official template) | [`submission/PRELIMINARY_PROPOSAL.md`](submission/PRELIMINARY_PROPOSAL.md) · PDF: _[link]_ |
 | Tech & Tools Declaration | [`submission/TECH_DECLARATION.md`](submission/TECH_DECLARATION.md) · PDF: _[link]_ |
-| Replit and RunPod proof of use | [`submission/REPLIT_PROOF.md`](submission/REPLIT_PROOF.md) · [`submission/RUNPOD_PROOF.md`](submission/RUNPOD_PROOF.md) |
+| Replit and RunPod proof of use | [Replit PDF](submission/SDC2026_Dsaise_Replit_POU.pdf) · [RunPod PDF](submission/SDC2026_Dsaise_Runpod_POU.pdf) · [`submission/REPLIT_PROOF.md`](submission/REPLIT_PROOF.md) · [`submission/RUNPOD_PROOF.md`](submission/RUNPOD_PROOF.md) |
 
 > **How to read this README.** The **Status** column says how far each feature is proven, and the **Data** column says whether what it shows is real or sample. ✅ **Works**: checked end to end in the running app (live AI and web services, fresh database) on 23–24 Oct 2026. 🧪 **Built**: in the code and covered by automated tests, not yet re-checked live. 🛠 **Planned**: designed, not built. **Real** data has a cited source; **Sample** data is illustrative and is labelled *Sample* in the app. We don't claim anything marked 🛠 as working.
 
@@ -328,7 +328,7 @@ python ml/runpod_train.py terminate   # always run this; stopping isn't enough
 - **Secrets:** `GEMINI_API_KEY`, `RUNPOD_API_KEY`, `RUNPOD_EMBED_ENDPOINT_ID`, `TAVILY_API_KEY` and the database URL are Replit Secrets, never in the code.
 - **Agents in production:** the Job market researcher, AI reviewer, emerging-skill committee and explainer run on the Replit server and call the Google Gemini API.
 
-📄 Proof of use: `submission/SDC2026_Dsaise_Replit_POU.pdf` (screenshots) · details: [`submission/REPLIT_PROOF.md`](submission/REPLIT_PROOF.md)
+📄 Proof of use: [`submission/SDC2026_Dsaise_Replit_POU.pdf`](submission/SDC2026_Dsaise_Replit_POU.pdf) (screenshots) · details: [`submission/REPLIT_PROOF.md`](submission/REPLIT_PROOF.md)
 
 ## How we use RunPod *(required)*
 
@@ -344,7 +344,7 @@ curl -X POST https://api.runpod.ai/v2/$RUNPOD_EMBED_ENDPOINT_ID/openai/v1/embedd
   -d '{"model": "BAAI/bge-m3", "input": ["Reconcile vendor statements against the ledger"]}'
 ```
 
-📄 Proof of use: `submission/SDC2026_Dsaise_Runpod_POU.pdf` (console screenshots) · details: [`submission/RUNPOD_PROOF.md`](submission/RUNPOD_PROOF.md) (pod and endpoint IDs, GPU, runtime, cost)
+📄 Proof of use: [`submission/SDC2026_Dsaise_Runpod_POU.pdf`](submission/SDC2026_Dsaise_Runpod_POU.pdf) (console screenshots) · details: [`submission/RUNPOD_PROOF.md`](submission/RUNPOD_PROOF.md) (pod and endpoint IDs, GPU, runtime, cost)
 
 ---
 
@@ -525,8 +525,8 @@ The organisers' checklist. The full rubric audit, with evidence for every compul
 - [ ] Team name, domain (Domain 1 / Domain 2) and SDG track filled in
 - [ ] Slide deck link added
 - [ ] Demo video link added
-- [ ] Replit used, with proof of use in `submission/`
-- [ ] RunPod used, with proof of use in `submission/`
+- [x] Replit used, with proof of use in `submission/`
+- [x] RunPod used, with proof of use in `submission/`
 - [ ] Preliminary submission completed (`SDC2026_Dsaise_Preliminary.pdf`)
 - [ ] Technology declaration completed (`SDC2026_Dsaise_TechDeclaration.pdf`)
 - [ ] Submission files renamed with your team name (replace `TeamName`)
