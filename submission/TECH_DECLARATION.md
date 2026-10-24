@@ -194,15 +194,15 @@ RunPod is essential to the quality of CV reading: the 13,939 ESCO skill vectors 
 
 > Template asks: what user or personal data is collected, stored or sent to third parties (including AI APIs), how it is protected, and how long it is kept.
 
-**Collected:** confirmed skills and levels, current role, weekly study hours, target date, budget, goals and saved plans, under a random profile ID. The live demo needs no account; optional sign-in (Supabase Auth) is switched off. Age, gender, race and religion are never collected or used, and a test checks that they don't change any result.
+**Collected:** skills and levels with short scrubbed evidence quotes, current role, weekly study hours, target date, budget and saved plans. No name, email or phone is stored. Age, gender, race and religion are never collected or used; a test checks they don't change any result.
 
-**CVs:** read in memory and never stored. Scans are read by OCR on our own server. Names, MyKad numbers, phones, emails, addresses and attribute lines are removed **before any AI sees the text** (99.4% of planted details on held-out test CVs), and the user sees what was removed.
+**CVs:** read in memory and never stored. Scans are read by OCR on our own server. Names, MyKad numbers, phones, emails and addresses are removed **before any AI sees the text** (99.4% on held-out test CVs), and the user sees what was removed.
 
-**Control:** each account sees only its own data; **Delete my data** removes the profile and everything linked to it. Profiles are kept until the user deletes them.
+**Live demo:** sign-in is off, so profiles aren't tied to accounts and anyone with a profile's number can open it; it is for synthetic CVs only. There is no automatic deletion. Optional sign-in (Supabase Auth) limits each account to its own data and adds **Delete my data**.
 
-**Protection:** keys in Replit Secrets only; staff routes need a role or admin token; fetched pages are treated as data, never instructions.
+**Protection:** keys in Replit Secrets; staff routes need the admin token.
 
-*Word count: 147*
+*Word count: about 145*
 
 ### 6.2 Known Limitations & Risks *[Maximum 150 words]*
 
