@@ -7,11 +7,11 @@
 
 | Field | Details |
 |---|---|
-| **Team name** | _[team name]_ |
+| **Team name** | Dsaise |
 | **Team domain** | Domain 1: Aiversecity Future-Ready Workforce |
 | **SDG track** | **SDG 8** Decent Work and Economic Growth (primary: redeployment instead of retrenchment), with SDG 4 (target 4.4), 9, 12, 13 and 16 |
-| **Team leader** | _[name]_ |
-| **University** | _[university]_ |
+| **Team leader** | Leow Shen En |
+| **University** | Universiti Malaya |
 | **Number of members** | _[n]_ |
 
 ## Links
@@ -164,7 +164,7 @@ scripts/                  database seed, data builders, benchmarks, API smoke te
 tests/                    automated tests (vitest)
 demo/                     demo CV and reset/start/prime scripts
 docs/                     ARCHITECTURE, API, DATA_SOURCES, DEMO, PITCH, SUBMISSION_CHECKLIST, organiser rules notes
-submission/               the four SDC2026_TeamName_*.pdf files, their answers in Markdown, the pitch deck
+submission/               the four SDC2026_Dsaise_*.pdf files, their answers in Markdown, the pitch deck
 proposal/  prototype/     first proposal (22 Oct) and early UI prototypes (sample data)
 .github/workflows/ci.yml  type-check and tests on every push
 ```
@@ -327,7 +327,7 @@ python ml/runpod_train.py terminate   # always run this; stopping isn't enough
 - **Secrets:** `GEMINI_API_KEY`, `RUNPOD_API_KEY`, `RUNPOD_EMBED_ENDPOINT_ID`, `TAVILY_API_KEY` and the database URL are Replit Secrets, never in the code.
 - **Agents in production:** the Job market researcher, AI reviewer, emerging-skill committee and explainer run on the Replit server and call the Google Gemini API.
 
-📄 Proof of use: `submission/SDC2026_TeamName_Replit_POU.pdf` (screenshots) · details: [`submission/REPLIT_PROOF.md`](submission/REPLIT_PROOF.md)
+📄 Proof of use: `submission/SDC2026_Dsaise_Replit_POU.pdf` (screenshots) · details: [`submission/REPLIT_PROOF.md`](submission/REPLIT_PROOF.md)
 
 ## How we use RunPod *(required)*
 
@@ -343,7 +343,7 @@ curl -X POST https://api.runpod.ai/v2/$RUNPOD_EMBED_ENDPOINT_ID/openai/v1/embedd
   -d '{"model": "BAAI/bge-m3", "input": ["Reconcile vendor statements against the ledger"]}'
 ```
 
-📄 Proof of use: `submission/SDC2026_TeamName_Runpod_POU.pdf` (console screenshots) · details: [`submission/RUNPOD_PROOF.md`](submission/RUNPOD_PROOF.md) (pod and endpoint IDs, GPU, runtime, cost)
+📄 Proof of use: `submission/SDC2026_Dsaise_Runpod_POU.pdf` (console screenshots) · details: [`submission/RUNPOD_PROOF.md`](submission/RUNPOD_PROOF.md) (pod and endpoint IDs, GPU, runtime, cost)
 
 ---
 
@@ -514,6 +514,7 @@ Declared in full in the [Tech & Tools Declaration](submission/TECH_DECLARATION.m
 
 | Name | Role | GitHub |
 |---|---|---|
+| Leow Shen En | Team leader | [@shenenleow10521](https://github.com/shenenleow10521) |
 | _[name]_ | _[role]_ | _[@username]_ |
 
 ## Submission checklist
@@ -525,8 +526,8 @@ The organisers' checklist. The full rubric audit, with evidence for every compul
 - [ ] Demo video link added
 - [ ] Replit used, with proof of use in `submission/`
 - [ ] RunPod used, with proof of use in `submission/`
-- [ ] Preliminary submission completed (`SDC2026_TeamName_Preliminary.pdf`)
-- [ ] Technology declaration completed (`SDC2026_TeamName_TechDeclaration.pdf`)
+- [ ] Preliminary submission completed (`SDC2026_Dsaise_Preliminary.pdf`)
+- [ ] Technology declaration completed (`SDC2026_Dsaise_TechDeclaration.pdf`)
 - [ ] Submission files renamed with your team name (replace `TeamName`)
 - [x] "How to Run" steps verified
 - [x] No API keys or secrets committed to the repository
