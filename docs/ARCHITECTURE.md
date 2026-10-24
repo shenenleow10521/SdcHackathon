@@ -2,7 +2,7 @@
 
 > **Audience:** the HalaTuju team and any AI assistant helping build it.
 > **Status:** v1, 23 Oct 2026. Hard deadline **Sun 25 Oct 2026, 07:59 MYT**, so plan to submit by **Sat 24 Oct, 23:00**.
-> **Related:** `proposal/HalaTuju_Proposal.md` (product), `prototype/halatuju-app.html` (UI and working scoring logic), `SDC_Hackathon_2026_Prelim_Requirements.md` (rules).
+> **Related:** `proposal/HalaTuju_Proposal.md` (product), `prototype/halatuju-app.html` (UI and working scoring logic), `docs/SDC_Hackathon_2026_Prelim_Requirements.md` (rules).
 
 ---
 

@@ -23,7 +23,7 @@
 | Replit project | _[Replit project URL]_ |
 | RunPod endpoint (bge-m3 embeddings) | `https://api.runpod.ai/v2/a7ipau1nmqogxs` (needs our API key; see [How we use RunPod](#how-we-use-runpod-required)) |
 | Pitch video (5–7 min, YouTube) | _[YouTube link]_ |
-| Slide deck | _[deck link]_ |
+| Slide deck | [`submission/HalaTuju_Pitch_Deck.html`](submission/HalaTuju_Pitch_Deck.html) (download and open in a browser) · PDF: _[link]_ |
 | Product Requirement Doc (official template) | [`submission/PRELIMINARY_PROPOSAL.md`](submission/PRELIMINARY_PROPOSAL.md) · PDF: _[link]_ |
 | Tech & Tools Declaration | [`submission/TECH_DECLARATION.md`](submission/TECH_DECLARATION.md) · PDF: _[link]_ |
 | Replit and RunPod proof of use | [`submission/REPLIT_PROOF.md`](submission/REPLIT_PROOF.md) · [`submission/RUNPOD_PROOF.md`](submission/RUNPOD_PROOF.md) |
@@ -438,7 +438,7 @@ The build started at the problem-statement release on **19 Oct 2026, 8 PM MYT**.
 
 | When (MYT) | What | Evidence |
 |---|---|---|
-| 21 Oct | Organiser materials read; requirements and rubric written up | `SDC_Hackathon_2026_Prelim_Requirements.md` ("analysed 2026-10-21") |
+| 21 Oct | Organiser materials read; requirements and rubric written up | [`docs/SDC_Hackathon_2026_Prelim_Requirements.md`](docs/SDC_Hackathon_2026_Prelim_Requirements.md) ("analysed 2026-10-21") |
 | 22 Oct | Proposal draft v0.1; four HTML prototypes of the map, route and reroute | `proposal/HalaTuju_Proposal.md` (dated 22 Oct), `prototype/` |
 | 23 Oct 00:58–02:30 | First commits: prototypes, proposal, architecture, Apache licence; a teammate's landing page merged as PR #1 | git history (`24f139e`, `ff8aaf8`, `485d9bd`, `cf93854`) |
 | 23 Oct 03:17 | First exposure-model runs on a local RTX 4070 (300-task sample, then full data) | `ml/artifacts/eval_sample300.json`, `eval_local.json` (run times inside) |

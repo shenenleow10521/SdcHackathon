@@ -13,7 +13,7 @@
 | 1 | `5. Online Orientation Briefing /1. SDC Hackathon Online Orientation Slides.pdf` | 44-slide PDF (orientation held 19 Oct 2026) | Text layer + every slide viewed as an image (many slides are image-only) |
 | 2 | `4. Participant Guideline (Docs & Tutorials)/2. Video Tutorials Needed/3. Mentorship Booking & Submission Method/2. Detailed Submission.mp4` | 4 min 06 s, 1080p screen recording | Transcribed with faster-whisper large-v3 (GPU) + screenshots every 8 s read visually |
 
-**Missing material:** the zip name ends in `-1-002`, which means it is **part 2 of a split Google Drive download**. Folders `1.`–`3.` and other items in folder `4.` are not in this zip. That likely includes the **official PRD template** and the **Tech & Tools Declaration template**, both referenced in the slides. Get part `-1-001` from the Drive before writing those documents.
+**Missing material:** the zip name ends in `-1-002`, which means it is **part 2 of a split Google Drive download**. Folders `1.`–`3.` and other items in folder `4.` are not in this zip. That likely includes the **official PRD template** and the **Tech & Tools Declaration template**, both referenced in the slides. **Update 24 Oct:** both templates were found in the organisers' Drive folder "2. Template for docs inside GitHub Rep", with the repo template https://github.com/michaelzhngg/SDC_Hackathon_Submission_Template. Our answers, field by field: `submission/PRELIMINARY_PROPOSAL.md` and `submission/TECH_DECLARATION.md`.
 
 ---
 
@@ -112,7 +112,7 @@ Rules for both domains: **must link to at least 1 SDG.** The domain cannot be ch
 
 | # | Item | Requirement |
 |---|---|---|
-| 1 | **Product Requirement Doc (PRD)** | Use the **official template**: problem, SDG alignment, target users, scope, key features. *(Template not in this zip; see section 0.)* |
+| 1 | **Product Requirement Doc (PRD)** | Use the **official template**: problem, SDG alignment, target users, scope, key features. *(Official template: see the update in section 0.)* |
 | 2 | **Pitch Deck Slides** | Problem, solution, technical approach and expected impact. Must match the story in the video. |
 | 3 | **Live Prototype Link** | Deployed link or accessible build. **A video or static mock-up does not count.** |
 | 4 | **Tech & Tools Declaration** | All APIs, cloud services, AI tools, LLMs, datasets, models and sponsor resources. Must include Replit proof (and RunPod proof if GPU was used). |
@@ -206,7 +206,7 @@ Range: warning → deductions → finalist status cancelled → DQ → future ba
 3. **Deadline wording.** The form says "until 25 October 2026"; the slides say **25 Oct 7:59:59 AM MYT**. Treat 7:59:59 AM as the binding time.
 4. **Domain naming.** The website preview shows "Domain A"; the slides use "Domain 1 / Domain 2". This is cosmetic, but check which label the portal shows for our team.
 5. **Committee GitHub usernames** for the collaborator rule are not in these files. Get them from Discord.
-6. **Templates** for the PRD and declaration are not in this zip part. Get part `-1-001`.
+6. ~~Templates for the PRD and declaration are not in this zip part.~~ Found on 24 Oct (see section 0). Submit them as `SDC2026_TeamName_Preliminary.pdf` and `SDC2026_TeamName_TechDeclaration.pdf`.
 
 ---
 

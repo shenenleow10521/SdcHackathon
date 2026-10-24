@@ -13,7 +13,7 @@ Prelim deadline: **Sun 25 Oct 2026, 07:59:59 MYT.** No late submissions, no chan
 | 5 | **PRD on the official Submission Template**: copy from `submission/PRELIMINARY_PROPOSAL.md`, fill _[verify]_ baseline figures from their sources, confirm the workshop and IP boxes, sign, save PDF | `submission/` + README link |
 | 6 | **Tech & Tools Declaration on the official template**: copy from `submission/TECH_DECLARATION.md`, add any other AI tool a member used, sign, save PDF | `submission/` + README link |
 | 7 | **Record the pitch video** (5:00–7:00, live demo inside; script `docs/PITCH.md`, clicks `docs/DEMO.md`), upload to YouTube (public or unlisted) | README Links: **Pitch video** |
-| 8 | **Pitch deck** matching the video (problem, solution, technical approach, impact) | README Links: **Slide deck**; `submission/` |
+| 8 | **Pitch deck** matching the video (problem, solution, technical approach, impact) | README Links: **Slide deck**; `submission/HalaTuju_Pitch_Deck.html` (export a PDF copy too) |
 | 9 | **Add the committee's GitHub accounts as collaborators** (usernames from Discord) | GitHub → Settings → Collaborators |
 | 10 | **Confirm on Discord** the "API Premium sponsor technology" checkbox on the submit form (which sponsor? we use Replit and RunPod) | Submit form |
 | 11 | **Make the repo public**, then submit the GitHub URL on sdchack.my and **open every link in an incognito window** | sdchack.my portal |
