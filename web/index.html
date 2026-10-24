@@ -112,9 +112,10 @@
       <label class="sr" for="year" data-i18n="time.year">Forecast year</label>
       <input type="range" id="year" min="2026" max="2030" step="1" value="2026">
       <span class="year" id="year-out" aria-hidden="true">2026</span>
-      <div class="seg" role="group" aria-label="AI adoption speed" data-i18n-aria="scn.aria">
-        <button type="button" data-scn="moderate" aria-pressed="true" data-i18n="scn.moderateBtn">Moderate AI</button>
-        <button type="button" data-scn="fast" aria-pressed="false" data-i18n="scn.fastBtn">Fast AI</button>
+      <span class="seg-k" aria-hidden="true" title="How fast AI takes over work tasks by 2030, not how fast this app runs." data-i18n="scn.label" data-i18n-title="scn.hint">AI spread</span>
+      <div class="seg" role="group" aria-label="AI spread: how fast AI takes over work tasks" data-i18n-aria="scn.aria" title="How fast AI takes over work tasks by 2030, not how fast this app runs." data-i18n-title="scn.hint">
+        <button type="button" data-scn="moderate" aria-pressed="true" data-i18n="scn.moderateBtn">Steady</button>
+        <button type="button" data-scn="fast" aria-pressed="false" data-i18n="scn.fastBtn">Fast</button>
       </div>
     </div>
     <div class="viewctl glass" role="group" aria-label="View" data-i18n-aria="map.viewAria">
