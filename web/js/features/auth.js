@@ -5,6 +5,7 @@ import { t } from "../i18n.js";
 import { $, esc, icons, store } from "../util.js";
 
 const CLERK_SCRIPT = "/vendor/clerk/clerk.browser.js";
+const CLERK_UI_SCRIPT = "/vendor/clerk-ui/ui.browser.js";
 const V = { msg: null, busy: false, view: "auth" };
 
 export const AUTH = { enabled: false, client: null, user: null, roles: [], profileId: null, guestProfileId: null, staffOpen: false };
@@ -14,7 +15,7 @@ let clerkSdkPromise;
 function loadClerkSdk(publishableKey, proxyUrl) {
   if (globalThis.Clerk?.load) return Promise.resolve(globalThis.Clerk);
   if (clerkSdkPromise) return clerkSdkPromise;
-  clerkSdkPromise = new Promise((resolve, reject) => {
+  clerkSdkPromise = loadScript(CLERK_UI_SCRIPT).then(() => new Promise((resolve, reject) => {
     const script = document.createElement("script");
     const loaded = () => globalThis.Clerk ? resolve(globalThis.Clerk) : reject(new Error("Clerk browser SDK did not load"));
     script.addEventListener("load", loaded, { once: true });
@@ -24,8 +25,21 @@ function loadClerkSdk(publishableKey, proxyUrl) {
     script.src = CLERK_SCRIPT;
     script.async = true;
     document.head.append(script);
-  });
+  }));
   return clerkSdkPromise;
+}
+
+/** Clerk's sign-in screens (@clerk/ui); without them mountSignIn fails with "not loaded with Ui components". */
+function loadScript(src) {
+  if (globalThis.__internal_ClerkUICtor) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.addEventListener("load", () => resolve(), { once: true });
+    s.addEventListener("error", () => reject(new Error("Couldn't load the sign-in service")), { once: true });
+    s.src = src;
+    s.async = true;
+    document.head.append(s);
+  });
 }
 
 const appearance = {
@@ -64,7 +78,7 @@ export async function initAuth(handlers) {
   if (!cfg?.auth?.enabled) return AUTH;
 
   AUTH.client = await loadClerkSdk(cfg.auth.publishableKey, cfg.auth.proxyUrl);
-  await AUTH.client.load();
+  await AUTH.client.load({ ui: { ClerkUI: globalThis.__internal_ClerkUICtor } });
   AUTH.enabled = true;
 
   await applySession(AUTH.client.user);

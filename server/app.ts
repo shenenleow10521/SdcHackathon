@@ -57,6 +57,8 @@ export function createApp(svc: Services) {
   // "/" is the landing page; the app lives at "/app" (its asset paths are absolute, so "/app/" works too).
   const web = path.join(projectRoot, "web");
   app.use("/vendor/clerk", express.static(path.join(projectRoot, "node_modules", "@clerk", "clerk-js", "dist"), { fallthrough: true }));
+  // Clerk v6 ships its sign-in screens separately; this registers them before clerk-js loads.
+  app.use("/vendor/clerk-ui", express.static(path.join(projectRoot, "node_modules", "@clerk", "ui", "dist"), { fallthrough: true }));
   app.get("/", (_req, res) => res.sendFile(path.join(web, "landing.html")));
   app.get(["/app", "/app/"], (_req, res) => res.sendFile(path.join(web, "index.html")));
   app.use(express.static(web, { index: false }));
