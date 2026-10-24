@@ -1,6 +1,6 @@
 run = "npm start"
 entrypoint = "server/index.ts"
-modules = ["nodejs-22", "postgresql-16"]
+modules = ["nodejs-20", "web", "python-3.12"]
 
 [deployment]
 run = ["sh", "-c", "npm start"]
@@ -9,3 +9,6 @@ deploymentTarget = "vm"
 [[ports]]
 localPort = 3000
 externalPort = 80
+
+[nix]
+channel = "stable-25_05"
