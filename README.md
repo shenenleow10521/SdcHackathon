@@ -19,7 +19,7 @@
 | Resource | Link |
 |---|---|
 | GitHub repository | https://github.com/shenenleow10521/SdcHackathon |
-| Live demo (Replit) | _[Replit deployment URL]_ |
+| Live demo (Replit) | https://halatuju.replit.app |
 | Replit project | _[Replit project URL]_ |
 | RunPod endpoint (bge-m3 embeddings) | `https://api.runpod.ai/v2/a7ipau1nmqogxs` (needs our API key; see [How we use RunPod](#how-we-use-runpod-required)) |
 | Pitch video (5–7 min, YouTube) | _[YouTube link]_ |
@@ -81,7 +81,7 @@ HalaTuju answers two different questions and never mixes them:
 | 3. Future-role matching + skills gap | Match % per job, per employer and for any of 3,039 ESCO jobs; skills you have vs. need |
 | 4. Personalised reskilling pathway | Fastest / Balanced / Safest routes fitted to your weekly hours; Reuse / Upskill / Evolve / Reskill steps with real courses and RM cost |
 | 5. SDG mapping | Every job (16) and skill (29) tagged with an SDG and a one-line reason, checked by a test; SDG-aware ranking |
-| 6. More than one future scenario | Moderate vs Fast AI, 2026–2030 year slider, the Balanced route, and the stress test (each plan replayed in 1,000 simulated futures) |
+| 6. More than one future scenario | Steady vs Fast AI spread, 2026–2030 year slider, the Balanced route, and the stress test (each plan replayed in 1,000 simulated futures) |
 
 **Humans stay in control:** no plan changes without the user's or an advisor's approval; big knowledge changes need a person; saved plans are offered a new route to *keep or switch*.
 
@@ -110,7 +110,7 @@ HalaTuju answers two different questions and never mixes them:
 | Career constellation (3D) | You, your skills, skills to learn, jobs, with your route lit up; closed roads for skills AI has taken over | ✅ Works | Sample catalogue |
 | Route options | Fastest / Balanced / Safest via shortest-path routing; alternative routes shown | ✅ Works | Sample catalogue |
 | Weekly hours | Weeks are shown at your own study pace (set during intake), not a fixed 6 hours | ✅ Works | n/a |
-| Scenarios | Moderate vs Fast AI adoption, 2026–2030 year slider; the "taken over" threshold falls as AI spreads | ✅ Works | Sample |
+| Scenarios | Steady vs Fast AI spread (how fast AI takes over tasks), 2026–2030 year slider; the "taken over" threshold falls as AI spreads | ✅ Works | Sample |
 | Step types | Reuse · Upskill · Evolve · Reskill, each with Learn → Practice → Prove | ✅ Works | Learn = Real courses; Practice/Prove = Sample |
 | Human edge | Task split (AI does / AI assists / still needs you) and rising human skills | ✅ Works | Sample |
 | Sector exploration | Finance, Sustainability, Tech & data, Operations; the map rebuilds | ✅ Works | Sample |
@@ -220,7 +220,7 @@ All three yes = the plan **works** in that future. The result is the share of fu
 
 **Precision and speed.** At 1,000 runs (configurable: `MONTE_CARLO.runs`, or `runs` per call) the rate is accurate to about ±2 percentage points at 95% confidence for plans near 85 to 90% (±3 near 50%; the margin is 1.96 × √(p(1 − p) / 1,000)). That covers the sampling only: the ranges above matter more than the run count. The whole test, tips included, takes about 5 ms in Node (10,000 runs: about 12 ms), so the browser runs it directly and keeps the result per plan.
 
-**What we see with the current data:** most routes in the catalogue take 4 to 15 weeks, so they finish in 2027, before the engine's AI takeovers (mostly 2029 to 2030). For Priya (6 hours a week, deadline 24 Apr 2027, 2026 view, Moderate AI), the ESG & Carbon Reporting Analyst plan works in **100%** of futures on the Fastest and Balanced routes; the Safest route works in 88% and fails mostly when her study time drops below 5 hours a week (12% of futures). Routes that start late or pass through a skill AI is about to take over fail the "road open" check, and the test then suggests the Balanced or Safest route.
+**What we see with the current data:** most routes in the catalogue take 4 to 15 weeks, so they finish in 2027, before the engine's AI takeovers (mostly 2029 to 2030). For Priya (6 hours a week, deadline 24 Apr 2027, 2026 view, Steady AI spread), the ESG & Carbon Reporting Analyst plan works in **100%** of futures on the Fastest and Balanced routes; the Safest route works in 88% and fails mostly when her study time drops below 5 hours a week (12% of futures). Routes that start late or pass through a skill AI is about to take over fail the "road open" check, and the test then suggests the Balanced or Safest route.
 
 **What the number means:** the share of 1,000 simulated futures the plan works in. It is a stress test of the plan, not a probability of being hired, not a new version of the match %, and not a forecast: hiring also depends on competition, interviews and the economy, which we don't model. **Method:** *Robust Decision Making* (RAND) and *Decision Making under Deep Uncertainty*: when nobody knows the true odds, choose the plan that holds up across the most plausible futures. The exposure error is measured; the slow-AI speed and the study-time and step-length ranges are our assumptions; the catalogue values it runs on are sample data (labelled in the app).
 
@@ -299,7 +299,7 @@ ESCO v1.2.1 has **no equivalent for any of our 5 AI-era skills** (best bge-m3 co
 |---|---|
 | Frontend | Vanilla JS, 3d-force-graph (three.js), GSAP, Lucide icons, Geist font; English and Bahasa Melayu |
 | Backend | Node 22, TypeScript, Express 5; zod, multer, unpdf (PDF text), tesseract.js (local OCR, eng + msa data vendored in `server/lib/tessdata`), fast-xml-parser |
-| Database | PostgreSQL (Replit PostgreSQL 16 or Supabase); embedded PGlite when no `DATABASE_URL` is set; Supabase Auth for accounts |
+| Database | Replit PostgreSQL 16 in the live app; embedded PGlite when no `DATABASE_URL` is set (local runs, tests); optional Supabase Auth for accounts (off in the live demo) |
 | AI models | **Google Gemini API**: gemini-3.5-flash-lite (main), gemini-3.1-flash-lite (reviewer); our ridge exposure model (JSON weights, one dot product per task) |
 | AI / Compute | **RunPod**: Serverless bge-m3 embeddings (endpoint `a7ipau1nmqogxs`); GPU pod for the final model training run |
 | Web search | Tavily (Job market researcher and committee only, trusted domains) |
@@ -308,7 +308,7 @@ ESCO v1.2.1 has **no equivalent for any of our 5 AI-era skills** (best bge-m3 co
 
 ## How we use Replit *(required)*
 
-- **Hosting:** the app is deployed with Replit Deployments (VM target, `.replit` runs `npm start` with PostgreSQL 16) at the Live demo link above.
+- **Hosting:** the app is deployed with Replit Deployments (VM target, `.replit` runs `npm start` with Replit PostgreSQL 16, the app's only database) at the Live demo link above.
 - **Secrets:** `GEMINI_API_KEY`, `RUNPOD_API_KEY`, `RUNPOD_EMBED_ENDPOINT_ID`, `TAVILY_API_KEY` and the database URL are Replit Secrets, never in the code.
 - **Agents in production:** the Job market researcher, AI reviewer, emerging-skill committee and explainer run on the Replit server and call the Google Gemini API.
 

@@ -38,11 +38,11 @@ Score estimates are our own judgement (out of 10), assuming items 1–8 above ar
 | Working prototype + functional UI + pitch | All three, or the submission is incomplete | App in `server/`, `web/`; pitch in `docs/PITCH.md` | ⚠️ pitch video and deck to record |
 | 1. Product Requirement Doc | Official template: problem, SDG, users, scope, features | [`submission/PRELIMINARY_PROPOSAL.md`](../submission/PRELIMINARY_PROPOSAL.md) (draft in template order); earlier `proposal/HalaTuju_Proposal.md` | ⚠️ copy into the official template, fill brackets, PDF |
 | 2. Pitch deck | Matches the video | — | ❌ team |
-| 3. Live prototype link | Deployed link; a video or mock-up does not count | `.replit` ready (Node 22, PostgreSQL 16, VM) | ❌ deploy |
+| 3. Live prototype link | Deployed link; a video or mock-up does not count | https://halatuju.replit.app (Reserved VM, Replit PostgreSQL 16) | ⚠️ deployed; check in incognito |
 | 4. Tech & Tools Declaration | Every API, cloud service, AI tool, LLM, dataset, model, sponsor resource; Replit proof; RunPod proof for GPU work | [`submission/TECH_DECLARATION.md`](../submission/TECH_DECLARATION.md), [`submission/RUNPOD_PROOF.md`](../submission/RUNPOD_PROOF.md), [`submission/REPLIT_PROOF.md`](../submission/REPLIT_PROOF.md) | ⚠️ screenshots, Replit URL, signature |
 | 5. GitHub repository | Public; reflects what you demo | https://github.com/shenenleow10521/SdcHackathon | ⚠️ still private |
 | 6. Pitching video | 5:00–7:00 on YouTube, with a prototype demo; −1 point per 30 s over | Script 5:50 (`docs/PITCH.md`) | ❌ record |
-| Replit (compulsory) | Proof from our own account | Deployment steps ready | ❌ deploy + screenshots |
+| Replit (compulsory) | Proof from our own account | Deployed at https://halatuju.replit.app | ⚠️ screenshots |
 | RunPod (GPU work) | Screenshot: pod ID or endpoint, GPU type, runtime | Pod `38jijj8fe5dazu` RTX 4090 2.5 min (`ml/artifacts/runpod_run.json`, `.log`); endpoint `a7ipau1nmqogxs` | ⚠️ console screenshots |
 | Repo created after 19 Oct release | — | First commit 23 Oct 2026 00:58 MYT | ✅ |
 | Apache License 2.0 | `LICENSE` at root | [`LICENSE`](../LICENSE) | ✅ |

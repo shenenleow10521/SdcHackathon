@@ -1,25 +1,38 @@
-# SDC Hackathon 2026 · Phase 1: Preliminary Project Proposal (PRD draft)
+# SDC Hackathon 2026 · Phase 1: Preliminary Project Proposal
 
-> Our answers, in the section order of the official **SDC Hackathon Submission Template** (the Product Requirement Doc). Copy them into the official form, fill the _[brackets]_, check every _[verify]_ figure against its source, sign, and save the result here as a PDF. Word limits are the template's.
+> **For the teammate filling the official form.** This file follows the official template `1. SDC Hackathon_ Submission Template.docx` field by field, in the same order and with the same labels and word limits.
+>
+> 1. Open a **copy** of the official .docx (the originals are in the organisers' Google Drive folder, "2. Template for docs inside GitHub Rep").
+> 2. Copy each answer below into the matching box. Keep the template's own wording and layout; don't add or remove sections.
+> 3. Fill every **🟨 TEAM** item. Only the team can answer these. Search this file for 🟨 to find them all.
+> 4. Tick the boxes: ☒ = tick, ☐ = leave empty.
+> 5. Check each word count after pasting (Word shows it at the bottom left). Limits are in the headings.
+> 6. Sign, date, then **File → Save As → PDF** named **`SDC2026_TeamName_Preliminary.pdf`** (replace `TeamName`). Put it in this `submission/` folder.
 
-## 1. Team and project overview
+**Submission deadline:** 25 October 2026 (portal closes Sun 25 Oct, 07:59:59 MYT)
+
+---
+
+## 1. Team & Project Overview
 
 | Field | Answer |
 |---|---|
-| Team name | _[team name]_ |
-| Selected domain | Domain 1: Aiversecity Future-Ready Workforce |
-| Selected SDG track (1–17) | **SDG 8** Decent Work and Economic Growth (targets 8.2, 8.5), with **SDG 4** target 4.4 (adults with skills for employment), and SDG 9, 12, 13 and 16 through the jobs and skills on the map |
-| Project / solution name | **HalaTuju** ("direction" in Malay): a live career map that reroutes as AI changes work |
-| Name (leader) | _[leader name]_ |
-| Email and phone (leader) | _[as on the registration form]_ |
-| University affiliation(s) | _[university]_ |
-| Number of team members | _[n]_ |
-| Live prototype | _[Replit deployment URL]_ |
-| Code repository | https://github.com/shenenleow10521/SdcHackathon |
+| Team Name | 🟨 TEAM |
+| Selected Domain | Domain 1: Aiversecity Future-Ready Workforce |
+| Selected SDG Track (1–17) | SDG 8: Decent Work and Economic Growth (with SDG 4, target 4.4) |
+| Project / Solution Name | HalaTuju: a live career map that reroutes as AI changes work |
+| Name (Leader) | 🟨 TEAM |
+| Email & Phone (Leader) | 🟨 TEAM (as on the registration form) |
+| University Affiliation(s) | 🟨 TEAM |
+| Number of Team Members | 🟨 TEAM |
 
-## 2. Executive summary and problem statement
+---
 
-### 2.1 The problem context *(250 words max)*
+## 2. Executive Summary & Problem Statement
+
+### 2.1 The Problem Context *[Maximum 250 words]*
+
+> Template asks: the specific real-world challenge, who is affected, why it matters, and the social, environmental or economic issues involved.
 
 Priya (our sample persona) has processed invoices at a shared-services centre in Penang for eleven years. Her employer is handing invoice matching and month-end close to AI agents next year. Staff who move into a new role within six months are redeployed; the rest are not. She has six hours a week to learn.
 
@@ -31,39 +44,47 @@ She has three questions that today's tools don't answer:
 
 Her HR team has the mirror problem: who in the team can move to which open role, by when, at what training cost.
 
-Malaysia's finance, admin and shared-services workforce sits in the occupations most exposed to generative AI (ILO Working Paper 140 places clerical support work highest _[verify: cite the exposure share]_), while new disclosure rules create demand for sustainability-reporting skills _[verify: NSRF / Bursa requirement]_. _[verify: one Malaysian headcount figure from the Domain 1 brief or MDEC/TalentCorp]_.
+Malaysia's finance, admin and shared-services workforce sits in the occupations most exposed to generative AI (ILO Working Paper 140 places clerical support work highest 🟨 TEAM: add the exposure share from ILO WP140), while new disclosure rules create demand for sustainability-reporting skills 🟨 TEAM: confirm the NSRF / Bursa requirement. 🟨 TEAM: add one Malaysian headcount figure (Domain 1 brief, MDEC or TalentCorp).
 
-*Word count: 200*
+*Word count: about 170 before the 🟨 figures are added, so about 80 words are left for them*
 
-### 2.2 The proposed AI solution *(300 words max)*
+### 2.2 The Proposed AI Solution *[Maximum 300 words]*
 
-HalaTuju turns a CV into a living career map and keeps it current.
+> Template asks: how the app applies AI to the problem, **and which tools or skills from the SDC Phase 1 workshops (GenAI APIs, database architecture, cloud hosting) you use.**
 
-**Read the CV safely.** PDF, pasted text, scan or photo. Scans are read by local OCR, personal details are removed before any AI sees the text (99.4% of planted details on held-out test CVs), and Gemini plus bge-m3 embeddings (on RunPod) match what the person has done against ESCO's 13,939 skills. On 36 held-out test CVs the current job was identified 97.2% of the time.
+HalaTuju turns a CV into a living career map and keeps it current. It uses all three Phase 1 workshop skills: a GenAI API (Google Gemini), database architecture (PostgreSQL as a versioned knowledge base) and cloud hosting (Replit Deployments).
 
-**Show the map.** The person, their skills, skills to learn and jobs, with Fastest, Balanced and Safest routes fitted to their weekly hours, real courses and RM cost. Skills AI is taking over become closed roads. "Check any job" covers all 3,039 ESCO occupations with match %, skill gap, four AI-exposure sources (ILO, Anthropic Economic Index, GPTs-are-GPTs, our own model), O\*NET tasks with human ratings, DOSM wages and Malaysia's Critical Occupations List.
+**Read the CV safely.** PDF, pasted text, scan or photo. Scans are read by local OCR, personal details are removed before any AI sees the text (99.4% of planted details on held-out test CVs), and Gemini plus bge-m3 embeddings match what the person has done against ESCO's 13,939 skills. On 36 held-out test CVs the current job was identified 97.2% of the time.
+
+**Show the map.** The person, their skills, skills to learn and jobs, with Fastest, Balanced and Safest routes fitted to their weekly hours, real courses and RM cost. Skills AI is taking over become closed roads. "Check any job" covers all 3,039 ESCO occupations with match %, skill gap, four AI-exposure sources, DOSM wages and Malaysia's Critical Occupations List.
 
 **Measure exposure ourselves.** Our model, trained on RunPod on 19,265 human-rated tasks, reaches r 0.919 on 185 occupations it never saw, and r 0.79 against the ILO index across 2,956 occupations.
 
-**Test the plan.** Each plan is replayed in 1,000 simulated futures (AI speed, our model's measured error, study time, step length): "Your plan works in 100% of 1,000 possible futures", with the reasons it fails and what would make it sturdier.
+**Test the plan.** Each plan is replayed in 1,000 simulated futures: "Your plan works in 100% of 1,000 possible futures", with the reasons it fails and what would make it sturdier.
 
-**Keep it current, with a person in charge.** A daily Job market researcher reads 74 vetted sites, checks every quote word for word, and a second model reviews each claim. Fixed rules apply small multi-source changes; anything that would change a route goes to a person. When they approve, the route visibly reroutes, with the source attached. Every change is versioned and can be undone.
+**Keep it current, with a person in charge.** A daily Job market researcher reads 74 vetted sites, checks every quote word for word, and a second model reviews each claim. Fixed rules apply small multi-source changes; anything that would change a route goes to a person. When they approve, the route visibly reroutes, with the source attached. Every change can be undone.
 
 The AI reads and explains; fixed formulas set every number.
 
-*Word count: 297*
+*Word count: about 295. Check it in Word after pasting; trim a clause if Word counts over 300.*
 
-## 3. Technical architecture and implementation plan
+---
 
-### 3.1 Conceptual tech stack
+## 3. Technical Architecture & Implementation Plan
+
+### 3.1 Conceptual Tech Stack
+
+> Template asks: technologies, frameworks, APIs and databases for a deployed prototype, plus a simple system block diagram (in the box or as an appendix), plus the sponsor question below.
 
 | Layer | Technology |
 |---|---|
 | Frontend | Vanilla JavaScript, 3d-force-graph (three.js) 3D map, GSAP; English and Bahasa Melayu |
 | Backend | Node 22, TypeScript, Express 5; shared scoring engine (server and browser); local OCR (tesseract.js) |
 | AI | Google Gemini API (gemini-3.5-flash-lite, gemini-3.1-flash-lite); BAAI/bge-m3 embeddings on RunPod Serverless; our own exposure model (bge-m3 + ridge, trained on RunPod) |
-| Data | PostgreSQL (versioned knowledge base); ESCO v1.2.1, O\*NET, ILO WP140, Anthropic Economic Index, GPTs-are-GPTs, DOSM, MyCOL |
+| Database and data | Replit PostgreSQL 16 (versioned knowledge base); ESCO v1.2.1, O\*NET, ILO WP140, Anthropic Economic Index, GPTs-are-GPTs, DOSM, MyCOL |
 | Hosting | Replit Deployments (Reserved VM, PostgreSQL 16); GitHub Actions CI |
+
+**System block diagram.** 🟨 TEAM: Word can't show the diagram code below. Open this file on GitHub (it draws the diagram), take a screenshot, and paste it into the box or add it as "Appendix A: System block diagram".
 
 ```mermaid
 flowchart LR
@@ -79,9 +100,13 @@ flowchart LR
   KB --> ENG --> UI
 ```
 
-**Sponsor resources:** **Yes.** **RunPod**: final training of our exposure model on a GPU pod (RTX 4090) and the bge-m3 Serverless endpoint used at run time. **Replit**: hosts the live app and its database.
+**Did your project utilize any official SDC sponsor-provided GenAI API or Cloud Platform? If yes, specify which one and how it is used.**
 
-### 3.2 Design-thinking and deployment strategy *(200 words max)*
+Yes.
+- **RunPod:** the final training run of our AI-exposure model on a GPU pod (RTX 4090), and the bge-m3 Serverless endpoint the app calls to read CVs.
+- **Replit:** hosts the live app and its PostgreSQL database; all keys are kept in Replit Secrets.
+
+### 3.2 Design-Thinking & Deployment Strategy *[Maximum 200 words]*
 
 **Empathise.** One persona from the brief's workforce: a mid-career accounts payable clerk with a six-month redeployment window and six hours a week. Her fear is wasted effort on the wrong course, so every screen answers "what do I do this week".
 
@@ -95,52 +120,83 @@ flowchart LR
 
 *Word count: 181*
 
-## 4. Preliminary environmental and SDG impact framework
+---
 
-| Metric category | Our response |
+## 4. Preliminary Environmental & SDG Impact Framework
+
+> Template note: judges use the target, baseline and KPI **during shortlisting to score Innovation & Creativity and Feasibility of Build.** The baseline must be **a number**, the Phase 2 target must be **a percentage**, and every source must be cited. Vague or unsupported figures weaken the case for Phase 2. **This is the most important 🟨 item in this file.**
+
+| Metric Category | Your Response |
 |---|---|
-| **Target SDG sub-target(s)** | **8.5** full and productive employment and decent work for all; **8.2** productivity through technological upgrading; **4.4** increase the number of adults with relevant skills for employment. Green-job routes support **13** (climate action) and **12** (responsible production) |
-| **Current problem baseline** | _[verify: share of Malaysian workers in highly AI-exposed occupations (DOSM LFS × ILO WP140)]_; _[verify: Malaysian reskilling need figure from the Domain 1 brief]_ |
-| **Core measurable KPIs** | (1) Current job identified from a CV (held-out benchmark: 97.2%). (2) Personal details removed before any AI call (99.4%; blind 82.6%). (3) Share of signals reaching users that passed a quote check and a human or rule gate (100% by design, tested). (4) Time from CV to a costed, stress-tested route (about 15 s CV reading in the demo dry run). (5) Share of a pilot team with a route ready before their deadline (HR view) |
-| **Phase 2 impact target** | (1) ≥ 95% on a fresh, unseen CV set. (2) ≥ 99% on a fresh set, measured blind. (3) 100%. (4) Under 1 minute end to end. (5) _[target for a pilot employer]_ |
+| **Target SDG Sub-Target(s)** | **Target 8.5:** "By 2030, achieve full and productive employment and decent work for all women and men…". **Target 8.2:** "Achieve higher levels of economic productivity through diversification, technological upgrading and innovation…". **Target 4.4:** "By 2030, substantially increase the number of youth and adults who have relevant skills, including technical and vocational skills, for employment, decent jobs and entrepreneurship." |
+| **Current Problem Baseline** | 🟨 TEAM: one number with its source, for example "X% of Malaysian workers are in occupations highly exposed to generative AI (ILO WP140 exposure index applied to DOSM Labour Force Survey employment by occupation)". Optionally a second one: a Malaysian reskilling-need figure from the Domain 1 brief. |
+| **Core Measurable KPI** | (1) % of CVs where the current job is identified correctly (held-out benchmark today: 97.2%). (2) % of planted personal details removed before any AI call (99.4%; blind run 82.6%). (3) % of market signals reaching users that passed a quote check and a human or rule gate (100% by design, tested). (4) Time from CV to a costed, stress-tested route (about 15 s in the demo dry run). (5) % of a pilot team with a route ready before their redeployment deadline (HR view). |
+| **Phase 2 Impact Target** | (1) ≥ 95% on a fresh, unseen CV set. (2) ≥ 99% on a fresh set, measured blind. (3) 100%. (4) Under 1 minute end to end. (5) 🟨 TEAM: a % target for a pilot employer, e.g. "≥ 80% of a pilot team". |
 
-## 5. Eligibility and readiness checklist
+**Sources:** 🟨 TEAM: list the citation for each figure above, e.g. ILO Working Paper 140 (2025); DOSM Labour Force Survey; our benchmark files `eval/RESULTS.md` and `eval/EMERGING.md` in the repo.
 
-- [ ] All team members have completed the mandatory GenAI, Database and Cloud Deployment upskilling workshops. _[team to confirm]_
-- [x] The project concept addresses a verified real-world problem mapped directly to one or more UN SDGs.
-- [x] The proposed solution targets a functional, deployed application rather than a theoretical business case study.
-- [ ] All fields in this template have been completed within the word limits stated. _(after filling the brackets)_
+---
 
-## 6. IP and originality declaration
+## 5. Eligibility & Readiness Checklist
 
-### 6.1 Pre-existing / prior-owned work
+Tick all boxes that apply before submitting.
 
-**No.** All code, design and research were created during the SDC 2026 hackathon period (from 19 Oct 2026, 8 PM). _[team to confirm]_
+- ☐ All team members have completed the mandatory GenAI, Database, and Cloud Deployment upskilling workshops. 🟨 TEAM: tick only if true for every member.
+- ☒ The project concept addresses a verified real-world problem mapped directly to one or more UN SDGs.
+- ☒ The proposed solution targets a functional, deployed application rather than a theoretical business case study.
+- ☐ All fields in this template have been completed within the word limits stated. 🟨 TEAM: tick after every 🟨 is filled and the word counts are checked.
 
-### 6.2 Third-party code, datasets or models
+---
 
-**Yes.** All are open source or public and used under their licences, with attribution in the README and `docs/DATA_SOURCES.md`:
+## 6. IP & Originality Declaration
 
-| Name | Type | Licence |
+### 6.1 Pre-Existing / Prior-Owned Work
+
+Does this submission include any code, design, research, or other work that any team member created or owned before the start of this hackathon?
+
+☐ Yes ☒ No 🟨 TEAM: confirm
+
+If yes, briefly describe what was pre-existing and which team member(s) owned it: N/A. All code, design and research were created during the SDC 2026 hackathon period (from 19 Oct 2026, 8 PM).
+
+### 6.2 Third-Party Code, Datasets, or Models
+
+Does your project use any third-party code libraries, open-source frameworks, public/private datasets, or pre-trained AI models that your team did not create?
+
+☒ Yes ☐ No
+
+If yes, list them below (open-source use is permitted provided it is declared and properly licensed/attributed):
+
+| Name | Type (code/dataset/model) | License |
 |---|---|---|
-| Google Gemini API (gemini-3.5-flash-lite, gemini-3.1-flash-lite) | Model (API) | Gemini API terms |
+| Google Gemini API (gemini-3.5-flash-lite, gemini-3.1-flash-lite) | Model | Gemini API terms |
 | BAAI/bge-m3 | Model | MIT |
-| Tesseract language data (eng, msa) via tesseract.js | Model / library | Apache-2.0 |
+| Tesseract language data (eng, msa) | Model | Apache-2.0 |
 | ESCO v1.2.1 and the ESCO–O\*NET crosswalk | Dataset | EU reuse policy (CC BY 4.0) |
 | O\*NET task statements and ratings | Dataset | CC BY 4.0 |
 | "GPTs are GPTs" task labels | Dataset | MIT |
-| ILO Working Paper 140 index | Dataset | CC BY 4.0 |
+| ILO Working Paper 140 exposure index | Dataset | CC BY 4.0 |
 | Anthropic Economic Index | Dataset | CC BY (data) |
 | DOSM / OpenDOSM wages | Dataset | CC BY 4.0 |
-| MyCOL 2024/2025 (codes and titles only) | Dataset | Facts with citation |
-| Express, zod, multer, unpdf, pg, PGlite, 3d-force-graph, GSAP, Lucide, Geist | Code | MIT / Apache-2.0 / ISC / OFL / GreenSock standard |
+| MyCOL 2024/2025 (codes and titles only) | Dataset | Facts, used with citation |
+| Express, TypeScript, zod, multer, unpdf, tesseract.js, pg, PGlite | Code | MIT / Apache-2.0 |
+| 3d-force-graph (three.js), GSAP, Lucide icons, Geist font | Code | MIT / GreenSock standard / ISC / SIL OFL 1.1 |
 
-### 6.3 Employment-related IP conflicts
+The full list with versions is in the Tech & Tools Declaration (`SDC2026_TeamName_TechDeclaration.pdf`), section 2.2.
 
-**No.** _[team to confirm that no member is bound by an agreement that could claim this work]_
+### 6.3 Employment-Related IP Conflicts
+
+Is any team member currently bound by an employment, internship, or consulting agreement under which their employer could claim ownership of work they create during this hackathon?
+
+☐ Yes ☒ No 🟨 TEAM: confirm for every member
+
+If yes, please describe the nature of the agreement and which member it concerns: N/A
+
+---
 
 ## 7. Declaration
 
 By submitting this proposal, the team leader confirms that the information provided is accurate to the best of the team's knowledge and that the project will be original work created during the SDC 2026 hackathon period.
 
-Signature: _[leader name] (Team Leader, typed)_ Date: _[date]_
+[Signature] 🟨 TEAM: leader signs
+
+[Date] 🟨 TEAM
