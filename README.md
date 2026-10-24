@@ -502,7 +502,7 @@ Declared in full in the [Tech & Tools Declaration](submission/SDC2026_Dsaise_Tec
 |---|---|---|
 | Leow Shen En | Team leader | [@shenenleow10521](https://github.com/shenenleow10521) |
 | Choong Zhuo Lin | Technical lead | [@25006675-png](https://github.com/25006675-png) |
-| Tan Wei Feng | Presenter and documentation | [@25005492-JACK](https://github.com/25005492-JACK) |
+| Tan Wei Feng | Presenter and documentation | [@25005493-JACK](https://github.com/25005493-JACK) |
 | Lim Jie Shin | Research and data | [@jieshin27](https://github.com/jieshin27) |
 | Esther Kong Yuan Er | UI/UX design | _[@username]_ |
 

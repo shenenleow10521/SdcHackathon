@@ -3,12 +3,12 @@
 All routes are under `/api`, JSON in and out. Errors are always `{ "error": { "code", "message", "details?" } }` with a proper HTTP status.
 Common query parameters: `profile` (int, default `1` = demo persona), `year` (2026–2030, default 2026), `scenario` (`moderate` | `fast`), `mode` (`fastest` | `noregret` | `safest`).
 Weeks in responses are **at the user's own pace** (`displayWeeks(weeks, hours)`) unless the field name ends in `Ref` (reference 6 h/week).
-**Accounts.** When `SUPABASE_URL` and `SUPABASE_ANON_KEY` are set, the browser signs in with Supabase Auth and sends `Authorization: Bearer <access token>`; the server checks it with Supabase on every request (cached for a minute). Then:
-- Any request that names a profile (`/profile/:id…`, `/esco/profile/:id…`, `?profile=`, body `profileId`, or `/plans/:id/send|route-update`) must come from that profile's owner: **401** `sign_in_required` when signed out, **403** `forbidden` for someone else's profile. The sample persona (profile 1) stays open to everyone. Users with a staff role may read, not change, any profile.
-- `POST /profile/intake` needs a signed-in user; the new profile is linked to the account (one per account: a new intake replaces the old profile).
-- A token that is invalid or expired gives **401** `invalid_session`.
+**Accounts.** When Replit-managed Clerk is configured (`CLERK_SECRET_KEY`, `CLERK_PUBLISHABLE_KEY`), the browser signs in through Clerk (loaded via the `/api/__clerk` proxy) and the server reads the verified Clerk session. Visitors who don't sign in get a private guest session: a signed, HttpOnly `ht_guest` cookie (`SESSION_SECRET`). Then:
+- Any request that names a profile (`/profile/:id…`, `/esco/profile/:id…`, `?profile=`, body `profileId`, or `/plans/:id/send|route-update`) must come from that profile's owner, signed-in account or guest browser: **401** `sign_in_required` otherwise, **403** `forbidden` for someone else's profile. The sample persona (profile 1) stays open to everyone. Users with a staff role may read, not change, any profile.
+- `POST /profile/intake` links the new profile to the signed-in account, or to the guest session.
+- Browser writes must come from this site (`Origin` check); other origins get **403** `cross_site_request`.
 
-Without those variables the app is an open demo: no sign-in, and profile routes are not checked.
+Without Clerk keys the app is an open demo: no sign-in, and profile routes are not checked.
 
 **Staff routes.** 🔒 = admin role, 🧑‍🏫 = advisor role (admins count as advisors). Roles come from the `ADMIN_EMAILS` / `ADVISOR_EMAILS` allow-lists. Without the role: **401** when signed out, **403** when signed in. The `x-admin-token` header (when `ADMIN_TOKEN` is set) also opens every staff route, for scripts and tests. With neither accounts nor `ADMIN_TOKEN` configured, staff routes are open (local demo). The audit log records the signed-in user's email as the actor (otherwise `x-actor`, default `admin`).
 
