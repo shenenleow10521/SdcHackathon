@@ -19,31 +19,16 @@
 | Resource | Link |
 |---|---|
 | GitHub repository | https://github.com/shenenleow10521/SdcHackathon |
-| Live demo (Replit) | https://halatuju.replit.app |
 | Replit project | _[Replit project URL]_ |
+| Live demo (Replit) | https://halatuju.replit.app |
 | RunPod endpoint (bge-m3 embeddings) | `https://api.runpod.ai/v2/a7ipau1nmqogxs` (needs our API key; see [How we use RunPod](#how-we-use-runpod-required)) |
-| Pitch video (5–7 min, YouTube) | _[YouTube link]_ |
 | Slide deck | [`submission/HalaTuju_Pitch_Deck.html`](submission/HalaTuju_Pitch_Deck.html) (download and open in a browser) · PDF: _[link]_ |
+| Pitch video (5–7 min, YouTube) | _[YouTube link]_ |
 | Product Requirement Doc (official template) | [`submission/PRELIMINARY_PROPOSAL.md`](submission/PRELIMINARY_PROPOSAL.md) · PDF: _[link]_ |
 | Tech & Tools Declaration | [`submission/TECH_DECLARATION.md`](submission/TECH_DECLARATION.md) · PDF: _[link]_ |
 | Replit and RunPod proof of use | [`submission/REPLIT_PROOF.md`](submission/REPLIT_PROOF.md) · [`submission/RUNPOD_PROOF.md`](submission/RUNPOD_PROOF.md) |
 
 > **How to read this README.** The **Status** column says how far each feature is proven, and the **Data** column says whether what it shows is real or sample. ✅ **Works**: checked end to end in the running app (live AI and web services, fresh database) on 23–24 Oct 2026. 🧪 **Built**: in the code and covered by automated tests, not yet re-checked live. 🛠 **Planned**: designed, not built. **Real** data has a cited source; **Sample** data is illustrative and is labelled *Sample* in the app. We don't claim anything marked 🛠 as working.
-
----
-
-## What only HalaTuju does
-
-| | What you see | The number behind it |
-|---|---|---|
-| **1. The reroute** | The Job market researcher finds dated evidence (e.g. Microsoft's Account Reconciliation Agent, 22 Oct 2026), checks the quote word for word on the page, and sends it to a person. They click **Approve**, the camera flies to *Vendor reconciliation*, it becomes a closed road, and Priya's route to ESG & Carbon Reporting Analyst bends through *Audit trail documentation → Sustainability disclosure*, with the source attached. | Knowledge base v1 → v2 and the reroute in 0.1 s (demo dry run, 24 Oct 2026). Every change is versioned and can be undone |
-| **2. Our own AI-exposure model, trained on RunPod** | A score for how much of any task AI can do, shown next to three published studies. | Final training on a RunPod RTX 4090 pod (`38jijj8fe5dazu`). On **185 occupations it never saw**: **r 0.919, MAE 0.065**, ahead of copying the nearest training task (r 0.880, MAE 0.071) and GPT-4's own labels (r 0.853, MAE 0.089). Per single task it ranks best (r 0.671) but its error is higher than nearest-neighbour (MAE 0.203 vs 0.176). Against the ILO's independent index across 2,956 occupations: r 0.79 |
-| **3. The whole ESCO taxonomy** | "Check any job": match %, skill gap, AI exposure, O\*NET tasks with human ratings, Malaysian wages, and a career network between jobs. | **3,039 occupations, 13,939 skills**, 126,051 essential/optional links (ESCO v1.2.1) |
-| **4. Your plan in 1,000 futures** | *"Your plan works in 100% of 1,000 possible futures"*, why it fails when it does, and what would make it sturdier. | Seeded Monte Carlo: AI speed (Slow to Fast), our model's measured error (SD 0.081), study hours ×0.5–1.5, step length ×0.8–1.2. About 5 ms per plan |
-| **5. A blind-annotated CV benchmark** | CV upload with skills, levels and the CV line that proves each one. | On **36 held-out CVs**: current job **97.2%** (95% CI 85.8–99.5), ESCO skills shown correct **71.7%** (68.3–74.9, blind judge), annotator's skills found **71.0%** strict (64.9–76.4) / 79.4% lenient, personal details removed **99.4%** after fixes (82.6% on the blind first run). [`eval/RESULTS.md`](eval/RESULTS.md) |
-| **6. Emerging skills ESCO doesn't have** | An emerging-skill committee that proposes, challenges and de-duplicates new skills against all of ESCO, and builds evidence across daily runs. | ESCO has no equivalent for any of our 5 AI-era skills. After the fix, 3 real runs put 6 candidates on the watching list; **3 hold up by hand**. [`eval/EMERGING.md`](eval/EMERGING.md) |
-| **7. Local OCR before any AI** | Scanned PDFs and phone photos of CVs are read on our own server (tesseract.js, English + Malay). Unsure text goes back to the user before any AI sees it. | Up to 3 pages; the scanned test CV leaks no personal detail |
-| **8. Malaysian and ESCO grounding** | "Critical in Malaysia" flags, DOSM wages, and requirement labels taken from ESCO, not set by hand. | **10 of the 15 destination jobs** are on MyCOL 2024/2025. Of the 66 catalogue requirements: **10 essential (ESCO, weight 2), 9 optional (ESCO, weight 1), 34 added by HalaTuju (weight 1), 13 not in ESCO yet (weight 1)**. A skill counts as yours at **level 3 of 5** |
 
 ---
 
@@ -72,33 +57,20 @@ HalaTuju answers two different questions and never mixes them:
 | **How close are you?** | ▓▓▓▓▓▓░░░░ *about halfway: 2 skills done, 3 close* | Measured today from your skills. You can improve it by learning. |
 | **How sturdy is your plan?** | *Your plan works in 88% of 1,000 possible futures* | Nobody knows how fast AI will change work, so we simulate 1,000 versions of the future and count the share your plan works in. |
 
-### Domain 1 must-haves
+### What only HalaTuju does
 
-| Must-have | Where |
-|---|---|
-| 1. Skills profile intake | CV/LinkedIn PDF, scan or photo (local OCR), pasted text; interviewer; confirm and rate levels |
-| 2. AI-trend signal layer (updatable, dated) | Job market researcher (daily, 74 vetted sites), dated sources with checked quotes, versioned knowledge base |
-| 3. Future-role matching + skills gap | Match % per job, per employer and for any of 3,039 ESCO jobs; skills you have vs. need |
-| 4. Personalised reskilling pathway | Fastest / Balanced / Safest routes fitted to your weekly hours; Reuse / Upskill / Evolve / Reskill steps with real courses and RM cost |
-| 5. SDG mapping | Every job (16) and skill (29) tagged with an SDG and a one-line reason, checked by a test; SDG-aware ranking |
-| 6. More than one future scenario | Steady vs Fast AI spread, 2026–2030 year slider, the Balanced route, and the stress test (each plan replayed in 1,000 simulated futures) |
-
-**Humans stay in control:** no plan changes without the user's or an advisor's approval; big knowledge changes need a person; saved plans are offered a new route to *keep or switch*.
-
-### Hardest risk and our fallback
-
-| Risk | What could go wrong | Fallback (built) |
+| | What you see | The number behind it |
 |---|---|---|
-| **A wrong AI signal reroutes people** (the hardest one) | A misread article changes thousands of plans | Trusted domains only, quote checked word for word, a second AI reviewer, deterministic triage, a person approves anything that changes a route, every version can be undone, and no single page can change a route on its own |
-| AI service down or out of quota | CV reading or agents stop | CV reading falls back to keyword matching, labelled "basic"; the Job market researcher replays its last recorded run, labelled "replayed" (`DEMO_MODE`); the explainer falls back to fixed templates |
-| RunPod cold or down | Embeddings unavailable | Fails over to a local bge-m3 server or Gemini embeddings, else keyword matching (labelled); `demo/prime.sh` warms the worker |
-| Personal data reaches the AI | Privacy breach | Scrubber removes 99.4% of planted details on held-out CVs; scans are read by local OCR first; CV files are never stored |
-| Exposure estimates are wrong | Plans look safer than they are | The model's measured error is fed into the stress test; four sources shown side by side ("Studies disagree") |
-| Sample catalogue mistaken for real data | Over-trust | Every sample value is labelled *Sample* in the app; "Check any job" runs on the real ESCO data |
+| **1. The reroute** | The Job market researcher finds dated evidence (e.g. Microsoft's Account Reconciliation Agent, 22 Oct 2026), checks the quote word for word on the page, and sends it to a person. They click **Approve**, the camera flies to *Vendor reconciliation*, it becomes a closed road, and Priya's route to ESG & Carbon Reporting Analyst bends through *Audit trail documentation → Sustainability disclosure*, with the source attached. | Knowledge base v1 → v2 and the reroute in 0.1 s (demo dry run, 24 Oct 2026). Every change is versioned and can be undone |
+| **2. Our own AI-exposure model, trained on RunPod** | A score for how much of any task AI can do, shown next to three published studies. | Final training on a RunPod RTX 4090 pod (`38jijj8fe5dazu`). On **185 occupations it never saw**: **r 0.919, MAE 0.065**, ahead of copying the nearest training task (r 0.880, MAE 0.071) and GPT-4's own labels (r 0.853, MAE 0.089). Per single task it ranks best (r 0.671) but its error is higher than nearest-neighbour (MAE 0.203 vs 0.176). Against the ILO's independent index across 2,956 occupations: r 0.79 |
+| **3. The whole ESCO taxonomy** | "Check any job": match %, skill gap, AI exposure, O\*NET tasks with human ratings, Malaysian wages, and a career network between jobs. | **3,039 occupations, 13,939 skills**, 126,051 essential/optional links (ESCO v1.2.1) |
+| **4. Your plan in 1,000 futures** | *"Your plan works in 100% of 1,000 possible futures"*, why it fails when it does, and what would make it sturdier. | Seeded Monte Carlo: AI speed (Slow to Fast), our model's measured error (SD 0.081), study hours ×0.5–1.5, step length ×0.8–1.2. About 5 ms per plan |
+| **5. A blind-annotated CV benchmark** | CV upload with skills, levels and the CV line that proves each one. | On **36 held-out CVs**: current job **97.2%** (95% CI 85.8–99.5), ESCO skills shown correct **71.7%** (68.3–74.9, blind judge), annotator's skills found **71.0%** strict (64.9–76.4) / 79.4% lenient, personal details removed **99.4%** after fixes (82.6% on the blind first run). [`eval/RESULTS.md`](eval/RESULTS.md) |
+| **6. Emerging skills ESCO doesn't have** | An emerging-skill committee that proposes, challenges and de-duplicates new skills against all of ESCO, and builds evidence across daily runs. | ESCO has no equivalent for any of our 5 AI-era skills. After the fix, 3 real runs put 6 candidates on the watching list; **3 hold up by hand**. [`eval/EMERGING.md`](eval/EMERGING.md) |
+| **7. Local OCR before any AI** | Scanned PDFs and phone photos of CVs are read on our own server (tesseract.js, English + Malay). Unsure text goes back to the user before any AI sees it. | Up to 3 pages; the scanned test CV leaks no personal detail |
+| **8. Malaysian and ESCO grounding** | "Critical in Malaysia" flags, DOSM wages, and requirement labels taken from ESCO, not set by hand. | **10 of the 15 destination jobs** are on MyCOL 2024/2025. Of the 66 catalogue requirements: **10 essential (ESCO, weight 2), 9 optional (ESCO, weight 1), 34 added by HalaTuju (weight 1), 13 not in ESCO yet (weight 1)**. A skill counts as yours at **level 3 of 5** |
 
----
-
-## Features and status
+### Key features and status
 
 | Feature | What it does | Status | Data |
 |---|---|---|---|
@@ -139,9 +111,64 @@ HalaTuju answers two different questions and never mixes them:
 | Malaysian labour data | Median wage and number of wage earners for the job's MASCO major group, 2021–2025, for ESCO and catalogue jobs | ✅ Works | Real (DOSM; group level) |
 | Critical in Malaysia | Flags jobs whose 4-digit group is on MyCOL 2024/2025 (66 groups, 692 ESCO occupations; 10 of the 15 destination jobs) | ✅ Works | Real (TalentCorp/ILMIA; group level) |
 
+### Tech stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Vanilla JS, 3d-force-graph (three.js), GSAP, Lucide icons, Geist font; English and Bahasa Melayu |
+| Backend | Node 22, TypeScript, Express 5; zod, multer, unpdf (PDF text), tesseract.js (local OCR, eng + msa data vendored in `server/lib/tessdata`), fast-xml-parser |
+| Database | Replit PostgreSQL 16 in the live app; embedded PGlite when no `DATABASE_URL` is set (local runs, tests); optional Supabase Auth for accounts (off in the live demo) |
+| AI models | **Google Gemini API**: gemini-3.5-flash-lite (main), gemini-3.1-flash-lite (reviewer); our ridge exposure model (JSON weights, one dot product per task) |
+| AI / Compute | **RunPod**: Serverless bge-m3 embeddings (endpoint `a7ipau1nmqogxs`); GPU pod for the final model training run |
+| Web search | Tavily (Job market researcher and committee only, trusted domains) |
+| Hosting / Dev | **Replit** (`.replit`: Node 22, PostgreSQL 16, `npm start`, VM deployment) |
+| Tests and CI | Vitest (419 tests), GitHub Actions on Node 22 and 24 |
+
+### Domain 1 must-haves
+
+| Must-have | Where |
+|---|---|
+| 1. Skills profile intake | CV/LinkedIn PDF, scan or photo (local OCR), pasted text; interviewer; confirm and rate levels |
+| 2. AI-trend signal layer (updatable, dated) | Job market researcher (daily, 74 vetted sites), dated sources with checked quotes, versioned knowledge base |
+| 3. Future-role matching + skills gap | Match % per job, per employer and for any of 3,039 ESCO jobs; skills you have vs. need |
+| 4. Personalised reskilling pathway | Fastest / Balanced / Safest routes fitted to your weekly hours; Reuse / Upskill / Evolve / Reskill steps with real courses and RM cost |
+| 5. SDG mapping | Every job (16) and skill (29) tagged with an SDG and a one-line reason, checked by a test; SDG-aware ranking |
+| 6. More than one future scenario | Steady vs Fast AI spread, 2026–2030 year slider, the Balanced route, and the stress test (each plan replayed in 1,000 simulated futures) |
+
+**Humans stay in control:** no plan changes without the user's or an advisor's approval; big knowledge changes need a person; saved plans are offered a new route to *keep or switch*.
+
+### Hardest risk and our fallback
+
+| Risk | What could go wrong | Fallback (built) |
+|---|---|---|
+| **A wrong AI signal reroutes people** (the hardest one) | A misread article changes thousands of plans | Trusted domains only, quote checked word for word, a second AI reviewer, deterministic triage, a person approves anything that changes a route, every version can be undone, and no single page can change a route on its own |
+| AI service down or out of quota | CV reading or agents stop | CV reading falls back to keyword matching, labelled "basic"; the Job market researcher replays its last recorded run, labelled "replayed" (`DEMO_MODE`); the explainer falls back to fixed templates |
+| RunPod cold or down | Embeddings unavailable | Fails over to a local bge-m3 server or Gemini embeddings, else keyword matching (labelled); `demo/prime.sh` warms the worker |
+| Personal data reaches the AI | Privacy breach | Scrubber removes 99.4% of planted details on held-out CVs; scans are read by local OCR first; CV files are never stored |
+| Exposure estimates are wrong | Plans look safer than they are | The model's measured error is fed into the stress test; four sources shown side by side ("Studies disagree") |
+| Sample catalogue mistaken for real data | Over-trust | Every sample value is labelled *Sample* in the app; "Check any job" runs on the real ESCO data |
+
 ---
 
-## How it works
+## Project structure
+
+```
+server/                   Express API: agents/ (scout = Job market researcher, reviewer, committee, CV, interviewer, explainer),
+                          routes/, services/ (planning, ranking, rescore, HR, scheduler), sources/ (fetch policy, search), lib/ (OCR, PDF, embeddings)
+shared/engine.js          scoring engine and stress test, used by both server and browser
+web/                      browser app (vanilla JS, 3D map, en/ms translations) and landing page
+db/                       schema, migrations and seed data (db/seed/README.md says what is real or sample)
+ml/                       AI-exposure model: data prep, embedding, training, evaluation, artifacts (incl. the RunPod run log)
+eval/                     CV benchmark (cv/, RESULTS.md), emerging-skill benchmark (EMERGING.md), result files
+scripts/                  database seed, data builders, benchmarks, API smoke test
+tests/                    automated tests (vitest)
+demo/                     demo CV and reset/start/prime scripts
+docs/                     ARCHITECTURE, API, DATA_SOURCES, DEMO, PITCH, SUBMISSION_CHECKLIST, organiser rules notes
+submission/               the four SDC2026_TeamName_*.pdf files, their answers in Markdown, the pitch deck
+video/                    pitch video source: Remotion scenes, timeline, audio tools, script (media kept out of git)
+proposal/  prototype/     first proposal (22 Oct) and early UI prototypes (sample data)
+.github/workflows/ci.yml  type-check and tests on every push
+```
 
 ### Architecture
 
@@ -168,6 +195,8 @@ flowchart LR
 | Fact checker | Removes any claim without a source |
 
 More detail: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), [`docs/API.md`](docs/API.md), [`docs/DATA_SOURCES.md`](docs/DATA_SOURCES.md).
+
+## How it works
 
 ### Core formulas
 
@@ -223,112 +252,6 @@ All three yes = the plan **works** in that future. The result is the share of fu
 **What we see with the current data:** most routes in the catalogue take 4 to 15 weeks, so they finish in 2027, before the engine's AI takeovers (mostly 2029 to 2030). For Priya (6 hours a week, deadline 24 Apr 2027, 2026 view, Steady AI spread), the ESG & Carbon Reporting Analyst plan works in **100%** of futures on the Fastest and Balanced routes; the Safest route works in 88% and fails mostly when her study time drops below 5 hours a week (12% of futures). Routes that start late or pass through a skill AI is about to take over fail the "road open" check, and the test then suggests the Balanced or Safest route.
 
 **What the number means:** the share of 1,000 simulated futures the plan works in. It is a stress test of the plan, not a probability of being hired, not a new version of the match %, and not a forecast: hiring also depends on competition, interviews and the economy, which we don't model. **Method:** *Robust Decision Making* (RAND) and *Decision Making under Deep Uncertainty*: when nobody knows the true odds, choose the plan that holds up across the most plausible futures. The exposure error is measured; the slow-AI speed and the study-time and step-length ranges are our assumptions; the catalogue values it runs on are sample data (labelled in the app).
-
----
-
-## Evidence
-
-### AI-exposure model (self-trained, final run on RunPod)
-
-A small model that predicts *how much of a task AI can do* (0–1) from the task's text: each task is embedded with **BAAI/bge-m3** and a **ridge regression** is trained on human ratings from *"GPTs are GPTs"* (Eloundou et al., *Science* 2024; 19,265 O\*NET tasks). Split **by occupation**, so test occupations were never seen in training. Numbers copied from [`ml/artifacts/eval.json`](ml/artifacts/eval.json) (RunPod run; the local development run on the same split matched to 3 decimals, except per-occupation r 0.918 there).
-
-| Held-out set | Our model | Always predict the average | Copy the nearest training task | GPT-4's own labels (reference) |
-|---|---|---|---|---|
-| Per task (n = 3,959) | r 0.671 · ρ 0.689 · MAE 0.203 | MAE 0.328 | r 0.565 · ρ 0.590 · **MAE 0.176** | r 0.587 · ρ 0.629 · MAE 0.189 |
-| Per occupation (n = 185) | **r 0.919 · ρ 0.916 · MAE 0.065** | MAE 0.170 | r 0.880 · ρ 0.879 · MAE 0.071 | r 0.853 · ρ 0.879 · MAE 0.089 |
-
-The model ranks tasks and occupations best (highest r and ρ) and is the most accurate per occupation. **Per single task, copying the nearest training task has a lower average error (MAE 0.176 vs 0.203).** HalaTuju uses the model at occupation and skill level, where it wins.
-
-**Independent check against ILO WP140.** We scored all 13,939 ESCO skills with the model (bge-m3 embeddings on RunPod Serverless, 486 s) and averaged each occupation's essential-skill scores. Across the 2,956 occupations ILO also scores, the two agree at **Pearson r = 0.79, Spearman ρ = 0.80**. ILO's method and data are independent of the model's training labels.
-
-### CV-reading benchmark
-
-50 synthetic Malaysian CVs and LinkedIn exports (messy PDF text, OCR typos, Bahasa Melayu, keyword stuffing), with answer keys written by an independent annotator agent that never saw our code, prompts or outputs. Headline on the **36 held-out CVs** (c15–c50), 95% Wilson intervals:
-
-| Measure | Result |
-|---|---|
-| Current job identified | **97.2%** (35/36) · 85.8–99.5 |
-| ESCO skills shown that are correct (blind judge) | **71.7%** (511/713) · 68.3–74.9 |
-| Annotator's skills found, strict | **71.0%** (169/238) · 64.9–76.4 |
-| Annotator's skills found, lenient (close ESCO neighbour, rule fixed in advance) | 79.4% (189/238) · 73.8–84.1 |
-| Personal details removed (after fixes, not blind) | **99.4%** (154/155) · 96.4–99.9 |
-| Personal details removed, blind first run | 82.6% (128/155) · 75.8–87.7 |
-
-The precision judge was six Claude agents working blind on shuffled lists with decoys (they rejected 98.5% of random decoys and 92.8% of look-alikes), because the free Gemini keys ran out of daily quota after a few CVs; those Gemini verdicts were thrown away. Failures, per-tier results and caveats: [`eval/RESULTS.md`](eval/RESULTS.md).
-
-### Emerging skills
-
-ESCO v1.2.1 has **no equivalent for any of our 5 AI-era skills** (best bge-m3 cosine 0.51–0.60; duplicate threshold 0.85). The first live committee run found 4 skill phrases with verified quotes and kept 0, which exposed a page-selection problem. After the fix (relevance-ranked pages, duplicate check against all of ESCO, evidence that builds across runs), **3 real runs** put **6 candidates on the watching list**, and **3 hold up by hand** (*integrate LLMs into finance workflows*, *evaluating AI-related risks*, and plausibly *evaluating AI financial models*). The 3 wrong ones each have 1 mention, so the thresholds (15 mentions, 5 organisations, 4 weeks) keep them out, and a person reviews anything that passes. Full funnel, hand checks and cost: [`eval/EMERGING.md`](eval/EMERGING.md).
-
----
-
-## Data and source policy
-
-| Source | Used for | Mode |
-|---|---|---|
-| **ESCO v1.2.1** (European Commission) | All 3,039 occupations and 13,939 skills with their essential/optional links ("check any job"); names, descriptions and codes for the 29-skill catalogue; requirement labels and weights for catalogue jobs | Reuse, with attribution (EU reuse policy, CC BY 4.0) |
-| **ESCO–O\*NET crosswalk** (ESCO Secretariat with USDOL/ETA) | Links 2,607 ESCO occupations to their closest O\*NET occupation | Reuse, with attribution |
-| **TalentCorp & ILMIA, MyCOL 2024/2025** | The 66 critical occupation groups in Malaysia (facts copied from the published table, checked against OCR) | Facts and link only |
-| **O\*NET** (USDOL/ETA) | Occupation codes, task lists with human ratings, and task text for training the exposure model | Reuse, with attribution (CC BY 4.0) |
-| **ILO WP140**, **Anthropic Economic Index**, **Eloundou et al.** | AI exposure per job, shown side by side ("Studies disagree") | Reuse, with citation |
-| **"GPTs are GPTs"** task labels (Eloundou et al. 2024, MIT) | Training labels for the self-trained exposure model | Reuse, with citation |
-| **Course provider listings** | 30 real courses with price, hours and link, for costed routes | Facts and link only |
-| **DOSM / OpenDOSM** | Median wage and wage earners by MASCO major group, 2021–2025 | Reuse (open government data, CC BY 4.0) |
-| Tavily web search (trusted domains only), RSS feeds, GDELT, Hacker News | AI-capability, adoption and demand news for the Job market researcher | Read and extract |
-| arXiv, OpenAlex | AI-capability signals | Read and extract |
-| Approved company careers pages | Company-specific requirements | Read and extract (facts, a short quote and the link only) |
-| Job boards (JobStreet, LinkedIn, Indeed and similar) | "See openings" | **Link only.** Their terms forbid automated access, so our agents never open them |
-
-**Rules for every fetch:** approved domains only; obey robots.txt and identify the bot; no logins, paywalls or workarounds; store extracted facts, a short evidence quote and the link, never full copies of pages; scrub personal details; rate-limit and cache. Page text is treated as **data, never as instructions** (protection against prompt injection).
-
-**Sample data:** where real data is not yet loaded, values are labelled *Sample* in the UI. Sample today: the demo persona (Priya Nair), the job and skill catalogue's exposure and demand outlook, task splits, skill bridges and job requirements, posting shares, Practice/Prove tasks, the employers and the HR team. Real today: the full ESCO taxonomy and the catalogue's ESCO mappings and requirement labels, the exposure studies, O\*NET tasks with human ratings, DOSM wages, MyCOL, course listings, Job market researcher signals and the exposure model's training labels.
-
-## Responsible AI
-
-- **People decide.** No plan changes without the user's or an advisor's approval; big knowledge changes need a person.
-- **No invented facts.** Agents use database IDs only; unsourced claims are removed.
-- **Fairness by design.** Age, gender, race and religion are never collected or used; a test checks that the same CV with a different name, gender, age or religion gives identical results.
-- **Privacy.** Personal details are scrubbed before any AI call, scans are read by local OCR first, and CV files are never stored. Each account sees only its own profile and plans, and **Delete my data** removes the profile and everything linked to it. The demo uses a synthetic persona only.
-- **Reversible.** Every knowledge change is versioned and can be undone.
-
----
-
-## Tech stack
-
-| Layer | Technology |
-|---|---|
-| Frontend | Vanilla JS, 3d-force-graph (three.js), GSAP, Lucide icons, Geist font; English and Bahasa Melayu |
-| Backend | Node 22, TypeScript, Express 5; zod, multer, unpdf (PDF text), tesseract.js (local OCR, eng + msa data vendored in `server/lib/tessdata`), fast-xml-parser |
-| Database | Replit PostgreSQL 16 in the live app; embedded PGlite when no `DATABASE_URL` is set (local runs, tests); optional Supabase Auth for accounts (off in the live demo) |
-| AI models | **Google Gemini API**: gemini-3.5-flash-lite (main), gemini-3.1-flash-lite (reviewer); our ridge exposure model (JSON weights, one dot product per task) |
-| AI / Compute | **RunPod**: Serverless bge-m3 embeddings (endpoint `a7ipau1nmqogxs`); GPU pod for the final model training run |
-| Web search | Tavily (Job market researcher and committee only, trusted domains) |
-| Hosting / Dev | **Replit** (`.replit`: Node 22, PostgreSQL 16, `npm start`, VM deployment) |
-| Tests and CI | Vitest (419 tests), GitHub Actions on Node 22 and 24 |
-
-## How we use Replit *(required)*
-
-- **Hosting:** the app is deployed with Replit Deployments (VM target, `.replit` runs `npm start` with Replit PostgreSQL 16, the app's only database) at the Live demo link above.
-- **Secrets:** `GEMINI_API_KEY`, `RUNPOD_API_KEY`, `RUNPOD_EMBED_ENDPOINT_ID`, `TAVILY_API_KEY` and the database URL are Replit Secrets, never in the code.
-- **Agents in production:** the Job market researcher, AI reviewer, emerging-skill committee and explainer run on the Replit server and call the Google Gemini API.
-
-📄 Proof of use: [`submission/REPLIT_PROOF.md`](submission/REPLIT_PROOF.md) (deployment URL, project history and screenshots).
-
-## How we use RunPod *(required)*
-
-- **Serverless inference (runtime):** with `EMBED_PROVIDER=runpod` (the deployed setting), **BAAI/bge-m3** runs on RunPod Serverless endpoint `a7ipau1nmqogxs` (`runpod/worker-infinity-embedding`, 0 minimum workers, 1 maximum) and (1) matches CV text to the 13,939 ESCO skills, (2) removes duplicate Job market researcher signals, (3) checks new skill candidates against ESCO and merges synonyms, and (4) embeds new tasks for the exposure model. It also embedded all 13,939 ESCO skills once for the model's scores (486 s).
-- **GPU training:** the exposure model's final training run happened on a **RunPod GPU pod** (NVIDIA GeForce RTX 4090, Secure Cloud, pod `38jijj8fe5dazu`, 23 Oct 2026 18:20–18:23 UTC, 2.5 minutes, about US$0.04); embedding all 19,265 tasks took 3.9 s. Log: [`ml/artifacts/runpod_run.log`](ml/artifacts/runpod_run.log), details: [`ml/artifacts/runpod_run.json`](ml/artifacts/runpod_run.json). Earlier development runs used a local GPU, which the organisers allow for testing.
-
-Example request (the app's own call, OpenAI-compatible):
-
-```bash
-curl -X POST https://api.runpod.ai/v2/$RUNPOD_EMBED_ENDPOINT_ID/openai/v1/embeddings \
-  -H "Authorization: Bearer $RUNPOD_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"model": "BAAI/bge-m3", "input": ["Reconcile vendor statements against the ledger"]}'
-```
-
-📄 Proof of use: [`submission/RUNPOD_PROOF.md`](submission/RUNPOD_PROOF.md) (pod and endpoint IDs, GPU, runtime, cost, console screenshots).
 
 ---
 
@@ -397,26 +320,121 @@ python ml/runpod_train.py terminate   # always run this; stopping isn't enough
 
 **Credit guardrails (US$25 per team).** Terminate pods as soon as a run ends; keep serverless minimum workers at 0; delete unused volumes. Spend so far: about US$4 of the US$25 (account balance US$20.96 on 24 Oct 2026, 04:30 MYT).
 
-## Project structure
+---
 
+## How we use Replit *(required)*
+
+- **Hosting:** the app is deployed with Replit Deployments (VM target, `.replit` runs `npm start` with Replit PostgreSQL 16, the app's only database) at the Live demo link above.
+- **Secrets:** `GEMINI_API_KEY`, `RUNPOD_API_KEY`, `RUNPOD_EMBED_ENDPOINT_ID`, `TAVILY_API_KEY` and the database URL are Replit Secrets, never in the code.
+- **Agents in production:** the Job market researcher, AI reviewer, emerging-skill committee and explainer run on the Replit server and call the Google Gemini API.
+
+📄 Proof of use: `submission/SDC2026_TeamName_Replit_POU.pdf` (screenshots) · details: [`submission/REPLIT_PROOF.md`](submission/REPLIT_PROOF.md)
+
+## How we use RunPod *(required)*
+
+- **Serverless inference (runtime):** with `EMBED_PROVIDER=runpod` (the deployed setting), **BAAI/bge-m3** runs on RunPod Serverless endpoint `a7ipau1nmqogxs` (`runpod/worker-infinity-embedding`, 0 minimum workers, 1 maximum) and (1) matches CV text to the 13,939 ESCO skills, (2) removes duplicate Job market researcher signals, (3) checks new skill candidates against ESCO and merges synonyms, and (4) embeds new tasks for the exposure model. It also embedded all 13,939 ESCO skills once for the model's scores (486 s).
+- **GPU training:** the exposure model's final training run happened on a **RunPod GPU pod** (NVIDIA GeForce RTX 4090, Secure Cloud, pod `38jijj8fe5dazu`, 23 Oct 2026 18:20–18:23 UTC, 2.5 minutes, about US$0.04); embedding all 19,265 tasks took 3.9 s. Log: [`ml/artifacts/runpod_run.log`](ml/artifacts/runpod_run.log), details: [`ml/artifacts/runpod_run.json`](ml/artifacts/runpod_run.json). Earlier development runs used a local GPU, which the organisers allow for testing.
+
+Example request (the app's own call, OpenAI-compatible):
+
+```bash
+curl -X POST https://api.runpod.ai/v2/$RUNPOD_EMBED_ENDPOINT_ID/openai/v1/embeddings \
+  -H "Authorization: Bearer $RUNPOD_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "BAAI/bge-m3", "input": ["Reconcile vendor statements against the ledger"]}'
 ```
-server/                   Express API: agents/ (scout = Job market researcher, reviewer, committee, CV, interviewer, explainer),
-                          routes/, services/ (planning, ranking, rescore, HR, scheduler), sources/ (fetch policy, search), lib/ (OCR, PDF, embeddings)
-shared/engine.js          scoring engine and stress test, used by both server and browser
-web/                      browser app (vanilla JS, 3D map, en/ms translations) and landing page
-db/                       schema, migrations and seed data (db/seed/README.md says what is real or sample)
-ml/                       AI-exposure model: data prep, embedding, training, evaluation, artifacts (incl. the RunPod run log)
-eval/                     CV benchmark (cv/, RESULTS.md), emerging-skill benchmark (EMERGING.md), result files
-scripts/                  database seed, data builders, benchmarks, API smoke test
-tests/                    automated tests (vitest)
-demo/                     demo CV and reset/start/prime scripts
-docs/                     ARCHITECTURE, API, DATA_SOURCES, DEMO, PITCH, SUBMISSION_CHECKLIST
-submission/               PRD draft, Tech & Tools Declaration, Replit and RunPod proof of use
-proposal/  prototype/     first proposal (22 Oct) and early UI prototypes (sample data)
-.github/workflows/ci.yml  type-check and tests on every push
-```
+
+📄 Proof of use: `submission/SDC2026_TeamName_Runpod_POU.pdf` (console screenshots) · details: [`submission/RUNPOD_PROOF.md`](submission/RUNPOD_PROOF.md) (pod and endpoint IDs, GPU, runtime, cost)
 
 ---
+
+## Challenges and learnings
+
+- **A benchmark is only useful if it can embarrass you.** The blind first privacy run scored 82.6% on held-out CVs, and the LinkedIn tier 55.2%; the fixes it forced took it to 99.4%. We report both.
+- **ESCO has no words for the AI era.** No ESCO skill covers prompting, supervising AI workflows, GHG accounting or three-way matching, so we label those requirements "not in ESCO yet" and built a committee to find new ones from evidence.
+- **Page selection, not the AI, was the committee's bottleneck.** The first run read 8 off-topic pages; ranking pages by relevance produced real candidates.
+- **GPU environments break on versions.** Two RunPod pods failed (torch/transformers mismatches) before the third ran; all three cost about US$0.07 together.
+- **Our per-task model error is worse than a nearest-neighbour baseline.** We use the model where it wins (per occupation and per skill) and say so.
+
+## Future improvements and known limitations
+
+- The job and skill catalogue (exposure and demand outlook, task splits, requirements, skill bridges) is sample data; the UI labels it. The real exposure studies and the self-trained model are shown next to it but don't drive the scores yet. **Next:** drive catalogue exposure from the model and the studies.
+- "Check any job": your match counts skills you confirmed ("I have this") or that map exactly from your profile; a closely related catalogue skill counts 40% only above a strict similarity of 0.8, so matches start low until you confirm skills.
+- O\*NET tasks and the two US studies come from the *closest* US occupation; about half the links are "broad", and the panel says which.
+- DOSM figures and the MyCOL flag are for the whole occupation group, not the single ESCO job.
+- Model scores for ESCO skills are estimates from skill titles; the model was trained on O\*NET task statements.
+- The demo's employers and HR team are fictional. Careers-page extraction works but no real employer is loaded yet. Job boards are link-only.
+- No HRD Corp-claimable course is loaded yet, so the claimable share shows RM 0.
+- The "would reroute N users" count in the review queue checks only the 2026 view, while the map reroutes at whatever year you are viewing.
+- The emerging-skill committee counts mentions in trusted news and research, not job postings, so a new skill needs weeks of daily runs to reach its thresholds; about half the watching candidates hold up by hand. **Next:** licensed Malaysian job-ad data and Bahasa Melayu news.
+- The CV benchmark is synthetic (no real personal data is allowed), small (36 held-out CVs), and its judge is an AI model; the privacy number is no longer blind on the held-out set.
+- In Malay, interface text is translated; job and skill names and source quotes stay in English.
+- Forecasts are scenarios, not predictions about any one person.
+
+---
+
+## Evidence
+
+### AI-exposure model (self-trained, final run on RunPod)
+
+A small model that predicts *how much of a task AI can do* (0–1) from the task's text: each task is embedded with **BAAI/bge-m3** and a **ridge regression** is trained on human ratings from *"GPTs are GPTs"* (Eloundou et al., *Science* 2024; 19,265 O\*NET tasks). Split **by occupation**, so test occupations were never seen in training. Numbers copied from [`ml/artifacts/eval.json`](ml/artifacts/eval.json) (RunPod run; the local development run on the same split matched to 3 decimals, except per-occupation r 0.918 there).
+
+| Held-out set | Our model | Always predict the average | Copy the nearest training task | GPT-4's own labels (reference) |
+|---|---|---|---|---|
+| Per task (n = 3,959) | r 0.671 · ρ 0.689 · MAE 0.203 | MAE 0.328 | r 0.565 · ρ 0.590 · **MAE 0.176** | r 0.587 · ρ 0.629 · MAE 0.189 |
+| Per occupation (n = 185) | **r 0.919 · ρ 0.916 · MAE 0.065** | MAE 0.170 | r 0.880 · ρ 0.879 · MAE 0.071 | r 0.853 · ρ 0.879 · MAE 0.089 |
+
+The model ranks tasks and occupations best (highest r and ρ) and is the most accurate per occupation. **Per single task, copying the nearest training task has a lower average error (MAE 0.176 vs 0.203).** HalaTuju uses the model at occupation and skill level, where it wins.
+
+**Independent check against ILO WP140.** We scored all 13,939 ESCO skills with the model (bge-m3 embeddings on RunPod Serverless, 486 s) and averaged each occupation's essential-skill scores. Across the 2,956 occupations ILO also scores, the two agree at **Pearson r = 0.79, Spearman ρ = 0.80**. ILO's method and data are independent of the model's training labels.
+
+### CV-reading benchmark
+
+50 synthetic Malaysian CVs and LinkedIn exports (messy PDF text, OCR typos, Bahasa Melayu, keyword stuffing), with answer keys written by an independent annotator agent that never saw our code, prompts or outputs. Headline on the **36 held-out CVs** (c15–c50), 95% Wilson intervals:
+
+| Measure | Result |
+|---|---|
+| Current job identified | **97.2%** (35/36) · 85.8–99.5 |
+| ESCO skills shown that are correct (blind judge) | **71.7%** (511/713) · 68.3–74.9 |
+| Annotator's skills found, strict | **71.0%** (169/238) · 64.9–76.4 |
+| Annotator's skills found, lenient (close ESCO neighbour, rule fixed in advance) | 79.4% (189/238) · 73.8–84.1 |
+| Personal details removed (after fixes, not blind) | **99.4%** (154/155) · 96.4–99.9 |
+| Personal details removed, blind first run | 82.6% (128/155) · 75.8–87.7 |
+
+The precision judge was six Claude agents working blind on shuffled lists with decoys (they rejected 98.5% of random decoys and 92.8% of look-alikes), because the free Gemini keys ran out of daily quota after a few CVs; those Gemini verdicts were thrown away. Failures, per-tier results and caveats: [`eval/RESULTS.md`](eval/RESULTS.md).
+
+### Emerging skills
+
+ESCO v1.2.1 has **no equivalent for any of our 5 AI-era skills** (best bge-m3 cosine 0.51–0.60; duplicate threshold 0.85). The first live committee run found 4 skill phrases with verified quotes and kept 0, which exposed a page-selection problem. After the fix (relevance-ranked pages, duplicate check against all of ESCO, evidence that builds across runs), **3 real runs** put **6 candidates on the watching list**, and **3 hold up by hand** (*integrate LLMs into finance workflows*, *evaluating AI-related risks*, and plausibly *evaluating AI financial models*). The 3 wrong ones each have 1 mention, so the thresholds (15 mentions, 5 organisations, 4 weeks) keep them out, and a person reviews anything that passes. Full funnel, hand checks and cost: [`eval/EMERGING.md`](eval/EMERGING.md).
+
+## Data and source policy
+
+| Source | Used for | Mode |
+|---|---|---|
+| **ESCO v1.2.1** (European Commission) | All 3,039 occupations and 13,939 skills with their essential/optional links ("check any job"); names, descriptions and codes for the 29-skill catalogue; requirement labels and weights for catalogue jobs | Reuse, with attribution (EU reuse policy, CC BY 4.0) |
+| **ESCO–O\*NET crosswalk** (ESCO Secretariat with USDOL/ETA) | Links 2,607 ESCO occupations to their closest O\*NET occupation | Reuse, with attribution |
+| **TalentCorp & ILMIA, MyCOL 2024/2025** | The 66 critical occupation groups in Malaysia (facts copied from the published table, checked against OCR) | Facts and link only |
+| **O\*NET** (USDOL/ETA) | Occupation codes, task lists with human ratings, and task text for training the exposure model | Reuse, with attribution (CC BY 4.0) |
+| **ILO WP140**, **Anthropic Economic Index**, **Eloundou et al.** | AI exposure per job, shown side by side ("Studies disagree") | Reuse, with citation |
+| **"GPTs are GPTs"** task labels (Eloundou et al. 2024, MIT) | Training labels for the self-trained exposure model | Reuse, with citation |
+| **Course provider listings** | 30 real courses with price, hours and link, for costed routes | Facts and link only |
+| **DOSM / OpenDOSM** | Median wage and wage earners by MASCO major group, 2021–2025 | Reuse (open government data, CC BY 4.0) |
+| Tavily web search (trusted domains only), RSS feeds, GDELT, Hacker News | AI-capability, adoption and demand news for the Job market researcher | Read and extract |
+| arXiv, OpenAlex | AI-capability signals | Read and extract |
+| Approved company careers pages | Company-specific requirements | Read and extract (facts, a short quote and the link only) |
+| Job boards (JobStreet, LinkedIn, Indeed and similar) | "See openings" | **Link only.** Their terms forbid automated access, so our agents never open them |
+
+**Rules for every fetch:** approved domains only; obey robots.txt and identify the bot; no logins, paywalls or workarounds; store extracted facts, a short evidence quote and the link, never full copies of pages; scrub personal details; rate-limit and cache. Page text is treated as **data, never as instructions** (protection against prompt injection).
+
+**Sample data:** where real data is not yet loaded, values are labelled *Sample* in the UI. Sample today: the demo persona (Priya Nair), the job and skill catalogue's exposure and demand outlook, task splits, skill bridges and job requirements, posting shares, Practice/Prove tasks, the employers and the HR team. Real today: the full ESCO taxonomy and the catalogue's ESCO mappings and requirement labels, the exposure studies, O\*NET tasks with human ratings, DOSM wages, MyCOL, course listings, Job market researcher signals and the exposure model's training labels.
+
+## Responsible AI
+
+- **People decide.** No plan changes without the user's or an advisor's approval; big knowledge changes need a person.
+- **No invented facts.** Agents use database IDs only; unsourced claims are removed.
+- **Fairness by design.** Age, gender, race and religion are never collected or used; a test checks that the same CV with a different name, gender, age or religion gives identical results.
+- **Privacy.** Personal details are scrubbed before any AI call, scans are read by local OCR first, and CV files are never stored. Each account sees only its own profile and plans, and **Delete my data** removes the profile and everything linked to it. The demo uses a synthetic persona only.
+- **Reversible.** Every knowledge change is versioned and can be undone.
 
 ## Quality
 
@@ -454,29 +472,6 @@ The build started at the problem-statement release on **19 Oct 2026, 8 PM MYT**.
 | 24 Oct 03:59–04:10 | Three emerging-skill runs after the fix | `eval/results/emerging-run-after-fix-{1,2,3}.json` |
 | 24 Oct 04:30 | Node 22 fix for PDF reading on Replit and in CI; submission documents | this README, `submission/` |
 
-## Challenges and learnings
-
-- **A benchmark is only useful if it can embarrass you.** The blind first privacy run scored 82.6% on held-out CVs, and the LinkedIn tier 55.2%; the fixes it forced took it to 99.4%. We report both.
-- **ESCO has no words for the AI era.** No ESCO skill covers prompting, supervising AI workflows, GHG accounting or three-way matching, so we label those requirements "not in ESCO yet" and built a committee to find new ones from evidence.
-- **Page selection, not the AI, was the committee's bottleneck.** The first run read 8 off-topic pages; ranking pages by relevance produced real candidates.
-- **GPU environments break on versions.** Two RunPod pods failed (torch/transformers mismatches) before the third ran; all three cost about US$0.07 together.
-- **Our per-task model error is worse than a nearest-neighbour baseline.** We use the model where it wins (per occupation and per skill) and say so.
-
-## Known limitations and future improvements
-
-- The job and skill catalogue (exposure and demand outlook, task splits, requirements, skill bridges) is sample data; the UI labels it. The real exposure studies and the self-trained model are shown next to it but don't drive the scores yet. **Next:** drive catalogue exposure from the model and the studies.
-- "Check any job": your match counts skills you confirmed ("I have this") or that map exactly from your profile; a closely related catalogue skill counts 40% only above a strict similarity of 0.8, so matches start low until you confirm skills.
-- O\*NET tasks and the two US studies come from the *closest* US occupation; about half the links are "broad", and the panel says which.
-- DOSM figures and the MyCOL flag are for the whole occupation group, not the single ESCO job.
-- Model scores for ESCO skills are estimates from skill titles; the model was trained on O\*NET task statements.
-- The demo's employers and HR team are fictional. Careers-page extraction works but no real employer is loaded yet. Job boards are link-only.
-- No HRD Corp-claimable course is loaded yet, so the claimable share shows RM 0.
-- The "would reroute N users" count in the review queue checks only the 2026 view, while the map reroutes at whatever year you are viewing.
-- The emerging-skill committee counts mentions in trusted news and research, not job postings, so a new skill needs weeks of daily runs to reach its thresholds; about half the watching candidates hold up by hand. **Next:** licensed Malaysian job-ad data and Bahasa Melayu news.
-- The CV benchmark is synthetic (no real personal data is allowed), small (36 held-out CVs), and its judge is an AI model; the privacy number is no longer blind on the held-out set.
-- In Malay, interface text is translated; job and skill names and source quotes stay in English.
-- Forecasts are scenarios, not predictions about any one person.
-
 ## Business model (planned analysis)
 
 > 🛠 Figures below are to be filled from cited public sources. No number is estimated without a source.
@@ -490,24 +485,6 @@ The build started at the problem-statement release on **19 Oct 2026, 8 PM MYT**.
 | Government and agency programmes (later) | Aggregate, anonymised skill-shift insight | Workforce planning |
 
 **Market sizing (to complete):** TAM = Malaysian workers in occupations with high AI exposure (DOSM Labour Force Survey × ILO WP140 exposure shares); SAM = finance, admin and clerical staff in Malaysian shared-services centres (MDEC / GBS reports _[cite]_); SOM = seats reachable in 3 years through _[n]_ pilot employers and _[n]_ institutions. **Break-even (to complete):** monthly costs (hosting, AI usage per user, RunPod embeddings, support) ÷ contribution per seat, with cost per user taken from measured usage.
-
-## Team
-
-| Name | Role | GitHub |
-|---|---|---|
-| _[name]_ | _[role]_ | _[@username]_ |
-
-## Submission checklist
-
-The full rubric audit and every compulsory item, with evidence and status, is in [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md).
-
-- [ ] Team name, domain and SDG track filled in
-- [ ] Slide deck and demo video links added
-- [ ] Replit used, with proof of use in `submission/`
-- [x] RunPod used (training pod + serverless endpoint), with proof text in `submission/` (screenshots to add)
-- [ ] PRD on the official template completed in `submission/`
-- [x] "How to run" steps checked
-- [x] No API keys or secrets committed to the repository
 
 ## Credits and licences
 
@@ -531,6 +508,29 @@ Declared in full in the [Tech & Tools Declaration](submission/TECH_DECLARATION.m
 | Claude Code (Anthropic) | Writing and reviewing code and tests, debugging, data scripts, documentation; writing the synthetic benchmark CVs and answer keys (a separate annotator agent), and the blind benchmark judge (Claude agents) |
 | Google Gemini API (gemini-3.5-flash-lite, gemini-3.1-flash-lite) | In-app agents: CV reader, Job market researcher, AI reviewer, emerging-skill committee, explainer |
 | _[any other AI tool the team used]_ | _[what for]_ |
+
+---
+
+## Team
+
+| Name | Role | GitHub |
+|---|---|---|
+| _[name]_ | _[role]_ | _[@username]_ |
+
+## Submission checklist
+
+The organisers' checklist. The full rubric audit, with evidence for every compulsory item, is in [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md).
+
+- [ ] Team name, domain (Domain 1 / Domain 2) and SDG track filled in
+- [ ] Slide deck link added
+- [ ] Demo video link added
+- [ ] Replit used, with proof of use in `submission/`
+- [ ] RunPod used, with proof of use in `submission/`
+- [ ] Preliminary submission completed (`SDC2026_TeamName_Preliminary.pdf`)
+- [ ] Technology declaration completed (`SDC2026_TeamName_TechDeclaration.pdf`)
+- [ ] Submission files renamed with your team name (replace `TeamName`)
+- [x] "How to Run" steps verified
+- [x] No API keys or secrets committed to the repository
 
 ## License
 
