@@ -21,3 +21,11 @@ __pycache__/
 
 # notes on other teams (keep private)
 competitors/
+
+# Internal working notes (kept locally, not part of the submission)
+docs/PITCH.md
+docs/DEMO.md
+docs/VIDEO_PLAN.md
+docs/SUBMISSION_CHECKLIST.md
+replit.md
+.agents/

@@ -5,4 +5,4 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 rm -rf data/pglite-demo
 echo "Demo database wiped. Now: bash demo/start.sh, then (in a second window) bash demo/prime.sh"
-echo "In the browser, clear this site's storage too (see docs/DEMO.md, Reset)."
+echo "In the browser, clear this site's storage too (DevTools > Application > Clear site data)."
