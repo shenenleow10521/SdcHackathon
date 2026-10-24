@@ -12,7 +12,7 @@
 | **SDG track** | **SDG 8** Decent Work and Economic Growth (primary: redeployment instead of retrenchment), with SDG 4 (target 4.4), 9, 12, 13 and 16 |
 | **Team leader** | Leow Shen En |
 | **University** | Universiti Malaya |
-| **Number of members** | _[n]_ |
+| **Number of members** | 5 |
 
 ## Links
 

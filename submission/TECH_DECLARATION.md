@@ -159,6 +159,7 @@ If yes, list them below:
 | Google Gemini (gemini-3.5-flash) | A first benchmark judge run; its verdicts were discarded when the free quota ran out | Minor |
 | faster-whisper large-v3 (local GPU) | Transcribing the organisers' submission tutorial video for our requirements notes | Minor |
 | Replit Agent (Replit) | Replacing Supabase sign-in with Replit-managed Clerk plus private guest sessions; Replit configuration. Reviewed by the team, fixed by a member, and merged after the 418 tests passed | Moderate |
+| OpenAI Codex (GPT-6) | Reviewing the project and completing these declarations | Minor |
 | Microsoft Edge neural voice (edge-tts) | Timing the pitch-video narration lines; not used in the final audio | Minor |
 | 🟨 TEAM: any other AI tool a member used (e.g. ChatGPT, Copilot, Gemini app, image or voice tools), or delete this row | 🟨 TEAM | 🟨 TEAM |
 
