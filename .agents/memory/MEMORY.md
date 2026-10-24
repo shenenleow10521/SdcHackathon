@@ -1,0 +1,1 @@
+- [Browser auth constraints](browser-auth-constraints.md) — Clerk's browser script initializes a singleton; the preview proxy rewrites SameSite, so retain explicit Origin checks.

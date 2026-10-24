@@ -10,20 +10,22 @@ const V = { msg: null, busy: false, view: "auth" };
 export const AUTH = { enabled: false, client: null, user: null, roles: [], profileId: null, guestProfileId: null, staffOpen: false };
 let onChange = () => {}, onDemo = () => {}, lastFocus = null, mountedNode = null;
 
-function loadClerkSdk() {
-  if (globalThis.Clerk) return Promise.resolve(globalThis.Clerk);
-  return new Promise((resolve, reject) => {
-    const current = document.querySelector(`script[src="${CLERK_SCRIPT}"]`);
-    const script = current || document.createElement("script");
+let clerkSdkPromise;
+function loadClerkSdk(publishableKey, proxyUrl) {
+  if (globalThis.Clerk?.load) return Promise.resolve(globalThis.Clerk);
+  if (clerkSdkPromise) return clerkSdkPromise;
+  clerkSdkPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
     const loaded = () => globalThis.Clerk ? resolve(globalThis.Clerk) : reject(new Error("Clerk browser SDK did not load"));
     script.addEventListener("load", loaded, { once: true });
     script.addEventListener("error", () => reject(new Error("Couldn't load the sign-in service")), { once: true });
-    if (!current) {
-      script.src = CLERK_SCRIPT;
-      script.async = true;
-      document.head.append(script);
-    } else if (globalThis.Clerk) loaded();
+    script.dataset.clerkPublishableKey = publishableKey;
+    if (proxyUrl) script.dataset.clerkProxyUrl = proxyUrl;
+    script.src = CLERK_SCRIPT;
+    script.async = true;
+    document.head.append(script);
   });
+  return clerkSdkPromise;
 }
 
 const appearance = {
@@ -60,8 +62,7 @@ export async function initAuth(handlers) {
   try { cfg = await get("/config"); } catch { return AUTH; }
   if (!cfg?.auth?.enabled) return AUTH;
 
-  const Clerk = await loadClerkSdk();
-  AUTH.client = new Clerk(cfg.auth.publishableKey, { proxyUrl: cfg.auth.proxyUrl });
+  AUTH.client = await loadClerkSdk(cfg.auth.publishableKey, cfg.auth.proxyUrl);
   await AUTH.client.load();
   AUTH.enabled = true;
 

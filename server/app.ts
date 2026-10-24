@@ -18,6 +18,7 @@ import accountRoutes from "./routes/account.ts";
 import { authenticate, profileGuard, intakeGuard } from "./lib/auth.ts";
 import { CLERK_PROXY_PATH, clerkProxyMiddleware } from "./middlewares/clerkProxyMiddleware.ts";
 import { guestSessionMiddleware } from "./middlewares/guestSession.ts";
+import { sameOriginMutations } from "./middlewares/sameOrigin.ts";
 
 export function createApp(svc: Services) {
   const app = express();
@@ -25,6 +26,7 @@ export function createApp(svc: Services) {
   app.set("trust proxy", 1);
   app.use(CLERK_PROXY_PATH, clerkProxyMiddleware());
   if (svc.config.clerkEnabled && !svc.auth) app.use(clerkMiddleware());
+  app.use("/api", sameOriginMutations);
   if (svc.config.clerkEnabled && svc.config.guestSessionSecret) app.use("/api", guestSessionMiddleware(svc.config.guestSessionSecret));
   app.use(express.json({ limit: "2mb" }));
   app.use((_req, res, next) => {

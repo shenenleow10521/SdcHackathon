@@ -85,7 +85,10 @@ describe("guest CV intake", () => {
 
     const forgedCookie = guestCookie.replace(/.$/, (character: string) => character === "A" ? "B" : "A");
     expect((await request(app).get(`/api/profile/${profileId}`).set("Cookie", forgedCookie)).status).toBe(401);
-    const deleted = await request(app).delete("/api/me/data").set("Cookie", guestCookie);
+    const crossSite = await request(app).delete("/api/me/data").set("Cookie", guestCookie).set("Origin", "https://other-site.example");
+    expect(crossSite.status).toBe(403);
+    expect(crossSite.body.error.code).toBe("cross_site_request");
+    const deleted = await request(app).delete("/api/me/data").set("Cookie", guestCookie).set("Host", "halatuju.example").set("Origin", "http://halatuju.example");
     expect(deleted.status).toBe(200);
     expect(deleted.body).toMatchObject({ profileId, deleted: true });
   });
