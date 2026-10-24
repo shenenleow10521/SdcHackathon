@@ -140,8 +140,9 @@ function mountSignIn() {
     AUTH.client.mountSignIn(node, {
       routing: "virtual",
       withSignUp: true, // one form: a new email continues into sign-up here instead of jumping to another page
-      afterSignInUrl: location.pathname,
-      afterSignUpUrl: location.pathname,
+      // Clerk v6 reads these (afterSignInUrl/afterSignUpUrl are ignored and it falls back to the landing page).
+      forceRedirectUrl: location.pathname,
+      signUpForceRedirectUrl: location.pathname,
       appearance,
       localization: store.get("lang", "en") === "ms"
         ? { signIn: { start: { title: "Selamat kembali", subtitle: "Log masuk untuk membuka akaun anda" } }, signUp: { start: { title: "Cipta akaun", subtitle: "Mulakan perjalanan kerjaya anda" } } }
