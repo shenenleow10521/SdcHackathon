@@ -29,7 +29,7 @@ Upload a CV and HalaTuju maps the skills you have, the jobs they lead to and a w
 | Resource | Link |
 |---|---|
 | GitHub repository | https://github.com/shenenleow10521/SdcHackathon |
-| Replit project | _[Replit project URL]_ |
+| Replit project | `https://replit.com/@25006675/SdcHackathon` (invite-only Replit workspace; the code is in this repo and the project is shown in the [Replit proof of use](submission/SDC2026_Dsaise_Replit_POU.pdf)) |
 | Live demo | https://halatuju.replit.app |
 | RunPod endpoint | `https://api.runpod.ai/v2/a7ipau1nmqogxs` (bge-m3 embeddings; needs our API key, see [How we use RunPod](#how-we-use-runpod-required)) |
 | Slide deck | [`submission/SDC2026_Dsaise_PitchDeck.pdf`](submission/SDC2026_Dsaise_PitchDeck.pdf) |
@@ -504,7 +504,7 @@ Declared in full in the [Tech & Tools Declaration](submission/SDC2026_Dsaise_Tec
 | Choong Zhuo Lin | Technical lead | [@25006675-png](https://github.com/25006675-png) |
 | Tan Wei Feng | Presenter and documentation | [@25005493-JACK](https://github.com/25005493-JACK) |
 | Lim Jie Shin | Research and data | [@jieshin27](https://github.com/jieshin27) |
-| Esther Kong Yuan Er | UI/UX design | _[@username]_ |
+| Esther Kong Yuan Er | UI/UX design | [@25-ESTHERKONG](https://github.com/25-ESTHERKONG) |
 
 ## Submission checklist
 

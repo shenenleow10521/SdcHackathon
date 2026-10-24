@@ -66,6 +66,9 @@ const appearance = {
     formButtonPrimary: "rounded-lg",
     footerActionLink: "font-semibold",
     footerActionText: "text-slate-600",
+    // Email sign-in only: Google needs our own Google OAuth credentials on a production Clerk instance.
+    socialButtonsRoot: { display: "none" },
+    dividerRow: { display: "none" },
   },
 };
 
