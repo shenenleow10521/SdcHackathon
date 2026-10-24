@@ -5,7 +5,7 @@ Team **Dsaise** · Project **HalaTuju** · SDC Hackathon 2026, Domain 1: Aiverse
 | # | Required item | File |
 |---|---|---|
 | 1 | Preliminary submission (Product Requirement Doc, official Submission Template) | [`SDC2026_Dsaise_Preliminary.pdf`](SDC2026_Dsaise_Preliminary.pdf) |
-| 2 | Pitch deck | [`SDC2026_Dsaise_PitchDeck.pdf`](SDC2026_Dsaise_PitchDeck.pdf) · interactive version: [`SDC2026_Dsaise_PitchDeck.html`](SDC2026_Dsaise_PitchDeck.html) (download and open in a browser) |
+| 2 | Pitch deck | [`SDC2026_Dsaise_PitchDeck.pdf`](SDC2026_Dsaise_PitchDeck.pdf) |
 | 3 | Live prototype | https://halatuju.replit.app |
 | 4 | Technical & Tools Declaration (official template) | [`SDC2026_Dsaise_TechDeclaration.pdf`](SDC2026_Dsaise_TechDeclaration.pdf) |
 | 4 | Replit proof of use | [`SDC2026_Dsaise_Replit_POU.pdf`](SDC2026_Dsaise_Replit_POU.pdf) |
