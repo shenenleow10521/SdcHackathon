@@ -501,10 +501,10 @@ Declared in full in the [Tech & Tools Declaration](submission/SDC2026_Dsaise_Tec
 | Name | Role | GitHub |
 |---|---|---|
 | Leow Shen En | Team leader | [@shenenleow10521](https://github.com/shenenleow10521) |
-| Choong Zhuo Lin | _[role]_ | [@25006675-png](https://github.com/25006675-png) |
-| Tan Wei Feng | _[role]_ | _[@username]_ |
-| Lim Jie Shin | _[role]_ | _[@username]_ |
-| Esther Kong Yuan Er | _[role]_ | _[@username]_ |
+| Choong Zhuo Lin | Technical lead | [@25006675-png](https://github.com/25006675-png) |
+| Tan Wei Feng | Presenter | _[@username]_ |
+| Lim Jie Shin | Research and data | [@jieshin27](https://github.com/jieshin27) |
+| Esther Kong Yuan Er | UI/UX design | _[@username]_ |
 
 ## Submission checklist
 
