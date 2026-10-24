@@ -139,7 +139,7 @@ function mountSignIn() {
   try {
     AUTH.client.mountSignIn(node, {
       routing: "virtual",
-      signUpUrl: location.pathname,
+      withSignUp: true, // one form: a new email continues into sign-up here instead of jumping to another page
       afterSignInUrl: location.pathname,
       afterSignUpUrl: location.pathname,
       appearance,
