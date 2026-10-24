@@ -1,6 +1,6 @@
 run = "npm start"
 entrypoint = "server/index.ts"
-modules = ["nodejs-20", "web", "python-3.12"]
+modules = ["web", "python-3.12", "nodejs-22"]
 
 [deployment]
 run = ["sh", "-c", "npm start"]
