@@ -11,6 +11,6 @@ Team **Dsaise** · Project **HalaTuju** · SDC Hackathon 2026, Domain 1: Aiverse
 | 4 | Replit proof of use | [`SDC2026_Dsaise_Replit_POU.pdf`](SDC2026_Dsaise_Replit_POU.pdf) |
 | 4 | RunPod proof of use | [`SDC2026_Dsaise_Runpod_POU.pdf`](SDC2026_Dsaise_Runpod_POU.pdf) |
 | 5 | GitHub repository | https://github.com/shenenleow10521/SdcHackathon |
-| 6 | Pitching video (5–7 min, YouTube) | _[YouTube link]_ |
+| 6 | Pitching video (5–7 min, YouTube) | https://youtu.be/shITdy-TYSg |
 
 The system block diagram is Appendix A of both forms, and also [`../docs/system-diagram.png`](../docs/system-diagram.png).

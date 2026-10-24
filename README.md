@@ -3,7 +3,7 @@
 **A GPS for your career: when AI closes a road, it reroutes you.**
 Upload a CV and HalaTuju maps the skills you have, the jobs they lead to and a week-by-week route there. A researcher agent reads the job market every day, a person approves anything that changes a route, and your route visibly reroutes, with the source attached. *HalaTuju* means "direction" in Malay.
 
-[![Live demo](https://img.shields.io/badge/live%20demo-halatuju.replit.app-F26B1D)](https://halatuju.replit.app) [![CI](https://github.com/shenenleow10521/SdcHackathon/actions/workflows/ci.yml/badge.svg)](https://github.com/shenenleow10521/SdcHackathon/actions/workflows/ci.yml) [![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
+[![Live demo](https://img.shields.io/badge/live%20demo-halatuju.replit.app-F26B1D)](https://halatuju.replit.app) [![Pitch video](https://img.shields.io/badge/pitch%20video-YouTube-FF0000)](https://youtu.be/shITdy-TYSg) [![CI](https://github.com/shenenleow10521/SdcHackathon/actions/workflows/ci.yml/badge.svg)](https://github.com/shenenleow10521/SdcHackathon/actions/workflows/ci.yml) [![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 
 ![Priya's career map: her skills, the jobs they lead to, and an 11-week route to ESG & Carbon Reporting Analyst](docs/screenshots/route-map.webp)
 
@@ -33,7 +33,7 @@ Upload a CV and HalaTuju maps the skills you have, the jobs they lead to and a w
 | Live demo | https://halatuju.replit.app |
 | RunPod endpoint | `https://api.runpod.ai/v2/a7ipau1nmqogxs` (bge-m3 embeddings; needs our API key, see [How we use RunPod](#how-we-use-runpod-required)) |
 | Slide deck | [`submission/SDC2026_Dsaise_PitchDeck.pdf`](submission/SDC2026_Dsaise_PitchDeck.pdf) |
-| Demo video | _[YouTube link]_ |
+| Demo video | https://youtu.be/shITdy-TYSg |
 | Preliminary submission (official template) | [`submission/SDC2026_Dsaise_Preliminary.pdf`](submission/SDC2026_Dsaise_Preliminary.pdf) |
 | Tech & Tools Declaration (official template) | [`submission/SDC2026_Dsaise_TechDeclaration.pdf`](submission/SDC2026_Dsaise_TechDeclaration.pdf) |
 | Replit and RunPod proof of use | [Replit](submission/SDC2026_Dsaise_Replit_POU.pdf) · [RunPod](submission/SDC2026_Dsaise_Runpod_POU.pdf) |
@@ -502,7 +502,7 @@ Declared in full in the [Tech & Tools Declaration](submission/SDC2026_Dsaise_Tec
 |---|---|---|
 | Leow Shen En | Team leader | [@shenenleow10521](https://github.com/shenenleow10521) |
 | Choong Zhuo Lin | Technical lead | [@25006675-png](https://github.com/25006675-png) |
-| Tan Wei Feng | Presenter | _[@username]_ |
+| Tan Wei Feng | Presenter and documentation | [@25005492-JACK](https://github.com/25005492-JACK) |
 | Lim Jie Shin | Research and data | [@jieshin27](https://github.com/jieshin27) |
 | Esther Kong Yuan Er | UI/UX design | _[@username]_ |
 
@@ -510,7 +510,7 @@ Declared in full in the [Tech & Tools Declaration](submission/SDC2026_Dsaise_Tec
 
 - [x] Team name, domain (Domain 1 / Domain 2) and SDG track filled in
 - [x] Slide deck link added
-- [ ] Demo video link added
+- [x] Demo video link added
 - [x] Replit used, with proof of use in `submission/`
 - [x] RunPod used, with proof of use in `submission/`
 - [x] Preliminary submission completed (`SDC2026_Dsaise_Preliminary.pdf`)
