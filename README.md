@@ -22,11 +22,11 @@
 | Replit project | _[Replit project URL]_ |
 | Live demo (Replit) | https://halatuju.replit.app |
 | RunPod endpoint (bge-m3 embeddings) | `https://api.runpod.ai/v2/a7ipau1nmqogxs` (needs our API key; see [How we use RunPod](#how-we-use-runpod-required)) |
-| Slide deck | [`submission/HalaTuju_Pitch_Deck.html`](submission/HalaTuju_Pitch_Deck.html) (download and open in a browser) · PDF: _[link]_ |
+| Slide deck | [`submission/SDC2026_Dsaise_PitchDeck.pdf`](submission/SDC2026_Dsaise_PitchDeck.pdf) · HTML (download and open in a browser): [`submission/SDC2026_Dsaise_PitchDeck.html`](submission/SDC2026_Dsaise_PitchDeck.html) |
 | Pitch video (5–7 min, YouTube) | _[YouTube link]_ |
-| Product Requirement Doc (official template) | [`submission/PRELIMINARY_PROPOSAL.md`](submission/PRELIMINARY_PROPOSAL.md) · PDF: _[link]_ |
-| Tech & Tools Declaration | [`submission/TECH_DECLARATION.md`](submission/TECH_DECLARATION.md) · PDF: _[link]_ |
-| Replit and RunPod proof of use | [Replit PDF](submission/SDC2026_Dsaise_Replit_POU.pdf) · [RunPod PDF](submission/SDC2026_Dsaise_Runpod_POU.pdf) · [`submission/REPLIT_PROOF.md`](submission/REPLIT_PROOF.md) · [`submission/RUNPOD_PROOF.md`](submission/RUNPOD_PROOF.md) |
+| Preliminary submission (PRD, official template) | [`submission/SDC2026_Dsaise_Preliminary.pdf`](submission/SDC2026_Dsaise_Preliminary.pdf) |
+| Tech & Tools Declaration (official template) | [`submission/SDC2026_Dsaise_TechDeclaration.pdf`](submission/SDC2026_Dsaise_TechDeclaration.pdf) |
+| Replit and RunPod proof of use | [Replit PDF](submission/SDC2026_Dsaise_Replit_POU.pdf) · [RunPod PDF](submission/SDC2026_Dsaise_Runpod_POU.pdf) |
 
 > **How to read this README.** The **Status** column says how far each feature is proven, and the **Data** column says whether what it shows is real or sample. ✅ **Works**: checked end to end in the running app (live AI and web services, fresh database) on 23–24 Oct 2026. 🧪 **Built**: in the code and covered by automated tests, not yet re-checked live. 🛠 **Planned**: designed, not built. **Real** data has a cited source; **Sample** data is illustrative and is labelled *Sample* in the app. We don't claim anything marked 🛠 as working.
 
@@ -171,6 +171,8 @@ proposal/  prototype/     first proposal (22 Oct) and early UI prototypes (sampl
 ```
 
 ### Architecture
+
+![HalaTuju system block diagram](docs/system-diagram.png)
 
 ```mermaid
 flowchart LR
@@ -328,7 +330,7 @@ python ml/runpod_train.py terminate   # always run this; stopping isn't enough
 - **Secrets:** `GEMINI_API_KEY`, `RUNPOD_API_KEY`, `RUNPOD_EMBED_ENDPOINT_ID`, `TAVILY_API_KEY` and the database URL are Replit Secrets, never in the code.
 - **Agents in production:** the Job market researcher, AI reviewer, emerging-skill committee and explainer run on the Replit server and call the Google Gemini API.
 
-📄 Proof of use: [`submission/SDC2026_Dsaise_Replit_POU.pdf`](submission/SDC2026_Dsaise_Replit_POU.pdf) (screenshots) · details: [`submission/REPLIT_PROOF.md`](submission/REPLIT_PROOF.md)
+📄 Proof of use: [`submission/SDC2026_Dsaise_Replit_POU.pdf`](submission/SDC2026_Dsaise_Replit_POU.pdf) (deployment, project history, usage and the live site)
 
 ## How we use RunPod *(required)*
 
@@ -344,7 +346,7 @@ curl -X POST https://api.runpod.ai/v2/$RUNPOD_EMBED_ENDPOINT_ID/openai/v1/embedd
   -d '{"model": "BAAI/bge-m3", "input": ["Reconcile vendor statements against the ledger"]}'
 ```
 
-📄 Proof of use: [`submission/SDC2026_Dsaise_Runpod_POU.pdf`](submission/SDC2026_Dsaise_Runpod_POU.pdf) (console screenshots) · details: [`submission/RUNPOD_PROOF.md`](submission/RUNPOD_PROOF.md) (pod and endpoint IDs, GPU, runtime, cost)
+📄 Proof of use: [`submission/SDC2026_Dsaise_Runpod_POU.pdf`](submission/SDC2026_Dsaise_Runpod_POU.pdf) (endpoint and pod IDs, GPU types, runtime, logs, cost)
 
 ---
 
@@ -501,7 +503,7 @@ The build started at the problem-statement release on **19 Oct 2026, 8 PM MYT**.
 
 ## AI tools used to build this project
 
-Declared in full in the [Tech & Tools Declaration](submission/TECH_DECLARATION.md). The hackathon rules require every AI tool used to be listed.
+Declared in full in the [Tech & Tools Declaration](submission/SDC2026_Dsaise_TechDeclaration.pdf). The hackathon rules require every AI tool used to be listed.
 
 | Tool | Used for |
 |---|---|
@@ -522,14 +524,14 @@ Declared in full in the [Tech & Tools Declaration](submission/TECH_DECLARATION.m
 
 The organisers' checklist. The full rubric audit, with evidence for every compulsory item, is in [`docs/SUBMISSION_CHECKLIST.md`](docs/SUBMISSION_CHECKLIST.md).
 
-- [ ] Team name, domain (Domain 1 / Domain 2) and SDG track filled in
-- [ ] Slide deck link added
+- [x] Team name, domain (Domain 1 / Domain 2) and SDG track filled in
+- [x] Slide deck link added
 - [ ] Demo video link added
 - [x] Replit used, with proof of use in `submission/`
 - [x] RunPod used, with proof of use in `submission/`
-- [ ] Preliminary submission completed (`SDC2026_Dsaise_Preliminary.pdf`)
-- [ ] Technology declaration completed (`SDC2026_Dsaise_TechDeclaration.pdf`)
-- [ ] Submission files renamed with your team name (replace `TeamName`)
+- [x] Preliminary submission completed (`SDC2026_Dsaise_Preliminary.pdf`)
+- [x] Technology declaration completed (`SDC2026_Dsaise_TechDeclaration.pdf`)
+- [x] Submission files renamed with your team name (replace `TeamName`)
 - [x] "How to Run" steps verified
 - [x] No API keys or secrets committed to the repository
 

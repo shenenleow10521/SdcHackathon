@@ -13,7 +13,7 @@
 | 1 | `5. Online Orientation Briefing /1. SDC Hackathon Online Orientation Slides.pdf` | 44-slide PDF (orientation held 19 Oct 2026) | Text layer + every slide viewed as an image (many slides are image-only) |
 | 2 | `4. Participant Guideline (Docs & Tutorials)/2. Video Tutorials Needed/3. Mentorship Booking & Submission Method/2. Detailed Submission.mp4` | 4 min 06 s, 1080p screen recording | Transcribed with faster-whisper large-v3 (GPU) + screenshots every 8 s read visually |
 
-**Missing material:** the zip name ends in `-1-002`, which means it is **part 2 of a split Google Drive download**. Folders `1.`–`3.` and other items in folder `4.` are not in this zip. That likely includes the **official PRD template** and the **Tech & Tools Declaration template**, both referenced in the slides. **Update 24 Oct:** both templates were found in the organisers' Drive folder "2. Template for docs inside GitHub Rep", with the repo template https://github.com/michaelzhngg/SDC_Hackathon_Submission_Template. Our answers, field by field: `submission/PRELIMINARY_PROPOSAL.md` and `submission/TECH_DECLARATION.md`.
+**Missing material:** the zip name ends in `-1-002`, which means it is **part 2 of a split Google Drive download**. Folders `1.`–`3.` and other items in folder `4.` are not in this zip. That likely includes the **official PRD template** and the **Tech & Tools Declaration template**, both referenced in the slides. **Update 24 Oct:** both templates were found in the organisers' Drive folder "2. Template for docs inside GitHub Rep", with the repo template https://github.com/michaelzhngg/SDC_Hackathon_Submission_Template. Our answers, field by field: `submission/SDC2026_Dsaise_Preliminary.pdf` and `submission/SDC2026_Dsaise_TechDeclaration.pdf`.
 
 ---
 

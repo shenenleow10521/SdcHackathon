@@ -6,14 +6,14 @@ Prelim deadline: **Sun 25 Oct 2026, 07:59:59 MYT.** No late submissions, no chan
 
 | # | To do | Where it goes |
 |---|---|---|
-| 1 | **Deploy on Replit** from the team's own account (steps in [`submission/REPLIT_PROOF.md`](../submission/REPLIT_PROOF.md)); set `ADMIN_TOKEN`; open `/app` and `/api/health` in an incognito window and upload `demo/priya-cv.pdf` once | README Links table: **Live demo URL** and **Replit project URL**; `submission/REPLIT_PROOF.md` |
+| 1 | **Deploy on Replit** from the team's own account (steps in [`submission/SDC2026_Dsaise_Replit_POU.pdf`](../submission/SDC2026_Dsaise_Replit_POU.pdf)); set `ADMIN_TOKEN`; open `/app` and `/api/health` in an incognito window and upload `demo/priya-cv.pdf` once | README Links table: **Live demo URL** and **Replit project URL**; `submission/SDC2026_Dsaise_Replit_POU.pdf` |
 | 2 | **Replit proof screenshots** (project with history, deployment running, live page) → export as PDF | `submission/` |
-| 3 | **RunPod console screenshots**: pod `38jijj8fe5dazu` in billing/usage history, endpoint `a7ipau1nmqogxs` with requests, billing total; plus, only if it exists, an organiser message confirming local GPU testing is allowed (if not, ask on Discord first: early test runs used a local GPU, the final training run used RunPod) → export as PDF | `submission/RUNPOD_PROOF.md` placeholders |
-| 4 | **Team name, leader, university, members, roles, GitHub usernames** | README (Team information, Team), `submission/PRELIMINARY_PROPOSAL.md`, `submission/TECH_DECLARATION.md` |
-| 5 | **PRD on the official Submission Template**: copy from `submission/PRELIMINARY_PROPOSAL.md`, fill _[verify]_ baseline figures from their sources, confirm the workshop and IP boxes, sign, save PDF | `submission/` + README link |
-| 6 | **Tech & Tools Declaration on the official template**: copy from `submission/TECH_DECLARATION.md`, add any other AI tool a member used, sign, save PDF | `submission/` + README link |
+| 3 | **RunPod console screenshots**: pod `38jijj8fe5dazu` in billing/usage history, endpoint `a7ipau1nmqogxs` with requests, billing total; plus, only if it exists, an organiser message confirming local GPU testing is allowed (if not, ask on Discord first: early test runs used a local GPU, the final training run used RunPod) → export as PDF | `submission/SDC2026_Dsaise_Runpod_POU.pdf` placeholders |
+| 4 | **Team name, leader, university, members, roles, GitHub usernames** | README (Team information, Team), `submission/SDC2026_Dsaise_Preliminary.pdf`, `submission/SDC2026_Dsaise_TechDeclaration.pdf` |
+| 5 | **PRD on the official Submission Template**: copy from `submission/SDC2026_Dsaise_Preliminary.pdf`, fill _[verify]_ baseline figures from their sources, confirm the workshop and IP boxes, sign, save PDF | `submission/` + README link |
+| 6 | **Tech & Tools Declaration on the official template**: copy from `submission/SDC2026_Dsaise_TechDeclaration.pdf`, add any other AI tool a member used, sign, save PDF | `submission/` + README link |
 | 7 | **Record the pitch video** (5:00–7:00, live demo inside; script `docs/PITCH.md`, clicks `docs/DEMO.md`), upload to YouTube (public or unlisted) | README Links: **Pitch video** |
-| 8 | **Pitch deck** matching the video (problem, solution, technical approach, impact) | README Links: **Slide deck**; `submission/HalaTuju_Pitch_Deck.html` (export a PDF copy too) |
+| 8 | **Pitch deck** matching the video (problem, solution, technical approach, impact) | README Links: **Slide deck**; `submission/SDC2026_Dsaise_PitchDeck.pdf` and `.html` |
 | 9 | **Add the committee's GitHub accounts as collaborators** (usernames from Discord) | GitHub → Settings → Collaborators |
 | 10 | **Confirm on Discord** the "API Premium sponsor technology" checkbox on the submit form (which sponsor? we use Replit and RunPod) | Submit form |
 | 11 | **Make the repo public**, then submit the GitHub URL on sdchack.my and **open every link in an incognito window** | sdchack.my portal |
@@ -36,10 +36,10 @@ Score estimates are our own judgement (out of 10), assuming items 1–8 above ar
 | Item | Requirement | Evidence | Status |
 |---|---|---|---|
 | Working prototype + functional UI + pitch | All three, or the submission is incomplete | App in `server/`, `web/`; pitch in `docs/PITCH.md` | ⚠️ pitch video and deck to record |
-| 1. Product Requirement Doc | Official template: problem, SDG, users, scope, features | [`submission/PRELIMINARY_PROPOSAL.md`](../submission/PRELIMINARY_PROPOSAL.md) (draft in template order); earlier `proposal/HalaTuju_Proposal.md` | ⚠️ copy into the official template, fill brackets, PDF |
+| 1. Product Requirement Doc | Official template: problem, SDG, users, scope, features | [`submission/SDC2026_Dsaise_Preliminary.pdf`](../submission/SDC2026_Dsaise_Preliminary.pdf) (draft in template order); earlier `proposal/HalaTuju_Proposal.md` | ⚠️ copy into the official template, fill brackets, PDF |
 | 2. Pitch deck | Matches the video | — | ❌ team |
 | 3. Live prototype link | Deployed link; a video or mock-up does not count | https://halatuju.replit.app (Reserved VM, Replit PostgreSQL 16) | ⚠️ deployed; check in incognito |
-| 4. Tech & Tools Declaration | Every API, cloud service, AI tool, LLM, dataset, model, sponsor resource; Replit proof; RunPod proof for GPU work | [`submission/TECH_DECLARATION.md`](../submission/TECH_DECLARATION.md), [`submission/RUNPOD_PROOF.md`](../submission/RUNPOD_PROOF.md), [`submission/REPLIT_PROOF.md`](../submission/REPLIT_PROOF.md) | ⚠️ screenshots, Replit URL, signature |
+| 4. Tech & Tools Declaration | Every API, cloud service, AI tool, LLM, dataset, model, sponsor resource; Replit proof; RunPod proof for GPU work | [`submission/SDC2026_Dsaise_TechDeclaration.pdf`](../submission/SDC2026_Dsaise_TechDeclaration.pdf), [`submission/SDC2026_Dsaise_Runpod_POU.pdf`](../submission/SDC2026_Dsaise_Runpod_POU.pdf), [`submission/SDC2026_Dsaise_Replit_POU.pdf`](../submission/SDC2026_Dsaise_Replit_POU.pdf) | ⚠️ screenshots, Replit URL, signature |
 | 5. GitHub repository | Public; reflects what you demo | https://github.com/shenenleow10521/SdcHackathon | ⚠️ still private |
 | 6. Pitching video | 5:00–7:00 on YouTube, with a prototype demo; −1 point per 30 s over | Script 5:50 (`docs/PITCH.md`) | ❌ record |
 | Replit (compulsory) | Proof from our own account | Deployed at https://halatuju.replit.app | ⚠️ screenshots |

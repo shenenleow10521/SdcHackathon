@@ -1,15 +1,16 @@
 # Submission documents
 
-Everything the SDC Hackathon 2026 preliminary round asks for besides the code, and where each piece goes. The full rubric audit and the list of what is still open are in [`../docs/SUBMISSION_CHECKLIST.md`](../docs/SUBMISSION_CHECKLIST.md).
+Team **Dsaise** · Project **HalaTuju** · SDC Hackathon 2026, Domain 1: Aiversecity Future-Ready Workforce. The organisers' required files, named as the official templates ask.
 
-| File | Required item | What it is | What the team still has to do |
-|---|---|---|---|
-| [`PRELIMINARY_PROPOSAL.md`](PRELIMINARY_PROPOSAL.md) | 1. Product Requirement Doc (official Submission Template) | Our answers in the template's section order, within its word limits | Copy into the official template, fill the _[brackets]_ and _[verify]_ figures, sign, save as `SDC2026_TeamName_Preliminary.pdf` here |
-| [`HalaTuju_Pitch_Deck.html`](HalaTuju_Pitch_Deck.html) | 2. Pitch deck | Problem, solution, technical approach, impact; must match the video. Story and numbers: [`../docs/PITCH.md`](../docs/PITCH.md) | Check it matches the video; export a PDF copy for judges who open it on GitHub |
-| [`REPLIT_PROOF.md`](REPLIT_PROOF.md) | 3. Live prototype link + Replit proof (compulsory) | Deployment steps, secrets list, screenshot list | Deploy from the team's own Replit account, add the URL and screenshots, export as `SDC2026_TeamName_Replit_POU.pdf` |
-| [`TECH_DECLARATION.md`](TECH_DECLARATION.md) | 4. Tech & Tools Declaration | Every API, cloud service, AI model and tool, dataset and sponsor resource, in the template's order, including AI coding assistance | Copy into the official template, fill the _[brackets]_, add any other AI tool a member used, sign, save as `SDC2026_TeamName_TechDeclaration.pdf` here |
-| [`RUNPOD_PROOF.md`](RUNPOD_PROOF.md) | 4. RunPod proof (GPU work) | Pod `38jijj8fe5dazu` (RTX 4090, final training run) and Serverless endpoint `a7ipau1nmqogxs` (bge-m3), with times, cost, artifacts and how to verify | Add the console screenshots listed in the file, export as `SDC2026_TeamName_Runpod_POU.pdf` |
-| (the repo itself) | 5. Public GitHub repository | https://github.com/shenenleow10521/SdcHackathon | Make it public before submitting; add the committee's accounts as collaborators |
-| _[YouTube link]_ | 6. Pitching video, 5:00–7:00, with a live demo | Script: [`../docs/PITCH.md`](../docs/PITCH.md); click-by-click demo: [`../docs/DEMO.md`](../docs/DEMO.md) | Record, upload to YouTube (public or unlisted), add the link to the README |
+| # | Required item | File |
+|---|---|---|
+| 1 | Preliminary submission (Product Requirement Doc, official Submission Template) | [`SDC2026_Dsaise_Preliminary.pdf`](SDC2026_Dsaise_Preliminary.pdf) |
+| 2 | Pitch deck | [`SDC2026_Dsaise_PitchDeck.pdf`](SDC2026_Dsaise_PitchDeck.pdf) · interactive version: [`SDC2026_Dsaise_PitchDeck.html`](SDC2026_Dsaise_PitchDeck.html) (download and open in a browser) |
+| 3 | Live prototype | https://halatuju.replit.app |
+| 4 | Technical & Tools Declaration (official template) | [`SDC2026_Dsaise_TechDeclaration.pdf`](SDC2026_Dsaise_TechDeclaration.pdf) |
+| 4 | Replit proof of use | [`SDC2026_Dsaise_Replit_POU.pdf`](SDC2026_Dsaise_Replit_POU.pdf) |
+| 4 | RunPod proof of use | [`SDC2026_Dsaise_Runpod_POU.pdf`](SDC2026_Dsaise_Runpod_POU.pdf) |
+| 5 | GitHub repository | https://github.com/shenenleow10521/SdcHackathon |
+| 6 | Pitching video (5–7 min, YouTube) | _[YouTube link]_ |
 
-Rules to keep in mind: no secrets in any file here (screenshots included: crop API keys out), the video must not run over 7:00 (−1 point per 30 s), and every link must open in an incognito window before the deadline (Sun 25 Oct 2026, 07:59:59 MYT).
+The system block diagram is Appendix A of both forms, and also [`../docs/system-diagram.png`](../docs/system-diagram.png).
