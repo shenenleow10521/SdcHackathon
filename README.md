@@ -217,7 +217,7 @@ tests/                    automated tests (vitest)
 demo/                     demo CV and reset/start/prime scripts
 docs/                     architecture, API, data sources, screenshots, system diagram, organiser rules notes
 submission/               SDC2026_Dsaise_*.pdf: preliminary submission, tech declaration, Replit and RunPod proof, pitch deck
-proposal/  prototype/     first proposal (22 Oct) and early UI prototypes
+prototype/                early UI prototypes of the map, route and reroute (22 Oct)
 .github/workflows/ci.yml  type-check and tests on every push
 ```
 
@@ -458,7 +458,7 @@ The build started at the problem-statement release on **19 Oct 2026, 8 PM MYT** 
 | When | What | Evidence |
 |---|---|---|
 | 21 Oct | Organiser materials read; requirements and rubric written up | [`docs/SDC_Hackathon_2026_Prelim_Requirements.md`](docs/SDC_Hackathon_2026_Prelim_Requirements.md) |
-| 22 Oct | Proposal draft; four HTML prototypes of the map, route and reroute | `proposal/`, `prototype/` |
+| 22 Oct | Proposal draft; four HTML prototypes of the map, route and reroute | `prototype/`; the draft is in the git history |
 | 23 Oct 00:58–02:30 | First commits; a teammate's landing page merged as PR #1 | git history |
 | 23 Oct 03:17 | First exposure-model runs on a local RTX 4070 | `ml/artifacts/eval_sample300.json`, `eval_local.json` |
 | 23 Oct 03:35 | First recorded live Job market researcher run | `db/seed/replay_run.json` |
