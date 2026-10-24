@@ -16,8 +16,12 @@ Keep the imported structure: Node.js 22, TypeScript, Express, and the existing v
 
 ## Current service configuration
 
-This Replit has configured AI and embedding credentials. The health check confirms Gemini and RunPod are available. `SCOUT_SCHEDULE=on` enables the existing daily market-research scheduler.
+This Replit has configured AI and embedding credentials and Replit-managed Clerk. The health check confirms Gemini and RunPod are available. `SCOUT_SCHEDULE=on` enables the existing daily market-research scheduler.
 
-- Supabase sign-in is not configured, so the app uses its existing no-sign-in demo behavior.
+- Replit-managed Clerk is provisioned for this app. Clerk sessions secure the API and profile ownership; the Priya demo remains available to visitors.
+- Visitors can upload a CV as guests without creating a Clerk account. A signed, HttpOnly guest cookie scopes the guest profile to that browser; the existing **Delete my data** option is available for guest data as well.
+- `SESSION_SECRET` signs guest cookies. Replit Secrets already contains this setting; configure a strong random value when running the app in a different environment.
+- When deploying, keep the Clerk proxy middleware mounted before Express body parsers. It is required for the production Clerk proxy and is a no-op in development.
 - Optional provider settings are listed in `.env.example`.
-- To enable existing integrations, use Replit Secrets for provider credentials. Do not commit `.env` or credentials. Keep the existing PGlite database unless the user explicitly requests a database change.
+- Do not commit `.env` or credentials. Clerk user IDs are stored as text; the migration preserves older UUID-form owner IDs but does not transfer ownership between identity providers.
+- Keep the existing PostgreSQL database unless the user explicitly requests a database change.

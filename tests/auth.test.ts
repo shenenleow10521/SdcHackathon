@@ -1,4 +1,4 @@
-// Accounts (Supabase Auth, mocked): each user sees only their own profile, plans and ESCO skills; staff routes
+// Accounts (Clerk sessions, mocked): each user sees only their own profile, plans and ESCO skills; staff routes
 // need a role; "Delete my data" removes everything linked to the profile. With accounts off, nothing changes
 // (the rest of the suite runs that way).
 import { describe, it, expect, beforeAll } from "vitest";
@@ -8,17 +8,17 @@ import { createApp } from "../server/app.ts";
 import { testServices } from "./helpers/services.ts";
 import { createMockLlm } from "../server/lib/llm.ts";
 import { createMockEmbedder } from "../server/lib/embed.ts";
-import { supabaseVerifier, type AuthVerifier } from "../server/lib/auth.ts";
+import type { AuthVerifier } from "../server/lib/auth.ts";
 import { cvLlmHandler } from "./fixtures/cv/mock-llm.ts";
 import type { Services } from "../server/context.ts";
 
 const PRIYA = readFileSync(new URL("./fixtures/cv/priya-nair.txt", import.meta.url), "utf8");
 
 const USERS: Record<string, { id: string; email: string }> = {
-  "tok-a": { id: "00000000-0000-4000-8000-00000000000a", email: "a@example.com" },
-  "tok-b": { id: "00000000-0000-4000-8000-00000000000b", email: "b@example.com" },
-  "tok-admin": { id: "00000000-0000-4000-8000-0000000000ad", email: "Admin@Example.com" },
-  "tok-adv": { id: "00000000-0000-4000-8000-0000000000ae", email: "advisor@example.com" },
+  "tok-a": { id: "user_a", email: "a@example.com" },
+  "tok-b": { id: "user_b", email: "b@example.com" },
+  "tok-admin": { id: "user_admin", email: "Admin@Example.com" },
+  "tok-adv": { id: "user_advisor", email: "advisor@example.com" },
 };
 const mockAuth: AuthVerifier = async token => USERS[token] ?? null;
 const as = (tok: string) => ({ Authorization: `Bearer ${tok}` });
@@ -30,29 +30,31 @@ let profileA: number;
 beforeAll(async () => {
   svc = await testServices({
     llm: createMockLlm(cvLlmHandler()), embed: createMockEmbedder(512), auth: mockAuth,
-    config: { supabase: { url: "https://example.supabase.co", anonKey: "anon-key" }, adminEmails: ["admin@example.com"], advisorEmails: ["advisor@example.com"], adminToken: "script-token" },
+    config: { clerkEnabled: true, clerkPublishableKey: "pk_test_mock", clerkProxyUrl: "", guestSessionSecret: "a-test-only-guest-session-secret", adminEmails: ["admin@example.com"], advisorEmails: ["advisor@example.com"], adminToken: "script-token" },
   });
   app = createApp(svc);
 });
 
-const intake = (tok?: string) => {
+const intake = (tok?: string, cookie?: string) => {
   const r = request(app).post("/api/profile/intake");
-  return (tok ? r.set(as(tok)) : r).send({ text: PRIYA, hours: 6 });
+  if (tok) r.set(as(tok));
+  if (cookie) r.set("Cookie", cookie);
+  return r.send({ text: PRIYA, hours: 6 });
 };
 
 describe("sign-in basics", () => {
-  it("GET /config gives the browser the public Supabase settings", async () => {
+  it("GET /config gives the browser the public Clerk settings", async () => {
     const res = await request(app).get("/api/config");
-    expect(res.body).toEqual({ auth: { enabled: true, url: "https://example.supabase.co", anonKey: "anon-key" } });
+    expect(res.body).toEqual({ auth: { enabled: true, publishableKey: "pk_test_mock", proxyUrl: "" } });
   });
 
-  it("GET /config says accounts are off when Supabase isn't configured", async () => {
+  it("GET /config says accounts are off when Clerk isn't configured", async () => {
     const off = createApp(await testServices({ db: svc.db }));
     expect((await request(off).get("/api/config")).body).toEqual({ auth: { enabled: false } });
   });
 
   it("GET /me: anonymous, signed in, and an invalid token", async () => {
-    expect((await request(app).get("/api/me")).body).toEqual({ authEnabled: true, user: null, roles: [], profileId: null });
+    expect((await request(app).get("/api/me")).body).toMatchObject({ authEnabled: true, user: null, roles: [], profileId: null, guestProfileId: null });
     const me = await request(app).get("/api/me").set(as("tok-a"));
     expect(me.body).toMatchObject({ user: { id: USERS["tok-a"].id, email: "a@example.com" }, roles: [], profileId: null });
     const bad = await request(app).get("/api/me").set(as("expired"));
@@ -66,12 +68,30 @@ describe("sign-in basics", () => {
   });
 });
 
-describe("profiles belong to their account", () => {
-  it("CV intake needs an account, and links the new profile to it", async () => {
-    const anon = await intake();
-    expect(anon.status).toBe(401);
-    expect(anon.body.error.code).toBe("sign_in_required");
+describe("guest CV intake", () => {
+  it("creates a private guest session, permits CV intake, and limits the profile to that browser", async () => {
+    const res = await intake();
+    expect(res.status).toBe(201);
+    const setCookies = Array.isArray(res.headers["set-cookie"]) ? res.headers["set-cookie"] : [res.headers["set-cookie"]];
+    expect(setCookies).toEqual(expect.arrayContaining([expect.stringMatching(/^ht_guest=.*HttpOnly.*SameSite=Lax/i)]));
+    const guestCookie = setCookies.find(value => value.startsWith("ht_guest="))!.split(";")[0];
+    const profileId = res.body.profileId;
 
+    expect((await request(app).get("/api/me").set("Cookie", guestCookie)).body).toMatchObject({
+      user: null, profileId, guestProfileId: profileId,
+    });
+    expect((await request(app).get(`/api/profile/${profileId}`).set("Cookie", guestCookie)).status).toBe(200);
+    expect((await request(app).get(`/api/profile/${profileId}`)).status).toBe(401);
+
+    const forgedCookie = guestCookie.replace(/.$/, (character: string) => character === "A" ? "B" : "A");
+    expect((await request(app).get(`/api/profile/${profileId}`).set("Cookie", forgedCookie)).status).toBe(401);
+    const deleted = await request(app).delete("/api/me/data").set("Cookie", guestCookie);
+    expect(deleted.status).toBe(200);
+    expect(deleted.body).toMatchObject({ profileId, deleted: true });
+  });
+});
+describe("profiles belong to their account", () => {
+  it("signed-in CV intake links the new profile to its Clerk account", async () => {
     const res = await intake("tok-a");
     expect(res.status).toBe(201);
     profileA = res.body.profileId;
@@ -126,7 +146,6 @@ describe("profiles belong to their account", () => {
     expect((await request(app).put(`/api/profile/${profileA}`).set(as("tok-admin")).send({ hours: 2 })).status).toBe(403);
   });
 });
-
 describe("staff routes need a role", () => {
   it("non-admins get 403 on admin routes, anonymous users 401", async () => {
     const adminRoutes = [
@@ -181,7 +200,9 @@ describe("one profile per account, and Delete my data", () => {
     expect(await count("select count(*) as n from profile_skills where profile_id=$1")).toBeGreaterThan(0);
     expect(await count("select count(*) as n from plans where profile_id=$1")).toBe(1);
 
-    expect((await request(app).delete("/api/me/data")).status).toBe(401);
+    const emptyGuest = await request(app).delete("/api/me/data");
+    expect(emptyGuest.status).toBe(200);
+    expect(emptyGuest.body.deleted).toBe(false);
     const res = await request(app).delete("/api/me/data").set(as("tok-a"));
     expect(res.status).toBe(200);
     expect(res.body).toMatchObject({ profileId: profileA, deleted: true, plans: 1 });
@@ -194,27 +215,3 @@ describe("one profile per account, and Delete my data", () => {
   });
 });
 
-describe("supabaseVerifier", () => {
-  const reply = (status: number, body: unknown) => (async () => new Response(JSON.stringify(body), { status })) as unknown as typeof fetch;
-
-  it("returns the user for a valid token and caches it", async () => {
-    let calls = 0;
-    const f = (async (url: any, init: any) => {
-      calls++;
-      expect(String(url)).toBe("https://x.supabase.co/auth/v1/user");
-      expect(init.headers).toMatchObject({ apikey: "anon", Authorization: "Bearer good" });
-      return new Response(JSON.stringify({ id: "u1", email: "Me@X.com" }), { status: 200 });
-    }) as unknown as typeof fetch;
-    const v = supabaseVerifier("https://x.supabase.co/", "anon", f);
-    expect(await v("good")).toEqual({ id: "u1", email: "me@x.com" });
-    await v("good");
-    expect(calls).toBe(1);
-  });
-
-  it("an invalid token is null; Supabase being down is a 503, not a sign-out", async () => {
-    expect(await supabaseVerifier("https://x.supabase.co", "anon", reply(401, { msg: "bad jwt" }))("t")).toBeNull();
-    await expect(supabaseVerifier("https://x.supabase.co", "anon", reply(500, {}))("t")).rejects.toMatchObject({ status: 503 });
-    const down = (async () => { throw new Error("ECONNRESET"); }) as unknown as typeof fetch;
-    await expect(supabaseVerifier("https://x.supabase.co", "anon", down)("t")).rejects.toMatchObject({ status: 503 });
-  });
-});

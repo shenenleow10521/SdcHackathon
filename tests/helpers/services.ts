@@ -27,6 +27,6 @@ export async function testServices(over: Partial<Omit<Services, "config">> & { c
   return {
     db, llm, embed, auth: over.auth ?? null, fetch: over.fetch || noNet, now: over.now || (() => new Date("2026-10-23T10:00:00Z")),
     config: { demoMode: false, adminToken: null, schedulerEnabled: false, scoutIntervalHours: 24, port: 0,
-      supabase: null, adminEmails: [], advisorEmails: [], ...(over.config || {}) },
+      clerkEnabled: false, clerkPublishableKey: "", clerkProxyUrl: "", guestSessionSecret: null, adminEmails: [], advisorEmails: [], ...(over.config || {}) },
   };
 }

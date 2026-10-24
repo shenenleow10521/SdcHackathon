@@ -11,6 +11,7 @@ import { t, tOr } from "../i18n.js";
 import { $, esc, icons, badge, store, reduce, toast, errorBox } from "../util.js";
 import { intro as guideIntro } from "./guide.js";
 import { intro as mapIntro } from "../graph3d.js";
+import { AUTH } from "./auth.js";
 
 const OB = { step: 0, mode: "upload", files: [], review: null, text: "", busy: false, stage: 0, err: null, intake: null, answers: {}, levels: {}, goals: {}, add: "" };
 let stageTimer = null, lastFocus = null;
@@ -205,7 +206,10 @@ async function readProfile() {
     }
     OB.review = null;
     OB.intake = res;
-    if (res.profileId) setProfileId(res.profileId);
+    if (res.profileId) {
+      setProfileId(res.profileId);
+      if (!AUTH.user) AUTH.guestProfileId = res.profileId;
+    }
     if (res.profile) { S.profile = normaliseProfile(res.profile); S.profileFallback = false; }
     seedLevels();
     const draft = res.draft?.skills || [];

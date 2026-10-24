@@ -1,6 +1,7 @@
 // Express app. Routes are grouped by feature; each module exports (svc) => Router.
 import express from "express";
 import path from "node:path";
+import { clerkMiddleware } from "@clerk/express";
 import { HttpError } from "./lib/http.ts";
 import { projectRoot } from "./lib/db.ts";
 import type { Services } from "./context.ts";
@@ -15,11 +16,16 @@ import escoRoutes from "./routes/esco.ts";
 import escoNetworkRoutes from "./routes/esco-network.ts";
 import accountRoutes from "./routes/account.ts";
 import { authenticate, profileGuard, intakeGuard } from "./lib/auth.ts";
+import { CLERK_PROXY_PATH, clerkProxyMiddleware } from "./middlewares/clerkProxyMiddleware.ts";
+import { guestSessionMiddleware } from "./middlewares/guestSession.ts";
 
 export function createApp(svc: Services) {
   const app = express();
   app.disable("x-powered-by");
   app.set("trust proxy", 1);
+  app.use(CLERK_PROXY_PATH, clerkProxyMiddleware());
+  if (svc.config.clerkEnabled && !svc.auth) app.use(clerkMiddleware());
+  if (svc.config.clerkEnabled && svc.config.guestSessionSecret) app.use("/api", guestSessionMiddleware(svc.config.guestSessionSecret));
   app.use(express.json({ limit: "2mb" }));
   app.use((_req, res, next) => {
     res.setHeader("X-Content-Type-Options", "nosniff");
@@ -28,7 +34,7 @@ export function createApp(svc: Services) {
   });
 
   const api = express.Router();
-  // Accounts: who is asking (Supabase token), then ownership checks on anything that names a profile.
+  // Accounts: who is asking (Clerk session), then ownership checks on anything that names a profile.
   api.use(authenticate(svc));
   api.use(profileGuard(svc));
   api.use(intakeGuard(svc));
@@ -48,6 +54,7 @@ export function createApp(svc: Services) {
   app.use("/shared", express.static(path.join(projectRoot, "shared")));
   // "/" is the landing page; the app lives at "/app" (its asset paths are absolute, so "/app/" works too).
   const web = path.join(projectRoot, "web");
+  app.use("/vendor/clerk", express.static(path.join(projectRoot, "node_modules", "@clerk", "clerk-js", "dist"), { fallthrough: true }));
   app.get("/", (_req, res) => res.sendFile(path.join(web, "landing.html")));
   app.get(["/app", "/app/"], (_req, res) => res.sendFile(path.join(web, "index.html")));
   app.use(express.static(web, { index: false }));

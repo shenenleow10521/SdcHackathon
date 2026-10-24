@@ -13,7 +13,7 @@ Replit is compulsory for every team. The proof must come **from our own account*
    - `TAVILY_API_KEY`
    - `DATABASE_URL`: the Replit PostgreSQL URL (created by the `postgresql-16` module) or the Supabase pooler URL
    - `ADMIN_TOKEN`: a long random string, so the public site's review queue and approve buttons are not open to everyone
-   - Optional: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `ADMIN_EMAILS` for sign-in; `DEMO_MODE=true` so a failed live source replays the last recorded run (labelled "replayed")
+   - Replit-managed Clerk provides sign-in; `ADMIN_EMAILS` configures staff roles. Guest CV intake uses a signed `SESSION_SECRET` cookie. `DEMO_MODE=true` replays a failed live source (labelled "replayed").
 3. **Run** once in the workspace and check the console line `HalaTuju on http://localhost:3000 ... embed=runpod-bge-m3`.
 4. **Deploy:** Deploy → **Reserved VM** (the daily Job market researcher needs an always-on server) → copy the `*.replit.app` URL.
 5. **Check in an incognito window:** `/` (landing), `/app` (the map), `/api/health` (`db.ok`, `llm.ok`, `embed.provider = runpod-bge-m3`). Upload `demo/priya-cv.pdf` once. Optionally run `npx tsx scripts/smoke-api.ts https://<url>` (read-only).

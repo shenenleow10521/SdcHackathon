@@ -47,7 +47,7 @@ Languages: TypeScript, JavaScript, Python 3.11 (ML pipeline, data scripts), SQL,
 | pg 8.23.1 | PostgreSQL client | MIT |
 | @electric-sql/pglite 0.5.11 | Embedded PostgreSQL for local runs and tests | Apache-2.0 |
 | dotenv 18.0.8 | Local environment variables | BSD-2-Clause |
-| Vitest 5.0.5, supertest 7.3.1 | 419 automated tests (development only) | MIT |
+| Vitest 5.0.5, supertest 7.3.1 | 418 automated tests (development only) | MIT |
 | 3d-force-graph 1.79.0 (three.js) | 3D career map | MIT |
 | GSAP 3.12.5 | Map animations | GreenSock standard licence (free) |
 | Lucide 0.469.0 | Icons | ISC |
@@ -69,7 +69,7 @@ Languages: TypeScript, JavaScript, Python 3.11 (ML pipeline, data scripts), SQL,
 | ESCO REST API (European Commission) | Building the ESCO mappings (build time only) | Free |
 | arXiv API, OpenAlex API, GDELT, Hacker News (Algolia) API, RSS feeds of vetted publishers | AI-capability, adoption and demand signals | Free |
 | data.gov.my / OpenDOSM API | DOSM wage data (build time only) | Free |
-| Supabase Auth | Optional email-and-password sign-in | Free |
+| Replit-managed Clerk | Email-and-password sign-in and account sessions; guest CV intake remains available | Included through Replit |
 
 Job boards (JobStreet, LinkedIn, Indeed) are plain links only; the app never calls them.
 
@@ -128,7 +128,7 @@ Did the team use any generative-AI tool to help create code, design, text or oth
 
 **How the team reviewed, tested and took responsibility for AI-generated output** *(100 words max)*
 
-The team chose the problem, persona, the reroute idea, the data sources and every design decision, and directed each change. AI-written code ships only with tests: 419 automated tests and a type-check run on every push in CI. Each number in the README is copied from a result file in the repo, and each benchmark was run on held-out data with its weak results reported (per-task model error, blind privacy score 82.6%). Every team member can explain every core feature. _[Team: adjust to what you actually did, e.g. who reviewed which part.]_
+The team chose the problem, persona, the reroute idea, the data sources and every design decision, and directed each change. AI-written code ships only with tests: 418 automated tests and a type-check run on every push in CI. Each number in the README is copied from a result file in the repo, and each benchmark was run on held-out data with its weak results reported (per-task model error, blind privacy score 82.6%). Every team member can explain every core feature. _[Team: adjust to what you actually did, e.g. who reviewed which part.]_
 
 *Word count: 92*
 
@@ -151,7 +151,7 @@ RunPod is essential to the quality of CV reading: the 13,939 ESCO skill vectors 
 
 ### 6.1 Data handling and privacy *(150 words max)*
 
-**Collected:** confirmed skills and levels, current role, weekly study hours, target date, budget, goals and saved plans, under a random profile ID. Accounts are optional (Supabase Auth, email and password). Age, gender, race and religion are never collected or used, and a test checks that they don't change any result.
+**Collected:** confirmed skills and levels, current role, weekly study hours, target date, budget, goals and saved plans, under a random profile ID. Users can create an account through Replit-managed Clerk, or use CV intake as a guest. Age, gender, race and religion are never collected or used, and a test checks that they don't change any result.
 
 **CVs:** read in memory and never stored. Scans are read by OCR on our own server. Names, MyKad numbers, phones, emails, addresses and attribute lines are removed **before any AI sees the text** (99.4% of planted details on held-out test CVs), and the user sees what was removed.
 
