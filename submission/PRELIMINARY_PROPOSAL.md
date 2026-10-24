@@ -83,6 +83,7 @@ The AI reads and explains; fixed formulas set every number.
 | AI | Google Gemini API (gemini-3.5-flash-lite, gemini-3.1-flash-lite); BAAI/bge-m3 embeddings on RunPod Serverless; our own exposure model (bge-m3 + ridge, trained on RunPod) |
 | Database and data | Replit PostgreSQL 16 (versioned knowledge base); ESCO v1.2.1, O\*NET, ILO WP140, Anthropic Economic Index, GPTs-are-GPTs, DOSM, MyCOL |
 | Hosting | Replit Deployments (Reserved VM, PostgreSQL 16); GitHub Actions CI |
+| Accounts | Replit-managed Clerk sign-in, with guest access (no account needed) |
 
 **System block diagram.** 🟨 TEAM: Word can't show the diagram code below. Open this file on GitHub (it draws the diagram), take a screenshot, and paste it into the box or add it as "Appendix A: System block diagram".
 
@@ -179,6 +180,7 @@ If yes, list them below (open-source use is permitted provided it is declared an
 | DOSM / OpenDOSM wages | Dataset | CC BY 4.0 |
 | MyCOL 2024/2025 (codes and titles only) | Dataset | Facts, used with citation |
 | Express, TypeScript, zod, multer, unpdf, tesseract.js, pg, PGlite | Code | MIT / Apache-2.0 |
+| Clerk SDK (@clerk/express, @clerk/clerk-js), http-proxy-middleware | Code | MIT |
 | 3d-force-graph (three.js), GSAP, Lucide icons, Geist font | Code | MIT / GreenSock standard / ISC / SIL OFL 1.1 |
 
 The full list with versions is in the Tech & Tools Declaration (`SDC2026_TeamName_TechDeclaration.pdf`), section 2.2.

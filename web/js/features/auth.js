@@ -1,59 +1,96 @@
-// Accounts (Supabase Auth): email + password, or the demo without an account.
-// Only active when the server says accounts are on (GET /api/config); otherwise the app is an open demo as before.
-// The Supabase client is loaded on demand from jsdelivr at a pinned version. The server checks the token on every
-// request; this module only keeps it fresh (api.js sends it) and draws the sign-in and "Delete my data" screens.
-import { get, del, setAuthToken, hasAdminToken } from "../api.js";
+// Replit-managed Clerk accounts. Sessions stay in Clerk's same-origin cookies;
+// the server verifies them and owns every profile/role decision.
+import { get, del, hasAdminToken } from "../api.js";
 import { t } from "../i18n.js";
 import { $, esc, icons, store } from "../util.js";
 
-const SUPABASE_JS = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/+esm";
+const CLERK_SCRIPT = "/vendor/clerk/clerk.browser.js";
+const V = { msg: null, busy: false, view: "auth" };
 
-// staffOpen: without accounts, whether the server's staff routes are open (no ADMIN_TOKEN); app.js checks it at boot.
-export const AUTH = { enabled: false, client: null, user: null, roles: [], profileId: null, staffOpen: false };
-const V = { mode: "signin", note: null, msg: null, busy: false, view: "auth" };
-let onChange = () => {}, onDemo = () => {}, lastFocus = null;
+export const AUTH = { enabled: false, client: null, user: null, roles: [], profileId: null, guestProfileId: null, staffOpen: false };
+let onChange = () => {}, onDemo = () => {}, lastFocus = null, mountedNode = null;
 
-/** handlers.onChange(): the signed-in user changed. handlers.onDemo(): the visitor chose the demo. */
+let clerkSdkPromise;
+function loadClerkSdk(publishableKey, proxyUrl) {
+  if (globalThis.Clerk?.load) return Promise.resolve(globalThis.Clerk);
+  if (clerkSdkPromise) return clerkSdkPromise;
+  clerkSdkPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    const loaded = () => globalThis.Clerk ? resolve(globalThis.Clerk) : reject(new Error("Clerk browser SDK did not load"));
+    script.addEventListener("load", loaded, { once: true });
+    script.addEventListener("error", () => reject(new Error("Couldn't load the sign-in service")), { once: true });
+    script.dataset.clerkPublishableKey = publishableKey;
+    if (proxyUrl) script.dataset.clerkProxyUrl = proxyUrl;
+    script.src = CLERK_SCRIPT;
+    script.async = true;
+    document.head.append(script);
+  });
+  return clerkSdkPromise;
+}
+
+const appearance = {
+  variables: {
+    colorPrimary: "#2879dc",
+    colorForeground: "#172033",
+    colorMutedForeground: "#64748b",
+    colorBackground: "#ffffff",
+    colorInput: "#f7f9fc",
+    colorInputForeground: "#172033",
+    colorDanger: "#c83b45",
+    colorNeutral: "#d7dee8",
+    fontFamily: 'Geist, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif',
+    borderRadius: "0.7rem",
+  },
+  elements: {
+    rootBox: "w-full",
+    cardBox: "w-full max-w-full",
+    card: "shadow-none border-0",
+    headerTitle: "font-semibold",
+    headerSubtitle: "text-slate-600",
+    formFieldLabel: "text-slate-700",
+    formFieldInput: "rounded-lg",
+    formButtonPrimary: "rounded-lg",
+    footerActionLink: "font-semibold",
+    footerActionText: "text-slate-600",
+  },
+};
+
 export async function initAuth(handlers) {
   onChange = handlers.onChange || onChange;
   onDemo = handlers.onDemo || onDemo;
   let cfg;
   try { cfg = await get("/config"); } catch { return AUTH; }
   if (!cfg?.auth?.enabled) return AUTH;
-  try {
-    const { createClient } = await import(SUPABASE_JS);
-    AUTH.client = createClient(cfg.auth.url, cfg.auth.anonKey, { auth: { flowType: "pkce", detectSessionInUrl: true, persistSession: true, autoRefreshToken: true } });
-  } catch (e) { console.warn("Accounts unavailable", e); return AUTH; }
+
+  AUTH.client = await loadClerkSdk(cfg.auth.publishableKey, cfg.auth.proxyUrl);
+  await AUTH.client.load();
   AUTH.enabled = true;
-  const { data } = await AUTH.client.auth.getSession();
-  // An email confirmation link returns with ?code=…; the client has used it, so tidy the address bar.
-  if (new URLSearchParams(location.search).has("code")) history.replaceState(null, "", location.pathname + location.hash);
-  await applySession(data.session);
-  AUTH.client.auth.onAuthStateChange((_event, session) => {
-    setAuthToken(session?.access_token || null);
-    // Don't call Supabase from inside this callback; react on the next tick.
-    if ((session?.user?.id || null) !== (AUTH.user?.id || null)) setTimeout(() => applySession(session).then(() => onChange()), 0);
+
+  await applySession(AUTH.client.user);
+  let previousUserId = AUTH.client.user?.id || null;
+  AUTH.client.addListener(({ user }) => {
+    const nextUserId = user?.id || null;
+    if (nextUserId === previousUserId) return;
+    previousUserId = nextUserId;
+    void applySession(user).then(() => onChange()).catch(e => console.warn("Couldn't load the signed-in account", e));
   });
   return AUTH;
 }
 
-async function applySession(session) {
-  setAuthToken(session?.access_token || null);
+async function applySession(clerkUser) {
   AUTH.user = null; AUTH.roles = []; AUTH.profileId = null;
-  if (!session) return;
-  try {
-    const me = await get("/me");
-    AUTH.user = me.user; AUTH.roles = me.roles || []; AUTH.profileId = me.profileId ?? null;
-  } catch (e) {
-    console.warn("Couldn't load the signed-in user", e);
-    if (e.status === 401) { setAuthToken(null); await AUTH.client.auth.signOut().catch(() => {}); }
-  }
+  const me = await get("/me");
+  if (clerkUser && me.user?.id !== clerkUser.id) throw new Error("Clerk session and application account did not match");
+  AUTH.user = clerkUser ? me.user : null;
+  AUTH.roles = clerkUser ? (me.roles || []) : [];
+  AUTH.profileId = me.profileId ?? null;
+  AUTH.guestProfileId = me.guestProfileId ?? null;
 }
 
 export const signedIn = () => !!AUTH.user;
 /** UI only (the server checks every staff route): may this visitor see staff views? */
 export const hasRole = r => AUTH.enabled ? AUTH.roles.includes(r) : AUTH.staffOpen || hasAdminToken();
-export const signOut = () => AUTH.client?.auth.signOut();
+export const signOut = () => AUTH.client?.signOut({ redirectUrl: location.pathname });
 
 // ---------- screens ----------
 export function openAuth(note = null) {
@@ -72,10 +109,36 @@ export function openDeleteData() {
   setTimeout(() => $("del-cancel")?.focus(), 30);
 }
 export function closeAuth() {
+  if (mountedNode && AUTH.client) {
+    AUTH.client.unmountSignIn(mountedNode);
+    mountedNode = null;
+  }
   $("auth").hidden = true;
   if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
 }
 
+function mountSignIn() {
+  const node = $("clerk-signin");
+  if (!node || !AUTH.client || mountedNode === node) return;
+  if (mountedNode) AUTH.client.unmountSignIn(mountedNode);
+  try {
+    AUTH.client.mountSignIn(node, {
+      routing: "virtual",
+      signUpUrl: location.pathname,
+      afterSignInUrl: location.pathname,
+      afterSignUpUrl: location.pathname,
+      appearance,
+      localization: store.get("lang", "en") === "ms"
+        ? { signIn: { start: { title: "Selamat kembali", subtitle: "Log masuk untuk membuka akaun anda" } }, signUp: { start: { title: "Cipta akaun", subtitle: "Mulakan perjalanan kerjaya anda" } } }
+        : { signIn: { start: { title: "Welcome back", subtitle: "Sign in to access your account" } }, signUp: { start: { title: "Create your account", subtitle: "Get started with your career plan" } } },
+    });
+    mountedNode = node;
+  } catch (e) {
+    console.error("Couldn't show the sign-in form", e);
+    V.msg = { err: true, text: e?.message || "The sign-in form could not be loaded." };
+    render();
+  }
+}
 
 function render() {
   const c = $("auth-card");
@@ -90,28 +153,21 @@ function render() {
     c.querySelector("#del-go").addEventListener("click", deleteData);
     return;
   }
-  const up = V.mode === "signup";
   c.innerHTML = `<div class="ob-top"><button class="icon-btn ob-x" type="button" id="auth-close" aria-label="${esc(t("common.close"))}"><i data-lucide="x"></i></button>
-      <div><div class="ob-kicker">${esc(t("auth.kicker"))}</div><h2 id="auth-title">${esc(t(up ? "auth.titleUp" : "auth.title"))}</h2><p>${esc(t("auth.intro"))}</p></div></div>
+      <div><div class="ob-kicker">${esc(t("auth.kicker"))}</div><h2 id="auth-title">${esc(t("auth.title"))}</h2><p>${esc(t("auth.intro"))}</p></div></div>
     <div class="ob-body">
       ${V.note ? `<p class="note">${esc(V.note)}</p>` : ""}
       <button class="btn btn-primary auth-wide" id="auth-demo" type="button"><i data-lucide="user-round"></i>${esc(t("auth.demo"))}</button>
       <p class="rs auth-center">${esc(t("auth.demoNote"))}</p>
       <div class="auth-or"><span>${esc(t("auth.or"))}</span></div>
-      <form class="auth-form" id="auth-form" novalidate>
-        <label>${esc(t("auth.email"))}<input name="email" type="email" autocomplete="email" required maxlength="200"></label>
-        <label>${esc(t("auth.password"))}<input name="password" type="password" autocomplete="${up ? "new-password" : "current-password"}" required minlength="${up ? 8 : 1}" maxlength="200"></label>
-        ${msg}
-        <button class="btn btn-soft auth-wide" type="submit" ${V.busy ? "disabled" : ""}>${V.busy ? '<span class="spin"></span>' : ""}${esc(t(up ? "auth.signup" : "auth.signin"))}</button>
-      </form>
-      <button class="linkish" id="auth-mode" type="button">${esc(t(up ? "auth.toSignin" : "auth.toSignup"))}</button>
+      ${msg}
+      <div class="clerk-signin" id="clerk-signin" aria-label="${esc(t("auth.signin"))}"></div>
     </div>
     <div class="ob-foot"><span class="left"><i data-lucide="lock"></i>${esc(t("auth.privacy"))}</span></div>`;
   icons();
   c.querySelector("#auth-close").addEventListener("click", chooseDemo);
   c.querySelector("#auth-demo").addEventListener("click", chooseDemo);
-  c.querySelector("#auth-mode").addEventListener("click", () => { V.mode = up ? "signin" : "signup"; V.msg = null; render(); });
-  c.querySelector("#auth-form").addEventListener("submit", submit);
+  setTimeout(mountSignIn, 0);
 }
 
 function chooseDemo() {
@@ -120,27 +176,11 @@ function chooseDemo() {
   onDemo();
 }
 
-async function submit(ev) {
-  ev.preventDefault();
-  const f = ev.target, email = f.email.value.trim(), password = f.password.value;
-  const up = V.mode === "signup";
-  if (!email || !password) { V.msg = { err: true, text: `${t("auth.failed")}: ${t("auth.email")} / ${t("auth.password")}` }; render(); return; }
-  if (up && password.length < 8) { V.msg = { err: true, text: t("auth.shortPassword") }; render(); $("auth-form").email.value = email; return; }
-  V.busy = true; V.msg = null; render();
-  const res = up
-    ? await AUTH.client.auth.signUp({ email, password, options: { emailRedirectTo: location.origin + location.pathname } })
-    : await AUTH.client.auth.signInWithPassword({ email, password });
-  V.busy = false;
-  if (res.error) { V.msg = { err: true, text: `${t("auth.failed")}: ${res.error.message}` }; render(); $("auth-form").email.value = email; return; }
-  if (up && !res.data.session) { V.mode = "signin"; V.msg = { err: false, text: t("auth.checkEmail") }; render(); $("auth-form").email.value = email; return; }
-  // Signed in: onAuthStateChange loads the account and the app closes this screen.
-}
-
 async function deleteData() {
   V.busy = true; V.msg = null; render();
   try {
     const out = await del("/me/data");
-    AUTH.profileId = null;
+    AUTH.profileId = null; AUTH.guestProfileId = null;
     closeAuth();
     onChange({ deleted: out.deleted });
   } catch (e) {

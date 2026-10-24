@@ -197,11 +197,14 @@ function showPendingPrompt() {
 
 async function reloadPlans() { await loadPlans(); if (UI.tab === "path" && UI.view === "user") Path.repaintSave(); }
 
-// ---------- accounts (only when the server has Supabase Auth switched on) ----------
+// ---------- accounts (only when Replit-managed Clerk is switched on) ----------
 function renderAccount() {
   const on = AUTH.enabled, inn = !!AUTH.user;
   $("signin-btn").hidden = !on || inn;
-  document.querySelectorAll("#menu [data-account]").forEach(el => { const v = el.dataset.account; el.hidden = !on || (v === "in" && !inn) || (v === "out" && inn); });
+  document.querySelectorAll("#menu [data-account]").forEach(el => {
+    const v = el.dataset.account;
+    el.hidden = !on || (v === "in" && !inn) || (v === "out" && inn);
+  });
   $("menu-who").textContent = inn ? t("menu.account", { email: AUTH.user.email || "" }) : "";
   document.querySelectorAll("#menu [data-staff]").forEach(el => { el.hidden = !hasRole(el.dataset.staff); });
   // Without accounts the Review button is where an admin enters the admin token, so it stays.
@@ -214,7 +217,7 @@ function renderAccount() {
 async function authChanged(info = {}) {
   renderAccount();
   if (AUTH.user && info.deleted !== undefined) {
-    setProfileId(1); await actions.loadProfile(1);
+    setProfileId(AUTH.guestProfileId || 1); await actions.loadProfile(AUTH.guestProfileId || 1);
     toast({ title: t(info.deleted ? "del.done" : "del.none"), badgeHtml: badge("b-good", t("reroute.appliedBadge")) });
     return;
   }
@@ -226,7 +229,7 @@ async function authChanged(info = {}) {
     if (!AUTH.profileId) openOnboarding(0);
     if (hasRole("admin")) Admin.loadReview().then(updateAdminCount);
   } else {
-    setProfileId(1); await actions.loadProfile(1);
+    setProfileId(AUTH.guestProfileId || 1); await actions.loadProfile(AUTH.guestProfileId || 1);
     toast({ title: t("auth.signedOut"), badgeHtml: badge("b-warn", t("src.sample")) });
   }
 }
@@ -237,10 +240,9 @@ async function demoChosen() {
   Guide.intro();
 }
 
-/** "Set up my profile" needs an account when accounts are on. */
+/** Guests can build a profile with their CV without creating an account. */
 function startOnboarding() {
-  if (AUTH.enabled && !AUTH.user) openAuth(t("auth.needAccount"));
-  else openOnboarding(0);
+  openOnboarding(0);
 }
 
 /** A job's details would repeat the My goal panel once that job is chosen there. */
@@ -440,7 +442,8 @@ async function boot() {
   if (!AUTH.enabled) AUTH.staffOpen = await get("/advisor/queue", null, { timeout: 8000 }).then(() => true, e => !e.needsAuth);
   if (AUTH.enabled) {
     if (AUTH.user) { setProfileId(AUTH.profileId || 1); if (!AUTH.profileId) first = "onboard"; }
-    else { if (profileId() !== 1) setProfileId(1); if (store.get("authChoice", null) !== "demo") first = "auth"; }
+    else if (AUTH.guestProfileId) setProfileId(AUTH.guestProfileId);
+    else { if (profileId() !== 1) setProfileId(1); if (store.get("authChoice", null) !== "demo") first = "onboard"; }
   } else if (!store.get("onboarded", false)) first = "onboard";
   renderAccount();
   await loadProfile(profileId());

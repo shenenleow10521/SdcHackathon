@@ -1,5 +1,5 @@
 // Accounts: what the browser needs to sign in, who is signed in, and "Delete my data".
-//   GET    /config    { auth:{ enabled, url?, anonKey? } }  (the anon key is public by design)
+//   GET    /config    { auth:{ enabled, publishableKey?, proxyUrl? } }
 //   GET    /me        { authEnabled, user:{id,email}|null, roles, profileId|null }
 //   DELETE /me/data   deletes the signed-in user's profile and everything linked to it
 import { Router } from "express";
@@ -7,14 +7,16 @@ import type { Services } from "../context.ts";
 import { HttpError } from "../lib/http.ts";
 import { audit } from "../repo.ts";
 import { deleteProfileData } from "../lib/auth.ts";
+import { guestOwnerId } from "../middlewares/guestSession.ts";
 
 export default function accountRoutes(svc: Services) {
   const r = Router();
-  const enabled = () => !!(svc.auth && svc.config.supabase);
+  const enabled = () => svc.config.clerkEnabled || !!svc.auth;
 
   r.get("/config", (_req, res) => {
-    const s = svc.config.supabase;
-    res.json({ auth: enabled() && s ? { enabled: true, url: s.url, anonKey: s.anonKey } : { enabled: false } });
+    res.json({ auth: enabled()
+      ? { enabled: true, publishableKey: svc.config.clerkPublishableKey, proxyUrl: svc.config.clerkProxyUrl }
+      : { enabled: false } });
   });
 
   const ownProfileId = async (userId: string) =>
@@ -22,14 +24,27 @@ export default function accountRoutes(svc: Services) {
 
   r.get("/me", async (req, res) => {
     const u = req.user;
-    res.json({ authEnabled: enabled(), user: u ? { id: u.id, email: u.email } : null, roles: u?.roles ?? [], profileId: u ? await ownProfileId(u.id) : null });
+    const guestProfileId = req.guestSessionId ? await ownProfileId(guestOwnerId(req.guestSessionId)) : null;
+    const profileId = (u ? await ownProfileId(u.id) : null) ?? guestProfileId;
+    res.json({ authEnabled: enabled(), user: u ? { id: u.id, email: u.email } : null, roles: u?.roles ?? [], profileId, guestProfileId });
   });
 
   r.delete("/me/data", async (req, res) => {
     const u = req.user;
-    if (!u) throw new HttpError(401, "sign_in_required", "Sign in to delete your data.");
-    const id = await ownProfileId(u.id);
-    const out = id ? await svc.db.tx(t => deleteProfileData(t, id)) : { profileId: null, deleted: false, plans: 0 };
+    if (!u && !req.guestSessionId) throw new HttpError(401, "sign_in_required", "Start a guest session or sign in to delete your data.");
+    const ids = [...new Set([
+      u ? await ownProfileId(u.id) : null,
+      req.guestSessionId ? await ownProfileId(guestOwnerId(req.guestSessionId)) : null,
+    ].filter((id): id is number => id !== null))];
+    const out = await svc.db.tx(async t => {
+      let deleted = false, plans = 0;
+      for (const id of ids) {
+        const result = await deleteProfileData(t, id);
+        deleted ||= result.deleted;
+        plans += result.plans;
+      }
+      return { profileId: ids[0] ?? null, deleted, plans };
+    });
     // Record that a deletion happened, without keeping anything about the person.
     await audit(svc.db, "user", "account.delete_data", null, { deleted: out.deleted, plans: out.plans });
     res.json(out);

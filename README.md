@@ -96,7 +96,7 @@ HalaTuju answers two different questions and never mixes them:
 | Company-level requirements | Per-employer match % and extra route stops | ✅ Works | Sample (fictional employers) |
 | Employer requirements form | Employers enter their own requirements; stored as unverified | ✅ Works | Employer-entered |
 | Advisor approval | A plan goes into a learning plan only after an advisor approves it (or asks for changes) | ✅ Works | n/a |
-| Accounts and roles | Optional sign-in with email and password (Supabase Auth; switched off in the live demo), or try the demo as Priya with no account. Each account sees only its own profile, plans and confirmed skills; admin and advisor screens need a role; **Delete my data** | 🧪 Built (ownership and role checks tested; live browser sign-in not yet checked) | n/a |
+| Accounts and roles | Sign in or create an account with Replit-managed Clerk, upload a CV as a guest, or try the demo as Priya. Guest profiles are scoped to a signed browser session; accounts can access only their own profiles; admin and advisor screens need a role; **Delete my data** | 🧪 Built (ownership, guest and role checks tested; live browser sign-in not yet checked) | n/a |
 | Deadline tracking | Target date + weekly hours → *Ahead / On track / Behind*, e.g. a six-month redeployment window | ✅ Works | n/a |
 | Costed route | Course cost in RM per step and in total, with the HRD Corp-claimable share | ✅ Works (no HRD Corp-claimable course is loaded yet, so that share shows RM 0) | Real (30 course listings with links) |
 | SDG-aware ranking | Choose an SDG priority (e.g. climate); jobs re-rank and the trade-off in match % and weeks is shown | ✅ Works | Sample tags on a Sample catalogue |
@@ -117,12 +117,13 @@ HalaTuju answers two different questions and never mixes them:
 |---|---|
 | Frontend | Vanilla JS, 3d-force-graph (three.js), GSAP, Lucide icons, Geist font; English and Bahasa Melayu |
 | Backend | Node 22, TypeScript, Express 5; zod, multer, unpdf (PDF text), tesseract.js (local OCR, eng + msa data vendored in `server/lib/tessdata`), fast-xml-parser |
-| Database | Replit PostgreSQL 16 in the live app; embedded PGlite when no `DATABASE_URL` is set (local runs, tests); optional Supabase Auth for accounts (off in the live demo) |
+| Database | Replit PostgreSQL 16 in the live app; embedded PGlite when no `DATABASE_URL` is set (local runs, tests) |
+| Accounts | Replit-managed Clerk (`@clerk/express`, `@clerk/clerk-js`); guests upload a CV without an account, tied to a signed browser cookie |
 | AI models | **Google Gemini API**: gemini-3.5-flash-lite (main), gemini-3.1-flash-lite (reviewer); our ridge exposure model (JSON weights, one dot product per task) |
 | AI / Compute | **RunPod**: Serverless bge-m3 embeddings (endpoint `a7ipau1nmqogxs`); GPU pod for the final model training run |
 | Web search | Tavily (Job market researcher and committee only, trusted domains) |
 | Hosting / Dev | **Replit** (`.replit`: Node 22, PostgreSQL 16, `npm start`, VM deployment) |
-| Tests and CI | Vitest (419 tests), GitHub Actions on Node 22 and 24 |
+| Tests and CI | Vitest (418 tests), GitHub Actions on Node 22 and 24 |
 
 ### Domain 1 must-haves
 
@@ -274,7 +275,7 @@ npm run dev             # http://localhost:3000
 ### Run tests
 
 ```bash
-npm test                # 419 tests (24 Oct 2026): engine, stress test, triage, Job market researcher sources, PII scrubbing, OCR, fairness, prompt injection, API, accounts, HR, web client
+npm test                # 418 tests (24 Oct 2026): engine, stress test, triage, Job market researcher sources, PII scrubbing, OCR, fairness, prompt injection, API, accounts, HR, web client
 npm run typecheck
 ```
 
@@ -283,7 +284,7 @@ The tests use an in-memory database; network and AI calls are mocked. To run the
 Environment (all in `.env.example`):
 - **AI:** `GEMINI_API_KEY` (required), `GEMINI_API_KEY_2`, `GEMINI_MODEL`, `GEMINI_REVIEWER_MODEL`.
 - **Database:** `DATABASE_URL` for PostgreSQL; leave it empty to use an embedded PGlite database in `./data`.
-- **Accounts:** `SUPABASE_URL` and `SUPABASE_ANON_KEY` switch on sign-in (email and password, via Supabase Auth); leave them empty for an open demo without accounts. `ADMIN_EMAILS` and `ADVISOR_EMAILS` (comma-separated) give staff roles.
+- **Accounts:** Replit-managed Clerk provides sign-up, sign-in and browser sessions (`CLERK_SECRET_KEY`, `CLERK_PUBLISHABLE_KEY`, provisioned by Replit). `SESSION_SECRET` signs guest-profile cookies. Without Clerk keys the app runs as an open demo. `ADMIN_EMAILS` and `ADVISOR_EMAILS` (comma-separated) give staff roles.
 - **Embeddings:** `EMBED_PROVIDER` (`runpod` / `local` / `gemini` / `none`), `RUNPOD_API_KEY`, `RUNPOD_EMBED_ENDPOINT_ID`, `LOCAL_EMBED_URL`, `LOCAL_EMBED_MODEL`.
 - **Job market researcher web search:** `TAVILY_API_KEY` (free tier is enough) or `BRAVE_API_KEY`; `COMMITTEE_QUERIES_PER_RUN` (default 3).
 - **Other:** `DEMO_MODE` (replay the last recorded Job market researcher run if a live source fails, labelled "replayed"), `ADMIN_TOKEN` (header `x-admin-token` opens staff routes for scripts), `SCOUT_SCHEDULE`, `SCOUT_INTERVAL_HOURS`, `PORT`.
@@ -432,14 +433,14 @@ ESCO v1.2.1 has **no equivalent for any of our 5 AI-era skills** (best bge-m3 co
 - **People decide.** No plan changes without the user's or an advisor's approval; big knowledge changes need a person.
 - **No invented facts.** Agents use database IDs only; unsourced claims are removed.
 - **Fairness by design.** Age, gender, race and religion are never collected or used; a test checks that the same CV with a different name, gender, age or religion gives identical results.
-- **Privacy.** Personal details are scrubbed before any AI call, scans are read by local OCR first, and CV files are never stored. Each account sees only its own profile and plans, and **Delete my data** removes the profile and everything linked to it. The demo uses a synthetic persona only.
+- **Privacy.** Personal details are scrubbed before any AI call, scans are read by local OCR first, and CV files are never stored. Each account, and each guest browser, sees only its own profile and plans, and **Delete my data** removes the profile and everything linked to it. The demo uses a synthetic persona only.
 - **Reversible.** Every knowledge change is versioned and can be undone.
 
 ## Quality
 
 | Check | What it covers | Status |
 |---|---|---|
-| Automated tests (`npm test`) | 419 tests in 24 files (24 Oct 2026): scoring engine, stress test, SDG coverage, full ESCO data and "check any job", O\*NET/DOSM/MyCOL layers, ESCO requirement labels, triage rules, Job market researcher sources, emerging-skill committee, personal-detail scrubbing, OCR routing, fairness, prompt injection, API shapes, source policy, HR, web client. Network and AI are mocked | ✅ |
+| Automated tests (`npm test`) | 418 tests in 24 files (24 Oct 2026): scoring engine, stress test, SDG coverage, full ESCO data and "check any job", O\*NET/DOSM/MyCOL layers, ESCO requirement labels, triage rules, Job market researcher sources, emerging-skill committee, personal-detail scrubbing, OCR routing, fairness, prompt injection, API shapes, source policy, HR, web client. Network and AI are mocked | ✅ |
 | Continuous integration | Type-check and tests on Node 22 and 24, on every push and pull request (`.github/workflows/ci.yml`); no linter yet | ✅ |
 | Fairness check | The same CV with a different name, gender, age or religion gives identical results (`tests/fairness.test.ts`) | ✅ |
 | CV-reading benchmark | 50 synthetic CVs, 36 held out; see [Evidence](#cv-reading-benchmark) and [`eval/RESULTS.md`](eval/RESULTS.md) | 🧪 |

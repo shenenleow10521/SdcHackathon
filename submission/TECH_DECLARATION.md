@@ -40,9 +40,9 @@ A CV arrives as a PDF, a pasted text, or a scan or photo. Scans are read by **lo
 
 Scores, routes and the 1,000-future stress test are **fixed formulas** in a shared engine (`shared/engine.js`) that runs on the server and in the browser; no AI sets a number.
 
-A daily **Job market researcher** agent searches 74 vetted sites (Tavily, RSS, GDELT, Hacker News, arXiv, OpenAlex), checks each quote word for word, and a second Gemini model reviews each claim. Deterministic triage applies small multi-source changes and sends the rest to a person. An approved change re-scores plans and reroutes them on the map.
+A daily **Job market researcher** agent searches 74 vetted sites, checks each quote word for word, and a second Gemini model reviews each claim. Deterministic triage applies small multi-source changes and sends the rest to a person. An approved change re-scores plans and reroutes them on the map.
 
-Our own **AI-exposure model** (bge-m3 + ridge regression, trained on a RunPod GPU pod) scores tasks and skills.
+Sign-in uses **Replit-managed Clerk**; guests can use the app without an account. Our own **AI-exposure model** (bge-m3 + ridge, trained on a RunPod GPU pod) scores tasks and skills.
 
 *Word count: 195*
 
@@ -63,7 +63,9 @@ Main languages: TypeScript, JavaScript, Python 3.11 (ML pipeline, data scripts),
 | pg 8.23.1 | PostgreSQL client | MIT |
 | @electric-sql/pglite 0.5.11 | Embedded PostgreSQL for local runs and tests | Apache-2.0 |
 | dotenv 18.0.8 | Local environment variables | BSD-2-Clause |
-| Vitest 5.0.5, supertest 7.3.1 | 419 automated tests (development only) | MIT |
+| @clerk/express 2.1.83, @clerk/clerk-js 6.40.1 | Sign-in and sessions (Replit-managed Clerk) | MIT |
+| http-proxy-middleware 4.2.0 | Forwards Clerk sign-in traffic through our own domain | MIT |
+| Vitest 5.0.5, supertest 7.3.1 | 418 automated tests (development only) | MIT |
 | 3d-force-graph 1.79.0 (three.js) | 3D career map | MIT |
 | GSAP 3.12.5 | Map animations | GreenSock standard licence (free) |
 | Lucide 0.469.0 | Icons | ISC |
@@ -82,6 +84,7 @@ Main languages: TypeScript, JavaScript, Python 3.11 (ML pipeline, data scripts),
 | API & Provider | Purpose in Project | Access Tier (free / paid / sponsor-provided) |
 |---|---|---|
 | Google Gemini API: `gemini-3.5-flash-lite` (main), `gemini-3.1-flash-lite` (reviewer and fallback), `gemini-embedding-001` (last-resort embedding fallback) | CV reading, Job market researcher extraction, AI reviewer, emerging-skill committee, route explanations | Free |
+| Clerk (managed by Replit) | Sign-up, sign-in and account sessions; guests can still upload a CV without an account | Sponsor-provided (through Replit) |
 | RunPod Serverless API (endpoint `a7ipau1nmqogxs`) | bge-m3 embeddings at run time | Sponsor-provided |
 | RunPod GraphQL / REST API | Launching, monitoring and stopping the training pod (`ml/runpod_train.py`) | Sponsor-provided |
 | Tavily Search API | Web search limited to trusted domains, for the Job market researcher and the committee | Free |
@@ -95,10 +98,10 @@ Job boards (JobStreet, LinkedIn, Indeed) are plain links only; the app never cal
 
 | Service & Provider | Purpose in Project | Plan / Region |
 |---|---|---|
-| Replit | Hosts the app (Deployments, Reserved VM) and its only database (Replit PostgreSQL 16); Secrets hold all keys | Replit Core (sponsor-provided) / 🟨 TEAM: region shown in the deployment settings |
+| Replit | Hosts the app (Deployments, Reserved VM) and its only database (Replit PostgreSQL 16); Secrets hold all keys | Replit Core (sponsor-provided) / Asia |
 | RunPod Serverless | bge-m3 embedding endpoint, 0–1 workers | Sponsor credit |
 | RunPod GPU Cloud | Final exposure-model training run (pod `38jijj8fe5dazu`, RTX 4090, 2.5 min) | Sponsor credit, Secure Cloud |
-| Supabase | PostgreSQL during local development only (the live app uses Replit PostgreSQL); optional sign-in code (Supabase Auth) that is switched off in the live demo | Free |
+| Supabase | PostgreSQL during local development only (the live app uses Replit PostgreSQL) | Free |
 | GitHub, GitHub Actions | Repository; type-check and tests on every push (Node 22 and 24) | Free |
 
 **How the prototype is deployed:** Replit Deployments (Reserved VM) runs `npm start` on Node 22 with Replit PostgreSQL 16. Steps are in `submission/REPLIT_PROOF.md`.
@@ -155,12 +158,13 @@ If yes, list them below:
 | Claude agents (Anthropic) | Writing the 50 synthetic benchmark CVs and their blind answer keys; the blind precision judge for the CV benchmark | Moderate |
 | Google Gemini (gemini-3.5-flash) | A first benchmark judge run; its verdicts were discarded when the free quota ran out | Minor |
 | faster-whisper large-v3 (local GPU) | Transcribing the organisers' submission tutorial video for our requirements notes | Minor |
+| Replit Agent (Replit) | Replacing Supabase sign-in with Replit-managed Clerk plus private guest sessions; Replit configuration. Reviewed by the team, fixed by a member, and merged after the 418 tests passed | Moderate |
 | Microsoft Edge neural voice (edge-tts) | Timing the pitch-video narration lines; not used in the final audio | Minor |
 | 🟨 TEAM: any other AI tool a member used (e.g. ChatGPT, Copilot, Gemini app, image or voice tools), or delete this row | 🟨 TEAM | 🟨 TEAM |
 
 Briefly describe how your team reviewed, tested, and took responsibility for AI-generated output: *[Maximum 100 words]*
 
-The team chose the problem, persona, the reroute idea, the data sources and every design decision, and directed each change. AI-written code ships only with tests: 419 automated tests and a type-check run on every push in CI. Each number in the README is copied from a result file in the repo, and each benchmark was run on held-out data with its weak results reported (per-task model error, blind privacy score 82.6%). Every team member can explain every core feature. 🟨 TEAM: adjust to what you actually did, e.g. who reviewed which part.
+The team chose the problem, persona, the reroute idea, the data sources and every design decision, and directed each change. AI-written code ships only with tests: 418 automated tests and a type-check run on every push in CI. Each number in the README is copied from a result file in the repo, and each benchmark was run on held-out data with its weak results reported (per-task model error, blind privacy score 82.6%). Every team member can explain every core feature. 🟨 TEAM: adjust to what you actually did, e.g. who reviewed which part.
 
 *Word count: 92*
 
@@ -177,7 +181,7 @@ If yes, list them below:
 | Sponsor | Resource (API / credits / platform / data) | How It Was Used in the Project |
 |---|---|---|
 | RunPod | Credits (US$25): GPU pod and Serverless | Final training run of our AI-exposure model (pod `38jijj8fe5dazu`, RTX 4090); bge-m3 embedding endpoint `a7ipau1nmqogxs` for CV matching, signal de-duplication and ESCO duplicate checks. Proof: `SDC2026_TeamName_Runpod_POU.pdf` |
-| Replit | Platform: Replit Core and Deployments | Hosts the live app and its PostgreSQL database; Secrets hold all keys. Proof: `SDC2026_TeamName_Replit_POU.pdf` |
+| Replit | Platform: Replit Core and Deployments | Hosts the live app and its PostgreSQL database; Clerk sign-in managed by Replit; Replit Agent for the sign-in change; Secrets hold all keys. Proof: `SDC2026_TeamName_Replit_POU.pdf` |
 | 🟨 TEAM: mentoring session, if the team used one (the template lists mentoring as a sponsor resource), or delete this row | Mentoring | 🟨 TEAM |
 
 Was the sponsor resource essential to the core functionality of the prototype, or could it be replaced? Explain briefly: *[Maximum 100 words]*
@@ -196,9 +200,9 @@ RunPod is essential to the quality of CV reading: the 13,939 ESCO skill vectors 
 
 **Collected:** skills and levels with short scrubbed evidence quotes, current role, weekly study hours, target date, budget and saved plans. No name, email or phone is stored. Age, gender, race and religion are never collected or used; a test checks they don't change any result.
 
-**CVs:** read in memory and never stored. Scans are read by OCR on our own server. Names, MyKad numbers, phones, emails and addresses are removed **before any AI sees the text** (99.4% on held-out test CVs), and the user sees what was removed.
+**CVs:** read in memory and never stored. Scans are read by local OCR. Names, MyKad numbers, phones, emails and addresses are removed **before any AI sees the text** (99.4% on held-out test CVs), and the user sees what was removed.
 
-**Live demo:** sign-in is off, so profiles aren't tied to accounts and anyone with a profile's number can open it; it is for synthetic CVs only. There is no automatic deletion. Optional sign-in (Supabase Auth) limits each account to its own data and adds **Delete my data**.
+**Control:** sign-in uses Replit-managed Clerk. Guests can upload a CV without an account; their profile is tied to a signed, HttpOnly browser cookie, so only that browser can open it. Each account or guest sees only its own data, and **Delete my data** removes it. There is no automatic deletion.
 
 **Protection:** keys in Replit Secrets; staff routes need the admin token.
 

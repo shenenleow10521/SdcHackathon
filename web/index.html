@@ -37,7 +37,7 @@
               <div class="menu-who" id="menu-who" data-account="in" hidden></div>
               <button type="button" role="menuitem" data-menu="signin" data-account="out" hidden><i data-lucide="log-in"></i><span data-i18n="menu.signin">Sign in or create an account</span></button>
               <button type="button" role="menuitem" data-menu="signout" data-account="in" hidden><i data-lucide="log-out"></i><span data-i18n="menu.signout">Sign out</span></button>
-              <button type="button" role="menuitem" data-menu="delete" data-account="in" hidden><i data-lucide="trash-2"></i><span data-i18n="menu.delete">Delete my data</span></button>
+              <button type="button" role="menuitem" data-menu="delete" data-account="delete" hidden><i data-lucide="trash-2"></i><span data-i18n="menu.delete">Delete my data</span></button>
             </div>
           </div>
         </div>
@@ -145,7 +145,7 @@
   <div class="ob-card" id="ob-card"></div>
 </div>
 
-<!-- Sign in (Supabase Auth) and "Delete my data"; only used when accounts are on -->
+<!-- Sign in (Replit-managed Clerk) and "Delete my data"; only used when accounts are on -->
 <div class="ob" id="auth" role="dialog" aria-modal="true" aria-labelledby="auth-title" hidden>
   <div class="ob-card auth-card" id="auth-card"></div>
 </div>

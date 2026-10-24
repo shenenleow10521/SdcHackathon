@@ -19,10 +19,6 @@ export function setAdminToken(t) {
 }
 export const hasAdminToken = () => !!adminToken;
 
-// Supabase access token of the signed-in user (features/auth.js keeps it fresh); sent as a Bearer token.
-let authToken = null;
-export function setAuthToken(t) { authToken = t || null; }
-
 export class ApiError extends Error {
   constructor(status, code, message, details) {
     super(message || "Request failed");
@@ -60,7 +56,6 @@ export async function api(path, opts = {}) {
   const timer = setTimeout(() => { timedOut = true; ctrl?.abort(); }, timeout);
   const headers = { Accept: "application/json" };
   if (adminToken) headers["x-admin-token"] = adminToken;
-  if (authToken) headers.Authorization = `Bearer ${authToken}`;
   let payload;
   if (form) payload = form;
   else if (body !== undefined) { headers["Content-Type"] = "application/json"; payload = JSON.stringify(body); }

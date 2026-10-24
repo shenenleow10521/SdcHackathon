@@ -10,8 +10,11 @@ export interface Config {
   schedulerEnabled: boolean;  // SCOUT_SCHEDULE=off disables the scheduled market scout
   scoutIntervalHours: number;
   port: number;
-  /** SUPABASE_URL + SUPABASE_ANON_KEY: switches accounts on. Both are public by design (sent to the browser). */
-  supabase: { url: string; anonKey: string } | null;
+  /** Replit-managed Clerk, provisioned with CLERK_SECRET_KEY and CLERK_PUBLISHABLE_KEY. */
+  clerkEnabled: boolean;
+  clerkPublishableKey: string;
+  clerkProxyUrl: string;
+  guestSessionSecret: string | null;
   adminEmails: string[];      // ADMIN_EMAILS (comma-separated): admin role (also advisor)
   advisorEmails: string[];    // ADVISOR_EMAILS: advisor role (advisor queue, HR view)
 }
@@ -35,7 +38,10 @@ export function configFromEnv(env = process.env): Config {
     schedulerEnabled: !/^(0|off|false|no)$/i.test(env.SCOUT_SCHEDULE || "on") && env.NODE_ENV !== "test",
     scoutIntervalHours: Number(env.SCOUT_INTERVAL_HOURS || 24),
     port: Number(env.PORT || 3000),
-    supabase: env.SUPABASE_URL && env.SUPABASE_ANON_KEY ? { url: env.SUPABASE_URL, anonKey: env.SUPABASE_ANON_KEY } : null,
+    clerkEnabled: !!(env.CLERK_SECRET_KEY && (env.CLERK_PUBLISHABLE_KEY || env.VITE_CLERK_PUBLISHABLE_KEY)),
+    clerkPublishableKey: env.CLERK_PUBLISHABLE_KEY || env.VITE_CLERK_PUBLISHABLE_KEY || "",
+    clerkProxyUrl: env.VITE_CLERK_PROXY_URL || "",
+    guestSessionSecret: env.SESSION_SECRET || null,
     adminEmails: emailList(env.ADMIN_EMAILS),
     advisorEmails: emailList(env.ADVISOR_EMAILS),
   };
