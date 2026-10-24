@@ -894,6 +894,8 @@
   "auth.titleUp": "Create your account",
   "auth.intro": "Save your own career map and plans. Only you can see them.",
   "auth.demo": "Try the demo as Priya (sample)",
+  "auth.guest": "Upload my CV as a guest",
+  "auth.guestNote": "No account needed. Your profile stays private to this browser.",
   "auth.demoNote": "No account needed. Priya is a sample persona; your changes stay in this browser.",
   "auth.or": "or use your account",
   "auth.email": "Email",

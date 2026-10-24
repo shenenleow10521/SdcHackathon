@@ -17,7 +17,9 @@ export function getClerkProxyHost(req: { headers: IncomingHttpHeaders }): string
 }
 
 export function clerkProxyMiddleware(): RequestHandler {
-  if (process.env.NODE_ENV !== "production" || !process.env.CLERK_SECRET_KEY) {
+  // Production Clerk instances (sk_live_ keys) load through this proxy; Replit deployments don't set NODE_ENV.
+  const key = process.env.CLERK_SECRET_KEY || "";
+  if (!key || (process.env.NODE_ENV !== "production" && !key.startsWith("sk_live_"))) {
     return (_req, _res, next) => next();
   }
   return createProxyMiddleware({

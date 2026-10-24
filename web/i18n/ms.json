@@ -894,6 +894,8 @@
   "auth.titleUp": "Cipta akaun anda",
   "auth.intro": "Simpan peta kerjaya dan pelan anda sendiri. Hanya anda yang boleh melihatnya.",
   "auth.demo": "Cuba demo sebagai Priya (sampel)",
+  "auth.guest": "Muat naik CV saya sebagai tetamu",
+  "auth.guestNote": "Tiada akaun diperlukan. Profil anda kekal peribadi dalam pelayar ini.",
   "auth.demoNote": "Tiada akaun diperlukan. Priya ialah persona sampel; perubahan anda kekal dalam pelayar ini.",
   "auth.or": "atau guna akaun anda",
   "auth.email": "E-mel",

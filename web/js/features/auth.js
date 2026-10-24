@@ -8,7 +8,7 @@ const CLERK_SCRIPT = "/vendor/clerk/clerk.browser.js";
 const V = { msg: null, busy: false, view: "auth" };
 
 export const AUTH = { enabled: false, client: null, user: null, roles: [], profileId: null, guestProfileId: null, staffOpen: false };
-let onChange = () => {}, onDemo = () => {}, lastFocus = null, mountedNode = null;
+let onChange = () => {}, onDemo = () => {}, onGuest = () => {}, lastFocus = null, mountedNode = null;
 
 let clerkSdkPromise;
 function loadClerkSdk(publishableKey, proxyUrl) {
@@ -58,6 +58,7 @@ const appearance = {
 export async function initAuth(handlers) {
   onChange = handlers.onChange || onChange;
   onDemo = handlers.onDemo || onDemo;
+  onGuest = handlers.onGuest || onGuest;
   let cfg;
   try { cfg = await get("/config"); } catch { return AUTH; }
   if (!cfg?.auth?.enabled) return AUTH;
@@ -99,7 +100,7 @@ export function openAuth(note = null) {
   Object.assign(V, { view: "auth", note, msg: null, busy: false });
   $("auth").hidden = false;
   render();
-  setTimeout(() => $("auth-demo")?.focus(), 30);
+  setTimeout(() => $("auth-guest")?.focus(), 30);
 }
 export function openDeleteData() {
   lastFocus = document.activeElement;
@@ -157,7 +158,9 @@ function render() {
       <div><div class="ob-kicker">${esc(t("auth.kicker"))}</div><h2 id="auth-title">${esc(t("auth.title"))}</h2><p>${esc(t("auth.intro"))}</p></div></div>
     <div class="ob-body">
       ${V.note ? `<p class="note">${esc(V.note)}</p>` : ""}
-      <button class="btn btn-primary auth-wide" id="auth-demo" type="button"><i data-lucide="user-round"></i>${esc(t("auth.demo"))}</button>
+      <button class="btn btn-primary auth-wide" id="auth-guest" type="button"><i data-lucide="upload"></i>${esc(t("auth.guest"))}</button>
+      <p class="rs auth-center">${esc(t("auth.guestNote"))}</p>
+      <button class="ghost auth-wide" id="auth-demo" type="button"><i data-lucide="user-round"></i>${esc(t("auth.demo"))}</button>
       <p class="rs auth-center">${esc(t("auth.demoNote"))}</p>
       <div class="auth-or"><span>${esc(t("auth.or"))}</span></div>
       ${msg}
@@ -167,7 +170,14 @@ function render() {
   icons();
   c.querySelector("#auth-close").addEventListener("click", chooseDemo);
   c.querySelector("#auth-demo").addEventListener("click", chooseDemo);
+  c.querySelector("#auth-guest").addEventListener("click", chooseGuest);
   setTimeout(mountSignIn, 0);
+}
+
+function chooseGuest() {
+  store.set("authChoice", "guest");
+  closeAuth();
+  onGuest();
 }
 
 function chooseDemo() {

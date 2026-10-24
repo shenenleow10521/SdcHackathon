@@ -431,7 +431,7 @@ async function boot() {
   G.setRotate(UI.rotating);
   loadHealth();
   $("panel").innerHTML = `<div class="boot-load"><div class="loading" role="status"><span class="spin"></span>${esc(t("boot.loading"))}</div></div>`;
-  const authReady = initAuth({ onChange: authChanged, onDemo: demoChosen }).catch(e => { console.warn(e); return AUTH; });
+  const authReady = initAuth({ onChange: authChanged, onDemo: demoChosen, onGuest: () => openOnboarding(0) }).catch(e => { console.warn(e); return AUTH; });
   try { await loadGraph(); }
   catch (e) { console.error(e); bootError(e); return; }
   loadEscoCount();
@@ -443,7 +443,7 @@ async function boot() {
   if (AUTH.enabled) {
     if (AUTH.user) { setProfileId(AUTH.profileId || 1); if (!AUTH.profileId) first = "onboard"; }
     else if (AUTH.guestProfileId) setProfileId(AUTH.guestProfileId);
-    else { if (profileId() !== 1) setProfileId(1); if (store.get("authChoice", null) !== "demo") first = "onboard"; }
+    else { if (profileId() !== 1) setProfileId(1); const choice = store.get("authChoice", null); if (!choice) first = "auth"; else if (choice === "guest") first = "onboard"; }
   } else if (!store.get("onboarded", false)) first = "onboard";
   renderAccount();
   await loadProfile(profileId());
