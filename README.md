@@ -96,7 +96,7 @@ HalaTuju answers two different questions and never mixes them:
 | Company-level requirements | Per-employer match % and extra route stops | ✅ Works | Sample (fictional employers) |
 | Employer requirements form | Employers enter their own requirements; stored as unverified | ✅ Works | Employer-entered |
 | Advisor approval | A plan goes into a learning plan only after an advisor approves it (or asks for changes) | ✅ Works | n/a |
-| Accounts and roles | Sign in with email and password (Supabase Auth), or try the demo as Priya with no account. Each account sees only its own profile, plans and confirmed skills; admin and advisor screens need a role; **Delete my data** | 🧪 Built (ownership and role checks tested; live browser sign-in not yet checked) | n/a |
+| Accounts and roles | Optional sign-in with email and password (Supabase Auth; switched off in the live demo), or try the demo as Priya with no account. Each account sees only its own profile, plans and confirmed skills; admin and advisor screens need a role; **Delete my data** | 🧪 Built (ownership and role checks tested; live browser sign-in not yet checked) | n/a |
 | Deadline tracking | Target date + weekly hours → *Ahead / On track / Behind*, e.g. a six-month redeployment window | ✅ Works | n/a |
 | Costed route | Course cost in RM per step and in total, with the HRD Corp-claimable share | ✅ Works (no HRD Corp-claimable course is loaded yet, so that share shows RM 0) | Real (30 course listings with links) |
 | SDG-aware ranking | Choose an SDG priority (e.g. climate); jobs re-rank and the trade-off in match % and weeks is shown | ✅ Works | Sample tags on a Sample catalogue |
@@ -165,7 +165,6 @@ tests/                    automated tests (vitest)
 demo/                     demo CV and reset/start/prime scripts
 docs/                     ARCHITECTURE, API, DATA_SOURCES, DEMO, PITCH, SUBMISSION_CHECKLIST, organiser rules notes
 submission/               the four SDC2026_TeamName_*.pdf files, their answers in Markdown, the pitch deck
-video/                    pitch video source: Remotion scenes, timeline, audio tools, script (media kept out of git)
 proposal/  prototype/     first proposal (22 Oct) and early UI prototypes (sample data)
 .github/workflows/ci.yml  type-check and tests on every push
 ```

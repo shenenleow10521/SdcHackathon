@@ -71,7 +71,7 @@ Main languages: TypeScript, JavaScript, Python 3.11 (ML pipeline, data scripts),
 | sentence-transformers, PyTorch, scikit-learn, pandas, NumPy, SciPy | Exposure-model embedding, training and evaluation (`ml/`) | Apache-2.0 / BSD |
 | Infinity (michaelfeil/infinity) | Local bge-m3 embedding server for development and fallback | MIT |
 | reportlab | Generates the synthetic demo CV PDF (`demo/make-cv-pdf.py`) | BSD |
-| Remotion | Renders the pitch video from code (`video/project/`; not part of the app) | Remotion licence (free for individuals and small teams) |
+| Remotion | Renders the pitch video from code (pitch video only; not part of the app) | Remotion licence (free for individuals and small teams) |
 
 ---
 
@@ -88,7 +88,6 @@ Main languages: TypeScript, JavaScript, Python 3.11 (ML pipeline, data scripts),
 | ESCO REST API (European Commission) | Building the ESCO mappings (build time only) | Free |
 | arXiv API, OpenAlex API, GDELT, Hacker News (Algolia) API, RSS feeds of vetted publishers | AI-capability, adoption and demand signals | Free |
 | data.gov.my / OpenDOSM API | DOSM wage data (build time only) | Free |
-| Supabase Auth | Optional email-and-password sign-in; switched off in the live demo, which needs no account | Free |
 
 Job boards (JobStreet, LinkedIn, Indeed) are plain links only; the app never calls them.
 
@@ -99,7 +98,7 @@ Job boards (JobStreet, LinkedIn, Indeed) are plain links only; the app never cal
 | Replit | Hosts the app (Deployments, Reserved VM) and its only database (Replit PostgreSQL 16); Secrets hold all keys | Replit Core (sponsor-provided) / 🟨 TEAM: region shown in the deployment settings |
 | RunPod Serverless | bge-m3 embedding endpoint, 0–1 workers | Sponsor credit |
 | RunPod GPU Cloud | Final exposure-model training run (pod `38jijj8fe5dazu`, RTX 4090, 2.5 min) | Sponsor credit, Secure Cloud |
-| Supabase | PostgreSQL during local development only; the live app uses Replit PostgreSQL | Free |
+| Supabase | PostgreSQL during local development only (the live app uses Replit PostgreSQL); optional sign-in code (Supabase Auth) that is switched off in the live demo | Free |
 | GitHub, GitHub Actions | Repository; type-check and tests on every push (Node 22 and 24) | Free |
 
 **How the prototype is deployed:** Replit Deployments (Reserved VM) runs `npm start` on Node 22 with Replit PostgreSQL 16. Steps are in `submission/REPLIT_PROOF.md`.
