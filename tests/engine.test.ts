@@ -1,11 +1,13 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { createEngine, displayWeeks, MODES, stressTest, MONTE_CARLO, PARAMS, yearOf, HAVE_LEVEL, aiInterp, aiTide } from "../shared/engine.js";
+import { createEngine, displayWeeks, MODES, normMode, edgeRel, stressTest, MONTE_CARLO, PARAMS, yearOf, HAVE_LEVEL, aiInterp, aiTide } from "../shared/engine.js";
 import { seedGraph, persona, knowledge } from "./helpers/seed-graph.ts";
 
 const golden = JSON.parse(readFileSync(new URL("./fixtures/golden.json", import.meta.url), "utf8"));
 
-describe("engine matches the prototype exactly", () => {
+// Match, rank, taken skills, future score and best jobs still match the prototype exactly. Routes no longer do: the
+// prototype's route types (fastest / no-regret / safest by weeks) became closest / safest by relatedness.
+describe("engine matches the prototype exactly (scores)", () => {
   for (const c of golden.cases) {
     const label = `${c.year} ${c.scenario}${c.signal ? " +signal" : ""}`;
     it(label, () => {
@@ -16,14 +18,10 @@ describe("engine matches the prototype exactly", () => {
       expect(Object.keys(g.nodes).filter(k => E.taken(k)).sort()).toEqual([...c.taken].sort());
       expect(E.futureScore()).toBe(c.futureScore);
       expect(E.sectorJobs("best")).toEqual(c.best);
+      // a route exists to the same jobs as in the prototype
       for (const [k, p] of Object.entries<any>(c.plans)) {
         const [job, mode] = k.split(":");
-        const got = E.planFor(job, mode);
-        expect(got.route ? got.route.key : null, `route ${k}`).toBe(p.key);
-        expect(got.core, `core ${k}`).toBe(p.core);
-        expect(got.ready, `ready ${k}`).toBe(p.ready);
-        expect(got.ups.map(u => u.id)).toEqual(p.ups);
-        expect(got.extras.map(x => x.id + "/" + x.kind)).toEqual(p.extras);
+        expect(!!E.planFor(job, mode).route, `route ${k}`).toBe(p.key !== null);
       }
     });
   }
@@ -31,13 +29,57 @@ describe("engine matches the prototype exactly", () => {
 
 describe("engine behaviour", () => {
   const g = seedGraph();
-  it("ESG fastest route is recon → ghg → esgRole in 6 weeks, and reroutes after the reconciliation signal", () => {
-    const before = createEngine(g, persona).shortestPath("esgRole", "fastest")!;
+  it("two route types, closest (default) and safest; old names still work", () => {
+    expect(MODES).toEqual(["closest", "safest"]);
+    expect([normMode("fastest"), normMode("noregret"), normMode(undefined), normMode("safest")]).toEqual(["closest", "safest", "closest", "safest"]);
+    const E = createEngine(g, persona);
+    expect(E.shortestPath("esgRole", "fastest")!.key).toBe(E.shortestPath("esgRole")!.key);
+    expect(E.shortestPath("esgRole", "noregret")!.key).toBe(E.shortestPath("esgRole", "safest")!.key);
+  });
+
+  it("ESG closest route is recon → ghg → esgRole (the bridge), and reroutes after the reconciliation signal", () => {
+    const before = createEngine(g, persona).shortestPath("esgRole", "closest")!;
     expect(before.key).toBe("ap>recon>ghg>esgRole");
-    expect(before.weeks).toBe(6);
-    const after = createEngine(seedGraph({ e: { recon: 0.18 } }), persona).shortestPath("esgRole", "fastest")!;
+    const after = createEngine(seedGraph({ e: { recon: 0.18 } }), persona).shortestPath("esgRole", "closest")!;
     expect(after.key).toBe("ap>audit>disc>esgRole");
-    expect(after.weeks).toBe(7);
+  });
+
+  it("route order is relatedness, not time: a hand-made edge's relatedness falls with its weeks", () => {
+    expect(edgeRel({ weeks: 4 })).toBe(0.5);
+    expect(edgeRel({ weeks: 2 })).toBeGreaterThan(edgeRel({ weeks: 4 }));
+    expect(edgeRel({ weeks: 9, rel: 0.8 })).toBe(0.8);
+    const E = createEngine(g, persona);
+    // a skill you have is reused at no learning time; the cost of stepping onto it is just the hop (+ AI traffic)
+    expect(E.edgeCost("closest", "audit", 1)).toBeCloseTo(PARAMS.hopCost, 9);
+    expect(E.edgeCost("safest", "recon", 1)).toBeGreaterThan(E.edgeCost("closest", "recon", 1));
+  });
+
+  it("time to job-ready counts every missing skill, flags estimates, and grows with distance from what you know", () => {
+    const E = createEngine(g, persona);
+    const p = E.planFor("esgRole");
+    expect(p.keySkills).toEqual(["ghg"]);
+    expect(p.missing.map(m => m.id)).toEqual(expect.arrayContaining(["ghg"]));
+    expect(p.missing.every(m => m.hours > 0 && m.estimated === true)).toBe(true); // no courses in the seed graph
+    expect(p.hours).toBe(p.missing.reduce((s, m) => s + m.hours, 0));
+    expect(p.ready).toBeCloseTo(p.hours / PARAMS.referenceHours, 2);
+    const ghg = p.missing.find(m => m.id === "ghg")!;
+    expect(ghg.hours).toBe(Math.round(PARAMS.estHoursMin + PARAMS.estHoursSpan * (1 - ghg.rel)));
+    // with a real course long enough, its hours are used and not flagged estimated
+    const withCourse = createEngine({ ...g, courses: { ghg: [{ hours: 24, source: "provider_listing" }] } } as any, persona).planFor("esgRole");
+    expect(withCourse.missing.find(m => m.id === "ghg")).toMatchObject({ hours: 24, estimated: false });
+  });
+
+  it("offers a safer route only when it differs, with what it avoids and why", () => {
+    const alt = createEngine(g, persona).saferAlternative("esgRole")!;
+    expect(alt.route.key).toBe("ap>audit>disc>esgRole");
+    expect(alt.avoids.find(a => a.id === "recon")).toMatchObject({ owned: true, reason: "exposure" });
+    expect(alt.adds).toEqual(["disc"]);
+    expect(typeof alt.addedRef).toBe("number");
+    // after the signal the default route already avoids reconciliation: no separate safer route
+    expect(createEngine(seedGraph({ e: { recon: 0.18 } }), persona).saferAlternative("esgRole")).toBeNull();
+    // the safer route names an approved signal as the reason when one raised the skill's exposure
+    const sig = createEngine(seedGraph({ e: { recon: 0.05 } }), persona).saferAlternative("esgRole")!;
+    expect(sig.avoids.find(a => a.id === "recon")?.reason).toBe("signal");
   });
 
   it("never routes through a taken skill (closed road)", () => {
@@ -72,6 +114,7 @@ describe("engine behaviour", () => {
     expect(E.has("recon")).toBe(true);       // level 4
     expect(E.coverage("process", 3)).toBeCloseTo(2 / 3, 5); // partial credit below the bar
     expect(E.planFor("opsRole", "fastest").ups).toContainEqual({ id: "process", from: 2, to: 3, weeks: 1 });
+    expect(E.planFor("opsRole").missing).toContainEqual(expect.objectContaining({ id: "process", kind: "upskill", hours: PARAMS.upskillHoursPerLevel, levelFrom: 2, levelTo: 3 }));
     expect(createEngine(g, { ...persona, level: { ...persona.level, process: 3 } }).has("process")).toBe(true);
   });
 
@@ -189,7 +232,7 @@ describe("future stress test (Monte Carlo)", () => {
   });
 
   it("a tip's rate is exactly what you get after making that change (same futures)", () => {
-    const opts = { startYear: today, deadlineYear: yearOf("2027-04-24") };
+    const opts = { startYear: today, deadlineYear: yearOf("2027-01-25") };
     const r = stressTest(seedGraph(), persona, "esgRole", "safest", opts);
     const hoursTip = r.sturdier.find((s: any) => s.kind === "hours");
     expect(hoursTip).toBeTruthy();

@@ -6,10 +6,14 @@
 //   4. Extract   - LLM (main model) returns {nodeId from a fixed list, kind, direction, magnitude, quote}.
 //                  Page text is DATA inside delimiters; the model is told to ignore instructions in it.
 //   5. Verify    - CODE checks the quote is word-for-word in the page; maps magnitude -> delta (never the LLM).
-//   6. Merge     - same skill + kind + direction from different sites = one signal; nSources = distinct organisations.
+//   6. Merge     - same skill + kind + direction from different sites = one signal. nSources counts distinct
+//                  organisations, and a near-identical quote on another site is the same source, not a second one.
 //   7. Dedupe    - same skill + URL, or embedding cosine >= 0.90 with a signal from the last 30 days.
-//   8. Review    - a second model checks the quote supports the claim.
-//   9. Triage    - deterministic rules (server/triage.ts). AUTO -> new KB version; FLAG -> review queue.
+//   8. Gate      - fixed checks (trusted source, quote on the page, fresh, not a duplicate). Fail = REJECT, no vote.
+//   9. Vote      - three agents (evidence checker, skill matcher, sceptic; server/agents/voters.ts) say include / exclude.
+//  10. Triage    - server/triage.ts. 2+ of 3 include -> AUTO (new KB version, labelled "agent vote", undoable, and
+//                  saved plans are offered "keep my route or switch"); 1 of 3 -> FLAG for a person; 0 of 3 -> REJECT.
+//                  If the vote can't happen (AI down) the signal is FLAGGED; nothing is applied without votes.
 import { z } from "zod";
 import type { Services } from "../context.ts";
 import { loadGraph, createVersion, type FullGraph, type KbChange } from "../kb.ts";
@@ -17,10 +21,11 @@ import { audit } from "../repo.ts";
 import { cosine } from "../lib/embed.ts";
 import { collectItems, hydrate, type SourceItem, type SourceName, type Query, SOURCE_NAMES, DAY_MS } from "../sources/index.ts";
 import { domainKey } from "../sources/policy.ts";
-import { triage } from "../triage.ts";
+import { triage, gateReasons, tallyText } from "../triage.ts";
 import { simulate, applyRescore } from "../services/rescore.ts";
 import { lastRecording, shouldReplay } from "../services/replay.ts";
-import { reviewClaim, claimText, type Review } from "./reviewer.ts";
+import { claimText } from "./reviewer.ts";
+import { castVotes, type VoteSet } from "./voters.ts";
 
 // ---------- fixed mapping: magnitude -> change (code, not the model) ----------
 export const EXPOSURE_STEP = { small: 0.02, medium: 0.05, large: 0.1 } as const;
@@ -38,7 +43,7 @@ export function deltasFor(kind: Kind, direction: Direction, magnitude: Magnitude
 export const scoutSettings = {
   // Sized to free tiers: ~30 web searches a day stays inside Tavily's 1,000/month; 60 Gemini calls a day.
   maxExtract: Number(process.env.SCOUT_MAX_EXTRACT || 30),
-  maxReview: Number(process.env.SCOUT_MAX_REVIEW || 30),
+  maxReview: Number(process.env.SCOUT_MAX_REVIEW || 10), // signals put to a vote per run: 3 AI calls each
   skillsPerRun: Number(process.env.SCOUT_SKILLS_PER_RUN || 10), // 10 of 29 skills a day: every skill every 3 days
   broadPerRun: Number(process.env.SCOUT_BROAD_PER_RUN ?? 10),
   llmPaceMs: Number(process.env.SCOUT_LLM_PACE_MS ?? (process.env.NODE_ENV === "test" ? 0 : 2500)),
@@ -156,6 +161,8 @@ Return {"findings": []} if the document has no clear, concrete evidence. At most
 export interface Candidate {
   nodeId: string; kind: Kind; direction: Direction; magnitude: Magnitude; quote: string; claim: string;
   url: string; title: string; date: string; sourceKind: SourceName; quoteFound: boolean;
+  /** Page text around the quote, shown to the voters (and kept in the recording). */
+  excerpt?: string;
 }
 
 function extractionSchema(ids: string[]) {
@@ -183,7 +190,18 @@ export async function extractFromItem(svc: Services, graph: FullGraph, item: Sou
   return r.data.findings.map(f => ({
     nodeId: f.nodeId, kind: f.kind, direction: f.direction, magnitude: f.magnitude, quote: f.quote.trim().slice(0, 600), claim: f.claim.trim(),
     url: item.url, title: item.title, date: item.date, sourceKind: item.sourceKind, quoteFound: quoteInText(f.quote, item.text),
+    excerpt: excerptNear(item.text, f.quote, EXCERPT_CHARS),
   }));
+}
+
+/** Page text around the quote, so the voters can judge it in context. Falls back to the opening if the quote isn't found literally. */
+export const EXCERPT_CHARS = 1200;
+export function excerptNear(text: string, quote: string, max: number): string {
+  const flat = text.replace(/\s+/g, " ");
+  const at = flat.toLowerCase().indexOf(quote.replace(/\s+/g, " ").trim().slice(0, 40).toLowerCase());
+  if (at < 0) return flat.slice(0, max);
+  const start = Math.max(0, at - Math.floor(max / 3));
+  return flat.slice(start, start + max);
 }
 
 // ---------- run ----------
@@ -302,12 +320,12 @@ async function liveRun(svc: Services, runId: number, opts: ScoutOptions): Promis
 
   // 5-9. Verify, merge, dedupe, review, triage, apply
   const out = await processCandidates(svc, runId, candidates, { replayed: false });
-  const recording = { recordedAt: svc.now().toISOString(), runId, items: recordedItems, candidates, reviews: out.reviews };
+  const recording = { recordedAt: svc.now().toISOString(), runId, items: recordedItems, candidates, votes: out.votes };
   return {
     ok: true,
     counts: { ...out.counts, fetched: items.length, candidates: candidates.length },
     signals: out.signals,
-    summary: { ...summaryBase, counts: { ...out.counts, fetched: items.length, candidates: candidates.length }, llm: { ...summaryBase.llm, reviewCalls: out.reviewCalls }, duplicates: out.duplicates, recording },
+    summary: { ...summaryBase, counts: { ...out.counts, fetched: items.length, candidates: candidates.length }, llm: { ...summaryBase.llm, voteCalls: out.voteCalls }, duplicates: out.duplicates, recording },
   };
 }
 
@@ -319,27 +337,36 @@ async function replayRun(svc: Services, runId: number, why: string): Promise<Sco
     return { runId, status: "failed", replayed: false, counts: zeroCounts(), signals: [], error: `${why}; no recorded run to replay` };
   }
   const candidates: Candidate[] = rec.recording.candidates || [];
-  const out = await processCandidates(svc, runId, candidates, { replayed: true, reviews: rec.recording.reviews || {} });
+  const out = await processCandidates(svc, runId, candidates, { replayed: true, votes: rec.recording.votes || {} });
   const counts = { ...out.counts, fetched: (rec.recording.items || []).length, candidates: candidates.length };
   await finish(svc, runId, "replayed", { replayOf: rec.runId, replayFrom: rec.from, recordedAt: rec.recording.recordedAt, reason: why, counts, duplicates: out.duplicates, items: rec.recording.items || [] });
   return { runId, status: "replayed", replayed: true, counts, signals: out.signals, replayOf: rec.runId, error: why };
 }
 
+/** Quote and URL keys for dedupe: case, spacing and punctuation ignored; URL fragment, utm_* params, www. and trailing slash dropped. */
+const quoteKey = (q: string) => normalizeText(q || "").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+function urlKey(u: string) {
+  try {
+    const x = new URL(u);
+    for (const k of [...x.searchParams.keys()]) if (/^utm_/i.test(k)) x.searchParams.delete(k);
+    return x.hostname.replace(/^www\./, "") + x.pathname.replace(/\/+$/, "") + x.search;
+  } catch { return u; }
+}
 const groupKey = (c: { nodeId: string; kind: string; direction: string }) => `${c.nodeId}|${c.kind}|${c.direction}`;
 const MAG_ORDER: Magnitude[] = ["small", "medium", "large"];
 
-export async function processCandidates(svc: Services, runId: number, candidates: Candidate[], opts: { replayed: boolean; reviews?: Record<string, any> }) {
+export async function processCandidates(svc: Services, runId: number, candidates: Candidate[], opts: { replayed: boolean; votes?: Record<string, VoteSet | null> }) {
   const counts = { rejected: 0, auto: 0, flagged: 0, duplicates: 0 };
   const signals: any[] = [], duplicates: any[] = [];
-  const reviews: Record<string, Review | null> = {};
-  let reviewCalls = 0, embedOk = true;
+  const votes: Record<string, VoteSet | null> = {};
+  let voteCalls = 0, embedOk = true;
   const graph = await loadGraph(svc.db);
   const now = svc.now();
 
   // Quote not found on the page: rejected by rule, kept on record (shows the guardrail working).
   for (const c of candidates.filter(c => !c.quoteFound)) {
-    const t = triage({ sourceUrl: c.url, quoteFound: false, duplicate: false, sourceDate: c.date, now, nSources: 1, reviewer: null, ...deltasFor(c.kind, c.direction, c.magnitude), usersRerouted: 0, key: groupKey(c) + c.url });
-    signals.push(await insertSignal(svc, runId, { ...mergeOne([c]), triage: t, reviewer: null, usersRerouted: null, replayed: opts.replayed, embedding: null }));
+    const t = triage({ sourceUrl: c.url, quoteFound: false, duplicate: false, sourceDate: c.date, now, key: groupKey(c) + c.url });
+    signals.push(await insertSignal(svc, runId, { ...mergeOne([c]), triage: t, votes: null, usersRerouted: null, replayed: opts.replayed, embedding: null }));
     counts.rejected++;
   }
 
@@ -353,10 +380,13 @@ export async function processCandidates(svc: Services, runId: number, candidates
 
   for (const [key, group] of groups) {
     const m = mergeOne(group);
-    // Dedupe: same skill + URL, else embedding cosine >= 0.90, else identical normalised quote.
+    // Dedupe: same skill + URL or identical normalised quote (the same quote often appears on several pages),
+    // else embedding cosine >= 0.90.
     const sameNode = recent.filter(r => r.node_id === m.nodeId);
-    const urls = new Set(m.sources.map(s => s.url));
-    let dupOf = sameNode.find(r => urls.has(r.source_url) || (r.sources || []).some((s: any) => urls.has(s.url)))?.id ?? null;
+    const urls = new Set(m.sources.map(s => urlKey(s.url)));
+    const quotes = new Set(m.sources.map(s => quoteKey(s.quote)));
+    let dupOf = sameNode.find(r => urls.has(urlKey(r.source_url)) || (r.sources || []).some((s: any) => urls.has(urlKey(s.url)))
+      || (r.quote && quotes.has(quoteKey(r.quote))))?.id ?? null;
     let embedding: number[] | null = null;
     if (!dupOf) {
       try {
@@ -368,36 +398,64 @@ export async function processCandidates(svc: Services, runId: number, candidates
         // Only compare vectors from the same model (same length).
         dupOf = sameNode.find(r => Array.isArray(r.embedding) && r.embedding.length === embedding!.length && cosine(embedding!, r.embedding) >= 0.9)?.id ?? null;
       } catch {
-        embedOk = false; // slow or down: use the text fallback for the rest of this run
-        const q = normalizeText(m.quote);
-        dupOf = sameNode.find(r => r.quote && normalizeText(r.quote) === q)?.id ?? null;
+        embedOk = false; // slow or down: rely on the URL and exact-quote checks for the rest of this run
       }
     }
     if (dupOf) { counts.duplicates++; duplicates.push({ nodeId: m.nodeId, url: m.sourceUrl, duplicateOf: dupOf }); continue; }
 
-    // AI reviewer (second model), or the recorded verdict when replaying.
-    let review: Review | null = null;
-    if (opts.reviews) review = opts.reviews[key] ?? null;
-    else if (reviewCalls < scoutSettings.maxReview) {
-      if (reviewCalls > 0 && scoutSettings.llmPaceMs) await sleep(scoutSettings.llmPaceMs);
-      reviewCalls++;
-      try { review = await reviewClaim(svc, claimText({ nodeName: graph.nodes[m.nodeId].name, tasks: (graph.nodes[m.nodeId].tasks || []).map((t: any) => t.text), kind: m.kind, direction: m.direction, magnitude: m.magnitude }), m.quote); }
-      catch { review = null; }
+    // The fixed gate comes first, so a signal that fails it is rejected without spending any AI calls.
+    const gate = gateReasons({ sourceUrl: m.sourceUrl, quoteFound: true, duplicate: false, sourceDate: m.date, now });
+    let voteSet: VoteSet | null = null;
+    const node = graph.nodes[m.nodeId];
+    if (gate.length) voteSet = null;
+    else if (opts.votes) voteSet = opts.votes[key] ?? null;               // replay: reuse what was recorded, no AI calls
+    else if (voteCalls >= scoutSettings.maxReview) voteSet = { votes: [], error: "vote limit for this run reached" };
+    else {
+      voteCalls++;
+      if (voteCalls > 1 && scoutSettings.llmPaceMs) await sleep(scoutSettings.llmPaceMs);
+      voteSet = await castVotes(svc, {
+        claim: claimText({ nodeName: node.name, tasks: (node.tasks || []).map((t: any) => t.text), kind: m.kind, direction: m.direction, magnitude: m.magnitude }),
+        skill: node.name, tasks: (node.tasks || []).map((t: any) => t.text), quote: m.quote, excerpt: m.excerpt || m.quote,
+        sourceUrl: m.sourceUrl, sourceTitle: m.title, sourceDate: m.date || null, nSources: m.nSources,
+      }, scoutSettings.llmPaceMs);
     }
-    reviews[key] = review;
+    votes[key] = voteSet;
 
-    // Would applying it change anyone's route or skill zone?
+    // Who would be affected? Only recorded for the review screen; it does not limit a vote-approved change.
     const change: KbChange = { kind: "delta", nodeId: m.nodeId, deltaE: m.deltaE, deltaD: m.deltaD };
     const sim = await simulate(svc, await loadGraph(svc.db), [change]);
-    const t = triage({ sourceUrl: m.sourceUrl, quoteFound: true, duplicate: false, sourceDate: m.date, now, nSources: m.nSources, reviewer: review,
-      deltaE: m.deltaE, deltaD: m.deltaD, usersRerouted: sim.usersRerouted, zoneChanges: sim.usersZoneChanged, key: `${key}|${m.sourceUrl}|${normalizeText(m.quote)}` });
-    let sig = await insertSignal(svc, runId, { ...m, triage: t, reviewer: review, usersRerouted: sim.usersRerouted, replayed: opts.replayed, embedding });
+    const t = triage({ sourceUrl: m.sourceUrl, quoteFound: true, duplicate: false, sourceDate: m.date, now, votes: voteSet, key: `${key}|${m.sourceUrl}|${normalizeText(m.quote)}` });
+    let sig = await insertSignal(svc, runId, { ...m, triage: t, votes: voteSet, usersRerouted: sim.usersRerouted, replayed: opts.replayed, embedding });
     recent.push({ id: sig.id, node_id: m.nodeId, quote: m.quote, source_url: m.sourceUrl, sources: m.sources, embedding });
-    if (t.decision === "auto") sig = await autoApply(svc, sig.id, change, m.title);
+    if (t.decision === "auto") sig = await autoApply(svc, sig.id, change, m.title, tallyText(voteSet!.votes.filter(v => v.vote === "include").length));
     if (sig.status === "applied") counts.auto++; else if (sig.triage === "rejected") counts.rejected++; else counts.flagged++;
     signals.push(sig);
   }
-  return { counts, signals, duplicates, reviews, reviewCalls };
+  return { counts, signals, duplicates, votes, voteCalls };
+}
+
+/** Word-overlap of two quotes (0..1): 1 = same words. A copied or lightly reworded quote scores high. */
+export function quoteSimilarity(a: string, b: string): number {
+  const A = new Set(quoteKey(a).split(" ").filter(Boolean)), B = new Set(quoteKey(b).split(" ").filter(Boolean));
+  if (!A.size || !B.size) return 0;
+  let both = 0;
+  for (const w of A) if (B.has(w)) both++;
+  return both / (A.size + B.size - both);
+}
+const SAME_QUOTE = 0.8;
+
+/**
+ * Independent sources: one per organisation (domainKey), and a near-identical quote on another site is the
+ * same source (it was copied or syndicated), not a second witness. The oldest item is counted first.
+ */
+export function countIndependent(items: { url: string; quote: string; date: string }[]): number {
+  const kept: { domain: string; quote: string }[] = [];
+  for (const c of [...items].sort((a, b) => a.date.localeCompare(b.date))) {
+    const domain = domainKey(c.url);
+    if (kept.some(k => k.domain === domain || quoteSimilarity(k.quote, c.quote) >= SAME_QUOTE)) continue;
+    kept.push({ domain, quote: c.quote });
+  }
+  return kept.length;
 }
 
 /** One signal from corroborating candidates. The largest magnitude is used (bigger = more likely to need a person). */
@@ -411,43 +469,53 @@ function mergeOne(group: Candidate[]) {
   return {
     nodeId: primary.nodeId, kind: primary.kind, direction: primary.direction, magnitude, ...d,
     quote: primary.quote, claim: primary.claim, sourceUrl: primary.url, title: primary.title, date: primary.date, sourceKind: primary.sourceKind,
-    nSources: new Set(items.map(c => domainKey(c.url))).size,
+    nSources: countIndependent(items), excerpt: primary.excerpt,
     sources: items.map(c => ({ url: c.url, domain: domainKey(c.url), title: c.title, date: c.date, quote: c.quote, sourceKind: c.sourceKind })),
   };
 }
 
-async function insertSignal(svc: Services, runId: number, s: ReturnType<typeof mergeOne> & { triage: ReturnType<typeof triage>; reviewer: Review | null; usersRerouted: number | null; replayed: boolean; embedding: number[] | null }) {
+async function insertSignal(svc: Services, runId: number, s: ReturnType<typeof mergeOne> & { triage: ReturnType<typeof triage>; votes: VoteSet | null; usersRerouted: number | null; replayed: boolean; embedding: number[] | null }) {
   const status = s.triage.decision === "rejected" ? "rejected" : "pending";
   const r = await svc.db.query<{ id: number }>(
-    `insert into signals(run_id,node_id,kind,title,delta_e,delta_d,quote,source_url,source_title,source_date,n_sources,reviewer_supports,reviewer_confidence,
-       reviewer_issue,triage,triage_reasons,status,users_rerouted,needs_spotcheck,embedding,is_sample,source_kind,sources,claim,replayed,created_at)
-     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,false,$21,$22,$23,$24,$25) returning id`,
+    `insert into signals(run_id,node_id,kind,title,delta_e,delta_d,quote,source_url,source_title,source_date,n_sources,
+       triage,triage_reasons,status,users_rerouted,needs_spotcheck,embedding,is_sample,source_kind,sources,claim,replayed,created_at,votes)
+     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,false,$18,$19,$20,$21,$22,$23) returning id`,
     [runId, s.nodeId, s.kind, (s.title || "Untitled source").slice(0, 300), s.deltaE, s.deltaD, s.quote.slice(0, 600), s.sourceUrl, (s.title || "").slice(0, 300), s.date || null,
-     s.nSources, s.reviewer?.supports ?? null, s.reviewer?.confidence ?? null, s.reviewer?.issue ?? null, s.triage.decision, JSON.stringify(s.triage.reasons), status,
-     s.usersRerouted, s.triage.needsSpotcheck, s.embedding ? JSON.stringify(s.embedding) : null, s.sourceKind, JSON.stringify(s.sources), s.claim.slice(0, 400), s.replayed, svc.now().toISOString()]);
+     s.nSources, s.triage.decision, JSON.stringify(s.triage.reasons), status,
+     s.usersRerouted, s.triage.needsSpotcheck, s.embedding ? JSON.stringify(s.embedding) : null, s.sourceKind, JSON.stringify(s.sources), s.claim.slice(0, 400), s.replayed, svc.now().toISOString(),
+     s.votes ? JSON.stringify(s.votes) : null]);
   return getSignal(svc, r.rows[0].id);
 }
 
-/** AUTO: re-check against the latest version (an earlier auto change may matter), then apply as a new version. */
-async function autoApply(svc: Services, signalId: number, change: KbChange, title: string) {
+/**
+ * AUTO (vote approved): apply as a new KB version. There is no size or reroute limit: the people whose saved
+ * plan would change are offered "keep my route or switch" by applyRescore, exactly as after a human approval.
+ */
+async function autoApply(svc: Services, signalId: number, change: KbChange, title: string, tally: string) {
   const before = await loadGraph(svc.db);
-  const sim = await simulate(svc, before, [change]);
-  if (sim.usersRerouted > 0 || sim.usersZoneChanged > 0) {
-    const reason = sim.usersRerouted ? `Would reroute ${sim.usersRerouted} users` : `Changes a skill zone for ${sim.usersZoneChanged} users`;
-    await svc.db.query(`update signals set triage='flagged', triage_reasons=$2, users_rerouted=$3 where id=$1`, [signalId, JSON.stringify([reason]), sim.usersRerouted]);
-    return getSignal(svc, signalId);
-  }
   const sig = await getSignal(svc, signalId);
-  const v = await createVersion(svc.db, `Auto-applied signal #${signalId}: ${title}`.slice(0, 300), "auto", [{ ...change, signalId, sourceUrl: sig.sourceUrl }]);
+  const by = `auto (agent vote ${tally})`;
+  const v = await createVersion(svc.db, `Auto-applied signal #${signalId} (agent vote ${tally}): ${title}`.slice(0, 300), "auto", [{ ...change, signalId, sourceUrl: sig.sourceUrl }]);
   const rerouted = await applyRescore(svc, before.kbVersion, v, { reason: `New evidence: ${title}`.slice(0, 300), signalId });
-  await svc.db.query(`update signals set status='applied', kb_version=$2, decided_by='auto (rules)', decided_at=$3, users_rerouted=$4 where id=$1`, [signalId, v, svc.now().toISOString(), new Set(rerouted.map(r => r.profileId)).size]);
-  await audit(svc.db, "auto", "signal.auto_apply", `signal:${signalId}`, { kbVersion: v, nodeId: change.nodeId, deltaE: change.deltaE, deltaD: change.deltaD });
+  await svc.db.query(`update signals set status='applied', kb_version=$2, decided_by=$3, decided_at=$4, users_rerouted=$5 where id=$1`, [signalId, v, by, svc.now().toISOString(), new Set(rerouted.map(r => r.profileId)).size]);
+  await audit(svc.db, "auto", "signal.auto_apply", `signal:${signalId}`, { approvedBy: `agent vote (${tally})`, votes: sig.votes?.votes ?? null, kbVersion: v, nodeId: change.nodeId, deltaE: change.deltaE, deltaD: change.deltaD });
   return getSignal(svc, signalId);
 }
 
 // ---------- signal JSON (one shape everywhere; see docs/API.md) ----------
 export const SIGNAL_SELECT = `select s.*, coalesce(o.title, k.label) as node_name from signals s
   left join occupations o on o.id = s.node_id left join skills k on k.id = s.node_id`;
+
+/** "2 of 3" include votes, or null if no complete vote was held. */
+function voteTally(v: any): string | null {
+  if (!v || v.error || !Array.isArray(v.votes) || !v.votes.length) return null;
+  return tallyText(v.votes.filter((x: any) => x.vote === "include").length);
+}
+/** Label for the UI and audit log: "agent vote (2 of 3)" when an agent vote applied it, else null. */
+function voteApprovedBy(r: any): string | null {
+  const t = voteTally(r.votes);
+  return t && r.status !== "pending" && r.triage === "auto" ? `agent vote (${t})` : null;
+}
 
 export function signalJson(r: any, names?: Record<string, string>) {
   return {
@@ -456,6 +524,7 @@ export function signalJson(r: any, names?: Record<string, string>) {
     sourceUrl: r.source_url, sourceTitle: r.source_title, sourceDate: r.source_date ? String(r.source_date instanceof Date ? r.source_date.toISOString() : r.source_date).slice(0, 10) : null,
     sourceKind: r.source_kind ?? (r.is_sample ? "sample" : null), sources: r.sources || [], nSources: r.n_sources,
     reviewer: r.reviewer_supports === null || r.reviewer_supports === undefined ? null : { supports: r.reviewer_supports, confidence: r.reviewer_confidence === null ? null : Number(r.reviewer_confidence), issue: r.reviewer_issue ?? null },
+    votes: r.votes ?? null, voteTally: voteTally(r.votes), approvedBy: voteApprovedBy(r),
     triage: r.triage, triageReasons: r.triage_reasons || [], status: r.status, usersRerouted: r.users_rerouted,
     needsSpotcheck: r.needs_spotcheck, spotcheck: r.spotcheck ?? null, decidedBy: r.decided_by, decidedAt: r.decided_at ? new Date(r.decided_at).toISOString() : null,
     decisionNote: r.decision_note ?? null, kbVersion: r.kb_version, runId: r.run_id, replayed: !!r.replayed, isSample: r.is_sample,

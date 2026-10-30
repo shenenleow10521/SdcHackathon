@@ -1,44 +1,73 @@
 // Detail drawer for a job, a skill or you. Jobs add: employer picker with per-employer match and extra stops,
 // "Studies disagree" (GET /api/studies), requirements, SDG links. Skills add: tasks (human edge), Learn → Practice → Prove,
 // emerging-skill evidence and the 5-minute check (GET/POST /api/skills/:id/check).
-import { S, UI, D, N, nameOf, W, matchOf, humanSplit, kindOf, confOf, actions, profileId } from "./state.js";
+import { S, UI, D, N, nameOf, W, matchOf, humanSplit, kindOf, confOf, actions, profileId, isAiEra } from "./state.js";
+import { aiEraBadge } from "./features/safer.js";
 import { get, post } from "./api.js";
 import { t } from "./i18n.js";
 import { $, esc, icons, badge, srcBadge, errorBox, loadingBox, extLink, sign, toast, bindRetry, pct, rm } from "./util.js";
 import { howLink } from "./features/why.js";
 import { skillBlock, loadSkillExposure } from "./features/exposure.js";
-import { splitBar } from "./panels/skills.js";
+import { splitBar, jobTasksHtml } from "./panels/skills.js";
 import * as G from "./graph3d.js";
 import { HAVE_LEVEL } from "/shared/engine.js";
+import { goalStep, stayDone } from "./features/goal.js";
+import * as Goal from "./features/goal.js"; // Goal.practiseFor (sdc goal module) may not exist yet: read it optionally
+import { drawerProve, bindSteps, shareHtml } from "./features/goal-ui.js";
+import { learnBlock } from "./features/learn.js";
 
 let lastFocus = null;
-const cache = { employers: null, employersErr: null, studies: {}, empMatch: {} };
+const cache = { employers: null, employersErr: null, studies: {}, empMatch: {}, esco: {} };
+/** An ESCO skill drawn on a route (map id "xs:<ESCO id>"), not in the catalogue graph and not AI-era. */
+const isEscoSkill = id => !N(id) && !isAiEra(id) && String(id).startsWith("xs:") && !!S.xsNames[id];
+const fold = (icon, title, body, open = false) => `<details class="sec dsec"${open ? " open" : ""}><summary><span><i data-lucide="${icon}"></i>${esc(title)}</span><i class="chev" data-lucide="chevron-down"></i></summary>${body}</details>`;
+
+// Details open inside the left panel, in place of the tabs, with "Back" (like a map app's place view); on phones the
+// same element is a bottom sheet (styles.css). Opening details from inside details stacks them, so Back goes one step back.
+let back = [], listScroll = 0;
+function dock() {
+  const d = $("drawer"), side = $("side");
+  if (d.parentElement !== side) side.insertBefore(d, side.querySelector(".side-body"));
+  return d;
+}
 
 export function openDrawer(id, quiet) {
-  if (!N(id)) return;
-  if (!quiet) lastFocus = document.activeElement;
+  const xs = !N(id) && isAiEra(id); // an AI-era skill on an ESCO job's route (not in the catalogue graph)
+  const es = isEscoSkill(id);
+  if (!N(id) && !xs && !es) return;
+  const d = dock(), side = $("side"), body = side.querySelector(".side-body");
+  if (!UI.drawer) { lastFocus = quiet ? lastFocus : document.activeElement; listScroll = body?.scrollTop || 0; back = []; }
+  else if (!quiet && UI.drawer !== id) back.push(UI.drawer);
   UI.drawer = id;
-  const d = $("drawer"), k = kindOf(id);
-  d.innerHTML = k === "job" ? jobDetail(id) : k === "you" ? youDetail(id) : skillDetail(id);
+  side.classList.add("has-detail");
+  d.classList.toggle("has-back", back.length > 0);
+  const k = es ? "esco" : kindOf(id);
+  d.innerHTML = xs ? aiEraDetail(id) : es ? escoSkillDetail(id) : k === "job" ? jobDetail(id) : k === "you" ? youDetail(id) : skillDetail(id);
   d.classList.add("open");
   d.setAttribute("aria-label", t("drawer.aria", { name: nameOf(id) }));
   if (!quiet) d.scrollTop = 0;
-  d.querySelector("#dr-close").addEventListener("click", closeDrawer);
+  d.querySelector("#dr-x")?.addEventListener("click", closeDrawer);
+  d.querySelector("#dr-close").addEventListener("click", () => { const prev = back.pop(); if (prev) { openDrawer(prev, true); d.classList.toggle("has-back", back.length > 0); d.scrollTop = 0; G.focusNode(prev); } else closeDrawer(); });
   d.querySelectorAll("[data-skill]").forEach(b => b.addEventListener("click", () => openDrawer(b.dataset.skill)));
   d.querySelectorAll("[role=button][data-skill]").forEach(b => b.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openDrawer(b.dataset.skill); } }));
   const sp = d.querySelector("#show-path"); if (sp) sp.addEventListener("click", () => { actions.showPath(id); closeDrawer(); });
   const pv = d.querySelector("#prove"); if (pv) pv.addEventListener("click", () => startCheck(id));
   const ed = d.querySelector("#edit-profile"); if (ed) ed.addEventListener("click", () => actions.openOnboarding?.(2));
+  bindSteps(d); // a goal step's Prove block, and "Share my progress" in your profile
   icons();
   if (k === "job") { loadEmployers(id); loadStudies(id); }
-  else if (k === "have" || k === "learn") loadSkillExposure(id);
+  else if (es) loadEscoSkill(id);
+  else if (!xs && (k === "have" || k === "learn")) loadSkillExposure(id);
   if (!quiet) { G.focusNode(id); d.querySelector("#dr-close").focus({ preventScroll: true }); }
 }
 
 export function closeDrawer() {
   if (!UI.drawer) return;
-  UI.drawer = null;
+  UI.drawer = null; back = [];
   $("drawer").classList.remove("open");
+  const side = $("side"), body = side.querySelector(".side-body");
+  side.classList.remove("has-detail");
+  if (body) requestAnimationFrame(() => { body.scrollTop = listScroll; });
   G.resetView(true);
   if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
 }
@@ -47,14 +76,15 @@ export function closeDrawer() {
 export function refreshDrawer() {
   const d = $("drawer");
   if (!UI.drawer || !d.classList.contains("open")) return;
-  if (!N(UI.drawer)) { closeDrawer(); return; }
+  if (!N(UI.drawer) && !isAiEra(UI.drawer) && !isEscoSkill(UI.drawer)) { closeDrawer(); return; }
   if (d.querySelector(".check-form")) return; // don't wipe a check in progress
   const st = d.scrollTop; openDrawer(UI.drawer, true); d.scrollTop = st;
 }
 
 function drHead(kind, icon, title, sub = "") {
-  return `<div class="dr-head"><div><div class="dr-kind"><i data-lucide="${icon}"></i>${esc(kind)}</div><h2>${esc(title)}</h2>${sub}</div>
-    <button class="icon-btn" id="dr-close" type="button" aria-label="${esc(t("drawer.close"))}"><i data-lucide="x"></i></button></div>`;
+  return `<button class="dr-back" id="dr-close" type="button"><i data-lucide="arrow-left"></i><span>${esc(t("drawer.back"))}</span></button>
+    <div class="dr-head"><div><div class="dr-kind"><i data-lucide="${icon}"></i>${esc(kind)}</div><h2>${esc(title)}</h2>${sub}</div>
+    <button class="icon-btn dr-x" id="dr-x" type="button" aria-label="${esc(t("drawer.close"))}"><i data-lucide="x"></i></button></div>`;
 }
 
 /** Who does the work, then exposure and demand in one line with the section's single "How is this worked out?" link. */
@@ -119,16 +149,16 @@ function jobDetail(j) {
   const E = S.E, n = N(j), m = matchOf(j), p = D.plans[j] || E.planFor(j, UI.mode, j === UI.job ? UI.employerReq : []);
   return `${drHead(t("drawer.job"), "briefcase", n.name, `<p class="dr-sub">${esc(n.stay ? t("jobs.stay") : t("jobs.change"))}</p>`)}
     <div class="sec"><div class="big-row"><div><div class="big-pct num">${m}%</div><div class="note">${esc(UI.employer && j === UI.job ? t("drawer.matchAt", { name: UI.employer.name }) : t("drawer.matchToday"))}</div></div>
-      <div style="text-align:right"><div class="num big-wk">${p.route ? W(p.ready) : "–"} ${esc(t("common.wk"))}</div><div class="note">${esc(t("drawer.toReady"))}</div></div></div>
+      <div style="text-align:right"><div class="num big-wk">${p.route ? esc(t("common.weeksN", { w: W(p.ready) })) : "–"}</div><div class="note">${esc(t("drawer.toReady"))}</div></div></div>
       <div class="dr-meta">${howLink("match", j)}${isSample(n.outlookSource) ? `<span class="src">${esc(t("drawer.sampleNote"))}</span>` : ""}</div></div>
     ${n.blurb ? `<p class="note">${esc(n.blurb)}</p>` : ""}
-    ${openingsHtml(n.name)}
-    ${splitBlock(j)}
-    <div class="sec" id="emp-sec"><h3><i data-lucide="building-2"></i>${esc(t("emp.title"))}</h3><div id="emp-box">${loadingBox()}</div></div>
+    <button class="btn btn-primary" id="show-path" type="button"><i data-lucide="route"></i>${esc(t("drawer.showPath"))}</button>
     ${hasReq(j) ? `<div class="sec"><h3><i data-lucide="list-checks"></i>${esc(t("drawer.asks"))}</h3>${jobAsks(j)}</div>` : ""}
+    ${openingsHtml(n.name)}
+    ${fold("info", t("drawer.moreJob"), `${splitBlock(j)}
+    <div class="sec" id="emp-sec"><h3><i data-lucide="building-2"></i>${esc(t("emp.title"))}</h3><div id="emp-box">${loadingBox()}</div></div>
     <div class="sec" id="studies-sec"><h3><i data-lucide="scale"></i>${esc(t("studies.title"))}</h3><div id="studies-box">${loadingBox()}</div></div>
-    ${Array.isArray(n.sdg) && n.sdg.length ? `<div class="sec"><h3><i data-lucide="globe"></i>${esc(t("drawer.sdg"))}</h3><div style="display:grid;gap:8px">${sdgRows(n.sdg)}</div></div>` : ""}
-    <button class="btn btn-primary" id="show-path" type="button"><i data-lucide="route"></i>${esc(t("drawer.showPath"))}</button>`;
+    ${Array.isArray(n.sdg) && n.sdg.length ? `<div class="sec"><h3><i data-lucide="globe"></i>${esc(t("drawer.sdg"))}</h3><div style="display:grid;gap:8px">${sdgRows(n.sdg)}</div></div>` : ""}`, !!(UI.employer && j === UI.job))}`;
 }
 
 // employers for this job
@@ -211,57 +241,124 @@ function youDetail(id) {
   const p = S.profile;
   return `${drHead(t("drawer.you"), "user-round", nameOf(id))}
     ${splitBlock(id)}
+    <p class="note">${esc(t("skills.tasksNote", { year: S.year, scenario: t("scn." + S.scenario) }))}</p>
+    ${jobTasksHtml()}
     <p class="note">${esc(t("drawer.youNote"))}</p>
     ${isSample(N(id).outlookSource) ? `<p class="src">${esc(t("drawer.sampleNote"))}</p>` : ""}
     <div class="sec"><h3><i data-lucide="user-cog"></i>${esc(t("drawer.profile"))}</h3>
       <dl class="kv"><dt>${esc(t("ob.name"))}</dt><dd>${esc(p.displayName)}</dd><dt>${esc(t("ob.hours"))}</dt><dd class="num">${esc(p.hours)} h</dd>
       <dt>${esc(t("ob.target"))}</dt><dd>${esc(p.targetDate || "–")}</dd><dt>${esc(t("ob.budget"))}</dt><dd class="num">${p.budgetRm != null ? "RM " + esc(p.budgetRm) : "–"}</dd></dl>
-      <button class="btn btn-soft" id="edit-profile" type="button" style="width:100%;margin-top:8px"><i data-lucide="sliders-horizontal"></i>${esc(t("skills.edit"))}</button></div>`;
+      <button class="btn btn-soft" id="edit-profile" type="button" style="width:100%;margin-top:8px"><i data-lucide="sliders-horizontal"></i>${esc(t("skills.edit"))}</button>
+      ${shareHtml()}</div>`;
+}
+
+// ---------- AI-era skill ----------
+/** Sources for an AI-era skill: publisher, title (linked), date. */
+function aiEraSources(list) {
+  if (!list.length) return `<p class="src">${esc(t("aiEra.noSources"))}</p>`;
+  return `<ul class="aiera-src">${list.map(s => `<li><span class="pub">${esc(s.publisher || "")}</span>${s.url ? extLink(s.url, s.title || s.url) : `<b>${esc(s.title || "")}</b>`}${s.date ? `<span class="rs">${esc(fmtSourceDate(s.date))}</span>` : ""}</li>`).join("")}</ul>`;
+}
+const fmtSourceDate = d => { const m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(String(d)); if (!m) return String(d); const dt = new Date(Date.UTC(+m[1], +m[2] - 1, +(m[3] || 1))); return dt.toLocaleDateString(document.documentElement.lang === "ms" ? "ms-MY" : "en-GB", { year: "numeric", month: "short", ...(m[3] ? { day: "numeric" } : {}), timeZone: "UTC" }); };
+
+/** Ticked as done in My goal (your move's steps or the "Stay AI-ready" track). */
+const doneInGoal = id => { const plain = String(id).replace(/^xs:/, ""); return !!goalStep(id)?.done || stayDone().some(x => x === id || x === plain || "xs:" + x === id); };
+const kindLabel = (id, have) => have ? t("drawer.yourSkill") : doneInGoal(id) ? t("drawer.learned") : t("drawer.toLearn");
+const kindIcon = (id, have) => have || doneInGoal(id) ? "check-circle" : "plus-circle";
+const doneNote = id => doneInGoal(id) ? `<p class="note dr-done"><i data-lucide="circle-check"></i>${esc(t("drawer.doneNote"))}</p>` : "";
+
+/** "Practise at work": real tasks from your goal's steps (O*NET), when the skill is on your goal or stay track. */
+function practiseHtml(id) {
+  const plain = String(id).replace(/^xs:/, "");
+  const list = (Goal.practiseFor?.(plain) || Goal.practiseFor?.(id) || []).slice(0, 3);
+  return list.length ? `<div class="sec"><h3><i data-lucide="hammer"></i>${esc(t("track.practise"))}</h3><ul class="dr-prac">${list.map(p => `<li>${esc(p.text)}${p.occupation ? `<span class="rs">${esc(p.occupation)}</span>` : ""}</li>`).join("")}</ul></div>` : "";
+}
+const goalProve = id => { const gs = goalStep(id); return gs ? drawerProve(gs) : ""; };
+
+/** A coloured chip: At risk (red), AI-assisted (amber), holds up (green). For your own skills, the My skills group names. */
+const BAND_OF_IMPACT = { Declining: "risk", Changing: "assist", Durable: "yours", "Rising human skill": "yours" };
+const bandChip = (band, mine) => band ? `<span class="band band-${band}">${esc(t(mine ? "myskills.g." + band : "band." + band))}</span>` : "";
+
+function aiEraDetail(id) {
+  const m = S.xsMeta[id] || S.xsMeta["xs:" + id] || {}, src = m.sources || [];
+  return `${drHead(doneInGoal(id) ? t("drawer.learned") : t("aiEra.kind"), doneInGoal(id) ? "check-circle" : "trending-up", nameOf(id), `<p class="dr-sub">${aiEraBadge()}</p>`)}
+    <div class="sec">${doneNote(id)}<p class="note">${esc(t("aiEra.why"))}</p></div>
+    ${learnBlock(id, nameOf(id))}
+    ${practiseHtml(id)}${goalProve(id)}
+    ${fold("info", t("drawer.more"), `${m.description ? `<p class="note">${esc(m.description)}</p>` : ""}
+      <div class="sec"><h3><i data-lucide="library"></i>${esc(t("aiEra.sources", { n: src.length }))}</h3>${aiEraSources(src)}</div>`)}`;
+}
+
+// ---------- ESCO skill (a step on a route to one of the 3,039 ESCO jobs) ----------
+function escoSkillDetail(id) {
+  const xp = S.escoPlan && S.escoPlan.id === UI.escoJob ? S.escoPlan : null, plain = id.slice(3);
+  const m = xp?.missing.find(x => x.id === plain), have = S.xsOwned.has(id);
+  const ctx = [xp ? t("drawer.onRoute", { job: nameOf(xp.id) }) : "", m?.group && m.group !== plain ? t("drawer.learnWith", { name: nameOf(N(m.group) ? m.group : "xs:" + m.group) }) : "",
+    m?.hours ? t("drawer.estHours", { h: Math.round(m.hours) }) : ""].filter(Boolean);
+  return `${drHead(kindLabel(id, have), kindIcon(id, have), nameOf(id), `<p class="dr-sub" id="esco-band"></p>`)}
+    <div class="sec">${doneNote(id)}<p class="note" id="esco-ai"></p>${ctx.length ? `<p class="note" style="margin-top:6px">${esc(ctx.join(". "))}.</p>` : ""}</div>
+    ${have ? "" : learnBlock(id, nameOf(id))}
+    ${practiseHtml(id)}${goalProve(id)}
+    ${fold("info", t("drawer.more"), `<p class="note" id="esco-desc"></p><p class="src" style="margin-top:8px">${esc(t("drawer.escoSrc"))}</p>`)}`;
+}
+async function loadEscoSkill(id) {
+  const plain = id.slice(3);
+  let s = cache.esco[plain];
+  if (!s) { try { s = cache.esco[plain] = await get(`/esco/skills/${encodeURIComponent(plain)}`); } catch { s = null; } }
+  if (UI.drawer !== id) return;
+  const ai = document.getElementById("esco-ai"), band = document.getElementById("esco-band"), desc = document.getElementById("esco-desc");
+  if (ai) ai.textContent = s?.exposure != null ? t("myskills.pct", { n: Math.round(100 * s.exposure) }) : "";
+  if (band && s?.band) band.innerHTML = bandChip({ risk: "risk", changing: "assist", safe: "yours" }[s.band], S.xsOwned.has(id));
+  if (desc) desc.textContent = s?.description || "";
 }
 
 // ---------- skill ----------
+// Up top: how AI affects it, ways to learn it (ranked for you), and proving it. Everything else is under "More about this skill".
 function skillDetail(k) {
   const E = S.E, n = N(k), have = E.owned(k), im = E.impact(k);
   const needs = UI.ring.filter(j => (S.graph.req[j] || []).some(r => r.skill === k));
   const evoOut = S.graph.edges.filter(e => e.from === k && e.kind === "evolve"), evoIn = S.graph.edges.filter(e => e.to === k && e.kind === "evolve");
   const buildsOn = S.graph.edges.filter(e => e.to === k && e.kind === "build" && N(e.from)?.type === "skill");
-  const course = (S.graph.courses?.[k] || [])[0];
   const em = n.emerging;
   const th = S.graph.thresholds || { postings: 15, employers: 5, weeks: 4 };
   const verified = confOf(k) === "verified", lvl = have ? E.lvl(k) : 0;
-  // Head: what is happening to this skill, and whether you proved it. Provenance sits in the footer note.
-  const sub = `<p class="dr-sub"><span class="tone-${esc(im.tone)}">${esc(t("impact." + im.label))}</span>${verified ? `<span class="dr-verified"><i data-lucide="badge-check"></i>${esc(t("conf.verified"))}</span>` : ""}</p>`;
+  const band = E.taken(k) ? "risk" : BAND_OF_IMPACT[im.label];
+  const sub = `<p class="dr-sub">${n.aiEra ? aiEraBadge() : bandChip(band, have)}${verified ? `<span class="dr-verified"><i data-lucide="badge-check"></i>${esc(t("conf.verified"))}</span>` : ""}</p>`;
   const thresholdRows = em ? [["skill.th.postings", em.postings, th.postings], ["skill.th.employers", em.employers, th.employers], ["skill.th.weeks", em.weeks, th.weeks]]
     .map(([l, v, tv]) => `<li><i data-lucide="${v >= tv ? "circle-check" : "circle-x"}" style="color:${v >= tv ? "var(--good)" : "var(--crit)"}"></i><span>${esc(t(l))}</span><b class="num">${esc(v ?? "–")}</b><span class="rs">${esc(t("skill.th.need", { n: tv }))}</span></li>`).join("") : "";
-  const emgSec = em ? `<div class="sec"><h3><i data-lucide="sparkles"></i>${esc(t("skill.whyNew"))}</h3><ul class="checks">${thresholdRows}</ul>
+  const emgSec = em ? `<div class="sec"><h3><i data-lucide="lightbulb"></i>${esc(t("skill.whyNew"))}</h3><ul class="checks">${thresholdRows}</ul>
     <p class="src" style="margin-top:8px">${esc(em.status === "confirmed" ? t("skill.fullWeight") : t("skill.halfWeight"))}${Array.isArray(em.synonyms) && em.synonyms.length ? " " + esc(t("skill.merged", { list: em.synonyms.join(", ") })) : ""}</p></div>` : "";
-  // One 5-step scale: your level filled, a mark where a skill counts as yours (level 3); each step's meaning on hover or focus.
-  const levels = `<div class="sec"><h3><i data-lucide="gauge"></i>${esc(have ? t("skill.yourLevel") : t("skill.levels"))}<span class="scale-n">${esc(lvl ? t("skill.scaleOf", { n: lvl }) : t("skill.scaleNew"))}</span></h3>
+  // One 5-step scale, only for a skill you have: your level filled, a mark where a skill counts as yours (level 3).
+  const levels = have ? `<div class="sec"><h3><i data-lucide="gauge"></i>${esc(t("skill.yourLevel"))}<span class="scale-n">${esc(t("skill.scaleOf", { n: lvl }))}</span></h3>
     <ol class="scale">${[1, 2, 3, 4, 5].map(i => `<li class="st${i <= lvl ? " on" : ""}${i === lvl ? " cur" : ""}${i === HAVE_LEVEL ? " own" : ""}" tabindex="0" data-tip="${esc(t("level." + i))}" aria-label="${esc(t("skill.scaleAria", { n: i, desc: t("level." + i) }))}"${i === lvl ? ` aria-current="true"` : ""}><i></i><span>${i}</span></li>`).join("")}
-      <li class="scale-own" style="grid-column:${HAVE_LEVEL} / -1" aria-hidden="true">${esc(t("skill.countsAt"))}</li></ol></div>`;
-  const fold = (icon, title, body) => `<details class="sec dsec"><summary><span><i data-lucide="${icon}"></i>${esc(title)}</span><i class="chev" data-lucide="chevron-down"></i></summary>${body}</details>`;
-  const tasks = Array.isArray(n.tasks) && n.tasks.length ? fold("list", t("skill.tasks"), `<ul class="tasks">${n.tasks.map(x => `<li><span>${esc(x.text)}</span><span class="task-mode ${x.mode === "ai" ? "ai" : ""}">${esc(t(x.mode === "ai" ? "split.ai" : x.mode === "assist" ? "split.assist" : "split.youShort"))}</span></li>`).join("")}</ul>`) : "";
+      <li class="scale-own" style="grid-column:${HAVE_LEVEL} / -1" aria-hidden="true">${esc(t("skill.countsAt"))}</li></ol></div>` : "";
+  const tasks = Array.isArray(n.tasks) && n.tasks.length ? `<div class="sec"><h3><i data-lucide="list"></i>${esc(t("skill.howAi"))}</h3><ul class="tasks">${n.tasks.map(x => `<li><span>${esc(x.text)}</span><span class="task-mode ${x.mode === "ai" ? "ai" : ""}">${esc(t(x.mode === "ai" ? "split.ai" : x.mode === "assist" ? "split.assist" : "split.youShort"))}</span></li>`).join("")}</ul></div>` : "";
   const links = [
     ...evoOut.map(e => `<button class="chip" type="button" data-skill="${esc(e.to)}"><i data-lucide="refresh-cw" style="color:var(--violet)"></i>${esc(t("skill.evolvesInto", { name: nameOf(e.to) }))}</button>`),
     ...evoIn.map(e => `<button class="chip" type="button" data-skill="${esc(e.from)}"><i data-lucide="refresh-cw" style="color:var(--violet)"></i>${esc(t("skill.newVersionOf", { name: nameOf(e.from) }))}</button>`),
     ...buildsOn.map(e => `<button class="chip" type="button" data-skill="${esc(e.from)}"><i data-lucide="corner-down-right"></i>${esc(t("skill.buildsOn", { name: nameOf(e.from) }))}</button>`),
     ...needs.map(j => `<button class="chip" type="button" data-skill="${esc(j)}"><i data-lucide="briefcase"></i>${esc(nameOf(j))}</button>`),
   ].join("");
-  const step = course && lvl < HAVE_LEVEL ? fold("footprints", have ? t("skill.nextLevel") : t("skill.howBuild"), `<div class="lpp">
-      <div class="lpp-item"><span class="ic" style="background:var(--accent-wash);color:var(--accent)"><i data-lucide="book-open"></i></span><div><div class="k">${esc(t("lpp.learn"))}</div><div class="v">${course.url ? extLink(course.url, course.title) : esc(course.title)}</div>${courseMeta(course) ? `<div class="m">${esc(courseMeta(course))}</div>` : ""}${course.provider ? `<div class="m">${esc(t("next.by", { provider: course.provider }))}</div>` : ""}</div></div>
-      ${course.practice ? `<div class="lpp-item"><span class="ic" style="background:var(--warn-wash);color:var(--warn)"><i data-lucide="hammer"></i></span><div><div class="k">${esc(t("lpp.practice"))}</div><div class="v">${esc(course.practice)}</div><div class="m">${esc(t("lpp.practiceSub"))}</div></div></div>` : ""}
-      ${course.prove ? `<div class="lpp-item"><span class="ic" style="background:var(--good-wash);color:var(--good)"><i data-lucide="badge-check"></i></span><div><div class="k">${esc(t("lpp.prove"))}</div><div class="v">${esc(course.prove)}</div><div class="m">${esc(t("lpp.proveSub"))}</div></div></div>` : ""}
-    </div>${isSample(course.source) ? `<p class="src" style="margin-top:8px">${esc(t("skill.courseSample"))}</p>` : course.practice ? `<p class="src" style="margin-top:8px">${esc(t("next.samplePractice"))}</p>` : ""}`) : "";
-  const check = have ? `<div class="sec" id="check-sec"><button class="btn btn-soft" id="prove" type="button" style="width:100%" ${verified || S.profileFallback ? "disabled" : ""}><i data-lucide="badge-check"></i>${esc(verified ? t("check.already") : t("check.take"))}</button></div>` : "";
+  // a step of your goal: who vouches for it, the check and "+ Add certificate" (features/goal-ui.js); else the plain check
+  const gs = goalStep(k);
+  const check = gs ? drawerProve(gs) : have ? `<div class="sec" id="check-sec"><button class="btn btn-soft" id="prove" type="button" style="width:100%" ${verified || S.profileFallback ? "disabled" : ""}><i data-lucide="badge-check"></i>${esc(verified ? t("check.already") : t("check.take"))}</button></div>` : "";
   const sdg = Array.isArray(n.sdg) && n.sdg.length === 2 && !Array.isArray(n.sdg[0]) ? `<div class="sec"><h3><i data-lucide="globe"></i>${esc(t("skill.sdg"))}</h3>${sdgRows([n.sdg])}</div>` : Array.isArray(n.sdg?.[0]) ? `<div class="sec"><h3><i data-lucide="globe"></i>${esc(t("skill.sdg"))}</h3>${sdgRows(n.sdg)}</div>` : "";
-  return `${drHead(have ? t("drawer.yourSkill") : t("drawer.toLearn"), have ? "check-circle" : "plus-circle", n.name, sub)}
-    <div class="sec"><p class="note">${esc(t("impact.why." + im.label, {}))}. ${esc(t("drawer.expLine", { e: Math.round(E.exposure(k) * 100), d: sign(E.demand(k)), year: S.year }))}</p>
-      ${n.description ? `<p class="note" style="margin-top:6px">${esc(n.description)}</p>` : ""}
-      <div class="dr-meta">${howLink("exposure", k)}</div></div>
+  // what to learn: for a skill at risk, what it evolves into; else this skill until level 5
+  const evoNext = evoOut.map(e => e.to).find(x => !E.owned(x));
+  const learnTo = band === "risk" && evoNext ? evoNext : lvl < 5 ? k : evoNext || null;
+  const summary = n.aiEra ? t("aiEra.why") : t("drawer.expLine", { e: Math.round(E.exposure(k) * 100), d: sign(E.demand(k)), year: S.year });
+  const more = `${n.description ? `<p class="note">${esc(n.description)}</p>` : ""}
+    ${!n.aiEra ? `<p class="note">${esc(t("impact.why." + im.label, {}))}.</p><div class="dr-meta">${howLink("exposure", k)}</div>` : ""}
+    ${n.aiEra ? `<div class="sec"><h3><i data-lucide="library"></i>${esc(t("aiEra.sources", { n: (n.sources || []).length }))}</h3>${aiEraSources(n.sources || [])}</div>` : ""}
     ${emgSec}
     ${links ? `<div class="sec"><h3><i data-lucide="git-branch"></i>${esc(t("skill.connections"))}</h3><div class="chips">${links}</div></div>` : ""}
-    ${levels}${tasks}${Array.isArray(n.tasks) && n.tasks.length ? skillBlock(k) : ""}${step}${check}${sdg}
+    ${Array.isArray(n.tasks) && n.tasks.length ? skillBlock(k) : ""}${sdg}
     <p class="src">${esc(t("skill.srcNote"))}${em ? "" : " " + esc(t("skill.frameworkNote"))}${isSample(n.outlookSource) ? " " + esc(t("skill.sampleNote")) : ""}</p>`;
+  return `${drHead(kindLabel(k, have), kindIcon(k, have), n.name, sub)}
+    <div class="sec">${have ? "" : doneNote(k)}<p class="note">${esc(summary)}</p></div>
+    ${tasks}
+    ${learnTo ? learnBlock(learnTo, nameOf(learnTo), [], learnTo === k ? "" : t("learn.next", { name: nameOf(learnTo) })) : ""}
+    ${practiseHtml(k)}${check}${levels}
+    ${fold("info", t("drawer.more"), more)}`;
 }
 
 // ---------- 5-minute check ----------

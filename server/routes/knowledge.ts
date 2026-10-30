@@ -15,6 +15,8 @@ import { runScout, SIGNAL_SELECT, signalJson, getSignal } from "../agents/scout.
 import { runCommittee, candidateJson } from "../agents/committee.ts";
 import { applyRescore, type Reroute } from "../services/rescore.ts";
 import { TRIAGE } from "../triage.ts";
+import { loadBridges } from "../services/bridges.ts";
+import { listBridges, bridgeCounts, decideBridge, BRIDGE_FAMILIES } from "../services/bridge-review.ts";
 
 const intId = z.coerce.number().int().positive();
 const noteBody = z.object({ note: z.string().max(500).optional() }).passthrough();
@@ -140,8 +142,37 @@ export default function knowledgeRoutes(svc: Services) {
         reverted: await count("s.status='reverted'"),
       },
       rules: TRIAGE,
+      // Cross-field bridges the data proposed, strongest first (full, filterable list: GET /review/bridges).
+      bridges: { ...listBridges({ limit: 10 }), counts: bridgeCounts() },
     });
   });
+
+  // ---------- Cross-field bridges (server/services/bridge-review.ts) ----------
+  // Proposed bridges are never used until a person approves one here; approving puts it into routes and the match at once.
+  r.get("/review/bridges", admin, (req, res) => {
+    const q = parse(z.object({
+      status: z.enum(["proposed", "approved", "rejected"]).default("proposed"),
+      skill: z.string().trim().max(100).optional(),
+      family: z.enum(BRIDGE_FAMILIES as [string, ...string[]]).optional(),
+      offset: z.coerce.number().int().min(0).default(0),
+      limit: z.coerce.number().int().min(1).max(100).default(20),
+    }), req.query);
+    res.json({ ...listBridges(q), counts: bridgeCounts(), families: BRIDGE_FAMILIES });
+  });
+
+  for (const [action, status] of [["approve", "approved"], ["reject", "rejected"]] as const) {
+    r.post(`/review/bridges/:id/${action}`, admin, async (req, res) => {
+      const id = parse(z.coerce.number().int().min(0), req.params.id);
+      const { note } = parse(noteBody, req.body || {});
+      const actor = actorOf(req);
+      const b = loadBridges()?.bridges[id];
+      if (!b) throw notFound("Bridge");
+      if (b.source === "team") throw new HttpError(409, "invalid_state", "This is one of the team's hand-made bridges; it is already approved");
+      const bridge = await decideBridge(svc.db, id, status, actor, note ?? null, svc.now());
+      await audit(svc.db, actor, `bridge.${action}`, `bridge:${b.from}>${b.to}`, { id, from: b.fromTitle, to: b.toTitle, score: b.score, note: note ?? null });
+      res.json({ bridge });
+    });
+  }
 
   // Approve a flagged signal: new KB version -> re-score everyone -> offer new routes.
   r.post("/review/signals/:id/approve", admin, async (req, res) => {

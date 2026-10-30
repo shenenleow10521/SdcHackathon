@@ -2,7 +2,7 @@
 // populate req.user. Roles come from the ADMIN_EMAILS / ADVISOR_EMAILS allow-lists.
 // - profileGuard: any request that names a profile (path, ?profile=, body profileId, or a plan id) must come from
 //   that profile's owner. The shared demo persona stays open to everyone; staff may read any profile.
-// - intakeGuard: a new profile from CV intake needs a signed-in user and is linked to them
+// - intakeGuard: a new profile from CV intake (or the no-CV quiz) needs a signed-in user and is linked to them
 //   (one profile per account: a new intake replaces the old profile).
 import type { Request, Response, NextFunction } from "express";
 import { clerkClient, getAuth } from "@clerk/express";
@@ -131,7 +131,7 @@ export async function deleteProfileData(db: Db, profileId: number) {
 /** CV intake needs an account when auth is on; the new profile is linked to it before the reply is sent. */
 export function intakeGuard(svc: Services) {
   return (req: Request, res: Response, next: NextFunction) => {
-    if (!authEnabled(svc) || req.method !== "POST" || req.path !== "/profile/intake") return next();
+    if (!authEnabled(svc) || req.method !== "POST" || (req.path !== "/profile/intake" && req.path !== "/profile/quiz/finish")) return next();
     const ownerId = req.user?.id || (req.guestSessionId ? guestOwnerId(req.guestSessionId) : null);
     if (!ownerId) return next(new HttpError(401, "guest_session_unavailable", "Your guest session couldn't be started. Please sign in and try again."));
     const json = res.json.bind(res);

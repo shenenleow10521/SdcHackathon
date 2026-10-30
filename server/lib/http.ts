@@ -16,12 +16,16 @@ export function parse<T>(schema: z.ZodType<T>, input: unknown): T {
   return r.data;
 }
 
+/** Route type: "closest" (Easiest start, default) or "safest"; the old names fastest/noregret still work (-> closest/safest). */
+export const modeParam = z.enum(["closest", "safest", "fastest", "noregret"]).default("closest")
+  .transform(m => (m === "safest" || m === "noregret" ? "safest" : "closest") as "closest" | "safest");
+
 /** Common query parameters: ?profile=&year=&scenario=&mode= */
 export const scenarioQuery = z.object({
   profile: z.coerce.number().int().positive().default(1),
   year: z.coerce.number().int().min(2026).max(2030).default(2026),
   scenario: z.enum(["moderate", "fast"]).default("moderate"),
-  mode: z.enum(["fastest", "noregret", "safest"]).default("fastest"),
+  mode: modeParam,
 });
 
 /**

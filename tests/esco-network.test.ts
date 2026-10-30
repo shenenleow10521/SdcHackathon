@@ -50,4 +50,21 @@ describe.skipIf(!has)("career network over all ESCO jobs", () => {
     for (let i = 1; i < res.body.jobs.length; i++) expect(res.body.jobs[i - 1].match).toBeGreaterThanOrEqual(res.body.jobs[i].match);
     expect((await request(app).get("/api/esco/profile/9999/best-jobs")).status).toBe(404);
   });
+
+  it("best-jobs uses the one match rule, on the same scale as the catalogue jobs, and lists your ESCO skills", async () => {
+    const app = createApp(svc);
+    const res = await request(app).get("/api/esco/profile/1/best-jobs?limit=60");
+    expect(res.status).toBe(200);
+    expect(res.body.jobs).toHaveLength(60);
+    expect(res.body.method).toMatch(/^Match = /);
+    // Priya (accounts payable): finance jobs lead, and the best is a believable match, not "23%" next to her 60-85% catalogue jobs
+    const top = res.body.jobs.slice(0, 5).map((j: any) => j.title);
+    expect(top).toEqual(expect.arrayContaining(["tax clerk", "accountant", "billing clerk"]));
+    expect(res.body.jobs[0].match).toBeGreaterThanOrEqual(45);
+    expect(res.body.jobs[0].match).toBeLessThan(85);
+    // her ESCO skills (CV + mapped catalogue skills), the most useful for her best jobs first
+    expect(res.body.skills.length).toBeGreaterThan(5);
+    expect(res.body.skills[0]).toMatchObject({ id: expect.any(String), title: expect.any(String), fromCatalogue: expect.any(Boolean) });
+    expect((await request(app).get("/api/esco/profile/1/best-jobs?limit=61")).status).toBe(400);
+  });
 });

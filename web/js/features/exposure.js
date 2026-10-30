@@ -1,6 +1,6 @@
 // Our self-trained AI-exposure model (bge-m3 embeddings + ridge regression on human-rated task labels,
 // Eloundou et al., "GPTs are GPTs", Science 2024). Shown next to the knowledge-base value, never replacing it.
-// GET /api/exposure/skill/:id · GET /api/exposure/model · POST /api/exposure/score.
+// GET /api/exposure/skill/:id, GET /api/exposure/model, POST /api/exposure/score.
 // The endpoints answer 503 exposure_model_unavailable when the server isn't on bge-m3 embeddings: the block then hides.
 import { UI } from "../state.js";
 import { get, post } from "../api.js";
@@ -11,8 +11,8 @@ import { openCustom } from "./why.js";
 const cache = { skill: {}, model: null };
 const unavailable = e => e?.code === "exposure_model_unavailable" || e?.notAvailable || e?.status === 503 || e?.status === 404;
 
-/** Placeholder in the skill drawer; filled (or removed) by loadSkillExposure. */
-export const skillBlock = k => `<div class="sec" id="xp-sec" data-skill-xp="${esc(k)}"><h3><i data-lucide="brain-circuit"></i>${esc(t("xp.title"))}</h3><div id="xp-box">${loadingBox(t("xp.loading"))}</div></div>`;
+/** Placeholder in the skill drawer, folded so the drawer leads with one exposure figure; filled (or removed) by loadSkillExposure. */
+export const skillBlock = k => `<details class="sec dsec" id="xp-sec" data-skill-xp="${esc(k)}"><summary><span><i data-lucide="brain-circuit"></i>${esc(t("xp.title"))}</span><i class="chev" data-lucide="chevron-down"></i></summary><div id="xp-box">${loadingBox(t("xp.loading"))}</div></details>`;
 
 export function modelLabel(m) {
   const run = m?.run || {};
@@ -40,8 +40,8 @@ export async function loadSkillExposure(k) {
   s.querySelector("#xp-box").innerHTML = `
     <p class="rs"><button class="link-btn" type="button" id="xp-how">${esc(t("xp.how"))}</button></p>
     <div class="xp-cmp">
-      <div><div class="k">${esc(t("xp.modelMean"))}</div><div class="v num">${res.modelMean == null ? "–" : Math.round(res.modelMean * 100) + "%"}</div>${res.modelMean == null ? "" : pctBar(res.modelMean, "m")}</div>
       <div><div class="k">${esc(t("xp.kb"))}${(kb.source || "sample") === "sample" ? ` <span class="rs">(${esc(t("src.sample").toLowerCase())})</span>` : ""}</div><div class="v num">${kb.exposure2026 == null ? "–" : Math.round(kb.exposure2026 * 100) + "%"}</div>${kb.exposure2026 == null ? "" : pctBar(kb.exposure2026, "kb")}</div>
+      <div><div class="k">${esc(t("xp.modelMean"))}</div><div class="v num">${res.modelMean == null ? "–" : Math.round(res.modelMean * 100) + "%"}</div>${res.modelMean == null ? "" : pctBar(res.modelMean, "m")}</div>
     </div>
     <ul class="xp-tasks">${(res.tasks || []).map(x => `<li><div class="xp-t"><span>${esc(x.task)}</span></div>
       <div class="xp-v">${pctBar(x.exposure, "m")}<b class="num">${Math.round(x.exposure * 100)}%</b></div></li>`).join("")}</ul>

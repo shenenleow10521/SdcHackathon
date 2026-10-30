@@ -19,7 +19,7 @@ export function safeUrl(u) {
 // They only show where a link goes. Matched by domain; other links get no icon.
 const LOGOS = { "myfuturejobs.gov.my": "myfuturejobs", "jobstreet.com": "jobstreet", "coursera.org": "coursera", "microsoft.com": "microsoft",
   "ghgprotocol.org": "ghgprotocol", "ifrs.org": "ifrs", "bsigroup.com": "bsi", "wanfahprosper.com": "wanfah", "dosm.gov.my": "opendosm",
-  "esco.ec.europa.eu": "esco", "ilo.org": "ilo", "onetcenter.org": "onet" };
+  "esco.ec.europa.eu": "esco", "ilo.org": "ilo", "onetcenter.org": "onet", "youtube.com": "youtube", "openlibrary.org": "openlibrary", "theiia.org": "theiia" };
 export function logoOf(url) {
   const h = hostOf(url);
   const k = Object.keys(LOGOS).find(d => h === d || h.endsWith("." + d));
@@ -65,7 +65,7 @@ export function srcBadge(source, { replayed = false } = {}) {
   if (s === "ilo") return badge("b-info", "ILO", "database");
   if (s === "employer_form") return badge("b-mute", t("src.employerForm"));
   if (s === "careers_page") return badge("b-info", t("src.careersPage"), "globe");
-  if (s === "committee" || s === "emerging") return badge("b-violet", t("src.committee"), "sparkles");
+  if (s === "committee" || s === "emerging") return badge("b-violet", t("src.committee"), "flag");
   return badge("b-good", t("src.live"), "radio");
 }
 

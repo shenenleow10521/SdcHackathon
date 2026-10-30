@@ -1,10 +1,12 @@
 // Personal plan for one job: match, route, typed steps, cost, deadline, human edge and sources.
 // All numbers come from shared/engine.js (fixed formulas) or from database records; nothing is estimated here.
-import { createEngine, displayWeeks, clamp, PARAMS } from "../../shared/engine.js";
+import { createEngine, displayWeeks, clamp, PARAMS, normMode } from "../../shared/engine.js";
 import { engineGraph, type FullGraph } from "../kb.ts";
 import { engineProfile, type Profile } from "../repo.ts";
+import { buildEscoPlan, escoJobId } from "./esco-plan.ts";
 
-export type Mode = "fastest" | "noregret" | "safest";
+/** Route types: "closest" (Easiest start, default) and "safest"; "fastest"/"noregret" are old names (closest/safest). */
+export type Mode = "closest" | "safest" | "fastest" | "noregret";
 export type Engine = ReturnType<typeof createEngine>;
 export interface ExtraReq { skill: string; weight: number; need: number; status?: string; source?: string }
 export interface SignalInfo { id: number; title: string | null; sourceTitle: string | null; sourceDate: string | null; sourceUrl: string | null }
@@ -14,6 +16,8 @@ export interface PlanOptions {
   now: Date;
   /** Details of the signals behind applied knowledge changes (for the sources list). */
   signals?: Record<number, SignalInfo>;
+  /** ESCO skills the person confirmed (profile_esco_skills); used for ESCO jobs. */
+  escoSkills?: Set<string>;
 }
 
 const DAY_MS = 86_400_000;
@@ -46,10 +50,10 @@ export function taskSplit(graph: FullGraph, nodeId: string, year = 2026, scenari
 export function routeView(graph: FullGraph, route: any, hours: number) {
   if (!route) return null;
   return {
-    key: route.key, nodes: route.nodes, risk: route.risk,
+    key: route.key, nodes: route.nodes, risk: route.risk, mode: route.mode,
     weeks: displayWeeks(route.weeks, hours), weeksRef: route.weeks,
     legs: route.legs.map((l: any) => ({ from: l.from, to: l.to, toName: graph.nodes[l.to]?.name ?? l.to, kind: l.kind, why: l.why,
-      weeks: displayWeeks(l.weeks, hours), weeksRef: l.weeks })),
+      weeks: displayWeeks(l.weeks, hours), weeksRef: l.weeks, rel: l.rel == null ? null : round2(l.rel), bridge: false })),
   };
 }
 
@@ -176,9 +180,52 @@ export function sourcesFor(graph: FullGraph, nodeIds: string[], costItems: { tit
   return out;
 }
 
-/** The full plan for GET /plan (and the employer match). */
+/** The full gap list of a catalogue plan: every missing skill with its hours and the key skill it belongs to. */
+export function missingView(graph: FullGraph, E: Engine, p: ReturnType<Engine["planFor"]>, hours: number) {
+  const N = graph.nodes;
+  return p.missing.map((m: any) => ({
+    id: m.id, name: N[m.id]?.name ?? m.id, type: "skill", key: m.key, kind: m.kind,
+    group: m.group, groupName: m.group ? N[m.group]?.name ?? m.group : null,
+    estimated: m.estimated, hours: m.hours, weeks: displayWeeks(m.hours / PARAMS.referenceHours, hours), rel: m.rel,
+    exposure: round2(E.exposure(m.id)), from: m.from, ...(m.kind === "upskill" ? { levelFrom: m.levelFrom, levelTo: m.levelTo } : {}),
+  }));
+}
+
+/** The approved signal that raised a skill's AI exposure (for "why the safer route avoids it"), or null. */
+export function signalFor(graph: FullGraph, nodeId: string, signals: Record<number, SignalInfo> = {}) {
+  if (!((graph.deltas.e[nodeId] || 0) > 0)) return null;
+  const ch = [...graph.appliedChanges].reverse().find(c => c.nodeId === nodeId && c.deltaE > 0);
+  const sig = ch?.signalId != null ? signals[ch.signalId] : undefined;
+  return { title: sig?.title ?? "Approved market change", sourceUrl: ch?.sourceUrl || sig?.sourceUrl || null, kbVersion: ch?.kbVersion ?? null };
+}
+
+/** The safest route as a concrete diff from the default one, or null when it is the same road. */
+export function saferView(graph: FullGraph, E: Engine, job: string, extraReq: any[], hours: number, weeksDefault: number | null, signals?: Record<number, SignalInfo>) {
+  const alt = E.saferAlternative(job, extraReq);
+  if (!alt) return null;
+  const N = graph.nodes, weeks = displayWeeks(alt.ready, hours);
+  return {
+    mode: "safest", route: routeView(graph, alt.route, hours), keySkills: alt.keySkills,
+    avoids: alt.avoids.map((a: any) => ({ ...a, name: N[a.id]?.name ?? a.id, signal: a.reason === "signal" ? signalFor(graph, a.id, signals) : null })),
+    adds: alt.adds.map((id: string) => ({ id, name: N[id]?.name ?? id })),
+    weeks, addedWeeks: weeksDefault == null ? null : weeks - weeksDefault,
+  };
+}
+
+/** GET /plan for any job: a catalogue job (buildPlan) or an ESCO occupation, "esco:<uuid>" (same plan shape, ESCO data). */
+export function buildJobPlan(graph: FullGraph, profile: Profile, opts: PlanOptions) {
+  if (graph.nodes[opts.job]?.type === "job") return buildPlan(graph, profile, opts);
+  const occ = escoJobId(opts.job);
+  if (!occ) throw Object.assign(new Error(`Unknown job: ${opts.job}`), { status: 404, code: "not_found" });
+  const year = opts.year ?? 2026, scenario = opts.scenario ?? "moderate";
+  const plan = buildEscoPlan(graph, engineFor(graph, profile, year, scenario), profile, occ,
+    { mode: normMode(opts.mode), year, scenario, now: opts.now, escoSkills: opts.escoSkills || new Set(), signals: opts.signals });
+  return { ...plan, deadline: deadlineFor(profile.targetDate, plan.weeks, opts.now) };
+}
+
+/** The full plan for a catalogue job (GET /plan and the employer match). */
 export function buildPlan(graph: FullGraph, profile: Profile, opts: PlanOptions) {
-  const mode = opts.mode ?? "fastest", year = opts.year ?? 2026, scenario = opts.scenario ?? "moderate";
+  const mode = normMode(opts.mode), year = opts.year ?? 2026, scenario = opts.scenario ?? "moderate";
   const extraReq = (opts.extraReq || []) as any[];
   const E = engineFor(graph, profile, year, scenario);
   if (!E.isJob(opts.job)) throw Object.assign(new Error(`Unknown job: ${opts.job}`), { status: 404, code: "not_found" });
@@ -192,14 +239,17 @@ export function buildPlan(graph: FullGraph, profile: Profile, opts: PlanOptions)
     ...b, name: N[b.skill]?.name ?? b.skill, from: i < (graph.req[opts.job] || []).length ? "catalogue" : "employer",
   }));
   const planSkills = steps.map(s => s.skillId);
+  const missing = missingView(graph, E, p, hours);
   return {
-    kbVersion: graph.kbVersion, job: opts.job, title: N[opts.job].name, mode, year, scenario, hours,
+    kbVersion: graph.kbVersion, job: opts.job, source: "catalogue", title: N[opts.job].name, mode, year, scenario, hours,
     match: E.match(opts.job, extraReq), breakdown,
     route: routeView(graph, p.route, hours),
+    keySkills: p.keySkills, missing,
+    weeks: weeksReady, weeksReady, weeksReadyRef: p.route ? p.ready : null,
+    weeksEstimated: missing.some(m => m.estimated), totalHours: p.hours,
+    saferAlternative: mode === "closest" && p.route ? saferView(graph, E, opts.job, extraReq, hours, weeksReady, opts.signals) : null,
     alternatives: E.alternatives(opts.job, mode).map((a: any) => routeView(graph, a, hours)),
     steps,
-    weeksCore: p.route ? displayWeeks(p.core, hours) : null, weeksReady,
-    weeksCoreRef: p.route ? p.core : null, weeksReadyRef: p.route ? p.ready : null,
     cost,
     deadline: deadlineFor(profile.targetDate, weeksReady, opts.now),
     humanEdge: humanEdgeFor(graph, E, opts.job, planSkills, year, scenario),

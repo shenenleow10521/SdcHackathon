@@ -1,8 +1,8 @@
 // HalaTuju web app: boot, the refresh loop, and app-level actions.
 // Data: GET /api/graph + GET /api/profile/:id; the shared engine recomputes in the browser on every change.
 // One failed call never blanks the page: each feature shows its own "not available yet" or "retry" state.
-import { S, UI, D, actions, rebuild, computeRing, computePlans, N, nameOf, W, matchOf, profileId, setProfileId, normaliseProfile, FALLBACK_PROFILE, isSampleProfile } from "./state.js";
-import { get, put, post } from "./api.js";
+import { S, UI, D, actions, rebuild, computeRing, computePlans, N, nameOf, W, matchOf, profileId, setProfileId, normaliseProfile, FALLBACK_PROFILE, isSampleProfile, escoRow, bestEscoPick, ESCO_BEST_LIMIT, mapJobs, currentJobTitle, isEsco, isAiEra, escoRowWeeks, jobWeeks, SHOW_STEP } from "./state.js";
+import { get, put, post, hasAdminToken } from "./api.js";
 import { initI18n, t, setLang, getLang, applyStatic, onLangChange } from "./i18n.js";
 import { $, esc, icons, reduce, toast, badge, extLink, fmtDate, store, enter, errorBox, bindRetry } from "./util.js";
 import * as G from "./graph3d.js";
@@ -18,27 +18,25 @@ import { loadHealth, renderStatus, renderAgents, initAgents } from "./features/s
 import { loadPlans, pendingPlans, routeUpdate, routeText, planJob, pendingOf } from "./features/plans.js";
 import { AUTH, initAuth, initAuthScreen, openAuth, closeAuth, openDeleteData, signOut, hasRole } from "./features/auth.js";
 import * as Guide from "./features/guide.js";
-import { goal, progress } from "./features/goal.js";
+import { goal, loadGoal } from "./features/goal.js";
+import { initSearch, renderFrom, renderTo } from "./features/search.js";
+import { stayJob } from "./features/stay.js";
 
 // ---------- header ----------
 function initials(name) { return (name || "?").replace(/\(.*?\)/g, "").trim().split(/\s+/).slice(0, 2).map(s => s[0] || "").join("").toUpperCase() || "?"; }
 
 function renderHead() {
-  const E = S.E, p = S.profile;
+  const p = S.profile;
   $("avatar").textContent = initials(p.displayName);
   // the server names an unnamed CV profile "My profile" or "Profil saya"; show that in the interface language
   $("me-name").textContent = ["My profile", "Profil saya"].includes(p.displayName) ? t("me.myProfile") : p.displayName || t("me.you");
-  $("me-meta").textContent = t("me.meta", { job: nameOf(E.root), h: p.hours });
+  const job = currentJobTitle();
+  $("me-meta").textContent = job ? t("me.meta", { job, h: p.hours }) : t("me.metaNoJob", { h: p.hours });
   $("sample-badge").hidden = !isSampleProfile();
-  // Goal line: the job you committed to and how far along you are (or a nudge to set one).
-  const g = goal();
-  if (g && E.isJob(g.job)) {
-    let gp = null; try { gp = E.planFor(g.job, g.mode || UI.mode); } catch { gp = null; }
-    const pr = progress(gp);
-    $("scorebar").innerHTML = `<button class="goal-line" type="button" id="goal-line"><i data-lucide="flag"></i><span><b>${esc(nameOf(g.job))}</b>${pr ? `<small>${esc(t("goal.headProg", { done: pr.done, total: pr.total, w: W(pr.left) }))}</small>` : ""}</span><i data-lucide="chevron-right"></i></button>`;
-    $("goal-line").onclick = () => { closeJobDrawer(); if (!UI.ring.includes(g.job)) UI.pinned = g.job; UI.job = g.job; UI.mode = g.mode || UI.mode; UI.tab = "path"; UI.view = "user"; UI.picked = true; refresh({ animate: true }); };
-  } else $("scorebar").innerHTML = `<p class="goal-none">${esc(t("goal.none"))}</p>`;
-  $("map-sum").textContent = t(S.escoJobs ? "map.sum" : "map.sumShort", { j: UI.ring.length, total: (S.escoJobs || 0).toLocaleString("en-MY") });
+  renderFrom(job);
+  // the To box names the job on the map (picked from a star, a row, the search box, or your goal)
+  renderTo(UI.escoJob ? nameOf(UI.escoJob) : UI.picked && UI.job ? nameOf(UI.job) : null);
+  $("map-sum").textContent = t(S.escoJobs ? "map.sum" : "map.sumShort", { j: mapJobs().length, total: (S.escoJobs || 0).toLocaleString("en-MY") });
   const nb = $("notice");
   if (S.profileFallback) { nb.hidden = false; nb.innerHTML = `${badge("b-warn", t("src.sample"))}<span>${esc(t("notice.fallback"))}</span><button class="ghost sm" type="button" id="notice-retry"><i data-lucide="refresh-cw"></i>${esc(t("state.retry"))}</button>`; $("notice-retry").onclick = () => actions.loadProfile(profileId()); }
   else if (S.localOnly) { nb.hidden = false; nb.innerHTML = `${badge("b-warn", t("notice.localBadge"))}<span>${esc(t("notice.local"))}</span>`; }
@@ -47,16 +45,23 @@ function renderHead() {
 }
 
 // ---------- panel ----------
+const GoalTab = { render: () => Path.renderGoal(), bind: el => Path.bindGoal(el) };
 let lastPanelKey = "";
 function renderPanel(animate) {
   const el = $("panel");
   const key = UI.view + ":" + UI.tab;
-  if (key !== lastPanelKey) { lastPanelKey = key; const sb = document.querySelector(".side-body"); if (sb) sb.scrollTop = 0; }
+  if (key !== lastPanelKey) {
+    lastPanelKey = key;
+    // the tabs stick to the top of the sidebar: on a tab change, scroll back only as far as the tabs
+    const sb = document.querySelector(".side-body"), tb = $("tabs");
+    // (the tabs are sticky, so their own offsetTop moves with the scroll: measure from the panel under them instead)
+    if (sb && tb && sb.scrollHeight > sb.clientHeight) sb.scrollTop = Math.min(sb.scrollTop, Math.max(0, el.offsetTop - tb.offsetHeight - sb.offsetTop));
+  }
   $("tabs").hidden = UI.view === "admin";
-  const mod = UI.view === "admin" ? Admin : UI.tab === "jobs" ? Jobs : UI.tab === "path" ? Path : Skills;
+  const mod = UI.view === "admin" ? Admin : UI.tab === "jobs" ? Jobs : UI.tab === "path" ? Path : UI.tab === "goal" ? GoalTab : Skills;
   try { el.innerHTML = mod.render(); }
   catch (e) { console.error(e); el.innerHTML = errorBox({ message: t("state.renderFailed") }); }
-  ["jobs", "path", "skills"].forEach(tb => { const b = $("tab-" + tb); b.setAttribute("aria-selected", String(UI.tab === tb)); b.tabIndex = UI.tab === tb ? 0 : -1; });
+  ["jobs", "path", "goal", "skills"].forEach(tb => { const b = $("tab-" + tb); b.setAttribute("aria-selected", String(UI.tab === tb)); b.tabIndex = UI.tab === tb ? 0 : -1; });
   $("admin-btn").setAttribute("aria-pressed", String(UI.view === "admin"));
   try { mod.bind(el); } catch (e) { console.error(e); }
   icons();
@@ -70,13 +75,24 @@ function updateAdminCount() {
 }
 
 // ---------- refresh ----------
+/** Route view (Plan and My goal): the map shows just your route; the chip switches to all jobs and back. */
+function syncRouteChip() {
+  const chip = $("route-chip"), planTab = (UI.tab === "path" || UI.tab === "goal") && UI.view === "user";
+  const on = G.routeView(), back = planTab && UI.routeAll && !!(UI.escoJob || (UI.picked && D.plan?.route));
+  chip.hidden = !on && !back;
+  chip.innerHTML = on ? `<i data-lucide="orbit"></i>${esc(t("map.allJobs"))}` : `<i data-lucide="route"></i>${esc(t("map.backRoute"))}`;
+  icons();
+}
+/** The open tab changed: route view comes and goes with it. */
+function tabChanged() { G.applyLayout(true); G.restyle(); syncRouteChip(); }
+
 function refresh({ reroute = false, animate = false } = {}) {
   if (!S.graph || !S.profile) return false;
   const prev = D.plan?.route?.key;
   try { rebuild(); } catch (e) { console.error(e); return false; }
   computeRing(); computePlans();
   const relaid = G.applyLayout(true);
-  renderHead(); renderPanel(animate); renderAgents(); renderStatus(); Guide.render();
+  renderHead(); renderPanel(animate); renderAgents(); renderStatus(); Guide.render(); syncRouteChip();
   $("year-out").textContent = S.year; $("year").value = S.year;
   $("year").setAttribute("aria-valuetext", String(S.year));
   refreshDrawer();
@@ -101,6 +117,7 @@ async function loadGraph() {
 }
 
 async function loadProfile(id) {
+  const prevId = S.profile?.id;
   try {
     S.profile = normaliseProfile(await get(`/profile/${id}`));
     S.profileFallback = false;
@@ -113,6 +130,8 @@ async function loadProfile(id) {
   }
   S.localOnly = false;
   UI.sdg = S.profile.sdgPriority || null; UI.rank = null; UI.rankErr = null;
+  if (S.profile.id !== prevId) forgetEscoBest(); // another person's ESCO matches must never show on this map
+  await loadGoal({ force: true }); // your goal is on the server (the persona's stays in this browser): load it before opening on it
 }
 
 function bootError(err) {
@@ -207,8 +226,9 @@ function renderAccount() {
   });
   $("menu-who").textContent = inn ? t("menu.account", { email: AUTH.user.email || "" }) : "";
   document.querySelectorAll("#menu [data-staff]").forEach(el => { el.hidden = !hasRole(el.dataset.staff); });
-  // Without accounts the Review button is where an admin enters the admin token, so it stays.
-  $("admin-btn").hidden = AUTH.enabled && !hasRole("admin");
+  // The Review button is for staff only: a signed-in admin, an admin token in this browser, or ?admin=1 (where an
+  // admin enters the token when accounts are off). Everyone else gets the user view without a dead end.
+  $("admin-btn").hidden = !(AUTH.enabled ? hasRole("admin") : hasAdminToken() || new URLSearchParams(location.search).has("admin"));
   document.querySelector("#agents .ag-actions").hidden = !hasRole("admin");
   if (UI.view === "admin" && !hasRole("admin")) actions.setView("user");
 }
@@ -246,21 +266,158 @@ function startOnboarding() {
 }
 
 /** A job's details would repeat the My goal panel once that job is chosen there. */
-function closeJobDrawer() { if (UI.drawer && N(UI.drawer)?.type === "job") closeDrawer(); }
+// Details open inside the left panel; going to another job or tab replaces them, like a map app.
+function closeJobDrawer() { if (UI.drawer) closeDrawer(); }
 
 /** Open on the goal you set last time: its job, route type and the My goal tab. */
 function applyGoal() {
   const g = goal();
   if (!g || !N(g.job) || N(g.job).type !== "job") return;
-  UI.job = g.job; UI.mode = g.mode || UI.mode; UI.picked = true; UI.tab = "path";
+  UI.job = g.job; UI.mode = g.mode || UI.mode; UI.picked = true; UI.tab = "goal";
   UI.pinned = g.job;
+}
+
+// ---------- ESCO jobs on the map ----------
+/** Your best matches across all ESCO jobs (top picks, the threshold slider) and the ESCO skills you have (the map's inner
+ *  ring when your catalogue skills are few). Optional: without it the map shows catalogue jobs only. */
+function forgetEscoBest() { S.escoBest = []; S.escoMine = []; S.xsOwned = new Set(); S.escoDefault = null; S.escoExtra = []; S.outlook = null; UI.escoPinned = null; UI.shown = SHOW_STEP; }
+async function loadEscoBest() {
+  const id = S.profile?.id;
+  if (!id || S.profileFallback) { forgetEscoBest(); S.escoPending = false; return; }
+  S.escoPending = !S.escoBest.length;
+  // your skills' outlook loads alongside (optional: My skills and the stay track fall back to the catalogue without it)
+  get(`/esco/profile/${id}/outlook`).then(o => { if (S.profile?.id === id) { S.outlook = o; if (S.E) refresh(); } }, () => {});
+  try {
+    const r = await get(`/esco/profile/${id}/best-jobs`, { limit: ESCO_BEST_LIMIT });
+    if (S.profile?.id !== id) return;
+    S.escoBest = Array.isArray(r?.jobs) ? r.jobs : [];
+    S.escoMine = Array.isArray(r?.skills) ? r.skills : [];
+    S.escoDefault = r?.defaultPick ? "esco:" + r.defaultPick : null; // the job to open on (not just the top match)
+    S.escoMine.forEach(k => { S.xsNames["xs:" + k.id] = k.title; S.xsOwned.add("xs:" + k.id); });
+  } catch { if (S.profile?.id === id) forgetEscoBest(); }
+  finally { if (S.profile?.id === id) S.escoPending = false; }
+}
+/** After the ESCO matches arrive: redraw, and if nothing is chosen yet and your best match is an ESCO job (a nurse, a
+ *  call-centre agent), open on it so its route shows straight away. Priya's catalogue picks win, so her map is unchanged. */
+async function escoBestLoaded() {
+  refresh();
+  if (UI.picked || UI.escoJob || goal() || UI.view !== "user") return;
+  const top = bestEscoPick();
+  if (top) await selectEsco(top, { quiet: true, tab: null });
+}
+
+/** GET /api/plan?job=esco:<id> (docs/API.md "The plan"): route.nodes [you, ..., job] with route.names, keySkills [id],
+ *  missing [{id,name,group,...}] (every skill still needed), weeks (already at your hours), saferAlternative. */
+function escoPlanShape(id, r) {
+  const E = S.E, idOf = k => String(typeof k === "string" ? k : k?.id || k?.skill || "");
+  const missing = (Array.isArray(r.missing) ? r.missing : []).map(m => ({ id: idOf(m), name: m.name || m.title || idOf(m), group: m.group || "", hours: m.hours ?? null, estimated: !!m.estimated, aiEra: !!m.aiEra, sources: Array.isArray(m.sources) ? m.sources : [], description: m.description || "" })).filter(m => m.id);
+  const nodes = Array.isArray(r.route?.nodes) ? r.route.nodes.map(idOf).filter(Boolean) : [];
+  let keys = (Array.isArray(r.keySkills) ? r.keySkills : []).map(idOf).filter(Boolean);
+  if (!keys.length) keys = nodes.slice(1, -1).filter(k => missing.some(m => m.id === k));
+  keys = keys.slice(0, 5);
+  const names = { ...(r.route?.names || {}) };
+  missing.forEach(m => { names[m.id] = m.name; });
+  (r.keySkills || []).forEach(k => { if (k && typeof k === "object" && k.name) names[idOf(k)] = k.name; });
+  Object.entries(names).forEach(([k, v]) => { if (!N(k)) S.xsNames["xs:" + k] = v; });
+  // AI-era skills (not in ESCO, which predates generative AI): no exposure score, a badge and their sources instead
+  const aiEra = [...missing, ...(Array.isArray(r.route?.nodes) ? r.route.nodes : []).filter(k => k && typeof k === "object")].filter(m => m.aiEra);
+  // AI-era skills the job is picking up that this route doesn't need yet (not the ones you already have)
+  const emerging = (Array.isArray(r.emerging) ? r.emerging : []).filter(e => e && e.id && !e.have && !missing.some(m => m.id === e.id));
+  emerging.forEach(e => { S.xsNames["xs:" + e.id] = e.name || e.id; aiEra.push(e); });
+  aiEra.forEach(m => { const k = idOf(m); S.xsMeta[N(k) ? k : "xs:" + k] = { aiEra: true, sources: Array.isArray(m.sources) ? m.sources : [], description: m.description || "" }; });
+  keys.forEach(k => { if (!N(k) && !S.xsNames["xs:" + k]) S.xsNames["xs:" + k] = k; });
+  // the route as map nodes: you, the skills it starts from and passes through, the job
+  const miss = new Set(missing.map(m => m.id));
+  const route = nodes.length >= 2 ? nodes.map((k, i) => i === 0 ? E.root : i === nodes.length - 1 ? id : N(k) ? k : "xs:" + k) : null;
+  nodes.slice(1, -1).forEach(k => { if (!N(k) && !miss.has(k)) S.xsOwned.add("xs:" + k); }); // ESCO skills you already have
+  const weeks = r.weeks ?? r.route?.weeks ?? null;
+  // each key step's own weeks (route legs), by map id
+  const legWeeks = {};
+  (Array.isArray(r.route?.legs) ? r.route.legs : []).forEach(l => { const k = idOf(l.to); if (k) legWeeks[N(k) ? k : "xs:" + k] = l.weeksRef ?? null; });
+  return { id, keys, missing, route, weeks: typeof weeks === "number" ? weeks : null, totalHours: typeof r.totalHours === "number" ? r.totalHours : null,
+    match: r.match ?? null, counts: r.counts || null, safer: r.saferAlternative || null, names, emerging: emerging.map(e => e.id), legWeeks };
+}
+
+let escoSeq = 0;
+/** Select an ESCO job: draw its plan on the map and (tab "path") show it in the Plan tab; tab null keeps the open tab.
+ *  If /api/plan doesn't know ESCO jobs, open its ESCO sheet instead. */
+async function selectEsco(id, { quiet = false, tab = "path", animate = true } = {}) {
+  if (!escoRow(id)) return;
+  const seq = ++escoSeq;
+  closeJobDrawer();
+  UI.escoJob = id; S.escoPlan = null; UI.view = "user";
+  if (tab) UI.tab = tab;
+  if (tab === "path") UI.routeAll = false;
+  refresh({ animate }); G.wave(id, "#f2b33d", 1.2, 240);
+  if (!quiet) Guide.mark("job");
+  if (tab === "path" && !quiet) revealPlan();
+  try {
+    const r = await get("/plan", { profile: profileId(), job: id, mode: UI.mode, year: S.year, scenario: S.scenario }, { timeout: 20000 });
+    if (seq !== escoSeq || UI.escoJob !== id) return;
+    S.escoPlan = escoPlanShape(id, r || {});
+    // a job opened from the search box has no best-match row yet: its plan gives the match and the counts
+    const row = escoRow(id);
+    if (row && row.match == null) Object.assign(row, { match: r.match ?? 0, have: r.counts?.have ?? 0, close: r.counts?.related ?? null, essential: r.counts?.essential ?? 0 });
+    // the list's weeks are a quick estimate; once the full plan is in, the row shows the plan's figure (they must agree)
+    if (row && S.escoPlan.totalHours != null) row.weeksRef = S.escoPlan.totalHours / 6;
+    refresh({ animate: false });
+  } catch {
+    if (seq !== escoSeq || UI.escoJob !== id) return;
+    // no ESCO plans on this server yet: keep the star selected and show the job's ESCO page
+    S.escoPlan = { id, keys: [], missing: [], weeks: null, match: null, safer: null, names: {}, none: true, legWeeks: {} };
+    refresh();
+    openSheet("esco", id.slice(5));
+  }
+}
+const clearEsco = () => { UI.escoJob = null; S.escoPlan = null; escoSeq++; };
+
+/** Phones: the map sits above the panel, so a tap on a job in the list would change a map the person can't see. Bring
+ *  the map back into view (when it is mostly scrolled away) and pulse the chosen star, so every tap visibly lands. */
+function peekMap(id) {
+  if (window.innerWidth >= 980) return;
+  const st = $("stage"), r = st?.getBoundingClientRect();
+  if (r && r.bottom < r.height * 0.6) st.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  setTimeout(() => G.wave(id, "#f2b33d", 1.6, 420), reduce ? 0 : 450);
+}
+
+/** Bring the chosen job's plan into view: the Plan tab scrolled to its top (it can be scrolled far down from the last
+ *  job), with a short highlight so the eye finds it. On phones the panel sits under the map, so scroll down to it. */
+function revealPlan() {
+  const sb = document.querySelector(".side-body"), el = $("panel"), tb = $("tabs");
+  if (window.innerWidth >= 980) { if (sb) sb.scrollTop = Math.min(sb.scrollTop, Math.max(0, el.offsetTop - tb.offsetHeight - sb.offsetTop)); }
+  else tb.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  flash(el.querySelector(".goal-head"));
+}
+const flash = node => { if (!node) return; node.classList.remove("flash"); void node.offsetWidth; node.classList.add("flash"); };
+
+/** Phones: tapping a job (on the map, or in the list while the map is in view) shows a small card on the map, like a
+ *  map app's place card: name, match, weeks and "See plan", which scrolls down to the plan. */
+function showMapCard(id) {
+  const card = $("map-card");
+  if (window.innerWidth >= 980 || !id) { card.hidden = true; return; }
+  const r = escoRow(id), quick = isEsco(id) ? escoRowWeeks(r) : D.plans[id]?.route ? W(D.plans[id].ready) : null, wk = jobWeeks(id) ?? quick;
+  card.innerHTML = `<div class="mc-t"><b>${esc(nameOf(id))}</b><span>${esc(t("map.jobMatch", { match: matchOf(id) }))}${wk ? ", " + esc(t("jobs.readyLine", { w: wk })) : ""}</span></div>
+    <button class="btn btn-primary sm" type="button" id="mc-plan"><i data-lucide="flag"></i>${esc(t("jobs.openPlan"))}</button>
+    <button class="icon-btn" type="button" id="mc-x" aria-label="${esc(t("common.close"))}"><i data-lucide="x"></i></button>`;
+  card.hidden = false; icons();
+  $("mc-plan").onclick = () => { card.hidden = true; actions.openPlan(id); };
+  $("mc-x").onclick = () => { card.hidden = true; };
+}
+/** Keep the tapped row in view and highlight it (the list re-renders under your finger). */
+function keepRow(id) {
+  requestAnimationFrame(() => {
+    const row = document.querySelector(`#panel [data-card="${CSS.escape(id)}"]`);
+    if (!row) return;
+    if (window.innerWidth >= 980) row.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
+    flash(row);
+  });
 }
 
 // ---------- actions used by panels ----------
 Object.assign(actions, {
   refresh: o => refresh(o),
   renderPanel: () => renderPanel(false),
-  renderAgents, updateAdminCount, openDrawer, closeDrawer, knowledgeChanged, approveSignal, reloadPlans,
+  renderAgents, updateAdminCount, openDrawer, closeDrawer, knowledgeChanged, approveSignal, reloadPlans, selectEsco,
   play: () => { if (!playT) $("play").click(); },
   setForecast(year, scenario) {
     stopPlay(); S.year = year; S.scenario = scenario;
@@ -272,31 +429,73 @@ Object.assign(actions, {
     UI.view = v;
     if (v === "admin") { Admin.loadSub(Admin.A.sub); closeDrawer(); }
     renderPanel(true);
-    if (window.innerWidth < 980 && v === "admin") $("side").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+    if (window.innerWidth < 980 && v === "admin") document.querySelector(".side-body").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
   },
   // Choosing a job fills the My goal panel; its full details open only from "See all about this job".
   selectJob(j) {
+    clearEsco();
     if (UI.job !== j) { UI.employer = null; UI.employerReq = []; }
     closeJobDrawer();
-    UI.job = j; UI.tab = "path"; UI.picked = true; refresh({ animate: true }); Guide.mark("job"); G.wave(j, "#f08a5d", 1.2, 240);
+    UI.job = j; UI.tab = "path"; UI.picked = true; UI.routeAll = false; refresh({ animate: true }); Guide.mark("job"); G.wave(j, "#f08a5d", 1.2, 240);
+    revealPlan();
+  },
+  // A row in the Explore list: select the job (its route shows on the map) and stay in the list, with "Open plan" on it.
+  previewJob(id) {
+    if (isEsco(id)) selectEsco(id, { tab: null, animate: false });
+    else {
+      clearEsco();
+      if (UI.job !== id) { UI.employer = null; UI.employerReq = []; }
+      closeJobDrawer();
+      UI.job = id; UI.picked = true; refresh({ animate: false }); Guide.mark("job"); G.wave(id, "#f08a5d", 1.2, 240);
+    }
+    keepRow(id);
+    if (window.innerWidth < 980) { peekMap(id); showMapCard(id); }
+  },
+  /** The My goal tab: the map shows your goal's route while it's open. */
+  openGoalTab() {
+    // the map shows your move's route, or with no move set, the hand-made AI-ready version of your job when there is one
+    const g = goal(), j = g && N(g.job)?.type === "job" ? g.job : stayJob();
+    UI.tab = "goal"; UI.view = "user"; $("map-card").hidden = true;
+    if (j) {
+      clearEsco(); closeJobDrawer();
+      if (!UI.ring.includes(j)) UI.pinned = j;
+      if (UI.job !== j) { UI.employer = null; UI.employerReq = []; }
+      UI.job = j; UI.mode = (g?.job === j && g.mode) || UI.mode; UI.picked = true;
+      UI.routeAll = false; refresh({ animate: true }); revealPlan();
+    } else { renderPanel(true); tabChanged(); }
+  },
+  /** The × in the To box: no job chosen, back to the list. */
+  clearDestination() {
+    clearEsco(); closeJobDrawer(); UI.escoPinned = null; UI.pinned = null; UI.picked = false; UI.tab = "jobs"; UI.view = "user";
+    $("map-card").hidden = true; refresh({ animate: true });
+  },
+  openPlan(id) {
+    $("map-card").hidden = true;
+    if (isEsco(id)) { if (UI.escoJob !== id) selectEsco(id, { tab: "path" }); else { UI.tab = "path"; UI.view = "user"; UI.routeAll = false; renderPanel(true); tabChanged(); revealPlan(); } }
+    else actions.selectJob(id);
+  },
+  /** A job from the search box that isn't among your best matches: add it (match and counts come with its plan). */
+  openEscoJob(e) {
+    const id = "esco:" + e.id;
+    if (!escoRow(id)) S.escoExtra = [...S.escoExtra, { id: e.id, title: e.title, essential: e.essential ?? 0, match: null, have: null, close: null, iloExposure: e.iloExposure ?? null, critical: !!e.critical, weeksRef: null }];
+    UI.escoPinned = id;
+    selectEsco(id, { tab: "path" });
+  },
+  /** Hours a week to learn: every weeks figure follows. Saved for your own profile; the sample persona changes here only. */
+  setHours(h) {
+    h = Number(h);
+    if (!h || !S.profile || h === S.profile.hours) return;
+    S.profile = { ...S.profile, hours: h }; Path.invalidate(); refresh();
+    if (!S.profile.isDemo && !S.profileFallback) put(`/profile/${profileId()}`, { hours: h }).catch(e => toast({ title: t("state.failed"), detail: e.message, badgeHtml: badge("b-crit", t("state.error")) }));
   },
   showPath(j) {
+    clearEsco();
     if (!UI.ring.includes(j)) UI.pinned = j;
     if (UI.job !== j) { UI.employer = null; UI.employerReq = []; }
     UI.job = j; UI.tab = "path"; UI.view = "user"; UI.picked = true; refresh({ animate: true }); Guide.mark("job");
   },
-  pinJob(j) {
-    if (!S.E.isJob(j)) return;
-    const added = !UI.ring.includes(j);
-    if (added) UI.pinned = j;
-    if (UI.job !== j) { UI.employer = null; UI.employerReq = []; }
-    UI.job = j; UI.search = ""; UI.picked = true;
-    refresh({ animate: true });
-    if (added) toast({ title: t("search.addedToast", { job: nameOf(j) }), detail: t("search.addedBody", { n: matchOf(j), w: D.plans[j]?.route ? W(D.plans[j].ready) : "–" }), badgeHtml: badge("b-info", t("search.added")) });
-    openDrawer(j);
-  },
   setSector(s) {
-    UI.sector = s; UI.pinned = null;
+    UI.sector = s; UI.pinned = null; clearEsco();
     refresh({ animate: true });
     const sec = (S.graph.sectors || []).find(x => x.id === s);
     if (UI.ring[0]) toast({ title: t("sector.toast", { name: s === "best" ? t("jobs.best") : sec?.name || s, n: UI.ring.length }), detail: t("sector.toastBody", { job: nameOf(UI.ring[0]), n: matchOf(UI.ring[0]) }), badgeHtml: badge("b-info", t("sector.updated")) });
@@ -323,32 +522,35 @@ Object.assign(actions, {
     const prevId = S.profile?.id;
     S.profile = normaliseProfile(p); S.localOnly = localOnly;
     if (prevId !== S.profile.id || !localOnly) { UI.sdg = S.profile.sdgPriority || null; UI.rank = null; UI.rankErr = null; }
-    Path.invalidate();
+    if (prevId !== S.profile.id) { forgetEscoBest(); UI.picked = false; } // a new person: their own best match opens
+    Path.invalidate(); clearEsco();
     refresh({ animate: true });
     if (UI.sdg) { await Jobs.loadRank(); refresh(); }
     if (prevId !== S.profile.id) reloadPlans();
+    if (!localOnly) loadEscoBest().then(escoBestLoaded);
   },
   async loadProfile(id) {
     await loadProfile(id);
     UI.pinned = null; UI.employer = null; UI.employerReq = [];
     applyGoal();
-    Path.invalidate();
+    Path.invalidate(); clearEsco();
     refresh({ animate: true });
     if (UI.sdg) { await Jobs.loadRank(); refresh(); }
     reloadPlans();
+    loadEscoBest().then(escoBestLoaded);
   },
-  topJob() { const j = UI.ring[0]; return j ? { job: j, match: matchOf(j), count: UI.ring.length } : null; },
+  topJob() { const j = [...UI.base].sort((a, b) => matchOf(b) - matchOf(a))[0]; return j ? { job: j, match: matchOf(j), count: UI.base.length } : null; },
 });
 
 // ---------- controls ----------
 function initControls() {
-  ["jobs", "path", "skills"].forEach((tb, i, all) => {
+  ["jobs", "path", "goal", "skills"].forEach((tb, i, all) => {
     const b = $("tab-" + tb);
-    b.addEventListener("click", () => { UI.tab = tb; closeWhy(); renderPanel(true); G.updateLabels(); });
+    b.addEventListener("click", () => { closeWhy(); if (tb === "goal") return actions.openGoalTab(); UI.tab = tb; $("map-card").hidden = true; renderPanel(true); tabChanged(); });
     b.addEventListener("keydown", e => {
       if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
       const n = all[(i + (e.key === "ArrowRight" ? 1 : all.length - 1)) % all.length];
-      UI.tab = n; renderPanel(true); G.updateLabels(); $("tab-" + n).focus();
+      if (n === "goal") actions.openGoalTab(); else { UI.tab = n; renderPanel(true); tabChanged(); } $("tab-" + n).focus();
     });
   });
   document.querySelectorAll("[data-scn]").forEach(b => b.addEventListener("click", async () => {
@@ -369,6 +571,7 @@ function initControls() {
   $("rotate").addEventListener("click", () => G.setRotate(!UI.rotating));
   $("labels-btn").addEventListener("click", () => { UI.labelsAll = !UI.labelsAll; $("labels-btn").setAttribute("aria-pressed", String(UI.labelsAll)); G.updateLabels(); });
   $("reset-view").addEventListener("click", () => G.resetView(true));
+  $("route-chip").addEventListener("click", () => { UI.routeAll = !UI.routeAll; tabChanged(); });
   $("legend-more").addEventListener("click", e => {
     const open = e.currentTarget.getAttribute("aria-expanded") !== "true";
     e.currentTarget.setAttribute("aria-expanded", String(open));
@@ -426,7 +629,7 @@ async function boot() {
   await initI18n();
   applyStatic(); onLang();
   icons();
-  initControls(); initWhy(); initOnboarding(); initSheets(); initAgents(); initAuthScreen(); Guide.initGuide();
+  initControls(); initSearch(); initWhy(); initOnboarding(); initSheets(); initAgents(); initAuthScreen(); Guide.initGuide();
   onLangChange(onLang);
   G.setRotate(UI.rotating);
   loadHealth();
@@ -453,7 +656,11 @@ async function boot() {
   renderHead(); renderPanel(); renderAgents(); renderStatus();
   G.init({
     nodeClick(id) {
-      if (N(id)?.type === "job") { UI.view = "user"; actions.selectJob(id); }
+      const phone = window.innerWidth < 980;
+      if (escoRow(id)) { selectEsco(id, { tab: "path", quiet: phone }); if (phone) showMapCard(id); }
+      else if (N(id)?.type === "job") { UI.view = "user"; if (phone) { actions.previewJob(id); UI.tab = "path"; renderPanel(false); } else actions.selectJob(id); }
+      // a skill on a route to an ESCO job opens its panel too (drawer.js escoSkillDetail); other unknown dots just show the tip
+      else if (!N(id) && !isAiEra(id) && !(String(id).startsWith("xs:") && S.xsNames[id])) G.showTipFor(id);
       else openDrawer(id);
     },
     altRoute(m) {
@@ -468,6 +675,7 @@ async function boot() {
   new MutationObserver(() => G.restyle()).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   globalThis.matchMedia?.("(prefers-color-scheme: dark)").addEventListener?.("change", () => G.restyle());
   if (UI.sdg) { await Jobs.loadRank(); refresh(); }
+  loadEscoBest().then(escoBestLoaded);
   reloadPlans().then(showPendingPrompt);
   if (hasRole("admin")) Admin.loadReview().then(updateAdminCount);
   Guide.render();

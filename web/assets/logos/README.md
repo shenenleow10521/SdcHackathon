@@ -16,5 +16,8 @@ Small icons shown next to links to these sites, only to show where a link goes (
 | esco.png | ESCO (European Commission) | https://esco.ec.europa.eu/themes/custom/oe_esco/images/favicons/ec/favicon.svg |
 | ilo.png | International Labour Organization | https://www.ilo.org/themes/custom/ilo/node_modules/@ilo-org/brand-assets/dist/assets/favicon/apple-touch-icon.png |
 | onet.png | O*NET Resource Center | https://www.onetcenter.org/apple-touch-icon.png?v=20201126 |
+| youtube.png | YouTube | https://www.youtube.com/s/desktop/5b8fd169/img/favicon_96x96.png (saved 30 Oct 2026) |
+| openlibrary.png | Open Library (Internet Archive) | https://openlibrary.org/static/favicon.ico (saved 30 Oct 2026) |
+| theiia.png | The Institute of Internal Auditors | https://www.theiia.org/favicon.ico (saved 30 Oct 2026) |
 
 TalentCorp is not included: its declared icon is a ministry crest, not a clean TalentCorp mark, so the MyCOL line has no icon.

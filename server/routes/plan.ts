@@ -7,9 +7,10 @@ import { z } from "zod";
 import type { Services } from "../context.ts";
 import { loadGraph, type FullGraph } from "../kb.ts";
 import { loadProfile, audit, type Profile } from "../repo.ts";
-import { parse, scenarioQuery, notFound, requireRole, actorOf, rateLimit, HttpError, badRequest } from "../lib/http.ts";
+import { parse, scenarioQuery, modeParam, notFound, requireRole, actorOf, rateLimit, HttpError, badRequest } from "../lib/http.ts";
 import { displayWeeks } from "../../shared/engine.js";
-import { buildPlan, engineFor, type ExtraReq, type SignalInfo } from "../services/planning.ts";
+import { buildJobPlan, engineFor, type ExtraReq, type SignalInfo } from "../services/planning.ts";
+import { escoJobId } from "../services/esco-plan.ts";
 import { mapJobs, rankBySdg } from "../services/ranking.ts";
 import { searchJobs } from "../services/jobsearch.ts";
 import { explain, factSheet } from "../agents/explainer.ts";
@@ -96,13 +97,16 @@ export default function planRoutes(svc: Services) {
     res.json(mapJobs(g, p, { sector: q.sector, sdg: q.sdg ?? p.sdgPriority, year: q.year, scenario: q.scenario, mode: q.mode }));
   });
 
-  // GET /plan — the full plan for one job (optionally with an employer's extra requirements).
+  // GET /plan — the full plan for one job: a catalogue job id, or any ESCO occupation as esco:<uuid>
+  // (optionally with an employer's extra requirements, catalogue jobs only).
   r.get("/plan", async (req, res) => {
     const q = parse(scenarioQuery.extend({ job: z.string().min(1).max(60), employer: intId.optional() }), req.query);
     const [g, p] = await Promise.all([loadGraph(svc.db), requireProfile(svc, q.profile)]);
-    requireJob(g, q.job);
-    const extraReq = q.employer ? await employerExtraReq(svc, g, q.employer, q.job) : [];
-    const plan = buildPlan(g, p, { job: q.job, mode: q.mode, year: q.year, scenario: q.scenario, extraReq, now: svc.now(), signals: await signalInfo(svc, g) });
+    const esco = g.nodes[q.job]?.type === "job" ? null : escoJobId(q.job);
+    if (!esco) requireJob(g, q.job);
+    const extraReq = q.employer && !esco ? await employerExtraReq(svc, g, q.employer, q.job) : [];
+    const escoSkills = esco ? new Set((await svc.db.query("select skill_id from profile_esco_skills where profile_id=$1", [p.id])).rows.map((x: any) => x.skill_id as string)) : undefined;
+    const plan = buildJobPlan(g, p, { job: q.job, mode: q.mode, year: q.year, scenario: q.scenario, extraReq, now: svc.now(), signals: await signalInfo(svc, g), escoSkills });
     res.json({ ...plan, employerId: q.employer ?? null });
   });
 
@@ -148,14 +152,16 @@ export default function planRoutes(svc: Services) {
 
   // ---------- Saved plans + advisor ----------
   r.post("/plans", async (req, res) => {
-    const b = parse(z.object({ profileId: intId, job: z.string().min(1).max(60), mode: z.enum(["fastest", "noregret", "safest"]).default("fastest"), employerId: intId.optional() }), req.body);
+    const b = parse(z.object({ profileId: intId, job: z.string().min(1).max(60), mode: modeParam, employerId: intId.optional() }), req.body);
     const [g, p] = await Promise.all([loadGraph(svc.db), requireProfile(svc, b.profileId)]);
     requireJob(g, b.job);
     if (b.employerId && !(await svc.db.query("select 1 from employers where id=$1", [b.employerId])).rows.length) throw notFound("Employer");
     const extra = b.employerId ? await employerExtraReq(svc, g, b.employerId, b.job) : [];
     const route = engineFor(g, p).planFor(b.job, b.mode, extra as any).route;
     if (!route) throw new HttpError(409, "no_route", "There is no open route to this job right now");
-    const stored = { key: route.key, nodes: route.nodes, legs: route.legs, weeks: route.weeks };
+    const plan = engineFor(g, p).planFor(b.job, b.mode, extra as any);
+    // weeks = time to job-ready from every missing skill (reference weeks), the one figure the plan shows
+    const stored = { key: route.key, nodes: route.nodes, legs: route.legs, weeks: plan.ready };
     const ins = await svc.db.query<{ id: number }>("insert into plans(profile_id, occupation_id, employer_id, mode, route, kb_version, status) values ($1,$2,$3,$4,$5,$6,'draft') returning id",
       [p.id, b.job, b.employerId ?? null, b.mode, JSON.stringify(stored), g.kbVersion]);
     await snapshotProfile(svc, g, p, b.mode);

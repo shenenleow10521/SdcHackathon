@@ -29,9 +29,14 @@ export function scoutNet() {
   ]);
 }
 
-/** Scripted AI: extraction by page, reviewer always agrees. */
+/** One scripted vote answer. */
+export const INCLUDE = { vote: "include", confidence: 0.9, reason: "Looks right" };
+export const EXCLUDE = { vote: "exclude", confidence: 0.8, reason: "Not convincing" };
+const isVoter = (req: LlmRequest<any>) => /three-person panel/.test(req.system);
+
+/** Scripted AI: extraction by page. The voters include everything except the reconciliation quote QC, where only the evidence checker includes (1 of 3). */
 export function scoutLlm(req: LlmRequest<any>) {
-  if (req.role === "reviewer") return { supports: true, confidence: 0.92, issue: "" };
+  if (isVoter(req)) return req.user.includes(QC) && !/EVIDENCE CHECKER/.test(req.system) ? EXCLUDE : INCLUDE;
   const u = req.user;
   if (u.includes(A)) return { findings: [{ nodeId: "viz", kind: "capability", direction: "up", magnitude: "small", quote: QA, claim: "AI builds dashboards" }] };
   if (u.includes(B)) return { findings: [{ nodeId: "viz", kind: "capability", direction: "up", magnitude: "small", quote: QB, claim: "AI builds dashboards" }] };

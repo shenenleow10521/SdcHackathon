@@ -2,7 +2,7 @@
 // the page text is then read through fetchApproved like any other page.
 //   - Gemini Google Search grounding (GEMINI_API_KEY; free keys usually have zero quota -> HTTP 429, then disabled for 6 h)
 //   - Brave Search API (BRAVE_API_KEY)
-//   - Tavily (TAVILY_API_KEY)
+//   - Tavily (TAVILY_API_KEY, falling back to TAVILY_API_KEY_2 once the first hits its plan cap or is rejected)
 import type { Services } from "../context.ts";
 import { fetchApi } from "./fetch.ts";
 import { trustedEntry, TRUSTED } from "./policy.ts";
@@ -10,11 +10,14 @@ import { geminiKeysFromEnv } from "../lib/llm.ts";
 import { type Query, type SourceResult, type SourceItem, toIsoDate, inWindow, clean } from "./types.ts";
 
 let groundingDisabledUntil = 0;
+// Tavily keys that hit a usage cap or were rejected (HTTP 432/429/401): skipped for the rest of the process.
+const deadTavilyKeys = new Set<string>();
+const tavilyKey = (env = process.env) => [env.TAVILY_API_KEY, env.TAVILY_API_KEY_2].find(k => k && !deadTavilyKeys.has(k));
 
 export function websearchProviders(env = process.env) {
   return {
     brave: !!env.BRAVE_API_KEY,
-    tavily: !!env.TAVILY_API_KEY,
+    tavily: !!tavilyKey(env),
     gemini: geminiKeysFromEnv(env).length > 0 && !/^(0|off|false|no)$/i.test(env.GEMINI_GROUNDING || "on") && Date.now() > groundingDisabledUntil,
   };
 }
@@ -38,14 +41,19 @@ async function brave(svc: Services, q: Query, since: Date): Promise<SourceResult
 }
 
 async function tavily(svc: Services, q: Query, since: Date): Promise<SourceResult> {
+  const key = tavilyKey();
+  if (!key) return { items: [], error: "Tavily: no usable key (usage cap reached)" };
   const r = await fetchApi(svc, "https://api.tavily.com/search", {
     method: "POST", headers: { "Content-Type": "application/json" },
     // Search only trusted domains (otherwise nearly every hit is dropped by keep()). Tavily counts LinkedIn
     // as part of microsoft.com, so it is excluded explicitly.
-    body: JSON.stringify({ api_key: process.env.TAVILY_API_KEY, query: q.terms.join(" "), topic: "news", days: 30, max_results: 10,
+    body: JSON.stringify({ api_key: key, query: q.terms.join(" "), topic: "news", days: 30, max_results: 10,
       include_domains: TAVILY_DOMAINS, exclude_domains: ["linkedin.com"] }),
   });
-  if (!r.ok) return { items: [], error: `Tavily: ${r.reason}` };
+  if (!r.ok) {
+    if (r.status === 432 || r.status === 429 || r.status === 401) { deadTavilyKeys.add(key); if (tavilyKey()) return tavily(svc, q, since); }
+    return { items: [], error: `Tavily: ${r.reason}` };
+  }
   const j = JSON.parse(r.body);
   const now = svc.now();
   const items: SourceItem[] = [];

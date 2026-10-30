@@ -7,7 +7,7 @@
  *   emerging?: { status: "provisional"|"confirmed" } | null, stay?: boolean }} GraphNode
  * @typedef {{ from: string, to: string, weeks: number, why: string, kind: string }} GraphEdge
  * @typedef {{ skill: string, weight: number, need: number, share?: number|null, status?: string }} Requirement
- * @typedef {{ kbVersion?: number, nodes: Record<string, GraphNode>, edges: GraphEdge[],
+ * @typedef {{ kbVersion?: number, nodes: Record<string, GraphNode>, edges: GraphEdge[], courses?: Record<string, { hours?: number|null, source?: string|null }[]>,
  *   req: Record<string, Requirement[]>, sectors?: { id: string, jobs: string[]|null }[],
  *   deltas?: { e?: Record<string, number>, d?: Record<string, number> } }} Graph
  * @typedef {{ occupationId: string, level: Record<string, number>, hours?: number }} EngineProfile
@@ -31,10 +31,26 @@ export const PARAMS = Object.freeze({
   bridgeCoverage: 0.4,      // a skill you lack but can bridge to from one you have
   emergingWeight: 0.5,      // unconfirmed emerging skills count at half weight
   rankMatch: 0.6, rankOutlook: 0.4,
-  fastestPenalty: 30, safestWeeks: 0.3, safestPenalty: 10, noregretPenalty: 6,
-  edgeBase: 0.01,
-  referenceHours: 6,        // edge weeks assume 6 learning hours a week
+  // Route order = relatedness ("start from what you know"), not time. Edge cost = hopCost + (1 - relatedness)
+  // + an AI-exposure term: "closest" (Easiest start) only slows down on skills AI is taking over (exposure above 0.5,
+  // like traffic), "safest" also penalises medium exposure (above 0.35), more strongly.
+  hopCost: 0.1,             // every stop costs a little, so short readable chains win ties
+  closestPenalty: 5,        // closest: 5 x max(0, e - 0.5)^2
+  safestPenalty: 6,         // safest: 6 x max(0, e - 0.35)^2 (0.35 = where "Low" AI risk ends)
+  safestFrom: 0.35,
+  weeksScale: 4,            // hand-made bridge relatedness = 4 / (4 + edge weeks): a 4-week bridge = 0.5
+  // Time to job-ready, from ALL missing skills: course hours where a course exists, else an estimate that grows with
+  // distance from what you know: estHoursMin + estHoursSpan x (1 - relatedness to the nearest skill you have).
+  estHoursMin: 12, estHoursSpan: 36,
+  minCourseHours: 6,        // a listed course counts as the time for a skill only if it is at least this long (a 1-hour module is not)
+  upskillHoursPerLevel: 6,  // raising a skill you have by one level
+  referenceHours: 6,        // weeks in the engine are "reference weeks" at 6 learning hours a week
   maxExposure: 0.99,
+  // A safer route is offered only when it avoids a skill AI does a lot of (exposure >= saferMinExposure, or an approved
+  // signal raised it) that is at least saferMinGain more exposed than every skill on the safer route. Without that, a
+  // "safer" road is just a different road, and saying it avoids AI would not be true.
+  saferMinExposure: 0.5,
+  saferMinGain: 0.1,
   slowFactor: 0.5,          // "Slow AI": half of the Moderate change by 2030 (our assumption, not sourced)
 });
 
@@ -75,7 +91,17 @@ export function aiTide(f, s) {
 }
 
 export const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-export const MODES = ["fastest", "noregret", "safest"];
+/** Route types: "closest" (UI: Easiest start, the default) and "safest". */
+export const MODES = ["closest", "safest"];
+/** Old route types from saved plans and URLs: fastest -> closest, noregret -> safest. */
+export function normMode(m) { return m === "safest" || m === "noregret" ? "safest" : "closest"; }
+
+/** Relatedness of a hand-made edge in [0,1]: its own `rel` if given, else from its weeks (4 / (4 + weeks)). */
+export function edgeRel(e) {
+  if (typeof e.rel === "number") return clamp(e.rel, 0, 1);
+  if (e.kind === "own") return 1;
+  return PARAMS.weeksScale / (PARAMS.weeksScale + Math.max(0, e.weeks || 0));
+}
 
 /**
  * Weeks at the user's own pace. Edge weeks are stored at 6 h/week.
@@ -150,19 +176,19 @@ export function createEngine(graph, profile, scenario = {}) {
   const outEdges = u => (u === ROOT ? rootEdges.concat(outIndex.get(u) || []) : outIndex.get(u) || []);
   const inEdges = v => graph.edges.filter(e => e.to === v);
 
-  function edgeCost(mode, to, weeks) {
-    const base = PARAMS.edgeBase;
-    if (!isSkill(to)) return (mode === "safest" ? PARAMS.safestWeeks * weeks : weeks) + base;
+  /** Cost of stepping onto `to` over an edge of relatedness `rel` (see PARAMS). */
+  function edgeCost(mode, to, rel) {
+    const base = PARAMS.hopCost + (1 - rel);
+    if (!isSkill(to)) return base;
     const e = exposure(to);
-    if (mode === "fastest") return weeks + base + PARAMS.fastestPenalty * Math.max(0, e - 0.5) ** 2;
-    if (mode === "safest") return PARAMS.safestWeeks * weeks + base + PARAMS.safestPenalty * e * e;
-    const worst = clamp(node(to).e[2] + boostE(to), 0, PARAMS.maxExposure); // no-regret: worst case, Fast AI 2030
-    return weeks + base + PARAMS.noregretPenalty * worst * worst;
+    if (normMode(mode) === "safest") return base + PARAMS.safestPenalty * Math.max(0, e - PARAMS.safestFrom) ** 2;
+    return base + PARAMS.closestPenalty * Math.max(0, e - 0.5) ** 2;
   }
 
   /** Dijkstra from you to a job. Jobs are destinations, never stopovers; taken skills are closed roads. */
-  function shortestPath(dest, mode = "fastest", opts = {}) {
+  function shortestPath(dest, mode = "closest", opts = {}) {
     if (!isJob(dest)) throw new Error(`Not a job: ${dest}`);
+    mode = normMode(mode);
     const blocked = new Set(opts.avoid || []);
     const dist = { [ROOT]: 0 }, prev = {}, done = new Set();
     while (true) {
@@ -175,13 +201,13 @@ export function createEngine(graph, profile, scenario = {}) {
         if (!N[b] || done.has(b) || blocked.has(b)) continue;
         if (isJob(b) && b !== dest) continue;
         if (isSkill(b) && taken(b)) continue;
-        const nd = dist[u] + edgeCost(mode, b, ed.weeks);
-        if (dist[b] === undefined || nd < dist[b]) { dist[b] = nd; prev[b] = { from: u, w: ed.weeks, why: ed.why, kind: ed.kind }; }
+        const nd = dist[u] + edgeCost(mode, b, edgeRel(ed));
+        if (dist[b] === undefined || nd < dist[b]) { dist[b] = nd; prev[b] = { from: u, w: ed.weeks, why: ed.why, kind: ed.kind, rel: edgeRel(ed) }; }
       }
     }
     if (dist[dest] === undefined) return null;
     const legs = [];
-    for (let v = dest; v !== ROOT; v = prev[v].from) legs.unshift({ from: prev[v].from, to: v, weeks: prev[v].w, why: prev[v].why, kind: prev[v].kind });
+    for (let v = dest; v !== ROOT; v = prev[v].from) legs.unshift({ from: prev[v].from, to: v, weeks: prev[v].w, why: prev[v].why, kind: prev[v].kind, rel: prev[v].rel });
     const nodes = [ROOT, ...legs.map(l => l.to)];
     const skills = nodes.filter(isSkill);
     const avgE = skills.reduce((s, k) => s + exposure(k), 0) / Math.max(1, skills.length);
@@ -189,7 +215,7 @@ export function createEngine(graph, profile, scenario = {}) {
   }
 
   /** Other good routes: block each stop on the best route in turn and keep distinct results. */
-  function alternatives(dest, mode = "fastest", max = 2) {
+  function alternatives(dest, mode = "closest", max = 2) {
     const best = shortestPath(dest, mode);
     if (!best) return [];
     const seen = new Set([best.key]), out = [];
@@ -228,22 +254,89 @@ export function createEngine(graph, profile, scenario = {}) {
   function outlook(job) { return clamp(50 + demand(job) - 40 * exposure(job), 0, 100); }
   function rankScore(job) { return PARAMS.rankMatch * match(job) + PARAMS.rankOutlook * outlook(job); }
 
-  /** Route + upskill steps + remaining gaps. Weeks are at the reference 6 h/week. */
-  function planFor(job, mode = "fastest", extraReq = []) {
-    const route = shortestPath(job, mode);
-    const onRoute = new Set(route ? route.nodes : []);
+  /** Hours of a real (non-sample) course on the skill that is long enough to learn it, or null. */
+  function courseHours(k) {
+    const c = (graph.courses?.[k] || []).find(x => x.source && x.source !== "sample" && Number(x.hours) >= PARAMS.minCourseHours);
+    return c ? Number(c.hours) : null;
+  }
+  /** Learning hours for a new skill reached with relatedness `rel` from what you know. */
+  function learnHours(k, rel) {
+    const h = courseHours(k);
+    if (h !== null) return { hours: h, estimated: false };
+    return { hours: Math.round(PARAMS.estHoursMin + PARAMS.estHoursSpan * (1 - clamp(rel, 0, 1))), estimated: true };
+  }
+
+  /**
+   * The plan for a job: the route (key stepping stones, in order of relatedness), every missing skill with its hours,
+   * and the time to job-ready from ALL of them. Weeks are reference weeks (6 h/week); displayWeeks rescales them.
+   *   keySkills = the new skills on the route; missing = key skills + skills to level up + other required skills.
+   *   ups / extras / core are kept for older callers.
+   */
+  function planFor(job, mode = "closest", extraReq = []) {
+    mode = normMode(mode);
+    const wk = h => Math.round(100 * h / PARAMS.referenceHours) / 100;
+    const sp = shortestPath(job, mode);
+    const onRoute = new Set(sp ? sp.nodes : []);
+    const missing = [];
+    let route = null;
+    if (sp) {
+      const legs = sp.legs.map(l => {
+        if (!isSkill(l.to) || owned(l.to)) return { ...l, weeks: 0 };
+        const t = learnHours(l.to, l.rel);
+        missing.push({ id: l.to, kind: l.kind === "evolve" ? "evolve" : "reskill", key: true, hours: t.hours, estimated: t.estimated,
+          rel: Math.round(100 * l.rel) / 100, from: isSkill(l.from) ? l.from : null, why: l.why || "", group: l.to });
+        return { ...l, weeks: wk(t.hours) };
+      });
+      route = { ...sp, legs, weeks: Math.round(100 * legs.reduce((s, l) => s + l.weeks, 0)) / 100 };
+    }
+    const keySkills = missing.map(m => m.id);
+    const linked = (x, k) => graph.edges.some(e => (e.from === x && e.to === k) || (e.from === k && e.to === x));
+    const keyNear = k => keySkills.find(x => linked(x, k)) || null;
     const ups = [], extras = [];
     for (const q of [...(graph.req[job] || []), ...extraReq]) {
       const k = q.skill;
-      if (owned(k)) { if (!taken(k) && lvl(k) < q.need) ups.push({ id: k, from: lvl(k), to: q.need, weeks: q.need - lvl(k) }); }
-      else if (!onRoute.has(k) && !extras.some(x => x.id === k)) {
+      if (owned(k)) {
+        if (taken(k) || lvl(k) >= q.need) continue;
+        const up = ups.find(u => u.id === k);
+        if (up) { // an employer may ask the same skill at a higher level: keep the highest
+          if (q.need > up.to) { up.to = q.need; up.weeks = q.need - up.from; const m = missing.find(x => x.id === k && x.kind === "upskill"); m.levelTo = q.need; m.hours = (q.need - up.from) * PARAMS.upskillHoursPerLevel; }
+          continue;
+        }
+        ups.push({ id: k, from: lvl(k), to: q.need, weeks: q.need - lvl(k) });
+        missing.push({ id: k, kind: "upskill", key: false, hours: (q.need - lvl(k)) * PARAMS.upskillHoursPerLevel, estimated: true, rel: 1, from: k, why: "",
+          levelFrom: lvl(k), levelTo: q.need, group: keyNear(k) });
+      } else if (!onRoute.has(k) && !extras.some(x => x.id === k)) {
         const inc = inEdges(k).filter(e => (owned(e.from) && (e.kind === "evolve" || !taken(e.from))) || onRoute.has(e.from));
-        const best = inc.sort((x, y) => x.weeks - y.weeks)[0];
-        extras.push({ id: k, weeks: best ? best.weeks : 4, from: best ? best.from : null, why: best ? best.why : "", kind: best && best.kind === "evolve" ? "evolve" : "reskill" });
+        const best = inc.sort((x, y) => edgeRel(y) - edgeRel(x))[0];
+        const rel = best ? edgeRel(best) : 0, t = learnHours(k, rel);
+        const kind = best && best.kind === "evolve" ? "evolve" : "reskill";
+        extras.push({ id: k, weeks: wk(t.hours), from: best ? best.from : null, why: best ? best.why : "", kind });
+        missing.push({ id: k, kind, key: false, hours: t.hours, estimated: t.estimated, rel: Math.round(100 * rel) / 100, from: best ? best.from : null,
+          why: best ? best.why : "", group: (best && keySkills.includes(best.from) ? best.from : null) || keyNear(k) });
       }
     }
-    const core = route ? route.weeks : 0;
-    return { job, mode, route, ups, extras, core, ready: core + ups.reduce((s, u) => s + u.weeks, 0) + extras.reduce((s, x) => s + x.weeks, 0) };
+    const hours = missing.reduce((s, m) => s + m.hours, 0);
+    return { job, mode, route, keySkills, missing, hours, ups, extras, core: route ? route.weeks : 0, ready: route ? wk(hours) : 0 };
+  }
+
+  /**
+   * The safest route, only when it differs from the default (closest) one: which skills it avoids and why
+   * (an approved market signal raised its AI exposure, or its exposure is high), what it adds, and the extra weeks.
+   */
+  function saferAlternative(job, extraReq = []) {
+    const a = planFor(job, "closest", extraReq), b = planFor(job, "safest", extraReq);
+    if (!a.route || !b.route || a.route.key === b.route.key) return null;
+    const inA = new Set(a.route.nodes), inB = new Set(b.route.nodes);
+    const safeMax = Math.max(0, ...b.route.nodes.filter(isSkill).map(exposure));
+    const avoids = a.route.nodes.filter(k => isSkill(k) && !inB.has(k))
+      .filter(k => (boostE(k) > 0 || exposure(k) >= PARAMS.saferMinExposure) && exposure(k) - safeMax >= PARAMS.saferMinGain)
+      .map(k => ({
+        id: k, owned: owned(k), exposure: Math.round(100 * exposure(k)) / 100, aiSharePct: Math.round(100 * exposure(k)),
+        reason: boostE(k) > 0 ? "signal" : "exposure",
+      }));
+    if (!avoids.length) return null;
+    const adds = b.route.nodes.filter(k => isSkill(k) && !inA.has(k) && !owned(k));
+    return { mode: "safest", route: b.route, keySkills: b.keySkills, avoids, adds, ready: b.ready, addedRef: Math.round(100 * (b.ready - a.ready)) / 100 };
   }
 
   const ownedSkills = () => Object.keys(N).filter(owned);
@@ -268,7 +361,7 @@ export function createEngine(graph, profile, scenario = {}) {
     root: ROOT, year, scenario: fast ? "fast" : slow ? "slow" : "moderate",
     lvl, owned, has, isSkill, isJob, exposure, demand, tide, taken, zone, impact, edgeCost,
     shortestPath, alternatives, bridgedFrom, coverage, weightOf, match, matchBreakdown, outlook, rankScore,
-    planFor, futureScore, ownedSkills, allJobs, sectorJobs,
+    planFor, saferAlternative, futureScore, ownedSkills, allJobs, sectorJobs,
   };
 }
 
@@ -324,7 +417,8 @@ export function stressSeed(profile, job, opts = {}) {
  * future counted once, under its first failed check), and single changes that would make the plan sturdier.
  * Seeded (stressSeed), so the same plan always gives the same number. It tests the plan; it is not a chance of being hired.
  */
-export function stressTest(graph, profile, job, mode = "fastest", opts = {}) {
+export function stressTest(graph, profile, job, mode = "closest", opts = {}) {
+  mode = normMode(mode);
   const MC = MONTE_CARLO;
   const runs = Math.max(1, Math.round(opts.runs ?? MC.runs));
   const view = opts.view || { year: PARAMS.baseYear, scenario: "moderate" };
@@ -360,7 +454,7 @@ export function stressTest(graph, profile, job, mode = "fastest", opts = {}) {
   const wf = (run, key) => MC.weeksFactor.min + (MC.weeksFactor.max - MC.weeksFactor.min) * rngFor(run, "w:" + key)();
 
   function simulate(p, h) {
-    const items = [...p.ups.map(u => ["up:" + u.id, u.weeks]), ...p.extras.map(x => ["x:" + x.id, x.weeks])];
+    const items = p.missing.filter(m => !m.key).map(m => ["x:" + m.id, m.hours / PARAMS.referenceHours]);
     const out = [];
     let works = 0;
     for (let run = 0; run < runs; run++) {

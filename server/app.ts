@@ -8,14 +8,17 @@ import type { Services } from "./context.ts";
 import graphRoutes from "./routes/graph.ts";
 import healthRoutes from "./routes/health.ts";
 import profileRoutes from "./routes/profile.ts";
+import goalRoutes from "./routes/goal.ts";
 import planRoutes from "./routes/plan.ts";
 import knowledgeRoutes from "./routes/knowledge.ts";
 import employerRoutes from "./routes/employers.ts";
 import exposureRoutes from "./routes/exposure.ts";
 import escoRoutes from "./routes/esco.ts";
+import learningRoutes from "./routes/learning.ts";
 import escoNetworkRoutes from "./routes/esco-network.ts";
 import accountRoutes from "./routes/account.ts";
 import { authenticate, profileGuard, intakeGuard } from "./lib/auth.ts";
+import { ensureBridgeDecisions } from "./services/bridge-review.ts";
 import { CLERK_PROXY_PATH, clerkProxyMiddleware } from "./middlewares/clerkProxyMiddleware.ts";
 import { guestSessionMiddleware } from "./middlewares/guestSession.ts";
 import { sameOriginMutations } from "./middlewares/sameOrigin.ts";
@@ -40,15 +43,20 @@ export function createApp(svc: Services) {
   api.use(authenticate(svc));
   api.use(profileGuard(svc));
   api.use(intakeGuard(svc));
+  // People's decisions on proposed cross-field bridges, loaded once into memory for the match and routes.
+  // A database hiccup here must not take the whole API down (/health included): it is retried on the next request.
+  api.use(async (_req, _res, next) => { try { await ensureBridgeDecisions(svc.db); } catch { /* retried next request */ } next(); });
   api.use(accountRoutes(svc));
   api.use(healthRoutes(svc));
   api.use(graphRoutes(svc));
   api.use(profileRoutes(svc));
+  api.use(goalRoutes(svc));
   api.use(planRoutes(svc));
   api.use(knowledgeRoutes(svc));
   api.use(employerRoutes(svc));
   api.use(exposureRoutes(svc));
   api.use(escoNetworkRoutes(svc));
+  api.use(learningRoutes(svc));
   api.use(escoRoutes(svc));
   api.use((req, _res, next) => next(new HttpError(404, "not_found", `No API route: ${req.method} ${req.path}`)));
   app.use("/api", api);

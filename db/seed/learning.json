@@ -1,0 +1,549 @@
+{
+  "_note": "Hand-picked learning resources, every URL opened and checked on 2026-10-30. Videos verified with YouTube oEmbed. Microsoft Learn page titles are given without the ' - Training | Microsoft Learn' suffix.",
+  "checkedAt": "2026-10-30",
+  "resources": {
+    "prompt": [
+      {
+        "format": "video",
+        "title": "AI Prompting for Finance Professionals",
+        "provider": "YouTube",
+        "by": "Association for Financial Professionals",
+        "url": "https://www.youtube.com/watch?v=vKBWOX2Bc6E",
+        "minutes": 10,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "Get better Copilot responses with great prompting",
+        "provider": "Microsoft Support",
+        "by": "Microsoft",
+        "url": "https://support.microsoft.com/en-us/microsoft-365-copilot/get-better-copilot-responses-with-great-prompting",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); title copied from the page; content on topic"
+      }
+    ],
+    "aiinv": [
+      {
+        "format": "video",
+        "title": "This Power Automate Flow Reads Invoices with AI",
+        "provider": "YouTube",
+        "by": "DamoBird365",
+        "url": "https://www.youtube.com/watch?v=_f9w8fM-hjU",
+        "minutes": 13,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "Use the invoice processing prebuilt model in Power Automate - AI Builder",
+        "provider": "Microsoft Learn",
+        "by": "Microsoft",
+        "url": "https://learn.microsoft.com/en-us/ai-builder/flow-invoice-processing",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); title copied from the page; content on topic"
+      },
+      {
+        "format": "practice",
+        "title": "Extract invoice data with AI Builder’s prebuilt model",
+        "provider": "Microsoft Learn",
+        "by": "Microsoft",
+        "url": "https://learn.microsoft.com/en-us/training/modules/ai-builder-invoice-processing/",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); training module with a short hands-on flow lab (needs a Power Automate/AI Builder trial)"
+      }
+    ],
+    "aisup": [
+      {
+        "format": "video",
+        "title": "What is Human In The Loop with AI? How HITL Shapes AI Systems",
+        "provider": "YouTube",
+        "by": "IBM Technology",
+        "url": "https://www.youtube.com/watch?v=9iS-YYLIXiw",
+        "minutes": 11,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "App. C: AI Risk Management and Human-AI Interaction",
+        "provider": "NIST AI Resource Center",
+        "by": "NIST",
+        "url": "https://airc.nist.gov/airmf-resources/airmf/appendices/app-c-ai-risk-management-and-human-ai-interaction/",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); title copied from the page; content on topic"
+      }
+    ],
+    "auto": [
+      {
+        "format": "video",
+        "title": "Power Automate Desktop - Invoice Processing",
+        "provider": "YouTube",
+        "by": "Microsoft Power Platform",
+        "url": "https://www.youtube.com/watch?v=aU6I5ZQSQgg",
+        "minutes": 11,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "Tutorial: Get started with cloud flows",
+        "provider": "Microsoft Learn",
+        "by": "Microsoft",
+        "url": "https://learn.microsoft.com/en-us/power-automate/get-started-with-cloud-flows",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); title copied from the page; content on topic"
+      },
+      {
+        "format": "practice",
+        "title": "Get started with Power Automate",
+        "provider": "Microsoft Learn",
+        "by": "Microsoft",
+        "url": "https://learn.microsoft.com/en-us/training/modules/get-started-flows/",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); step-by-step training module where you build a flow in your own Power Automate account"
+      }
+    ],
+    "recon": [
+      {
+        "format": "video",
+        "title": "Stop Doing Manual Reconciliations in Excel: Use Power Query",
+        "provider": "YouTube",
+        "by": "Excel University",
+        "url": "https://www.youtube.com/watch?v=fxm8AY8sUdU",
+        "minutes": 16,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "Create a fuzzy match (Power Query)",
+        "provider": "Microsoft Support",
+        "by": "Microsoft",
+        "url": "https://support.microsoft.com/en-us/excel/create-a-fuzzy-match-power-query",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200, redirected to this URL); explains matching two lists with near-identical entries, as used in supplier statement reconciliation"
+      }
+    ],
+    "excel": [
+      {
+        "format": "video",
+        "title": "Pivot Table Excel | Step-by-Step Tutorial",
+        "provider": "YouTube",
+        "by": "Kevin Stratvert",
+        "url": "https://www.youtube.com/watch?v=dvbLrwD2SpA",
+        "minutes": 9,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "practice",
+        "title": "Analyze and visualize data using Microsoft Copilot",
+        "provider": "Microsoft Learn",
+        "by": "Microsoft",
+        "url": "https://learn.microsoft.com/en-us/training/modules/analyze-visualize-data-copilot/",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); training module on analysing data in Excel with Copilot"
+      },
+      {
+        "format": "book",
+        "title": "Excel Data Analysis for Dummies",
+        "provider": "Wiley",
+        "by": "Paul McFedries",
+        "year": 2022,
+        "isbn": "9781119844426",
+        "url": "https://openlibrary.org/works/OL19544306W",
+        "minutes": null,
+        "cost": "paid",
+        "lang": "en",
+        "evidence": "Open Library works/editions API returned this title, author, publisher and ISBN; the openlibrary.org HTML page itself could not be loaded at check time (site unreachable)"
+      }
+    ],
+    "viz": [
+      {
+        "format": "video",
+        "title": "Make an Incredible Finance KPI Dashboard with Power BI in 20 minutes",
+        "provider": "YouTube",
+        "by": "Chandoo",
+        "url": "https://www.youtube.com/watch?v=i3AR0gt9SHA",
+        "minutes": 22,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "Tutorial: Get Started Creating in the Power BI Service - Power BI",
+        "provider": "Microsoft Learn",
+        "by": "Microsoft",
+        "url": "https://learn.microsoft.com/en-us/power-bi/fundamentals/service-get-started",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); title copied from the page; content on topic"
+      },
+      {
+        "format": "practice",
+        "title": "Dashboard in a Day - Online workshop",
+        "provider": "Microsoft Learn",
+        "by": "Microsoft",
+        "url": "https://learn.microsoft.com/en-us/training/paths/dashboard-in-a-day/",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); beginner workshop with hands-on labs for building a first dashboard"
+      },
+      {
+        "format": "book",
+        "title": "Storytelling with Data",
+        "provider": "Wiley",
+        "by": "Cole Nussbaumer Knaflic",
+        "year": 2015,
+        "isbn": "9781119055259",
+        "url": "https://openlibrary.org/works/OL17659741W",
+        "minutes": null,
+        "cost": "paid",
+        "lang": "en",
+        "evidence": "Open Library works/editions API returned this title, author, publisher and ISBN; the openlibrary.org HTML page itself could not be loaded at check time (site unreachable)"
+      }
+    ],
+    "esgdata": [
+      {
+        "format": "video",
+        "title": "Sustainability Data Collection, Analysis and Management: Why, Who, and How?",
+        "provider": "YouTube",
+        "by": "Cisco Live EMEA",
+        "url": "https://www.youtube.com/watch?v=CyE_i2_PyA4",
+        "minutes": 29,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "Internal control over sustainability data",
+        "provider": "Internal Audit Foundation (The IIA), with ACCA",
+        "by": "Internal Audit Foundation and ACCA",
+        "url": "https://www.theiia.org/globalassets/site/content/research/foundation/2025/sustainability-data-report-acca-iia.pdf",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "PDF fetched (HTTP 200); first page title read from the file; report on controls over sustainability data"
+      }
+    ],
+    "ghg": [
+      {
+        "format": "video",
+        "title": "Scope 1, 2, and 3 explained I ClimatePartner",
+        "provider": "YouTube",
+        "by": "ClimatePartner",
+        "url": "https://www.youtube.com/watch?v=0Z_X7iZdLEk",
+        "minutes": 3,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "Corporate Value Chain (Scope 3) Standard",
+        "provider": "GHG Protocol",
+        "by": "WRI and WBCSD",
+        "url": "https://ghgprotocol.org/corporate-value-chain-scope-3-standard",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); title copied from the page; content on topic"
+      },
+      {
+        "format": "article",
+        "title": "Greenhouse gas emissions",
+        "provider": "Microsoft Sustainability Resources",
+        "by": "Microsoft",
+        "url": "https://microsoft.github.io/Sustainability-Resources/greenhouse-gas-emissions/",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); covers GHG emissions accounting and scopes 1, 2 and 3"
+      },
+      {
+        "format": "book",
+        "title": "The Greenhouse Gas Protocol",
+        "provider": "World Business Council for Sustainable Development / WRI",
+        "by": "World Resources Institute and World Business Council for Sustainable Development",
+        "year": 2004,
+        "isbn": "9781569735688",
+        "url": "https://openlibrary.org/works/OL8898656W",
+        "minutes": null,
+        "cost": "paid",
+        "lang": "en",
+        "evidence": "Open Library works/editions API returned this title, author, publisher and ISBN; the openlibrary.org HTML page itself could not be loaded at check time (site unreachable)"
+      }
+    ],
+    "disc": [
+      {
+        "format": "video",
+        "title": "Introduction to Bursa Malaysia's Sustainability Reporting Requirement",
+        "provider": "YouTube",
+        "by": "Bursa Malaysia",
+        "url": "https://www.youtube.com/watch?v=r9LBOQ9NWJI",
+        "minutes": 8,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "IFRS - Introduction to the ISSB and IFRS Sustainability Disclosure Standards",
+        "provider": "IFRS Foundation",
+        "by": "IFRS Foundation",
+        "url": "https://www.ifrs.org/sustainability/knowledge-hub/introduction-to-issb-and-ifrs-sustainability-disclosure-standards/",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); title copied from the page; content on topic"
+      }
+    ],
+    "audit2": [
+      {
+        "format": "video",
+        "title": "Types of Internal Audit Controls | Fundamentals of Internal Auditing | Part 17 of 44",
+        "provider": "YouTube",
+        "by": "ACI Learning | Audit",
+        "url": "https://www.youtube.com/watch?v=SCuDKQNzTrI",
+        "minutes": 23,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "The IIA’s Three Lines Model: An Update of the Three Lines of Defense",
+        "provider": "The Institute of Internal Auditors",
+        "by": "The IIA",
+        "url": "https://www.theiia.org/globalassets/documents/resources/the-iias-three-lines-model-an-update-of-the-three-lines-of-defense-july-2020/three-lines-model-updated-english.pdf",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "PDF fetched (HTTP 200); title read from the first page of the file"
+      },
+      {
+        "format": "book",
+        "title": "Sawyer's internal auditing",
+        "provider": "Institute of Internal Auditors",
+        "by": "Lawrence B. Sawyer",
+        "year": 2003,
+        "isbn": "9780894135090",
+        "url": "https://openlibrary.org/works/OL2944890W",
+        "minutes": null,
+        "cost": "paid",
+        "lang": "en",
+        "evidence": "Open Library works/editions API returned this title, author, publisher and ISBN; the openlibrary.org HTML page itself could not be loaded at check time (site unreachable)"
+      }
+    ],
+    "fin": [
+      {
+        "format": "video",
+        "title": "Financial Analysis Fundamentals | Course Module",
+        "provider": "YouTube",
+        "by": "Corporate Finance Institute",
+        "url": "https://www.youtube.com/watch?v=N6dbAFGL6l4",
+        "minutes": 16,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "book",
+        "title": "The Interpretation of Financial Statements",
+        "provider": "John Wiley & Sons",
+        "by": "Benjamin Graham and Spencer B. Meredith",
+        "year": 1997,
+        "isbn": "9780471177609",
+        "url": "https://openlibrary.org/works/OL273185W",
+        "minutes": null,
+        "cost": "paid",
+        "lang": "en",
+        "evidence": "Open Library works/editions API returned this title, author, publisher and ISBN; the openlibrary.org HTML page itself could not be loaded at check time (site unreachable)"
+      }
+    ],
+    "ai-literacy": [
+      {
+        "format": "video",
+        "title": "99% of Beginners Don't Know the Basics of AI",
+        "provider": "YouTube",
+        "by": "Jeff Su",
+        "url": "https://www.youtube.com/watch?v=nVyD6THcvDQ",
+        "minutes": 10,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "practice",
+        "title": "Prepare to Use Generative AI at Work",
+        "provider": "Microsoft Learn",
+        "by": "Microsoft",
+        "url": "https://learn.microsoft.com/en-us/training/modules/what-generative-ai/",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); training module for any worker on generative AI basics, risks and responsible use"
+      },
+      {
+        "format": "book",
+        "title": "Co-Intelligence",
+        "provider": "Penguin Publishing Group",
+        "by": "Ethan Mollick",
+        "year": 2024,
+        "isbn": "9780593716717",
+        "url": "https://openlibrary.org/works/OL37565105W",
+        "minutes": null,
+        "cost": "paid",
+        "lang": "en",
+        "evidence": "Open Library works/editions API returned this title, author, publisher and ISBN; the openlibrary.org HTML page itself could not be loaded at check time (site unreachable)"
+      }
+    ],
+    "ai-check-output": [
+      {
+        "format": "video",
+        "title": "Why do AI models hallucinate?",
+        "provider": "YouTube",
+        "by": "Claude",
+        "url": "https://www.youtube.com/watch?v=005JLRt3gXI",
+        "minutes": 5,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "Evaluate Copilot output for clarity, accuracy, tone, and context",
+        "provider": "Microsoft Support",
+        "by": "Microsoft",
+        "url": "https://support.microsoft.com/en-us/microsoft-365-copilot/evaluate-copilot-output-for-clarity-accuracy-tone-and-coverage",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); title copied from the page; content on topic"
+      },
+      {
+        "format": "book",
+        "title": "AI Snake Oil",
+        "provider": "Princeton University Press",
+        "by": "Arvind Narayanan and Sayash Kapoor",
+        "year": 2024,
+        "isbn": "9780691249643",
+        "url": "https://openlibrary.org/works/OL38014844W",
+        "minutes": null,
+        "cost": "paid",
+        "lang": "en",
+        "evidence": "Open Library works/editions API returned this title, author, publisher and ISBN; the openlibrary.org HTML page itself could not be loaded at check time (site unreachable)"
+      }
+    ],
+    "ai-draft-summarise": [
+      {
+        "format": "video",
+        "title": "How to Use Microsoft Copilot in Outlook & Teams: Enhance Your Communications",
+        "provider": "YouTube",
+        "by": "Kevin Stratvert",
+        "url": "https://www.youtube.com/watch?v=RY1NRd-aoyI",
+        "minutes": 18,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "Welcome to Copilot in Word",
+        "provider": "Microsoft Support",
+        "by": "Microsoft",
+        "url": "https://support.microsoft.com/en-us/word/welcome-to-copilot-in-word",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); title copied from the page; content on topic"
+      },
+      {
+        "format": "practice",
+        "title": "Work smarter with AI",
+        "provider": "Microsoft Learn",
+        "by": "Microsoft",
+        "url": "https://learn.microsoft.com/en-us/training/paths/work-smarter-with-ai/",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); learning path that includes summarising and simplifying information with Copilot"
+      }
+    ],
+    "ai-write-prompts": [
+      {
+        "format": "video",
+        "title": "Discover the Art of Prompting | Google AI Essentials",
+        "provider": "YouTube",
+        "by": "Grow with Google",
+        "url": "https://www.youtube.com/watch?v=jNNatjruXx8",
+        "minutes": 31,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "Write Effective Prompts to Achieve Optimal Results",
+        "provider": "Microsoft Learn",
+        "by": "Microsoft",
+        "url": "https://learn.microsoft.com/en-us/training/modules/write-effective-prompts-do-more-prompting/",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); training module on writing effective prompts (context, goal, source, expectations)"
+      }
+    ],
+    "ai-protect-data": [
+      {
+        "format": "video",
+        "title": "Is ChatGPT Safe for Work? Enterprise AI Compliance Explained",
+        "provider": "YouTube",
+        "by": "CBT Nuggets",
+        "url": "https://www.youtube.com/watch?v=ZvrBNO4VDUk",
+        "minutes": 10,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "YouTube oEmbed returned this exact title and author_name; duration from the YouTube page listing"
+      },
+      {
+        "format": "article",
+        "title": "Enterprise data protection in Microsoft Copilot and Microsoft Copilot Chat",
+        "provider": "Microsoft Learn",
+        "by": "Microsoft",
+        "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/enterprise-data-protection",
+        "minutes": null,
+        "cost": "free",
+        "lang": "en",
+        "evidence": "Page fetched (HTTP 200); title copied from the page; content on topic"
+      }
+    ]
+  }
+}

@@ -1,0 +1,153 @@
+{
+ "date": "2026-10-30",
+ "models": {
+  "main": "gemini-3.5-flash-lite",
+  "reviewer": "gemini-3.1-flash-lite"
+ },
+ "answered": [
+  "gemini-3.1-flash-lite",
+  "gemini-3.5-flash-lite"
+ ],
+ "X": 1,
+ "Y": 1,
+ "results": [
+  {
+   "id": 34,
+   "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Cloud ERP Finance",
+   "human": "include",
+   "why": "approved by admin",
+   "votes": {
+    "votes": [
+     {
+      "role": "evidence",
+      "vote": "include",
+      "confidence": 0.95,
+      "reason": "The quote explicitly describes an AI agent performing the core tasks of vendor reconciliation, such as identifying ledger exceptions and suggesting resolutions.",
+      "model": "gemini-3.1-flash-lite"
+     },
+     {
+      "role": "skill",
+      "vote": "include",
+      "confidence": 0.95,
+      "reason": "The quote directly discusses AI agents automating the reconciliation of accounts and identifying exceptions between ledgers, matching the tasks of vendor reconciliation.",
+      "model": "gemini-3.5-flash-lite"
+     },
+     {
+      "role": "sceptic",
+      "vote": "exclude",
+      "confidence": 0.9,
+      "reason": "The claim relies entirely on a vendor's marketing material describing its own product features rather than evidence of actual industry-wide adoption or impact.",
+      "model": "gemini-3.1-flash-lite"
+     }
+    ],
+    "error": null
+   },
+   "outcome": "auto-apply",
+   "agrees": true
+  }
+ ],
+ "peeked": [
+  {
+   "id": 35,
+   "title": "Microsoft named a Leader in the 2026 Gartner® Magic Quadrant™ for Cloud ERP Finance",
+   "human": "include",
+   "why": "still waiting for a person",
+   "votes": {
+    "votes": [
+     {
+      "role": "evidence",
+      "vote": "include",
+      "confidence": 0.9,
+      "reason": "The quote directly describes AI automating manual tasks like invoice recognition and entry, which aligns with the claimed change in invoice data entry.",
+      "model": "gemini-3.1-flash-lite"
+     },
+     {
+      "role": "skill",
+      "vote": "include",
+      "confidence": 0.95,
+      "reason": "The quote directly discusses intelligent invoice recognition and finance entries automating accounts payable processing, matching invoice data entry tasks.",
+      "model": "gemini-3.5-flash-lite"
+     },
+     {
+      "role": "sceptic",
+      "vote": "exclude",
+      "confidence": 0.9,
+      "reason": "The source is a self-promotional blog post from Microsoft that lacks specific evidence or independent verification of the claimed automation capabilities.",
+      "model": "gemini-3.1-flash-lite"
+     }
+    ],
+    "error": null
+   },
+   "outcome": "auto-apply",
+   "agrees": false
+  },
+  {
+   "id": 36,
+   "title": "Build the future of agentic ERP with new Microsoft Dynamics 365 capabilities",
+   "human": "include",
+   "why": "still waiting for a person",
+   "votes": {
+    "votes": [
+     {
+      "role": "evidence",
+      "vote": "include",
+      "confidence": 0.9,
+      "reason": "The quote confirms that AI now provides generative insights for demand planning tasks, directly supporting the claim that AI can perform more tasks within supply chain planning.",
+      "model": "gemini-3.1-flash-lite"
+     },
+     {
+      "role": "skill",
+      "vote": "include",
+      "confidence": 1,
+      "reason": "The quote directly discusses AI-driven demand planning capabilities, which aligns with forecasting demand in supply chain planning.",
+      "model": "gemini-3.5-flash-lite"
+     },
+     {
+      "role": "sceptic",
+      "vote": "exclude",
+      "confidence": 0.9,
+      "reason": "The claim relies entirely on marketing copy from a single vendor promoting its own product features rather than independent evidence of widespread task automation.",
+      "model": "gemini-3.1-flash-lite"
+     }
+    ],
+    "error": null
+   },
+   "outcome": "auto-apply",
+   "agrees": false
+  },
+  {
+   "id": 37,
+   "title": "Microsoft named a Leader in the 2026 IDC MarketScape for AI-Enabled Operational ERP",
+   "human": "include",
+   "why": "still waiting for a person",
+   "votes": {
+    "votes": [
+     {
+      "role": "evidence",
+      "vote": "exclude",
+      "confidence": 0.9,
+      "reason": "The quote mentions a Procurement Agent but does not provide evidence that it performs strategic sourcing tasks like negotiating contracts or assessing supplier risk.",
+      "model": "gemini-3.1-flash-lite"
+     },
+     {
+      "role": "skill",
+      "vote": "include",
+      "confidence": 0.85,
+      "reason": "The quote mentions a Procurement Agent which directly relates to procurement and strategic sourcing tasks such as negotiating contracts and supplier management.",
+      "model": "gemini-3.5-flash-lite"
+     },
+     {
+      "role": "sceptic",
+      "vote": "exclude",
+      "confidence": 0.9,
+      "reason": "The source is a vendor's marketing blog post describing a preview feature, which does not constitute evidence of widespread organizational adoption or a medium change in the skill.",
+      "model": "gemini-3.1-flash-lite"
+     }
+    ],
+    "error": null
+   },
+   "outcome": "flag (split)",
+   "agrees": false
+  }
+ ]
+}

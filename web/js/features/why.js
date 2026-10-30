@@ -170,7 +170,7 @@ function weeksBody(job) {
   const exRows = p.extras.map(x => `<tr><td>${esc(nameOf(x.id))}<div class="rs">${esc(t("why.leg.extra"))}</div></td><td class="num">${x.weeks}</td><td class="num">${W(x.weeks)}</td></tr>`).join("");
   const html = `${p.route ? `<p class="pop-lead">${esc(t("why.leadWeeks", { w: W(p.ready), h }))}</p>` : ""}
     ${p.route ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>${esc(t("why.col.step"))}</th><th>${esc(t("why.col.ref"))}</th><th>${esc(t("why.col.you", { h }))}</th></tr></thead><tbody>${legRows}${upRows}${exRows}</tbody>
-      <tfoot><tr><td>${esc(t("why.corePath"))}</td><td class="num">${p.core}</td><td class="num">${W(p.core)}</td></tr><tr><td>${esc(t("why.jobReady"))}</td><td class="num">${p.ready}</td><td class="num"><b>${W(p.ready)}</b></td></tr></tfoot></table></div>`
+      <tfoot><tr><td>${esc(t("why.jobReady"))}</td><td class="num">${p.ready}</td><td class="num"><b>${W(p.ready)}</b></td></tr></tfoot></table></div>`
       : `<p class="note">${esc(t("path.noRouteBody", { year: S.year }))}</p>`}
     <details class="pop-more"><summary>${esc(t("why.howCalc"))}</summary><p class="formula">${esc(t("why.weeksFormula", { h }))}</p>
       <ul class="formula-notes"><li>${esc(t("why.weeksMode." + UI.mode))}</li><li>${esc(t("why.weeksClosed"))}</li></ul></details>

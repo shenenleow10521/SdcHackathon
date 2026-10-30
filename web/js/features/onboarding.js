@@ -1,19 +1,24 @@
 // First-use onboarding, wired to the intake agent:
 // 1. Upload a CV / LinkedIn PDF, a scan, or up to 3 photos (POST /api/profile/intake, field "cv") or paste text (JSON { text }) → detected skills, scrubbed details, matching used.
 //    Scans and photos are read by OCR on our server. If the server is unsure of the text ({ needsReview }), it lands in the paste box to check first.
+//    No CV? "Answer questions": pick a sector, then tick the tasks you do in a typical week over 4-6 adaptive rounds
+//    (POST /api/profile/quiz/next), which builds a profile of the same shape (POST /api/profile/quiz/finish).
 // 2. The interviewer's follow-up questions (POST /api/profile/:id/answers).
 // 3. Confirm levels on the 1–5 scale (PUT /api/profile/:id/skills) and set hours, target date and budget (PUT /api/profile/:id).
 // "Use the sample persona" is always one click away. The shared sample persona is never changed on the server:
 // edits to it stay in this browser.
 import { S, actions, setProfileId, normaliseProfile, nameOf } from "../state.js";
-import { upload, post, put } from "../api.js";
-import { t, tOr } from "../i18n.js";
+import { upload, get, post, put } from "../api.js";
+import { t, tOr, getLang } from "../i18n.js";
 import { $, esc, icons, badge, store, reduce, toast, errorBox } from "../util.js";
 import { intro as guideIntro } from "./guide.js";
 import { intro as mapIntro } from "../graph3d.js";
 import { AUTH } from "./auth.js";
 
 const OB = { step: 0, mode: "upload", files: [], review: null, text: "", busy: false, stage: 0, err: null, intake: null, answers: {}, levels: {}, goals: {}, add: "" };
+// The no-CV quiz: chosen sector, every answered round, the current round's chips and what is ticked in it.
+const newQuiz = () => ({ sectors: null, sector: null, seed: 1, rounds: [], current: null, picks: new Set(), none: false, finishing: false });
+let Q = newQuiz();
 let stageTimer = null, lastFocus = null;
 const STAGES = ["ob.stage1", "ob.stage2", "ob.stage3", "ob.stage4"];
 const MAX_FILE = 5 * 1024 * 1024, MAX_PHOTOS = 3;
@@ -24,12 +29,13 @@ const stageText = i => t(i === 0 && OB.mode === "upload" && OB.files.some(isPhot
 
 export function openOnboarding(step = 0) {
   lastFocus = document.activeElement;
-  if (step === 0) Object.assign(OB, { step: 0, files: [], review: null, text: "", busy: false, err: null, intake: null, answers: {} });
+  if (step === 0) { Object.assign(OB, { step: 0, files: [], review: null, text: "", busy: false, err: null, intake: null, answers: {} }); Q = { ...newQuiz(), sectors: Q.sectors }; }
   else OB.step = step;
   seedLevels();
   $("ob").hidden = false;
   render();
-  setTimeout(() => $("ob-card").querySelector("button, input, textarea, select")?.focus(), 30);
+  // start screen readers and keyboards at the dialog's title, not on the close button (no ring flashes on open)
+  setTimeout(() => { const h = $("ob-title"); if (h) { h.tabIndex = -1; h.focus(); } else $("ob-card").querySelector("button, input, textarea, select")?.focus(); }, 30);
 }
 
 export function closeOnboarding() {
@@ -48,7 +54,7 @@ function seedLevels() {
   OB.goals = { occupationId: p?.occupationId || "", hours: p?.hours || 6, targetDate: p?.targetDate || "", budgetRm: p?.budgetRm ?? "", displayName: p?.displayName || "" };
 }
 
-const confNote = c => `<span class="rn-src">${esc(t(c === "verified" ? "conf.verified" : c === "cv" ? "conf.cv" : "conf.self"))}</span>`;
+const confNote = c => `<span class="rn-src">${esc(t(c === "verified" ? "conf.verified" : c === "cv" ? "conf.cv" : c === "quiz" ? "conf.quiz" : "conf.self"))}</span>`;
 
 function render() {
   const c = $("ob-card"), s = OB.step;
@@ -57,24 +63,27 @@ function render() {
   if (s === 0) {
     head = `<div class="ob-kicker">${esc(t("ob.k1"))}</div><h2 id="ob-title">${esc(t("ob.h1"))}</h2><p>${esc(t("ob.p1"))}</p>`;
     body = OB.intake ? intakeSummary() : `
-      <div class="seg" role="group" aria-label="${esc(t("ob.modeAria"))}"><button type="button" data-obmode="upload" aria-pressed="${OB.mode === "upload"}"><i data-lucide="upload"></i>${esc(t("ob.upload"))}</button><button type="button" data-obmode="paste" aria-pressed="${OB.mode === "paste"}"><i data-lucide="clipboard-paste"></i>${esc(t("ob.paste"))}</button></div>
-      ${OB.mode === "upload" ? `<label class="drop" id="drop" for="cv-file"><span class="ic"><i data-lucide="upload"></i></span>
+      <div class="seg" role="group" aria-label="${esc(t("ob.modeAria"))}"><button type="button" data-obmode="upload" aria-pressed="${OB.mode === "upload"}"><i data-lucide="upload"></i>${esc(t("ob.upload"))}</button><button type="button" data-obmode="paste" aria-pressed="${OB.mode === "paste"}"><i data-lucide="clipboard-paste"></i>${esc(t("ob.paste"))}</button><button type="button" data-obmode="quiz" aria-pressed="${OB.mode === "quiz"}"><i data-lucide="list-checks"></i>${esc(t("ob.quiz"))}</button></div>
+      ${OB.mode === "quiz" ? quizBody() : OB.mode === "upload" ? `<label class="drop" id="drop" for="cv-file"><span class="ic"><i data-lucide="upload"></i></span>
           <span><b>${esc(t("ob.dropTitle"))}</b><br><span class="note">${esc(t("ob.dropHint"))}</span></span>
           <input id="cv-file" type="file" accept="application/pdf,.pdf,image/jpeg,image/png,.jpg,.jpeg,.png" multiple class="sr">
           ${OB.files.length > 1 ? `<span class="fm">${esc(t("ob.filesN", { n: OB.files.length }))}</span>` : ""}
           ${OB.files.map(f => `<span class="file"><span class="fi"><i data-lucide="${isPhoto(f) ? "image" : "file-text"}"></i></span><span><span style="font-weight:600;font-size:13.5px">${esc(f.name)}</span><br><span class="fm">${Math.round(f.size / 1024)} KB</span></span><i data-lucide="check" style="color:var(--good)"></i></span>`).join("")}
-        </label>
-        <p class="note ob-scan-note"><i data-lucide="shield-check"></i>${esc(t("ob.scanPrivacy"))}</p>`
+        </label>`
       : `${OB.review ? `<div class="ob-review" role="status"><b>${esc(t("ob.reviewTitle"))}</b><p class="note">${esc(t("ob.reviewNote", { n: OB.review.confidence }))}</p></div>` : ""}
          <label class="sr" for="cv-text">${esc(t("ob.pasteLabel"))}</label><textarea id="cv-text" class="textarea" rows="8" maxlength="30000" placeholder="${esc(t("ob.pastePh"))}">${esc(OB.text)}</textarea>
          <div class="rs">${esc(t("ob.chars", { n: OB.text.length }))}</div>`}
-      ${OB.busy ? `<ul class="stages" role="status">${STAGES.map((k, i) => `<li class="${i < OB.stage ? "done" : i === OB.stage ? "on" : ""}">${i === OB.stage ? '<span class="spin"></span>' : `<i data-lucide="${i < OB.stage ? "circle-check" : "circle"}"></i>`}${esc(stageText(i))}</li>`).join("")}</ul>` : ""}
+      ${OB.busy && OB.mode !== "quiz" ? `<ul class="stages" role="status">${STAGES.map((k, i) => `<li class="${i < OB.stage ? "done" : i === OB.stage ? "on" : ""}">${i === OB.stage ? '<span class="spin"></span>' : `<i data-lucide="${i < OB.stage ? "circle-check" : "circle"}"></i>`}${esc(stageText(i))}</li>`).join("")}</ul>` : ""}
       ${OB.err ? errorBox(OB.err) : ""}`;
     const ready = OB.mode === "upload" ? OB.files.length > 0 : OB.text.trim().length >= 40;
-    foot = `<span class="left"><i data-lucide="lock"></i>${esc(t("ob.private"))}</span>
-      <div class="right">${OB.intake ? "" : `<button class="ghost" id="ob-sample" type="button">${esc(t("ob.skip"))}</button>`}
-      ${OB.intake ? `<button class="btn btn-primary" id="ob-next" type="button">${esc(t("ob.continue"))}<i data-lucide="arrow-right"></i></button>`
-        : `<button class="btn btn-primary" id="ob-read" type="button" ${!ready || OB.busy ? "disabled" : ""}><i data-lucide="sparkles"></i>${esc(OB.busy ? t("ob.reading") : t("ob.read"))}</button>`}</div>`;
+    const quizReady = !!Q.current && (Q.picks.size > 0 || Q.none);
+    const mainBtn = OB.intake ? `<button class="btn btn-primary" id="ob-next" type="button">${esc(t("ob.continue"))}<i data-lucide="arrow-right"></i></button>`
+      : OB.mode === "quiz" ? (Q.sector ? `<button class="ghost" id="quiz-sector" type="button" ${OB.busy ? "disabled" : ""}>${esc(t("quiz.changeSector"))}</button>
+          <button class="btn btn-primary" id="quiz-next" type="button" ${!quizReady || OB.busy ? "disabled" : ""}>${esc(t("quiz.next"))}<i data-lucide="arrow-right"></i></button>` : "")
+      : `<button class="btn btn-primary" id="ob-read" type="button" ${!ready || OB.busy ? "disabled" : ""}><i data-lucide="scan-text"></i>${esc(OB.busy ? t("ob.reading") : t("ob.read"))}</button>`;
+    body += `<p class="ob-priv"><i data-lucide="lock"></i>${esc(t("ob.private"))}</p>`;
+    foot = `${OB.intake ? "" : `<button class="ghost" id="ob-sample" type="button">${esc(t("ob.skip"))}</button>`}
+      <div class="right">${mainBtn}</div>`;
   } else if (s === 1) {
     const qs = OB.intake?.questions || [];
     head = `<div class="ob-kicker">${esc(t("ob.k2"))}</div><h2 id="ob-title">${esc(qs.length ? t("ob.h2", { n: qs.length }) : t("ob.h2none"))}</h2><p>${esc(t("ob.p2"))}</p>`;
@@ -105,11 +114,54 @@ function render() {
         <label>${esc(t("ob.budget"))}<input id="g-budget" type="number" min="0" step="50" value="${esc(OB.goals.budgetRm ?? "")}" inputmode="numeric" placeholder="${esc(t("ob.budgetPh"))}"></label>
         <p class="rs">${esc(t("ob.goalsHint"))}</p></fieldset>`;
     foot = `<button class="ghost" id="ob-back" type="button"><i data-lucide="arrow-left"></i>${esc(OB.intake ? t("ob.back") : t("common.cancel"))}</button>
-      <button class="btn btn-primary" id="ob-finish" type="button" ${OB.busy ? "disabled" : ""}>${OB.busy ? '<span class="spin"></span>' : '<i data-lucide="sparkles"></i>'}${esc(t("ob.build"))}</button>`;
+      <button class="btn btn-primary" id="ob-finish" type="button" ${OB.busy ? "disabled" : ""}>${OB.busy ? '<span class="spin"></span>' : '<i data-lucide="check"></i>'}${esc(t("ob.build"))}</button>`;
   }
   c.innerHTML = `<div class="ob-top">${bars}<button class="icon-btn ob-x" type="button" id="ob-close" aria-label="${esc(t("common.close"))}"><i data-lucide="x"></i></button><div>${head}</div></div><div class="ob-body">${body}</div><div class="ob-foot">${foot}</div>`;
   icons();
   bind(c);
+}
+
+// No-CV quiz: sector buttons, then one round of task chips (multi-select, plus "None of these").
+function quizBody() {
+  if (!Q.sectors) { if (!OB.busy && !OB.err) loadSectors(); return OB.err ? "" : `<p class="note quiz-wait" role="status"><span class="spin"></span>${esc(t("quiz.loading"))}</p>`; }
+  if (!Q.sector) return `<p class="note">${esc(t("quiz.pickNote"))}</p>
+    <div class="quiz-sectors" role="group" aria-label="${esc(t("quiz.sectorAria"))}">${Q.sectors.map(x => `<button type="button" data-qsector="${esc(x.id)}" aria-pressed="false"><i data-lucide="${esc(x.icon)}"></i><b>${esc(t("quiz.sector." + x.id))}</b></button>`).join("")}</div>`;
+  if (OB.busy) return `<p class="note quiz-wait" role="status"><span class="spin"></span>${esc(t(Q.finishing ? "quiz.building" : "quiz.thinking"))}</p>`;
+  if (!Q.current) return "";
+  const c = Q.current;
+  return `<div class="quiz-top"><span class="ob-kicker">${esc(t("quiz.sector." + Q.sector))}, ${esc(t("quiz.round", { n: c.round, m: c.maxRounds }))}</span><span class="note">${esc(t("quiz.left", { n: c.candidates, m: c.total }))}</span></div>
+    <p class="quiz-h" id="quiz-q">${esc(t("quiz.question"))}</p><p class="note">${esc(t("quiz.multi"))}</p>
+    <div class="quiz-chips" role="group" aria-labelledby="quiz-q">${c.chips.map(x => `<button type="button" data-qchip="${esc(x.taskId)}" aria-pressed="${Q.picks.has(x.taskId)}" title="${esc(x.source)}">${esc(x.text)}</button>`).join("")}
+      <button type="button" class="quiz-none" data-qnone aria-pressed="${Q.none}">${esc(t("quiz.none"))}</button></div>`;
+}
+
+async function loadSectors() {
+  OB.busy = true;
+  try { Q.sectors = (await get("/profile/quiz/sectors")).sectors || []; }
+  catch (e) { OB.err = e.notAvailable ? { message: t("quiz.unavailable") } : e; }
+  OB.busy = false; render();
+}
+
+async function quizStep(fn) {
+  if (OB.busy) return;
+  OB.busy = true; OB.err = null; render();
+  try { await fn(); }
+  catch (e) { OB.err = e.notAvailable ? { message: t("quiz.unavailable") } : e; }
+  OB.busy = false; Q.finishing = false; render();
+  if (OB.intake && !reduce && globalThis.gsap) globalThis.gsap.from(".found-list li", { opacity: 0, x: -6, stagger: 0.12, duration: 0.3, ease: "power3.out" });
+  else setTimeout(() => $("ob-card").querySelector("[data-qchip], [data-qsector]")?.focus(), 30);
+}
+
+// Ask for the next round; when the server says we're done, build the profile (same response shape as CV intake).
+// The answered rounds are only kept once the server accepts them, so a failed request can simply be retried.
+async function quizNext(rounds) {
+  const body = { sector: Q.sector, seed: Q.seed, lang: getLang(), rounds };
+  const res = await post("/profile/quiz/next", body);
+  if (!res.done) { Object.assign(Q, { rounds, current: res, picks: new Set(), none: false }); return; }
+  Q.finishing = true; render();
+  const done = await post("/profile/quiz/finish", body, { timeout: 60000 });
+  Q.rounds = rounds;
+  acceptIntake(done, "quiz");
 }
 
 // ESCO skills (of 13,939) found in the CV. Skills shown in use are saved to the profile; skills only listed are not.
@@ -121,7 +173,23 @@ function escoSummary(list) {
     <div class="chips">${used.slice(0, 16).map(e => chip(e)).join("")}${listed.slice(0, 6).map(e => chip(e, t("ob.escoListed"))).join("")}</div>`;
 }
 
+function quizSummary() {
+  const r = OB.intake, d = r.draft || {}, occ = d.occupation, skills = d.skills || [], es = d.escoSkills || [];
+  const ticked = Q.rounds.flat().filter(a => a.ticked).length;
+  const also = (d.matches || []).slice(1).map(m => m.title);
+  return `<ul class="found-list">
+      ${occ ? `<li><i data-lucide="circle-check"></i><span>${esc(t("ob.occ", { title: occ.title || nameOf(occ.id) }))} <span class="found-sub">(${esc(tOr("ob.confLevel." + occ.confidence, occ.confidence))})</span></span></li>` : ""}
+      ${also.length ? `<li><i data-lucide="compass"></i><span>${esc(t("quiz.alsoClose", { list: also.join(", ") }))}</span></li>` : ""}
+      <li><i data-lucide="circle-check"></i><span>${esc(t("quiz.skillsFound", { n: skills.length, m: es.length, k: ticked }))}</span></li>
+      ${(r.questions || []).length ? `<li class="warn"><i data-lucide="circle-help"></i><span>${esc(t("ob.unclear", { n: r.questions.length }))}</span></li>` : ""}
+    </ul>
+    ${skills.length ? `<p class="ob-esco-h">${esc(t("quiz.found"))}</p><div class="chips">${skills.slice(0, 14).map(s => `<span class="chip" title="${esc(s.evidence || "")}">${esc(s.label || nameOf(s.skillId))}</span>`).join("")}</div>` : ""}
+    ${es.length ? `<p class="ob-esco-h">${esc(t("quiz.escoTitle", { n: es.length }))}</p><div class="chips">${es.slice(0, 16).map(e => `<span class="chip" title="${esc(e.phrase || "")}">${esc(e.title)}</span>`).join("")}</div>` : ""}
+    <p class="note">${esc(t("quiz.sourceNote"))}</p>`;
+}
+
 function intakeSummary() {
+  if (OB.intake?.source === "quiz") return quizSummary();
   const r = OB.intake, d = r.draft || {}, occ = d.occupation, skills = d.skills || [], un = d.unmatched || [], pr = r.providers || {};
   const removed = r.scrubbed?.removed || [];
   const llmOk = pr.llm === true || (typeof pr.llm === "string" && !/^(unavailable|none|off|false)$/i.test(pr.llm));
@@ -157,6 +225,23 @@ function bind(c) {
     const ch = ta.nextElementSibling; if (ch) ch.textContent = t("ob.chars", { n: OB.text.length });
   });
   const sample = c.querySelector("#ob-sample"); if (sample) sample.addEventListener("click", useSample);
+  c.querySelectorAll("[data-qsector]").forEach(b => b.addEventListener("click", () => {
+    Object.assign(Q, { sector: b.dataset.qsector, rounds: [], current: null, seed: Math.floor(Math.random() * 2 ** 31) });
+    quizStep(() => quizNext([]));
+  }));
+  c.querySelectorAll("[data-qchip]").forEach(b => b.addEventListener("click", () => {
+    const id = b.dataset.qchip;
+    if (Q.picks.has(id)) Q.picks.delete(id); else Q.picks.add(id);
+    Q.none = false; render(); $("ob-card").querySelector(`[data-qchip="${CSS.escape(id)}"]`)?.focus();
+  }));
+  const none = c.querySelector("[data-qnone]");
+  if (none) none.addEventListener("click", () => { Q.none = !Q.none; if (Q.none) Q.picks = new Set(); render(); $("ob-card").querySelector("[data-qnone]")?.focus(); });
+  const qn = c.querySelector("#quiz-next");
+  if (qn) qn.addEventListener("click", () => {
+    const round = Q.current.chips.map(x => ({ taskId: x.taskId, ticked: Q.picks.has(x.taskId) }));
+    quizStep(() => quizNext([...Q.rounds, round]));
+  });
+  const qs = c.querySelector("#quiz-sector"); if (qs) qs.addEventListener("click", () => { Q = { ...newQuiz(), sectors: Q.sectors }; OB.err = null; render(); });
   const rd = c.querySelector("#ob-read"); if (rd) rd.addEventListener("click", readProfile);
   const back = c.querySelector("#ob-back"); if (back) back.addEventListener("click", () => { if (!OB.intake && OB.step === 2) { closeOnboarding(); return; } OB.step--; render(); });
   const next = c.querySelector("#ob-next"); if (next) next.addEventListener("click", nextStep);
@@ -204,23 +289,27 @@ async function readProfile() {
       setTimeout(() => $("ob-card").querySelector("#cv-text")?.focus(), 30);
       return;
     }
-    OB.review = null;
-    OB.intake = res;
-    if (res.profileId) {
-      setProfileId(res.profileId);
-      if (!AUTH.user) AUTH.guestProfileId = res.profileId;
-    }
-    if (res.profile) { S.profile = normaliseProfile(res.profile); S.profileFallback = false; }
-    seedLevels();
-    const draft = res.draft?.skills || [];
-    draft.forEach(s => { if (!OB.conf[s.skillId]) OB.conf[s.skillId] = "cv"; });
-    OB.answers = {};
+    acceptIntake(res, "cv");
   } catch (e) {
     OB.err = e.notAvailable ? { message: t("ob.intakeNA") } : e;
   }
   clearInterval(stageTimer);
   OB.busy = false; render();
   if (OB.intake && !reduce && globalThis.gsap) globalThis.gsap.from(".found-list li", { opacity: 0, x: -6, stagger: 0.12, duration: 0.3, ease: "power3.out" });
+}
+
+// A new profile from CV intake or the quiz: remember it and pre-fill the next steps.
+function acceptIntake(res, conf) {
+  OB.review = null;
+  OB.intake = res;
+  if (res.profileId) {
+    setProfileId(res.profileId);
+    if (!AUTH.user) AUTH.guestProfileId = res.profileId;
+  }
+  if (res.profile) { S.profile = normaliseProfile(res.profile); S.profileFallback = false; }
+  seedLevels();
+  (res.draft?.skills || []).forEach(s => { if (!OB.conf[s.skillId]) OB.conf[s.skillId] = conf; });
+  OB.answers = {};
 }
 
 async function nextStep() {

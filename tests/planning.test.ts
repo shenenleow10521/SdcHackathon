@@ -24,7 +24,8 @@ describe("buildPlan", () => {
   it("demo persona, ESG fastest: route ap>recon>ghg>esgRole with reuse + reskill steps", () => {
     const p = buildPlan(g, persona, { job: "esgRole", mode: "fastest", now: NOW });
     expect(p.route!.key).toBe("ap>recon>ghg>esgRole");
-    expect(p.route!.weeksRef).toBe(6);
+    expect(p.mode).toBe("closest"); // "fastest" is the old name
+    expect(p.keySkills).toEqual(["ghg"]);
     expect(p.steps.filter(s => s.part === "route").map(s => [s.type, s.skillId])).toEqual([["reuse", "recon"], ["reskill", "ghg"]]);
     const reuse = p.steps[0];
     expect(reuse.weeks).toBe(0);
@@ -53,16 +54,30 @@ describe("buildPlan", () => {
     expect([...seen].sort()).toEqual(["evolve", "reskill", "reuse", "upskill"]);
   });
 
-  it("weeks scale with the user's hours (displayWeeks), reference weeks do not", () => {
+  it("one weeks figure: time to job-ready from ALL missing skills, at the user's hours", () => {
     const slow = buildPlan(g, { ...persona, hours: 3 }, { job: "esgRole", now: NOW });
     const fast = buildPlan(g, { ...persona, hours: 12 }, { job: "esgRole", now: NOW });
-    expect(slow.weeksCoreRef).toBe(6);
-    expect(fast.weeksCoreRef).toBe(6);
-    expect(slow.weeksCore).toBe(12);
-    expect(fast.weeksCore).toBe(3);
-    expect(slow.weeksReady).toBe(displayWeeks(slow.weeksReadyRef!, 3));
-    expect(slow.route!.legs.find((l: any) => l.to === "ghg")!.weeks).toBe(8);
-    expect(slow.steps.find(s => s.skillId === "ghg")!.weeks).toBe(8);
+    expect(slow.weeksReadyRef).toBe(fast.weeksReadyRef);
+    expect(slow.totalHours).toBe(slow.missing.reduce((s, m) => s + m.hours, 0));
+    expect(slow.weeksReadyRef).toBeCloseTo(slow.totalHours / 6, 2);
+    expect(slow.weeks).toBe(displayWeeks(slow.weeksReadyRef!, 3));
+    expect(fast.weeks).toBe(displayWeeks(fast.weeksReadyRef!, 12));
+    expect(slow).not.toHaveProperty("weeksCore");
+    const ghg = slow.missing.find(m => m.id === "ghg")!;
+    expect(ghg).toMatchObject({ key: true, group: "ghg" });
+    expect(slow.route!.legs.find((l: any) => l.to === "ghg")!.weeks).toBe(displayWeeks(ghg.hours / 6, 3));
+    // every missing item says whether its hours are a course's or an estimate
+    expect(slow.missing.every(m => typeof m.estimated === "boolean" && m.hours > 0)).toBe(true);
+    expect(slow.weeksEstimated).toBe(slow.missing.some(m => m.estimated));
+  });
+
+  it("safer alternative: only when the safest route differs, with what it avoids, why, and the weeks difference", () => {
+    const p = buildPlan(g, persona, { job: "esgRole", now: NOW });
+    expect(p.saferAlternative).toMatchObject({ mode: "safest", route: { key: "ap>audit>disc>esgRole" }, adds: [{ id: "disc" }] });
+    expect(p.saferAlternative!.avoids).toContainEqual(expect.objectContaining({ id: "recon", name: "Vendor reconciliation", reason: "exposure" }));
+    expect(p.saferAlternative!.addedWeeks).toBe(p.saferAlternative!.weeks - p.weeks!);
+    expect(buildPlan(g, persona, { job: "esgRole", mode: "safest", now: NOW }).saferAlternative).toBeNull();
+    expect(buildPlan(g, persona, { job: "procRole", now: NOW }).saferAlternative).toBeNull(); // same road both ways
   });
 
   it("human edge: task split interpolated like the engine; rising skills are the engine's label", () => {
@@ -143,7 +158,7 @@ describe("GET /plan, /map, /rank", () => {
   it("GET /api/plan returns the full contract for the demo persona", async () => {
     const res = await request(createApp(svc)).get("/api/plan?job=esgRole&mode=fastest");
     expect(res.status).toBe(200);
-    for (const k of ["kbVersion", "job", "mode", "match", "breakdown", "route", "alternatives", "steps", "weeksCore", "weeksReady", "cost", "deadline", "humanEdge", "sources"])
+    for (const k of ["kbVersion", "job", "mode", "match", "breakdown", "route", "keySkills", "missing", "weeks", "saferAlternative", "alternatives", "steps", "weeksReady", "cost", "deadline", "humanEdge", "sources"])
       expect(res.body).toHaveProperty(k);
     expect(res.body.route.key).toBe("ap>recon>ghg>esgRole");
     expect(res.body.sources.some((s: any) => s.kind === "sample")).toBe(true);
@@ -322,5 +337,55 @@ describe("GET /studies", () => {
     await s.db.query("update exposure_studies set value=0.4 where occupation_id='esgRole' and study='ILO WP140'");
     expect((await request(app).get("/api/studies?job=esgRole")).body.disagree).toBe(false);
     expect((await request(app).get("/api/studies?job=nope")).status).toBe(404);
+  });
+});
+
+describe("plans for any ESCO job (job=esco:<uuid>)", () => {
+  const SOFTWARE_DEV = "esco:f2b15a0e-e65a-438a-affb-29b9d50b77d1";
+  const SUSTAINABILITY_MGR = "esco:2cf2b905-3308-4b5d-8e8d-633fc7a3f3ce";
+  const CALL_CENTRE = "esco:0ededdc2-050a-4ec3-8e70-6295105fcd19";
+
+  it("returns the same plan shape: match, key route, full gap list, one weeks figure, sources with the ESCO URI", async () => {
+    const app = createApp(svc);
+    for (const job of [SOFTWARE_DEV, SUSTAINABILITY_MGR, CALL_CENTRE]) {
+      const res = await request(app).get(`/api/plan?job=${job}`);
+      expect(res.status, job).toBe(200);
+      const b = res.body;
+      expect(b).toMatchObject({ job, source: "esco", mode: "closest" });
+      for (const k of ["route", "keySkills", "missing", "weeks", "saferAlternative", "match", "deadline", "sources"]) expect(b, `${job} ${k}`).toHaveProperty(k);
+      expect(b.match).toBeGreaterThanOrEqual(0);
+      // a short readable chain: you -> one of your skills -> 3-5 key stepping stones -> the job
+      expect(b.keySkills.length).toBeGreaterThanOrEqual(3);
+      expect(b.keySkills.length).toBeLessThanOrEqual(5);
+      expect(b.route.nodes[0]).toBe("ap");
+      expect(b.route.nodes.at(-1)).toBe(job);
+      expect(b.route.nodes).toEqual(expect.arrayContaining(b.keySkills));
+      expect(b.route.legs.length).toBe(b.route.nodes.length - 1);
+      expect(b.route.legs.every((l: any) => typeof l.toName === "string" && l.toName.length > 0)).toBe(true);
+      // knowledge items are in the gap list and the time, never route stops
+      const ids = new Set(b.missing.map((m: any) => m.id));
+      for (const k of b.keySkills) expect(ids.has(k)).toBe(true);
+      for (const m of b.missing.filter((x: any) => x.type === "knowledge")) expect(b.route.nodes).not.toContain(m.id);
+      expect(b.missing.every((m: any) => m.hours > 0 && typeof m.estimated === "boolean" && "group" in m && "name" in m)).toBe(true);
+      expect(b.totalHours).toBe(b.missing.reduce((s: number, m: any) => s + m.hours, 0));
+      expect(b.weeks).toBe(displayWeeks(b.totalHours / 6, persona.hours));
+      expect(b.sources.some((s: any) => s.kind === "esco" && String(s.url).startsWith("http://data.europa.eu/esco/occupation/"))).toBe(true);
+      if (b.saferAlternative) {
+        expect(b.saferAlternative.route.key).not.toBe(b.route.key);
+        expect(b.saferAlternative.avoids.length).toBeGreaterThan(0);
+        expect(["signal", "exposure", "other"]).toContain(b.saferAlternative.avoids[0].reason);
+      }
+    }
+  });
+
+  it("uses the hand-made bridges across fields (Priya -> sustainability manager crosses one)", async () => {
+    const b = (await request(createApp(svc)).get(`/api/plan?job=${SUSTAINABILITY_MGR}`)).body;
+    expect(b.route.legs.some((l: any) => l.bridge === true && l.kind === "bridge")).toBe(true);
+  });
+
+  it("unknown ESCO ids are 404", async () => {
+    const app = createApp(svc);
+    expect((await request(app).get("/api/plan?job=esco:00000000-0000-0000-0000-000000000000")).status).toBe(404);
+    expect((await request(app).get("/api/plan?job=esco:nope")).status).toBe(404);
   });
 });

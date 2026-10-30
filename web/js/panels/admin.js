@@ -14,6 +14,7 @@ export const A = {
   versions: null, versionsErr: null,
   sources: null, sourcesErr: null,
   scout: { running: false, result: null, err: null, startedAt: 0, replay: false },
+  bridges: null,        // proposed skill bridges (GET /review/bridges); null = none or the endpoint isn't there
   busy: new Set(),
   needsToken: false,
 };
@@ -34,6 +35,16 @@ export async function loadReview() {
   A.reviewLoading = false;
   actions.updateAdminCount?.();
 }
+/** Proposed bridges between skills in different fields. Optional: any error (no such endpoint yet) hides the section. */
+async function loadBridges() {
+  A.bridgesTried = true;
+  try {
+    const r = await get("/review/bridges", { status: "proposed", limit: 20 });
+    const list = Array.isArray(r) ? r : r?.bridges || r?.proposed || r?.pending || [];
+    A.bridges = list.filter(b => b && (b.status || "proposed") === "proposed");
+    A.bridgesTotal = typeof r?.total === "number" ? r.total : A.bridges.length;
+  } catch { A.bridges = null; }
+}
 async function loadRuns() { try { A.runs = (await get("/scout/runs")).runs || []; A.runsErr = null; } catch (e) { A.runsErr = e; } }
 async function loadVersions() { try { A.versions = (await get("/kb/versions")).versions || []; A.versionsErr = null; } catch (e) { A.versionsErr = e; } }
 async function loadSources() { try { A.sources = await get("/sources"); A.sourcesErr = null; } catch (e) { A.sourcesErr = e; } }
@@ -46,7 +57,7 @@ async function fillModel() {
 }
 
 export async function loadSub(sub = A.sub) {
-  if (sub === "queue") await loadReview();
+  if (sub === "queue") await Promise.all([loadReview(), loadBridges()]);
   if (sub === "runs") await loadRuns();
   if (sub === "versions") await loadVersions();
   if (sub === "sources") await loadSources();
@@ -128,6 +139,7 @@ function queueHtml() {
       ${pend.length ? pend.map(signalCard).join("") : `<div class="empty">${esc(t("admin.nothing"))}</div>`}</div>
     <div><div class="h2"><h2>${esc(t("admin.newSkills"))}</h2><span>${emg.length}</span></div>
       ${emg.length ? emg.map(emergingCard).join("") : `<div class="empty">${esc(t("admin.noSkills"))}</div>`}</div>
+    ${bridgesHtml()}
     <div><div class="h2"><h2>${esc(t("admin.spot"))}</h2><span>${esc(t("admin.spotHint"))}</span></div>
       ${spot.length ? spot.map(spotCard).join("") : `<div class="empty">${esc(t("admin.noSpot"))}</div>`}</div>
     <div><div class="h2"><h2>${esc(t("admin.handled"))}</h2><span>${done.length}</span></div>
@@ -189,7 +201,7 @@ function emergingCard(c) {
   const status = watching
     ? t("admin.watchingLine", { m: p.mentions?.have ?? c.postings ?? 0, mn: th.postings, o: p.organisations?.have ?? c.employers ?? 0, on: th.employers, w: p.weeks?.have ?? c.weeks ?? 0, wn: th.weeks })
     : t("admin.halfWeight") + ".";
-  return `<div class="rv"><div class="rv-top">${watching ? badge("b-info", t("admin.watching"), "eye") : badge("b-violet", t("admin.emerging"), "sparkles")}</div>
+  return `<div class="rv"><div class="rv-top">${watching ? badge("b-info", t("admin.watching"), "eye") : badge("b-violet", t("admin.emerging"), "flag")}</div>
     <div class="rv-t">${esc(c.label || nameOf(c.skillId))}</div><div class="rv-m">${esc(status)}${syn.length ? " " + esc(t("skill.merged", { list: syn.join(", ") })) : ""}</div>
     <ul class="checks">${rows}${linked ? `<li><i data-lucide="circle-check" style="color:var(--good)"></i><span>${esc(t("admin.linked"))}</span><b>${esc(nameOf(linked))}</b><span></span></li>` : ""}</ul>
     ${cm && Object.keys(cm).length ? `<div class="rv-s"><i data-lucide="bot"></i>${esc(t("admin.committee", { p: verdict(cm.proposer), s: verdict(cm.skeptic), d: verdict(cm.duplicate) }))}</div>` : ""}
@@ -197,6 +209,51 @@ function emergingCard(c) {
     ${watching ? `<div class="rv-m">${esc(t("admin.watchingHint"))}</div>` : ""}
     <div class="rv-actions">${watching ? "" : `<button class="btn btn-primary" type="button" data-confirm="${esc(c.id)}" ${busy ? "disabled" : ""}><i data-lucide="badge-check"></i>${esc(t("admin.confirm"))}</button>`}
       <button class="btn btn-soft" type="button" data-ereject="${esc(c.id)}" ${busy ? "disabled" : ""}>${esc(t("admin.rejectSkill"))}</button></div></div>`;
+}
+
+// ---------- skill bridges ----------
+const BRIDGES_SHOWN = 12;
+const bridgeId = b => String(b.id ?? `${b.from?.id ?? b.from}~${b.to?.id ?? b.to}`);
+const capFirst = x => (x ? String(x)[0].toUpperCase() + String(x).slice(1) : "");
+const titleOf = x => capFirst(typeof x === "string" ? x : x?.title || x?.name || "");
+function bridgesHtml() {
+  if (!Array.isArray(A.bridges)) return ""; // endpoint absent: show nothing
+  const list = A.bridges;
+  return `<div class="bridges" id="bridges"><div class="h2"><h2>${esc(t("admin.bridges"))}</h2><span>${(A.bridgesTotal ?? list.length).toLocaleString("en-MY")}</span></div>
+    <p class="note">${esc(t("admin.bridgesHint"))}</p>
+    ${list.length ? list.slice(0, BRIDGES_SHOWN).map(bridgeCard).join("") : `<div class="empty">${esc(t("admin.bridgeNone"))}</div>`}</div>`;
+}
+function bridgeCard(b) {
+  const ev = b.evidence || {}, id = bridgeId(b), busy = A.busy.has("b" + id);
+  const from = titleOf(b.from?.title || b.fromTitle || b.from), to = titleOf(b.to?.title || b.toTitle || b.to);
+  const acts = (ev.sharedActivities || []).map(x => titleOf(x).replace(/[.\s]+$/, "")).filter(Boolean).slice(0, 3).map((x, i) => (i ? x.toLowerCase() : x));
+  const tf = (ev.tasksFrom || []).map(titleOf).find(Boolean), tt = (ev.tasksTo || []).map(titleOf).find(Boolean);
+  const jobs = [...(ev.occFrom || []).slice(0, 2), ...(ev.occTo || []).slice(0, 2)].map(titleOf).filter(Boolean);
+  return `<div class="rv bridge" data-bridge="${esc(id)}">
+    <div class="rv-top">${badge("b-info", t("admin.bridgeProposed"), "git-merge")}${b.source === "team" ? badge("b-mute", t("admin.bridgeTeam"), "users") : ""}</div>
+    <div class="rv-t bridge-t"><span>${esc(from)}</span><span class="to"><i data-lucide="arrow-left-right" aria-hidden="true"></i>${esc(to)}</span></div>
+    ${acts.length ? `<div class="rv-m">${esc(t("admin.bridgeBoth", { list: acts.join(", ") }))}</div>` : ""}
+    ${b.why ? `<blockquote class="rv-q">${esc(b.why)}</blockquote>` : ""}
+    ${tf || tt ? `<div class="bridge-sec"><div class="bridge-k">${esc(t("admin.bridgeTasks"))}</div><dl class="bridge-tasks">
+      ${tf ? `<div><dt>${esc(from)}</dt><dd>${esc(tf)}</dd></div>` : ""}${tt ? `<div><dt>${esc(to)}</dt><dd>${esc(tt)}</dd></div>` : ""}</dl></div>` : ""}
+    ${jobs.length ? `<div class="bridge-sec"><div class="bridge-k">${esc(t("admin.bridgeJobs"))}</div><div class="bridge-jobs">${jobs.map(j => `<span>${esc(j)}</span>`).join("")}</div></div>` : ""}
+    <div class="rv-actions"><button class="btn btn-primary" type="button" data-bapprove="${esc(id)}" ${busy ? "disabled" : ""}>${busy ? '<span class="spin"></span>' : '<i data-lucide="check"></i>'}${esc(t("admin.bridgeApprove"))}</button>
+      ${b.source === "team" ? "" : `<button class="btn btn-soft" type="button" data-breject="${esc(id)}" ${busy ? "disabled" : ""}>${esc(t("admin.reject"))}</button>`}</div></div>`;
+}
+async function decideBridge(id, ok) {
+  const key = "b" + id; if (A.busy.has(key)) return;
+  const b = (A.bridges || []).find(x => bridgeId(x) === id) || {};
+  A.busy.add(key); repaint();
+  try {
+    await post(`/review/bridges/${encodeURIComponent(id)}/${ok ? "approve" : "reject"}`, {});
+    toast(ok ? { title: t("admin.bridgeApproved"), detail: t("admin.bridgeApprovedBody", { from: titleOf(b.from?.title || b.fromTitle || b.from), to: titleOf(b.to?.title || b.toTitle || b.to) }), badgeHtml: badge("b-good", t("admin.bridgeApproved"), "check") }
+      : { title: t("admin.bridgeRejected"), badgeHtml: badge("b-mute", t("admin.h.rejected")) });
+  } catch (e) {
+    if (e.needsAuth) { A.needsToken = true; actions.renderPanel(); }
+    toast({ title: t("state.failed"), detail: e.notAvailable ? t("state.notAvailable") : e.message, badgeHtml: badge("b-crit", t("state.error")) });
+  }
+  A.busy.delete(key);
+  await loadBridges(); repaint();
 }
 
 function spotCard(s) {
@@ -333,6 +390,8 @@ function bindBody(b) {
     await post(`/review/spotcheck/${x.dataset.spot}`, { ok });
     toast({ title: t(ok ? "admin.spotOkToast" : "admin.spotBadToast"), badgeHtml: badge(ok ? "b-good" : "b-warn", t("admin.spot")) });
   })));
+  b.querySelectorAll("[data-bapprove]").forEach(x => x.addEventListener("click", () => decideBridge(x.dataset.bapprove, true)));
+  b.querySelectorAll("[data-breject]").forEach(x => x.addEventListener("click", () => decideBridge(x.dataset.breject, false)));
   b.querySelectorAll("[data-undo]").forEach(x => x.addEventListener("click", async () => {
     const id = x.dataset.undo;
     // Two-step confirm inline: the first click arms the button for a few seconds.
@@ -370,6 +429,7 @@ export function bind(el) {
   });
   const b = $("admin-body"); if (b) { bindBody(b); enter(b.querySelectorAll(".rv")); }
   if (!A.review && !A.reviewLoading && A.sub === "queue") loadSub("queue");
+  else if (A.sub === "queue" && !A.bridgesTried) { A.bridgesTried = true; loadBridges().then(repaint); }
   else if (A.sub === "model") fillModel();
   else if (A.sub !== "queue" && !A[A.sub] && !A[A.sub + "Err"]) loadSub(A.sub);
 }

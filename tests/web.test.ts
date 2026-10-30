@@ -43,7 +43,7 @@ describe("i18n", () => {
 
   it("dynamic key families are complete", () => {
     const fam: Record<string, string[]> = {
-      "mode.": ["fastest", "noregret", "safest"], "mode.note.": ["fastest", "noregret", "safest"], "why.weeksMode.": ["fastest", "noregret", "safest"],
+      "mode.": ["closest", "safest", "fastest", "noregret"], "mode.note.": ["closest", "safest", "fastest", "noregret"], "why.weeksMode.": ["closest", "safest", "fastest", "noregret"],
       "scn.": ["moderate", "fast"], "risk.": ["Low", "Medium", "High"], "jobs.risk.": ["Low", "Medium", "High"],
       "level.": ["1", "2", "3", "4", "5"], "conf.": ["cv", "self", "verified", "High", "Medium", "Low"],
       "impact.": ["Declining", "Changing", "Durable", "Rising human skill"], "impact.why.": ["Declining", "Changing", "Durable", "Rising human skill"],

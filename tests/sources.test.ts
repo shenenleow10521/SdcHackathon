@@ -282,4 +282,31 @@ describe("web search providers", () => {
       expect(body.exclude_domains).toContain("linkedin.com");
     } finally { vi.unstubAllEnvs(); }
   });
+
+  it("switches to TAVILY_API_KEY_2 after the first key hits its plan cap (HTTP 432) and remembers the switch", async () => {
+    const { vi } = await import("vitest");
+    const { searchWeb, websearchProviders } = await import("../server/sources/websearch.ts");
+    vi.stubEnv("TAVILY_API_KEY", "capped-key");
+    vi.stubEnv("TAVILY_API_KEY_2", "second-key");
+    vi.stubEnv("BRAVE_API_KEY", "");
+    vi.stubEnv("GEMINI_GROUNDING", "off");
+    try {
+      const net = mockFetch([
+        ["https://api.tavily.com/search", (_url, init) => JSON.parse(String(init!.body)).api_key === "capped-key"
+          ? { status: 432, body: "{}" }
+          : { headers: { "content-type": "application/json" }, body: JSON.stringify({ results: [
+              { url: "https://news.sap.com/2026/10/ai-agents-finance/", title: "AI agents for finance", content: "Agents match invoices.", published_date: "Wed, 14 Oct 2026 08:00:00 GMT" },
+            ] }) }],
+      ]);
+      const svc = await testServices({ fetch: net });
+      const keysUsed = () => net.calls.filter(c => c.url.includes("tavily")).map(c => JSON.parse(String(c.init!.body)).api_key);
+      const r1 = await searchWeb(svc, { terms: ["invoice", "AI"] }, since);
+      expect(r1.items).toHaveLength(1);
+      expect(r1.error).toBeUndefined();
+      expect(keysUsed()).toEqual(["capped-key", "second-key"]);
+      await searchWeb(svc, { terms: ["payroll", "AI"] }, since);
+      expect(keysUsed()).toEqual(["capped-key", "second-key", "second-key"]); // the capped key is not retried
+      expect(websearchProviders().tavily).toBe(true);
+    } finally { vi.unstubAllEnvs(); }
+  });
 });

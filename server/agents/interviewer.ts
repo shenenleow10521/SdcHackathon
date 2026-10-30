@@ -3,6 +3,7 @@
 // they weren't given. Questions use fixed templates (EN/BM), so they are predictable and testable.
 // Question ids say what they change: "skill:<skillId>" (answer = level 0-5) or "hours" (answer = hours a week).
 // Answers are the user's own rating: confidence becomes 'self'.
+// Used after CV intake and after the no-CV quiz (server/services/quiz.ts), whose drafts have the same fields.
 import type { Services } from "../context.ts";
 import type { Draft } from "./cv.ts";
 import { HttpError, badRequest } from "../lib/http.ts";
@@ -11,6 +12,8 @@ import { loadProfile, audit, type Profile } from "../repo.ts";
 export const MAX_QUESTIONS = 3;
 export const HOURS_OPTIONS = [2, 4, 6, 8, 10, 15, 20];
 
+/** The parts of a draft the interviewer reads (a CV draft, or a quiz draft with nearMisses = []). */
+export type InterviewDraft = Pick<Draft, "occupation" | "nearMisses"> & { skills: { skillId: string; label: string; level: number; sure: boolean }[] };
 export interface Question { id: string; text: string; skillId?: string; field?: string; options: { value: number; label: string }[] }
 type Lang = "en" | "ms";
 
@@ -38,7 +41,7 @@ const levelOptions = (lang: Lang) => LEVELS[lang].map((label, value) => ({ value
  *   2. skills found in the CV that the extractor was not sure about;
  *   3. skills the user's current job needs but the CV doesn't mention, then near-misses from matching.
  */
-export async function buildQuestions(svc: Services, draft: Draft, opts: { hoursGiven: boolean; lang?: Lang }): Promise<Question[]> {
+export async function buildQuestions(svc: Services, draft: InterviewDraft, opts: { hoursGiven: boolean; lang?: Lang }): Promise<Question[]> {
   const lang: Lang = opts.lang === "ms" ? "ms" : "en";
   const qs: Question[] = [];
   if (!opts.hoursGiven)

@@ -51,6 +51,9 @@ describe("employer form", () => {
     const list = await request(app).get("/api/employers");
     expect(list.body.employers.find((e: any) => e.id === id).jobs).toEqual(["esgRole"]);
     expect(list.body.employers.some((e: any) => e.name.includes("(sample)") && e.source === "sample")).toBe(true); // HR sample employer
+    // the HR sheet opens on the first employer with a team: the HR sample employer, not a new one with nobody linked
+    expect(list.body.employers.find((e: any) => e.hasTeam)).toMatchObject({ name: "Sample Shared Services Centre (sample)" });
+    expect(list.body.employers.find((e: any) => e.id === id).hasTeam).toBe(false);
     expect((await request(app).get("/api/employers/9999")).status).toBe(404);
   });
 });

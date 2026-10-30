@@ -1,0 +1,349 @@
+{
+  "_note": "AI-era skills: skills that ESCO v1.2.1 (2022, before generative AI) does not have. Curated by the HalaTuju team on 2026-10-30. Every skill has 1-3 public sources; each quote is an exact sentence (or clause) copied from the linked page or PDF, and all 58 quotes were checked on 2026-10-30 by downloading the source (curl, HTML tags stripped, or pdftotext) and matching the quote verbatim after whitespace normalisation. 'locator' gives the PDF page (index unless marked 'printed') or the article. 'fileUrl' is the copy of the PDF we read when the publisher's page only links it via script. Skills we could not source were dropped. aiEra: true (all entries) means our exposure model's score is not meaningful for this skill (it measures how much an LLM speeds a task, so AI-usage skills look 'highly exposed'); the app should show 'AI-era skill: grows with AI' instead. workContext is a short team-written phrase for the existing work the AI skill changes; it is used only as search text to find occupations. The links to ESCO skills and occupations are computed, not curated: see ai_skills_links.json (scripts/link-ai-skills.ts).",
+  "_version": "2026-10-30",
+  "categories": {
+    "use": "Using AI tools at work",
+    "judge": "Checking and overseeing AI output",
+    "finance": "AI in finance, audit and ESG",
+    "govern": "AI governance, risk and ethics",
+    "lead": "Leading AI adoption",
+    "build": "Building with AI"
+  },
+  "skills": [
+    {
+      "id": "ai-write-prompts",
+      "label": "write prompts for generative AI tools",
+      "description": "Write clear instructions with context and intent so generative AI tools return useful results for a work task, and refine them over several rounds.",
+      "category": "use",
+      "workContext": "write and edit documents, reports and correspondence",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "IMDA and SkillsFuture Singapore", "title": "Skills Framework for ICT: Skills in Generative AI (TSC: Prompt Design)", "url": "https://imda.gov.sg/-/media/imda/files/how-we-can-help/tesa/sfw-for-ict/sfw-for-ict-skills-in-genai.pdf", "date": "2025-03", "locator": "p.5", "quote": "Craft effective prompts to shape outputs and elicit desired responses in AI models." },
+        { "publisher": "World Economic Forum", "title": "Future of Jobs Report 2025", "url": "https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf", "date": "2025-01", "locator": "p.44", "quote": "For employers, these insights emphasize the need for training and upskilling initiatives that focus on both advanced prompt-writing skills and broader GenAI literacy." },
+        { "publisher": "Microsoft", "title": "2025 Work Trend Index: The Year the Frontier Firm Is Born", "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/2025-the-year-the-frontier-firm-is-born", "date": "2025-04-23", "quote": "prompting with context and intent, refining outputs instead of accepting first drafts" }
+      ]
+    },
+    {
+      "id": "ai-check-output",
+      "label": "check AI-generated output for errors",
+      "description": "Review what an AI tool produces before using it: check accuracy and relevance, spot weak reasoning and gaps, and correct or reject the output instead of accepting the first draft.",
+      "category": "judge",
+      "workContext": "review, proofread and fact-check documents and analyses",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "IMDA and SkillsFuture Singapore", "title": "Skills Framework for ICT: Skills in Generative AI (TSC: Generative AI Principles and Applications)", "url": "https://imda.gov.sg/-/media/imda/files/how-we-can-help/tesa/sfw-for-ict/sfw-for-ict-skills-in-genai.pdf", "date": "2025-03", "locator": "p.4", "quote": "Analyse the accuracy and relevance of generative AI outputs for specific tasks." },
+        { "publisher": "ICAEW", "title": "Generative AI Guide: Using generative AI", "url": "https://www.icaew.com/technical/technology/artificial-intelligence/generative-ai-guide/using-generative-ai", "date": "2023-09", "quote": "Professional scepticism applies equally to the output from AI, as it does to any manually produced information." },
+        { "publisher": "Microsoft", "title": "2025 Work Trend Index: The Year the Frontier Firm Is Born", "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/2025-the-year-the-frontier-firm-is-born", "date": "2025-04-23", "quote": "refining outputs instead of accepting first drafts, spotting weak reasoning or gaps, and knowing when to push back or steer the conversation or plan." }
+      ]
+    },
+    {
+      "id": "ai-literacy",
+      "label": "apply AI literacy at work",
+      "description": "Know in practice what current AI tools can and cannot do, so you can judge when and how to use them for business tasks. Applied use, not the technical knowledge in ESCO's 'principles of artificial intelligence'.",
+      "category": "use",
+      "workContext": "use digital technologies and software tools at work",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "European Union", "title": "Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 4", "url": "http://data.europa.eu/eli/reg/2024/1689/oj", "date": "2024-07-12", "locator": "Art. 4", "quote": "Providers and deployers of AI systems shall take measures to ensure, to their best extent, a sufficient level of AI literacy of their staff and other persons dealing with the operation and use of AI systems on their behalf" },
+        { "publisher": "LinkedIn", "title": "LinkedIn Skills on the Rise 2025: The 15 fastest-growing skills in the U.S.", "url": "https://www.linkedin.com/pulse/linkedin-skills-rise-2025-15-fastest-growing-us-linkedin-news-hy0le", "date": "2025-03-19", "quote": "As AI rapidly transforms industries, companies are increasingly looking for professionals with the ability to understand and utilize tools harnessing that technology for business purposes." },
+        { "publisher": "TalentCorp Malaysia", "title": "Impact Study of Artificial Intelligence, Digital, and Green Economy on the Malaysian Workforce, Volume 1", "url": "https://www.talentcorp.com.my/resources/publications/impact-study-of-artificial-intelligence-digital-and-green-economy-on-the-malaysian-workforce-volume-1/", "fileUrl": "https://lms.mynext.my/course/YES-Rock-The-School-bersama-Pembimbing-Rakan-Sebaya-PRS-2026/file/225/download", "date": "2024-11-18", "locator": "printed p.68", "quote": "Interestingly, Digital and AI Fluency, as well as Sustainability Awareness, are now central to these skills, serving as significant differentiators from traditional competencies." }
+      ]
+    },
+    {
+      "id": "ai-draft-summarise",
+      "label": "use generative AI tools to draft and summarise documents",
+      "description": "Use generative AI assistants such as Copilot or ChatGPT to produce first drafts of emails, reports, posts and summaries, then edit them for the task.",
+      "category": "use",
+      "workContext": "draft correspondence and reports, and summarise documents",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "IMDA and SkillsFuture Singapore", "title": "Skills Framework for ICT: Skills in Generative AI (TSC: Generative AI Principles and Applications, basic level)", "url": "https://imda.gov.sg/-/media/imda/files/how-we-can-help/tesa/sfw-for-ict/sfw-for-ict-skills-in-genai.pdf", "date": "2025-03", "locator": "p.4", "quote": "Use generative AI to carry out specific tasks." },
+        { "publisher": "TalentCorp Malaysia", "title": "Impact Study of Artificial Intelligence, Digital, and Green Economy on the Malaysian Workforce, Volume 1", "url": "https://www.talentcorp.com.my/resources/publications/impact-study-of-artificial-intelligence-digital-and-green-economy-on-the-malaysian-workforce-volume-1/", "fileUrl": "https://lms.mynext.my/course/YES-Rock-The-School-bersama-Pembimbing-Rakan-Sebaya-PRS-2026/file/225/download", "date": "2024-11-18", "locator": "printed p.82", "quote": "Copilot then produced a few sentences that made a good starting point for a post or website description." },
+        { "publisher": "Microsoft and LinkedIn", "title": "2024 Work Trend Index Annual Report: AI at Work Is Here. Now Comes the Hard Part", "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part", "date": "2024-05-08", "quote": "66% of leaders say they wouldn’t hire someone without AI skills." }
+      ]
+    },
+    {
+      "id": "ai-find-use-cases",
+      "label": "identify tasks that generative AI can improve",
+      "description": "Find which tasks in your own job or team can be done or sped up with generative AI, and apply the tools to them to raise productivity.",
+      "category": "use",
+      "workContext": "analyse work processes to improve productivity",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "IMDA and SkillsFuture Singapore", "title": "Skills Framework for ICT: Skills in Generative AI (Chapter 1: Generative AI Skills for AI Users)", "url": "https://imda.gov.sg/-/media/imda/files/how-we-can-help/tesa/sfw-for-ict/sfw-for-ict-skills-in-genai.pdf", "date": "2025-03", "locator": "p.3", "quote": "Workers across the economy, not just tech workers, now have access to many generative AI products and services that can enhance productivity, drive innovation and more." },
+        { "publisher": "SkillsFuture Singapore", "title": "Factsheet 2: Top Skills Trends in 2025", "url": "https://isomer-user-content.by.gov.sg/41/4955bc61-161d-4584-945c-7eeeb276867a/Factsheet%20on%20Top%20skills%20trends%20in%202025.pdf", "date": "2026-01-27", "locator": "p.2", "quote": "This presents opportunities to improve work productivity across many industries through the adoption of AI tools." }
+      ]
+    },
+    {
+      "id": "ai-analyse-data",
+      "label": "analyse data with AI assistants",
+      "description": "Use AI assistants, for example inside spreadsheets, to analyse and summarise data faster, and check the results before relying on them.",
+      "category": "use",
+      "workContext": "analyse data with spreadsheets and report the results",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "World Economic Forum", "title": "Future of Jobs Report 2025", "url": "https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf", "date": "2025-01", "locator": "p.12", "quote": "Institution-sponsored learners, on the other hand, emphasize practical applications within the workplace, including leveraging AI tools to enhance efficiency in Excel or leveraging the technology to develop applications." },
+        { "publisher": "Microsoft and LinkedIn", "title": "2024 Work Trend Index Annual Report: AI at Work Is Here. Now Comes the Hard Part", "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part", "date": "2024-05-08", "quote": "how to use AI for their role or function (+35%), or specific use cases such as writing or analyzing data (+32%)." }
+      ]
+    },
+    {
+      "id": "ai-protect-data",
+      "label": "protect confidential data when using AI tools",
+      "description": "Recognise sensitive or personal information and keep it out of unapproved AI tools; follow company policy on which AI services may be used.",
+      "category": "judge",
+      "workContext": "handle confidential and personal data",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "IMDA and SkillsFuture Singapore", "title": "Skills Framework for ICT: Skills in Generative AI (TSC: Generative AI Principles and Applications)", "url": "https://imda.gov.sg/-/media/imda/files/how-we-can-help/tesa/sfw-for-ict/sfw-for-ict-skills-in-genai.pdf", "date": "2025-03", "locator": "p.4", "quote": "Identify sensitive information in datasets." },
+        { "publisher": "Microsoft and LinkedIn", "title": "2024 Work Trend Index Annual Report: AI at Work Is Here. Now Comes the Hard Part", "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part", "date": "2024-05-08", "quote": "It also puts company data at risk in an environment where leaders’ #1 concern for the year ahead is cybersecurity and data privacy." }
+      ]
+    },
+    {
+      "id": "ai-manage-agents",
+      "label": "delegate tasks to and manage AI agents",
+      "description": "Set up AI agents, assign them work, check what they do and step in for exceptions and high-stakes decisions, as part of a team of people and agents.",
+      "category": "judge",
+      "workContext": "delegate tasks, supervise work and monitor performance",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "Microsoft", "title": "2025 Work Trend Index: The Year the Frontier Firm Is Born", "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/2025-the-year-the-frontier-firm-is-born", "date": "2025-04-23", "quote": "someone who builds, delegates to, and manages agents to amplify their impact" },
+        { "publisher": "Microsoft", "title": "2025 Work Trend Index: The Year the Frontier Firm Is Born", "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/2025-the-year-the-frontier-firm-is-born", "date": "2025-04-23", "quote": "To maximize the impact of these human-agent teams, organizations need a new metric: the human-agent ratio." },
+        { "publisher": "International Labour Organization", "title": "Generative AI and Jobs: A Refined Global Index of Occupational Exposure (ILO Working Paper 140)", "url": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf", "date": "2025-05", "locator": "printed p.41", "quote": "Additionally, these models have been gaining some agentic capabilities, allowing them to execute multi-step tasks autonomously, interact with software environments, and make decisions based on contextual inputs." }
+      ]
+    },
+    {
+      "id": "ai-oversee-decisions",
+      "label": "oversee AI-assisted decisions",
+      "description": "Monitor AI systems used in decisions, interpret their outputs correctly, and decide when to disregard, override or reverse them.",
+      "category": "judge",
+      "workContext": "review recommendations and make decisions",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "European Union", "title": "Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 26(2)", "url": "http://data.europa.eu/eli/reg/2024/1689/oj", "date": "2024-07-12", "locator": "Art. 26(2)", "quote": "Deployers shall assign human oversight to natural persons who have the necessary competence, training and authority, as well as the necessary support." },
+        { "publisher": "European Union", "title": "Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 14(4)(d)", "url": "http://data.europa.eu/eli/reg/2024/1689/oj", "date": "2024-07-12", "locator": "Art. 14(4)(d)", "quote": "to decide, in any particular situation, not to use the high-risk AI system or to otherwise disregard, override or reverse the output of the high-risk AI system;" },
+        { "publisher": "International Labour Organization", "title": "Generative AI and Jobs: A Refined Global Index of Occupational Exposure (ILO Working Paper 140)", "url": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf", "date": "2025-05", "locator": "printed p.44", "quote": "Similarly, financial institutions might hesitate to fully delegate decisions such as mortgage approvals or business plan evaluations to AI systems, preferring to retain human judgement, oversight and accountability." }
+      ]
+    },
+    {
+      "id": "ai-automation-bias",
+      "label": "counter automation bias when using AI outputs",
+      "description": "Recognise the pull to over-rely on AI recommendations and content, and check them critically before acting on them.",
+      "category": "judge",
+      "workContext": "evaluate information critically before making decisions",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "European Union", "title": "Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 14(4)(b)", "url": "http://data.europa.eu/eli/reg/2024/1689/oj", "date": "2024-07-12", "locator": "Art. 14(4)(b)", "quote": "to remain aware of the possible tendency of automatically relying or over-relying on the output produced by a high-risk AI system (automation bias)" },
+        { "publisher": "NIST", "title": "NIST AI 600-1, Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile", "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf", "date": "2024-07", "locator": "p.13", "quote": "This phenomenon is an example of automation bias, or excessive deference to automated systems." }
+      ]
+    },
+    {
+      "id": "ai-finance-close",
+      "label": "use AI tools in reconciliation, close and reporting",
+      "description": "Use AI and machine-learning tools for reconciliations, balance sheet reviews, variance narratives and month-end close, and review what they produce.",
+      "category": "finance",
+      "workContext": "reconcile accounts, prepare balance sheets and close the books",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "ACCA", "title": "The Smart Alliance: Accounting expertise meets machine intelligence", "url": "https://www.accaglobal.com/content/dam/gb/policy-and-insights/reports/2024/smart-alliance-full.pdf", "date": "2024-08", "locator": "p.24", "quote": "Many organisations are leveraging AI to enhance core accounting and finance processes, allowing for greater accuracy and speed in tasks such as balance sheet reviews, payment reconciliations, and cost estimations." },
+        { "publisher": "ICAEW", "title": "Generative AI Guide: Using generative AI", "url": "https://www.icaew.com/technical/technology/artificial-intelligence/generative-ai-guide/using-generative-ai", "date": "2023-09", "quote": "It is important to think outside the box and to review, challenge and critique all generative AI outputs, as you would a member of your team or output provided by an audit client." }
+      ]
+    },
+    {
+      "id": "ai-automate-workflows",
+      "label": "automate routine finance and admin work with generative AI",
+      "description": "Combine generative AI with existing automation to take over repetitive work such as first-draft narratives, document capture and matching, keeping a human review step.",
+      "category": "finance",
+      "workContext": "process invoices, payments and routine administrative records",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "ACCA", "title": "The Smart Alliance: Accounting expertise meets machine intelligence", "url": "https://www.accaglobal.com/content/dam/gb/policy-and-insights/reports/2024/smart-alliance-full.pdf", "date": "2024-08", "locator": "p.46", "quote": "With the introduction of GenAI, the system can now produce initial draft narratives that are approximately 80% complete, significantly reducing the manual effort required from analysts." }
+      ]
+    },
+    {
+      "id": "ai-detect-deepfake-fraud",
+      "label": "detect AI-enabled fraud such as deepfakes",
+      "description": "Recognise red flags of fraud that uses generative AI: deepfake executives asking for payments, altered or synthetic identity documents, and attempts to get past identity checks.",
+      "category": "finance",
+      "workContext": "detect fraud and verify identity documents",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "FinCEN (US Treasury)", "title": "FinCEN Alert on Fraud Schemes Involving Deepfake Media Targeting Financial Institutions (FIN-2024-Alert004)", "url": "https://www.fincen.gov/sites/default/files/shared/FinCEN-Alert-DeepFakes-Alert508FINAL.pdf", "date": "2024-11-13", "locator": "p.1", "quote": "These schemes often involve criminals altering or creating fraudulent identity documents to circumvent identity verification and authentication methods." },
+        { "publisher": "Bank Negara Malaysia", "title": "Discussion Paper on Artificial Intelligence in the Malaysian Financial Sector", "url": "https://www.bnm.gov.my/documents/20124/938039/DP_Artificial_Intelligence_in_the_Financial_Sector.pdf", "date": "2025-08-05", "locator": "p.20", "quote": "This extends to the creation of hyper-realistic deepfakes of company executives to prompt unlawful money transfers." }
+      ]
+    },
+    {
+      "id": "ai-audit-systems",
+      "label": "audit AI systems and their controls",
+      "description": "Assess the risks, controls, governance and model validation around the AI a business uses, as an internal auditor, risk or assurance professional.",
+      "category": "finance",
+      "workContext": "audit internal controls and assess risks",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "The Institute of Internal Auditors", "title": "The IIA's Updated AI Auditing Framework", "url": "https://www.theiia.org/en/content/tools/professional/2023/the-iias-updated-ai-auditing-framework/", "date": "2024-09-13", "quote": "The IIA’s Artificial Intelligence Auditing Framework helps internal auditors understand risks related to artificial intelligence and identify internal controls to manage those risks." },
+        { "publisher": "Bank Negara Malaysia", "title": "Discussion Paper on Artificial Intelligence in the Malaysian Financial Sector", "url": "https://www.bnm.gov.my/documents/20124/938039/DP_Artificial_Intelligence_in_the_Financial_Sector.pdf", "date": "2025-08-05", "locator": "p.26", "quote": "Moreover, model validation, often embedded in development and monitoring phases, has been cited as a particularly critical step in ensuring the reliability and integrity of AI applications." }
+      ]
+    },
+    {
+      "id": "ai-esg-data",
+      "label": "use AI to collect and analyse ESG data",
+      "description": "Use AI to turn transaction and operational data into environmental and sustainability metrics for reporting, and verify the data and estimates involved.",
+      "category": "finance",
+      "workContext": "collect and report sustainability and environmental data",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "ACCA (press release on the AI Monitor report 'Unravelling AI's role in sustainability', via Zawya)", "title": "ACCA urges businesses to weigh up sustainability implications of AI investment", "url": "https://www.zawya.com/en/press-release/companies-news/acca-urges-businesses-to-weigh-up-sustainability-implications-of-ai-investment-tpgfi8rs", "date": "2024-12", "quote": "In particular, technology could play a supporting role in sustainability reporting with AI overcoming one key challenge - converting financial data into meaningful environmental metrics." },
+        { "publisher": "ACCA", "title": "The Smart Alliance: Accounting expertise meets machine intelligence", "url": "https://www.accaglobal.com/content/dam/gb/policy-and-insights/reports/2024/smart-alliance-full.pdf", "date": "2024-08", "locator": "p.25", "quote": "Financial planning and analysis remains a valuable application but there's also a turn to fraud detection and risk management, sustainability and ESG reporting, and compliance and regulatory reporting." }
+      ]
+    },
+    {
+      "id": "ai-data-readiness",
+      "label": "prepare business data for AI use",
+      "description": "Collect, clean, standardise and verify business data so AI systems produce reliable results, and handle the exceptions they flag.",
+      "category": "finance",
+      "workContext": "manage data quality and clean data",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "ACCA (press release, via Zawya)", "title": "ACCA urges businesses to weigh up sustainability implications of AI investment", "url": "https://www.zawya.com/en/press-release/companies-news/acca-urges-businesses-to-weigh-up-sustainability-implications-of-ai-investment-tpgfi8rs", "date": "2024-12", "quote": "They need to ensure high-quality data input that AI systems can effectively interpret and learn over time, dealing with exceptions and verifying data." },
+        { "publisher": "Bank Negara Malaysia", "title": "Discussion Paper on Artificial Intelligence in the Malaysian Financial Sector", "url": "https://www.bnm.gov.my/documents/20124/938039/DP_Artificial_Intelligence_in_the_Financial_Sector.pdf", "date": "2025-08-05", "locator": "p.31", "quote": "These include talent shortages, limited data readiness, and difficulties integrating AI with legacy systems." }
+      ]
+    },
+    {
+      "id": "ai-select-tools",
+      "label": "evaluate and select AI tools and vendors",
+      "description": "Choose AI tools that fit a business use case, weigh building against buying, and assess the risks of depending on a third-party AI provider.",
+      "category": "lead",
+      "workContext": "evaluate and procure software and suppliers",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "ACCA", "title": "The Smart Alliance: Accounting expertise meets machine intelligence", "url": "https://www.accaglobal.com/content/dam/gb/policy-and-insights/reports/2024/smart-alliance-full.pdf", "date": "2024-08", "locator": "p.53", "quote": "Select AI tools and algorithms that best fit the objectives and requirements of specific use cases." },
+        { "publisher": "Bank Negara Malaysia", "title": "Discussion Paper on Artificial Intelligence in the Malaysian Financial Sector", "url": "https://www.bnm.gov.my/documents/20124/938039/DP_Artificial_Intelligence_in_the_Financial_Sector.pdf", "date": "2025-08-05", "locator": "p.18", "quote": "According to the BNM AI Survey 2024, dependency on third-party service providers was the biggest concern for banks and ITOs, followed by concerns related to cloud usage in AI." }
+      ]
+    },
+    {
+      "id": "ai-redesign-work",
+      "label": "redesign jobs and workflows around AI",
+      "description": "Work out which tasks in a process AI can automate or support, and reshape the workflow, roles and training to match, with input from the people affected.",
+      "category": "lead",
+      "workContext": "analyse and redesign business processes and jobs",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "Microsoft", "title": "2025 Work Trend Index: The Year the Frontier Firm Is Born", "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/2025-the-year-the-frontier-firm-is-born", "date": "2025-04-23", "quote": "Identify the processes ripe for full automation—as well as those where human-AI collaboration unlocks outsize value." },
+        { "publisher": "SkillsFuture Singapore", "title": "Factsheet 2: Top Skills Trends in 2025", "url": "https://isomer-user-content.by.gov.sg/41/4955bc61-161d-4584-945c-7eeeb276867a/Factsheet%20on%20Top%20skills%20trends%20in%202025.pdf", "date": "2026-01-27", "locator": "p.3", "quote": "SSG has published a new dashboard, \"AI Potential on Tasks\", on the Jobs-Skills Portal, showing the AI potential for automation of tasks across job roles, enabling more informed decisions on training development, job redesign and workforce planning." },
+        { "publisher": "International Labour Organization", "title": "Generative AI and Jobs: A Refined Global Index of Occupational Exposure (ILO Working Paper 140)", "url": "https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf", "date": "2025-05", "locator": "abstract", "quote": "As most occupations consist of tasks that require human input, transformation of jobs is the most likely impact of GenAI." }
+      ]
+    },
+    {
+      "id": "ai-lead-adoption",
+      "label": "lead change management for AI adoption",
+      "description": "Plan and lead the communication, training and support a team needs to adopt AI tools, closing the gap between leadership plans and staff readiness.",
+      "category": "lead",
+      "workContext": "manage organisational change and train staff",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "TalentCorp Malaysia", "title": "Impact Study of Artificial Intelligence, Digital, and Green Economy on the Malaysian Workforce, Volume 1", "url": "https://www.talentcorp.com.my/resources/publications/impact-study-of-artificial-intelligence-digital-and-green-economy-on-the-malaysian-workforce-volume-1/", "fileUrl": "https://lms.mynext.my/course/YES-Rock-The-School-bersama-Pembimbing-Rakan-Sebaya-PRS-2026/file/225/download", "date": "2024-11-18", "locator": "printed p.28", "quote": "Key priorities for industry players include investing in training to address skills gaps and implementing robust change management plans for AI adoption to bridge the receptiveness gap between leadership and staff." },
+        { "publisher": "ACCA", "title": "The Smart Alliance: Accounting expertise meets machine intelligence", "url": "https://www.accaglobal.com/content/dam/gb/policy-and-insights/reports/2024/smart-alliance-full.pdf", "date": "2024-08", "locator": "p.48", "quote": "Change management and employee upskilling were critical to the project's success." }
+      ]
+    },
+    {
+      "id": "ai-manage-risk",
+      "label": "manage risks of AI systems",
+      "description": "Identify, analyse and treat the risks an AI system poses to people, the business and compliance across its lifecycle, using a structured framework such as the NIST AI RMF.",
+      "category": "govern",
+      "workContext": "manage risks and compliance",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "NIST", "title": "Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1, GOVERN 2.2", "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf", "date": "2023-01", "locator": "p.28", "quote": "The organization’s personnel and partners receive AI risk management training to enable them to perform their duties and responsibilities consistent with related policies, procedures, and agreements." },
+        { "publisher": "European Union", "title": "Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 9(2)(a)", "url": "http://data.europa.eu/eli/reg/2024/1689/oj", "date": "2024-07-12", "locator": "Art. 9(2)(a)", "quote": "the identification and analysis of the known and the reasonably foreseeable risks that the high-risk AI system can pose to health, safety or fundamental rights when the high-risk AI system is used in accordance with its intended purpose;" }
+      ]
+    },
+    {
+      "id": "ai-impact-assessment",
+      "label": "conduct AI impact assessments",
+      "description": "Assess how an AI system may affect people and groups, including their fundamental rights, before and during its use, and record the safeguards.",
+      "category": "govern",
+      "workContext": "assess impacts on people and human rights",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "European Union", "title": "Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 27(1)", "url": "http://data.europa.eu/eli/reg/2024/1689/oj", "date": "2024-07-12", "locator": "Art. 27(1)", "quote": "shall perform an assessment of the impact on fundamental rights that the use of such system may produce." },
+        { "publisher": "NIST", "title": "Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1, Appendix A", "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf", "date": "2023-01", "locator": "p.41", "quote": "AI Impact Assessment tasks include assessing and evaluating requirements for AI system accountability, combating harmful bias, examining impacts of AI systems, product safety, liability, and security, among others." }
+      ]
+    },
+    {
+      "id": "ai-bias",
+      "label": "identify and mitigate bias in AI systems",
+      "description": "Examine an AI system's data and outputs for harmful bias and discrimination, evaluate fairness, and record and act on the results.",
+      "category": "govern",
+      "workContext": "ensure fairness and non-discrimination in decisions",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "NIST", "title": "Artificial Intelligence Risk Management Framework (AI RMF 1.0), NIST AI 100-1, MEASURE 2.11", "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf", "date": "2023-01", "locator": "p.35", "quote": "Fairness and bias – as identified in the MAP function – are evaluated and results are documented." },
+        { "publisher": "European Union", "title": "Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 10(2)(f)", "url": "http://data.europa.eu/eli/reg/2024/1689/oj", "date": "2024-07-12", "locator": "Art. 10(2)(f)", "quote": "examination in view of possible biases that are likely to affect the health and safety of persons, have a negative impact on fundamental rights or lead to discrimination prohibited under Union law" }
+      ]
+    },
+    {
+      "id": "ai-explain-decisions",
+      "label": "explain AI-assisted decisions",
+      "description": "Give the people affected a clear, meaningful explanation of how an AI system contributed to a decision about them.",
+      "category": "govern",
+      "workContext": "explain decisions to customers and stakeholders",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "European Union", "title": "Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 86(1)", "url": "http://data.europa.eu/eli/reg/2024/1689/oj", "date": "2024-07-12", "locator": "Art. 86(1)", "quote": "clear and meaningful explanations of the role of the AI system in the decision-making procedure and the main elements of the decision taken." },
+        { "publisher": "OECD", "title": "Recommendation of the Council on Artificial Intelligence (OECD/LEGAL/0449), Principle 1.3", "url": "https://legalinstruments.oecd.org/public/doc/648/648.en.pdf", "date": "2024-05-03", "locator": "Principle 1.3", "quote": "AI Actors should commit to transparency and responsible disclosure regarding AI systems." }
+      ]
+    },
+    {
+      "id": "ai-disclose-content",
+      "label": "disclose use of AI-generated content",
+      "description": "Tell people when they are dealing with AI or receiving content that AI generated or altered, such as synthetic images, audio or video.",
+      "category": "govern",
+      "workContext": "produce media content and communicate with the public",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "European Union", "title": "Regulation (EU) 2024/1689 (Artificial Intelligence Act), Article 50(4)", "url": "http://data.europa.eu/eli/reg/2024/1689/oj", "date": "2024-07-12", "locator": "Art. 50(4)", "quote": "Deployers of an AI system that generates or manipulates image, audio or video content constituting a deep fake, shall disclose that the content has been artificially generated or manipulated." }
+      ]
+    },
+    {
+      "id": "ai-responsible-use",
+      "label": "use AI responsibly and ethically at work",
+      "description": "Apply responsible-AI principles (fairness, transparency, accountability, privacy, human oversight) when choosing and using AI tools; an AI-specific extension of ESCO's 'data ethics'.",
+      "category": "govern",
+      "workContext": "apply ethics and data protection rules at work",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "IMDA and SkillsFuture Singapore", "title": "Skills Framework for ICT: Skills in Generative AI (Chapter 3: Ethics and Governance for Generative AI)", "url": "https://imda.gov.sg/-/media/imda/files/how-we-can-help/tesa/sfw-for-ict/sfw-for-ict-skills-in-genai.pdf", "date": "2025-03", "locator": "p.17", "quote": "All workers across the economy should be able to grasp the ethical and governance considerations in generative AI, and be able to exercise appropriate judgement and use AI responsibly." },
+        { "publisher": "Government of Malaysia (MyGOV portal)", "title": "National Guidelines on Artificial Intelligence Governance and Ethics (AIGE)", "url": "https://www.malaysia.gov.my/en/my-initiative/whole-government-digital-services/tadbir-urus/national-guidelines-on-artificial-intelligence-governance-and-ethics-aige", "date": "2024-09", "quote": "AIGE outlines seven core principles for responsible AI use, aligned with international guidelines from UNESCO, OECD, and the European Commission." },
+        { "publisher": "TalentCorp Malaysia", "title": "Impact Study of Artificial Intelligence, Digital, and Green Economy on the Malaysian Workforce, Volume 1", "url": "https://www.talentcorp.com.my/resources/publications/impact-study-of-artificial-intelligence-digital-and-green-economy-on-the-malaysian-workforce-volume-1/", "fileUrl": "https://lms.mynext.my/course/YES-Rock-The-School-bersama-Pembimbing-Rakan-Sebaya-PRS-2026/file/225/download", "date": "2024-11-18", "locator": "printed p.67", "quote": "The ICT sector, in particular, is focusing on AI ethics and governance, highlighting the importance of new technologies in improving operational effectiveness." }
+      ]
+    },
+    {
+      "id": "ai-red-team",
+      "label": "test and red-team generative AI systems",
+      "description": "Probe AI systems with structured tests and adversarial prompts to find inaccurate, harmful or biased outputs before and after they go live.",
+      "category": "build",
+      "workContext": "test software for errors and security weaknesses",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "NIST", "title": "NIST AI 600-1, Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile", "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf", "date": "2024-07", "locator": "p.54", "quote": "AI red-teaming is an evolving practice that references exercises often conducted in a controlled environment and in collaboration with AI developers building AI models to identify potential adverse behavior or outcomes of a GAI model or system" }
+      ]
+    },
+    {
+      "id": "ai-build-apps",
+      "label": "build applications on generative AI models",
+      "description": "Assemble assistants, chatbots or agent workflows on top of generative AI models for a specific business use, including with low-code or no-code platforms.",
+      "category": "build",
+      "workContext": "develop software applications",
+      "aiEra": true,
+      "sources": [
+        { "publisher": "IMDA and SkillsFuture Singapore", "title": "Skills Framework for ICT: Skills in Generative AI (TSC: Generative AI Application Development and Deployment)", "url": "https://imda.gov.sg/-/media/imda/files/how-we-can-help/tesa/sfw-for-ict/sfw-for-ict-skills-in-genai.pdf", "date": "2025-03", "locator": "p.13", "quote": "Design and build applications around generative AI models, integrating the language processing capabilities towards specific use cases and domains, and troubleshoot AI tools" }
+      ]
+    }
+  ],
+  "dropped": [
+    { "label": "use AI coding assistants", "reason": "Sources only said software development leads GenAI adoption; none named the skill. O*NET Hot Technologies (2025 postings) lists no generative AI tool." },
+    { "label": "post-edit machine translations", "reason": "No supporting source found in this pass." },
+    { "label": "teach or coach others to use AI", "reason": "OECD and UNESCO pages were unreachable (403 / CAPTCHA); only secondary summaries found." },
+    { "label": "apply AI management systems (ISO/IEC 42001)", "reason": "iso.org returned 403; no verified quote." },
+    { "label": "comply with AI regulations", "reason": "Merged into the specific oversight, risk, impact-assessment and disclosure skills, each backed by an EU AI Act article." }
+  ]
+}

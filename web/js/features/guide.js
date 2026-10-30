@@ -1,9 +1,9 @@
-// Demo guide: walks a first-time viewer through the loop that matters most — pick a job, compare route types,
+// Demo guide: walks a first-time viewer through the loop that matters most — pick a job, check the safer route,
 // look ahead to 2030, run the market scout, then approve a change and watch the route reroute.
-// It never blocks the app: the spotlight ignores clicks, any click elsewhere puts it away, and the tour can be
-// skipped or minimised. "Tour done" and "minimised" are remembered in localStorage (store() wraps it in try/catch).
-import { S, UI, actions, nameOf, W, matchOf } from "../state.js";
-import { MODES } from "/shared/engine.js";
+// It never blocks the app: the spotlight ignores clicks, any click elsewhere puts it away, and the tour is one
+// compact line that can be closed. "Tour done" is remembered in localStorage (store() wraps it in try/catch).
+import { S, UI, actions, nameOf, W, matchOf, isEsco } from "../state.js";
+import { MODES, normMode } from "/shared/engine.js";
 import { t } from "../i18n.js";
 import { $, esc, icons, reduce, store } from "../util.js";
 import { setAgentsOpen } from "./status.js";
@@ -12,39 +12,51 @@ import { A, pendingCount } from "../panels/admin.js";
 
 const done = { job: false, mode: false, future: false, scout: false, signal: false };
 let skipped = store.get("tourDone", false);
-let min = store.get("guideMin", false);
 let last = null, okMsg = "", timer = 0, reroute = null, autoShown = false;
 
 const blocked = () => !$("ob")?.hidden || !$("auth")?.hidden;
 const routeKey = (j, m) => { try { return S.E.planFor(j, m)?.route?.key || null; } catch { return null; } };
-/** The job to demo: the one whose route types differ most (so step 2 visibly changes something), then the best match. */
+/** The job to demo: one with a safer route that differs (so step 2 visibly changes something), then the best match. */
 const best = () => {
-  if (!S.E || !UI.ring.length) return UI.ring[0];
+  if (!S.E || !UI.ring.length) return UI.ring[0] || null;
   const kinds = j => new Set(MODES.map(m => routeKey(j, m)).filter(Boolean)).size;
   return [...UI.ring].sort((a, b) => kinds(b) - kinds(a) || matchOf(b) - matchOf(a))[0];
 };
-/** The route type whose road differs most from the current one for this job (most steps not shared). */
-const otherMode = () => {
-  const nodes = m => { try { return S.E.planFor(UI.job, m)?.route?.nodes || []; } catch { return []; } };
-  const now = new Set(nodes(UI.mode)), diff = m => nodes(m).filter(k => !now.has(k)).length;
-  const alt = MODES.filter(m => m !== UI.mode).sort((a, b) => diff(b) - diff(a))[0];
-  return alt || (UI.mode === "noregret" ? "fastest" : "noregret");
-};
+/** The other route type (Easiest start <-> Safest): what the "Safer route available" card switches to. */
+const otherMode = () => (normMode(UI.mode) === "safest" ? "closest" : "safest");
 const panel = sel => $("panel")?.querySelector(sel);
+/** No catalogue job is among your top picks (a nurse, a salesperson): the tour follows your best ESCO job instead. */
+const escoOnly = () => UI.base.length > 0 && UI.base.every(isEsco);
+const escoPick = () => UI.escoJob || UI.base.find(isEsco) || UI.escoRing[0];
+const escoRowEl = () => panel(`[data-esco-job="${CSS.escape(escoPick() || "")}"]`) || panel("[data-esco-job]");
 const toUser = () => { if (UI.view === "admin") actions.setView("user"); };
 const closeDr = () => { if (UI.drawer) actions.closeDrawer?.(); };
 
 const STEPS = [
   { id: "job",
     target: () => UI.view === "admin" ? [$("admin-btn"), "guide.tip.back"] : UI.tab !== "jobs" ? [$("tab-jobs"), "guide.tip.jobs"]
+      : escoOnly() ? [escoRowEl(), "guide.tip.job"]
       : [panel(`.job-hit[data-job="${CSS.escape(best() || "")}"]`) || panel(".job-hit"), "guide.tip.job"],
-    act: () => { toUser(); if (best()) actions.selectJob(best()); },
-    ok: () => t("guide.ok.job", { job: nameOf(UI.job) }) },
+    act: () => { toUser(); if (escoOnly()) actions.selectEsco(escoPick()); else if (best()) actions.selectJob(best()); },
+    ok: () => t("guide.ok.job", { job: nameOf(UI.escoJob || UI.job) }) },
   { id: "mode",
     prep: () => { if (innerWidth < 980) closeDr(); },
-    target: () => UI.view === "admin" ? [$("admin-btn"), "guide.tip.back"] : UI.tab !== "path" ? [$("tab-path"), "guide.tip.path"] : [panel(".mode-seg"), "guide.tip.mode"],
-    act: () => { toUser(); if (!UI.picked && best()) actions.selectJob(best()); closeDr(); UI.tab = "path"; actions.setMode(otherMode()); },
-    ok: () => t("guide.ok.mode", { mode: t("mode." + UI.mode) }) },
+    // the open job may have no safer route (no card to point at): then point at the guide's job instead
+    target: () => UI.view === "admin" ? [$("admin-btn"), "guide.tip.back"]
+      : escoOnly() ? (UI.tab !== "path" ? [$("tab-path"), "guide.tip.path"] : panel(".mode-seg") ? [panel(".mode-seg"), "guide.tip.mode"] : [$("tab-jobs"), "guide.tip.jobs"])
+      : UI.tab !== "path" ? [$("tab-path"), "guide.tip.path"]
+      : panel(".mode-seg") ? [panel(".mode-seg"), "guide.tip.mode"] : [$("tab-jobs"), "guide.tip.other", { job: nameOf(best()) }],
+    act: () => {
+      toUser(); closeDr();
+      if (escoOnly()) {
+        actions.setMode(otherMode()); // redraws the ESCO route the other way
+        actions.selectEsco(escoPick(), { tab: "path" });
+        return;
+      }
+      if (!UI.picked || (!panel(".mode-seg") && best() && UI.job !== best())) actions.selectJob(best());
+      UI.tab = "path"; actions.setMode(otherMode());
+    },
+    ok: () => t("guide.ok.mode", { mode: t("mode." + normMode(UI.mode)) }) },
   { id: "future",
     prep: closeDr,
     target: () => [document.querySelector(".timeline"), "guide.tip.future"],
@@ -78,11 +90,11 @@ const STEPS = [
 function pickSignal(apply = false) {
   const sigs = (A.review?.pending || []).filter(x => x.nodeId);
   if (!sigs.length || !S.E) return sigs[0] || null;
-  const jobs = [...new Set([UI.job, ...UI.ring].filter(Boolean))], modes = [UI.mode, ...MODES.filter(m => m !== UI.mode)];
+  const jobs = [...new Set([UI.job, ...UI.ring].filter(Boolean))], modes = [normMode(UI.mode), ...MODES.filter(m => m !== normMode(UI.mode))];
   for (const sig of sigs) for (const m of modes) for (const j of jobs) {
     let r = null; try { r = S.E.planFor(j, m)?.route; } catch { r = null; }
     if (r?.nodes?.includes(sig.nodeId)) {
-      if (apply && (UI.job !== j || UI.mode !== m)) { UI.job = j; UI.picked = true; UI.tab = "path"; actions.setMode(m); }
+      if (apply && (UI.job !== j || normMode(UI.mode) !== m)) { UI.job = j; UI.picked = true; UI.tab = "path"; actions.setMode(m); }
       return sig;
     }
   }
@@ -102,7 +114,7 @@ function spotOn(get) {
     if (!SPOT.get) return;
     if (!SPOT.el || !SPOT.el.isConnected) {
       const tg = SPOT.get(); SPOT.el = tg && tg[0];
-      if (SPOT.el) { $("spot-tip").innerHTML = `<i data-lucide="mouse-pointer-click"></i>${esc(t(tg[1]))}`; icons(); if (!SPOT.shown) SPOT.el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); }
+      if (SPOT.el) { $("spot-tip").innerHTML = `<i data-lucide="mouse-pointer-click"></i>${esc(t(tg[1], tg[2]))}`; icons(); if (!SPOT.shown) SPOT.el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); }
     }
     const r = SPOT.el && SPOT.el.getBoundingClientRect();
     if (!r || !r.width || blocked()) s.classList.remove("on");
@@ -110,7 +122,12 @@ function spotOn(get) {
       const pad = 6;
       s.style.left = (r.left - pad) + "px"; s.style.top = (r.top - pad) + "px";
       s.style.width = (r.width + pad * 2) + "px"; s.style.height = (r.height + pad * 2) + "px";
-      s.classList.toggle("above", r.bottom + 64 > innerHeight);
+      // the chip must not cover what's next to the target (a list's next job name): beside a wide target when there is
+      // room on the right (desktop: over the map), else above it; below only for small controls with room under them
+      const tw = $("spot-tip").offsetWidth || 160, wide = r.width > 220;
+      const side = wide && r.right + 26 + tw < innerWidth;
+      s.classList.toggle("beside", side);
+      s.classList.toggle("above", !side && (wide ? r.top > 56 : r.bottom + 64 > innerHeight));
       if (!SPOT.shown) { SPOT.shown = true; s.classList.add("on"); requestAnimationFrame(() => s.classList.add("move")); }
     }
     SPOT.raf = requestAnimationFrame(track);
@@ -120,7 +137,7 @@ function spotOn(get) {
 function spotOff() { SPOT.get = null; SPOT.el = null; cancelAnimationFrame(SPOT.raf); $("spot")?.classList.remove("on", "move"); }
 
 function showStep(step) {
-  if (!step || min || skipped || blocked()) return;
+  if (!step || skipped || blocked()) return;
   step.prep?.();
   spotOn(step.target);
 }
@@ -139,8 +156,8 @@ export function rerouted({ job, oldRoute, newRoute, signal }) {
 /** Start (or restart) the tour, e.g. from the menu. */
 export function start() {
   Object.keys(done).forEach(k => { done[k] = false; });
-  skipped = false; min = false; okMsg = ""; last = null; reroute = null;
-  store.set("tourDone", false); store.set("guideMin", false);
+  skipped = false; okMsg = ""; last = null; reroute = null;
+  store.set("tourDone", false);
   render();
   setTimeout(() => showStep(next()), 300);
 }
@@ -160,7 +177,7 @@ function summary() {
   if (!r || r.before === null || r.after === null) return `<div class="g-why">${esc(t("guide.applied"))}</div>`;
   const same = r.before === r.after && r.from.join() === r.to.join();
   if (same) return `<div class="g-why"><b>${esc(nameOf(r.job))}</b> ${esc(t("guide.sameWeeks", { w: r.after }))}</div>`;
-  return `<div class="g-ba"><span class="b">${r.before} ${esc(t("common.wk"))}</span><i data-lucide="arrow-right"></i><span class="a">${r.after} ${esc(t("common.wk"))}</span><small>${esc(nameOf(r.job))}</small></div>
+  return `<div class="g-ba"><span class="b">${esc(t("common.weeksN", { w: r.before }))}</span><i data-lucide="arrow-right"></i><span class="a">${esc(t("common.weeksN", { w: r.after }))}</span><small>${esc(nameOf(r.job))}</small></div>
     <div class="g-why">${esc(same ? t("guide.same") : t("guide.changed"))}</div>
     ${same ? "" : `<div class="g-route"><div><span>${esc(t("guide.before"))}</span><s>${esc(r.from.join(" → ") || "–")}</s></div><div><span>${esc(t("guide.now"))}</span><em>${esc(r.to.join(" → ") || "–")}</em></div></div>`}`;
 }
@@ -181,26 +198,22 @@ export function render() {
   last = nx;
   // Tour finished and nothing left to show: get out of the way (the menu can restart it).
   if (!nx && !reroute) { g.hidden = true; return; }
-  const dots = list.map(s => `<i class="${done[s.id] ? "on" : s === nx ? "now" : ""}"></i>`).join("");
-  g.classList.toggle("min", min);
   g.classList.toggle("done", !nx);
-  const top = `<div class="g-top"><span class="g-k"><i data-lucide="${nx ? "map" : "circle-check"}"></i>${esc(nx ? t("guide.step", { n: list.indexOf(nx) + 1, total: list.length }) : t("guide.complete"))}</span>
-    <span class="g-dots" role="img" aria-label="${esc(t("guide.progress", { n, total: list.length }))}">${dots}</span>
-    <button class="g-x" id="g-min" type="button" aria-expanded="${!min}" aria-label="${esc(t(min ? "guide.show" : "guide.hide"))}"><i data-lucide="${min ? "chevron-down" : "chevron-up"}"></i></button></div>`;
-  const ok = okMsg && nx ? `<div class="g-ok" role="status"><i data-lucide="circle-check"></i>${esc(okMsg)}</div>` : "";
+  // one compact line: step count, what to do (details in the tooltip), "Show me", close
+  const ok = okMsg && !nx ? `<div class="g-ok" role="status"><i data-lucide="circle-check"></i>${esc(okMsg)}</div>` : "";
   const body = nx
-    ? `${ok}<div class="g-row"><div class="g-t">${esc(t("guide.t." + nx.id))}<small>${esc(t("guide.d." + nx.id))}</small>
-        <span class="g-acts"><button class="g-where" id="g-where" type="button">${esc(t("guide.where"))}</button><button class="g-skip" id="g-skip" type="button">${esc(t("guide.skip"))}</button></span></div>
-        <button class="btn g-go" id="g-go" type="button">${esc(t("guide.go"))}</button></div>`
-    : `${reroute ? summary() : okMsg ? `<div class="g-ok" role="status"><i data-lucide="circle-check"></i>${esc(okMsg)}</div>` : ""}<div class="g-row"><div class="g-t"><span class="g-acts"><button class="g-again" id="g-again" type="button">${esc(t("guide.again"))}</button><button class="g-skip" id="g-skip" type="button">${esc(t("guide.close"))}</button></span></div>
-        ${reroute && (reroute.before !== reroute.after || reroute.from.join() !== reroute.to.join()) ? `<button class="btn g-go" id="g-see" type="button">${esc(t("guide.see"))}</button>` : ""}</div>`;
-  g.innerHTML = top + `<div class="g-body">${body}</div>`;
-  $("g-min").addEventListener("click", () => { min = !min; store.set("guideMin", min); if (min) spotOff(); render(); });
+    ? `<div class="g-line"><span class="g-n" aria-label="${esc(t("guide.progress", { n, total: list.length }))}">${esc(t("guide.stepShort", { n: list.indexOf(nx) + 1, total: list.length }))}</span>
+        <span class="g-t" title="${esc(t("guide.d." + nx.id))}">${esc(t("guide.t." + nx.id))}</span>
+        <button class="btn g-go" id="g-go" type="button">${esc(t("guide.go"))}</button>
+        <button class="g-x" id="g-skip" type="button" aria-label="${esc(t("guide.skip"))}" title="${esc(t("guide.skip"))}"><i data-lucide="x"></i></button></div>`
+    : `${reroute ? summary() : ok}<div class="g-line"><span class="g-n g-done"><i data-lucide="circle-check"></i>${esc(t("guide.complete"))}</span><span class="g-t"></span>
+        ${reroute && (reroute.before !== reroute.after || reroute.from.join() !== reroute.to.join()) ? `<button class="btn g-go" id="g-see" type="button">${esc(t("guide.see"))}</button>` : `<button class="g-again" id="g-again" type="button">${esc(t("guide.again"))}</button>`}
+        <button class="g-x" id="g-skip" type="button" aria-label="${esc(t("guide.close"))}" title="${esc(t("guide.close"))}"><i data-lucide="x"></i></button></div>`;
+  g.innerHTML = body;
   $("g-skip")?.addEventListener("click", finish);
-  $("g-where")?.addEventListener("click", () => showStep(nx));
   $("g-go")?.addEventListener("click", () => {
     showStep(nx); // point at the control first, then do the step
-    setTimeout(() => { spotOff(); nx.act(); }, reduce || min ? 150 : 750);
+    setTimeout(() => { spotOff(); nx.act(); }, reduce ? 150 : 750);
   });
   $("g-see")?.addEventListener("click", () => { spotOff(); if (UI.view === "admin") actions.setView("user"); UI.tab = "path"; actions.renderPanel(); hint(panel(".steps")); });
   $("g-again")?.addEventListener("click", start);

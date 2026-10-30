@@ -39,5 +39,45 @@ export async function seedHr(t: Db) {
     for (const [skill, level] of Object.entries(m.skills))
       await t.query("insert into profile_skills(profile_id, skill_id, level, confidence, evidence) values ($1,$2,$3,'self','Synthetic sample team member')",
         [p.rows[0].id, skill, level]);
+    const share = SHARING[m.name];
+    if (share) await seedProgress(t, p.rows[0].id, m.skills, share);
   }
+}
+
+// Goal progress for the HR "Team progress" table: three of the six sample members chose to share it (the other three
+// are only counted). Synthetic, like the team. Dates are relative to the day the database is seeded. A tick is stored the
+// way the API stores one (server/services/goal.ts setStepDone): the skill is raised to the level the job needs and the
+// goal_steps row remembers what it changed, so unticking in the app undoes it. A step's hours are its catalogue course's
+// hours when that course is at least 6 h (the plan's rule), else left empty.
+type Tick = { skill: string; level: number; daysAgo: number; proof?: { kind: "check" | "advisor"; by: string } };
+const SHARING: Record<string, { job: string; setDaysAgo: number; ticks: Tick[]; checkIns: { weeksAgo: number; hours: number }[] }> = {
+  "Team member A (sample)": { job: "stayRole", setDaysAgo: 24,   // on track
+    ticks: [{ skill: "dispute", level: 3, daysAgo: 6, proof: { kind: "check", by: "HalaTuju skill check" } }],
+    checkIns: [{ weeksAgo: 3, hours: 6 }, { weeksAgo: 2, hours: 5 }, { weeksAgo: 1, hours: 7 }, { weeksAgo: 0, hours: 4 }] },
+  "Team member B (sample)": { job: "faRole", setDaysAgo: 35,     // behind
+    ticks: [{ skill: "fin", level: 3, daysAgo: 10, proof: { kind: "advisor", by: "Puan Aminah (sample advisor)" } }, { skill: "viz", level: 3, daysAgo: 4 }],
+    checkIns: [{ weeksAgo: 5, hours: 8 }, { weeksAgo: 3, hours: 4 }, { weeksAgo: 1, hours: 2 }] },
+  "Team member E (sample)": { job: "esgRole", setDaysAgo: 13,    // ahead
+    ticks: [],
+    checkIns: [{ weeksAgo: 2, hours: 12 }, { weeksAgo: 1, hours: 14 }, { weeksAgo: 0, hours: 6 }] },
+};
+
+async function seedProgress(t: Db, id: number, skills: Record<string, number>, s: (typeof SHARING)[string]) {
+  await t.query("update profiles set share_progress=true where id=$1", [id]);
+  await t.query("insert into goals(profile_id, job, mode, set_at) values ($1,$2,'closest', current_date - $3::int)", [id, s.job, s.setDaysAgo]);
+  for (const k of s.ticks) {
+    const before = skills[k.skill] ?? null, verified = !!k.proof;
+    await t.query(`insert into profile_skills(profile_id, skill_id, level, confidence, evidence) values ($1,$2,$3,$4,'Synthetic sample team member')
+                   on conflict (profile_id, skill_id) do update set level=excluded.level, confidence=excluded.confidence`,
+      [id, k.skill, k.level, verified ? "verified" : "self"]);
+    const h = (await t.query<{ hours: number | null }>("select max(hours) as hours from courses where skill_id=$1", [k.skill])).rows[0]?.hours ?? null;
+    await t.query(`insert into goal_steps(profile_id, skill_id, done, done_at, hours, raised_skill, level_before, level_set)
+                   values ($1,$2,true, now() - make_interval(days => $3::int), $4, $2, $5, $6)`,
+      [id, k.skill, k.daysAgo, h != null && h >= 6 ? h : null, before, k.level]);
+    if (k.proof) await t.query("insert into skill_proofs(profile_id, skill_id, kind, vouched_by, at) values ($1,$2,$3,$4, now() - make_interval(days => $5::int))",
+      [id, k.skill, k.proof.kind, k.proof.by, k.daysAgo]);
+  }
+  for (const c of s.checkIns)
+    await t.query("insert into goal_checkins(profile_id, week_start, hours) values ($1, date_trunc('week', current_date - $2::int * 7)::date, $3)",
+      [id, c.weeksAgo, c.hours]);
 }

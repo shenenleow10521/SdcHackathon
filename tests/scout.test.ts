@@ -44,22 +44,28 @@ describe("scout run (mocked sources + AI)", () => {
     expect(out.counts).toMatchObject({ fetched: 4, candidates: 4, auto: 1, flagged: 1, rejected: 1, duplicates: 0 });
 
     const auto = out.signals.find(s => s.nodeId === "viz")!;
-    expect(auto).toMatchObject({ status: "applied", triage: "auto", nSources: 2, deltaE: 0.02, deltaD: 0, decidedBy: "auto (rules)", nodeName: "Dashboard reporting", isSample: false });
+    expect(auto).toMatchObject({ status: "applied", triage: "auto", nSources: 2, deltaE: 0.02, deltaD: 0, decidedBy: "auto (agent vote 3 of 3)", approvedBy: "agent vote (3 of 3)", voteTally: "3 of 3", nodeName: "Dashboard reporting", isSample: false });
     expect(auto.sources.map((s: any) => s.url).sort()).toEqual([B, A].sort());
-    expect(auto.reviewer).toEqual({ supports: true, confidence: 0.92, issue: null });
+    expect(auto.votes.error).toBeNull();
+    expect(auto.votes.votes.map((v: any) => [v.role, v.vote, v.model])).toEqual([["evidence", "include", "mock-reviewer"], ["skill", "include", "mock-main"], ["sceptic", "include", "mock-reviewer"]]);
+    expect(auto.triageReasons[0]).toBe("Approved by agent vote (3 of 3)");
     expect(auto.kbVersion).toBe(v0 + 1);
     expect((await loadGraph(svc.db)).deltas.e.viz).toBe(0.02);
 
     const flagged = out.signals.find(s => s.nodeId === "recon" && s.triage === "flagged")!;
     expect(flagged.status).toBe("pending");
     expect(flagged.deltaE).toBe(0.1);                       // "large" -> 0.10 by code
-    expect(flagged.triageReasons).toEqual(expect.arrayContaining(["Big change", "Single source"]));
+    expect(flagged.triageReasons[0]).toBe("Split vote (1 of 3 include): a person decides");
+    expect(flagged.triageReasons).toHaveLength(4);       // the verdict plus the three reasons
+    expect(flagged.voteTally).toBe("1 of 3");
+    expect(flagged.approvedBy).toBeNull();
     expect(flagged.sourceUrl).toBe(C);
     expect(flagged.quote).toBe(QC);
 
     const rejected = out.signals.find(s => s.triage === "rejected")!;
     expect(rejected.triageReasons).toContain("Quote not found on the source page");
     expect(rejected.sourceUrl).toBe(D);
+    expect(rejected.votes).toBeNull();                   // the gate rejected it: nobody voted
 
     // Only the auto change made a new version; the flagged one waits for a person.
     expect(await latestVersion(svc.db)).toBe(v0 + 1);
@@ -69,14 +75,18 @@ describe("scout run (mocked sources + AI)", () => {
     expect(run.summary.items.every((i: any) => i.excerpt.length <= 300)).toBe(true);
     const auditRow = (await svc.db.query("select * from audit_log where action='signal.auto_apply'")).rows[0] as any;
     expect(auditRow.actor).toBe("auto");
+    expect(auditRow.detail).toMatchObject({ approvedBy: "agent vote (3 of 3)" });
   });
 
   it("stays within the AI call caps", async () => {
     const svc = await testServices({ fetch: scoutNet(), llmHandler: scoutLlm });
     await runScout(svc, { sources: ["rss"], nodes: ["viz", "recon"] });
     const calls = (svc.llm as any).calls as LlmRequest<any>[];
-    expect(calls.filter(c => c.role !== "reviewer").length).toBe(4);
-    expect(calls.filter(c => c.role === "reviewer").length).toBe(2);
+    const voters = calls.filter(c => /three-person panel/.test(c.system));
+    expect(calls.length - voters.length).toBe(4);       // extraction: one per page
+    expect(voters.length).toBe(6);                      // 3 voters for each of the 2 signals that passed the gate (the made-up quote gets none)
+    expect(voters.filter(c => c.role === "reviewer").length).toBe(4);   // roles are spread over both models
+    expect(voters.filter(c => c.role === "main").length).toBe(2);
   });
 
   it("a second run finds the same items and counts them as duplicates (nothing re-applied)", async () => {
@@ -97,6 +107,21 @@ describe("scout run (mocked sources + AI)", () => {
     const out = await runScout(svc, { sources: ["rss"], nodes: ["viz"] });
     expect(out.counts.duplicates).toBe(1);
     expect(out.signals.some(s => s.nodeId === "viz" && s.triage !== "rejected")).toBe(false);
+  });
+
+  it("dedupes the same quote seen on another page (case and punctuation ignored) and the same URL with tracking params, even when embeddings disagree", async () => {
+    let n = 0; // every text gets its own orthogonal vector, so only the text/URL checks can match
+    const embed = { provider: "mock", model: "onehot", embed: async (xs: string[]) => xs.map(() => { const v = new Array(64).fill(0); v[n++ % 64] = 1; return v; }),
+      status: () => ({ provider: "mock", model: "onehot", configured: true, lastError: null }) } as any;
+    const svc = await testServices({ fetch: scoutNet(), llmHandler: scoutLlm, embed });
+    const sameQuote = "  " + QA.toUpperCase().replace(/,/g, "").replace(/\.$/, "!") + " ";
+    await svc.db.query(`insert into signals(node_id, kind, title, delta_e, quote, source_url, triage, status, created_at)
+      values ('viz','capability','another page',0.02,$1,'https://apnews.com/other','flagged','pending',$2)`, [sameQuote, "2026-10-15T00:00:00Z"]);
+    await svc.db.query(`insert into signals(node_id, kind, title, delta_e, quote, source_url, triage, status, created_at)
+      values ('recon','capability','same page',0.02,'a different quote entirely about ledgers',$1,'flagged','pending',$2)`, [C.replace("https://", "https://www.").replace(/\/$/, "") + "?utm_source=x", "2026-10-15T00:00:00Z"]);
+    const out = await runScout(svc, { sources: ["rss"], nodes: ["viz", "recon"] });
+    const dups = ((await svc.db.query("select summary from runs where id=$1", [out.runId])).rows[0] as any).summary.duplicates;
+    expect(dups.map((d: any) => d.nodeId).sort()).toEqual(["recon", "viz"]);
   });
 
   it("records a failed run when every source fails (no demo mode)", async () => {

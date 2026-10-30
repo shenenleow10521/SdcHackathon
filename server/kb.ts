@@ -151,5 +151,5 @@ export async function createVersion(db: Db, note: string, actor: string, changes
 
 /** The plain engine graph (what shared/engine.js needs), from a full graph. */
 export function engineGraph(g: FullGraph) {
-  return { kbVersion: g.kbVersion, nodes: g.nodes, edges: g.edges, req: g.req, sectors: g.sectors, deltas: g.deltas };
+  return { kbVersion: g.kbVersion, nodes: g.nodes, edges: g.edges, req: g.req, sectors: g.sectors, deltas: g.deltas, courses: g.courses };
 }

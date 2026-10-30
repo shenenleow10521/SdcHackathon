@@ -6,6 +6,7 @@ import { t } from "../i18n.js";
 import { $, esc, icons, badge, errorBox, loadingBox, fmtDate, rm, toast, bindRetry, ago, extLink } from "../util.js";
 import { routeNodes, statusBadge } from "./plans.js";
 import { forgetEmployers } from "../drawer.js";
+import { loadTeamProgress } from "./team-progress.js";
 
 let current = null, lastFocus = null;
 
@@ -198,7 +199,8 @@ async function loadHr() {
   catch (e) { if (!still("hr")) return; body().innerHTML = failBox(e, "hr", "hr"); bindRetry(body(), { hr: loadHr }); icons(); return; }
   if (!still("hr")) return;
   if (!emps.length) { body().innerHTML = `<div class="empty">${esc(t("hr.noEmployers"))}</div>`; return; }
-  if (!hrEmployer || !emps.some(e => e.id === hrEmployer)) hrEmployer = (emps.find(e => e.source === "sample") || emps[0]).id;
+  // open on the first employer that has a team (the sample shared services centre), not an empty one
+  if (!hrEmployer || !emps.some(e => e.id === hrEmployer)) hrEmployer = (emps.find(e => e.hasTeam) || emps.find(e => e.source === "sample") || emps[0]).id;
   body().innerHTML = `<div class="hr-pick"><label for="hr-emp">${esc(t("hr.employer"))}</label><select id="hr-emp" class="select">${emps.map(e => `<option value="${esc(e.id)}" ${e.id === hrEmployer ? "selected" : ""}>${esc(e.name)}</option>`).join("")}</select>
     <span class="rs">${esc(t("hr.scenario", { year: S.year, scenario: t("scn." + S.scenario) }))}</span></div><div id="hr-out">${loadingBox(t("hr.loading"))}</div>`;
   body().querySelector("#hr-emp").addEventListener("change", e => { hrEmployer = Number(e.target.value); loadTeam(); });
@@ -218,6 +220,7 @@ async function loadTeam() {
   o.innerHTML = `${r.employer?.isSample || r.note ? `<p class="src">${esc(r.note || t("hr.sampleNote"))}</p>` : ""}
     <div class="hr-sum"><p class="esco-big tn">${esc(t("hr.placedOf", { n: tot.assigned ?? asg.length, total: tot.people ?? team.length }))}</p>
       <dl class="sheet-kv tn"><dt>${esc(t("hr.openingsTotal"))}</dt><dd>${esc(tot.openings ?? "–")}</dd><dt>${esc(t("hr.onTime"))}</dt><dd>${esc(tot.onTime ?? "–")}</dd><dt>${esc(t("hr.cost"))}</dt><dd>${rm(tot.costRm)}</dd><dt>${esc(t("hr.hrdLabel"))}</dt><dd>${rm(tot.hrdClaimableRm)}</dd></dl></div>
+    <div class="sec" id="hr-progress"></div>
     <div class="sec"><h3>${esc(t("hr.roles"))}</h3>${roles.length ? `<ul class="alt-list esco-rows">${roles.map(x => `<li><span class="esco-row-main"><span>${esc(x.title || nameOf(x.job))}</span><small class="rs">${esc(t("hr.by", { date: fmtDate(x.deadline) }))}</small></span><span class="esco-row-end tn">${esc(t("hr.openingsN", { n: x.openings }))}${x.openingsLeft ? `<small class="rs">${esc(t("hr.left", { n: x.openingsLeft }))}</small>` : ""}</span></li>`).join("")}</ul>` : `<p class="note">${esc(t("hr.noRoles"))}</p>`}</div>
     <div class="sec"><h3>${esc(t("hr.team"))}</h3>
     ${team.length ? `<div class="tbl-wrap"><table class="tbl hr-tbl"><thead><tr><th>${esc(t("hr.col.person"))}</th><th>${esc(t("hr.col.move"))}</th><th>${esc(t("hr.col.match"))}</th><th>${esc(t("hr.col.weeks"))}</th><th>${esc(t("hr.col.cost"))}</th><th>${esc(t("hr.col.ontime"))}</th></tr></thead><tbody>
@@ -226,11 +229,12 @@ async function loadTeam() {
           <td>${best ? esc(nameOf(best.job)) : "–"}${a ? "" : best ? `<div class="rs">${esc(t("hr.notAssigned"))}</div>` : ""}</td>
           <td class="r tn">${best ? esc(best.match) + "%" : "–"}</td><td class="r tn">${best?.weeks ?? "–"}</td><td class="r tn">${best ? rm(best.costRm) : "–"}</td>
           <td class="r">${best ? ((a ? true : best.onTime) ? esc(t("hr.yes")) : `<span class="hr-late">${esc(t("hr.no"))}</span>`) : "–"}${best?.readyBy ? `<div class="rs">${esc(fmtDate(best.readyBy))}</div>` : ""}</td></tr>
-          ${(m.options || []).length > 1 ? `<tr class="opt-row"><td colspan="6"><details><summary>${esc(t("hr.allOptions", { n: m.options.length }))}</summary><table class="tbl hr-opts"><tbody>${m.options.map(op => `<tr><td>${esc(op.title || nameOf(op.job))}</td><td class="r tn">${esc(op.match)}%</td><td class="r tn">${esc(op.weeks ?? "–")} ${esc(t("common.wk"))}</td><td class="r tn">${rm(op.costRm)}</td><td class="r">${op.onTime ? esc(t("hr.onTimeShort")) : `<span class="hr-late">${esc(t("hr.late"))}</span>`}</td></tr>`).join("")}</tbody></table></details></td></tr>` : ""}`;
+          ${(m.options || []).length > 1 ? `<tr class="opt-row"><td colspan="6"><details><summary>${esc(t("hr.allOptions", { n: m.options.length }))}</summary><table class="tbl hr-opts"><tbody>${m.options.map(op => `<tr><td>${esc(op.title || nameOf(op.job))}</td><td class="r tn">${esc(op.match)}%</td><td class="r tn">${op.weeks != null ? esc(t("common.weeksN", { w: op.weeks })) : "–"}</td><td class="r tn">${rm(op.costRm)}</td><td class="r">${op.onTime ? esc(t("hr.onTimeShort")) : `<span class="hr-late">${esc(t("hr.late"))}</span>`}</td></tr>`).join("")}</tbody></table></details></td></tr>` : ""}`;
       }).join("")}</tbody></table></div>` : `<div class="empty">${esc(t("hr.noTeam"))}</div>`}</div>
     ${(r.unassigned || []).length ? `<div class="sec"><h3>${esc(t("hr.unassigned"))}</h3><ul class="handled">${r.unassigned.map(u => `<li><i data-lucide="minus"></i><div><b>${esc(u.name)}</b>${esc(u.reason)}</div></li>`).join("")}</ul></div>` : ""}
     ${r.rule ? `<p class="src">${esc(r.rule)}</p>` : ""}`;
   icons();
+  loadTeamProgress($("hr-progress"), hrEmployer);
 }
 
 // ---------- employer requirements form ----------

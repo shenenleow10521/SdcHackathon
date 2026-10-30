@@ -2,7 +2,8 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { readFileSync } from "node:fs";
 import { gunzipSync } from "node:zlib";
-import { loadEsco, escoStats, searchOccupations, searchSkills, occupationDetail, RELATED_COSINE } from "../server/services/esco.ts";
+import { loadEsco, escoStats, searchOccupations, searchSkills, occupationDetail, escoCoverage, RELATED_COSINE, MATCH } from "../server/services/esco.ts";
+import { setSkillNetwork } from "../server/services/skill-network.ts";
 import { PARAMS } from "../shared/engine.js";
 import { knowledge } from "./helpers/seed-graph.ts";
 import { testServices } from "./helpers/services.ts";
@@ -65,7 +66,7 @@ describe("search", () => {
 });
 
 describe("check any job", () => {
-  it("counts a profile skill mapped to an essential ESCO skill as 'have', and computes match over essential skills only", () => {
+  it("counts a profile skill mapped to an essential ESCO skill as 'have'; match = weighted share of essential skills (knowledge counts half)", () => {
     const d = loadEsco()!;
     const cat = Object.keys(map.skills).find(c => map.skills[c].uri && Object.values<any>(d.occupations).some(o => o.essential.includes(escoId(c))))!;
     const occId = Object.keys(d.occupations).find(id => d.occupations[id].essential.includes(escoId(cat)))!;
@@ -74,7 +75,8 @@ describe("check any job", () => {
     expect(without.essential.find(s => s.id === escoId(cat))!.basis).toBe("missing");
     const s = withIt.essential.find(s => s.id === escoId(cat))!;
     expect(s).toMatchObject({ basis: "have", via: cat, coverage: 1 });
-    const expected = Math.round(100 * withIt.essential.reduce((a, x) => a + x.coverage, 0) / withIt.essential.length);
+    const w = (x: { type: string }) => (x.type === "knowledge" ? MATCH.knowledgeWeight : 1);
+    const expected = Math.round(100 * withIt.essential.reduce((a, x) => a + w(x) * x.coverage, 0) / withIt.essential.reduce((a, x) => a + w(x), 0));
     expect(withIt.match).toBe(expected);
     expect(withIt.match).toBeGreaterThan(without.match);
   });
@@ -85,6 +87,22 @@ describe("check any job", () => {
     const occId = Object.keys(d.occupations).find(id => d.occupations[id].essential.includes(sid))!;
     const s = occupationDetail(occId, { [d.scores[sid][1]]: 2 })!.essential.find(x => x.id === sid)!;
     expect(s).toMatchObject({ basis: "related", coverage: PARAMS.bridgeCoverage });
+  });
+
+  it("gives part credit for a skill linked to one you have in the skill network: the link's strength, capped at relatedMax", () => {
+    const d = loadEsco()!;
+    const ids = Object.keys(d.skills).filter(id => d.skills[id].type !== "knowledge" && !(d.catalogueByEsco.get(id) || []).length);
+    const [a, b, c] = ids;
+    try {
+      // a -> b strong (0.9), a -> c weak (below relatedMin)
+      setSkillNetwork({ meta: null, byId: new Map([[a, [[b, 0.9], [c, MATCH.relatedMin - 0.05]]]]) } as any);
+      const cov = escoCoverage({}, new Set([a]));
+      expect(cov(a)).toMatchObject({ basis: "have", coverage: 1 });
+      expect(cov(b)).toMatchObject({ basis: "related", coverage: MATCH.relatedMax, via: a });
+      expect(cov(c)).toMatchObject({ basis: "missing", coverage: 0 });
+      // links count from either side
+      expect(escoCoverage({}, new Set([b]))(a)).toMatchObject({ basis: "related", coverage: MATCH.relatedMax, via: b });
+    } finally { setSkillNetwork(null); }
   });
 
   it("returns null for an unknown occupation", () => { expect(occupationDetail("00000000-0000-0000-0000-000000000000")).toBeNull(); });

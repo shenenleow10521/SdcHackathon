@@ -66,8 +66,9 @@ Port the `LOGIC` section of `prototype/halatuju-app.html` into `scoring.ts`, unc
 | `taken(id)` | AI has taken the skill over: exposure ≥ 0.85 − 0.2 × tide, and demand < 0. The skill becomes a closed road |
 | `impact(id)` | Declining / Changing / Durable / Rising human skill |
 | `match(job)` | Σ(weight × coverage) ÷ Σ weight. Coverage = level ÷ needed (max 1); a skill you lack but can bridge to = 0.4; unconfirmed emerging skills count at half weight |
-| `shortestPath(job, mode)` | Dijkstra over skill edges; modes `fastest`, `noregret`, `safest` (cost formulas in §7) |
-| `planFor(job, mode)` | Route + upskill steps + remaining gaps → core weeks and job-ready weeks |
+| `shortestPath(job, mode)` | Dijkstra over skill edges, ordered by relatedness; modes `closest` (Easiest start, default) and `safest`; old names `fastest`/`noregret` map to them (cost formulas in §7) |
+| `planFor(job, mode)` | Route (key skills) + every missing skill with its hours → weeks to job-ready |
+| `saferAlternative(job)` | The safest route when it differs from the default: what it avoids and why, what it adds, the time difference |
 | `rankScore(job)` | 0.6 × match + 0.4 × outlook (for "Best matches") |
 | `futureScore()` | Share of the user's skills that are safe in the selected year/scenario |
 | `stressTest(graph, profile, job, mode)` | Monte Carlo: replays the plan in 1,000 seeded random futures (AI speed, exposure error, study hours, step lengths; ranges in `MONTE_CARLO`) and returns the share where the route stays open, you are ready by the deadline and the job is still in demand, plus failure patterns and sturdier alternatives |
@@ -82,7 +83,7 @@ Pure functions, no I/O. **Unit-test these first** (`tests/engine.test.ts`), usin
 | **Interviewer** | After upload | LLM + profile gaps | ≤ 3 questions, each `{ id, text, options[] }`; answers become level/hour updates | Questions come only from low-confidence skills |
 | **Explainer** | Plan/drawer requests | LLM | Short "why" text that cites record IDs | Fact checker removes any sentence citing an unknown ID |
 | **Market scout** (shown in the app as "Job market researcher") | `POST /api/scout/run` (on demand; daily job later) | arXiv, OpenAlex, RSS → LLM extraction → embeddings for dedupe | Signal candidates (see §5) | Exact quote required; source URL required |
-| **AI reviewer** | Each signal candidate | A second LLM call with a *different system prompt* (ideally a different model) | `{ supports: bool, confidence: 0–1, issue? }` | Checks the claim against the quote only |
+| **Three voters** (`agents/voters.ts`) | Each signal that passed the fixed gate | Three LLM calls with three different jobs (evidence checker, skill matcher, sceptic), spread over both Gemini models | `{ vote: include\|exclude, confidence: 0–1, reason }` each, stored with the model that answered | See the claim (written by code), the quote and the page text around it, as data; their votes are inputs to the triage rule |
 | **Emerging-skill committee** | Weekly / on demand | Proposer → skeptic → duplicate check (LLM + embeddings) | `emerging_candidates` rows | Evidence thresholds (§5.3); provisional until a person confirms |
 
 **LLM wrapper** (`server/lib/llm.ts`): one function `complete({ system, user, schema, temperature: 0 })`, using the Replit AI Integrations client. Replit sets the credentials as environment variables when you enable the integration; check the exact names in the Replit Integrations pane. Swapping the model means changing one line. Cache responses in the DB keyed by a hash of the prompt, which gives demo reliability and lower cost.
@@ -90,17 +91,24 @@ Pure functions, no I/O. **Unit-test these first** (`tests/engine.test.ts`), usin
 **Embedding wrapper** (`server/lib/embed.ts`): `embed(texts: string[]) → number[][]`, calling the RunPod endpoint (`RUNPOD_API_KEY`, `RUNPOD_EMBED_ENDPOINT_ID`). Check the worker README for the exact request format; it documents an OpenAI-compatible route. Skill embeddings are **precomputed once** (`scripts/embed-skills.ts`) and stored with each skill. Cosine similarity runs in Node, which is fine for a few thousand skills.
 
 ### 3.3 Triage (`server/triage.ts`)
-Deterministic rules. No LLM decides whether a change is applied.
+A fixed gate, then a vote of three agents. People stay in control: a split vote always goes to a person, and everyone whose saved plan would change is asked "keep my route or switch".
 
 ```
-REJECT  if no source URL | source not on trust list | quote not found in fetched text
-        | duplicate (cosine ≥ 0.90 with an existing signal in the last 30 days) | source older than 180 days
-AUTO    if n_independent_sources ≥ 2 AND reviewer.supports AND reviewer.confidence ≥ 0.8
-        AND |Δexposure| ≤ 0.05 AND |Δdemand| ≤ 5
-        AND applying it changes no user's route or skill zone
-FLAG    otherwise (big change, single source, reviewer unsure/disagrees, reroutes users, or a new skill)
+GATE    (not a vote; failing it means REJECT, with no vote)
+        source URL on the trust list | quote found word for word in the fetched page
+        | not a duplicate of a signal from the last 30 days | source not older than 180 days
+VOTE    evidence checker, skill matcher and sceptic each say include or exclude
+        3 of 3 or 2 of 3 include -> AUTO    applied now, labelled "approved by agent vote (2 of 3)", undoable
+        1 of 3 include           -> FLAG    a person decides; the three reasons are attached
+        0 of 3 include           -> REJECT  logged with the three reasons
+FLAG    also when the vote could not happen (no key, quota, timeout): nothing is applied without votes
+        and when the source has no date
 ```
-Spot check: mark 5% of AUTO items `needs_spotcheck = true` for the weekly human sample.
+There is no limit on the size of a vote-approved change. Applying it works exactly like a human approval: new `kb_version`, re-score every profile, and saved plans whose best route changes get a "keep or switch" offer. Undo is the same as for any version.
+
+Independent sources are counted by organisation (`domainKey`); a near-identical quote on another site counts as the same source. The count is shown to the sceptic and the review screen, but it is not part of the rule.
+
+Spot check: 5% of AUTO items (by hash) are marked `needs_spotcheck = true` for a person to look at. The votes are stored per signal (`signals.votes`, migration 72) and returned by the review API as `votes`, `voteTally` and `approvedBy`. `scripts/eval-votes.ts` replays the vote on signals a person already decided and writes `eval/VOTES.md`.
 
 ### 3.4 Web UI (`web/`)
 Start from `prototype/halatuju-app.html`. Split it into `index.html`, `app.js` and `api.js`, and replace the hard-coded `NODES/EDGES/REQ/...` with `GET /api/graph`. The engine can run **both** server-side (authoritative) and in the browser (instant slider feedback), because it's the same file.
@@ -133,7 +141,8 @@ courses(skill_id text, title text, provider text, url text, hours int, cost text
 -- Signals and review
 signals(id serial pk, node_id text, kind text,            -- 'capability' | 'adoption' | 'demand'
         delta_exposure real, delta_demand real, quote text, source_url text, source_title text,
-        source_date date, n_sources int, reviewer_supports bool, reviewer_confidence real,
+        source_date date, n_sources int, reviewer_supports bool, reviewer_confidence real,   -- reviewer_*: old signals only
+        votes jsonb,                                      -- {votes:[{role,vote,confidence,reason,model}], error}
         triage text,                                      -- 'auto' | 'flagged' | 'rejected'
         triage_reasons text[], status text,               -- 'applied' | 'pending' | 'rejected'
         decided_by text, decided_at timestamptz, needs_spotcheck bool, kb_version int)
@@ -170,7 +179,7 @@ llm_cache(key text pk, response jsonb, created_at timestamptz)
 1. For each tracked task, build 1–2 queries, then query arXiv, OpenAlex and RSS (last 30 days).
 2. LLM extracts `{ node_id, kind, direction, magnitude, quote, source_url, source_date }` (the quote must be copied word-for-word).
 3. Verify the quote appears in the fetched text; dedupe with embeddings; count independent sources.
-4. AI reviewer call, then the triage rules (§3.3).
+4. The fixed gate, then the three-agent vote, then the triage rule (§3.3).
 5. AUTO items go into a new `kb_version`. FLAG items go to the review queue (`GET /api/review`).
 6. On approval: apply the item, create a new `kb_version`, re-score every profile, and write `profile_snapshots`. The UI shows "Route update available: keep / switch".
 
@@ -208,13 +217,15 @@ llm_cache(key text pk, response jsonb, created_at timestamptz)
 | Interpolation | linear 2026 → 2030; `fast` uses the 2030-fast endpoint |
 | Tide | `clamp((year − 2026)/4) × (fast ? 1 : 0.6)` |
 | Taken over | `exposure ≥ 0.85 − 0.2 × tide AND demand < 0` |
-| Edge cost: fastest | `weeks + 0.01 + 30 × max(0, e − 0.5)²` |
-| Edge cost: safest | `0.3 × weeks + 0.01 + 10 × e²` |
-| Edge cost: Balanced | `weeks + 0.01 + 6 × e_fast2030²` |
+| Edge relatedness | ESCO network value, or for a hand-made edge `4 / (4 + weeks)`; a skill you have = 1 |
+| Edge cost: closest | `0.1 + (1 − relatedness) + 5 × max(0, e − 0.5)²` |
+| Edge cost: safest | `0.1 + (1 − relatedness) + 6 × max(0, e − 0.35)²` |
+| Hours per missing skill | real course ≥ 6 h: its hours; else `12 + 36 × (1 − rel)` (estimated); level-up: 6 h per level. ESCO jobs: see docs/API.md "The plan" |
+| Key steps (ESCO jobs) | 3-5 numbered steps from the job's missing practical skills, by `ESCO_PLAN.weights`: closest = 0.4 core + 0.3 reachability + 0.15 distinctiveness (idf) + 0.15 (1 − AI exposure); safest = 0.3 / 0.2 / 0.1 / 0.4. Core = share of the job's 8 closest sibling jobs that also list the skill as essential. Attitude and transversal skills (ESCO reuse level 1 plus a checked title list, `server/services/esco-attitude.ts`, 126 skills) are never key steps; they stay in the gaps, the time and "Also needed" |
 | Match coverage | owned: `min(1, level/needed)`, taken: 0.3; missing but bridged: 0.4; else 0 |
 | Emerging weight | × 0.5 until confirmed |
 | Rank | `0.6 × match + 0.4 × clamp(50 + demand − 40 × exposure)` |
-| Weeks shown | `round(weeks × 6 / hours_per_week)` |
+| Weeks shown | `round(total hours of all missing skills / hours_per_week)` (one figure) |
 | Triage thresholds | §3.3 |
 
 Changing any value means changing it here **and** in `engine/params.ts`.
@@ -233,7 +244,7 @@ halatuju/
 │  ├─ index.ts          # Express app: static web/, /api routes
 │  ├─ routes/           # graph.ts profile.ts plan.ts scout.ts review.ts health.ts
 │  ├─ engine/           # scoring.ts params.ts graph.ts (load snapshot from DB)
-│  ├─ agents/           # cv.ts interviewer.ts explainer.ts scout.ts reviewer.ts committee.ts
+│  ├─ agents/           # cv.ts interviewer.ts explainer.ts scout.ts reviewer.ts voters.ts committee.ts
 │  ├─ lib/              # llm.ts embed.ts pdf.ts pii.ts db.ts cache.ts
 │  ├─ sources/          # arxiv.ts openalex.ts rss.ts (+ trust list)
 │  └─ triage.ts

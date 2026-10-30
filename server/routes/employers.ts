@@ -64,7 +64,9 @@ export default function employersRoutes(svc: Services) {
     const rows = (await svc.db.query("select * from employers order by id")).rows as any[];
     const jobs = (await svc.db.query(`select employer_id, occupation_id from employer_requirements
                                       union select employer_id, occupation_id from open_roles order by 1, 2`)).rows as any[];
-    res.json({ employers: rows.map(e => employerJson(e, jobs.filter(j => j.employer_id === e.id).map(j => j.occupation_id))) });
+    // hasTeam: someone's profile is linked to this employer (the HR sheet opens on the first such employer)
+    const teams = new Set((await svc.db.query<{ employer_id: number }>("select distinct employer_id from profiles where employer_id is not null")).rows.map(r => r.employer_id));
+    res.json({ employers: rows.map(e => ({ ...employerJson(e, jobs.filter(j => j.employer_id === e.id).map(j => j.occupation_id)), hasTeam: teams.has(e.id) })) });
   });
 
   r.get("/employers/:id", async (req, res) => {

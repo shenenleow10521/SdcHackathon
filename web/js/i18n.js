@@ -42,7 +42,8 @@ export const onLangChange = fn => listeners.add(fn);
 /** Plain-text translation with {var} substitution. Callers escape it before putting it in HTML when vars hold data. */
 export function t(key, vars) {
   let s = dict[key] ?? en[key] ?? key;
-  if (vars) s = s.replace(/\{(\w+)\}/g, (m, k) => (vars[k] !== undefined && vars[k] !== null ? String(vars[k]) : m));
+  if (vars) s = s.replace(/\{(\w+)\}/g, (m, k) => (vars[k] !== undefined && vars[k] !== null ? String(vars[k]) : m))
+    .replace(/(^|[^\d.,])1 (week|hour)s\b/g, "$11 $2"); // English: "1 week", not "1 weeks"
   return s;
 }
 

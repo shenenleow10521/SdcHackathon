@@ -1,14 +1,16 @@
-// Cinematic layer for the 3D map: glowing planets, bloom, deep-space backdrop (sky, twinkling stars, nebulae, glowing orbits).
+// Cinematic layer for the 3D map: lit planets, a dark sky, faint orbit guides, and glow only where it means something:
+// a still halo on "You", the destination and the route's stops, and bloom that only they and the route line are bright
+// enough to catch. No flares, pulses or twinkling: every effect on the map carries meaning.
 // Ported from the HalaTuju.zip design (halatuju-app.html). Built only from the three.js classes that already live inside
 // 3d-force-graph (taken from its post-processing composer), so the page never loads a second copy of three.js.
 // Every effect is optional: if any step fails, the plain constellation keeps working exactly as before.
-import { S, UI, kindOf } from "./state.js";
+import { S, UI, N, kindOf, selJob, jobStrength } from "./state.js";
 import { $, reduce } from "./util.js";
 import { isGoal } from "./features/goal.js";
 
 let Graph = null, ctx = null;
 const FX = { on: false, K: null, scene: null, geo: null, U: { uTime: { value: 0 }, uEnc: { value: 1 } }, nodes: {}, objs: [], waves: [],
-  beam: null, sky: null, bg: null, bloom: null, bloomRan: false, intro: null, introPending: false, focus: null, focusId: null, now: 0, lastWave: 0, aspect: 1.6,
+  bg: null, bloom: null, bloomRan: false, intro: null, introPending: false, focus: null, focusId: null, now: 0, lastWave: 0, aspect: 1.6,
   speed: reduce ? 0 : 1 };
 export const isOn = () => FX.on;
 export const focusSet = () => (FX.on ? FX.focus : null);
@@ -27,45 +29,17 @@ void main(){ vec3 n = normalize(vN), v = normalize(vV); float ndv = clamp(dot(n,
   gl_FragColor = vec4(enc(c), uAlpha); }`,
   bbV: `attribute vec2 corner; uniform float uSize; varying vec2 vC;
 void main(){ vC = corner; vec4 mv = modelViewMatrix * vec4(0.0, 0.0, 0.0, 1.0); mv.xy += corner * uSize; gl_Position = projectionMatrix * mv; }`,
-  haloF: `uniform vec3 uColor; uniform float uAlpha; uniform float uTime; uniform float uPulse; uniform float uFlare; varying vec2 vC;
+  haloF: `uniform vec3 uColor; uniform float uAlpha; varying vec2 vC;
 void main(){ float d = length(vC); if (d > 1.0) discard;
   float g = exp(-d * d * 6.0) * 0.8 + exp(-d * d * 28.0) * 0.9;
-  float p = 1.0 + uPulse * 0.35 * sin(uTime * 3.0);
-  float ax = abs(vC.x), ay = abs(vC.y);
-  float spikes = (exp(-ay * 70.0) * exp(-ax * 3.2) + exp(-ax * 70.0) * exp(-ay * 3.2)) * (0.8 + 0.2 * sin(uTime * 1.7));
-  vec3 col = mix(uColor, vec3(1.0), clamp(spikes * uFlare, 0.0, 0.7));
-  gl_FragColor = vec4(enc(col), (g * (1.0 - smoothstep(0.7, 1.0, d)) * p + spikes * uFlare) * uAlpha); }`,
-  pulseF: `uniform vec3 uColor; uniform float uAlpha; uniform float uTime; varying vec2 vC;
-void main(){ float d = length(vC); float a = 0.0;
-  for (int i = 0; i < 2; i++) { float r = fract(uTime * 0.38 + float(i) * 0.5); a += (1.0 - smoothstep(0.0, 0.045, abs(d - r))) * (1.0 - r) * (1.0 - r); }
-  gl_FragColor = vec4(enc(uColor), a * uAlpha); }`,
+  gl_FragColor = vec4(enc(uColor), g * (1.0 - smoothstep(0.7, 1.0, d)) * uAlpha); }`,
   flatV: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
-  ringF: `uniform vec3 uColor; uniform float uAlpha; uniform float uTime; varying vec2 vUv;
-void main(){ float edge = smoothstep(0.0, 0.3, vUv.y) * (1.0 - smoothstep(0.55, 1.0, vUv.y));
-  float bands = 0.6 + 0.4 * sin(vUv.y * 22.0);
-  float sweep = 0.35 + 0.65 * pow(0.5 + 0.5 * sin((vUv.x - uTime * 0.07) * 6.2831853), 5.0);
-  gl_FragColor = vec4(enc(uColor), edge * bands * sweep * uAlpha); }`,
   orbitF: `uniform vec3 uColor; uniform float uAlpha; varying vec2 vUv;
 void main(){ float edge = 1.0 - abs(vUv.y * 2.0 - 1.0); gl_FragColor = vec4(enc(uColor), edge * uAlpha); }`,
-  beamV: `attribute vec2 corner; uniform float uH; uniform float uW; varying vec2 vC;
-void main(){ vC = corner; vec4 mv = modelViewMatrix * vec4(0.0, corner.y * uH, 0.0, 1.0); mv.x += corner.x * uW; gl_Position = projectionMatrix * mv; }`,
-  beamF: `uniform vec3 uColor; uniform float uAlpha; uniform float uTime; varying vec2 vC;
-void main(){ float x = vC.x, y = vC.y; float core = exp(-x * x * 22.0); float soft = exp(-x * x * 3.0) * 0.4;
-  float fade = pow(1.0 - y, 1.7) * smoothstep(0.0, 0.04, y);
-  float scan = 0.7 + 0.3 * sin(y * 46.0 - uTime * 5.0);
-  gl_FragColor = vec4(enc(mix(uColor, vec3(1.0), core * 0.55)), (core + soft) * fade * scan * uAlpha); }`,
   waveF: `uniform vec3 uColor; uniform float uProg; varying vec2 vUv;
 void main(){ vec2 q = vUv * 2.0 - 1.0; float d = length(q); if (d > 1.0) discard; float r = max(uProg, 0.001); float w = 0.03 + 0.10 * r;
   float ring = 1.0 - smoothstep(0.0, w, abs(d - r)); float fill = (1.0 - smoothstep(0.0, r, d)) * 0.12 * (1.0 - r);
   gl_FragColor = vec4(enc(uColor), (ring + fill) * (1.0 - r) * 1.5); }`,
-  starV: `attribute vec2 corner; attribute float seed; attribute float size; uniform float uTime; varying vec2 vC; varying float vA; varying float vS;
-void main(){ vC = corner; vS = seed; vec4 mv = modelViewMatrix * vec4(position, 1.0);
-  float tw = 0.55 + 0.45 * sin(uTime * (0.7 + seed * 2.3) + seed * 51.0); vA = tw;
-  mv.xy += corner * size * (0.8 + 0.2 * tw); gl_Position = projectionMatrix * mv; }`,
-  starF: `varying vec2 vC; varying float vA; varying float vS;
-void main(){ float d = length(vC); if (d > 1.0) discard; float a = pow(1.0 - d, 2.6) + exp(-d * d * 40.0) * 0.6;
-  vec3 c = vec3(0.78, 0.85, 1.0); if (vS > 0.88) c = vec3(1.0, 0.86, 0.7); else if (vS < 0.18) c = vec3(0.62, 0.74, 1.0);
-  gl_FragColor = vec4(enc(c), a * vA * 0.75); }`,
   nebF: `uniform vec3 uColor; uniform float uAlpha; uniform float uSeed; varying vec2 vC;
 float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float n2(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(h(i), h(i + vec2(1.0, 0.0)), f.x), mix(h(i + vec2(0.0, 1.0)), h(i + vec2(1.0, 1.0)), f.x), f.y); }
@@ -103,7 +77,6 @@ function fxLin(c) {
   else if (c[0] === "#") { let h = c.slice(1); if (h.length === 3) h = h.split("").map(x => x + x).join(""); const n = parseInt(h, 16); r = (n >> 16 & 255) / 255; g = (n >> 8 & 255) / 255; b = (n & 255) / 255; }
   return [r, g, b].map(v => Math.pow(v, 2.2));
 }
-const fxMix = (a, b, t) => [0, 1, 2].map(i => a[i] + (b[i] - a[i]) * t);
 
 // three.js classes, borrowed from the library's own composer
 function fxKit() {
@@ -152,41 +125,39 @@ function fxAnnulus(r0, r1, seg) {
   return fxGeo({ position: [pos, 3], uv: [uv, 2] }, idx);
 }
 
-// one glowing planet per node: a lit core, a soft halo, and for jobs and "you" a ring and a pulse
-
-// one glowing planet per node: a lit core, a soft halo, and for jobs and "you" a ring and a pulse
+// one planet per node: a lit core, and a still halo for the few that matter ("You", the destination, the route's stops)
 function fxNode(n) {
-  const K = FX.K, id = n.id, t = kindOf(id), g = new K.Obj3D();
+  const K = FX.K, id = n.id, g = new K.Obj3D();
   const core = new K.Mesh(FX.geo.sphere, fxMat(FXS.coreV, FXS.coreF, { uColor: { value: [1, 1, 1] }, uAlpha: { value: 1 }, uGlow: { value: 0.2 } }, { blending: 1, depthWrite: true }));
-  const halo = fxMesh(FX.geo.quad, fxMat(FXS.bbV, FXS.haloF, { uColor: { value: [1, 1, 1] }, uAlpha: { value: 0 }, uSize: { value: 1 }, uPulse: { value: 0 }, uFlare: { value: 0 } }));
+  const halo = fxMesh(FX.geo.quad, fxMat(FXS.bbV, FXS.haloF, { uColor: { value: [1, 1, 1] }, uAlpha: { value: 0 }, uSize: { value: 1 } }));
   halo.renderOrder = 3; halo.raycast = fxNoRay;
   g.add(core); g.add(halo);
-  const st = { id, g, core, halo, ring: null, pulse: null };
-  if (t === "job" || t === "you") {
-    const h = hashOf(id);
-    const ring = fxMesh(FX.geo.annulus, fxMat(FXS.flatV, FXS.ringF, { uColor: { value: [1, 1, 1] }, uAlpha: { value: 0 } }, { side: 2 }), true);
-    ring.rotation.x = 0.25 + h * 0.4; ring.rotation.z = (h - 0.5) * 0.7; ring.raycast = fxNoRay; ring.renderOrder = 2;
-    const pulse = fxMesh(FX.geo.quad, fxMat(FXS.bbV, FXS.pulseF, { uColor: { value: [1, 1, 1] }, uAlpha: { value: 0 }, uSize: { value: 1 } }));
-    pulse.raycast = fxNoRay; pulse.renderOrder = 3;
-    g.add(ring); g.add(pulse); st.ring = ring; st.pulse = pulse;
-  }
+  const st = { id, g, core, halo };
   st.tgt = fxTarget(id); st.cur = Object.assign({}, st.tgt, { c: st.tgt.c.slice() });
   FX.nodes[id] = st; fxApply(st, 1);
   return g;
 }
+// Bloom picks up only what is brighter than its threshold, so everything that is not "You", the destination or the route
+// is kept a notch darker than that: their colour still reads, but they never glow.
+const UNLIT = 0.72;
 function fxTarget(id) {
-  const t = kindOf(id), tk = takenOf(id), sel = id === UI.job, on = ctx.onPlan(id), n = { id };
-  const c = fxLin(ctx.nColor(n)), r = Math.max(2.2, Math.cbrt(ctx.nVal(n)) * 4);
-  // only "you", the chosen job and the route glow; everything else is a flat, slightly dimmed sphere so its colour reads.
+  const t = kindOf(id), tk = takenOf(id), sel = id === selJob(), on = ctx.onPlan(id), n = { id };
+  let c = fxLin(ctx.nColor(n));
+  const r = Math.max(2.2, Math.cbrt(ctx.nVal(n)) * 4);
   // Once a job is chosen, the other jobs sit back further and brighten while hovered.
-  let hs = 0, ha = 0, glow = 0.04, ra = 0, pa = 0, fl = 0, ca = 0.65;
-  if (t === "job" && !sel && UI.job && !isGoal(id)) { if (FX.focusId === id) { glow = 0.2; ca = 1; } else { glow = 0; ca = 0.32; } }
-  if (t === "you") { hs = r * 3.2; ha = 0.5; glow = 0.34; ra = 0.4; pa = 0.3; fl = 0.35; ca = 1; }
-  else if (t === "job" && sel) { hs = r * 4; ha = 0.75; glow = 0.42; ra = 0.7; pa = 0.5; fl = 0.25; ca = 1; }
+  let hs = 0, ha = 0, glow = 0.04, ca = 0.65, lit = false;
+  // (kept bright enough that the job colour still reads as a job, not as a dark "at risk" red)
+  const js = t === "job" ? jobStrength(id) * (ctx.labelled && !ctx.labelled(id) ? 0.55 : 1) : 1;
+  if (t === "job" && !sel && selJob() && !isGoal(id)) { if (FX.focusId === id) { glow = 0.25; ca = 1; } else { glow = 0.04 + 0.12 * js; ca = 0.4 + 0.3 * js; } }
+  else if (t === "job" && !sel) { glow = 0.05 + 0.15 * js; ca = 0.45 + 0.55 * js; }
+  if (!N(id) && t !== "job" && !on) { glow = 0; ca = 0.42; } // the selected ESCO job's other missing skills: faint dots
+  if (t === "you") { hs = r * 3.2; ha = 0.5; glow = 0.34; ca = 1; lit = true; }
+  else if (t === "job" && sel) { hs = r * 4; ha = 0.75; glow = 0.42; ca = 1; lit = true; }
   else if (tk) { glow = 0; ca = 0.5; }
-  else if (on && t !== "job") { hs = r * 3; ha = 0.7; glow = 0.32; ca = 1; }
+  else if (on && t !== "job") { hs = r * 3; ha = 0.7; glow = 0.32; ca = 1; lit = true; }
+  if (!lit) c = c.map(v => v * UNLIT);
   const dim = FX.focus && !FX.focus.has(id) ? 0.18 : 1;
-  return { c, r, hs, ha: ha * dim, glow, ra: ra * dim, pa: pa * dim, fl: fl * dim, ca: ca * (dim < 1 ? 0.35 : 1), pulse: 0 };
+  return { c, r, hs, ha: ha * dim, glow, ca: ca * (dim < 1 ? 0.35 : 1) };
 }
 function fxIntroScale(id) {
   if (!FX.intro) return 1;
@@ -194,49 +165,34 @@ function fxIntroScale(id) {
   if (k <= 0) return 0; if (k >= 1) return 1;
   const x = k - 1; return 1 + 2.70158 * x * x * x + 1.70158 * x * x; // ease-out-back
 }
+const FX_EASED = ["r", "hs", "ha", "glow", "ca"];
 function fxApply(st, k) {
   const a = st.cur, b = st.tgt;
   for (let i = 0; i < 3; i++) a.c[i] += (b.c[i] - a.c[i]) * k;
-  for (const p of ["r", "hs", "ha", "glow", "ra", "pa", "ca", "pulse", "fl"]) a[p] += (b[p] - a[p]) * k;
+  for (const p of FX_EASED) a[p] += (b[p] - a[p]) * k;
   const s = fxIntroScale(st.id), cu = st.core.material.uniforms, hu = st.halo.material.uniforms;
   st.core.scale.setScalar(Math.max(0.001, a.r * s));
   cu.uColor.value = a.c; cu.uAlpha.value = a.ca * Math.min(1, s * 1.5); cu.uGlow.value = a.glow;
-  hu.uColor.value = a.c; hu.uSize.value = a.hs * s; hu.uAlpha.value = a.ha; hu.uPulse.value = a.pulse; hu.uFlare.value = a.fl;
+  hu.uColor.value = a.c; hu.uSize.value = a.hs * s; hu.uAlpha.value = a.ha;
   st.halo.visible = a.ha > 0.01 && s > 0.01;
-  if (st.ring) {
-    st.ring.scale.setScalar(a.r * s); st.ring.material.uniforms.uColor.value = fxMix(a.c, [1, 1, 1], 0.35); st.ring.material.uniforms.uAlpha.value = a.ra;
-    st.ring.visible = a.ra > 0.01 && s > 0.01;
-    const pu = st.pulse.material.uniforms; pu.uColor.value = a.c; pu.uSize.value = a.r * 6.5 * s; pu.uAlpha.value = a.pa; st.pulse.visible = a.pa > 0.01;
-  }
 }
 /** Re-target every planet after the map's state changed (called from restyle). */
 export function styleAll() { if (FX.on) Object.values(FX.nodes).forEach(st => { st.tgt = fxTarget(st.id); }); }
 
-// the deep-space backdrop: gradient sky, twinkling stars, nebulae, glowing orbits
+// the backdrop: a dark gradient sky, one faint still nebula for depth, and thin orbit guides (your skills, skills to
+// learn, and the time rings the job stars sit on)
 function fxBackdrop() {
-  const K = FX.K, small = $("graph").clientWidth < 700, { RING, LIFT } = ctx;
+  const K = FX.K, { RING, LIFT, TIME } = ctx;
   FX.bg = fxMesh(K.fsGeo, fxMat(FXS.bgV, FXS.bgF, { uAspect: { value: FX.aspect } }, { transparent: false, blending: 1, depthTest: false, depthWrite: false }));
   FX.bg.renderOrder = -1000; FX.bg.raycast = fxNoRay;
-  const sky = new K.Obj3D();
-  const stars = fxMesh(fxQuads(small ? 1400 : 2600, () => {
-    const u = Math.random() * 2 - 1, th = Math.random() * Math.PI * 2, rad = 2600 + Math.random() * 1800, s = Math.sqrt(1 - u * u);
-    return { pos: [rad * s * Math.cos(th), rad * u, rad * s * Math.sin(th)], attrs: { seed: Math.random(), size: 2.6 + Math.pow(Math.random(), 7) * 11 } };
-  }), fxMat(FXS.starV, FXS.starF));
-  sky.add(stars);
-  [["#2b4aa8", -1500, 2600, 0.6, 1700, 0.17], ["#6a3fb0", -1300, 2600, 2.1, 1500, 0.15], ["#1f7f8a", -1700, 2700, 3.6, 1600, 0.15], ["#a8452a", -1200, 2500, 5.0, 1300, 0.08], ["#3c55c4", 900, 2900, 1.4, 1800, 0.13]].forEach(([hex, y, rad, ang, size, al], i) => {
-    const m = fxMesh(FX.geo.quad, fxMat(FXS.bbV, FXS.nebF, { uColor: { value: fxLin(hex) }, uAlpha: { value: al }, uSize: { value: size }, uSeed: { value: i * 1.37 } }));
-    m.position.set(Math.cos(ang) * rad, y, Math.sin(ang) * rad); m.renderOrder = -10; sky.add(m);
+  const neb = fxMesh(FX.geo.quad, fxMat(FXS.bbV, FXS.nebF, { uColor: { value: fxLin("#2b4aa8") }, uAlpha: { value: 0.08 }, uSize: { value: 1700 }, uSeed: { value: 0 } }));
+  neb.position.set(Math.cos(0.6) * 2600, -1500, Math.sin(0.6) * 2600); neb.renderOrder = -10; neb.raycast = fxNoRay;
+  [FX.bg, neb].forEach(o => { FX.scene.add(o); FX.objs.push(o); });
+  // static, thin, faint guides: the two skill rings, then the time rings a little fainter
+  [[RING[1], LIFT[1], 0.2], [RING[2], LIFT[2], 0.2], ...(TIME || []).map(r => [r, LIFT[3], 0.14])].forEach(([r, y, al]) => {
+    const m = fxMesh(fxAnnulus(r - 0.5, r + 0.5, 256), fxMat(FXS.flatV, FXS.orbitF, { uColor: { value: fxLin("#7f93b8") }, uAlpha: { value: al } }, { side: 2 }));
+    m.position.y = y; m.renderOrder = 1; FX.scene.add(m); FX.objs.push(m); (FX.orbits ||= []).push(m);
   });
-  FX.sky = sky; [FX.bg, sky].forEach(o => { FX.scene.add(o); FX.objs.push(o); });
-  for (let r = 1; r <= 3; r++) {
-    // static, thin, faint guides
-    const m = fxMesh(fxAnnulus(RING[r] - 0.5, RING[r] + 0.5, 256), fxMat(FXS.flatV, FXS.orbitF, { uColor: { value: fxLin("#7f93b8") }, uAlpha: { value: 0.2 } }, { side: 2 }));
-    m.position.y = LIFT[r]; m.renderOrder = 1; FX.scene.add(m); FX.objs.push(m);
-  }
-  FX.beam = fxMesh(fxQuads(1), fxMat(FXS.beamV, FXS.beamF, { uColor: { value: fxLin("#ff8a4c") }, uAlpha: { value: 0 }, uH: { value: 150 }, uW: { value: 9 } }));
-  // the beam's quad goes from the node upwards
-  const cy = FX.beam.geometry.getAttribute("corner"); for (let i = 0; i < 4; i++) cy.setY(i, i < 2 ? 0 : 1); cy.needsUpdate = true;
-  FX.beam.renderOrder = 5; FX.beam.raycast = fxNoRay; FX.scene.add(FX.beam); FX.objs.push(FX.beam);
 }
 function fxBloom() {
   const K = FX.K, comp = K.comp;
@@ -267,7 +223,7 @@ function fxBloom() {
 }
 
 
-/** Turn the layer on. c = { Graph, RING, LIFT, posOf, visible(), nColor, nVal, onPlan, restyle, setRotate, home(), scanning() } */
+/** Turn the layer on. c = { Graph, RING, LIFT, TIME (time ring radii), posOf, visible(), nColor, nVal, onPlan, restyle, setRotate, home(), scanning() } */
 export function init(c) {
   ctx = c; Graph = c.Graph;
   if (FX.on || !Graph) return;
@@ -278,7 +234,7 @@ export function init(c) {
     const rr = Graph.renderer(), pr = Math.min(window.devicePixelRatio || 1, 1.75);
     if (rr.getPixelRatio && rr.getPixelRatio() > pr) { rr.setPixelRatio(pr); if (K.comp.setPixelRatio) K.comp.setPixelRatio(pr); }
     FX.aspect = $("graph").clientWidth / Math.max(1, $("graph").clientHeight);
-    FX.geo = { sphere: fxSphere(28), quad: fxQuads(1), annulus: fxAnnulus(1.55, 2.45, 96), flat: fxGeo({ position: [[-1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1], 3], uv: [[0, 0, 1, 0, 1, 1, 0, 1], 2] }, [0, 2, 1, 0, 3, 2]) };
+    FX.geo = { sphere: fxSphere(28), quad: fxQuads(1), flat: fxGeo({ position: [[-1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1], 3], uv: [[0, 0, 1, 0, 1, 1, 0, 1], 2] }, [0, 2, 1, 0, 3, 2]) };
     fxBackdrop();
     FX.on = true;
     Graph.nodeThreeObject(n => fxNode(n)).linkDirectionalParticleWidth(3.2);
@@ -344,15 +300,13 @@ export function tick(dt) {
   if (FX.intro && FX.now - FX.intro.t0 > 3.4) FX.intro = null;
   const k = 1 - Math.pow(0.002, dt);
   for (const id in FX.nodes) fxApply(FX.nodes[id], k);
-  const b = FX.beam, p = UI.job && ctx.visible().has(UI.job) ? ctx.posOf(UI.job) : null, bu = b.material.uniforms;
-  if (p) b.position.set(p.x, p.y, p.z);
-  bu.uAlpha.value += ((p ? 0.45 : 0) * (UI.job ? fxIntroScale(UI.job) : 1) - bu.uAlpha.value) * k; b.visible = bu.uAlpha.value > 0.01;
+  // route view (graph3d.js) shows just your route: the orbit guides would only add noise
+  const orbits = !ctx.routeView?.(); (FX.orbits || []).forEach(o => { o.visible = orbits; });
   FX.waves = FX.waves.filter(w => {
     const q = Math.min(1, (FX.now - w.t0) / w.dur); w.m.material.uniforms.uProg.value = 1 - Math.pow(1 - q, 2.2);
     if (q >= 1) { FX.scene.remove(w.m); w.m.material.dispose(); return false; }
     return true;
   });
   if (ctx.scanning() && FX.now - FX.lastWave > 0.7) { FX.lastWave = FX.now; wave(S.E?.root, "#4a93ea", 1.3, 420); }
-  if (FX.sky) FX.sky.rotation.y += dt * 0.006 * FX.speed;
   if (FX.bg) FX.bg.material.uniforms.uAspect.value = FX.aspect;
 }
