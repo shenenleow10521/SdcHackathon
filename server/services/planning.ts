@@ -11,7 +11,7 @@ export type Engine = ReturnType<typeof createEngine>;
 export interface ExtraReq { skill: string; weight: number; need: number; status?: string; source?: string }
 export interface SignalInfo { id: number; title: string | null; sourceTitle: string | null; sourceDate: string | null; sourceUrl: string | null }
 export interface PlanOptions {
-  job: string; mode?: Mode; year?: number; scenario?: "moderate" | "fast";
+  job: string; mode?: Mode; year?: number; scenario?: "slow" | "moderate" | "fast";
   extraReq?: ExtraReq[];
   now: Date;
   /** Details of the signals behind applied knowledge changes (for the sources list). */
@@ -28,7 +28,7 @@ const addWeeks = (now: Date, weeks: number) => new Date(now.getTime() + weeks * 
 export const AHEAD_SHARE = 0.75;
 
 /** The engine for one profile + scenario on one knowledge-base snapshot. */
-export function engineFor(graph: FullGraph, profile: Profile, year = 2026, scenario: "moderate" | "fast" = "moderate"): Engine {
+export function engineFor(graph: FullGraph, profile: Profile, year = 2026, scenario: "slow" | "moderate" | "fast" = "moderate"): Engine {
   return createEngine(engineGraph(graph) as any, engineProfile(profile), { year, scenario });
 }
 
@@ -39,7 +39,7 @@ export function pickCourse(graph: FullGraph, skillId: string) {
 }
 
 /** Task split [AI does it, AI assists, still needs you] in %, interpolated exactly like the engine's exposure. */
-export function taskSplit(graph: FullGraph, nodeId: string, year = 2026, scenario: "moderate" | "fast" = "moderate"): number[] | null {
+export function taskSplit(graph: FullGraph, nodeId: string, year = 2026, scenario: "slow" | "moderate" | "fast" = "moderate"): number[] | null {
   const s = graph.nodes[nodeId]?.split;
   if (!Array.isArray(s) || s.length < 3) return null;
   const f = clamp((year - PARAMS.baseYear) / (PARAMS.endYear - PARAMS.baseYear), 0, 1);
@@ -142,7 +142,7 @@ export function deadlineFor(targetDate: string | null, weeksNeeded: number | nul
 }
 
 /** Human edge: the job's task split and the skills (yours or on this plan) the engine labels "Rising human skill". */
-export function humanEdgeFor(graph: FullGraph, E: Engine, job: string, planSkills: string[], year: number, scenario: "moderate" | "fast") {
+export function humanEdgeFor(graph: FullGraph, E: Engine, job: string, planSkills: string[], year: number, scenario: "slow" | "moderate" | "fast") {
   const ids = [...new Set([...E.ownedSkills(), ...planSkills])].filter(k => E.isSkill(k));
   const risingSkills = ids.filter(k => E.impact(k).label === "Rising human skill").map(k => ({
     skillId: k, name: graph.nodes[k].name, owned: E.owned(k), why: E.impact(k).why,

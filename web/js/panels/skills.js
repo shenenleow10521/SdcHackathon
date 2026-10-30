@@ -2,7 +2,7 @@
 // Each skill is one row: name, one sentence, one action. Tap the row for the full detail in the drawer.
 // Two sources, one row: the hand-made catalogue (the sample persona: tasks with who does them, "evolves into", real
 // courses, forecast by year) or, for everyone else, the server's outlook for their ESCO skills (features/stay.js header).
-import { S, N, nameOf, humanSplit, confOf, actions } from "../state.js";
+import { S, N, nameOf, humanSplit, confOf, actions, cap } from "../state.js";
 import { t } from "../i18n.js";
 import { esc, badge } from "../util.js";
 import { stayTrack, stayJob } from "../features/stay.js";
@@ -58,7 +58,7 @@ function outlookCards() {
     const id = N(s.id) ? s.id : "xs:" + s.id;
     if (!N(s.id)) S.xsNames[id] = s.title;
     return {
-    id, name: s.title, band: s.band, pct: Math.round(100 * s.exposure), click: true,
+    id, name: cap(s.title), band: s.band, pct: Math.round(100 * s.exposure), click: true,
     learn: s.learn ? { name: s.learn.name, hours: s.learn.hours, course: s.learn.course } : null,
   }; });
 }

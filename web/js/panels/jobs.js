@@ -77,7 +77,7 @@ function stayCard(st) {
 
 /** Under the selected row: "Open plan" (the plan itself lives in the Plan tab, never twice). */
 function openRow(id) {
-  return `<div class="job-open"><button class="btn btn-primary sm" type="button" data-open-plan="${esc(id)}"><i data-lucide="flag"></i>${esc(t("jobs.openPlan"))}</button></div>`;
+  return `<div class="job-open"><button class="btn btn-primary sm" type="button" data-open-plan="${esc(id)}"><i data-lucide="route"></i>${esc(t("jobs.openPlan"))}</button></div>`;
 }
 
 // An ESCO job: the same card shape as a catalogue job (name and match, then weeks and the counts behind the match).

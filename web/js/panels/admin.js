@@ -71,7 +71,7 @@ export function render() {
     <div class="admin-banner"><div><div class="ob-kicker">${esc(t("admin.kicker"))}</div><h2>${esc(t("admin.title"))}</h2>
       <p class="note">${esc(t("admin.intro"))}</p></div>
       <button class="ghost" type="button" id="admin-exit"><i data-lucide="arrow-left"></i>${esc(t("admin.exit"))}</button></div>
-    ${A.needsToken || hasAdminToken() ? tokenBox() : ""}
+    ${A.needsToken ? tokenBox() : ""}
     <div class="seg seg-wide" role="tablist" aria-label="${esc(t("admin.sectionsAria"))}">${SUBS.map(s => `<button type="button" role="tab" data-sub="${s}" aria-selected="${A.sub === s}" aria-pressed="${A.sub === s}">${esc(t("admin.sub." + s))}</button>`).join("")}</div>
     <div id="admin-body">${body()}</div>
   </div>`;
@@ -127,7 +127,7 @@ function queueHtml() {
     ${anySample ? `<p class="note">${esc(t("admin.sampleNote"))}</p>` : ""}
     <div class="tiles tiles-4">
       <div class="tile"><div class="k">${esc(t("admin.t.waiting"))}</div><div class="v num">${pend.length + emg.length}</div></div>
-      <div class="tile"><div class="k">${esc(t("admin.t.auto"))}</div><div class="v num">${esc(c.auto ?? c.applied ?? done.filter(x => x.triage === "auto" || x.status === "applied").length)}</div></div>
+      <div class="tile"><div class="k">${esc(t("admin.t.auto"))}</div><div class="v num">${esc(c.autoApplied ?? c.auto ?? done.filter(x => x.triage === "auto" || x.status === "applied").length)}</div></div>
       <div class="tile"><div class="k">${esc(t("admin.t.spot"))}</div><div class="v num">${spot.length}</div></div>
       <div class="tile"><div class="k">${esc(t("admin.t.kb"))}</div><div class="v num">v${esc(S.graph.kbVersion)}</div></div>
     </div>
@@ -196,7 +196,8 @@ function emergingCard(c) {
   const syn = Array.isArray(c.synonyms) ? c.synonyms : [];
   const ev = Array.isArray(c.evidence) ? c.evidence : [];
   const busy = A.busy.has("e" + c.id);
-  const verdict = v => typeof v === "string" ? v : v && typeof v === "object" ? (v.verdict || v.reason || v.note || (v.ok === false ? "✗" : "✓")) : "✓";
+  // The page already says which items are sample data, so drop a "Sample: " prefix on each verdict.
+  const verdict = v => String(typeof v === "string" ? v : v && typeof v === "object" ? (v.verdict || v.reason || v.note || (v.ok === false ? "✗" : "✓")) : "✓").replace(/^sample:\s*/i, "");
   const p = c.progress || {};
   const status = watching
     ? t("admin.watchingLine", { m: p.mentions?.have ?? c.postings ?? 0, mn: th.postings, o: p.organisations?.have ?? c.employers ?? 0, on: th.employers, w: p.weeks?.have ?? c.weeks ?? 0, wn: th.weeks })
@@ -231,7 +232,7 @@ function bridgeCard(b) {
   const jobs = [...(ev.occFrom || []).slice(0, 2), ...(ev.occTo || []).slice(0, 2)].map(titleOf).filter(Boolean);
   return `<div class="rv bridge" data-bridge="${esc(id)}">
     <div class="rv-top">${badge("b-info", t("admin.bridgeProposed"), "git-merge")}${b.source === "team" ? badge("b-mute", t("admin.bridgeTeam"), "users") : ""}</div>
-    <div class="rv-t bridge-t"><span>${esc(from)}</span><span class="to"><i data-lucide="arrow-left-right" aria-hidden="true"></i>${esc(to)}</span></div>
+    <div class="rv-t bridge-t"><span>${esc(from)}</span><span class="to"><i data-lucide="arrow-right" aria-hidden="true"></i>${esc(to)}</span></div>
     ${acts.length ? `<div class="rv-m">${esc(t("admin.bridgeBoth", { list: acts.join(", ") }))}</div>` : ""}
     ${b.why ? `<blockquote class="rv-q">${esc(b.why)}</blockquote>` : ""}
     ${tf || tt ? `<div class="bridge-sec"><div class="bridge-k">${esc(t("admin.bridgeTasks"))}</div><dl class="bridge-tasks">
@@ -268,7 +269,8 @@ function spotCard(s) {
 function handledRow(x) {
   const st = x.status || "";
   const ok = /approv|applied|confirm|auto|provisional/i.test(st) || x.triage === "auto";
-  const label = { approved: "admin.h.approved", rejected: "admin.h.rejected", applied: "admin.h.applied", auto: "admin.h.applied", confirmed: "admin.h.confirmed", provisional: "admin.h.provisional", merged: "admin.h.merged", reverted: "admin.h.reverted" }[st] || null;
+  // A flagged change a person approved is stored as "applied" too: only call it automatic when no person decided it.
+  const label = st === "applied" && x.decidedBy ? "admin.h.approved" : { approved: "admin.h.approved", rejected: "admin.h.rejected", applied: "admin.h.applied", auto: "admin.h.applied", confirmed: "admin.h.confirmed", provisional: "admin.h.provisional", merged: "admin.h.merged", reverted: "admin.h.reverted" }[st] || null;
   const title = x.title || (x.label ? t("admin.newSkillName", { name: x.label }) : "–");
   const who = x.decidedBy ? " " + t("admin.byName", { name: x.decidedBy }) : x.triage === "auto" ? " " + t("admin.byRules") : "";
   return `<li><i data-lucide="${ok ? "check" : "x"}" style="color:${ok ? "var(--good)" : "var(--crit)"}"></i><div><b>${esc(label ? t(label) : st)}${esc(who)}</b>${esc(title)}${x.deltaE || x.deltaD ? ": " + esc(changeText(x)) : ""}${x.triageReasons?.length && !ok ? `<div class="rs">${esc(reasonList(x.triageReasons))}</div>` : ""}</div></li>`;

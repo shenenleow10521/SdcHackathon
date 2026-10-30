@@ -21,7 +21,7 @@ const toDate = (v: any) => (typeof v === "string" ? v.slice(0, 10) : new Date(v)
 export interface OpenRole { id: number; job: string; title: string; openings: number; deadline: string }
 
 /** One person's options for each open role. Employer-specific requirements for a role are included. */
-export function optionsFor(graph: FullGraph, p: Profile, roles: OpenRole[], extraByJob: Record<string, ExtraReq[]>, opts: { year: number; scenario: "moderate" | "fast"; mode: Mode; now: Date }) {
+export function optionsFor(graph: FullGraph, p: Profile, roles: OpenRole[], extraByJob: Record<string, ExtraReq[]>, opts: { year: number; scenario: "slow" | "moderate" | "fast"; mode: Mode; now: Date }) {
   const E = engineFor(graph, p, opts.year, opts.scenario);
   return roles.map(role => {
     const extra = extraByJob[role.job] || [];
@@ -52,7 +52,7 @@ export function assign(team: { profileId: number; options: ReturnType<typeof opt
   return { assignment, openingsLeft: Object.fromEntries(left) };
 }
 
-export async function redeployment(svc: Services, graph: FullGraph, employerId: number, opts: { year: number; scenario: "moderate" | "fast"; mode?: Mode }) {
+export async function redeployment(svc: Services, graph: FullGraph, employerId: number, opts: { year: number; scenario: "slow" | "moderate" | "fast"; mode?: Mode }) {
   const emp = (await svc.db.query("select * from employers where id=$1", [employerId])).rows[0] as any;
   if (!emp) return null;
   const roles: OpenRole[] = ((await svc.db.query("select * from open_roles where employer_id=$1 order by deadline, id", [employerId])).rows as any[])

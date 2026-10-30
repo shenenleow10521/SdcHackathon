@@ -75,29 +75,40 @@ function stepList(steps, dates, track, autoOpen = true) {
 
 const bar = (done, total) => { const p = total ? Math.round(100 * done / total) : 100; return `<div class="gl-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${p}"><i style="width:${p}%"></i></div>`; };
 
+/** The goal header's big figures, like a map app's "25 min, 12 km": weeks left and steps done. */
+const figs = (weeksLeft, done, total) => `<div class="gl-figs">
+    <div class="gl-fig"><b>${esc(done >= total ? "0" : String(Math.max(1, weeksLeft || 1)))}</b><span>${esc(t("goal.figWeeks"))}</span></div>
+    <div class="gl-fig"><b>${esc(t("goal.figSteps", { done, total }))}</b><span>${esc(t("goal.figStepsLbl"))}</span></div></div>`;
+
 // ---------- the two tracks ----------
-function moveCard(v) {
+// hero: this track is the goal, shown first with big figures.
+function moveCard(v, hero = false) {
   const steps = numbered(v.steps || []);
-  const head = `<div class="gl-kick">${esc(t("goal.moveKicker"))}</div>
+  const head = `<div class="gl-kick">${esc(t(hero ? "goal.heroKicker" : "goal.moveKicker"))}</div>
     <div class="ms-gh"><h2>${esc(v.goal.title || nameOf(v.goal.job))}</h2><span class="ms-meta">${esc(t("goal.setOn", { date: day(v.goal.setAt) }))}</span></div>`;
-  if (v.noRoute || !steps.length) return `<section class="ms-card gl-track">${head}<p class="ms-line">${esc(v.noRoute ? t("path.noRouteBody", { year: S.year }) : t("track.nothingLeft"))}</p>${links(v)}</section>`;
-  const done = steps.filter(s => s.done).length;
+  if (v.noRoute || !steps.length) return `<section class="ms-card gl-track${hero ? " gl-hero" : ""}">${head}<p class="ms-line">${esc(v.noRoute ? t("path.noRouteBody", { year: S.year }) : t("track.nothingLeft"))}</p>${links(v)}</section>`;
+  const done = steps.filter(s => s.done).length, left = weeksLeftOf(steps);
   const dates = scheduleSteps(steps, v.hoursPerWeek || S.profile.hours, today());
   const match = v.match != null ? t("track.matchNow", { n: Math.round(v.match) }) + " " : "";
-  return `<section class="ms-card gl-track" id="gl-move">${head}
-    <p class="ms-line">${esc(match + progressLine(done, steps.length, weeksLeftOf(steps), t))}</p>${bar(done, steps.length)}
+  return `<section class="ms-card gl-track${hero ? " gl-hero" : ""}" id="gl-move">${head}
+    ${hero ? figs(left, done, steps.length) : `<p class="ms-line">${esc(match + progressLine(done, steps.length, left, t))}</p>`}${bar(done, steps.length)}
+    ${hero && match ? `<p class="ms-meta">${esc(match.trim())}</p>` : ""}
+    ${hero ? `<div class="gl-sub">${esc(t("goal.stepsHead"))}<span class="ms-meta">${esc(t("goal.mapHint"))}</span></div>` : ""}
     ${stepList(steps, dates, "move")}
     ${links(v)}</section>`;
 }
 const links = v => `<div class="ms-links"><button class="link-btn" type="button" data-open-route="${esc(v.goal.job)}">${esc(t("goal.openPlan"))}</button></div>`;
 
-function stayCard(st, withDates) {
-  const head = `<div class="gl-kick">${esc(t("stay.kicker"))}</div><div class="ms-gh"><h2>${esc(t("stay.title", { job: st.job }))}</h2></div>`;
-  if (!st.items.length) return `<section class="ms-card gl-track">${head}<p class="ms-line">${esc(t("outlook.stayNone", { job: st.job }))}</p></section>`;
-  const steps = st.items.map(x => ({ skillId: x.id, name: cap(x.name), hours: x.hours, done: x.done, key: false, course: x.course || null }));
+function stayCard(st, withDates, hero = false) {
+  const cls = `ms-card gl-track${hero ? " gl-hero" : ""}`;
+  const head = `<div class="gl-kick">${esc(t(hero ? "goal.heroKicker" : "stay.kicker"))}</div><div class="ms-gh"><h2>${esc(t("stay.title", { job: st.job }))}</h2></div>
+    ${hero ? `<p class="ms-meta">${esc(t("stay.kicker"))}</p>` : ""}`;
+  if (!st.items.length) return `<section class="${cls}">${head}<p class="ms-line">${esc(t("outlook.stayNone", { job: st.job }))}</p></section>`;
+  const steps = st.items.map((x, i) => ({ skillId: x.id, name: cap(x.name), hours: x.hours, done: x.done, key: false, n: hero ? i + 1 : 0, course: x.course || null }));
   const dates = withDates ? scheduleSteps(steps, S.profile.hours, today()) : steps.map(() => null);
-  return `<section class="ms-card gl-track" id="gl-stay">${head}
-    <p class="ms-line">${esc(progressLine(st.done, st.items.length, st.weeksLeft, t))}</p>${bar(st.done, st.items.length)}
+  return `<section class="${cls}" id="gl-stay">${head}
+    ${hero ? figs(st.weeksLeft, st.done, st.items.length) : `<p class="ms-line">${esc(progressLine(st.done, st.items.length, st.weeksLeft, t))}</p>`}${bar(st.done, st.items.length)}
+    ${hero ? `<div class="gl-sub">${esc(t("goal.stepsHead"))}</div>` : ""}
     ${stepList(steps, dates, "stay", withDates)}</section>`;
 }
 
@@ -116,13 +127,14 @@ function weekCard(v, st) {
     next = `<div class="gl-next"><div class="ms-name">${esc(nx.n ? t("track.stepN", { n: nx.n, name: stepName(nx) }) : stepName(nx))}</div><p class="ms-line">${esc(line)}</p>
       <div class="ms-act">${url ? `<a class="ms-btn" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(t("track.openCourse"))}</a>` : ""}<button class="link-btn" type="button" data-gl-goto="${esc(drawerId(nx.skillId))}" data-gl-name="${esc(stepName(nx))}">${esc(t("track.seeStep"))}</button></div></div>`;
   } else next = `<p class="ms-line">${esc(t("track.allDone"))}</p>`;
+  const pace = paceBlock(v);
   return `<section class="ms-card gl-week">
     <div class="ms-gh"><h2>${esc(t("track.week"))}</h2><span class="ms-meta">${esc(t("track.weekOf", { date: day(mondayOf(today())) }))}</span></div>
-    ${next}<hr class="ms-hr">${paceBlock(v)}</section>`;
+    ${next}${pace ? `<hr class="ms-hr">${pace}` : ""}</section>`;
 }
 
 function paceBlock(v) {
-  if (!v) return `<p class="ms-meta">${esc(t("track.paceNoGoal"))}</p>`;
+  if (!v) return ""; // no goal job: the week card shows only the next step, so it never asks for a goal it already shows above
   if (v.local) return `<p class="ms-meta">${esc(t("track.paceSample"))}</p>`;
   const p = paceText(v.pace, t, lang(), year()), tw = thisWeek();
   return `${p ? `<div class="gl-pace s-${esc(p.status)}"><b>${esc(p.head)}</b><span class="ms-line">${esc(p.line)}</span></div>` : ""}
@@ -153,14 +165,15 @@ function recordCard() {
 export function renderGoal() {
   if (onServer() && !goal() && goalLoading()) return `<div class="stack ms-page">${loadingBox(t("track.loading"))}</div>`;
   const v = goalView(), st = stayTrack(), err = goalError();
-  const move = v ? moveCard(v)
-    : `<section class="ms-card gl-track"><div class="gl-kick">${esc(t("goal.moveKicker"))}</div><div class="ms-gh"><h2>${esc(t("goal.moveNoneTitle"))}</h2></div><p class="ms-line">${esc(t("goal.noneBody"))}</p>
+  const noMove = `<section class="ms-card gl-track"><div class="gl-kick">${esc(t("goal.moveKicker"))}</div><div class="ms-gh"><h2>${esc(t("goal.moveNoneTitle"))}</h2></div><p class="ms-line">${esc(t("goal.noneBody"))}</p>
       <div class="ms-act"><button class="ms-btn" type="button" data-tab-jobs>${esc(t("goal.noneBtn"))}</button></div></section>`;
+  // The goal comes first: the job you're moving to, or else your own job made AI-ready. Then this week, then the other track.
+  const cards = v ? [moveCard(v, true), weekCard(v, st), st ? stayCard(st, false) : ""]
+    : st ? [stayCard(st, true, true), weekCard(null, st), noMove]
+    : [noMove];
   return `<div class="stack ms-page gl-page">
     ${err && !err.notAvailable ? `<div id="gl-err">${errorBox(err, "goal")}</div>` : ""}
-    ${weekCard(v, st)}
-    ${st ? stayCard(st, !v) : ""}
-    ${move}
+    ${cards.join("")}
     ${recordCard()}
   </div>`;
 }

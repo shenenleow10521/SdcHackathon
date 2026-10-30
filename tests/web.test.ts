@@ -49,7 +49,7 @@ describe("i18n", () => {
       "impact.": ["Declining", "Changing", "Durable", "Rising human skill"], "impact.why.": ["Declining", "Changing", "Durable", "Rising human skill"],
       "step.": ["start", "reuse", "upskill", "evolve", "reskill", "arrive"], "admin.sub.": ["queue", "runs", "versions", "sources"],
       "scout.c.": ["fetched", "candidates", "rejected", "duplicates", "auto", "flagged"], "status.aria.": ["ok", "partial", "down"],
-      "sheet.": ["advisor", "hr", "employer", "advisor.kicker", "hr.kicker", "employer.kicker"], "plan.status.": ["draft", "sent", "approved", "changes"],
+      "sheet.": ["hr", "employer", "hr.kicker", "employer.kicker", "hr.locked"], "hr.tab.": ["team", "plans"], "plan.status.": ["draft", "sent", "approved", "changes"],
       "split.": ["you", "youShort"],
       "stress.why.": ["open", "ready", "worth"], "stress.in.": ["speed", "estimate", "hours", "weeks", "deadline"],
       "stress.when.": ["speed.high", "speed.low", "hours.low", "hours.lowAny", "hours.high", "weeks.high", "weeks.low", "estimate.high", "estimate.low"],

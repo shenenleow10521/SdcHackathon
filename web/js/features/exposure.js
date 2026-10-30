@@ -70,7 +70,7 @@ export function modelCardHtml(m) {
       ${m.target ? `<li>${esc(t("xp.target", { target: m.target }))}</li>` : ""}
       <li>${esc(modelLabel(m))}${m.run?.time ? ", " + esc(fmtDate(m.run.time)) : ""}</li>
     </ul>
-    <p class="formula">${esc(t("xp.caveat"))} ${m.measures ? esc(m.measures) : ""}</p>`;
+    <p class="formula">${esc(t("xp.caveat"))}</p>`;
 }
 
 async function howGood(anchor, model) {

@@ -1,6 +1,6 @@
 // Cinematic layer for the 3D map: lit planets, a dark sky, faint orbit guides, and glow only where it means something:
 // a still halo on "You", the destination and the route's stops, and bloom that only they and the route line are bright
-// enough to catch. No flares, pulses or twinkling: every effect on the map carries meaning.
+// enough to catch. No flares or pulses on the planets; only the backdrop stars twinkle.
 // Ported from the HalaTuju.zip design (halatuju-app.html). Built only from the three.js classes that already live inside
 // 3d-force-graph (taken from its post-processing composer), so the page never loads a second copy of three.js.
 // Every effect is optional: if any step fails, the plain constellation keeps working exactly as before.
@@ -40,6 +40,14 @@ void main(){ float edge = 1.0 - abs(vUv.y * 2.0 - 1.0); gl_FragColor = vec4(enc(
 void main(){ vec2 q = vUv * 2.0 - 1.0; float d = length(q); if (d > 1.0) discard; float r = max(uProg, 0.001); float w = 0.03 + 0.10 * r;
   float ring = 1.0 - smoothstep(0.0, w, abs(d - r)); float fill = (1.0 - smoothstep(0.0, r, d)) * 0.12 * (1.0 - r);
   gl_FragColor = vec4(enc(uColor), (ring + fill) * (1.0 - r) * 1.5); }`,
+  starV: `attribute vec2 corner; attribute float seed; attribute float size; uniform float uTime; varying vec2 vC; varying float vA; varying float vS;
+void main(){ vC = corner; vS = seed; vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  float tw = 0.55 + 0.45 * sin(uTime * (0.7 + seed * 2.3) + seed * 51.0); vA = tw;
+  mv.xy += corner * size * (0.8 + 0.2 * tw); gl_Position = projectionMatrix * mv; }`,
+  starF: `varying vec2 vC; varying float vA; varying float vS;
+void main(){ float d = length(vC); if (d > 1.0) discard; float a = pow(1.0 - d, 2.6) + exp(-d * d * 40.0) * 0.6;
+  vec3 c = vec3(0.78, 0.85, 1.0); if (vS > 0.88) c = vec3(1.0, 0.86, 0.7); else if (vS < 0.18) c = vec3(0.62, 0.74, 1.0);
+  gl_FragColor = vec4(enc(c), a * vA * 0.75); }`,
   nebF: `uniform vec3 uColor; uniform float uAlpha; uniform float uSeed; varying vec2 vC;
 float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float n2(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(h(i), h(i + vec2(1.0, 0.0)), f.x), mix(h(i + vec2(0.0, 1.0)), h(i + vec2(1.0, 1.0)), f.x), f.y); }
@@ -179,15 +187,23 @@ function fxApply(st, k) {
 /** Re-target every planet after the map's state changed (called from restyle). */
 export function styleAll() { if (FX.on) Object.values(FX.nodes).forEach(st => { st.tgt = fxTarget(st.id); }); }
 
-// the backdrop: a dark gradient sky, one faint still nebula for depth, and thin orbit guides (your skills, skills to
-// learn, and the time rings the job stars sit on)
+// the backdrop: a dark gradient sky, twinkling stars and coloured nebulae on a slowly turning sky, and thin orbit
+// guides (your skills, skills to learn, and the time rings the job stars sit on)
 function fxBackdrop() {
-  const K = FX.K, { RING, LIFT, TIME } = ctx;
+  const K = FX.K, small = $("graph").clientWidth < 700, { RING, LIFT, TIME } = ctx;
   FX.bg = fxMesh(K.fsGeo, fxMat(FXS.bgV, FXS.bgF, { uAspect: { value: FX.aspect } }, { transparent: false, blending: 1, depthTest: false, depthWrite: false }));
   FX.bg.renderOrder = -1000; FX.bg.raycast = fxNoRay;
-  const neb = fxMesh(FX.geo.quad, fxMat(FXS.bbV, FXS.nebF, { uColor: { value: fxLin("#2b4aa8") }, uAlpha: { value: 0.08 }, uSize: { value: 1700 }, uSeed: { value: 0 } }));
-  neb.position.set(Math.cos(0.6) * 2600, -1500, Math.sin(0.6) * 2600); neb.renderOrder = -10; neb.raycast = fxNoRay;
-  [FX.bg, neb].forEach(o => { FX.scene.add(o); FX.objs.push(o); });
+  const sky = new K.Obj3D();
+  const stars = fxMesh(fxQuads(small ? 1400 : 2600, () => {
+    const u = Math.random() * 2 - 1, th = Math.random() * Math.PI * 2, rad = 2600 + Math.random() * 1800, s = Math.sqrt(1 - u * u);
+    return { pos: [rad * s * Math.cos(th), rad * u, rad * s * Math.sin(th)], attrs: { seed: Math.random(), size: 2.6 + Math.pow(Math.random(), 7) * 11 } };
+  }), fxMat(FXS.starV, FXS.starF));
+  stars.raycast = fxNoRay; sky.add(stars);
+  [["#2b4aa8", -1500, 2600, 0.6, 1700, 0.17], ["#6a3fb0", -1300, 2600, 2.1, 1500, 0.15], ["#1f7f8a", -1700, 2700, 3.6, 1600, 0.15], ["#a8452a", -1200, 2500, 5.0, 1300, 0.08], ["#3c55c4", 900, 2900, 1.4, 1800, 0.13]].forEach(([hex, y, rad, ang, size, al], i) => {
+    const m = fxMesh(FX.geo.quad, fxMat(FXS.bbV, FXS.nebF, { uColor: { value: fxLin(hex) }, uAlpha: { value: al }, uSize: { value: size }, uSeed: { value: i * 1.37 } }));
+    m.position.set(Math.cos(ang) * rad, y, Math.sin(ang) * rad); m.renderOrder = -10; m.raycast = fxNoRay; sky.add(m);
+  });
+  FX.sky = sky; [FX.bg, sky].forEach(o => { FX.scene.add(o); FX.objs.push(o); });
   // static, thin, faint guides: the two skill rings, then the time rings a little fainter
   [[RING[1], LIFT[1], 0.2], [RING[2], LIFT[2], 0.2], ...(TIME || []).map(r => [r, LIFT[3], 0.14])].forEach(([r, y, al]) => {
     const m = fxMesh(fxAnnulus(r - 0.5, r + 0.5, 256), fxMat(FXS.flatV, FXS.orbitF, { uColor: { value: fxLin("#7f93b8") }, uAlpha: { value: al } }, { side: 2 }));
@@ -308,5 +324,6 @@ export function tick(dt) {
     return true;
   });
   if (ctx.scanning() && FX.now - FX.lastWave > 0.7) { FX.lastWave = FX.now; wave(S.E?.root, "#4a93ea", 1.3, 420); }
+  if (FX.sky) FX.sky.rotation.y += dt * 0.006 * FX.speed;
   if (FX.bg) FX.bg.material.uniforms.uAspect.value = FX.aspect;
 }

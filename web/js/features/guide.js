@@ -43,8 +43,8 @@ const STEPS = [
     prep: () => { if (innerWidth < 980) closeDr(); },
     // the open job may have no safer route (no card to point at): then point at the guide's job instead
     target: () => UI.view === "admin" ? [$("admin-btn"), "guide.tip.back"]
-      : escoOnly() ? (UI.tab !== "path" ? [$("tab-path"), "guide.tip.path"] : panel(".mode-seg") ? [panel(".mode-seg"), "guide.tip.mode"] : [$("tab-jobs"), "guide.tip.jobs"])
-      : UI.tab !== "path" ? [$("tab-path"), "guide.tip.path"]
+      : escoOnly() ? (UI.tab !== "path" ? STEPS[0].target() : panel(".mode-seg") ? [panel(".mode-seg"), "guide.tip.mode"] : [$("tab-jobs"), "guide.tip.jobs"])
+      : UI.tab !== "path" ? STEPS[0].target()
       : panel(".mode-seg") ? [panel(".mode-seg"), "guide.tip.mode"] : [$("tab-jobs"), "guide.tip.other", { job: nameOf(best()) }],
     act: () => {
       toUser(); closeDr();
@@ -60,7 +60,7 @@ const STEPS = [
   { id: "future",
     prep: closeDr,
     target: () => [document.querySelector(".timeline"), "guide.tip.future"],
-    act: () => { closeDr(); actions.play?.(); },
+    act: () => { closeDr(); actions.showFuture?.(); },
     ok: () => t("guide.ok.future") },
   { id: "scout", admin: true,
     prep: () => { closeDr(); setAgentsOpen(true); },

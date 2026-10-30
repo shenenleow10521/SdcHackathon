@@ -80,7 +80,8 @@ export const N = id => S.graph?.nodes?.[id];
 export const isEsco = id => typeof id === "string" && id.startsWith("esco:");
 export const escoRow = id => isEsco(id) ? S.escoBest.find(r => "esco:" + r.id === id) || S.escoExtra.find(r => "esco:" + r.id === id) || null : null;
 
-const cap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
+/** ESCO titles come lowercase; show them with a capital first letter. */
+export const cap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
 /** An AI-era skill (newer than ESCO; the plan marks it aiEra): shown with a badge and sources, never an exposure %. */
 export const isAiEra = id => !!(S.xsMeta[id]?.aiEra || S.xsMeta["xs:" + id]?.aiEra);
 /** Your job today in words: the ESCO job the server matched (profile.currentEsco), else the catalogue occupation, else null
@@ -91,7 +92,7 @@ export function currentJobTitle() {
   const occ = S.E?.root || S.profile?.occupationId;
   return occ && occ !== "other" && N(occ) ? N(occ).name : null;
 }
-export const nameOf = id => N(id)?.name || (isEsco(id) ? cap(escoRow(id)?.title) : S.xsNames[id]) || id;
+export const nameOf = id => N(id)?.name || (isEsco(id) ? cap(escoRow(id)?.title) : cap(S.xsNames[id])) || id;
 /** The job the map is centred on: a selected ESCO job, otherwise the catalogue job. */
 export const selJob = () => UI.escoJob || UI.job;
 /** At most this many job stars are drawn; the list can show more. */

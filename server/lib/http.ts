@@ -24,7 +24,7 @@ export const modeParam = z.enum(["closest", "safest", "fastest", "noregret"]).de
 export const scenarioQuery = z.object({
   profile: z.coerce.number().int().positive().default(1),
   year: z.coerce.number().int().min(2026).max(2030).default(2026),
-  scenario: z.enum(["moderate", "fast"]).default("moderate"),
+  scenario: z.enum(["slow", "moderate", "fast"]).default("moderate"),
   mode: modeParam,
 });
 

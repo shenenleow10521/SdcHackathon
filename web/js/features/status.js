@@ -68,7 +68,6 @@ export function renderAgents() {
   ];
   list.innerHTML = rows.map(([n, ic, d, s]) => `<li><span class="ag-ic ${s === "done" ? "" : s}"><i data-lucide="${ic}"></i></span><div><div class="an">${esc(t(n))}</div><div class="ad">${esc(d)}</div></div></li>`).join("");
   const tg = $("ag-toggle"); if (tg) tg.setAttribute("aria-label", t(tg.getAttribute("aria-expanded") === "true" ? "agent.toggle" : "agent.expand"));
-  const fresh = $("ag-fresh"); if (fresh) fresh.textContent = ls ? t("agent.ranAgo", { when: ago(ls.startedAt) }) : "";
   const btn = $("scout");
   if (btn) {
     if (sc.running) { btn.disabled = true; btn.innerHTML = `<span class="spin"></span>${esc(t("scout.runningBtn"))}`; }

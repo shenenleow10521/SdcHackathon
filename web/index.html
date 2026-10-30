@@ -15,6 +15,7 @@
 <a class="skip" href="#panel" data-i18n="a11y.skip">Skip to the planner</a>
 <div class="app">
   <aside class="side" id="side" aria-label="Career planner" data-i18n-aria="a11y.planner">
+    <div class="side-resize" id="side-resize" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Resize the panel" data-i18n-aria="a11y.resize" title="Drag to resize, double-click to reset" data-i18n-title="a11y.resizeTip"></div>
     <div class="side-head">
       <div class="brand">
         <a class="logo" href="/" data-i18n-title="head.home" title="HalaTuju home page"><span class="logo-mark" aria-hidden="true"><i data-lucide="compass"></i></span>HalaTuju</a>
@@ -37,8 +38,7 @@
               <button type="button" role="menuitem" data-menu="employer"><i data-lucide="building-2"></i><span data-i18n="menu.employer">For employers: publish requirements</span></button>
               <hr data-staff="advisor" hidden>
               <button type="button" role="menuitem" data-menu="review" data-staff="admin" hidden><i data-lucide="shield-check"></i><span data-i18n="menu.review">Knowledge review (admin)</span></button>
-              <button type="button" role="menuitem" data-menu="advisor" data-staff="advisor" hidden><i data-lucide="graduation-cap"></i><span data-i18n="menu.advisor">Advisor approvals</span></button>
-              <button type="button" role="menuitem" data-menu="hr" data-staff="advisor" hidden><i data-lucide="users"></i><span data-i18n="menu.hr">HR redeployment</span></button>
+              <button type="button" role="menuitem" data-menu="hr" data-staff="advisor" hidden><i data-lucide="users"></i><span data-i18n="menu.hr">For HR</span></button>
               <hr data-account hidden>
               <div class="menu-who" id="menu-who" data-account="in" hidden></div>
               <button type="button" role="menuitem" data-menu="signin" data-account="out" hidden><i data-lucide="log-in"></i><span data-i18n="menu.signin">Sign in or create an account</span></button>
@@ -62,7 +62,6 @@
       <div class="guide" id="guide" role="region" aria-label="Demo guide" data-i18n-aria="guide.aria" hidden></div>
       <div class="tabs" id="tabs" role="tablist" aria-label="Planner sections" data-i18n-aria="tabs.aria">
         <button class="tab" role="tab" id="tab-jobs" aria-selected="true" aria-controls="panel"><i data-lucide="compass"></i><span data-i18n="tabs.jobs">Explore</span></button>
-        <button class="tab" role="tab" id="tab-path" aria-selected="false" aria-controls="panel" tabindex="-1"><i data-lucide="flag"></i><span data-i18n="tabs.path">Plan</span></button>
         <button class="tab" role="tab" id="tab-goal" aria-selected="false" aria-controls="panel" tabindex="-1"><i data-lucide="list-checks"></i><span data-i18n="tabs.goal">My goal</span></button>
         <button class="tab" role="tab" id="tab-skills" aria-selected="false" aria-controls="panel" tabindex="-1"><i data-lucide="layers"></i><span data-i18n="tabs.skills">My skills</span></button>
       </div>
@@ -93,22 +92,21 @@
             <button class="status-dot" id="status-dot" type="button" aria-expanded="false" aria-controls="status-pop" aria-label="System status"></button>
             <span id="fresh" data-i18n="status.loading">Loading market data…</span>
           </div>
+          <button class="lg-more" id="legend-more" type="button" aria-expanded="false" aria-controls="legend-extra" data-i18n="legend.more">Map key</button>
         </div>
-        <div class="lg-row">
+        <div class="lg-row" id="legend-extra" hidden>
           <span><i class="lg" style="background:var(--n-you)"></i><span data-i18n="legend.you">You</span></span>
           <span><i class="lg" style="background:var(--n-have)"></i><span data-i18n="legend.have">Your skills</span></span>
           <span><i class="lg" style="background:var(--n-risk)"></i><span data-i18n="legend.risk">At risk</span></span>
           <span><i class="lg" style="background:var(--n-learn)"></i><span data-i18n="legend.learn">Skills to learn</span></span>
           <span><i class="lg" style="background:var(--n-job-star)"></i><span data-i18n="legend.jobs">Jobs</span></span>
           <span><i class="lg line" style="background:var(--l-path)"></i><span data-i18n="legend.path">Your route</span></span>
-          <button class="lg-more" id="legend-more" type="button" aria-expanded="false" aria-controls="legend-extra" data-i18n="legend.more">More</button>
-        </div>
-        <div class="lg-row" id="legend-extra" hidden>
           <span><i class="lg" style="background:var(--n-taken)"></i><span data-i18n="legend.taken">AI took over</span></span>
           <span><i class="lg line" style="background:var(--l-alt)"></i><span data-i18n="legend.alt">Other routes</span></span>
           <span><i class="lg line" style="background:var(--l-evolve)"></i><span data-i18n="legend.evolve">Evolves into</span></span>
         </div>
       </div>
+      <button class="route-chip glass" id="route-chip" type="button" hidden></button>
       <div class="status-pop glass" id="status-pop" role="dialog" aria-label="System status" data-i18n-aria="status.title" hidden></div>
     </div>
     <div class="toast glass" id="toast" role="status" aria-live="polite"></div>
@@ -116,16 +114,16 @@
     <div class="rerouting glass" id="rerouting" aria-hidden="true"><span class="spin"></span><span data-i18n="map.rerouting">Finding a new path…</span></div>
     <div class="tip glass" id="tip" hidden></div>
     <div class="map-card glass" id="map-card" role="region" aria-live="polite" hidden></div>
-    <button class="route-chip glass" id="route-chip" type="button" hidden></button>
     <aside class="drawer glass" id="drawer" aria-label="Details"></aside>
     <div class="dock">
       <div class="timeline glass" role="group" aria-label="Forecast" data-i18n-aria="time.aria">
-        <button class="icon-btn" id="play" type="button" aria-label="Play the forecast" data-i18n-aria="time.play"><i data-lucide="play"></i></button>
-        <label class="sr" for="year" data-i18n="time.year">Forecast year</label>
-        <input type="range" id="year" min="2026" max="2030" step="1" value="2026">
-        <span class="year" id="year-out" aria-hidden="true">2026</span>
-        <span class="seg-k" aria-hidden="true" title="How fast AI takes over work tasks by 2030, not how fast this app runs." data-i18n="scn.label" data-i18n-title="scn.hint">AI adoption</span>
-        <div class="seg" role="group" aria-label="AI adoption: how fast AI takes over work tasks" data-i18n-aria="scn.aria" title="How fast AI takes over work tasks by 2030, not how fast this app runs." data-i18n-title="scn.hint">
+        <div class="seg" role="group" aria-label="Forecast year" data-i18n-aria="time.year">
+          <button type="button" data-year="2026" aria-pressed="true" data-i18n="time.today">Today</button>
+          <button type="button" data-year="2030" aria-pressed="false">2030</button>
+        </div>
+        <span class="seg-k scn-part" aria-hidden="true" title="How fast AI takes over work tasks by 2030, not how fast this app runs." data-i18n="scn.label" data-i18n-title="scn.hint" hidden>AI adoption</span>
+        <div class="seg scn-part" role="group" aria-label="AI adoption: how fast AI takes over work tasks" data-i18n-aria="scn.aria" title="How fast AI takes over work tasks by 2030, not how fast this app runs." data-i18n-title="scn.hint" hidden>
+          <button type="button" data-scn="slow" aria-pressed="false" data-i18n="scn.slowBtn">Slow</button>
           <button type="button" data-scn="moderate" aria-pressed="true" data-i18n="scn.moderateBtn">Steady</button>
           <button type="button" data-scn="fast" aria-pressed="false" data-i18n="scn.fastBtn">Fast</button>
         </div>
@@ -141,7 +139,7 @@
   <section class="agents glass collapsed" id="agents" aria-label="AI agents" data-i18n-aria="agent.aria">
     <div class="ag-head">
       <h3><i data-lucide="bot"></i><span data-i18n="agent.title">Agents</span></h3>
-      <div class="ag-head-r"><span class="ag-fresh" id="ag-fresh"></span>
+      <div class="ag-head-r">
         <button class="ag-toggle" id="ag-toggle" type="button" aria-expanded="false" aria-controls="ag-body" aria-label="Show agents"><i data-lucide="chevron-down"></i></button></div>
     </div>
     <div class="ag-body" id="ag-body">

@@ -136,7 +136,7 @@ class Heap {
 }
 
 export interface EscoPlanOptions {
-  mode?: string; year: number; scenario: "moderate" | "fast"; now: Date;
+  mode?: string; year: number; scenario: "slow" | "moderate" | "fast"; now: Date;
   escoSkills: Set<string>;
   signals?: Record<number, SignalInfo>;
 }

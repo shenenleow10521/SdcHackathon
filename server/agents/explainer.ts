@@ -16,7 +16,7 @@ export interface FactSheet { subject: string; records: FactRecord[] }
 const r2 = (x: number) => Math.round(x * 100) / 100;
 
 /** Build the fact sheet for a job (route, match breakdown) or a skill (outlook, jobs that need it). */
-export function factSheet(graph: FullGraph, profile: Profile, opts: { node: string; mode: Mode; year: number; scenario: "moderate" | "fast"; signals?: Record<number, SignalInfo> }): FactSheet {
+export function factSheet(graph: FullGraph, profile: Profile, opts: { node: string; mode: Mode; year: number; scenario: "slow" | "moderate" | "fast"; signals?: Record<number, SignalInfo> }): FactSheet {
   const E = engineFor(graph, profile, opts.year, opts.scenario);
   const N = graph.nodes, id = opts.node, hours = profile.hours || 6;
   const n = N[id];

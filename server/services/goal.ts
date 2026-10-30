@@ -90,7 +90,7 @@ export async function escoSkillsOf(db: Db, profileId: number) {
   return new Set((await db.query<{ skill_id: string }>("select skill_id from profile_esco_skills where profile_id=$1", [profileId])).rows.map(r => r.skill_id));
 }
 
-export interface PlanOpts { year: number; scenario: "moderate" | "fast" }
+export interface PlanOpts { year: number; scenario: "slow" | "moderate" | "fast" }
 
 /** The goal job's plan, by the same code as GET /plan. */
 export async function goalPlan(svc: Services, graph: FullGraph, p: Profile, g: Goal, o: PlanOpts) {

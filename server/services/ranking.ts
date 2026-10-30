@@ -28,7 +28,7 @@ function order(jobs: string[], score: (j: string) => number) {
 }
 
 /** SDG-aware ranking with the trade-off against the top job without the SDG. */
-export function rankBySdg(graph: FullGraph, profile: Profile, opts: { sdg: number; year: number; scenario: "moderate" | "fast"; mode?: Mode }) {
+export function rankBySdg(graph: FullGraph, profile: Profile, opts: { sdg: number; year: number; scenario: "slow" | "moderate" | "fast"; mode?: Mode }) {
   const E = engineFor(graph, profile, opts.year, opts.scenario);
   const mode = opts.mode ?? "fastest";
   const hours = profile.hours || PARAMS.referenceHours;
@@ -54,7 +54,7 @@ export function rankBySdg(graph: FullGraph, profile: Profile, opts: { sdg: numbe
 }
 
 /** Jobs for the map. sector 'best' = top 4 by rank (with the SDG bonus if one is chosen), always keeping a stay-and-adapt option. */
-export function mapJobs(graph: FullGraph, profile: Profile, opts: { sector: string; sdg?: number | null; year: number; scenario: "moderate" | "fast"; mode: Mode }) {
+export function mapJobs(graph: FullGraph, profile: Profile, opts: { sector: string; sdg?: number | null; year: number; scenario: "slow" | "moderate" | "fast"; mode: Mode }) {
   const E = engineFor(graph, profile, opts.year, opts.scenario);
   const hours = profile.hours || PARAMS.referenceHours;
   const score = (j: string) => scoreWithSdg(E, graph, j, opts.sdg);

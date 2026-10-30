@@ -1,4 +1,4 @@
-// Full-width sheets for the people around the worker: the advisor's approval queue, the HR redeployment view
+// Full-width sheets for the people around the worker: "For HR" (redeployment, and plans to approve)
 // and the employer requirements form. Each loads on open and shows loading / empty / error states.
 import { S, actions, nameOf, profileId } from "../state.js";
 import { get, post, put } from "../api.js";
@@ -20,7 +20,7 @@ export function openSheet(kind, arg) {
   body.innerHTML = loadingBox();
   icons();
   setTimeout(() => $("sheet-close").focus(), 20);
-  ({ advisor: loadAdvisor, hr: loadHr, employer: renderEmployerForm, esco: () => loadEscoJob(arg), escoBest: loadEscoBest })[kind]?.();
+  ({ hr: () => openHr(arg), employer: renderEmployerForm, esco: () => loadEscoJob(arg), escoBest: loadEscoBest })[kind]?.();
 }
 export function closeSheet() {
   $("sheet").hidden = true; current = null;
@@ -144,18 +144,45 @@ function escoTasks(on) {
     <p class="src">${esc(t("esco.tasksSrc", { title: on.title, match: t("esco.match." + on.match) }))}</p>`;
 }
 
-// ---------- advisor ----------
+// ---------- For HR: one sheet, two tabs (Redeployment, Plans to approve) ----------
+// In the employer plan the HR person is also the one who signs off a worker's plan, so both live here.
+let hrTab = "team";
+const HR_TABS = ["team", "plans"];
+const pane = tab => (still("hr") && hrTab === tab ? $("hr-pane") : null);
+function openHr(tab) {
+  if (HR_TABS.includes(tab)) hrTab = tab;
+  body().innerHTML = `<div class="seg seg-wide hr-tabs" role="tablist" aria-label="${esc(t("sheet.hr"))}">${HR_TABS.map(k => `<button type="button" role="tab" data-hr-tab="${k}" aria-selected="${hrTab === k}" aria-pressed="${hrTab === k}">${esc(t("hr.tab." + k))}<span class="count" data-hr-count="${k}" hidden></span></button>`).join("")}</div>
+    <div id="hr-pane"></div>`;
+  body().querySelectorAll("[data-hr-tab]").forEach(b => b.addEventListener("click", () => {
+    if (b.dataset.hrTab === hrTab) return;
+    hrTab = b.dataset.hrTab;
+    body().querySelectorAll("[data-hr-tab]").forEach(x => { const on = x === b; x.setAttribute("aria-selected", String(on)); x.setAttribute("aria-pressed", String(on)); });
+    showHrTab();
+  }));
+  showHrTab();
+  countPlans();
+}
+function showHrTab() { $("hr-pane").innerHTML = loadingBox(); (hrTab === "plans" ? loadAdvisor : loadHr)(); }
+// the number of plans waiting, on the tab, so HR sees there is something to approve without opening it
+async function countPlans() {
+  try {
+    const n = ((await get("/advisor/queue")).plans || []).length, c = still("hr") ? body().querySelector('[data-hr-count="plans"]') : null;
+    if (c) { c.textContent = n; c.hidden = !n; }
+  } catch { /* the tab still works without the count */ }
+}
+
+// ---------- plans to approve ----------
 async function loadAdvisor() {
   let res;
   try { res = await get("/advisor/queue"); }
-  catch (e) { if (!still("advisor")) return; body().innerHTML = failBox(e, "advisor", "adv"); bindRetry(body(), { adv: loadAdvisor }); icons(); return; }
-  if (!still("advisor")) return;
+  catch (e) { const o = pane("plans"); if (!o) return; o.innerHTML = failBox(e, "hr", "adv"); bindRetry(o, { adv: loadAdvisor }); icons(); return; }
+  const o = pane("plans"); if (!o) return;
   const plans = res.plans || [];
-  body().innerHTML = `<p class="note">${esc(t("adv.intro"))}</p>
+  o.innerHTML = `<p class="note">${esc(t("adv.intro"))}</p>
     ${plans.some(p => p.profile?.isDemo) ? `<p class="src">${esc(t("adv.sampleNote"))}</p>` : ""}
     ${plans.length ? `<div class="adv-list">${plans.map(advCard).join("")}</div>` : `<div class="empty">${esc(t("adv.empty"))}</div>`}`;
   icons();
-  body().querySelectorAll("[data-decide]").forEach(b => b.addEventListener("click", () => decide(b.dataset.plan, b.dataset.decide)));
+  o.querySelectorAll("[data-decide]").forEach(b => b.addEventListener("click", () => decide(b.dataset.plan, b.dataset.decide)));
 }
 
 function advCard(p) {
@@ -163,7 +190,7 @@ function advCard(p) {
   const stops = routeNodes(p.route).slice(1, -1);
   return `<article class="adv-card" data-plan-card="${esc(p.id)}">
     <div class="adv-top"><div><div class="rv-t">${esc(pr.displayName || t("adv.someone"))}</div>
-      <div class="rs">${esc(pr.occupationTitle || nameOf(pr.occupationId))} → <b>${esc(p.title || nameOf(p.job))}</b></div>
+      <div class="rs">${esc(cap(pr.occupationTitle) || nameOf(pr.occupationId))} → <b>${esc(cap(p.title) || nameOf(p.job))}</b></div>
       <div class="rs">${esc(t("adv.route", { mode: t("mode." + (p.mode || "fastest")) }))}</div></div>
       <div class="adv-when">${statusBadge(p.status)}<span class="rs">${esc(t("adv.sent", { when: ago(p.sentAt || p.updatedAt) }))}</span></div></div>
     <dl class="sheet-kv tn"><dt>${esc(t("adv.match"))}</dt><dd>${esc(pr.matchNow ?? "–")}%</dd><dt>${esc(t("adv.weeks"))}</dt><dd>${esc(p.weeks ?? "–")}</dd><dt>${esc(t("adv.hours"))}</dt><dd>${esc(pr.hours ?? "–")}</dd>${pr.targetDate ? `<dt>${esc(t("adv.target"))}</dt><dd>${esc(fmtDate(pr.targetDate))}</dd>` : ""}</dl>
@@ -184,7 +211,7 @@ async function decide(id, decision) {
     await post(`/plans/${id}/decision`, note ? { decision, note } : { decision });
     toast({ title: t(decision === "approve" ? "adv.approvedToast" : "adv.changesToast"), badgeHtml: badge(decision === "approve" ? "b-good" : "b-warn", t(decision === "approve" ? "plan.status.approved" : "plan.status.changes")) });
     await actions.reloadPlans?.();
-    loadAdvisor();
+    loadAdvisor(); countPlans();
   } catch (e) {
     btns.forEach(b => b.disabled = false);
     toast({ title: t("state.failed"), detail: e.notAvailable ? t("state.notAvailable") : e.message, badgeHtml: badge("b-crit", t("state.error")) });
@@ -196,20 +223,20 @@ let hrEmployer = null;
 async function loadHr() {
   let emps;
   try { emps = ((await get("/employers")).employers || []).filter(e => !isTestEmployer(e)); }
-  catch (e) { if (!still("hr")) return; body().innerHTML = failBox(e, "hr", "hr"); bindRetry(body(), { hr: loadHr }); icons(); return; }
-  if (!still("hr")) return;
-  if (!emps.length) { body().innerHTML = `<div class="empty">${esc(t("hr.noEmployers"))}</div>`; return; }
+  catch (e) { const o = pane("team"); if (!o) return; o.innerHTML = failBox(e, "hr", "hr"); bindRetry(o, { hr: loadHr }); icons(); return; }
+  const o = pane("team"); if (!o) return;
+  if (!emps.length) { o.innerHTML = `<div class="empty">${esc(t("hr.noEmployers"))}</div>`; return; }
   // open on the first employer that has a team (the sample shared services centre), not an empty one
   if (!hrEmployer || !emps.some(e => e.id === hrEmployer)) hrEmployer = (emps.find(e => e.hasTeam) || emps.find(e => e.source === "sample") || emps[0]).id;
-  body().innerHTML = `<div class="hr-pick"><label for="hr-emp">${esc(t("hr.employer"))}</label><select id="hr-emp" class="select">${emps.map(e => `<option value="${esc(e.id)}" ${e.id === hrEmployer ? "selected" : ""}>${esc(e.name)}</option>`).join("")}</select>
-    <span class="rs">${esc(t("hr.scenario", { year: S.year, scenario: t("scn." + S.scenario) }))}</span></div><div id="hr-out">${loadingBox(t("hr.loading"))}</div>`;
-  body().querySelector("#hr-emp").addEventListener("change", e => { hrEmployer = Number(e.target.value); loadTeam(); });
+  o.innerHTML = `<div class="hr-pick"><label for="hr-emp">${esc(t("hr.employer"))}</label><select id="hr-emp" class="select">${emps.map(e => `<option value="${esc(e.id)}" ${e.id === hrEmployer ? "selected" : ""}>${esc(e.name)}</option>`).join("")}</select>
+    <span class="rs">${esc(S.year < 2030 ? t("hr.today") : t("hr.scenario", { year: S.year, scenario: t("scn." + S.scenario) }))}</span></div><div id="hr-out">${loadingBox(t("hr.loading"))}</div>`;
+  o.querySelector("#hr-emp").addEventListener("change", e => { hrEmployer = Number(e.target.value); loadTeam(); });
   icons();
   loadTeam();
 }
 
 async function loadTeam() {
-  const out = () => (still("hr") ? $("hr-out") : null);
+  const out = () => (pane("team") ? $("hr-out") : null);
   if (out()) out().innerHTML = loadingBox(t("hr.loading"));
   let r;
   try { r = await get(`/hr/${hrEmployer}/redeployment`, { year: S.year, scenario: S.scenario }); }
@@ -217,19 +244,21 @@ async function loadTeam() {
   const o = out(); if (!o) return;
   const tot = r.totals || {}, team = r.team || [], roles = r.openRoles || [], asg = r.assignment || [];
   const byPerson = Object.fromEntries(asg.map(a => [a.profileId, a]));
+  // Courses without a listed price add RM 0 to a total, so say how many were left out.
+  const cost = (v, n) => rm(v) + (n ? `<div class="rs">${esc(t(n === 1 ? "hr.costUnknown1" : "hr.costUnknownN", { n }))}</div>` : "");
   o.innerHTML = `${r.employer?.isSample || r.note ? `<p class="src">${esc(r.note || t("hr.sampleNote"))}</p>` : ""}
     <div class="hr-sum"><p class="esco-big tn">${esc(t("hr.placedOf", { n: tot.assigned ?? asg.length, total: tot.people ?? team.length }))}</p>
-      <dl class="sheet-kv tn"><dt>${esc(t("hr.openingsTotal"))}</dt><dd>${esc(tot.openings ?? "–")}</dd><dt>${esc(t("hr.onTime"))}</dt><dd>${esc(tot.onTime ?? "–")}</dd><dt>${esc(t("hr.cost"))}</dt><dd>${rm(tot.costRm)}</dd><dt>${esc(t("hr.hrdLabel"))}</dt><dd>${rm(tot.hrdClaimableRm)}</dd></dl></div>
+      <dl class="sheet-kv tn"><dt>${esc(t("hr.openingsTotal"))}</dt><dd>${esc(tot.openings ?? "–")}</dd><dt>${esc(t("hr.onTime"))}</dt><dd>${esc(tot.onTime ?? "–")}</dd><dt>${esc(t("hr.cost"))}</dt><dd>${cost(tot.costRm, tot.unknownCostCount)}</dd><dt>${esc(t("hr.hrdLabel"))}</dt><dd>${rm(tot.hrdClaimableRm)}</dd></dl></div>
     <div class="sec" id="hr-progress"></div>
-    <div class="sec"><h3>${esc(t("hr.roles"))}</h3>${roles.length ? `<ul class="alt-list esco-rows">${roles.map(x => `<li><span class="esco-row-main"><span>${esc(x.title || nameOf(x.job))}</span><small class="rs">${esc(t("hr.by", { date: fmtDate(x.deadline) }))}</small></span><span class="esco-row-end tn">${esc(t("hr.openingsN", { n: x.openings }))}${x.openingsLeft ? `<small class="rs">${esc(t("hr.left", { n: x.openingsLeft }))}</small>` : ""}</span></li>`).join("")}</ul>` : `<p class="note">${esc(t("hr.noRoles"))}</p>`}</div>
+    <div class="sec"><h3>${esc(t("hr.roles"))}</h3>${roles.length ? `<ul class="alt-list esco-rows">${roles.map(x => `<li><span class="esco-row-main"><span>${esc(x.title || nameOf(x.job))}</span><small class="rs">${esc(t("hr.by", { date: fmtDate(x.deadline) }))}</small></span><span class="esco-row-end tn">${esc(t(x.openings === 1 ? "hr.openings1" : "hr.openingsN", { n: x.openings }))}${x.openingsLeft ? `<small class="rs">${esc(t("hr.left", { n: x.openingsLeft }))}</small>` : ""}</span></li>`).join("")}</ul>` : `<p class="note">${esc(t("hr.noRoles"))}</p>`}</div>
     <div class="sec"><h3>${esc(t("hr.team"))}</h3>
     ${team.length ? `<div class="tbl-wrap"><table class="tbl hr-tbl"><thead><tr><th>${esc(t("hr.col.person"))}</th><th>${esc(t("hr.col.move"))}</th><th>${esc(t("hr.col.match"))}</th><th>${esc(t("hr.col.weeks"))}</th><th>${esc(t("hr.col.cost"))}</th><th>${esc(t("hr.col.ontime"))}</th></tr></thead><tbody>
       ${team.map(m => { const a = byPerson[m.profileId]; const best = a || [...(m.options || [])].sort((x, y) => y.match - x.match)[0];
         return `<tr><td><b>${esc(m.name)}</b><div class="rs">${esc(m.current?.title || "")}</div><div class="rs">${esc(t("hr.hoursWk", { h: m.hours ?? "–" }))}</div></td>
           <td>${best ? esc(nameOf(best.job)) : "–"}${a ? "" : best ? `<div class="rs">${esc(t("hr.notAssigned"))}</div>` : ""}</td>
-          <td class="r tn">${best ? esc(best.match) + "%" : "–"}</td><td class="r tn">${best?.weeks ?? "–"}</td><td class="r tn">${best ? rm(best.costRm) : "–"}</td>
+          <td class="r tn">${best ? esc(best.match) + "%" : "–"}</td><td class="r tn">${best?.weeks ?? "–"}</td><td class="r tn">${best ? cost(best.costRm, best.unknownCostCount) : "–"}</td>
           <td class="r">${best ? ((a ? true : best.onTime) ? esc(t("hr.yes")) : `<span class="hr-late">${esc(t("hr.no"))}</span>`) : "–"}${best?.readyBy ? `<div class="rs">${esc(fmtDate(best.readyBy))}</div>` : ""}</td></tr>
-          ${(m.options || []).length > 1 ? `<tr class="opt-row"><td colspan="6"><details><summary>${esc(t("hr.allOptions", { n: m.options.length }))}</summary><table class="tbl hr-opts"><tbody>${m.options.map(op => `<tr><td>${esc(op.title || nameOf(op.job))}</td><td class="r tn">${esc(op.match)}%</td><td class="r tn">${op.weeks != null ? esc(t("common.weeksN", { w: op.weeks })) : "–"}</td><td class="r tn">${rm(op.costRm)}</td><td class="r">${op.onTime ? esc(t("hr.onTimeShort")) : `<span class="hr-late">${esc(t("hr.late"))}</span>`}</td></tr>`).join("")}</tbody></table></details></td></tr>` : ""}`;
+          ${(m.options || []).length > 1 ? `<tr class="opt-row"><td colspan="6"><details><summary>${esc(t("hr.allOptions", { n: m.options.length }))}</summary><table class="tbl hr-opts"><tbody>${m.options.map(op => `<tr><td>${esc(op.title || nameOf(op.job))}</td><td class="r tn">${esc(op.match)}%</td><td class="r tn">${op.weeks != null ? esc(t("common.weeksN", { w: op.weeks })) : "–"}</td><td class="r tn">${cost(op.costRm, op.unknownCostCount)}</td><td class="r">${op.onTime ? esc(t("hr.onTimeShort")) : `<span class="hr-late">${esc(t("hr.late"))}</span>`}</td></tr>`).join("")}</tbody></table></details></td></tr>` : ""}`;
       }).join("")}</tbody></table></div>` : `<div class="empty">${esc(t("hr.noTeam"))}</div>`}</div>
     ${(r.unassigned || []).length ? `<div class="sec"><h3>${esc(t("hr.unassigned"))}</h3><ul class="handled">${r.unassigned.map(u => `<li><i data-lucide="minus"></i><div><b>${esc(u.name)}</b>${esc(u.reason)}</div></li>`).join("")}</ul></div>` : ""}
     ${r.rule ? `<p class="src">${esc(r.rule)}</p>` : ""}`;

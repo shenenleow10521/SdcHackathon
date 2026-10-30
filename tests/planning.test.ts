@@ -171,6 +171,11 @@ describe("GET /plan, /map, /rank", () => {
     expect((await request(app).get("/api/plan?job=esgRole&mode=quick")).status).toBe(400);
     expect((await request(app).get("/api/plan?job=recon")).status).toBe(404); // a skill, not a job
   });
+  it("accepts the Slow, Steady and Fast AI paces, and nothing else", async () => {
+    const app = createApp(svc);
+    for (const s of ["slow", "moderate", "fast"]) expect((await request(app).get(`/api/plan?job=esgRole&year=2030&scenario=${s}`)).status).toBe(200);
+    expect((await request(app).get("/api/plan?job=esgRole&scenario=turbo")).status).toBe(400);
+  });
   it("sources include approved signals that changed a node on the plan, with their URL", async () => {
     const s2 = await testServices();
     const sig = await s2.db.query<{ id: number }>(`insert into signals(node_id, kind, title, delta_e, triage, status, source_url, source_date)

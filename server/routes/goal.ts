@@ -27,7 +27,7 @@ const idParam = z.object({ id: z.coerce.number().int().positive() });
 const stepParams = idParam.extend({ skillId: z.string().min(1).max(60) });
 const planQuery = z.object({
   year: z.coerce.number().int().min(2026).max(2030).default(2026),
-  scenario: z.enum(["moderate", "fast"]).default("moderate"),
+  scenario: z.enum(["slow", "moderate", "fast"]).default("moderate"),
 });
 const goalBody = z.object({
   job: z.string().trim().min(1).max(60),

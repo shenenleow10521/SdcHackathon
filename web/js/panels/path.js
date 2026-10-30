@@ -5,7 +5,7 @@
 // Steps show hours (they add up exactly); only the total is in weeks, with its hours shown. Progress on your goal lives
 // in the My goal tab (renderGoal below).
 // Below: the future stress test, and (collapsed) facts about the job, then cost, deadline and sending the plan to an advisor.
-import { S, UI, D, N, nameOf, W, actions, profileId, kindOf, matchOf, currentJobTitle, escoRow, escoPlanWeeks, isAiEra } from "../state.js";
+import { S, UI, D, N, nameOf, cap, W, actions, profileId, kindOf, matchOf, currentJobTitle, escoRow, escoPlanWeeks, isAiEra } from "../state.js";
 import { normMode, stressTest, yearOf } from "/shared/engine.js";
 import { get } from "../api.js";
 import { t } from "../i18n.js";
@@ -72,7 +72,14 @@ function alsoRows(items) {
   return [`<li class="step-sub">${esc(t("path.alsoH", { n: items.length }))}</li>`, ...rows,
     ...(more > 0 && !UI.alsoAll ? [`<li class="step-more"><button class="link-btn" type="button" id="also-all">${esc(t("path.alsoMore", { n: more }))}</button></li>`] : [])];
 }
-const estText = m => (m.estimated ? t("path.estShort") : "");
+
+// "+N more skills with this step": collapsed under a key step, the same skills as that step's cluster on the map
+function groupRows(node, items) {
+  if (!items.length) return [];
+  const open = !!UI.grpOpen?.has(node), h = items.reduce((a, x) => a + (x.hours || 0), 0);
+  return [`<li class="step-grp"><button class="grp-tg" type="button" data-grp="${esc(node)}" aria-expanded="${open}"><i data-lucide="chevron-right"></i><span>${esc(t(items.length === 1 ? "path.grp1" : "path.grpN", { n: items.length }))}</span>${h ? `<span class="grp-h">${esc(t("common.hours", { h: Math.round(h) }))}</span>` : ""}</button></li>`,
+    ...items.map(x => x.html.replace('<li class="step', `<li data-grp-of="${esc(node)}"${open ? "" : " hidden"} class="step also grp-item`))];
+}
 
 /** Match explained: skills you have, and those you have partly (a lower level or a close skill), which count part-way. */
 function haveLine(a, c, b, match) {
@@ -117,6 +124,9 @@ function aboutHtml(j) {
     </details>`;
 }
 
+// Back to the job list: the route page lives under Explore, like a map app's directions
+const backRow = () => `<button class="link-btn path-back" type="button" data-tab-jobs><i data-lucide="arrow-left"></i>${esc(t("path.back"))}</button>`;
+
 export function render() {
   if (UI.escoJob && escoRow(UI.escoJob)) return escoRender();
   const E = S.E, j = UI.job, g = goal();
@@ -134,11 +144,12 @@ export function render() {
       ${haveLine(cov.filter(c => c >= 1).length, cov.filter(c => c > 0 && c < 1).length, req.length, matchOf(j))}
       ${UI.employer ? `<div class="emp-chip">${badge("b-info", t("emp.at", { name: UI.employer.name }), "building-2")}<button class="ghost sm" type="button" id="emp-clear"><i data-lucide="x"></i>${esc(t("emp.clear"))}</button></div>` : ""}
       ${sum}
+      ${stressLine(j)}
       ${mine ? `<button class="link-btn goal-back" type="button" data-tab-goal><i data-lucide="list-checks"></i>${esc(t("goal.seeProgress"))}</button>` : `<button class="btn btn-primary goal-set" id="goal-set" type="button" ${p?.route ? "" : "disabled"}><i data-lucide="flag"></i>${esc(t(g ? "goal.switch" : "goal.set"))}</button>
         ${goalNote(g)}`}
     </header>`;
   const options = routeChoice(j);
-  if (!p?.route) return `<div class="stack">${head}<p class="note">${esc(t("path.noRouteBody", { year: S.year }))}</p>${aboutHtml(j)}</div>`;
+  if (!p?.route) return `<div class="stack">${backRow()}${head}<p class="note">${esc(t("path.noRouteBody", { year: S.year }))}</p>${aboutHtml(j)}</div>`;
 
   const done = new Set(mine ? g.done : []);
   const hoursOf = id => (p.missing || []).find(m => m.id === id)?.hours ?? null;
@@ -155,14 +166,14 @@ export function render() {
       const also = (p.missing || []).filter(m => !m.key).map(m => ({ html: stepRow({
         kind: m.kind, node: m.id, hours: m.hours, done: done.has(m.id),
         title: m.kind === "upskill" ? t("path.upTitle", { name: nameOf(m.id), from: m.levelFrom, to: m.levelTo }) : nameOf(m.id),
-        sub: [UI.employerReq.some(r => r.skill === m.id) ? t("emp.extraStop", { name: UI.employer?.name || "" }) : "", estText(m)].filter(Boolean).join(", "),
+        sub: UI.employerReq.some(r => r.skill === m.id) ? t("emp.extraStop", { name: UI.employer?.name || "" }) : "",
       }) }));
       rows.push(...alsoRows(also));
       rows.push(stepRow({ kind: "arrive", title: nameOf(l.to), sub: t("path.arrive"), node: l.to }));
     }
   });
   return `<div class="stack">
-    ${head}
+    ${backRow()}${head}
     <section><h3 class="sec-h">${esc(t("path.routeYours"))}<span class="sec-meta">${esc(t("mode." + normMode(UI.mode)))}</span></h3>
       ${options}
       <ol class="steps">${rows.join("")}</ol>
@@ -170,7 +181,7 @@ export function render() {
     ${stressHtml(j)}
     ${aboutHtml(j)}
     <details class="more" id="plan-more"${UI.planMore ? " open" : ""}>
-      <summary><span>${esc(t("path.more"))}</span><i class="chev" data-lucide="chevron-down"></i></summary>
+      <summary><span>${esc(t(onTeam() ? "path.more" : "path.moreSolo"))}</span><i class="chev" data-lucide="chevron-down"></i></summary>
       <div class="more-in">
         <div id="plan-server">${serverHtml()}</div>
         <div id="plan-save">${saveHtml()}</div>
@@ -183,7 +194,7 @@ export function render() {
 function escoRender() {
   const id = UI.escoJob, r = escoRow(id), g = goal();
   const xp = S.escoPlan && S.escoPlan.id === id ? S.escoPlan : null;
-  const mid = k => (N(k) ? k : "xs:" + k), nm = k => (N(k) ? nameOf(k) : xp?.names[k] || nameOf(mid(k)));
+  const mid = k => (N(k) ? k : "xs:" + k), nm = k => (N(k) ? nameOf(k) : cap(xp?.names[k]) || nameOf(mid(k)));
   const c = xp?.counts, have = c?.have ?? r.have, close = c?.related ?? r.close ?? 0, n = c?.essential ?? r.essential;
   const head = `<header class="goal-head">
       <div class="goal-k"><span>${esc(t("goal.preview"))}</span><span class="goal-kind">${esc(r.isCurrent ? t("jobs.currentStay") : t("jobs.change"))}</span></div>
@@ -193,8 +204,8 @@ function escoRender() {
       ${goalNote(g)}
     </header>`;
   const details = `<button class="btn btn-ghost sm" type="button" data-esco-sheet="${esc(id.slice(5))}"><i data-lucide="info"></i>${esc(t("jobs.escoDetails"))}</button>`;
-  if (!xp) return `<div class="stack">${head}${loadingBox(t("jobs.escoLoading"))}</div>`;
-  if (xp.none || !xp.route) return `<div class="stack">${head}${details}</div>`;
+  if (!xp) return `<div class="stack">${backRow()}${head}${loadingBox(t("jobs.escoLoading"))}</div>`;
+  if (xp.none || !xp.route) return `<div class="stack">${backRow()}${head}${details}</div>`;
   // the route choice: "Safer route available" (only sent when it differs), or on the safer route a way back
   const safest = normMode(UI.mode) === "safest";
   const options = xp.safer && !safest ? card("safest", t("path.saferH"), saferLine(xp.safer.avoids || [], nm), xp.safer.addedWeeks != null ? `<span class="risk">${esc(saferWeeks(xp.safer.addedWeeks))}</span>` : "")
@@ -202,17 +213,26 @@ function escoRender() {
   let k = 0;
   const rows = [stepRow({ kind: "start", title: currentJobTitle() ? t("path.youToday", { job: currentJobTitle() }) : t("path.youTodayNoJob"), node: S.E.root })];
   const onRoute = new Set(xp.route), missOf = node => (xp.missing || []).find(m => mid(m.id) === node);
+  // the other skills to build sit under the key step they're learned with, like the "+N" clusters on the map
+  const byStep = new Map(), loose = [];
+  (xp.missing || []).filter(m => !onRoute.has(mid(m.id))).forEach(m => {
+    const at = m.group && onRoute.has(mid(m.group)) ? mid(m.group) : null;
+    if (at) { if (!byStep.has(at)) byStep.set(at, []); byStep.get(at).push(m); } else loose.push(m);
+  });
+  const subRow = m => stepRow({ kind: "reskill", title: cap(m.name) || nm(m.id), hours: m.hours, node: mid(m.id) });
   xp.route.slice(1, -1).forEach(node => {
     const ai = isAiEra(node);
     if (kindOf(node) === "have") rows.push(stepRow({ kind: "reuse", title: nameOf(node), sub: t("path.haveIt"), node }));
-    else rows.push(stepRow({ kind: "reskill", title: nameOf(node), sub: ai ? t("aiEra.badge") : "", hours: missOf(node)?.hours ?? (xp.legWeeks?.[node] != null ? xp.legWeeks[node] * 6 : null), node, n: ++k }));
+    else {
+      rows.push(stepRow({ kind: "reskill", title: nameOf(node), sub: ai ? t("aiEra.badge") : "", hours: missOf(node)?.hours ?? (xp.legWeeks?.[node] != null ? xp.legWeeks[node] * 6 : null), node, n: ++k }));
+      rows.push(...groupRows(node, (byStep.get(node) || []).map(m => ({ hours: m.hours, html: subRow(m) }))));
+    }
   });
-  const also = (xp.missing || []).filter(m => !onRoute.has(mid(m.id))).map(m => ({ html: stepRow({ kind: "reskill", title: m.name || nm(m.id), sub: [m.group ? t("path.gapGroup", { name: nm(m.group) }) : "", estText(m)].filter(Boolean).join(", "), hours: m.hours, node: mid(m.id) }) }));
-  rows.push(...alsoRows(also));
+  rows.push(...alsoRows(loose.map(m => ({ html: subRow(m) }))));
   rows.push(stepRow({ kind: "arrive", title: nameOf(id), sub: t("path.arrive"), node: id }));
   const emerging = (xp.emerging || []).length ? `<div class="esco-emg"><span class="esco-emg-k">${esc(t("jobs.escoEmerging"))}</span>${xp.emerging.slice(0, 3).map(e => `<button class="link-btn" type="button" data-xs="xs:${esc(e)}">${esc(nameOf("xs:" + e))}</button>`).join("")}</div>` : "";
   return `<div class="stack">
-    ${head}
+    ${backRow()}${head}
     <section><h3 class="sec-h">${esc(t("path.routeYours"))}<span class="sec-meta">${esc(t("mode." + normMode(UI.mode)))}</span></h3>
       ${options}
       <ol class="steps">${rows.join("")}</ol>
@@ -229,7 +249,7 @@ export const bindGoal = el => bindGoalTab(el);
 // ---------- future stress test: the plan replayed in 1,000 simulated futures ----------
 // 1,000 runs take a few milliseconds, so they run on the main thread; results are cached per plan.
 const stressCache = new Map();
-function stressHtml(j) {
+function stressRun(j) {
   let r;
   try {
     const p = S.profile;
@@ -245,8 +265,19 @@ function stressHtml(j) {
       if (stressCache.size > 50) stressCache.clear();
       stressCache.set(key, r);
     }
-  } catch (e) { console.warn("stress test failed", e); return ""; }
-  if (!r.route) return "";
+  } catch (e) { console.warn("stress test failed", e); return null; }
+  return r;
+}
+/** One line under the weeks figure: the stress-test result, linking down to its chart. */
+function stressLine(j) {
+  const r = stressRun(j);
+  if (!r?.route) return "";
+  const tone = r.rate >= 90 ? "good" : r.rate >= 67 ? "warn" : "crit";
+  return `<button class="link-btn stress-jump t-${tone}" type="button" data-jump-stress><i data-lucide="${tone === "good" ? "shield-check" : "shield-alert"}"></i>${esc(t("stress.short", { pct: r.rate + "%", n: r.runs.toLocaleString("en-US") }))}</button>`;
+}
+function stressHtml(j) {
+  const r = stressRun(j);
+  if (!r?.route) return "";
   const tone = r.rate >= 90 ? "good" : r.rate >= 67 ? "warn" : "crit";
   const pctOf = share => (share < 1 ? t("stress.under1") : Math.round(share) + "%");
   const skillName = x => (x.skill ? nameOf(x.skill) : "");
@@ -261,10 +292,33 @@ function stressHtml(j) {
   const inputs = ["speed", "estimate", "hours", "weeks", "deadline"].map(k => `<li>${esc(t("stress.in." + k, { h: S.profile.hours }))}</li>`).join("");
   return `<section class="stress"><h3 class="sec-h">${esc(t("stress.title"))}</h3>
     <p class="stress-v t-${tone}">${head}</p>
-    <div class="stress-bar t-${tone}" aria-hidden="true"><span style="width:${r.rate}%"></span></div>
+    ${futuresChart(r)}
     ${pats ? `<div class="sub-h">${esc(t("stress.patterns"))}</div><ul class="alt-list">${pats}</ul>` : ""}
     ${fixes ? `<div class="sub-h">${esc(t("stress.sturdier"))}</div><ul class="alt-list">${fixes}</ul>` : ""}
     <details class="src-details"><summary>${esc(t("stress.how"))}</summary><p class="src">${esc(t("stress.intro", { n: runs }))}</p><ul class="src stress-in">${inputs}</ul><p class="src">${esc(t("stress.method"))}</p></details></section>`;
+}
+
+// When you're job-ready across the futures: one column per week, the part where the plan holds in green, where it
+// fails in red, and the range that 8 in 10 futures fall in.
+function futuresChart(r) {
+  const f = r.futures || [];
+  if (!f.length) return "";
+  const ws = f.map(x => x.weeks).sort((a, b) => a - b);
+  const q = p => ws[Math.floor(p * (ws.length - 1))];
+  const lo = ws[0], hi = ws[ws.length - 1], step = Math.max(1, Math.ceil((hi - lo + 1) / 28));
+  const bins = Array.from({ length: Math.floor((hi - lo) / step) + 1 }, (_, i) => ({ from: lo + i * step, ok: 0, bad: 0 }));
+  f.forEach(x => { const b = bins[Math.floor((x.weeks - lo) / step)]; if (x.ok) b.ok++; else b.bad++; });
+  const max = Math.max(...bins.map(b => b.ok + b.bad));
+  const a = q(0.1), b = q(0.9), bad = f.length - f.filter(x => x.ok).length;
+  const wk = b0 => (step === 1 ? String(b0.from) : `${b0.from}–${b0.from + step - 1}`);
+  const cols = bins.map(c => `<div class="fc-col" title="${esc(t("stress.binTip", { n: c.ok + c.bad, w: wk(c), bad: c.bad }))}">
+      ${c.bad ? `<span class="fc-bad" style="height:${(100 * c.bad / max).toFixed(1)}%"></span>` : ""}${c.ok ? `<span class="fc-ok" style="height:${(100 * c.ok / max).toFixed(1)}%"></span>` : ""}</div>`).join("");
+  return `<figure class="fc" aria-label="${esc(t("stress.range", { a, b }))}">
+    <p class="fc-range">${esc(a === b ? t("stress.rangeOne", { a }) : t("stress.range", { a, b }))}</p>
+    <div class="fc-bars">${cols}</div>
+    <div class="fc-axis"><span>${esc(t("stress.wk", { n: lo }))}</span><span>${esc(t("stress.wk", { n: hi }))}</span></div>
+    <figcaption class="fc-key"><span><i class="fc-ok"></i>${esc(t("stress.kOk", { n: (f.length - bad).toLocaleString("en-US") }))}</span>${bad ? `<span><i class="fc-bad"></i>${esc(t("stress.kBad", { n: bad.toLocaleString("en-US") }))}</span>` : ""}</figcaption>
+  </figure>`;
 }
 
 // ---------- server plan: deadline + cost ----------
@@ -329,15 +383,21 @@ function ensureServer() {
 }
 
 // ---------- send to an advisor ----------
+const onTeam = () => S.profile?.employerId != null;
 function saveHtml() {
   const mine = plansForJob(UI.job);
   const latest = mine[0];
   const pend = mine.find(p => pendingOf(p));
   const sample = S.profileFallback;
+  // a keep-or-switch offer from a knowledge change shows for everyone (setting a goal saves the plan)
+  const offer = pend ? `<div class="reroute-card">${badge("b-warn", t("reroute.badge"), "route")}<p>${esc(t("reroute.offer", { route: routeText(pendingOf(pend)) }))}</p>
+      <div class="rv-actions"><button class="btn btn-primary" type="button" data-route="switch" data-plan="${esc(pend.id)}"><i data-lucide="shuffle"></i>${esc(t("reroute.switch"))}</button><button class="btn btn-soft" type="button" data-route="keep" data-plan="${esc(pend.id)}">${esc(t("reroute.keep"))}</button></div></div>` : "";
+  // Sign-off is only for people on an employer's team (HR approves before the company pays or moves them);
+  // someone planning on their own decides by setting the goal.
+  if (!onTeam()) return offer ? `<div class="msec">${offer}</div>` : "";
   return `<div class="msec">
     <h4>${esc(t("plan.advisorH"))}</h4>
-    ${pend ? `<div class="reroute-card">${badge("b-warn", t("reroute.badge"), "route")}<p>${esc(t("reroute.offer", { route: routeText(pendingOf(pend)) }))}</p>
-      <div class="rv-actions"><button class="btn btn-primary" type="button" data-route="switch" data-plan="${esc(pend.id)}"><i data-lucide="shuffle"></i>${esc(t("reroute.switch"))}</button><button class="btn btn-soft" type="button" data-route="keep" data-plan="${esc(pend.id)}">${esc(t("reroute.keep"))}</button></div></div>` : ""}
+    ${offer}
     ${latest ? `<div class="plan-status">${statusBadge(latest.status)}<span class="rs">${esc(t("plan.savedAs", { mode: t("mode." + normMode(latest.mode)), id: latest.id }))}</span></div>
       ${noteOf(latest) ? `<p class="advisor-note"><i data-lucide="message-square-quote"></i>${esc(noteOf(latest))}</p>` : ""}` : ""}
     <button class="btn btn-soft" id="plan-send-btn" type="button" ${sample || latest?.status === "sent" ? "disabled" : ""}><i data-lucide="send"></i>${esc(latest?.status === "sent" ? t("plan.sentBtn") : t("plan.send"))}</button>
@@ -412,6 +472,14 @@ export function bind(el) {
   const more = el.querySelector("#plan-more"); if (more) more.addEventListener("toggle", () => { UI.planMore = more.open; });
   const aa = el.querySelector("#also-all"); if (aa) aa.addEventListener("click", () => { UI.alsoAll = true; el.querySelectorAll(".also-more").forEach(x => x.classList.remove("also-more")); aa.closest("li").remove(); });
   const hs = el.querySelector("#hours-sel"); if (hs) hs.addEventListener("change", () => { actions.setHours(hs.value); $("hours-sel")?.focus({ preventScroll: true }); });
+  el.querySelectorAll("[data-jump-stress]").forEach(b => b.addEventListener("click", () => el.querySelector(".stress")?.scrollIntoView({ behavior: "smooth", block: "start" })));
+  el.querySelectorAll("[data-grp]").forEach(b => b.addEventListener("click", () => {
+    const node = b.dataset.grp, open = b.getAttribute("aria-expanded") !== "true";
+    UI.grpOpen ||= new Set(); if (open) UI.grpOpen.add(node); else UI.grpOpen.delete(node);
+    b.setAttribute("aria-expanded", String(open));
+    el.querySelectorAll(`[data-grp-of="${CSS.escape(node)}"]`).forEach(r => { r.hidden = !open; });
+  }));
+  el.querySelectorAll("[data-tab-jobs]").forEach(b => b.addEventListener("click", () => document.getElementById("tab-jobs").click()));
   el.querySelectorAll("[data-tab-goal]").forEach(b => b.addEventListener("click", () => actions.openGoalTab()));
   const gg = el.querySelector("#goto-goal"); if (gg) gg.addEventListener("click", () => { const g = goal(); if (g) { UI.mode = g.mode || UI.mode; actions.showPath(g.job); } });
   el.querySelectorAll("[data-esco-sheet]").forEach(b => b.addEventListener("click", () => openSheet("esco", b.dataset.escoSheet)));

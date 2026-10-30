@@ -61,7 +61,9 @@ function renderPanel(animate) {
   const mod = UI.view === "admin" ? Admin : UI.tab === "jobs" ? Jobs : UI.tab === "path" ? Path : UI.tab === "goal" ? GoalTab : Skills;
   try { el.innerHTML = mod.render(); }
   catch (e) { console.error(e); el.innerHTML = errorBox({ message: t("state.renderFailed") }); }
-  ["jobs", "path", "goal", "skills"].forEach(tb => { const b = $("tab-" + tb); b.setAttribute("aria-selected", String(UI.tab === tb)); b.tabIndex = UI.tab === tb ? 0 : -1; });
+  // a job's route page sits under Explore (like a map app's directions), so Explore stays selected there
+  const on = UI.tab === "path" ? "jobs" : UI.tab;
+  ["jobs", "goal", "skills"].forEach(tb => { const b = $("tab-" + tb); b.setAttribute("aria-selected", String(on === tb)); b.tabIndex = on === tb ? 0 : -1; });
   $("admin-btn").setAttribute("aria-pressed", String(UI.view === "admin"));
   try { mod.bind(el); } catch (e) { console.error(e); }
   icons();
@@ -93,8 +95,9 @@ function refresh({ reroute = false, animate = false } = {}) {
   computeRing(); computePlans();
   const relaid = G.applyLayout(true);
   renderHead(); renderPanel(animate); renderAgents(); renderStatus(); Guide.render(); syncRouteChip();
-  $("year-out").textContent = S.year; $("year").value = S.year;
-  $("year").setAttribute("aria-valuetext", String(S.year));
+  // Today or 2030; the AI pace only changes anything in 2030, so it shows only then
+  document.querySelectorAll("[data-year]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.year === S.year)));
+  document.querySelectorAll(".scn-part").forEach(x => { x.hidden = S.year < 2030; });
   refreshDrawer();
   const changed = reroute && prev !== D.plan?.route?.key;
   if (changed) G.wave(S.E.root, "#f08a5d", 1.6, 620);
@@ -175,9 +178,11 @@ async function knowledgeChanged({ reason = "change", signal = null, rerouted = n
       badgeHtml: badge("b-info", t("reroute.badgeNew"), "route"), ms: 11000,
     });
   } else {
+    // Reroutes from a knowledge change show in the 2030 view: on Today, say so instead of a bare "unchanged".
+    const see2030 = S.year < 2030 ? `<br>${esc(t("reroute.see2030"))}` : "";
     toast({
       title: t(reason === "undo" ? "reroute.undone" : "reroute.applied"),
-      detailHtml: `${job ? esc(t("reroute.same", { job: nameOf(job), a: oldMatch, b: newMatch })) : ""}${src ? "<br>" + src : ""}${others}`,
+      detailHtml: `${job ? esc(t(oldMatch === newMatch ? "reroute.sameMatch" : "reroute.same", { job: nameOf(job), a: oldMatch, b: newMatch })) : ""}${see2030}${src ? "<br>" + src : ""}${others}`,
       badgeHtml: badge("b-good", t("reroute.appliedBadge")), ms: 8000,
     });
   }
@@ -418,9 +423,9 @@ Object.assign(actions, {
   refresh: o => refresh(o),
   renderPanel: () => renderPanel(false),
   renderAgents, updateAdminCount, openDrawer, closeDrawer, knowledgeChanged, approveSignal, reloadPlans, selectEsco,
-  play: () => { if (!playT) $("play").click(); },
+  showFuture: () => { if (S.year !== 2030) document.querySelector('[data-year="2030"]').click(); },
   setForecast(year, scenario) {
-    stopPlay(); S.year = year; S.scenario = scenario;
+    S.year = year; S.scenario = scenario;
     document.querySelectorAll("[data-scn]").forEach(o => o.setAttribute("aria-pressed", String(o.dataset.scn === scenario)));
     refresh();
   },
@@ -544,7 +549,7 @@ Object.assign(actions, {
 
 // ---------- controls ----------
 function initControls() {
-  ["jobs", "path", "goal", "skills"].forEach((tb, i, all) => {
+  ["jobs", "goal", "skills"].forEach((tb, i, all) => {
     const b = $("tab-" + tb);
     b.addEventListener("click", () => { closeWhy(); if (tb === "goal") return actions.openGoalTab(); UI.tab = tb; $("map-card").hidden = true; renderPanel(true); tabChanged(); });
     b.addEventListener("keydown", e => {
@@ -559,15 +564,12 @@ function initControls() {
     if (refresh({ reroute: true })) toast({ title: t("scn.changedTitle"), detail: t("scn.changedBody", { scenario: t("scn." + S.scenario) }), badgeHtml: badge("b-info", t("scn.newPath")) });
     if (UI.sdg) { await Jobs.loadRank(); refresh(); }
   }));
-  $("year").addEventListener("input", e => { stopPlay(); S.year = +e.target.value; refresh({ reroute: true }); Guide.mark("future"); });
-  $("year").addEventListener("change", async () => { if (UI.sdg) { await Jobs.loadRank(); refresh(); } });
-  $("play").addEventListener("click", () => {
-    if (playT) return stopPlay();
-    if (S.year >= 2030) { S.year = 2026; refresh(); }
-    Guide.mark("future");
-    $("play").innerHTML = '<i data-lucide="pause"></i>'; $("play").setAttribute("aria-label", t("time.pause")); icons();
-    playT = setInterval(() => { if (S.year >= 2030) return stopPlay(); S.year++; refresh({ reroute: true }); }, reduce ? 500 : 1200);
-  });
+  document.querySelectorAll("[data-year]").forEach(b => b.addEventListener("click", async () => {
+    if (+b.dataset.year === S.year) return;
+    S.year = +b.dataset.year; refresh({ reroute: true }); Guide.mark("future");
+    if (UI.sdg) { await Jobs.loadRank(); refresh(); }
+  }));
+  initResize();
   $("rotate").addEventListener("click", () => G.setRotate(!UI.rotating));
   $("labels-btn").addEventListener("click", () => { UI.labelsAll = !UI.labelsAll; $("labels-btn").setAttribute("aria-pressed", String(UI.labelsAll)); G.updateLabels(); });
   $("reset-view").addEventListener("click", () => G.resetView(true));
@@ -612,8 +614,31 @@ function initControls() {
   }));
   document.addEventListener("keydown", e => { if (e.key === "Escape" && UI.drawer && $("ob").hidden && $("sheet").hidden) closeDrawer(); });
 }
-let playT = null;
-function stopPlay() { if (playT) { clearInterval(playT); playT = null; $("play").innerHTML = '<i data-lucide="play"></i>'; $("play").setAttribute("aria-label", t("time.play")); icons(); } }
+
+// The panel's width: drag its right edge, or use the arrow keys on it. Remembered in this browser; double-click resets.
+function initResize() {
+  const app = document.querySelector(".app"), h = $("side-resize");
+  const lim = w => Math.round(Math.min(Math.max(w, 380), Math.max(380, Math.min(760, innerWidth - 420))));
+  const set = w => { if (w == null) app.style.removeProperty("--side-w"); else app.style.setProperty("--side-w", lim(w) + "px"); };
+  const save = () => store.set("sideW", $("side").offsetWidth);
+  set(store.get("sideW", null));
+  h.addEventListener("pointerdown", e => {
+    e.preventDefault(); h.setPointerCapture(e.pointerId); app.classList.add("resizing");
+    const left = $("side").getBoundingClientRect().left;
+    const move = ev => set(ev.clientX - left);
+    const up = () => { h.removeEventListener("pointermove", move); app.classList.remove("resizing"); save(); };
+    h.addEventListener("pointermove", move);
+    h.addEventListener("pointerup", up, { once: true });
+    h.addEventListener("pointercancel", up, { once: true });
+  });
+  h.addEventListener("dblclick", () => { set(null); store.set("sideW", null); });
+  h.addEventListener("keydown", e => {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    e.preventDefault(); set($("side").offsetWidth + (e.key === "ArrowRight" ? 24 : -24)); save();
+  });
+  // keep a saved width inside the limits when the window shrinks
+  addEventListener("resize", () => { const w = store.get("sideW", null); if (w != null) set(w); });
+}
 
 function onLang() {
   applyStatic();

@@ -473,7 +473,7 @@ export function stressTest(graph, profile, job, mode = "closest", opts = {}) {
       if (!cause && arrive > deadline) cause = { check: "ready", skill: null };
       if (!cause && [Math.min(arrive, deadline), PARAMS.endYear].some(y => demandAt(job, y, s) < 0)) cause = { check: "worth", skill: null };
       if (!cause) works++;
-      out.push({ cause, hours: h * hf, wf: fsum / Math.max(1, p.route.legs.length + items.length) });
+      out.push({ cause, hours: h * hf, wf: fsum / Math.max(1, p.route.legs.length + items.length), weeks: Math.round(total * rate) });
     }
     return { works, out };
   }
@@ -530,5 +530,7 @@ export function stressTest(graph, profile, job, mode = "closest", opts = {}) {
     if (pct(w) > pct(works)) sturdier.push({ kind: "hours", hours: hours + 1, works: w, rate: pct(w) });
     sturdier.sort((a, b) => b.works - a.works);
   }
-  return { job, mode, route: plan.route, readyWeeks: plan.ready, runs, works, rate: pct(works), seed, patterns, sturdier };
+  // each future's weeks to job-ready and whether the plan held there, for the chart
+  const futures = base.out.map(o => ({ weeks: o.weeks, ok: !o.cause }));
+  return { job, mode, route: plan.route, readyWeeks: plan.ready, runs, works, rate: pct(works), seed, patterns, sturdier, futures };
 }

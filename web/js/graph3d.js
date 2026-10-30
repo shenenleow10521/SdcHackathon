@@ -503,7 +503,7 @@ export function updateLabels() {
     let html = "", cls = "lb";
     if (kind === "you") { const cur = currentJobTitle(); cls += " you"; html = `${esc(t("map.you"))}${cur ? `<small>${esc(cur)}</small>` : ""}`; }
     else if (kind === "job") {
-      cls += " job" + (id === sel ? " sel" : sel && !isGoal(id) && id !== hoverId ? " dim" : "");
+      cls += " job" + (id === sel ? " sel" : sel && !isGoal(id) && id !== hoverId ? " dim" : "") + (isGoal(id) ? " goal" : "");
       const w = jobWeeks(id), cov = id === sel ? coverageOf(id) : null;
       const wk = w != null ? esc(t("common.weeksN", { w })) : isEsco(id) ? "" : "–";
       html = `${isGoal(id) ? `<span class="tg goal">${esc(t("goal.mapTag"))}</span> ` : ""}${esc(nameOf(id))}<small><span>${esc(t("map.jobMatch", { match: matchOf(id) }))}</span>${wk ? `<span>${wk}</span>` : ""}</small>${cov ? `<small class="jcov">${esc(t("map.covered", { have: cov.have, n: cov.n }))}</small>` : ""}`;

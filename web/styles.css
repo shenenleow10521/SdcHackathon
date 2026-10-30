@@ -74,7 +74,7 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ---------- shell ---------- */
-.app { height: 100%; display: grid; grid-template-columns: clamp(440px, 34vw, 540px) minmax(0, 1fr); grid-template-areas: "side stage"; }
+.app { height: 100%; display: grid; grid-template-columns: var(--side-w, clamp(440px, 34vw, 540px)) minmax(0, 1fr); grid-template-areas: "side stage"; }
 .side { grid-area: side; min-width: 0; display: flex; flex-direction: column; background: var(--panel); border-right: 1px solid var(--line); overflow: hidden; position: relative; /* contains .sr labels so they can't stretch the page */ }
 .side-head { padding-block: 16px 14px; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: 18px; display: grid; gap: 14px; border-bottom: 1px solid var(--line); }
 .side-body { flex: 1; overflow-y: auto; padding-block: 16px 28px; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: 18px; }
@@ -120,7 +120,7 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 .fp-bar i { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 3px; background: var(--accent); transition: width .5s ease-out, left .5s ease-out; }
 .fp-bar i.gain { background: repeating-linear-gradient(135deg, var(--good) 0 4px, color-mix(in srgb, var(--good) 55%, transparent) 4px 7px); border-radius: 0 3px 3px 0; }
 
-.tabs { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 3px; gap: 2px; }
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 3px; gap: 2px; }
 .tab { border: 0; background: transparent; border-radius: 7px; height: 32px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 550; color: var(--ink-2); transition: background-color .15s ease-out, color .15s ease-out; }
 .tab:hover { color: var(--ink); }
 .tab[aria-selected="true"] { background: var(--accent-wash); color: var(--accent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent); font-weight: 650; }
@@ -377,7 +377,7 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
   .topbar { right: 16px; }
   /* small screens: a one-line key (no summary, no "More") so the coloured dots are explained */
   .legend { padding: 5px 10px; font-size: 11px; }
-  .legend .map-sum, .legend .lg-more, .legend #legend-extra, .legend .lg-row > span:has(.line) { display: none; }
+  .legend .map-sum, .legend .lg-row > span:has(.line) { display: none; }
   .legend .lg-row { gap: 3px 10px; }
   .legend .lg { width: 8px; height: 8px; }
 }
@@ -387,8 +387,6 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 .ag-head h3 { margin: 0; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 7px; }
 .ag-toggle { border: 0; background: transparent; color: var(--muted); width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; }
 .ag-toggle:hover { background: var(--panel-2); color: var(--ink); }
-.ag-fresh { font-size: 11.5px; color: var(--muted); }
-.agents:not(.collapsed) .ag-fresh { display: none; }
 .ag-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
 .ag-list li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 9px; align-items: start; }
 .ag-ic { width: 26px; height: 26px; border-radius: 7px; background: var(--panel-2); border: 1px solid var(--line); display: grid; place-items: center; color: var(--ink-2); position: relative; }
@@ -407,16 +405,13 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 .ag-body { display: grid; gap: 10px; }
 
 .timeline { position: absolute; z-index: var(--z-ui); left: calc(50% - 120px); transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 12px; padding: 7px 10px; flex-wrap: wrap; justify-content: center; max-width: calc(100% - 32px); }
-.timeline input[type="range"] { width: 160px; accent-color: var(--accent); }
 .seg-k { font-size: 12.5px; font-weight: 600; color: var(--ink-2); margin-right: -6px; white-space: nowrap; cursor: help; }
-.year { font-size: 14px; font-weight: 600; min-width: 4ch; font-variant-numeric: tabular-nums; }
 .icon-btn { width: 32px; height: 32px; border: 0; background: transparent; border-radius: var(--r-sm); display: grid; place-items: center; color: var(--ink); }
 .icon-btn:hover { background: var(--panel-2); }
 .icon-btn[aria-pressed="true"] { background: var(--accent-wash); color: var(--accent); }
 .viewctl { position: absolute; z-index: var(--z-ui); right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: grid; padding: 4px; gap: 2px; }
 @media (max-width: 980px) {
   .timeline { left: max(12px, env(safe-area-inset-left, 0px)); right: max(12px, env(safe-area-inset-right, 0px)); transform: none; max-width: none; gap: 8px; flex-wrap: nowrap; }
-  .timeline input[type="range"] { width: auto; flex: 1 1 60px; min-width: 0; }
   .timeline .seg button { padding: 5px 8px; }
   .viewctl { bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
 }
@@ -785,7 +780,7 @@ a.ext svg.lucide { width: 12px; height: 12px; }
 .sheet { width: min(980px, 100%); max-height: calc(100svh - 32px); background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: 0 8px 24px rgba(0, 0, 0, .18); display: grid; grid-template-rows: auto minmax(0, 1fr); overflow: hidden; }
 .sheet-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 18px 20px 12px; border-bottom: 1px solid var(--line); }
 .sheet-head h2 { margin: 2px 0 0; font-size: 20px; font-weight: 600; }
-.sheet-body { overflow-y: auto; padding: 16px 20px 22px; display: grid; gap: 14px; align-content: start; }
+.sheet-body { overflow-y: auto; padding: 16px 20px 22px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; align-content: start; }
 .adv-list { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr)); }
 .adv-card { border: 1px solid var(--line); border-radius: var(--r-md); padding: 14px; display: grid; gap: 8px; align-content: start; }
 .adv-top { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
@@ -869,7 +864,6 @@ label.drop { cursor: pointer; }
   .timeline { gap: 6px; padding: 6px 8px; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
   .timeline .seg button { padding: 5px 8px; font-size: 12px; }
   .timeline .seg-k { display: none; }
-  .timeline input[type="range"] { width: 80px; }
   .viewctl { bottom: calc(64px + env(safe-area-inset-bottom, 0px)); right: 10px; }
   .topbar { left: 10px; right: 10px; top: 10px; }
   .pill { font-size: 11.5px; }
@@ -912,8 +906,6 @@ sup.cite { font-size: 10px; font-weight: 700; color: var(--accent); margin-left:
 
 /* Future stress test: share of 1,000 simulated futures the plan works in */
 .stress-pct { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
-.stress-bar { height: 6px; max-width: 320px; border-radius: 3px; background: var(--line); overflow: hidden; margin: 2px 0 12px; }
-.stress-bar span { display: block; height: 100%; background: currentColor; border-radius: 3px; }
 .stress-in { margin: 4px 0 8px; padding-left: 18px; }
 .stress-in li { margin: 2px 0; }
 .link-btn { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; font-weight: 550; text-align: left; cursor: pointer; text-underline-offset: 2px; }
@@ -946,7 +938,7 @@ sup.cite { font-size: 10px; font-weight: 700; color: var(--accent); margin-left:
 .adv-when { display: grid; justify-items: end; gap: 4px; }
 .adv-card .sheet-kv { max-width: 260px; }
 .hr-sum { display: grid; gap: 6px; }
-#hr-out { display: grid; gap: 20px; }
+#hr-out { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
 #hr-out .sec h3 { font-size: 13px; color: var(--ink); }
 .hr-sum .sheet-kv { max-width: 360px; }
 .hr-late { color: var(--crit); font-weight: 600; }
@@ -1578,3 +1570,66 @@ sup.cite { font-size: 10px; font-weight: 700; color: var(--accent); margin-left:
 @media (max-width: 980px) { .drawer:not(.has-back) .dr-back { display: none; } }
 .dr-prac { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 13px; color: var(--ink); }
 .dr-prac .rs { display: block; }
+
+/* My goal: the goal header (job name, big figures, progress bar, numbered steps) */
+.gl-hero h2 { font-size: 20px; line-height: 1.25; }
+.gl-figs { display: flex; gap: 28px; margin: 10px 0 8px; }
+.gl-fig { display: flex; flex-direction: column; }
+.gl-fig b { font-size: 26px; line-height: 1.1; font-weight: 700; color: var(--ink); }
+.gl-fig span { font-size: 12.5px; color: var(--muted); }
+.gl-sub { display: flex; flex-direction: column; gap: 2px; margin: 14px 0 4px; font-weight: 600; font-size: 13.5px; color: var(--ink); }
+
+/* Route page under Explore: back to the job list */
+.path-back { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 -4px; font-size: 13px; color: var(--muted); text-decoration: none; }
+.path-back:hover { color: var(--ink); }
+.path-back svg { width: 15px; height: 15px; }
+
+/* 1,000 futures: when you're job-ready, one column per week (green where the plan holds, red where it fails) */
+.fc { margin: 4px 0 14px; }
+.fc-range { margin: 0 0 8px; font-size: 13px; color: var(--ink-2); }
+.fc-bars { display: flex; align-items: flex-end; gap: 2px; height: 64px; border-bottom: 1px solid var(--line); }
+.fc-col { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; gap: 1px; min-width: 3px; }
+.fc-col:hover span { filter: brightness(1.15); }
+.fc-col span { display: block; }
+.fc-col span:first-child { border-radius: 3px 3px 0 0; }
+.fc-ok { background: var(--good); }
+.fc-bad { background: var(--crit); }
+.fc-axis { display: flex; justify-content: space-between; margin-top: 4px; font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.fc-key { display: flex; gap: 14px; margin-top: 6px; font-size: 12px; color: var(--ink-2); }
+.fc-key span { display: inline-flex; align-items: center; gap: 6px; }
+.fc-key i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+
+/* Map top bar: the legend is one header line with a "Map key" toggle; "Show all jobs" sits beside it */
+.topbar .route-chip { position: static; transform: none; height: 36px; align-self: flex-start; }
+.mk-head .lg-more { margin-left: 2px; }
+.timeline .scn-part[hidden] { display: none; }
+.stress-jump { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; text-decoration: none; margin: -2px 0 2px; }
+.stress-jump svg { width: 15px; height: 15px; }
+.stress { scroll-margin-top: 64px; }
+
+/* Drag the panel's right edge to resize it (desktop only); double-click resets */
+.side-resize { position: absolute; top: 0; right: 0; bottom: 0; width: 8px; cursor: col-resize; z-index: 5; touch-action: none; }
+.side-resize::after { content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 2px; background: transparent; transition: background .15s ease-out; }
+.side-resize:hover::after, .side-resize:focus-visible::after, .app.resizing .side-resize::after { background: var(--accent); }
+.side-resize:focus-visible { outline: none; }
+.app.resizing { cursor: col-resize; user-select: none; }
+.app.resizing .stage { pointer-events: none; }
+@media (max-width: 980px) { .side-resize { display: none; } }
+
+/* "+N more skills with this step": a toggle under a key step, its rows indented under it */
+.step-grp { list-style: none; padding: 0 0 4px 41px; margin-top: -4px; }
+.grp-tg { display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; padding: 3px 0; font: inherit; font-size: 12.5px; font-weight: 600; color: var(--accent); cursor: pointer; }
+.grp-tg svg { width: 14px; height: 14px; transition: transform .15s ease-out; }
+.grp-tg[aria-expanded="true"] svg { transform: rotate(90deg); }
+.grp-tg .grp-h { font-weight: 400; color: var(--muted); margin-left: 4px; }
+.step.grp-item { margin-left: 33px; }
+.step.grp-item[hidden] { display: none; }
+
+/* Your goal job on the map: a green frame and a filled "Goal" tag, so it stands apart from the other orange job stars */
+.lb.job.goal, .lb.job.goal.sel { border-color: #3fbf7a; box-shadow: 0 0 0 1.5px #3fbf7a, 0 0 0 5px rgba(63, 191, 122, 0.18); }
+.lb.job.goal .tg.goal { align-self: center; margin-bottom: 3px; padding: 1px 8px; border-radius: 999px; background: #3fbf7a; color: #08130c; }
+.lb.job.goal.dim { opacity: 1; }
+/* the toast sits below the top bar ("Show all jobs" now lives there) */
+@media (min-width: 981px) { .toast { top: 112px; left: 50%; } }
+.hr-tabs .count { margin-left: 6px; }
+.hr-tabs .count[hidden] { display: none; }
