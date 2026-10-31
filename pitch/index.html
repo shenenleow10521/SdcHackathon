@@ -836,17 +836,118 @@ footer a { color: var(--ink-2); }
           <circle cx="210" cy="289" r="91" fill="url(#mk-sam)" stroke="rgba(155,140,255,.95)" stroke-width="1.4"/>
           <circle cx="210" cy="368.5" r="16" fill="#ff7a3d" opacity=".55" filter="url(#mk-glow)"/>
           <circle cx="210" cy="368.5" r="11.5" fill="#ff7a3d"/>
-          <text x="210" y="62" text-anchor="middle" fill="#9ac8ff" font-family="Geist, sans-serif" font-size="13" font-weight="700" letter-spacing="2.5">TAM</text>
-          <text x="210" y="228" text-anchor="middle" fill="#c9c0ff" font-family="Geist, sans-serif" font-size="13" font-weight="700" letter-spacing="2.5">SAM</text>
-          <text x="210" y="405" text-anchor="middle" fill="#ff9a67" font-family="Geist, sans-serif" font-size="13" font-weight="700" letter-spacing="2.5">SOM</text>
+          <text x="210" y="70" text-anchor="middle" fill="#9ac8ff" font-family="Geist, sans-serif" font-size="15" font-weight="700" letter-spacing="2.5">TAM</text>
+          <text x="210" y="236" text-anchor="middle" fill="#c9c0ff" font-family="Geist, sans-serif" font-size="15" font-weight="700" letter-spacing="2.5">SAM</text>
         </svg>
         <ol class="mkt-ladder">
-          <li style="--c:#4a93ea"><span class="tag">TAM</span><b>RM 726M</b><span class="what">2.42 million Malaysian workers in jobs with high or medium AI impact</span></li>
-          <li style="--c:#9b8cff"><span class="tag">SAM</span><b>RM 186M</b><span class="what">620,000 workers in highly impacted jobs</span></li>
-          <li style="--c:#ff7a3d"><span class="tag">SOM</span><b>RM 3M</b><span class="what">10,000 seats by year three. Break-even at about 1,000 seats.</span></li>
+          <li style="--c:#4a93ea;--w:100%"><div class="row"><span class="tag">TAM</span><b>RM 726M</b></div><div class="bar"><i></i></div><span class="what">2.42 million Malaysian workers in jobs with high or medium AI impact</span></li>
+          <li style="--c:#9b8cff;--w:25.6%"><div class="row"><span class="tag">SAM</span><b>RM 186M</b></div><div class="bar"><i></i></div><span class="what">620,000 workers in highly impacted jobs</span></li>
+          <li style="--c:#ff7a3d;--w:1.2%"><div class="row"><span class="tag">SOM</span><b>RM 3M</b></div><div class="bar"><i></i></div><span class="what">10,000 seats by year three. Break-even at about 1,000 seats.</span></li>
         </ol>
       </div>
       <p class="after mkt-src rv" style="--i:3">Sources: TalentCorp (2024), GBS Malaysia Mid-Term Report (2025), DOSM. Prices are pilot assumptions.</p>
+    </div>
+  </section>
+
+  <!-- ================= ARCHITECTURE ================= -->
+  <section class="sec deck" id="arch" aria-labelledby="arch-h">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="kicker">Architecture</p>
+        <h2 id="arch-h">One app on Replit, with AI services plugged in at the edge.</h2>
+      </div>
+      <div class="arch rv" style="--i:1">
+<svg class="arch-svg" viewBox="0 0 1200 500" role="img" aria-labelledby="arch-t arch-d">
+  <title id="arch-t">HalaTuju system architecture</title>
+  <desc id="arch-d">People use the web app on Replit. The REST API calls the engine, which is plain code, and the agents, which use Gemini, RunPod and trusted news sources. A triage gate with a three-agent vote writes to the versioned PostgreSQL knowledge base. GitHub Actions tests every update before it is deployed to Replit.</desc>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8fa3c0"/></marker>
+    <marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a93ea"/></marker>
+    <marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#a98bff"/></marker>
+    <marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#f2b33d"/></marker>
+    <linearGradient id="g-node" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#18223a"/><stop offset="1" stop-color="#0f1626"/></linearGradient>
+    <linearGradient id="g-eng" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2f52"/><stop offset="1" stop-color="#112038"/></linearGradient>
+    <linearGradient id="g-rp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b1f52"/><stop offset="1" stop-color="#160f2c"/></linearGradient>
+  </defs>
+
+  <!-- people -->
+  <text class="a-col" x="10" y="26">People</text>
+  <g class="a-person"><rect x="10" y="44" width="160" height="58" rx="12"/><circle cx="34" cy="73" r="6" fill="#f4f6fa"/><text x="50" y="69" class="a-t">Worker</text><text x="50" y="87" class="a-s">CV or questions</text></g>
+  <g class="a-person"><rect x="10" y="118" width="160" height="58" rx="12"/><circle cx="34" cy="147" r="6" fill="#2fc28b"/><text x="50" y="143" class="a-t">HR or advisor</text><text x="50" y="161" class="a-s">opt-in team view</text></g>
+  <g class="a-person"><rect x="10" y="192" width="160" height="58" rx="12"/><circle cx="34" cy="221" r="6" fill="#f2b33d"/><text x="50" y="217" class="a-t">Reviewer</text><text x="50" y="235" class="a-s">decides split votes</text></g>
+
+  <!-- replit boundary -->
+  <rect class="a-replit" x="205" y="10" width="655" height="400" rx="18"/>
+  <rect x="222" y="0" width="236" height="22" rx="11" fill="#f26207"/>
+  <text x="340" y="15.5" text-anchor="middle" class="a-badge">Replit Deployments, Reserved VM</text>
+
+  <!-- web + api + auth -->
+  <g class="a-node"><rect x="235" y="44" width="170" height="70" rx="12"/><text x="252" y="72" class="a-t">Web app</text><text x="252" y="92" class="a-s">three.js career map</text><text x="252" y="106" class="a-s">English and BM</text></g>
+  <g class="a-node"><rect x="235" y="150" width="170" height="70" rx="12"/><text x="252" y="178" class="a-t">REST API</text><text x="252" y="198" class="a-s">Node 22, TypeScript</text><text x="252" y="212" class="a-s">Express 5, zod checks</text></g>
+  <g class="a-node small"><rect x="235" y="256" width="170" height="52" rx="12"/><text x="252" y="278" class="a-t sm">Sign-in</text><text x="252" y="296" class="a-s">Replit Clerk, or guest</text></g>
+  <g class="a-node small"><rect x="235" y="330" width="170" height="52" rx="12"/><text x="252" y="352" class="a-t sm">/api/health</text><text x="252" y="370" class="a-s">database, AI, scheduler</text></g>
+
+  <!-- engine -->
+  <g class="a-eng"><rect x="450" y="44" width="180" height="100" rx="12"/><text x="467" y="72" class="a-t">Engine</text><text x="467" y="92" class="a-s">match score, routes</text><text x="467" y="108" class="a-s">goal tracking, 1,000 futures</text><rect x="467" y="118" width="118" height="18" rx="9" class="a-pill"/><text x="526" y="131" text-anchor="middle" class="a-pt">plain code, no AI</text></g>
+
+  <!-- agents -->
+  <g class="a-node"><rect x="450" y="176" width="180" height="206" rx="12"/><text x="467" y="204" class="a-t">AI agents</text>
+    <text x="467" y="230" class="a-li">CV reader</text><text x="467" y="245" class="a-s">personal details removed first</text>
+    <text x="467" y="270" class="a-li">Interviewer, explainer</text>
+    <text x="467" y="295" class="a-li">News researcher</text><text x="467" y="310" class="a-s">every 24 hours</text>
+    <text x="467" y="335" class="a-li">Three voters</text><text x="467" y="350" class="a-s">evidence, skill, sceptic</text>
+    <text x="467" y="370" class="a-s dim">output checked against real IDs</text></g>
+
+  <!-- db + triage -->
+  <g class="a-db"><path d="M672 56 a80 14 0 0 1 160 0 v78 a80 14 0 0 1 -160 0z"/><path d="M672 56 a80 14 0 0 0 160 0" class="a-db-top"/>
+    <text x="752" y="96" text-anchor="middle" class="a-t">PostgreSQL 16</text><text x="752" y="115" text-anchor="middle" class="a-s">versioned knowledge base</text><text x="752" y="131" text-anchor="middle" class="a-s">every change undoable</text></g>
+  <g class="a-gate"><rect x="672" y="190" width="160" height="96" rx="12"/><text x="689" y="216" class="a-t">Triage gate</text><text x="689" y="236" class="a-s">quote found on the page</text><text x="689" y="252" class="a-s">2 or 3 yes: applied</text><text x="689" y="268" class="a-s">1 yes: a person decides</text></g>
+
+  <!-- externals -->
+  <text class="a-col" x="905" y="26">Outside services</text>
+  <g class="a-rp"><rect x="905" y="40" width="285" height="118" rx="14"/><circle cx="927" cy="64" r="6" fill="#a98bff"/><text x="941" y="69" class="a-t">RunPod</text>
+    <text x="923" y="94" class="a-li">Serverless: BAAI/bge-m3</text><text x="923" y="110" class="a-s">CV wording to 13,939 skills, scales to zero</text>
+    <text x="923" y="134" class="a-li">GPU pod: RTX 4090</text><text x="923" y="150" class="a-s">trained our AI-exposure model</text></g>
+  <g class="a-ext"><rect x="905" y="176" width="285" height="74" rx="14"/><circle cx="927" cy="200" r="6" fill="#4a93ea"/><text x="941" y="205" class="a-t">Google Gemini</text><text x="923" y="228" class="a-s">3.5 Flash-Lite reads and writes</text><text x="923" y="243" class="a-s">3.1 Flash-Lite reviews and votes</text></g>
+  <g class="a-ext"><rect x="905" y="268" width="285" height="74" rx="14"/><circle cx="927" cy="292" r="6" fill="#2fc28b"/><text x="941" y="297" class="a-t">Trusted sources</text><text x="923" y="320" class="a-s">74 sites via Tavily, arXiv, OpenAlex, RSS</text><text x="923" y="335" class="a-s">ESCO, O*NET, ILO, DOSM, MyCOL data</text></g>
+  <g class="a-fb"><rect x="905" y="356" width="285" height="54" rx="12"/><text x="921" y="378" class="a-s">If RunPod is cold: local model, then keywords</text><text x="921" y="396" class="a-s">If Gemini is down: keyword matching, labelled</text></g>
+
+  <!-- arrows: people to web -->
+  <path class="a-ar" d="M170 73 H200 V79 H233" marker-end="url(#ah)"/>
+  <path class="a-ar" d="M170 147 H200 V86"/>
+  <path class="a-ar" d="M170 221 H200 V147"/>
+  <!-- web <-> api -->
+  <path class="a-ar b" d="M320 116 V148" marker-start="url(#ahb)" marker-end="url(#ahb)"/>
+  <!-- api -> sign-in -->
+  <path class="a-ar" d="M320 222 V254" marker-end="url(#ah)"/>
+  <!-- api -> engine, api -> agents -->
+  <path class="a-ar b flow" d="M405 172 H428 V94 H448" marker-end="url(#ahb)"/>
+  <path class="a-ar b flow" d="M405 196 H428 V260 H448" marker-end="url(#ahb)"/>
+  <!-- engine <-> db -->
+  <path class="a-ar b" d="M632 94 H670" marker-start="url(#ahb)" marker-end="url(#ahb)"/>
+  <!-- agents -> gate -> db -->
+  <path class="a-ar a flow" d="M632 300 H650 V238 H670" marker-end="url(#aha)"/>
+  <path class="a-ar a" d="M752 188 V150" marker-end="url(#aha)"/>
+  <!-- gate -> reviewer (split vote) -->
+  <path class="a-ar a dash" d="M752 288 V394 H188 V232 H172" marker-end="url(#aha)"/>
+  <text x="560" y="404" class="a-lab">split vote goes to a person</text>
+  <!-- agents -> externals -->
+  <path class="a-ar p flow" d="M632 330 H862 V100 H903" marker-end="url(#ahp)"/>
+  <path class="a-ar b" d="M862 213 H903" marker-end="url(#ahb)"/>
+  <path class="a-ar" d="M862 305 H903" marker-end="url(#ah)"/>
+
+  <!-- CI strip -->
+  <g class="a-ci">
+    <text class="a-col" x="10" y="452">Every update</text>
+    <rect x="150" y="430" width="160" height="38" rx="19"/><text x="230" y="454" text-anchor="middle" class="a-ct">GitHub push</text>
+    <rect x="350" y="430" width="250" height="38" rx="19"/><text x="475" y="454" text-anchor="middle" class="a-ct">GitHub Actions: typecheck, 533 tests</text>
+    <rect x="640" y="430" width="200" height="38" rx="19"/><text x="740" y="454" text-anchor="middle" class="a-ct">Node 22 and Node 24</text>
+    <rect x="880" y="430" width="200" height="38" rx="19" class="rl"/><text x="980" y="454" text-anchor="middle" class="a-ct">Deploy to Replit</text>
+    <path class="a-ar" d="M312 449 H348" marker-end="url(#ah)"/><path class="a-ar" d="M602 449 H638" marker-end="url(#ah)"/><path class="a-ar" d="M842 449 H878" marker-end="url(#ah)"/>
+  </g>
+</svg>
+
+      </div>
     </div>
   </section>
 
@@ -1374,6 +1475,55 @@ html { scroll-snap-type: y proximity; }
 #stack .ts { margin-top: 20px; }
 #stack .ts-layers li { padding: 10px 0; }
 #stack .ts-sp { padding-top: 14px; padding-bottom: 12px; }
+
+/* ---------- architecture diagram ---------- */
+.arch { margin-top: 18px; }
+.arch-svg { width: 100%; height: auto; display: block; max-height: calc(100svh - 260px); font-family: var(--font); overflow: visible; }
+.arch-svg .a-col { font-size: 11px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; fill: #7f8ba3; }
+.arch-svg .a-t { font-size: 15px; font-weight: 700; fill: #eef2f8; letter-spacing: -.2px; }
+.arch-svg .a-t.sm { font-size: 13.5px; }
+.arch-svg .a-s { font-size: 11.5px; fill: #a9b5c9; }
+.arch-svg .a-s.dim { fill: #7f8ba3; font-style: italic; }
+.arch-svg .a-li { font-size: 12.5px; font-weight: 600; fill: #dfe6f1; }
+.arch-svg .a-node rect, .arch-svg .a-person rect { fill: url(#g-node); stroke: rgba(170,186,214,.28); stroke-width: 1; }
+.arch-svg .a-eng rect:first-of-type { fill: url(#g-eng); stroke: #4a93ea; stroke-width: 1.4; filter: drop-shadow(0 0 10px rgba(74,147,234,.35)); }
+.arch-svg .a-pill { fill: rgba(74,147,234,.22); stroke: none; }
+.arch-svg .a-pt { font-size: 10.5px; font-weight: 700; fill: #9ac8ff; }
+.arch-svg .a-db path { fill: #132038; stroke: #4a93ea; stroke-width: 1.3; }
+.arch-svg .a-db .a-db-top { fill: none; }
+.arch-svg .a-gate rect { fill: #251c0c; stroke: #f2b33d; stroke-width: 1.3; filter: drop-shadow(0 0 10px rgba(242,179,61,.25)); }
+.arch-svg .a-replit { fill: rgba(242,98,7,.045); stroke: rgba(242,98,7,.7); stroke-width: 1.3; stroke-dasharray: 6 5; }
+.arch-svg .a-badge { font-size: 11.5px; font-weight: 800; fill: #fff; letter-spacing: .2px; }
+.arch-svg .a-rp rect { fill: url(#g-rp); stroke: #a98bff; stroke-width: 1.4; filter: drop-shadow(0 0 12px rgba(169,139,255,.35)); }
+.arch-svg .a-ext rect { fill: url(#g-node); stroke: rgba(170,186,214,.3); stroke-width: 1; }
+.arch-svg .a-fb rect { fill: none; stroke: rgba(170,186,214,.25); stroke-dasharray: 4 4; }
+.arch-svg .a-ar { fill: none; stroke: #8fa3c0; stroke-width: 1.4; }
+.arch-svg .a-ar.b { stroke: #4a93ea; }
+.arch-svg .a-ar.p { stroke: #a98bff; }
+.arch-svg .a-ar.a { stroke: #f2b33d; }
+.arch-svg .a-ar.dash { stroke-dasharray: 5 5; opacity: .8; }
+.arch-svg .a-ar.flow { stroke-dasharray: 7 6; animation: archflow 1.6s linear infinite; }
+@keyframes archflow { to { stroke-dashoffset: -26; } }
+.arch-svg .a-lab { font-size: 11px; font-weight: 600; fill: #f2b33d; text-anchor: middle; paint-order: stroke; stroke: #0a0e18; stroke-width: 4px; }
+.arch-svg .a-ci rect { fill: rgba(255,255,255,.04); stroke: rgba(170,186,214,.28); }
+.arch-svg .a-ci rect.rl { fill: rgba(242,98,7,.14); stroke: rgba(242,98,7,.7); }
+.arch-svg .a-ct { font-size: 12.5px; font-weight: 600; fill: #e3e9f3; }
+@media (prefers-reduced-motion: reduce) { .arch-svg .a-ar.flow { animation: none; } }
+
+/* market v2: aligned with the headline column; rings left, a ladder with proportion bars right */
+#market .mkt { margin: 22px 0 0 178px; grid-template-columns: 300px minmax(0, 1fr); gap: 64px; max-width: 980px; }
+#market .mkt-src { margin-left: 178px; }
+#market .mkt-ladder li { display: block; padding: 14px 0 16px; }
+#market .mkt-ladder li:first-child { padding-top: 0; }
+#market .mkt-ladder .row { display: flex; align-items: baseline; gap: 16px; }
+#market .mkt-ladder .tag { margin: 0; min-width: 62px; }
+#market .mkt-ladder b, #market .mkt-ladder li:first-child b, #market .mkt-ladder li:last-child b { font-size: 40px; }
+#market .mkt-ladder li:first-child b { font-size: 48px; }
+#market .mkt-ladder .bar { height: 6px; margin: 12px 0 8px 78px; border-radius: 6px; background: rgba(170, 186, 214, .1); overflow: hidden; }
+#market .mkt-ladder .bar i { display: block; height: 100%; min-width: 6px; width: 0; border-radius: 6px; background: var(--c); box-shadow: 0 0 12px var(--c); transition: width 1.4s var(--ease) .3s; }
+#market.in .mkt-ladder .bar i, #market .mkt.in .mkt-ladder .bar i { width: var(--w); }
+#market .mkt-ladder .what { display: block; margin-left: 78px; }
+@media (max-width: 1000px) { #market .mkt, #market .mkt-src { margin-left: 0; } }
 </style>
 
 <footer>
@@ -1846,8 +1996,8 @@ setTimeout(measure, 800); addEventListener("load", measure);
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var story = $('#story'), rail = $('#rail'), stops = [], cur = -1, anim = null;
-  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'stack', 'go', 'tests', 'checks', 'roadmap', 'limits'];
-  var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', market: 'Market size', stack: 'Tech stack', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Your route changes with it' };
+  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'arch', 'stack', 'go', 'tests', 'checks', 'roadmap', 'limits'];
+  var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', market: 'Market size', arch: 'Architecture', stack: 'Tech stack', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Your route changes with it' };
   var chNames = ['Act 1: Stay', 'Act 2: Move', 'The route', 'Act 3: Updated'], chHash = ['story', 'roles', 'route', 'rerouted'];
   function build() {
     stops = [];
@@ -2028,8 +2178,8 @@ setTimeout(measure, 800); addEventListener("load", measure);
 <script>
 /* Page numbers: a number and label in a column beside the headline, and a faint outline number behind that column (or in the top-right corner on centred pages). */
 (function () {
-  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'stack', 'go', 'tests', 'checks', 'roadmap', 'limits'];
-  var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', market: 'Market size', stack: 'Tech stack', roadmap: 'Roadmap', limits: 'What we say openly', go: 'Close' };
+  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'arch', 'stack', 'go', 'tests', 'checks', 'roadmap', 'limits'];
+  var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', market: 'Market size', arch: 'Architecture', stack: 'Tech stack', roadmap: 'Roadmap', limits: 'What we say openly', go: 'Close' };
   ids.forEach(function (id, i) {
     if (id === 'hero' || id === 'team') return; // the title and team pages carry no number; counting starts at The problem
     var el = document.getElementById(id); if (!el) return;
