@@ -717,25 +717,26 @@ footer a { color: var(--ink-2); }
       <div class="sec-head rv">
         <p class="kicker">How well it works</p>
         <h2 id="ev-h">Measured, not claimed.</h2>
-        <p>We trained our own AI model and tested it on jobs it had never seen. We also tested how well it reads CVs and whether it treats everyone the same. We show the first result and the result after fixes.</p>
+        <p>We trained our own AI model and tested it on jobs it had never seen, then tested how well the app reads CVs. Where we fixed something, we show the first result too.</p>
       </div>
-      <div class="two">
-        <div class="glass rv" style="--i:1">
-          <p class="k">How closely our model agrees with human experts, on 185 jobs it had never seen. 1.0 means perfect agreement.</p>
-          <div class="bars">
-            <div class="brow me"><span class="l">HalaTuju model</span><div class="track"><div class="fill" style="--w:79.3%"></div></div><span class="v">0.919</span></div>
-            <div class="brow"><span class="l">Simple shortcut method</span><div class="track"><div class="fill" style="--w:53.3%"></div></div><span class="v">0.880</span></div>
-            <div class="brow"><span class="l">GPT-4’s own ratings</span><div class="track"><div class="fill" style="--w:35.3%"></div></div><span class="v">0.853</span></div>
-            <div class="axis"><span></span><div><span style="left:0">0.80</span><span style="left:33.3%">0.85</span><span style="left:66.7%">0.90</span><span style="left:100%">0.95</span></div><span></span></div>
+      <div class="ev2 rv" style="--i:1">
+        <section class="ev2-model">
+          <p class="ev2-k">Our AI model against human experts</p>
+          <div class="ev2-hero"><span>0.92</span><small>agreement on 185 jobs it had never seen<br>1.0 means perfect agreement</small></div>
+          <div class="ev2-bars">
+            <div class="me"><b>HalaTuju model</b><i style="--w:79.3%"></i><em>0.919</em></div>
+            <div><b>Simple shortcut</b><i style="--w:53.3%"></i><em>0.880</em></div>
+            <div><b>GPT-4’s own ratings</b><i style="--w:35.3%"></i><em>0.853</em></div>
           </div>
-          <p class="src">The scale starts at 0.80 to show the gap. Built on the EU’s official list of 3,039 jobs and 13,939 skills, plus 27 new AI-era skills we added from 58 published sources. Against the ILO’s separate index of 2,956 jobs, which we never trained on: 0.79. Expert ratings from Eloundou et al., Science, 2024.</p>
-        </div>
-        <div class="ev">
-          <div class="glass rv" style="--i:2;--c:#2fc28b"><div class="big" style="color:var(--c)"><span data-n="35">35</span> <small>of 36</small></div><div class="meter"><i style="--w:97.2%"></i></div><h3>Current job read correctly from the CV</h3><p>36 test CVs, 24 Oct 2026</p></div>
-          <div class="glass rv" style="--i:3;--c:#4a93ea"><div class="big" style="color:var(--c)"><span data-n="95">95</span><small>&ndash;100%</small></div><div class="meter"><i style="--w:97%"></i></div><h3>Right job in the top 3 from a few questions, no CV</h3><p>finance, sales and IT jobs; about 70% for trades</p></div>
-          <div class="glass rv" style="--i:4;--c:#ff7a3d"><div class="big" style="color:var(--c)"><span data-n="154">154</span> <small>of 155</small></div><div class="meter"><i style="--w:99.4%"></i></div><h3>Personal details removed before any AI reads the CV</h3><p>after fixes; the first test removed 128 of 155</p></div>
-          <div class="glass rv" style="--i:5;--c:#9b8cff"><div class="big" style="color:var(--c)"><span data-n="533">533</span></div><div class="meter"><i style="--w:100%"></i></div><h3>Automated tests</h3><p>run on every code update; counted 30 Oct 2026</p></div>
-        </div>
+          <p class="ev2-src">Scale starts at 0.80. Built on the EU’s list of 3,039 jobs and 13,939 skills. Against the ILO’s separate index of 2,956 jobs, never trained on: 0.79.</p>
+        </section>
+        <section class="ev2-list">
+          <p class="ev2-k">Reading CVs and quality</p>
+          <div class="ev2-row" style="--c:#2fc28b"><span class="v">35<small>of 36</small></span><div><b>Current job read correctly</b><p>36 test CVs, 24 Oct 2026</p></div></div>
+          <div class="ev2-row" style="--c:#ff7a3d"><span class="v">154<small>of 155</small></span><div><b>Personal details removed first</b><p>before any AI reads the CV; 128 of 155 on the first test</p></div></div>
+          <div class="ev2-row" style="--c:#5aa0f0"><span class="v">95<small>–100%</small></span><div><b>Right job in the top 3, no CV</b><p>from a few questions; finance, sales, IT</p></div></div>
+          <div class="ev2-row" style="--c:#a98bff"><span class="v">533</span><div><b>Automated tests</b><p>run on every code update</p></div></div>
+        </section>
       </div>
     </div>
   </section>
@@ -1690,6 +1691,32 @@ html { scroll-snap-type: y proximity; }
 .dm-backup { margin-left: auto; font-size: 14px; color: var(--muted); text-decoration: none; border-bottom: 1px solid rgba(170, 186, 214, .3); padding-bottom: 2px; }
 .dm-backup:hover { color: var(--ink); }
 @media (max-width: 1000px) { .dm { margin-left: 0; } .dm-acts { grid-template-columns: 1fr 1fr; gap: 26px 0; } .dm-acts::before { display: none; } .dm-backup { margin-left: 0; } }
+
+/* ---------- how well it works v2 ---------- */
+#evidence { background: radial-gradient(ellipse 75% 65% at 55% 60%, rgba(5,7,13,.8) 0%, rgba(5,7,13,.55) 55%, rgba(5,7,13,.2) 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%); }
+.ev2 { margin: 30px 0 0 178px; max-width: 1000px; display: grid; grid-template-columns: 1fr 1fr; gap: 54px; }
+.ev2-k { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+.ev2-hero { display: flex; align-items: center; gap: 18px; }
+.ev2-hero span { font-size: 76px; font-weight: 800; letter-spacing: -.05em; line-height: .9; background: linear-gradient(90deg, #5aa0f0, #ff7a3d); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ev2-hero small { font-size: 14px; line-height: 1.45; color: var(--ink-2); }
+.ev2-bars { margin-top: 22px; display: grid; gap: 12px; }
+.ev2-bars div { display: grid; grid-template-columns: 148px minmax(0,1fr) 46px; gap: 12px; align-items: center; font-size: 14px; }
+.ev2-bars b { font-weight: 500; color: var(--ink-2); }
+.ev2-bars .me b { font-weight: 700; color: var(--ink); }
+.ev2-bars i { height: 8px; border-radius: 8px; background: rgba(170,186,214,.12); position: relative; overflow: hidden; }
+.ev2-bars i::after { content: ""; position: absolute; inset: 0; width: var(--w); border-radius: 8px; background: #59647a; }
+.ev2-bars .me i::after { background: linear-gradient(90deg, #5aa0f0, #ff7a3d); box-shadow: 0 0 12px rgba(255,122,61,.5); }
+.ev2-bars em { font-style: normal; font-weight: 700; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+.ev2-src { margin-top: 18px; font-size: 13px; line-height: 1.5; color: var(--muted); }
+.ev2-row { display: grid; grid-template-columns: 128px minmax(0,1fr); gap: 16px; align-items: center; padding: 13px 0; border-top: 1px solid rgba(170,186,214,.13); }
+.ev2-row:first-of-type { border-top: 0; padding-top: 0; }
+.ev2-row .v { font-size: 38px; font-weight: 800; letter-spacing: -.04em; line-height: 1; color: var(--c); font-variant-numeric: tabular-nums; }
+.ev2-row .v small { font-size: 13px; font-weight: 700; letter-spacing: 0; color: var(--ink-2); margin-left: 5px; }
+.ev2-row b { font-size: 15px; color: var(--ink); }
+.ev2-row p { margin-top: 3px; font-size: 13.5px; color: var(--muted); }
+@media (max-width: 1000px) { .ev2 { margin-left: 0; grid-template-columns: 1fr; } }
 </style>
 
 <footer>
