@@ -16,8 +16,8 @@
 :root {
   --bg: #05070d;
   --ink: #eef2f8;
-  --ink-2: #b4bfd2;
-  --muted: #7f8ba3;
+  --ink-2: #d6dded;
+  --muted: #aab5c9;
   --line: rgba(170, 186, 214, .14);
   --blue: #4a93ea;
   --green: #2fc28b;
@@ -1555,11 +1555,11 @@ html { scroll-snap-type: y proximity; }
 /* ---------- architecture diagram ---------- */
 .arch { margin-top: 18px; }
 .arch-svg { width: 100%; height: auto; display: block; max-height: calc(100svh - 260px); font-family: var(--font); overflow: visible; }
-.arch-svg .a-col { font-size: 11px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; fill: #7f8ba3; }
+.arch-svg .a-col { font-size: 11px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; fill: #aab5c9; }
 .arch-svg .a-t { font-size: 15px; font-weight: 700; fill: #eef2f8; letter-spacing: -.2px; }
 .arch-svg .a-t.sm { font-size: 13.5px; }
-.arch-svg .a-s { font-size: 11.5px; fill: #a9b5c9; }
-.arch-svg .a-s.dim { fill: #7f8ba3; font-style: italic; }
+.arch-svg .a-s { font-size: 11.5px; fill: #cdd5e4; }
+.arch-svg .a-s.dim { fill: #aab5c9; font-style: italic; }
 .arch-svg .a-li { font-size: 12.5px; font-weight: 600; fill: #dfe6f1; }
 .arch-svg .a-node rect, .arch-svg .a-person rect { fill: url(#g-node); stroke: rgba(170,186,214,.28); stroke-width: 1; }
 .arch-svg .a-eng rect:first-of-type { fill: url(#g-eng); stroke: #4a93ea; stroke-width: 1.4; filter: drop-shadow(0 0 10px rgba(74,147,234,.35)); }
@@ -1603,7 +1603,7 @@ html { scroll-snap-type: y proximity; }
 
 /* ---------- architecture v2 ---------- */
 .arch-svg.v2 { max-height: calc(100svh - 250px); }
-.v2 .v-col { font-size: 11px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; fill: #7f8ba3; }
+.v2 .v-col { font-size: 11px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; fill: #aab5c9; }
 .v2 .v-person rect { fill: rgba(255,255,255,.04); stroke: rgba(170,186,214,.28); }
 .v2 .v-pt { font-size: 14px; font-weight: 600; fill: #eef2f8; }
 .v2 .v-note { font-size: 11.5px; fill: #8d9bb0; }
@@ -1619,7 +1619,7 @@ html { scroll-snap-type: y proximity; }
 .v2 .v-card.core rect { stroke: #5aa0f0; stroke-width: 1.3; }
 .v2 .v-card.gate rect { stroke: #f2b33d; stroke-width: 1.3; }
 .v2 .v-t { font-size: 15px; font-weight: 700; fill: #eef2f8; letter-spacing: -.2px; }
-.v2 .v-s { font-size: 11.5px; fill: #a9b5c9; }
+.v2 .v-s { font-size: 11.5px; fill: #cdd5e4; }
 .v2 .v-db path { fill: #132038; stroke: #5aa0f0; stroke-width: 1.3; }
 .v2 .v-db .top { fill: none; }
 .v2 .v-chips rect { fill: rgba(242,98,7,.12); stroke: rgba(242,98,7,.55); }
@@ -1907,7 +1907,7 @@ html { scroll-snap-type: y proximity; }
 .mc-fan { width: 100%; height: auto; display: block; font-family: var(--font); }
 .mc-fan .g { stroke: rgba(170,186,214,.1); }
 .mc-fan .g.z { stroke: rgba(255,255,255,.4); stroke-dasharray: 4 4; }
-.mc-fan .ax { font-size: 11px; fill: #7f8ba3; }
+.mc-fan .ax { font-size: 11px; fill: #aab5c9; }
 .mc-fan .b90 { fill: rgba(90,160,240,.16); }
 .mc-fan .b50 { fill: rgba(47,212,160,.26); }
 .mc-fan .med { fill: none; stroke: url(#mc-g); stroke-width: 3; filter: drop-shadow(0 0 6px rgba(255,122,61,.45)); }
@@ -1915,7 +1915,7 @@ html { scroll-snap-type: y proximity; }
 .mc-fan .bel { stroke: #f2b33d; stroke-dasharray: 3 4; opacity: .7; }
 .mc-fan .bed { fill: #f2b33d; filter: drop-shadow(0 0 8px #f2b33d); }
 .mc-fan .bet { font-size: 12px; font-weight: 700; fill: #f2b33d; }
-.mc-fan .lg text { font-size: 11px; fill: #a9b5c9; }
+.mc-fan .lg text { font-size: 11px; fill: #cdd5e4; }
 .mc-stats { display: grid; gap: 0; }
 .mc-stats div { padding: 11px 0; border-top: 1px solid rgba(170,186,214,.13); }
 .mc-stats div:first-child { border-top: 0; padding-top: 0; }
@@ -1945,7 +1945,7 @@ html { scroll-snap-type: y proximity; }
 .ask span { font-size: 15.5px; color: var(--ink); }
 @media (max-width: 1000px) { .bz, .mc, .mc-tor, .rdm, .ask { margin-left: 0; } .bz, .mc { grid-template-columns: 1fr; } .tor, .rdm { grid-template-columns: 1fr 1fr; } .rdm::before { display: none; } }
 
-.mc-lg { float: right; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; letter-spacing: 0; text-transform: none; font-size: 11.5px; color: #a9b5c9; }
+.mc-lg { float: right; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; letter-spacing: 0; text-transform: none; font-size: 11.5px; color: #cdd5e4; }
 .mc-lg i { width: 14px; height: 9px; border-radius: 2px; margin-left: 10px; }
 .mc-lg .l90 { background: rgba(90,160,240,.35); } .mc-lg .l50 { background: rgba(47,212,160,.5); } .mc-lg .lmed { height: 3px; background: #ff7a3d; }
 #mc .sec-head p { max-width: 70ch; }
@@ -2019,6 +2019,12 @@ html { scroll-snap-type: y proximity; }
 .js #business.play .pz-role { animation: pzLi .6s var(--ease) both; animation-delay: calc(var(--k) * 130ms + 900ms); }
 .js #business.play .pz-c.main .pz-role { animation-delay: 1.75s; }
 @media (prefers-reduced-motion: reduce) { .js #business .pz-c, .js #business .pz-c li, .js #business .pz-role, .js #business .pz-tag { opacity: 1 !important; transform: none !important; animation: none !important; } }
+
+/* ---------- readability: darker veil behind every content page ---------- */
+section#problem.sec, section#built.sec, section#story.sec, section#evidence.sec, section#method.sec, section#tested.sec, section#brief.sec, section#impact.sec, section#business.sec, section#market.sec, section#mc.sec, section#roadmap.sec, section#tests.sec, section#checks.sec, section#limits.sec { background: radial-gradient(ellipse 85% 75% at 50% 55%, rgba(5,7,13,.9) 0%, rgba(5,7,13,.8) 55%, rgba(5,7,13,.55) 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 70px, #000 calc(100% - 70px), transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 70px, #000 calc(100% - 70px), transparent 100%); }
+.deck .sec-head > p, .sec .sec-head > p { color: var(--ink-2); }
 </style>
 
 <footer>
