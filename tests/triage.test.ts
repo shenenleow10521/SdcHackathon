@@ -64,7 +64,7 @@ describe("the vote", () => {
     expect(r.decision).toBe("flagged");
     expect(r.reasons[0]).toMatch(/Split vote \(1 of 3 include\)/);
     expect(r.reasons).toHaveLength(4);
-    expect(r.reasons.join("|")).toMatch(/Evidence checker \(exclude\).*Skill matcher \(include\).*Sceptic \(exclude\)/);
+    expect(r.reasons.join("|")).toMatch(/Evidence checker, m-reviewer \(exclude\).*Skill matcher, m-main \(include\).*Sceptic, m-reviewer \(exclude\)/);
   });
 
   it("0 of 3 include -> rejected, with the reasons", () => {

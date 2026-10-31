@@ -6,7 +6,7 @@ import { createEngine } from "../shared/engine.js";
 import { loadGraph, createVersion, engineGraph, latestVersion } from "../server/kb.ts";
 import { loadProfile, engineProfile } from "../server/repo.ts";
 import { createApp } from "../server/app.ts";
-import { createGeminiLlm, toGeminiSchema, LlmUnavailableError } from "../server/lib/llm.ts";
+import { createGeminiLlm, createKrackedLlm, toGeminiSchema, LlmUnavailableError } from "../server/lib/llm.ts";
 import { testServices } from "./helpers/services.ts";
 import type { Services } from "../server/context.ts";
 
@@ -152,6 +152,32 @@ describe("LLM wrapper", () => {
     expect(body).not.toContain("priya@example.com");
     expect(body).not.toContain("900101-07-1234");
     expect(body).not.toContain("345 6789");
+  });
+});
+
+describe("KrackedDevs LLM", () => {
+  const schema = z.object({ ok: z.boolean() });
+  const reply = (content: string) => new Response(JSON.stringify({ choices: [{ message: { content } }] }), { status: 200 });
+
+  it("gives each voter seat its own model and leaves temperature out for GPT", async () => {
+    const bodies: any[] = [];
+    const llm = createKrackedLlm({ keys: ["k"], fetch: (async (_u: string, init: any) => { bodies.push(JSON.parse(init.body)); return reply('{"ok":true}'); }) as any });
+    const a = await llm.complete({ system: "s", user: "u", schema, role: "reviewer", voter: "evidence", cache: false });
+    const b = await llm.complete({ system: "s", user: "u", schema, role: "reviewer", voter: "sceptic", cache: false });
+    const c = await llm.complete({ system: "s", user: "u", schema, voter: "skill", cache: false });
+    expect([a.model, b.model, c.model]).toEqual(["gpt-5.5", "DeepSeek-V4-Pro", "gpt-6-sol"]);
+    expect(bodies[0].temperature).toBeUndefined();
+    expect(bodies[0].reasoning_effort).toBe("low");
+    expect(bodies[1].temperature).toBe(0);
+  });
+
+  it("does not serve one model's cached answer to another model", async () => {
+    const db = (await testServices()).db;
+    let calls = 0;
+    const f = (async () => { calls++; return reply('{"ok":true}'); }) as any;
+    await createKrackedLlm({ db, keys: ["k"], fetch: f }).complete({ system: "s", user: "u", schema });
+    await createKrackedLlm({ db, keys: ["k"], fetch: f, models: { main: "gpt-5.4" } }).complete({ system: "s", user: "u", schema });
+    expect(calls).toBe(2);
   });
 });
 

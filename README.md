@@ -303,7 +303,7 @@ npm run typecheck
 <details>
 <summary>Environment variables, smoke test and model training</summary>
 
-- **AI:** `GEMINI_API_KEY` (required), `GEMINI_API_KEY_2`, `GEMINI_MODEL`, `GEMINI_REVIEWER_MODEL`.
+- **AI:** `KRACKEDDEVS_API_KEY` (KrackedDevs proxy; main `gpt-5.5`, reviewer `DeepSeek-V4-Pro`, voters `gpt-5.5` / `gpt-6-sol` / `DeepSeek-V4-Pro`), `KRACKEDDEVS_MODEL`, `KRACKEDDEVS_REVIEWER_MODEL`. Without it: `GEMINI_API_KEY`, `GEMINI_API_KEY_2`, `GEMINI_MODEL`, `GEMINI_REVIEWER_MODEL`.
 - **Database:** `DATABASE_URL` for PostgreSQL; empty = embedded PGlite in `./data`.
 - **Accounts:** Replit-managed Clerk (`CLERK_SECRET_KEY`, `CLERK_PUBLISHABLE_KEY`, provisioned by Replit); `SESSION_SECRET` signs guest cookies; without Clerk keys the app runs as an open demo. `ADMIN_EMAILS` and `ADVISOR_EMAILS` give staff roles.
 - **Embeddings:** `EMBED_PROVIDER` (`runpod` / `local` / `gemini` / `none`), `RUNPOD_API_KEY`, `RUNPOD_EMBED_ENDPOINT_ID`, `LOCAL_EMBED_URL`.

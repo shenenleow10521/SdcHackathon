@@ -66,7 +66,7 @@ export async function castVotes(svc: Services, c: VoteCandidate, paceMs = 0): Pr
   for (const v of VOTERS) {
     if (votes.length && paceMs) await new Promise(r => setTimeout(r, paceMs));
     try {
-      const r = await svc.llm.complete({ role: v.model, system: v.system, user, schema: VoteSchema, maxOutputTokens: 400 });
+      const r = await svc.llm.complete({ role: v.model, voter: v.role, system: v.system, user, schema: VoteSchema, maxOutputTokens: 400 });
       votes.push({ role: v.role, vote: r.data.vote, confidence: r.data.confidence, reason: r.data.reason.trim(), model: r.model });
     } catch (e: any) {
       return { votes, error: `${v.role} voter unavailable: ${String(e?.message || e).slice(0, 200)}` };

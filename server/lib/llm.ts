@@ -1,5 +1,6 @@
-// LLM wrapper (Google Gemini). One call shape for every agent:
+// LLM wrapper. One call shape for every agent:
 //   llm.complete({ system, user, schema })  ->  { data, model, cached }
+// Two providers: the KrackedDevs proxy (OpenAI-compatible, GPT + DeepSeek) and Google Gemini.
 // - Output is forced to JSON with the zod schema (converted to JSON Schema) and validated again here.
 // - Every response is cached in llm_cache by a hash of model + prompt + schema (demo reliability, lower cost).
 // - Rate limits / server errors rotate to the next API key, then to the fallback model.
@@ -9,12 +10,15 @@ import { z } from "zod";
 import type { Db } from "./db.ts";
 import { scrubPii } from "./pii.ts";
 
+export type VoterSeat = "evidence" | "skill" | "sceptic";
 export interface LlmRequest<T> {
   system: string;
   user: string;
   schema: z.ZodType<T>;
   /** 'main' for most agents; 'reviewer' uses a different model, so a second model checks the first. */
   role?: "main" | "reviewer";
+  /** A voter on the three-agent panel. If the provider has a model for this seat, that model answers. */
+  voter?: VoterSeat;
   temperature?: number;
   maxOutputTokens?: number;
   /** Read and write the response cache (default true). */
@@ -32,6 +36,10 @@ export class LlmUnavailableError extends Error {
 }
 
 export const DEFAULT_MODELS = { main: "gemini-3.5-flash-lite", reviewer: "gemini-3.1-flash-lite" };
+/** KrackedDevs proxy defaults. The three voters use models from two vendors, so the panel is not one model voting three times. */
+export const KRACKEDDEVS_MODELS = { main: "gpt-5.5", reviewer: "DeepSeek-V4-Pro" };
+export const KRACKEDDEVS_VOTERS: Record<VoterSeat, string> = { evidence: "gpt-5.5", skill: "gpt-6-sol", sceptic: "DeepSeek-V4-Pro" };
+export const KRACKEDDEVS_BASE_URL = "https://litellm.rapidscreen.io/v1";
 
 /** Every Gemini key in the environment: GEMINI_API_KEY, GEMINI_API_KEY_2, ..., gemini_key, gemini_key_2, ... (deduplicated, in order). */
 export function geminiKeysFromEnv(env = process.env): string[] {
@@ -43,15 +51,65 @@ export function geminiKeysFromEnv(env = process.env): string[] {
     .filter((k, i, a) => k && a.indexOf(k) === i);
 }
 
-export function createGeminiLlm(opts: {
-  db?: Db; keys: string[]; models?: Partial<typeof DEFAULT_MODELS>;
-  fetch?: typeof fetch; timeoutMs?: number;
-}): Llm {
-  const models = {
-    main: opts.models?.main || DEFAULT_MODELS.main,
-    reviewer: opts.models?.reviewer || DEFAULT_MODELS.reviewer,
-  };
+/** Sends one prompt to one model with one key and returns the raw JSON text. */
+type Transport = (args: { model: string; key: string; system: string; user: string; jsonSchema: unknown; temperature: number; maxOutputTokens: number; signal: AbortSignal }) =>
+  Promise<{ retry: boolean; error: string } | { text: string }>;
+
+interface LlmOpts { db?: Db; keys: string[]; fetch?: typeof fetch; timeoutMs?: number }
+
+export function createGeminiLlm(opts: LlmOpts & { models?: Partial<typeof DEFAULT_MODELS> }): Llm {
   const doFetch = opts.fetch || fetch;
+  const transport: Transport = async ({ model, key, system, user, jsonSchema, temperature, maxOutputTokens, signal }) => {
+    const res = await doFetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+      method: "POST", signal,
+      headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: system }] },
+        contents: [{ role: "user", parts: [{ text: user }] }],
+        generationConfig: { temperature, maxOutputTokens, responseMimeType: "application/json", responseJsonSchema: jsonSchema },
+      }),
+    });
+    if (res.status === 429 || res.status >= 500 || res.status === 403) return { retry: true, error: `${model} HTTP ${res.status}` };
+    const body: any = await res.json();
+    if (!res.ok) throw new Error(`${model} HTTP ${res.status}: ${body?.error?.message || "error"}`);
+    const text = body?.candidates?.[0]?.content?.parts?.filter((p: any) => typeof p.text === "string").map((p: any) => p.text).join("") ?? "";
+    if (!text) throw new Error(`${model} returned no text (${body?.candidates?.[0]?.finishReason || body?.promptFeedback?.blockReason || "empty"})`);
+    return { text };
+  };
+  return buildLlm(opts, { main: opts.models?.main || DEFAULT_MODELS.main, reviewer: opts.models?.reviewer || DEFAULT_MODELS.reviewer }, {}, transport, toGeminiSchema, "Gemini");
+}
+
+/** The KrackedDevs LiteLLM proxy (OpenAI chat-completions format). */
+export function createKrackedLlm(opts: LlmOpts & { baseUrl?: string; models?: Partial<typeof KRACKEDDEVS_MODELS>; voters?: Partial<Record<VoterSeat, string>> }): Llm {
+  const doFetch = opts.fetch || fetch;
+  const baseUrl = (opts.baseUrl || KRACKEDDEVS_BASE_URL).replace(/\/+$/, "");
+  const transport: Transport = async ({ model, key, system, user, jsonSchema, temperature, maxOutputTokens, signal }) => {
+    // GPT models here are reasoning models: they reject temperature, and hidden reasoning counts against the token limit.
+    const gpt = /^gpt-/i.test(model);
+    const res = await doFetch(`${baseUrl}/chat/completions`, {
+      method: "POST", signal,
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+      body: JSON.stringify({
+        model,
+        messages: [{ role: "system", content: system }, { role: "user", content: user }],
+        response_format: { type: "json_schema", json_schema: { name: "answer", strict: false, schema: jsonSchema } },
+        ...(gpt ? { reasoning_effort: "low", max_completion_tokens: maxOutputTokens + 2048 } : { temperature, max_tokens: maxOutputTokens }),
+      }),
+    });
+    if (res.status === 429 || res.status >= 500 || res.status === 403) return { retry: true, error: `${model} HTTP ${res.status}` };
+    const body: any = await res.json();
+    if (!res.ok) throw new Error(`${model} HTTP ${res.status}: ${String(body?.error?.message || "error").slice(0, 200)}`);
+    const text = body?.choices?.[0]?.message?.content ?? "";
+    if (!text) throw new Error(`${model} returned no text (${body?.choices?.[0]?.finish_reason || "empty"})`);
+    return { text: String(text).replace(/^```(?:json)?\s*|\s*```$/g, "") };
+  };
+  const toSchema = (s: z.ZodType<any>) => { const js: any = z.toJSONSchema(s, { target: "draft-7", unrepresentable: "any" }); delete js.$schema; return js; };
+  return buildLlm(opts, { main: opts.models?.main || KRACKEDDEVS_MODELS.main, reviewer: opts.models?.reviewer || KRACKEDDEVS_MODELS.reviewer },
+    { ...KRACKEDDEVS_VOTERS, ...opts.voters }, transport, toSchema, "KrackedDevs");
+}
+
+function buildLlm(opts: LlmOpts, models: { main: string; reviewer: string }, voters: Partial<Record<VoterSeat, string>>,
+  transport: Transport, toSchema: (s: z.ZodType<any>) => unknown, provider: string): Llm {
   const keys = opts.keys;
   let keyIdx = 0, lastError: string | null = null;
 
@@ -72,23 +130,9 @@ export function createGeminiLlm(opts: {
       const ctrl = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), opts.timeoutMs ?? 45000);
       try {
-        const res = await doFetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-          method: "POST", signal: ctrl.signal,
-          headers: { "Content-Type": "application/json", "x-goog-api-key": key },
-          body: JSON.stringify({
-            systemInstruction: { parts: [{ text: system }] },
-            contents: [{ role: "user", parts: [{ text: user }] }],
-            generationConfig: { temperature, maxOutputTokens, responseMimeType: "application/json", responseJsonSchema: jsonSchema },
-          }),
-        });
-        if (res.status === 429 || res.status >= 500 || res.status === 403) {
-          lastErr = `${model} HTTP ${res.status}`; keyIdx++; continue; // try the next key
-        }
-        const body: any = await res.json();
-        if (!res.ok) throw new Error(`${model} HTTP ${res.status}: ${body?.error?.message || "error"}`);
-        const text = body?.candidates?.[0]?.content?.parts?.filter((p: any) => typeof p.text === "string").map((p: any) => p.text).join("") ?? "";
-        if (!text) throw new Error(`${model} returned no text (${body?.candidates?.[0]?.finishReason || body?.promptFeedback?.blockReason || "empty"})`);
-        return text;
+        const r = await transport({ model, key, system, user, jsonSchema, temperature, maxOutputTokens, signal: ctrl.signal });
+        if ("retry" in r) { lastErr = r.error; keyIdx++; continue; } // try the next key
+        return r.text;
       } catch (e: any) {
         lastErr = e?.name === "AbortError" ? `${model} timed out` : e?.message || String(e);
         if (!/HTTP 4\d\d/.test(lastErr)) { keyIdx++; continue; }
@@ -102,12 +146,15 @@ export function createGeminiLlm(opts: {
     status: () => ({ configured: keys.length > 0, models, keys: keys.length, lastError }),
     async complete<T>(req: LlmRequest<T>): Promise<LlmResult<T>> {
       const role = req.role || "main";
-      const primary = models[role], fallback = role === "main" ? models.reviewer : models.main;
+      const base = models[role];
+      const primary = (req.voter && voters[req.voter]) || base;
+      const fallback = primary !== base ? base : role === "main" ? models.reviewer : models.main;
       const user = scrubPii(req.user).text;
-      const jsonSchema = toGeminiSchema(req.schema);
+      const jsonSchema = toSchema(req.schema);
       const temperature = req.temperature ?? 0;
       const useCache = req.cache !== false;
-      const key = createHash("sha256").update(JSON.stringify([role, req.system, user, jsonSchema, temperature])).digest("hex");
+      // The model name is part of the key, so switching models never serves another model's old answer.
+      const key = createHash("sha256").update(JSON.stringify([primary, role, req.system, user, jsonSchema, temperature])).digest("hex");
       if (useCache) {
         const hit = await cacheGet(key);
         if (hit) {
@@ -115,7 +162,7 @@ export function createGeminiLlm(opts: {
           if (parsed.success) return { data: parsed.data, model: hit.model, cached: true };
         }
       }
-      if (!keys.length) throw new LlmUnavailableError("No Gemini API key configured");
+      if (!keys.length) throw new LlmUnavailableError(`No ${provider} API key configured`);
       const errors: string[] = [];
       for (const model of [primary, fallback]) {
         for (let tries = 0; tries < 2; tries++) {

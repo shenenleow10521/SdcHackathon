@@ -60,7 +60,7 @@ export function gateReasons(i: Pick<TriageInput, "sourceUrl" | "quoteFound" | "d
 }
 
 const ROLE_LABEL = { evidence: "Evidence checker", skill: "Skill matcher", sceptic: "Sceptic" } as const;
-export const voteReasons = (v: VoteSet) => v.votes.map(x => `${ROLE_LABEL[x.role]} (${x.vote}): ${x.reason || "no reason given"}`);
+export const voteReasons = (v: VoteSet) => v.votes.map(x => `${ROLE_LABEL[x.role]}${x.model ? `, ${x.model}` : ""} (${x.vote}):${x.reason || "no reason given"}`);
 /** "approved by agent vote (2 of 3)" etc. */
 export const tallyText = (n: number) => `${n} of ${TRIAGE.voters}`;
 
