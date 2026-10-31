@@ -780,16 +780,30 @@ footer a { color: var(--ink-2); }
     <div class="wrap">
       <div class="sec-head rv">
         <p class="kicker">How it is built</p>
-        <h2 id="tested-h">Six parts, each with one job. 533 tests on every update.</h2>
-        <p>Deployed on Replit, with the whole journey running live on one pipeline. AI reads text; plain code works out every number. If the AI gateway goes down, CV reading falls back to keyword matching. If RunPod is slow to start, a local model takes over. If no course exists, the screen says “no course listed yet”.</p>
+        <h2 id="tested-h">Input, brain, output. 533 tests on every update.</h2>
+        <p>Deployed on Replit, running live as one pipeline. AI reads text; plain code works out every number.</p>
       </div>
-      <div class="checks mods">
-        <div class="glass rv" style="--i:1;--c:#4a93ea"><span class="n">01</span><h3>Data</h3><p>The EU’s official list of jobs and skills, plus Malaysian wage and job data from the Department of Statistics (DOSM) and MyCOL.</p><p class="src">Database, every version kept</p></div>
-        <div class="glass rv" style="--i:2;--c:#9b8cff"><span class="n">02</span><h3>Model</h3><p>Scores how much of each task and skill AI can do today.</p><p class="src">Our own trained model, run on RunPod</p></div>
-        <div class="glass rv" style="--i:3;--c:#2fc28b"><span class="n">03</span><h3>Profile</h3><p>Turns a CV or a few questions into a skills list. Personal details are removed first.</p><p class="src">GPT-5.5 via KrackedDevs, bge-m3 on RunPod</p></div>
-        <div class="glass rv" style="--i:4;--c:#ff7a3d"><span class="n">04</span><h3>Engine</h3><p>Matches jobs, builds routes, tracks goals and runs the 1,000-futures test.</p><p class="src">Plain code, no AI</p></div>
-        <div class="glass rv" style="--i:5;--c:#f2b33d"><span class="n">05</span><h3>Researcher</h3><p>Reads the news, checks every quote, and runs the three-agent vote.</p><p class="src">GPT-5.5 and DeepSeek via KrackedDevs, 74 trusted sites</p></div>
-        <div class="glass rv" style="--i:6;--c:#eef2f8"><span class="n">06</span><h3>People</h3><p>Screens for workers, HR teams, advisors and reviewers.</p><p class="src">Web app, English and Bahasa Melayu</p></div>
+      <div class="bt rv" style="--i:1">
+        <div class="bt-lane">
+          <span class="bt-lbl">Input</span>
+          <div class="bt-m" style="--c:#2fc28b"><b>Profile</b><p>A CV or a few questions become a skills list, details removed first.</p><em>GPT-5.5 via KrackedDevs</em></div>
+          <div class="bt-m" style="--c:#5aa0f0"><b>Data</b><p>The EU’s official jobs and skills, plus DOSM wages and MyCOL shortages.</p><em>Replit PostgreSQL, versioned</em></div>
+        </div>
+        <div class="bt-lane">
+          <span class="bt-lbl">Brain</span>
+          <div class="bt-m" style="--c:#a98bff"><b>Model</b><p>Scores how much of each task and skill AI can do today.</p><em>trained on RunPod</em></div>
+          <div class="bt-m hot" style="--c:#ff7a3d"><b>Engine</b><p>Matches jobs, builds routes and runs the 1,000-futures test.</p><em>plain code, no AI</em></div>
+          <div class="bt-m" style="--c:#f2b33d"><b>Researcher</b><p>Reads the news, checks every quote, runs the three-agent vote.</p><em>GPT and DeepSeek via KrackedDevs</em></div>
+        </div>
+        <div class="bt-lane">
+          <span class="bt-lbl">Output</span>
+          <div class="bt-m" style="--c:#eef2f8"><b>People</b><p>Screens for workers, HR, advisors and reviewers.</p><em>web app on Replit</em></div>
+          <div class="bt-m" style="--c:#eef2f8"><b>Two languages</b><p>English and Bahasa Melayu, same numbers.</p><em>keyboard friendly</em></div>
+        </div>
+        <div class="bt-safe">
+          <span class="bt-lbl">Fallbacks</span>
+          <ul><li><b>AI gateway down</b>keyword matching</li><li><b>RunPod slow</b>a local model</li><li><b>No course</b>“no course listed yet”</li><li><b>Every update</b>533 tests first</li></ul>
+        </div>
       </div>
     </div>
   </section>
@@ -1717,6 +1731,31 @@ html { scroll-snap-type: y proximity; }
 .ev2-row b { font-size: 15px; color: var(--ink); }
 .ev2-row p { margin-top: 3px; font-size: 13.5px; color: var(--muted); }
 @media (max-width: 1000px) { .ev2 { margin-left: 0; grid-template-columns: 1fr; } }
+
+/* ---------- how it is built v2: three lanes ---------- */
+#tested { background: radial-gradient(ellipse 75% 65% at 55% 60%, rgba(5,7,13,.8) 0%, rgba(5,7,13,.55) 55%, rgba(5,7,13,.2) 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%); }
+.bt { margin: 28px 0 0 178px; max-width: 1000px; display: grid; gap: 0; }
+.bt-lane { display: grid; grid-template-columns: 90px repeat(3, minmax(0, 1fr)); gap: 26px; align-items: start; padding: 16px 0; border-top: 1px solid rgba(170,186,214,.13); }
+.bt-lane:first-child { border-top: 0; padding-top: 0; }
+.bt-lbl { padding-top: 3px; font-size: 11.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.bt-m b { display: flex; align-items: center; gap: 9px; font-size: 1.05rem; color: var(--ink); letter-spacing: -.01em; }
+.bt-m b::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); }
+.bt-m p { margin-top: 6px; font-size: 14px; line-height: 1.45; color: var(--ink-2); }
+.bt-m em { display: inline-block; margin-top: 8px; font-style: normal; font-size: 12px; font-weight: 600; color: var(--c); }
+.bt-m.hot em { padding: 2px 9px; border-radius: 999px; background: rgba(255,122,61,.14); border: 1px solid rgba(255,122,61,.45); }
+.bt-safe { display: grid; grid-template-columns: 90px minmax(0,1fr); gap: 26px; align-items: start; margin-top: 4px; padding-top: 14px; border-top: 1px dashed rgba(170,186,214,.22); }
+.bt-safe ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; font-size: 13.5px; color: var(--ink-2); }
+.bt-safe li b { display: block; font-size: 13px; color: var(--ink); margin-bottom: 2px; }
+@media (max-width: 1000px) { .bt { margin-left: 0; } .bt-lane, .bt-safe { grid-template-columns: 1fr; } .bt-safe ul { grid-template-columns: 1fr 1fr; } }
+
+.bt { margin-top: 22px; }
+.bt-lane { padding: 12px 0; }
+.bt-m p { margin-top: 4px; }
+.bt-m em { margin-top: 5px; }
+.bt-safe { padding-top: 12px; }
+#tested .sec-head h2 { font-size: 2.4rem; }
 </style>
 
 <footer>
