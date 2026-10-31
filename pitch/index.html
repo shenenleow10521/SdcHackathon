@@ -817,31 +817,6 @@ footer a { color: var(--ink-2); }
     </div>
   </section>
 
-
-  <!-- ================= SINCE PHASE 1 ================= -->
-  <section class="sec deck" id="since" aria-labelledby="since-h">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <p class="kicker">Impact and feasibility</p>
-        <h2 id="since-h">What changed since the preliminary round.</h2>
-        <p>Phase 1 was submitted on 25 October. Everything on the right is live on 31 October.</p>
-      </div>
-      <div class="two one">
-        <div class="glass rv" style="--i:1">
-          <div class="plans since">
-            <div class="plan head"><b></b><span class="pr">Phase 1, 25 Oct</span><span>Now</span></div>
-            <div class="plan"><b>Who decides a market signal</b><span class="pr">A person approved every change</span><span>Three agents vote; a split vote goes to a person; every vote is recorded</span></div>
-            <div class="plan"><b>What a plan covers</b><span class="pr">Moving to a new job</span><span>Stay in your job or move, with weekly check-ins</span></div>
-            <div class="plan"><b>Jobs you can get a route to</b><span class="pr">16 catalogue jobs</span><span>Any of the 3,039 jobs on the official list</span></div>
-            <div class="plan"><b>AI-era skills on the map</b><span class="pr">None</span><span>27 new skills, each from a published source</span></div>
-            <div class="plan"><b>Personal details removed before AI reads the CV</b><span class="pr">128 of 155 on the first test</span><span>154 of 155 after fixes</span></div>
-            <div class="plan"><b>Automated tests</b><span class="pr">418</span><span>533, run on every code update</span></div>
-            <div class="plan"><b>For employers</b><span class="pr">None</span><span>HR team view, only for workers who choose to share</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
   <!-- ================= MARKET ================= -->
   <section class="sec deck" id="market" aria-labelledby="market-h">
     <div class="wrap">
@@ -1800,8 +1775,8 @@ setTimeout(measure, 800); addEventListener("load", measure);
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var story = $('#story'), rail = $('#rail'), stops = [], cur = -1, anim = null;
-  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'since', 'market', 'tests', 'checks', 'roadmap', 'limits', 'go'];
-  var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', since: 'Since Phase 1', market: 'Market size', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Your route changes with it' };
+  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'tests', 'checks', 'roadmap', 'limits', 'go'];
+  var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', market: 'Market size', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Your route changes with it' };
   var chNames = ['Act 1: Stay', 'Act 2: Move', 'The route', 'Act 3: Updated'], chHash = ['story', 'roles', 'route', 'rerouted'];
   function build() {
     stops = [];
@@ -1982,8 +1957,8 @@ setTimeout(measure, 800); addEventListener("load", measure);
 <script>
 /* Page numbers: a number and label in a column beside the headline, and a faint outline number behind that column (or in the top-right corner on centred pages). */
 (function () {
-  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'since', 'market', 'tests', 'checks', 'roadmap', 'limits', 'go'];
-  var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', since: 'Since Phase 1', market: 'Market size', roadmap: 'Roadmap', limits: 'What we say openly', go: 'Close' };
+  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'tests', 'checks', 'roadmap', 'limits', 'go'];
+  var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', market: 'Market size', roadmap: 'Roadmap', limits: 'What we say openly', go: 'Close' };
   ids.forEach(function (id, i) {
     if (id === 'hero' || id === 'team') return; // the title and team pages carry no number; counting starts at The problem
     var el = document.getElementById(id); if (!el) return;
