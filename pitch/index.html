@@ -825,25 +825,44 @@ footer a { color: var(--ink-2); }
         <h2 id="market-h">A market of 620,000 workers who need this now.</h2>
         <p>Sized from the number of Malaysian workers in jobs that AI will change, at RM 300 per worker a year.</p>
       </div>
-      <div class="mkt rv" style="--i:2">
-        <svg class="mkt-rings" viewBox="0 0 420 420" role="img" aria-label="Nested circles sized by area: TAM RM 726 million, SAM RM 186 million, SOM RM 3 million">
+      <div class="fnl rv" style="--i:2">
+        <svg viewBox="0 0 1000 330" role="img" aria-label="Market funnel: TAM RM 726 million, 2.42 million workers; SAM RM 186 million, 620,000 workers; SOM RM 3 million, 10,000 seats by year three">
           <defs>
-            <radialGradient id="mk-tam" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#4a93ea" stop-opacity=".26"/><stop offset="1" stop-color="#4a93ea" stop-opacity=".04"/></radialGradient>
-            <radialGradient id="mk-sam" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#9b8cff" stop-opacity=".38"/><stop offset="1" stop-color="#9b8cff" stop-opacity=".08"/></radialGradient>
-            <filter id="mk-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+            <linearGradient id="fn-1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a5fae"/><stop offset="1" stop-color="#4a93ea"/></linearGradient>
+            <linearGradient id="fn-2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5a46b8"/><stop offset="1" stop-color="#9b8cff"/></linearGradient>
+            <linearGradient id="fn-3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d4501b"/><stop offset="1" stop-color="#ff8a4d"/></linearGradient>
+            <filter id="fn-glow" x="-20%" y="-40%" width="140%" height="180%"><feGaussianBlur stdDeviation="14"/></filter>
           </defs>
-          <circle cx="210" cy="200" r="180" fill="url(#mk-tam)" stroke="rgba(74,147,234,.9)" stroke-width="1.4"/>
-          <circle cx="210" cy="289" r="91" fill="url(#mk-sam)" stroke="rgba(155,140,255,.95)" stroke-width="1.4"/>
-          <circle cx="210" cy="368.5" r="16" fill="#ff7a3d" opacity=".55" filter="url(#mk-glow)"/>
-          <circle cx="210" cy="368.5" r="11.5" fill="#ff7a3d"/>
-          <text x="210" y="70" text-anchor="middle" fill="#9ac8ff" font-family="Geist, sans-serif" font-size="15" font-weight="700" letter-spacing="2.5">TAM</text>
-          <text x="210" y="236" text-anchor="middle" fill="#c9c0ff" font-family="Geist, sans-serif" font-size="15" font-weight="700" letter-spacing="2.5">SAM</text>
+          <g class="fn-band b1">
+            <path d="M0 0 H520 L486 96 H34 Z" fill="#4a93ea" opacity=".35" filter="url(#fn-glow)"/>
+            <path d="M0 0 H520 L486 96 H34 Z" fill="url(#fn-1)"/>
+            <text x="30" y="30" class="fn-tag">TAM</text>
+            <text x="260" y="66" class="fn-num">RM 726M</text>
+            <path d="M532 48 H590" class="fn-lead"/><circle cx="532" cy="48" r="3.5" fill="#4a93ea"/>
+            <text x="604" y="40" class="fn-h">Everyone who could use it</text>
+            <text x="604" y="64" class="fn-d">2.42 million Malaysian workers in jobs</text>
+            <text x="604" y="84" class="fn-d">with high or medium AI impact</text>
+          </g>
+          <g class="fn-band b2">
+            <path d="M44 117 H476 L442 213 H78 Z" fill="#9b8cff" opacity=".35" filter="url(#fn-glow)"/>
+            <path d="M44 117 H476 L442 213 H78 Z" fill="url(#fn-2)"/>
+            <text x="74" y="147" class="fn-tag">SAM</text>
+            <text x="260" y="183" class="fn-num">RM 186M</text>
+            <path d="M488 165 H590" class="fn-lead"/><circle cx="488" cy="165" r="3.5" fill="#9b8cff"/>
+            <text x="604" y="157" class="fn-h">Who needs it most</text>
+            <text x="604" y="181" class="fn-d">620,000 workers in highly impacted jobs</text>
+          </g>
+          <g class="fn-band b3">
+            <path d="M88 234 H432 L398 330 H122 Z" fill="#ff7a3d" opacity=".4" filter="url(#fn-glow)"/>
+            <path d="M88 234 H432 L398 330 H122 Z" fill="url(#fn-3)"/>
+            <text x="118" y="264" class="fn-tag">SOM</text>
+            <text x="260" y="300" class="fn-num">RM 3M</text>
+            <path d="M444 282 H590" class="fn-lead"/><circle cx="444" cy="282" r="3.5" fill="#ff7a3d"/>
+            <text x="604" y="274" class="fn-h">Our target by year three</text>
+            <text x="604" y="298" class="fn-d">10,000 seats at RM 300 a year</text>
+            <text x="604" y="318" class="fn-d">Break-even at about 1,000 seats</text>
+          </g>
         </svg>
-        <ol class="mkt-ladder">
-          <li style="--c:#4a93ea;--w:100%"><div class="row"><span class="tag">TAM</span><b>RM 726M</b></div><div class="bar"><i></i></div><span class="what">2.42 million Malaysian workers in jobs with high or medium AI impact</span></li>
-          <li style="--c:#9b8cff;--w:25.6%"><div class="row"><span class="tag">SAM</span><b>RM 186M</b></div><div class="bar"><i></i></div><span class="what">620,000 workers in highly impacted jobs</span></li>
-          <li style="--c:#ff7a3d;--w:1.2%"><div class="row"><span class="tag">SOM</span><b>RM 3M</b></div><div class="bar"><i></i></div><span class="what">10,000 seats by year three. Break-even at about 1,000 seats.</span></li>
-        </ol>
       </div>
       <p class="after mkt-src rv" style="--i:3">Sources: TalentCorp (2024), GBS Malaysia Mid-Term Report (2025), Department of Statistics Malaysia (DOSM). Prices are pilot assumptions.</p>
     </div>
@@ -942,55 +961,6 @@ footer a { color: var(--ink-2); }
 </svg>
 
 
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= TECH STACK ================= -->
-  <section class="sec deck" id="stack" aria-labelledby="stack-h">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <p class="kicker">Tech stack</p>
-        <h2 id="stack-h">Built on our three sponsors, running live.</h2>
-        <p>Replit hosts the product, KrackedDevs gives our agents their language models, and RunPod runs and trained our own AI models. Every figure is in our GitHub repo.</p>
-      </div>
-      <div class="ts3">
-        <article class="sp rv" style="--i:1;--sp:#f26207">
-          <header><span class="sp-logo"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 3h7v6H5zM12 9h7v6h-7zM5 15h7v6H5z" fill="#0a0e18"/></svg></span><div><b>Replit</b><em>Hosting and data</em></div></header>
-          <ul>
-            <li><b>Deployments</b>serves the live app</li>
-            <li><b>PostgreSQL 16</b>the only database</li>
-            <li><b>Clerk sign-in</b>accounts and guests</li>
-            <li><b>Secrets</b>API keys out of the code</li>
-            <li><b>Always on</b>agents run 24/7</li>
-          </ul>
-        </article>
-        <article class="sp rv" style="--i:2;--sp:#2fd4a0">
-          <header><span class="sp-logo">K</span><div><b>KrackedDevs</b><em>LLM gateway</em></div></header>
-          <ul>
-            <li><b>GPT-5.5</b>main model, every agent</li>
-            <li><b>DeepSeek-V4-Pro</b>reviews the main model</li>
-            <li><b>GPT-6-sol</b>one of three voters</li>
-            <li><b>Two vendors</b>a truly independent vote</li>
-            <li><b>One endpoint</b>OpenAI-compatible JSON</li>
-          </ul>
-        </article>
-        <article class="sp rv" style="--i:3;--sp:#a98bff">
-          <header><span class="sp-logo">R</span><div><b>RunPod</b><em>GPU compute</em></div></header>
-          <ul>
-            <li><b>Serverless</b>bge-m3, CV to 13,939 skills</li>
-            <li><b>Scales to zero</b>no cost when idle</li>
-            <li><b>GPU pod</b>RTX 4090 trained our model</li>
-            <li><b>Training</b>2.5 minutes, US$0.04</li>
-            <li><b>Speed</b>13,939 skills in 486 s</li>
-          </ul>
-        </article>
-      </div>
-      <div class="ts-row rv" style="--i:4">
-        <div><span>Interface</span>Vanilla JS, three.js, GSAP, English and BM</div>
-        <div><span>Server</span>Node 22, TypeScript, Express 5, zod</div>
-        <div><span>Data</span>ESCO, O*NET, ILO, DOSM, MyCOL</div>
-        <div><span>Quality</span>533 tests, GitHub Actions</div>
       </div>
     </div>
   </section>
@@ -1579,6 +1549,22 @@ html { scroll-snap-type: y proximity; }
 
 .sp li { grid-template-columns: 128px minmax(0, 1fr); padding: 8px 0; font-size: 14px; }
 .sp-logo svg { display: block; }
+
+/* ---------- market funnel ---------- */
+#market .fnl { margin: 26px 0 0 178px; max-width: 980px; }
+#market .fnl svg { width: 100%; height: auto; display: block; overflow: visible; font-family: var(--font); }
+#market .fn-tag { font-size: 13px; font-weight: 800; letter-spacing: 2.5px; fill: rgba(255,255,255,.75); }
+#market .fn-num { font-size: 44px; font-weight: 800; letter-spacing: -1.6px; fill: #fff; text-anchor: middle; }
+#market .fn-h { font-size: 17px; font-weight: 700; fill: #eef2f8; letter-spacing: -.2px; }
+#market .fn-d { font-size: 15px; fill: #b4bfd2; }
+#market .fn-lead { stroke: rgba(170,186,214,.35); stroke-width: 1.2; stroke-dasharray: 3 4; fill: none; }
+#market .fn-band { opacity: 0; transform: translateY(14px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+#market .fn-band.b2 { transition-delay: .18s; }
+#market .fn-band.b3 { transition-delay: .36s; }
+#market .fnl.in .fn-band, #market.in .fn-band { opacity: 1; transform: none; }
+#market .mkt-src { margin-left: 178px; margin-top: 22px; }
+@media (max-width: 1000px) { #market .fnl, #market .mkt-src { margin-left: 0; } }
+@media (prefers-reduced-motion: reduce) { #market .fn-band { opacity: 1; transform: none; transition: none; } }
 </style>
 
 <footer>
@@ -2051,8 +2037,8 @@ setTimeout(measure, 800); addEventListener("load", measure);
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var story = $('#story'), rail = $('#rail'), stops = [], cur = -1, anim = null;
-  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'arch', 'stack', 'go', 'tests', 'checks', 'roadmap', 'limits'];
-  var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', market: 'Market size', arch: 'Architecture', stack: 'Tech stack', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Your route changes with it' };
+  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'arch', 'go', 'tests', 'checks', 'roadmap', 'limits'];
+  var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', market: 'Market size', arch: 'Architecture', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Your route changes with it' };
   var chNames = ['Act 1: Stay', 'Act 2: Move', 'The route', 'Act 3: Updated'], chHash = ['story', 'roles', 'route', 'rerouted'];
   function build() {
     stops = [];
@@ -2233,8 +2219,8 @@ setTimeout(measure, 800); addEventListener("load", measure);
 <script>
 /* Page numbers: a number and label in a column beside the headline, and a faint outline number behind that column (or in the top-right corner on centred pages). */
 (function () {
-  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'arch', 'stack', 'go', 'tests', 'checks', 'roadmap', 'limits'];
-  var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', market: 'Market size', arch: 'Architecture', stack: 'Tech stack', roadmap: 'Roadmap', limits: 'What we say openly', go: 'Close' };
+  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'arch', 'go', 'tests', 'checks', 'roadmap', 'limits'];
+  var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', market: 'Market size', arch: 'Architecture', roadmap: 'Roadmap', limits: 'What we say openly', go: 'Close' };
   ids.forEach(function (id, i) {
     if (id === 'hero' || id === 'team') return; // the title and team pages carry no number; counting starts at The problem
     var el = document.getElementById(id); if (!el) return;
