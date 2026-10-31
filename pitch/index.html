@@ -1565,6 +1565,16 @@ html { scroll-snap-type: y proximity; }
 #market .mkt-src { margin-left: 178px; margin-top: 22px; }
 @media (max-width: 1000px) { #market .fnl, #market .mkt-src { margin-left: 0; } }
 @media (prefers-reduced-motion: reduce) { #market .fn-band { opacity: 1; transform: none; transition: none; } }
+
+/* architecture page: a quiet blueprint backdrop that covers the moving sky, so the diagram reads cleanly */
+#arch { background:
+    radial-gradient(ellipse 70% 60% at 55% 62%, rgba(40, 70, 120, .22), transparent 70%),
+    linear-gradient(rgba(120, 150, 200, .055) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(90deg, rgba(120, 150, 200, .055) 1px, transparent 1px) 0 0 / 40px 40px,
+    #070b14;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 70px, #000 calc(100% - 70px), transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 70px, #000 calc(100% - 70px), transparent 100%); }
+#arch .pn-big { -webkit-text-stroke-color: rgba(170, 186, 214, .12); }
 </style>
 
 <footer>
