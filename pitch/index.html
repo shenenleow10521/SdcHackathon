@@ -786,11 +786,11 @@ footer a { color: var(--ink-2); }
         <h2 id="impact-h">A UN goal that changes the ranking, not just a label</h2>
         
       </div>
-      <ul class="orbs">
-        <li class="orb rv" style="--i:0;--c:#A21942"><div class="ball">8</div><h3>Decent work</h3><p class="lvl">Target 8.5</p><p>Move workers whose jobs are exposed to AI into new roles, instead of laying them off.</p></li>
-        <li class="orb rv" style="--i:1;--c:#A21942"><div class="ball">8</div><h3>Productivity through innovation</h3><p class="lvl">Target 8.2</p><p>Workers learn the AI skills their own job now needs.</p></li>
-        <li class="orb rv" style="--i:2;--c:#C5192D"><div class="ball">4</div><h3>Skills for work</h3><p class="lvl">Target 4.4</p><p>Every route is a skills plan, with hours and courses.</p></li>
-        <li class="orb rv" style="--i:3;--c:#4a93ea"><div class="ball">Any</div><h3>Any goal, by choice</h3><p class="lvl">Put a UN goal first</p><p>Put the goal you care about first, and the job list re-ranks around it, showing the cost in match points.</p></li>
+      <ul class="sdg-tiles">
+        <li class="rv" style="--i:0;--c:#A21942"><div class="sdgt"><img src="sdg/goal-08.png" width="192" height="192" alt="UN Sustainable Development Goal 8: Decent work and economic growth"></div><h3>Decent work</h3><p class="lvl">Target 8.5</p><p>Move workers whose jobs are exposed to AI into new roles, instead of laying them off.</p></li>
+        <li class="rv" style="--i:1;--c:#A21942"><div class="sdgt"><img src="sdg/goal-08.png" width="192" height="192" alt="UN Sustainable Development Goal 8: Decent work and economic growth"></div><h3>Productivity through innovation</h3><p class="lvl">Target 8.2</p><p>Workers learn the AI skills their own job now needs.</p></li>
+        <li class="rv" style="--i:2;--c:#C5192D"><div class="sdgt"><img src="sdg/goal-04.png" width="192" height="192" alt="UN Sustainable Development Goal 4: Quality education"></div><h3>Skills for work</h3><p class="lvl">Target 4.4</p><p>Every route is a skills plan, with hours and courses.</p></li>
+        <li class="rv" style="--i:3;--c:#4a93ea"><div class="sdgt mosaic" role="img" aria-label="A selection of UN Sustainable Development Goal icons"><img src="sdg/goal-01.png" alt=""><img src="sdg/goal-03.png" alt=""><img src="sdg/goal-05.png" alt=""><img src="sdg/goal-07.png" alt=""><img src="sdg/goal-10.png" alt=""><img src="sdg/goal-11.png" alt=""><img src="sdg/goal-13.png" alt=""><img src="sdg/goal-04.png" alt=""><img src="sdg/goal-08.png" alt=""></div><h3>Any goal, by choice</h3><p class="lvl">Put a UN goal first</p><p>Put the goal you care about first, and the job list re-ranks around it, showing the cost in match points.</p></li>
       </ul>
     </div>
   </section>
@@ -1575,6 +1575,18 @@ html { scroll-snap-type: y proximity; }
   -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 70px, #000 calc(100% - 70px), transparent 100%);
           mask-image: linear-gradient(180deg, transparent 0, #000 70px, #000 calc(100% - 70px), transparent 100%); }
 #arch .pn-big { -webkit-text-stroke-color: rgba(170, 186, 214, .12); }
+
+/* ---------- SDG tiles with the official UN icons ---------- */
+.sdg-tiles { list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; text-align: center; }
+.sdg-tiles .sdgt { width: 132px; height: 132px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 18px 40px -12px color-mix(in srgb, var(--c) 80%, transparent), 0 0 46px -6px color-mix(in srgb, var(--c) 55%, transparent); transition: transform .4s var(--ease); }
+.sdg-tiles li:hover .sdgt { transform: translateY(-4px) rotate(-1.5deg); }
+.sdg-tiles .sdgt img { width: 100%; height: 100%; display: block; }
+.sdg-tiles .sdgt.mosaic { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #0a0e18; }
+.sdg-tiles .sdgt.mosaic img { width: 100%; height: 100%; object-fit: cover; }
+.sdg-tiles h3 { margin-top: 22px; font-size: 1.1rem; }
+.sdg-tiles .lvl { margin-top: 4px; font-size: 12.5px; color: var(--muted); }
+.sdg-tiles p:not(.lvl) { margin: 8px auto 0; font-size: 15px; max-width: 28ch; color: var(--ink-2); }
+@media (max-width: 900px) { .sdg-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 
 <footer>
