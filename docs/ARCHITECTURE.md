@@ -1,8 +1,75 @@
-# HalaTuju: Technical Architecture (Preliminary Round)
+# HalaTuju: Technical Architecture
 
-> **Audience:** the HalaTuju team and any AI assistant helping build it.
-> **Status:** v1, 23 Oct 2026. Hard deadline **Sun 25 Oct 2026, 07:59 MYT**, so plan to submit by **Sat 24 Oct, 23:00**.
-> **Related:** [`README.md`](../README.md) (product), `prototype/halatuju-app.html` (UI and working scoring logic), `docs/SDC_Hackathon_2026_Prelim_Requirements.md` (rules).
+> **Audience:** the HalaTuju team, judges reading the code, and any AI assistant helping build it.
+> **Status:** v2, 31 Oct 2026 (final round). Section 0 describes the final build. Sections 1–15 are the v1 design from 23 Oct, corrected where the build differs; sections 13–15 are kept as the history of the prelim plan.
+> **Related:** [`README.md`](../README.md) (product), [`API.md`](API.md) (endpoints), [`DATA_SOURCES.md`](DATA_SOURCES.md) (data and licences).
+
+---
+
+## 0. Final build (31 Oct 2026)
+
+What changed after the preliminary round, and where it lives in the code.
+
+| Area | Prelim (25 Oct) | Final | Code |
+|---|---|---|---|
+| Product order | Move first: where can I go? | **Stay first, then move**: which of my skills AI takes, how to stay AI-ready, then where to go | `web/js/features/stay.js`, `server/services/outlook.ts` |
+| Skill outlook | Matched skills and gaps | Every confirmed skill grouped as at risk, AI-assisted or still yours, with one action each | `server/services/outlook.ts`, `web/js/panels/skills.js` |
+| Routes | 16 catalogue jobs | Any of 3,039 ESCO occupations: key steps, AI-era skills with sources, cross-field bridges reviewed before use, practice tasks, hand-checked learning links | `server/services/esco-plan.ts`, `bridges.ts`, `bridge-review.ts`, `ai-skills.ts`, `learning.ts` |
+| Map | Distance = similarity | Distance = months to job-ready (3/6/12/24-month rings); size = match; "You are here" route view | `web/js/graph3d.js`, `web/js/features/views.js` |
+| Scenarios | Steady / Fast toggle on screen (Slow existed only inside the engine) | **Slow / Steady / Fast** on screen, from one AI-speed parameter (`PARAMS.slowFactor`, `moderateTide`), shown as Today vs 2030 side by side, with what shifts spelled out; futures chart from the user's point of view (when they are job-ready) | `shared/engine.js`, `web/js/features/futures.js`, `web/js/panels/path.js` |
+| SDG mapping | Hand tags on 29 skills and 16 jobs | Every job and skill tagged with a goal and a one-line reason (hand-written for the catalogue, rule-based for all ESCO jobs and skills); path contribution in Plan; optional SDG-aware ranking (+10 points, rule shown on screen) | `shared/sdg.js`, `web/js/features/sdg.js`, `server/services/ranking.ts` |
+| Evidence review | One AI reviewer plus fixed rules | Three voters (evidence checker, skill matcher, sceptic) on models from two vendors; vote stored per signal; split votes go to a person (§3.3) | `server/agents/voters.ts`, `server/triage.ts` |
+| Progress | Saved plan | My goal: Stay AI-ready and Your move tracks, weekly check-ins, proof of each skill, skills record; opt-in team progress for HR | `server/services/goal.ts`, `server/routes/goal.ts`, `web/js/features/goal-ui.js`, `team-progress.js` |
+| Thin profiles | CV or pasted text | Plus a no-CV task quiz (4,017 O\*NET tasks) | `server/services/quiz.ts` |
+| LLM provider | Gemini | KrackedDevs proxy (OpenAI-compatible; main `gpt-5.5`, reviewer `DeepSeek-V4-Pro`, voters `gpt-5.5` / `gpt-6-sol` / `DeepSeek-V4-Pro`) when `KRACKEDDEVS_API_KEY` is set; otherwise Gemini (`gemini-3.5-flash-lite` / `gemini-3.1-flash-lite`) | `server/lib/llm.ts` |
+
+```mermaid
+flowchart LR
+  subgraph Browser["Browser (EN / BM)"]
+    UI[My skills · Explore map · Plan · My goal · For HR · Review]
+    ENGB[shared/engine.js + shared/sdg.js<br/>instant scenario and futures]
+  end
+  subgraph Replit["Replit Reserved VM (Node 22 + Express)"]
+    API[REST API]
+    ENG[shared/engine.js<br/>match · routes · scenarios · 1,000 futures]
+    ESCO[ESCO services<br/>3,039 jobs · 13,939 skills · bridges · learning]
+    AG[Agents<br/>CV reader · interviewer · explainer · researcher]
+    VOTE[Three voters → triage]
+    DB[(Replit PostgreSQL 16)]
+  end
+  LLM[[KrackedDevs proxy<br/>or Gemini fallback]]
+  EMB[[RunPod Serverless<br/>bge-m3]]
+  SRC[(74 trusted domains<br/>Tavily · RSS · arXiv · OpenAlex · GDELT)]
+  UI <--> API
+  UI --- ENGB
+  API --> ENG
+  API --> ESCO
+  API --> AG
+  ENG <--> DB
+  AG --> LLM
+  AG --> EMB
+  AG --> SRC
+  AG --> VOTE --> DB
+```
+
+**Design rule (unchanged):** agents do the reading and talking; fixed formulas do the maths. LLMs return database IDs, never free-text jobs, courses or numbers.
+
+### Models used in the app
+
+| Model | Provider | Role in the app | When it runs |
+|---|---|---|---|
+| `gpt-5.5` | OpenAI, via the KrackedDevs proxy | Main model: CV reading (phrases, then skills and current job), interviewer questions, explanations, researcher extraction; **evidence-checker voter** | When `KRACKEDDEVS_API_KEY` is set |
+| `gpt-6-sol` | via the KrackedDevs proxy | **Skill-matcher voter** | When `KRACKEDDEVS_API_KEY` is set |
+| `DeepSeek-V4-Pro` | DeepSeek, via the KrackedDevs proxy | Reviewer model (claim review, emerging-skill sceptic); **sceptic voter** | When `KRACKEDDEVS_API_KEY` is set |
+| `gemini-3.5-flash-lite` / `gemini-3.1-flash-lite` | Google Gemini API | Main and reviewer models (the voters spread over both) | Instead of the KrackedDevs models when its key is not set |
+| `BAAI/bge-m3` (1,024-d) | RunPod Serverless (`worker-infinity-embedding`) | Embeddings: CV phrases against 13,939 ESCO skills, duplicate checks, skill network | Always, if RunPod is configured; a local bge-m3 server is the failover |
+| `gemini-embedding-001` | Google Gemini API | Embedding fallback | Only when no bge-m3 is available; labelled keyword matching after that |
+| HalaTuju exposure model (bge-m3 + ridge) | Our own, trained on a RunPod RTX 4090 pod (`ml/`, `ml/artifacts/exposure_model.json`) | AI-exposure score for every ESCO skill (r = 0.79 against ILO WP140) | Pre-computed (`db/seed/esco_skill_scores.json.gz`) |
+| Tesseract `eng` + `msa` | tesseract.js, local | OCR for scanned CVs, before any text leaves the server | On upload of an image or scanned PDF |
+
+The three voters use models from two vendors (OpenAI and DeepSeek), so the vote is not one model voting three times. If a model fails or is rate-limited, the call moves to the other model of the same provider (main ↔ reviewer); if no vote can happen, the signal goes to a person. Model names are set in `server/lib/llm.ts` and can be changed with environment variables (`.env.example`).
+
+**Tests:** 543 automated tests in 36 files (31 Oct 2026, 11:30 MYT); CI on every push.
 
 ---
 
@@ -11,7 +78,7 @@
 | Area | Decision | Why |
 |---|---|---|
 | Hosting | **Replit** (deploy from Replit) | Compulsory. Likely the "API Premium sponsor" on the submit form (confirm on Discord) |
-| LLM | **Replit AI Integrations**: OpenAI, Anthropic or Gemini models, no API key, billed to Replit credits | Uses the sponsor's technology; no extra accounts |
+| LLM | v1 plan was Replit AI Integrations. **Built:** Google Gemini (prelim), then the **KrackedDevs proxy** (GPT + DeepSeek) with Gemini as fallback (final) | Gemini free-tier quotas; the KrackedDevs proxy gives the vote panel models from two vendors |
 | Embeddings (GPU) | **BAAI/bge-m3** (MIT) on **RunPod Serverless** with the official `worker-infinity-embedding` worker | Real semantic matching; satisfies RunPod's "GPU work goes through RunPod" rule; scales to zero |
 | Backend | **Node 22 + TypeScript + Express** | The prototype's scoring and routing code is already JavaScript and is reused as-is |
 | Database | **Replit PostgreSQL** (`DATABASE_URL`). If unavailable, SQLite file | Durable profiles, signals, review queue |
@@ -19,7 +86,7 @@
 | Skill data | **ESCO** (essential/optional skills per job) + **O\*NET** (tasks, importance) | Free to reuse with credit (see §12) |
 | Trend sources | **arXiv API, OpenAlex, curated RSS feeds** (AI lab/vendor blogs) | Free, legal, no scraping |
 | Job-board data | **Not used.** JobStreet's and LinkedIn's terms forbid scraping or copying content | Use framework weights; posting shares stay labelled "sample" until a licensed source exists |
-| Accounts | One demo user (sample persona "Priya") plus an admin toggle. No login for the prelim | Time; "no real personal data" rule |
+| Accounts | v1 plan: one demo user. **Built:** Replit-managed Clerk sign-in plus guest sessions (signed cookie); staff roles for review and HR | Judges can try it without an account; "no real personal data" rule |
 
 ---
 
@@ -37,7 +104,7 @@ flowchart LR
     TRI[Triage rules]
     DB[(PostgreSQL)]
   end
-  LLM[[Replit AI Integrations<br/>LLM]]
+  LLM[[LLM: KrackedDevs proxy<br/>or Gemini]]
   EMB[[RunPod Serverless<br/>bge-m3 embeddings]]
   SRC[(arXiv · OpenAlex · RSS)]
 
@@ -83,10 +150,10 @@ Pure functions, no I/O. **Unit-test these first** (`tests/engine.test.ts`), usin
 | **Interviewer** | After upload | LLM + profile gaps | ≤ 3 questions, each `{ id, text, options[] }`; answers become level/hour updates | Questions come only from low-confidence skills |
 | **Explainer** | Plan/drawer requests | LLM | Short "why" text that cites record IDs | Fact checker removes any sentence citing an unknown ID |
 | **Market scout** (shown in the app as "Job market researcher") | `POST /api/scout/run` (on demand; daily job later) | arXiv, OpenAlex, RSS → LLM extraction → embeddings for dedupe | Signal candidates (see §5) | Exact quote required; source URL required |
-| **Three voters** (`agents/voters.ts`) | Each signal that passed the fixed gate | Three LLM calls with three different jobs (evidence checker, skill matcher, sceptic), spread over both Gemini models | `{ vote: include\|exclude, confidence: 0–1, reason }` each, stored with the model that answered | See the claim (written by code), the quote and the page text around it, as data; their votes are inputs to the triage rule |
+| **Three voters** (`agents/voters.ts`) | Each signal that passed the fixed gate | Three LLM calls with three different jobs (evidence checker, skill matcher, sceptic). KrackedDevs: `gpt-5.5`, `gpt-6-sol`, `DeepSeek-V4-Pro` (two vendors); Gemini fallback: spread over both Gemini models | `{ vote: include\|exclude, confidence: 0–1, reason }` each, stored with the model that answered | See the claim (written by code), the quote and the page text around it, as data; their votes are inputs to the triage rule |
 | **Emerging-skill committee** | Weekly / on demand | Proposer → skeptic → duplicate check (LLM + embeddings) | `emerging_candidates` rows | Evidence thresholds (§5.3); provisional until a person confirms |
 
-**LLM wrapper** (`server/lib/llm.ts`): one function `complete({ system, user, schema, temperature: 0 })`, using the Replit AI Integrations client. Replit sets the credentials as environment variables when you enable the integration; check the exact names in the Replit Integrations pane. Swapping the model means changing one line. Cache responses in the DB keyed by a hash of the prompt, which gives demo reliability and lower cost.
+**LLM wrapper** (`server/lib/llm.ts`): one function `complete({ system, user, schema, role?, voter? })` for every agent. Two providers behind it: the KrackedDevs proxy (OpenAI-compatible, used when `KRACKEDDEVS_API_KEY` is set) and Google Gemini. Output is forced to JSON with the zod schema and validated again. Rate limits and server errors rotate to the next key, then to the fallback model. Personal details are scrubbed again before text leaves the server. Every response is cached in `llm_cache`, keyed by a hash of model, prompt and schema.
 
 **Embedding wrapper** (`server/lib/embed.ts`): `embed(texts: string[]) → number[][]`, calling the RunPod endpoint (`RUNPOD_API_KEY`, `RUNPOD_EMBED_ENDPOINT_ID`). Check the worker README for the exact request format; it documents an OpenAI-compatible route. Skill embeddings are **precomputed once** (`scripts/embed-skills.ts`) and stored with each skill. Cosine similarity runs in Node, which is fine for a few thousand skills.
 
@@ -260,7 +327,7 @@ halatuju/
 - `DATABASE_URL`
 - `RUNPOD_API_KEY`, `RUNPOD_EMBED_ENDPOINT_ID`
 - `DEMO_MODE=true|false`
-- Replit AI Integrations sets its own variables.
+- `KRACKEDDEVS_API_KEY`, `KRACKEDDEVS_MODEL`, `KRACKEDDEVS_REVIEWER_MODEL`; without them `GEMINI_API_KEY`, `GEMINI_API_KEY_2`, `GEMINI_MODEL`, `GEMINI_REVIEWER_MODEL`. The full list is in `.env.example`.
 - Never commit secrets. Use Replit Secrets.
 
 ---
@@ -311,13 +378,16 @@ halatuju/
 | BAAI/bge-m3 | MIT | Name it in the declaration |
 | RunPod worker-infinity-embedding | Check repo licence | Name it in the declaration |
 | 3d-force-graph, GSAP, Lucide, Geist font | Their respective licences (check each) | List in README |
-| Replit AI Integrations model(s) | Replit / provider terms | Name the exact model(s) in the declaration |
+| Gemini models; GPT-5.5, gpt-6-sol and DeepSeek-V4-Pro via the KrackedDevs proxy | Provider and sponsor terms | Name the exact models in the declaration |
+| UN SDG icons (`web/assets/sdg/`) | UN SDG icon guidelines (informational use) | Use the official icons unchanged |
 
 **Declaration must also list:** every AI tool used to build the project (including AI coding assistants), Replit proof of use (deployment URL, project history), and RunPod proof of use (endpoint ID, GPU type, runtime screenshot).
 
 ---
 
 ## 13. Build plan (now → Sat 23:00)
+
+> History: this was the prelim build plan of 23 Oct, kept for the record. Sections 14 and 15 are from the same plan.
 
 Roles: **A** backend/engine/DB · **B** agents/LLM/RunPod · **C** frontend · **D** data, documents and video. Merge roles if the team is smaller. **Commit small and often.**
 

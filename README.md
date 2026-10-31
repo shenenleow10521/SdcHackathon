@@ -32,10 +32,12 @@ Upload a CV and HalaTuju maps the skills you have, the jobs they lead to and a w
 | Replit project | `https://replit.com/@25006675/SdcHackathon` (invite-only Replit workspace; the code is in this repo and the project is shown in the [Replit proof of use](submission/SDC2026_Dsaise_Replit_POU.pdf)) |
 | Live demo | https://halatuju.replit.app |
 | RunPod endpoint | `https://api.runpod.ai/v2/a7ipau1nmqogxs` (bge-m3 embeddings; needs our API key, see [How we use RunPod](#how-we-use-runpod-required)) |
-| Slide deck | [`submission/SDC2026_Dsaise_PitchDeck.pdf`](submission/SDC2026_Dsaise_PitchDeck.pdf) |
+| Slide deck | [`submission/prelim/SDC2026_Dsaise_PitchDeck.pdf`](submission/prelim/SDC2026_Dsaise_PitchDeck.pdf) |
 | Demo video | https://youtu.be/shITdy-TYSg |
-| Preliminary submission (official template) | [`submission/SDC2026_Dsaise_Preliminary.pdf`](submission/SDC2026_Dsaise_Preliminary.pdf) |
-| Tech & Tools Declaration (official template) | [`submission/SDC2026_Dsaise_TechDeclaration.pdf`](submission/SDC2026_Dsaise_TechDeclaration.pdf) |
+| Preliminary submission (official template) | [`submission/prelim/SDC2026_Dsaise_Preliminary.pdf`](submission/prelim/SDC2026_Dsaise_Preliminary.pdf) |
+| Final Project & Prototype Report | [`submission/SDC2026_Dsaise_Final.pdf`](submission/SDC2026_Dsaise_Final.pdf) |
+| Updated PRD (final round) | [`submission/SDC2026_Dsaise_PRD_Final.pdf`](submission/SDC2026_Dsaise_PRD_Final.pdf) |
+| Tech & Tools Declaration (final round) | [`submission/SDC2026_Dsaise_TechDeclaration.pdf`](submission/SDC2026_Dsaise_TechDeclaration.pdf) |
 | Replit and RunPod proof of use | [Replit](submission/SDC2026_Dsaise_Replit_POU.pdf) · [RunPod](submission/SDC2026_Dsaise_Runpod_POU.pdf) |
 
 ---
@@ -174,7 +176,7 @@ Grouped by priority: the first group is the demo path. **Status:** ✅ **Works**
 | AI / Compute | **RunPod**: Serverless embeddings (endpoint `a7ipau1nmqogxs`) and a GPU pod for the final model training |
 | Web search | Tavily, limited to trusted domains |
 | Hosting / Dev | **Replit** Deployments (Reserved VM) |
-| Tests and CI | Vitest (418 tests), GitHub Actions on Node 22 and 24 |
+| Tests and CI | Vitest (543 tests), GitHub Actions on Node 22 and 24 |
 
 ### Domain 1 must-haves
 
@@ -216,7 +218,7 @@ scripts/                  database seed, data builders, benchmarks, API smoke te
 tests/                    automated tests (vitest)
 demo/                     demo CV and reset/start/prime scripts
 docs/                     architecture, API, data sources, screenshots, system diagram, organiser rules notes
-submission/               SDC2026_Dsaise_*.pdf: preliminary submission, tech declaration, Replit and RunPod proof, pitch deck
+submission/               final-round PDFs; Replit and RunPod proof; prelim/ holds the 25 Oct preliminary PDFs
 prototype/                early UI prototypes of the map, route and reroute (22 Oct)
 .github/workflows/ci.yml  type-check and tests on every push
 ```
@@ -296,7 +298,7 @@ npm run dev             # http://localhost:3000
 ### Run tests
 
 ```bash
-npm test                # 418 tests: engine, stress test, triage, sources, PII scrubbing, OCR, fairness, prompt injection, API, accounts, HR, web client
+npm test                # 543 tests: engine, stress test, triage, sources, PII scrubbing, OCR, fairness, prompt injection, API, accounts, HR, goals, votes, SDG tags, web client
 npm run typecheck
 ```
 
@@ -378,7 +380,7 @@ Every headline number is copied from a result file in this repo.
 
 **Emerging skills.** The first live committee run kept 0 of 4 phrases, which exposed a page-selection problem. After the fix, 3 real runs put 6 candidates on watch; 3 hold up by hand. The 3 wrong ones have 1 mention each, so the thresholds (15 mentions, 5 organisations, 4 weeks) keep them out. [`eval/EMERGING.md`](eval/EMERGING.md).
 
-**Quality.** 418 automated tests in 24 files and a type-check on every push (Node 22 and 24); a fairness test (the same CV with a different name, gender, age or religion gives identical results); a prompt-injection test (hostile page text can't change extraction, invent IDs or skip triage); a live end-to-end check of researcher → review → approve → reroute on a fresh database (23–24 Oct 2026).
+**Quality.** 543 automated tests in 36 files and a type-check on every push (Node 22 and 24); a fairness test (the same CV with a different name, gender, age or religion gives identical results); a prompt-injection test (hostile page text can't change extraction, invent IDs or skip triage); a live end-to-end check of researcher → review → approve → reroute on a fresh database (23–24 Oct 2026).
 
 </details>
 
@@ -393,7 +395,7 @@ Every headline number is copied from a result file in this repo.
 | Enterprise (main revenue) | RM 25 per worker a month, paid by the employer | HR view, internal redeployment, help for leavers; staff opt in |
 | Public partners | Annual licence | PERKESO, TalentCorp, universities |
 
-**Market (Malaysia, at RM 300 per worker a year):** TAM **RM 726M** (2.42M workers in high- and medium-impact jobs) · SAM **RM 186M** (620,000 highly impacted workers) · SOM **RM 3M** (10,000 seats by year 3: 20 employers × 500 staff, starting in Penang and KL shared-services centres). **Break-even at about 1,000 seats** (fixed cost RM 24,452 a month ÷ RM 24.50 contribution per seat). Sources: TalentCorp AI, digital and green economy impact study (2024), GBS Malaysia Mid-Term Report (2025), DOSM; prices are our pilot assumptions. Details: slides 22–23 and 30 of the [pitch deck](submission/SDC2026_Dsaise_PitchDeck.pdf).
+**Market (Malaysia, at RM 300 per worker a year):** TAM **RM 726M** (2.42M workers in high- and medium-impact jobs) · SAM **RM 186M** (620,000 highly impacted workers) · SOM **RM 3M** (10,000 seats by year 3: 20 employers × 500 staff, starting in Penang and KL shared-services centres). **Break-even at about 1,000 seats** (fixed cost RM 24,452 a month ÷ RM 24.50 contribution per seat). Sources: TalentCorp AI, digital and green economy impact study (2024), GBS Malaysia Mid-Term Report (2025), DOSM; prices are our pilot assumptions. Details: slides 22–23 and 30 of the [pitch deck](submission/prelim/SDC2026_Dsaise_PitchDeck.pdf).
 
 ## Challenges and learnings
 

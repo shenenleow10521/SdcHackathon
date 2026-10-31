@@ -27,8 +27,12 @@ docs/PITCH.md
 docs/DEMO.md
 docs/VIDEO_PLAN.md
 docs/SUBMISSION_CHECKLIST.md
+docs/QA.md
 replit.md
 .agents/
 proposal/
 .mcp.json
 PRODUCT.md
+
+# Finals drafts with placeholders (local only; final PDFs go in submission/)
+submission/finals/

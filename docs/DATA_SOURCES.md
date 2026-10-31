@@ -110,6 +110,23 @@ The two employers, "Sample Green Reporting Co. (sample)" and "Sample Finance Ana
 
 ---
 
+## 7. Added in the final round (29–31 Oct 2026)
+
+| File | What it holds | Source and licence | Real or derived |
+|---|---|---|---|
+| `db/seed/learning.json` | 45 hand-picked learning resources for 17 skills, 38 of them free (videos, Microsoft Learn modules, guides, books). Every URL was opened and checked on 30 Oct 2026; videos were also checked with YouTube oEmbed | Providers include YouTube channels (e.g. Association for Financial Professionals), Microsoft Learn and Support, NIST AI Resource Center, GHG Protocol, IFRS Foundation, The IIA, ACCA, WBCSD/WRI, Wiley. We store only titles, facts and links | **Real** links |
+| `db/seed/ai_skills.json` | 27 AI-era skills that ESCO v1.2.1 (2022, before generative AI) does not have. Each has 1–3 public sources with an exact quoted sentence | Curated by the team on 30 Oct 2026 from public sources (cited per skill) | **Real** sources; the selection is ours |
+| `db/seed/ai_skills_links.json` | For each AI-era skill: its 10 nearest ESCO skills (bge-m3 cosine) and the ESCO occupations where it applies (O\*NET tasks with GPTs-are-GPTs β ≥ 0.4) | ESCO v1.2.1 (CC BY 4.0), O\*NET, Eloundou et al. (MIT); built by `scripts/link-ai-skills.ts` | **Derived** |
+| `db/seed/onet_dwa.json.gz` | O\*NET Detailed, Intermediate and Generalized Work Activities linked to task statements | O\*NET 30.2 Database (CC BY 4.0, USDOL/ETA); built by `scripts/discover-bridges.ts prepare` | **Real** |
+| `db/seed/esco_skill_network.json.gz` | Relatedness between ESCO skills: √(co-occurrence across ESCO occupations × bge-m3 similarity), top-k per skill | ESCO v1.2.1; built by `scripts/build-skill-network.ts`, checked by `scripts/validate-skill-network.ts` | **Derived** |
+| `db/seed/esco_bridges.json.gz` | Bridges between skills in different fields, from shared O\*NET work activities (hierarchical soft cosine). Shown only after review | O\*NET 30.2 via the ESCO–O\*NET crosswalk; built by `scripts/discover-bridges.ts`, checked by `scripts/validate-bridges.ts` | **Derived**, reviewed |
+| `db/seed/esco_transversal.json` | IDs of 86 transversal ESCO skills (reuse level 1), kept out of key steps | ESCO v1.2.1 skill data (reuse level field only, not the CC BY-SA transversal hierarchy) | **Real** |
+| `db/seed/quiz_tasks.json` | 4,017 O\*NET tasks for the no-CV quiz, with ESCO links and short chips in English and Bahasa Melayu | O\*NET (CC BY 4.0), ESCO v1.2.1; chip wording rewritten by an LLM from the task statement only | **Real** links, LLM-worded chips |
+| Sample HR team (`server/seed/hr.ts`) | Team members for the opt-in HR progress view | Created for the project | **Sample**, labelled |
+| SDG tags (`shared/sdg.js`) | A goal and a one-line reason for every ESCO job and skill (topic words, then ISCO-08 group) | Our rule; UN SDG names and colours; official icons in `web/assets/sdg/` | **Rule-based**, reasons shown |
+
+---
+
 ## Required attributions
 
 - **ESCO:** "This service uses the ESCO classification of the European Commission." We modified it: we selected and mapped concepts to our own catalogue and kept a subset of the alternative labels. (ESCO v1.2.1)
