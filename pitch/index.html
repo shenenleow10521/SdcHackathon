@@ -775,38 +775,6 @@ footer a { color: var(--ink-2); }
     </div>
   </section>
 
-  <!-- ================= HOW IT IS BUILT ================= -->
-  <section class="sec deck" id="tested" aria-labelledby="tested-h">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <p class="kicker">How it is built</p>
-        <h2 id="tested-h">Input, brain, output. 533 tests on every update.</h2>
-        <p>Deployed on Replit, running live as one pipeline. AI reads text; plain code works out every number.</p>
-      </div>
-      <div class="bt rv" style="--i:1">
-        <div class="bt-lane">
-          <span class="bt-lbl">Input</span>
-          <div class="bt-m" style="--c:#2fc28b"><b>Profile</b><p>A CV or a few questions become a skills list, details removed first.</p><em>GPT-5.5 via KrackedDevs</em></div>
-          <div class="bt-m" style="--c:#5aa0f0"><b>Data</b><p>The EU’s official jobs and skills, plus DOSM wages and MyCOL shortages.</p><em>Replit PostgreSQL, versioned</em></div>
-        </div>
-        <div class="bt-lane">
-          <span class="bt-lbl">Brain</span>
-          <div class="bt-m" style="--c:#a98bff"><b>Model</b><p>Scores how much of each task and skill AI can do today.</p><em>trained on RunPod</em></div>
-          <div class="bt-m hot" style="--c:#ff7a3d"><b>Engine</b><p>Matches jobs, builds routes and runs the 1,000-futures test.</p><em>plain code, no AI</em></div>
-          <div class="bt-m" style="--c:#f2b33d"><b>Researcher</b><p>Reads the news, checks every quote, runs the three-agent vote.</p><em>GPT and DeepSeek via KrackedDevs</em></div>
-        </div>
-        <div class="bt-lane">
-          <span class="bt-lbl">Output</span>
-          <div class="bt-m" style="--c:#eef2f8"><b>People</b><p>Screens for workers, HR, advisors and reviewers.</p><em>web app on Replit</em></div>
-          <div class="bt-m" style="--c:#eef2f8"><b>Two languages</b><p>English and Bahasa Melayu, same numbers.</p><em>keyboard friendly</em></div>
-        </div>
-        <div class="bt-safe">
-          <span class="bt-lbl">Fallbacks</span>
-          <ul><li><b>AI gateway down</b>keyword matching</li><li><b>RunPod slow</b>a local model</li><li><b>No course</b>“no course listed yet”</li><li><b>Every update</b>533 tests first</li></ul>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ================= THE BRIEF ================= -->
   <section class="sec" id="brief" aria-labelledby="brief-h">
@@ -2497,7 +2465,7 @@ setTimeout(measure, 800); addEventListener("load", measure);
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var story = $('#story'), rail = $('#rail'), stops = [], cur = -1, anim = null;
-  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'market', 'business', 'roadmap', 'arch', 'go', 'mc', 'tests', 'checks', 'limits'];
+  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'brief', 'impact', 'market', 'business', 'roadmap', 'arch', 'go', 'mc', 'tests', 'checks', 'limits'];
   var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', market: 'Market size', mc: 'Business stress test', arch: 'Architecture', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Your route changes with it' };
   var chNames = ['Act 1: Stay', 'Act 2: Move', 'The route', 'Act 3: Updated'], chHash = ['story', 'roles', 'route', 'rerouted'];
   function build() {
@@ -2679,7 +2647,7 @@ setTimeout(measure, 800); addEventListener("load", measure);
 <script>
 /* Page numbers: a number and label in a column beside the headline, and a faint outline number behind that column (or in the top-right corner on centred pages). */
 (function () {
-  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'market', 'business', 'roadmap', 'arch', 'go', 'mc', 'tests', 'checks', 'limits'];
+  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'brief', 'impact', 'market', 'business', 'roadmap', 'arch', 'go', 'mc', 'tests', 'checks', 'limits'];
   var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', market: 'Market size', mc: 'Business stress test', arch: 'Architecture', roadmap: 'Roadmap', limits: 'What we say openly', go: 'Close' };
   ids.forEach(function (id, i) {
     if (id === 'hero' || id === 'team') return; // the title and team pages carry no number; counting starts at The problem
