@@ -660,26 +660,29 @@ footer a { color: var(--ink-2); }
     <div class="wrap">
       <div class="sec-head rv">
         <p class="kicker">What we built</p>
-        <h2 id="built-h">Three things most tools don’t do.</h2>
-        <p>Not a chatbot and not a dashboard. HalaTuju is a career map: your skills, the jobs they lead to, and a route between them that updates itself when the news changes.</p>
+        <h2 id="built-h">Three engines most career tools don’t have.</h2>
+        <p>Not a chatbot and not a dashboard. HalaTuju is a career map: your skills, the jobs they lead to, and a route between them that keeps itself up to date.</p>
       </div>
       <div class="wb rv" style="--i:1">
         <article style="--c:#5aa0f0">
-          <div class="wb-num"><span data-n="13939">13,939</span><small>skills</small></div>
-          <h3>Every skill scored</h3>
-          <p>Our own AI model scores every official skill, so you see which of yours AI is taking over.</p>
+          <p class="wb-tag"><i>1</i>Our own model</p>
+          <h3>We trained our own AI-exposure model.</h3>
+          <p>It scores how much of each official skill AI can already do, so you see which of yours are at risk.</p>
+          <div class="wb-proof"><b data-n="13939">13,939</b><span>skills scored, trained on RunPod</span></div>
           <div class="wb-vs"><span class="no">✕</span>Most tools: a job match, no view of your own skills</div>
         </article>
         <article style="--c:#a98bff">
-          <div class="wb-num"><span data-n="1000">1,000</span><small>futures</small></div>
-          <h3>Every route tested</h3>
-          <p>Each career route is replayed with AI moving slowly or fast, and we show what usually breaks it.</p>
+          <p class="wb-tag"><i>2</i>Future simulation</p>
+          <h3>We simulate 1,000 futures for every route.</h3>
+          <p>AI moves slowly in some, fast in others. You see how often your route holds, and what breaks it.</p>
+          <div class="wb-proof"><b data-n="1000">1,000</b><span>futures per route, plain code, no guessing</span></div>
           <div class="wb-vs"><span class="no">✕</span>Most tools: one fixed plan</div>
         </article>
         <article style="--c:#ff7a3d">
-          <div class="wb-num"><span data-n="74">74</span><small>trusted sites</small></div>
-          <h3>Updated with the news</h3>
-          <p>Agents read the news daily, three of them vote on each finding, and you decide whether to switch.</p>
+          <p class="wb-tag"><i>3</i>AI research agents</p>
+          <h3>AI agents keep your route up to date.</h3>
+          <p>They read the news every day, three of them vote on each finding, and you decide whether to switch.</p>
+          <div class="wb-proof"><b data-n="74">74</b><span>trusted sites checked daily</span></div>
           <div class="wb-vs"><span class="no">✕</span>Most tools: fixed data, updated by hand</div>
         </article>
       </div>
@@ -1993,6 +1996,21 @@ section#problem.sec, section#built.sec, section#story.sec, section#evidence.sec,
   -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 70px, #000 calc(100% - 70px), transparent 100%);
           mask-image: linear-gradient(180deg, transparent 0, #000 70px, #000 calc(100% - 70px), transparent 100%); }
 .deck .sec-head > p, .sec .sec-head > p { color: var(--ink-2); }
+
+/* what we built: capability first, number as proof */
+.wb-tag { display: flex; align-items: center; gap: 10px; margin: 0 !important; font-size: 12px !important; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--c) !important; }
+.wb-tag i { font-style: normal; display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--c); font-size: 13px; letter-spacing: 0; box-shadow: 0 0 16px color-mix(in srgb, var(--c) 45%, transparent); }
+.wb h3 { margin-top: 14px; font-size: 1.65rem; line-height: 1.15; letter-spacing: -.025em; color: var(--ink); }
+.wb article > p:not(.wb-tag) { margin-top: 12px; }
+.wb-proof { margin-top: 18px; display: flex; align-items: baseline; gap: 10px; }
+.wb-proof b { font-size: 34px; font-weight: 800; letter-spacing: -.04em; line-height: 1; color: var(--c); font-variant-numeric: tabular-nums; text-shadow: 0 0 24px color-mix(in srgb, var(--c) 45%, transparent); }
+.wb-proof span { font-size: 13.5px; font-weight: 600; color: var(--ink-2); line-height: 1.3; }
+
+.wb article { display: flex; flex-direction: column; }
+.wb h3 { min-height: 2.3em; }
+.wb article > p:not(.wb-tag) { min-height: 4.5em; }
+.wb-vs { margin-top: auto; }
+.wb-proof { margin-bottom: 18px; }
 </style>
 
 <footer>
