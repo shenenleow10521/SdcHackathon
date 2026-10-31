@@ -840,19 +840,32 @@ footer a { color: var(--ink-2); }
   <section class="sec deck" id="business" aria-labelledby="biz-h">
     <div class="wrap">
       <div class="sec-head rv">
-        <p class="kicker">Impact and feasibility</p>
-        <h2 id="biz-h">Free for workers, paid by employers.</h2>
-        <p>Retraining one worker costs RM 150. Retrenching one costs RM 22,800 in severance under Malaysian law for a clerk with 11 years’ service. A worker gets a first plan about 15 seconds after uploading a CV. Running cost: RM 0.03 to read a CV and RM 1.05 for a news check. Personal data is removed before any AI call and never stored as a file, in line with PDPA.</p>
+        <p class="kicker">Business model</p>
+        <h2 id="biz-h">Free for workers. Employers pay, because layoffs cost more.</h2>
       </div>
-      <div class="two one">
-        <div class="glass rv" style="--i:1">
-          <div class="plans">
-            <div class="plan"><b>Personal</b><span class="pr">Free</span><span>Career map, routes and the 1,000-futures test, private to the worker</span></div>
-            <div class="plan"><b>Personal Plus</b><span class="pr">RM 9.90 a month</span><span>Certificates and advisor sessions</span></div>
-            <div class="plan main"><b>Enterprise</b><span class="pr">RM 25 per worker a month</span><span>HR view, moving staff into new roles, help for leavers. Staff choose whether to share.</span></div>
-            <div class="plan"><b>Public partners</b><span class="pr">Annual licence</span><span>PERKESO, TalentCorp, universities</span></div>
+      <div class="bz rv" style="--i:1">
+        <div class="bz-roi">
+          <p class="mc-k">For an employer with 500 staff</p>
+          <div class="bz-eq">
+            <div><b>RM 150k</b><span>a year for HalaTuju<br>500 seats × RM 25 × 12</span></div>
+            <i>=</i>
+            <div class="hot"><b>7</b><span>redeployments instead of layoffs<br>at RM 22,800 severance each</span></div>
           </div>
-          <p class="src">Reading one CV costs us RM 0.03 and one news check RM 1.05, measured 24 Oct 2026. First step: a 3-month pilot with one HRD Corp-registered employer. This is a plan, not a signed deal. HR sees progress only for workers who choose to share. Personal data is protected under PDPA: removed before any AI call, never stored as files, and the worker can delete it.</p>
+          <p class="bz-note">Seven moves a year and the employer is ahead. Every move after that is money saved and a worker kept.</p>
+          <p class="mc-k" style="margin-top:22px">Per seat, per month</p>
+          <div class="bz-unit">
+            <div><b>RM 25.00</b><span>price</span></div><i>−</i>
+            <div><b>RM 0.50</b><span>cost to serve</span></div><i>=</i>
+            <div class="hot"><b>RM 24.50</b><span>98% contribution margin</span></div>
+          </div>
+        </div>
+        <div class="bz-plans">
+          <p class="mc-k">Plans</p>
+          <div class="bz-p main"><b>Enterprise</b><em>RM 25 per worker a month</em><span>HR view, internal moves, help for leavers. Staff opt in. Main revenue.</span></div>
+          <div class="bz-p"><b>Personal</b><em>Free</em><span>Map, routes and the 1,000-futures test, private to the worker.</span></div>
+          <div class="bz-p"><b>Personal Plus</b><em>RM 9.90 a month</em><span>Certificates and advisor sessions.</span></div>
+          <div class="bz-p"><b>Public partners</b><em>Annual licence</em><span>PERKESO, TalentCorp, universities.</span></div>
+          <p class="mc-src">Severance: 20 days’ wages per year of service at the DOSM 2025 clerical median, RM 2,693. Reading a CV costs RM 0.03 and a news check RM 1.05, measured. Personal data handled under PDPA. Prices are pilot assumptions.</p>
         </div>
       </div>
     </div>
@@ -906,6 +919,61 @@ footer a { color: var(--ink-2); }
         </svg>
       </div>
       <p class="after mkt-src rv" style="--i:3">Sources: TalentCorp (2024), GBS Malaysia Mid-Term Report (2025), Department of Statistics Malaysia (DOSM). Prices are pilot assumptions.</p>
+    </div>
+  </section>
+
+  <!-- ================= BUSINESS MONTE CARLO ================= -->
+  <section class="sec deck" id="mc" aria-labelledby="mc-h">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="kicker">The business case</p>
+        <h2 id="mc-h">We ran the business 10,000 times.</h2>
+        <p>The same stress test we give workers, applied to our own company. Every input is a range, not a single guess.</p>
+      </div>
+      <div class="mc rv" style="--i:1">
+        <div class="mc-chart">
+          <p class="mc-k">Monthly profit, 2027 to 2029 <span class="mc-lg"><i class="l90"></i>8 in 10 futures <i class="l50"></i>5 in 10 <i class="lmed"></i>Median</span></p>
+          <svg class="mc-fan" viewBox="0 0 640 300" role="img" aria-label="Monthly profit across 10,000 simulated futures, January 2027 to December 2029. The median crosses zero in month 10 and reaches about RM 108,000 a month by the end of 2029.">
+  <defs><linearGradient id="mc-g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5aa0f0"/><stop offset=".35" stop-color="#2fd4a0"/><stop offset="1" stop-color="#ff7a3d"/></linearGradient></defs>
+  <line x1="56" x2="630" y1="266.0" y2="266.0" class="g"/><text x="48" y="270.0" text-anchor="end" class="ax">-40k</text><line x1="56" x2="630" y1="226.9" y2="226.9" class="g z"/><text x="48" y="230.9" text-anchor="end" class="ax">RM 0</text><line x1="56" x2="630" y1="178.1" y2="178.1" class="g"/><text x="48" y="182.1" text-anchor="end" class="ax">50k</text><line x1="56" x2="630" y1="129.2" y2="129.2" class="g"/><text x="48" y="133.2" text-anchor="end" class="ax">100k</text><line x1="56" x2="630" y1="80.4" y2="80.4" class="g"/><text x="48" y="84.4" text-anchor="end" class="ax">150k</text><line x1="56" x2="630" y1="31.5" y2="31.5" class="g"/><text x="48" y="35.5" text-anchor="end" class="ax">200k</text><text x="56.0" y="288" text-anchor="start" class="ax">Jan 2027</text><text x="252.8" y="288" text-anchor="middle" class="ax">Jan 2028</text><text x="449.6" y="288" text-anchor="middle" class="ax">Jan 2029</text><text x="630.0" y="288" text-anchor="end" class="ax">Dec 2029</text>
+  <path d="M56.0,249.6 L72.4,246.2 L88.8,242.6 L105.2,239.1 L121.6,236.9 L138.0,234.4 L154.4,222.0 L170.8,211.2 L187.2,201.6 L203.6,192.6 L220.0,184.7 L236.4,178.5 L252.8,159.6 L269.2,154.5 L285.6,149.9 L302.0,144.8 L318.4,138.3 L334.8,131.3 L351.2,123.4 L367.6,115.5 L384.0,109.3 L400.4,102.7 L416.8,96.0 L433.2,89.7 L449.6,82.6 L466.0,76.3 L482.4,70.1 L498.8,63.0 L515.2,58.7 L531.6,54.0 L548.0,46.7 L564.4,41.5 L580.8,35.7 L597.2,30.9 L613.6,25.1 L630.0,20.8 L630.0,175.7 L613.6,177.2 L597.2,178.9 L580.8,180.7 L564.4,182.5 L548.0,184.6 L531.6,186.8 L515.2,188.4 L498.8,190.3 L482.4,192.8 L466.0,195.6 L449.6,197.4 L433.2,199.9 L416.8,201.8 L400.4,204.3 L384.0,206.7 L367.6,209.3 L351.2,211.5 L334.8,213.8 L318.4,216.8 L302.0,219.1 L285.6,221.5 L269.2,223.7 L252.8,226.6 L236.4,237.6 L220.0,240.2 L203.6,242.7 L187.2,244.8 L170.8,247.0 L154.4,248.8 L138.0,250.4 L121.6,250.6 L105.2,251.2 L88.8,252.8 L72.4,254.6 L56.0,256.8Z" class="b90"/>
+  <path d="M56.0,250.8 L72.4,247.9 L88.8,245.1 L105.2,242.2 L121.6,240.6 L138.0,238.9 L154.4,231.1 L170.8,223.3 L187.2,216.0 L203.6,208.4 L220.0,201.6 L236.4,194.8 L252.8,176.3 L269.2,171.3 L285.6,166.4 L302.0,162.6 L318.4,159.1 L334.8,155.7 L351.2,152.4 L367.6,148.1 L384.0,144.5 L400.4,139.4 L416.8,133.3 L433.2,127.8 L449.6,122.5 L466.0,117.1 L482.4,113.0 L498.8,107.9 L515.2,102.7 L531.6,97.4 L548.0,93.1 L564.4,88.6 L580.8,84.7 L597.2,79.9 L613.6,75.7 L630.0,71.2 L630.0,157.7 L613.6,159.0 L597.2,160.4 L580.8,162.2 L564.4,163.7 L548.0,165.3 L531.6,166.3 L515.2,168.4 L498.8,170.2 L482.4,172.3 L466.0,174.3 L449.6,176.8 L433.2,179.5 L416.8,182.2 L400.4,184.9 L384.0,188.0 L367.6,191.3 L351.2,194.4 L334.8,197.9 L318.4,201.5 L302.0,204.7 L285.6,208.2 L269.2,211.5 L252.8,214.7 L236.4,227.7 L220.0,231.3 L203.6,234.9 L187.2,238.5 L170.8,241.8 L154.4,244.9 L138.0,247.2 L121.6,247.7 L105.2,248.5 L88.8,250.3 L72.4,252.4 L56.0,254.8Z" class="b50"/>
+  <path d="M56.0,252.6 L72.4,250.0 L88.8,247.7 L105.2,245.4 L121.6,244.3 L138.0,243.4 L154.4,239.0 L170.8,234.0 L187.2,228.4 L203.6,223.5 L220.0,218.4 L236.4,213.3 L252.8,197.5 L269.2,193.0 L285.6,188.4 L302.0,183.3 L318.4,179.5 L334.8,175.6 L351.2,172.3 L367.6,169.2 L384.0,166.1 L400.4,163.5 L416.8,161.1 L433.2,158.7 L449.6,156.8 L466.0,154.2 L482.4,151.3 L498.8,148.8 L515.2,145.6 L531.6,142.1 L548.0,138.8 L564.4,135.3 L580.8,131.6 L597.2,128.0 L613.6,124.9 L630.0,121.6" class="med"/>
+  <line x1="203.6" x2="203.6" y1="12" y2="266" class="bel"/>
+  <circle cx="203.6" cy="226.9" r="6" class="bed"/>
+  <text x="213.6" y="26" class="bet">Break-even, Oct 2027 (median)</text>
+</svg>
+        </div>
+        <div class="mc-stats">
+          <div><b>98%</b><span>of futures break even within 18 months</span></div>
+          <div><b>RM 152k</b><span>funding needed to get there (1 in 10 futures: RM 244k)</span></div>
+          <div><b>RM 1.9M</b><span>yearly revenue by end of 2029 (80% range RM 1.0M–RM 3.2M)</span></div>
+          <div><b>7,358</b><span>seats by end of 2029; our 10,000 target is a stretch, reached in 1 of 4 futures</span></div>
+        </div>
+      </div>
+      <div class="mc-tor rv" style="--i:2">
+        <p class="mc-k">What moves year-three profit most</p>
+        <div class="tor"><div><b>Staff per employer</b><i style="--w:100%"></i><span>RM 2.1M swing</span></div><div><b>Employers signed a month</b><i style="--w:75%"></i><span>RM 1.6M swing</span></div><div><b>Price we actually charge</b><i style="--w:27%"></i><span>RM 552k swing</span></div><div><b>Employers who leave</b><i style="--w:22%"></i><span>RM 460k swing</span></div></div>
+        <p class="mc-src">Inputs: RM 25 a seat a month, RM 0.50 to serve, RM 24,452 fixed a month; 1 to 4 pilot employers at 30–80% of price; 0.25–0.9 new employers a month of 200–900 staff; 0.5–3% monthly churn; team grows to 5 past 5,000 seats. Seeded, 10,000 runs.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ROADMAP ================= -->
+  <section class="sec deck" id="roadmap" aria-labelledby="road-h">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="kicker">Roadmap</p>
+        <h2 id="road-h">Penang first. Break-even in 2027. RM 1.9M a year by 2029.</h2>
+      </div>
+      <ol class="rdm rv" style="--i:1">
+        <li style="--c:#2fd4a0" class="done"><span class="when">Now, Oct 2026</span><b>Live and tested</b><p>Any of 3,039 jobs, 1,000-futures test, three-agent vote, 533 tests.</p><em>Done</em></li>
+        <li style="--c:#5aa0f0"><span class="when">Next 3 months</span><b>Ready for employers</b><p>Track all 13,939 skills daily. Import HR data. HRD Corp-claimable courses.</p><em>Goal: letter of intent from 1 employer</em></li>
+        <li style="--c:#a98bff"><span class="when">H1 2027</span><b>Pilot in Penang</b><p>About 90 shared-services companies. First letters to InvestPenang and PSDC.</p><em>Goal: 2–3 centres, about 1,500 staff</em></li>
+        <li style="--c:#f2b33d" class="mile"><span class="when">Oct 2027</span><b>Break-even</b><p>Monthly profit turns positive in the median of 10,000 simulated futures.</p><em>Funding needed: about RM 150k</em></li>
+        <li style="--c:#ff7a3d"><span class="when">2028–29</span><b>Scale</b><p>Employers and universities across Penang and KL. Licensed Malaysian job-ad data. More sectors.</p><em>Median: 7,400 seats, RM 1.9M a year</em></li>
+      </ol>
+      <div class="ask rv" style="--i:2"><b>Our ask</b><span>Introductions to one pilot employer, and to HRD Corp so our courses can be claimed.</span></div>
     </div>
   </section>
 
@@ -1051,21 +1119,6 @@ footer a { color: var(--ink-2); }
         <div class="glass rv" style="--i:1;--c:#4a93ea"><span class="n">01</span><h3>Change the trend data now</h3><p>Open the agents panel and watch three agents vote on a news finding. The knowledge base moves from version 1 to version 2, every plan is re-scored, and the route visibly changes on the map, with the source attached. Undo puts it back.</p><p class="src">In rehearsal, the route changed in 0.1 seconds</p></div>
         <div class="glass rv" style="--i:2;--c:#2fc28b"><span class="n">02</span><h3>Is this course real?</h3><p>30 real course listings with price and hours. Jobs come from the EU’s official list; wages are Malaysian government figures from DOSM. When no course exists, the app says “no course listed yet” instead of making one up.</p><p class="src">Click any step to open the listing</p></div>
         <div class="glass rv" style="--i:3;--c:#ff7a3d"><span class="n">03</span><h3>Why this score, and what would raise it?</h3><p>The breakdown lists each skill the job needs, how much employers want it, and your level. Confirm a skill or finish a step, and the number updates in front of you.</p><p class="src">A fixed formula. No AI in the loop.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= ROADMAP ================= -->
-  <section class="sec deck" id="roadmap" aria-labelledby="road-h">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <p class="kicker">Appendix: roadmap</p>
-        <h2 id="road-h">Start in Penang. Measure. Expand.</h2>
-      </div>
-      <div class="road">
-        <div class="glass rv" style="--i:1;--c:#ff7a3d"><span class="when">Now, the final</span><h3>Scale the news-reading layer</h3><ul><li>Track all 13,939 skills daily</li><li>Import HR data from employers</li><li>A 3-month pilot plan with one HRD Corp-registered employer</li></ul></div>
-        <div class="glass rv" style="--i:2;--c:#4a93ea"><span class="when">H1 2027, pilot</span><h3>Penang shared-services centres</h3><ul><li>About 90 companies</li><li>Letters to InvestPenang and PSDC</li><li>A pilot with real CVs, with each worker’s consent</li></ul></div>
-        <div class="glass rv" style="--i:3;--c:#9b8cff"><span class="when">Next</span><h3>Deeper Malaysian data</h3><ul><li>Licensed Malaysian job-ad data</li><li>Bahasa Melayu news for the researcher</li><li>Our model scoring the whole job catalogue</li></ul></div>
       </div>
     </div>
   </section>
@@ -1818,6 +1871,77 @@ html { scroll-snap-type: y proximity; }
 .fin-thanks { margin: 24px 0 0 !important; }
 .fin-foot { margin-top: 30px; }
 .fin-team { margin-top: 20px !important; }
+
+/* ---------- business pages ---------- */
+#business, #mc, #roadmap { background: radial-gradient(ellipse 75% 65% at 55% 60%, rgba(5,7,13,.82) 0%, rgba(5,7,13,.6) 55%, rgba(5,7,13,.22) 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%); }
+.mc-k { font-size: 11.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+.mc-src { margin-top: 14px; font-size: 12.5px; line-height: 1.5; color: var(--muted); }
+/* business model */
+.bz { margin: 26px 0 0 178px; max-width: 1000px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 50px; }
+.bz-eq, .bz-unit { display: flex; align-items: center; gap: 16px; }
+.bz-eq > i, .bz-unit > i { font-style: normal; font-size: 26px; font-weight: 300; color: var(--muted); }
+.bz-eq b { display: block; font-size: 44px; font-weight: 800; letter-spacing: -.04em; line-height: 1; color: var(--ink); }
+.bz-eq .hot b { font-size: 64px; color: #7fd38f; text-shadow: 0 0 30px rgba(127,211,143,.4); }
+.bz-eq span { display: block; margin-top: 6px; font-size: 13.5px; line-height: 1.4; color: var(--ink-2); }
+.bz-note { margin-top: 14px; font-size: 15px; color: var(--ink); max-width: 46ch; }
+.bz-unit b { display: block; font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: var(--ink); }
+.bz-unit .hot b { color: #5aa0f0; }
+.bz-unit span { font-size: 12.5px; color: var(--muted); }
+.bz-p { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 11px 0; border-top: 1px solid rgba(170,186,214,.13); }
+.bz-p:first-of-type { border-top: 0; padding-top: 0; }
+.bz-p b { font-size: 15px; color: var(--ink); }
+.bz-p em { font-style: normal; font-size: 13px; font-weight: 700; color: var(--ink-2); text-align: right; }
+.bz-p span { grid-column: 1 / -1; font-size: 13.5px; color: var(--muted); }
+.bz-p.main b, .bz-p.main em { color: #ff9a5c; }
+/* monte carlo */
+.mc { margin: 22px 0 0 178px; max-width: 1000px; display: grid; grid-template-columns: 1.35fr .9fr; gap: 36px; align-items: start; }
+.mc-fan { width: 100%; height: auto; display: block; font-family: var(--font); }
+.mc-fan .g { stroke: rgba(170,186,214,.1); }
+.mc-fan .g.z { stroke: rgba(255,255,255,.4); stroke-dasharray: 4 4; }
+.mc-fan .ax { font-size: 11px; fill: #7f8ba3; }
+.mc-fan .b90 { fill: rgba(90,160,240,.16); }
+.mc-fan .b50 { fill: rgba(47,212,160,.26); }
+.mc-fan .med { fill: none; stroke: url(#mc-g); stroke-width: 3; filter: drop-shadow(0 0 6px rgba(255,122,61,.45)); }
+.mc-fan .lg .med { stroke: #ff7a3d; }
+.mc-fan .bel { stroke: #f2b33d; stroke-dasharray: 3 4; opacity: .7; }
+.mc-fan .bed { fill: #f2b33d; filter: drop-shadow(0 0 8px #f2b33d); }
+.mc-fan .bet { font-size: 12px; font-weight: 700; fill: #f2b33d; }
+.mc-fan .lg text { font-size: 11px; fill: #a9b5c9; }
+.mc-stats { display: grid; gap: 0; }
+.mc-stats div { padding: 11px 0; border-top: 1px solid rgba(170,186,214,.13); }
+.mc-stats div:first-child { border-top: 0; padding-top: 0; }
+.mc-stats b { display: block; font-size: 34px; font-weight: 800; letter-spacing: -.04em; line-height: 1.05; color: var(--ink); }
+.mc-stats div:first-child b { font-size: 46px; color: #7fd38f; text-shadow: 0 0 26px rgba(127,211,143,.35); }
+.mc-stats span { display: block; margin-top: 3px; font-size: 13.5px; line-height: 1.4; color: var(--ink-2); }
+.mc-tor { margin: 18px 0 0 178px; max-width: 1000px; }
+.tor { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; }
+.tor div { display: grid; grid-template-columns: 1fr auto; gap: 6px 8px; font-size: 13px; }
+.tor b { font-weight: 600; color: var(--ink-2); }
+.tor span { font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+.tor i { grid-column: 1 / -1; height: 6px; border-radius: 6px; background: rgba(170,186,214,.12); position: relative; overflow: hidden; }
+.tor i::after { content: ""; position: absolute; inset: 0; width: var(--w); border-radius: 6px; background: linear-gradient(90deg, #f2b33d, #ff7a3d); }
+/* roadmap */
+.rdm { list-style: none; margin: 34px 0 0 178px; padding: 0; max-width: 1000px; display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); position: relative; }
+.rdm::before { content: ""; position: absolute; left: 0; right: 0; top: 30px; height: 2px; background: linear-gradient(90deg, #2fd4a0, #5aa0f0 25%, #a98bff 50%, #f2b33d 72%, #ff7a3d); opacity: .6; }
+.rdm li { position: relative; padding-right: 20px; }
+.rdm .when { display: block; font-size: 12.5px; font-weight: 700; color: var(--c); }
+.rdm li::before { content: ""; display: block; width: 14px; height: 14px; margin: 9px 0 16px; border-radius: 50%; background: #0c1322; border: 2px solid var(--c); box-shadow: 0 0 0 5px rgba(5,7,13,.9); position: relative; z-index: 1; }
+.rdm li.done::before { background: var(--c); }
+.rdm li.mile::before { width: 20px; height: 20px; margin: 6px 0 13px; background: var(--c); box-shadow: 0 0 0 5px rgba(5,7,13,.9), 0 0 20px var(--c); }
+.rdm b { display: block; font-size: 1.15rem; color: var(--ink); letter-spacing: -.01em; }
+.rdm p { margin-top: 6px; font-size: 14px; line-height: 1.45; color: var(--ink-2); }
+.rdm em { display: block; margin-top: 10px; font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--c); line-height: 1.35; }
+.ask { margin: 36px 0 0 178px; max-width: 1000px; display: flex; gap: 16px; align-items: baseline; padding: 16px 20px; border-radius: 14px; background: rgba(255,122,61,.08); border: 1px solid rgba(255,122,61,.35); }
+.ask b { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #ff9a5c; white-space: nowrap; }
+.ask span { font-size: 15.5px; color: var(--ink); }
+@media (max-width: 1000px) { .bz, .mc, .mc-tor, .rdm, .ask { margin-left: 0; } .bz, .mc { grid-template-columns: 1fr; } .tor, .rdm { grid-template-columns: 1fr 1fr; } .rdm::before { display: none; } }
+
+.mc-lg { float: right; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; letter-spacing: 0; text-transform: none; font-size: 11.5px; color: #a9b5c9; }
+.mc-lg i { width: 14px; height: 9px; border-radius: 2px; margin-left: 10px; }
+.mc-lg .l90 { background: rgba(90,160,240,.35); } .mc-lg .l50 { background: rgba(47,212,160,.5); } .mc-lg .lmed { height: 3px; background: #ff7a3d; }
+#mc .sec-head p { max-width: 70ch; }
 </style>
 
 <footer>
@@ -2290,8 +2414,8 @@ setTimeout(measure, 800); addEventListener("load", measure);
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var story = $('#story'), rail = $('#rail'), stops = [], cur = -1, anim = null;
-  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'arch', 'go', 'tests', 'checks', 'roadmap', 'limits'];
-  var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', market: 'Market size', arch: 'Architecture', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Your route changes with it' };
+  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'mc', 'roadmap', 'arch', 'go', 'tests', 'checks', 'limits'];
+  var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', market: 'Market size', mc: 'Business case', arch: 'Architecture', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Your route changes with it' };
   var chNames = ['Act 1: Stay', 'Act 2: Move', 'The route', 'Act 3: Updated'], chHash = ['story', 'roles', 'route', 'rerouted'];
   function build() {
     stops = [];
@@ -2472,8 +2596,8 @@ setTimeout(measure, 800); addEventListener("load", measure);
 <script>
 /* Page numbers: a number and label in a column beside the headline, and a faint outline number behind that column (or in the top-right corner on centred pages). */
 (function () {
-  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'arch', 'go', 'tests', 'checks', 'roadmap', 'limits'];
-  var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', market: 'Market size', arch: 'Architecture', roadmap: 'Roadmap', limits: 'What we say openly', go: 'Close' };
+  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'mc', 'roadmap', 'arch', 'go', 'tests', 'checks', 'limits'];
+  var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', market: 'Market size', mc: 'Business case', arch: 'Architecture', roadmap: 'Roadmap', limits: 'What we say openly', go: 'Close' };
   ids.forEach(function (id, i) {
     if (id === 'hero' || id === 'team') return; // the title and team pages carry no number; counting starts at The problem
     var el = document.getElementById(id); if (!el) return;
