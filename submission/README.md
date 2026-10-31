@@ -9,9 +9,9 @@ Team **Dsaise** · Project **HalaTuju** · SDC Hackathon 2026, Domain 1: Aiverse
 | Final Project & Prototype Report (finalist template) | [`SDC2026_Dsaise_Final.pdf`](SDC2026_Dsaise_Final.pdf) |
 | Updated Product Requirement Doc | [`SDC2026_Dsaise_PRD_Final.pdf`](SDC2026_Dsaise_PRD_Final.pdf) |
 | Updated Technical & Tools Declaration (finalist template) | [`SDC2026_Dsaise_TechDeclaration.pdf`](SDC2026_Dsaise_TechDeclaration.pdf) |
-| Final pitch deck (.pptx, plus a flattened PDF) | *(to add)* |
+| Final pitch deck (.pptx, plus a flattened PDF) | [`SDC2026_Dsaise_PitchDeck_Final.pptx`](SDC2026_Dsaise_PitchDeck_Final.pptx), [`SDC2026_Dsaise_PitchDeck_Final.pdf`](SDC2026_Dsaise_PitchDeck_Final.pdf) |
 | Live prototype | https://halatuju.replit.app |
-| Backup demo video of the final build (YouTube) | *(to add)* |
+| Backup demo video of the final build (YouTube) | https://youtu.be/ssNKYQV_tdY |
 | GitHub repository (committee accounts added as collaborators) | https://github.com/shenenleow10521/SdcHackathon |
 | Replit and RunPod proof of use | [`SDC2026_Dsaise_Replit_POU.pdf`](SDC2026_Dsaise_Replit_POU.pdf), [`SDC2026_Dsaise_Runpod_POU.pdf`](SDC2026_Dsaise_Runpod_POU.pdf) |
 
