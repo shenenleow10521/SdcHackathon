@@ -20,7 +20,7 @@ a1.text(5, w["net"] + 300_000, f"{w['net']/w['invest']:.2f}× cost", ha="center"
 a1.set_xticks(x, labels, fontsize=10)
 a1.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"RM {v/1e6:.1f}M" if v else "0"))
 a1.set_ylim(0, 3.1e6); a1.grid(axis="y", color="#e5e5e5", lw=0.8); a1.set_axisbelow(True)
-a1.set_title("Social value in one year (median of 10,000 runs)", loc="left", fontsize=12)
+a1.set_title("Social return on investment (SROI), one year · median of 10,000 runs", loc="left", fontsize=12)
 fig.tight_layout()
 fig.savefig("/home/claude/final-pitch/assets/sroi_wf.png", dpi=180, facecolor="white")
 print("ok")
