@@ -850,11 +850,27 @@ footer a { color: var(--ink-2); }
     </div>
   </section>
 
+  <!-- ================= WARP ================= -->
+  <section class="warp" id="go" aria-labelledby="go-h">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="kicker">Close</p>
+        <h2 id="go-h">When AI changes the route, your route changes with it.</h2>
+        <p class="thanks">Thank you.</p>
+        <p>halatuju.replit.app, no account needed. Team Dsaise: Leow Shen En, Choong Zhuo Lin, Tan Wei Feng, Lim Jie Shin and Esther Kong Yuan Er.</p>
+      </div>
+      <div class="ctas rv" style="--i:1">
+        <a class="btn btn-primary" href="https://halatuju.replit.app/app" target="_blank" rel="noopener" data-warp id="warp-btn">Open the app<svg class="i i-move"><use href="#i-arrow-right"/></svg></a>
+        <a class="btn btn-ghost" href="https://github.com/shenenleow10521/SdcHackathon" target="_blank" rel="noopener"><svg class="i"><use href="#i-code-xml"/></svg>Source code</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= TESTS ================= -->
   <section class="sec deck" id="tests" aria-labelledby="tests-h">
     <div class="wrap">
       <div class="sec-head rv">
-        <p class="kicker">Q&A backup: how well it works</p>
+        <p class="kicker">Appendix: how well it works</p>
         <h2 id="tests-h">Three tests that could have embarrassed us.</h2>
         <p>We ran them anyway, and we show the results as they came out.</p>
       </div>
@@ -870,7 +886,7 @@ footer a { color: var(--ink-2); }
   <section class="sec deck" id="checks" aria-labelledby="checks-h">
     <div class="wrap">
       <div class="sec-head rv">
-        <p class="kicker">Q&A backup: judges, try to break it</p>
+        <p class="kicker">Appendix: judges, try to break it</p>
         <h2 id="checks-h">Change the data. Check a course. Ask why.</h2>
         <p>Three things you can test in the app right now, and what you will see.</p>
       </div>
@@ -886,7 +902,7 @@ footer a { color: var(--ink-2); }
   <section class="sec deck" id="roadmap" aria-labelledby="road-h">
     <div class="wrap">
       <div class="sec-head rv">
-        <p class="kicker">Q&A backup: roadmap</p>
+        <p class="kicker">Appendix: roadmap</p>
         <h2 id="road-h">Start in Penang. Measure. Expand.</h2>
       </div>
       <div class="road">
@@ -901,28 +917,13 @@ footer a { color: var(--ink-2); }
   <section class="sec deck" id="limits" aria-labelledby="limits-h">
     <div class="wrap">
       <div class="sec-head rv">
-        <p class="kicker">Q&A backup: what we say openly</p>
+        <p class="kicker">Appendix: what we say openly</p>
         <h2 id="limits-h">What this prototype cannot do yet.</h2>
       </div>
       <div class="checks">
         <div class="glass rv" style="--i:1;--c:#f2b33d"><h3>Sample data in places</h3><p>The 16-job catalogue in the demo uses labelled sample data. “Check any job” uses the real official list. Most study times are estimates, and our task evidence comes from US data.</p></div>
         <div class="glass rv" style="--i:2;--c:#ff7a3d"><h3>Matching is still rough</h3><p>A nurse matches her own job at only about 30%, because the official list has about 60 skills per job and a CV names about 16. The questions reach about 70% accuracy for trade jobs.</p></div>
         <div class="glass rv" style="--i:3;--c:#4a93ea"><h3>Tests still to run</h3><p>We have not yet tested clues such as school name or graduation year. The 1,000 futures test a plan; they do not predict any one person’s future.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= WARP ================= -->
-  <section class="warp" id="go" aria-labelledby="go-h">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <p class="kicker">Close</p>
-        <h2 id="go-h">HalaTuju. When AI changes the route, your route changes with it.</h2>
-        <p>halatuju.replit.app, no account needed. Team Dsaise: Leow Shen En, Choong Zhuo Lin, Tan Wei Feng, Lim Jie Shin and Esther Kong Yuan Er.</p>
-      </div>
-      <div class="ctas rv" style="--i:1">
-        <a class="btn btn-primary" href="https://halatuju.replit.app/app" target="_blank" rel="noopener" data-warp id="warp-btn">Open the app<svg class="i i-move"><use href="#i-arrow-right"/></svg></a>
-        <a class="btn btn-ghost" href="https://github.com/shenenleow10521/SdcHackathon" target="_blank" rel="noopener"><svg class="i"><use href="#i-code-xml"/></svg>Source code</a>
       </div>
     </div>
   </section>
@@ -1303,6 +1304,9 @@ html { scroll-snap-type: y proximity; }
 .mkt-ladder .what { grid-area: what; font-size: 15px; color: var(--ink-2); max-width: 44ch; }
 .mkt-src { font-size: 13px !important; color: var(--muted); margin-top: 14px; }
 @media (max-width: 1000px) { .mkt { grid-template-columns: 1fr; gap: 24px; } .mkt-rings { max-width: 320px; margin: 0 auto; } }
+
+.thanks { margin-top: 18px !important; font-size: 2rem !important; font-weight: 800; color: var(--amber); letter-spacing: -.02em; max-width: none !important; }
+.warp .sec-head p:not(.thanks) { margin-top: 14px; }
 </style>
 
 <footer>
@@ -1574,7 +1578,7 @@ function readScroll() {
   st.pre = clamp(y / Math.max(1, M.storyTop), 0, 1);
   st.q = clamp((y - (M.storyTop + M.storyH - innerHeight)) / Math.max(1, M.goTop - (M.storyTop + M.storyH - innerHeight)), 0, 1);
   var afterStory = clamp((y - (M.storyTop + M.storyH - innerHeight)) / (innerHeight * 0.8), 0, 1);
-  var nearGo = clamp(1 - (M.goTop - innerHeight * 0.5 - y) / (innerHeight * 0.9), 0, 1);
+  var nearGo = clamp(1 - Math.abs(y - M.goTop) / (innerHeight * 0.9), 0, 1);
   st.veil = afterStory * 0.7 * (1 - nearGo * 0.85);
   st.warpIn = smooth(0.35, 1, nearGo);
   bar.style.transform = "scaleX(" + (M.docH > 0 ? y / M.docH : 0) + ")";
@@ -1775,7 +1779,7 @@ setTimeout(measure, 800); addEventListener("load", measure);
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var story = $('#story'), rail = $('#rail'), stops = [], cur = -1, anim = null;
-  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'tests', 'checks', 'roadmap', 'limits', 'go'];
+  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'go', 'tests', 'checks', 'roadmap', 'limits'];
   var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', market: 'Market size', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Your route changes with it' };
   var chNames = ['Act 1: Stay', 'Act 2: Move', 'The route', 'Act 3: Updated'], chHash = ['story', 'roles', 'route', 'rerouted'];
   function build() {
@@ -1957,12 +1961,12 @@ setTimeout(measure, 800); addEventListener("load", measure);
 <script>
 /* Page numbers: a number and label in a column beside the headline, and a faint outline number behind that column (or in the top-right corner on centred pages). */
 (function () {
-  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'tests', 'checks', 'roadmap', 'limits', 'go'];
+  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'go', 'tests', 'checks', 'roadmap', 'limits'];
   var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', market: 'Market size', roadmap: 'Roadmap', limits: 'What we say openly', go: 'Close' };
   ids.forEach(function (id, i) {
     if (id === 'hero' || id === 'team') return; // the title and team pages carry no number; counting starts at The problem
     var el = document.getElementById(id); if (!el) return;
-    var n = String(i - 1).padStart(2, '0');
+    var ai = ids.indexOf('go'); var n = i > ai ? 'A' + (i - ai) : String(i - 1).padStart(2, '0');
     var head = el.querySelector('.sec-head') || el.querySelector('.hero-in') || el.querySelector('.wrap');
     var centered = !head.classList.contains('sec-head') || head.classList.contains('center');
     var k = head.querySelector('.kicker, .eyebrow');
