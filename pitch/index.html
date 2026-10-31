@@ -807,20 +807,6 @@ footer a { color: var(--ink-2); }
     </div>
   </section>
 
-  <!-- ================= IMPACT AND FEASIBILITY ================= -->
-  <section class="sec deck" id="feas" aria-labelledby="feas-h">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <p class="kicker">Impact and feasibility</p>
-        <h2 id="feas-h">We set targets on 25 October. Here is where we stand.</h2>
-      </div>
-      <div class="kp rv" style="--i:1">
-        <div class="kp-row kp-head"><span>What we track</span><span>25 Oct</span><span>Target</span><span>Now</span><span>How we checked</span></div><div class="kp-row"><span class="kp-what">Current job read right from a CV</span><span class="kp-b">97.2%</span><span class="kp-t">≥95% on new CVs</span><span class="kp-now re"><b>97.2%</b><i>Re-test</i></span><span class="kp-how">36-CV blind benchmark</span></div><div class="kp-row"><span class="kp-what">Personal details removed before any AI</span><span class="kp-b">99.4%</span><span class="kp-t">≥99% on new CVs</span><span class="kp-now re"><b>99.4%</b><i>Re-test</i></span><span class="kp-how">155 planted details</span></div><div class="kp-row"><span class="kp-what">Users who get a costed route in 60 s</span><span class="kp-b">not measured</span><span class="kp-t">≥80%</span><span class="kp-now re"><b>Timing test</b><i>Re-test</i></span><span class="kp-how">10 first-time users</span></div><div class="kp-row"><span class="kp-what">Pilot workers with an approved plan</span><span class="kp-b">–</span><span class="kp-t">≥70%</span><span class="kp-now wait"><b>Pilot H1 2027</b><i>Not yet</i></span><span class="kp-how">Pilot logs</span></div><div class="kp-row"><span class="kp-what">Jobs you can get a route to</span><span class="kp-b">16</span><span class="kp-t">Any official job</span><span class="kp-now ok"><b>3,039</b><i>Met</i></span><span class="kp-how">Live in the app</span></div><div class="kp-row"><span class="kp-what">Same result for any name, gender, age or race</span><span class="kp-b">–</span><span class="kp-t">Identical</span><span class="kp-now ok"><b>6 of 6</b><i>Met</i></span><span class="kp-how">Automated fairness test</span></div>
-      </div>
-      <div class="fz rv" style="--i:2"><div class="fz-t"><span>Reach</span><b>HR teams first</b><p>About 1,500 staff in KL, then campuses and TVET</p></div><div class="fz-t"><span>Fresh data</span><b>Every day</b><p>74 sites, about RM 31.50 a month</p></div><div class="fz-t"><span>Running cost</span><b>RM 0.50</b><p>per worker a month, all in</p></div><div class="fz-t"><span>Learning cost</span><b>29 of 30</b><p>listed courses are free</p></div><div class="fz-t"><span>Privacy</span><b>PDPA</b><p>Details removed before AI, opt-in</p></div></div>
-    </div>
-  </section>
-
   <!-- ================= SROI ================= -->
   <section class="sec deck" id="sroi" aria-labelledby="sroi-h">
     <div class="wrap">
@@ -830,7 +816,7 @@ footer a { color: var(--ink-2); }
         <p>Every RM 1 spent brings back about RM 2.31.</p>
       </div>
       <figure class="mpl rv" style="--i:1"><img src="assets/sroi.png" width="2210" height="782" alt="Left: waterfall of social value for one 1,500-staff pilot centre in the median run. Severance avoided RM 1.75M plus wages kept RM 0.95M gives RM 2.70M gross; minus RM 1.21M that would happen anyway and RM 0.45M credit to others leaves RM 1.04M net, 2.31 times the RM 0.45M pilot cost. Right: histogram of 10,000 simulated pilots; almost all return more than RM 1 per RM 1, median 2.31."></figure>
-      <p class="mpl-note rv" style="--i:2">Simulated, not measured. Social return on investment method; every input is a range. Model and inputs: pitch/business/sroi_sim.py.</p>
+      <p class="mpl-note rv" style="--i:2"><b>Measured so far:</b> 97.2% of jobs read right from a CV · 99.4% of personal details removed before AI · same result for any name, gender, age or race. Full scorecard in A1. The chart above is simulated.</p>
     </div>
   </section>
 
@@ -1056,6 +1042,20 @@ footer a { color: var(--ink-2); }
         <div class="fin-qr"><img src="assets/qr.png" width="84" height="84" alt="QR code for halatuju.replit.app"><span>Scan to try it<br><b>halatuju.replit.app</b></span></div>
       </div>
       <p class="fin-team">Leow Shen En, Choong Zhuo Lin, Tan Wei Feng, Lim Jie Shin, Esther Kong Yuan Er</p>
+    </div>
+  </section>
+
+  <!-- ================= IMPACT AND FEASIBILITY ================= -->
+  <section class="sec deck" id="feas" aria-labelledby="feas-h">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="kicker">Appendix: impact and feasibility</p>
+        <h2 id="feas-h">We set targets on 25 October. Here is where we stand.</h2>
+      </div>
+      <div class="kp rv" style="--i:1">
+        <div class="kp-row kp-head"><span>What we track</span><span>25 Oct</span><span>Target</span><span>Now</span><span>How we checked</span></div><div class="kp-row"><span class="kp-what">Current job read right from a CV</span><span class="kp-b">97.2%</span><span class="kp-t">≥95% on new CVs</span><span class="kp-now re"><b>97.2%</b><i>Re-test</i></span><span class="kp-how">36-CV blind benchmark</span></div><div class="kp-row"><span class="kp-what">Personal details removed before any AI</span><span class="kp-b">99.4%</span><span class="kp-t">≥99% on new CVs</span><span class="kp-now re"><b>99.4%</b><i>Re-test</i></span><span class="kp-how">155 planted details</span></div><div class="kp-row"><span class="kp-what">Users who get a costed route in 60 s</span><span class="kp-b">not measured</span><span class="kp-t">≥80%</span><span class="kp-now re"><b>Timing test</b><i>Re-test</i></span><span class="kp-how">10 first-time users</span></div><div class="kp-row"><span class="kp-what">Pilot workers with an approved plan</span><span class="kp-b">–</span><span class="kp-t">≥70%</span><span class="kp-now wait"><b>Pilot H1 2027</b><i>Not yet</i></span><span class="kp-how">Pilot logs</span></div><div class="kp-row"><span class="kp-what">Jobs you can get a route to</span><span class="kp-b">16</span><span class="kp-t">Any official job</span><span class="kp-now ok"><b>3,039</b><i>Met</i></span><span class="kp-how">Live in the app</span></div><div class="kp-row"><span class="kp-what">Same result for any name, gender, age or race</span><span class="kp-b">–</span><span class="kp-t">Identical</span><span class="kp-now ok"><b>6 of 6</b><i>Met</i></span><span class="kp-how">Automated fairness test</span></div>
+      </div>
+      <div class="fz rv" style="--i:2"><div class="fz-t"><span>Reach</span><b>HR teams first</b><p>About 1,500 staff in KL, then campuses and TVET</p></div><div class="fz-t"><span>Fresh data</span><b>Every day</b><p>74 sites, about RM 31.50 a month</p></div><div class="fz-t"><span>Running cost</span><b>RM 0.50</b><p>per worker a month, all in</p></div><div class="fz-t"><span>Learning cost</span><b>29 of 30</b><p>listed courses are free</p></div><div class="fz-t"><span>Privacy</span><b>PDPA</b><p>Details removed before AI, opt-in</p></div></div>
     </div>
   </section>
 
@@ -2304,6 +2304,9 @@ section#feas.sec { background: radial-gradient(ellipse 85% 75% at 50% 55%, rgba(
 .kp-now { flex-wrap: nowrap; }
 .kp-row { padding: 11px 18px; }
 .fz { margin-top: 22px; }
+
+.mpl { border-radius: 0; }
+.mpl-note b { color: var(--ink); }
 </style>
 
 <footer>
@@ -2776,7 +2779,7 @@ setTimeout(measure, 800); addEventListener("load", measure);
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var story = $('#story'), rail = $('#rail'), stops = [], cur = -1, anim = null;
-  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'brief', 'impact', 'feas', 'sroi', 'market', 'business', 'roadmap', 'arch', 'go', 'mc', 'tests', 'checks', 'data', 'limits'];
+  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'brief', 'impact', 'sroi', 'market', 'business', 'roadmap', 'arch', 'go', 'feas', 'mc', 'tests', 'checks', 'data', 'limits'];
   var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', feas: 'Impact and feasibility', sroi: 'Impact in numbers', market: 'Market size', mc: 'Business stress test', arch: 'Architecture', data: 'Where our data comes from', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Closing' };
   var chNames = ['Act 1: Stay', 'Act 2: Move', 'The route', 'Act 3: Updated'], chHash = ['story', 'roles', 'route', 'rerouted'];
   function build() {
@@ -2958,7 +2961,7 @@ setTimeout(measure, 800); addEventListener("load", measure);
 <script>
 /* Page numbers: a number and label in a column beside the headline, and a faint outline number behind that column (or in the top-right corner on centred pages). */
 (function () {
-  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'brief', 'impact', 'feas', 'sroi', 'market', 'business', 'roadmap', 'arch', 'go', 'mc', 'tests', 'checks', 'data', 'limits'];
+  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'brief', 'impact', 'sroi', 'market', 'business', 'roadmap', 'arch', 'go', 'feas', 'mc', 'tests', 'checks', 'data', 'limits'];
   var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', feas: 'Impact and feasibility', sroi: 'Impact in numbers', market: 'Market size', mc: 'Business stress test', arch: 'Architecture', roadmap: 'Roadmap', data: 'Where our data comes from', limits: 'What we say openly', go: 'Close' };
   ids.forEach(function (id, i) {
     if (id === 'hero' || id === 'team') return; // the title and team pages carry no number; counting starts at The problem
