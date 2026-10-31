@@ -4,17 +4,17 @@
 // Rule: a topic word in the name picks a specific goal; otherwise a job's ISCO-08 sub-major group does. Every job also
 // links to SDG 8 (decent work: target 8.5) and every skill to SDG 4 (target 4.4: skills for decent jobs).
 
-/** All 17 goals, with the UN's official colours. */
+/** All 17 goals, with the UN's official names (as on the icons) and colours. */
 export const SDG_INFO = Object.freeze({
   1: { name: "No poverty", color: "#e5243b" }, 2: { name: "Zero hunger", color: "#dda63a" },
-  3: { name: "Good health", color: "#4c9f38" }, 4: { name: "Quality education", color: "#c5192d" },
-  5: { name: "Gender equality", color: "#ff3a21" }, 6: { name: "Clean water", color: "#26bde2" },
-  7: { name: "Clean energy", color: "#fcc30b" }, 8: { name: "Decent work", color: "#a21942" },
-  9: { name: "Industry & innovation", color: "#fd6925" }, 10: { name: "Reduced inequalities", color: "#dd1367" },
-  11: { name: "Sustainable cities", color: "#fd9d24" }, 12: { name: "Responsible production", color: "#bf8b2e" },
+  3: { name: "Good health and well-being", color: "#4c9f38" }, 4: { name: "Quality education", color: "#c5192d" },
+  5: { name: "Gender equality", color: "#ff3a21" }, 6: { name: "Clean water and sanitation", color: "#26bde2" },
+  7: { name: "Affordable and clean energy", color: "#fcc30b" }, 8: { name: "Decent work and economic growth", color: "#a21942" },
+  9: { name: "Industry, innovation and infrastructure", color: "#fd6925" }, 10: { name: "Reduced inequalities", color: "#dd1367" },
+  11: { name: "Sustainable cities and communities", color: "#fd9d24" }, 12: { name: "Responsible consumption and production", color: "#bf8b2e" },
   13: { name: "Climate action", color: "#3f7e44" }, 14: { name: "Life below water", color: "#0a97d9" },
-  15: { name: "Life on land", color: "#56c02b" }, 16: { name: "Strong institutions", color: "#00689d" },
-  17: { name: "Partnerships", color: "#19486a" },
+  15: { name: "Life on land", color: "#56c02b" }, 16: { name: "Peace, justice and strong institutions", color: "#00689d" },
+  17: { name: "Partnerships for the goals", color: "#19486a" },
 });
 
 // Topic words -> goal, first match wins (more specific topics first).

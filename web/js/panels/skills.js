@@ -113,12 +113,12 @@ export function render() {
   const E = S.E, root = E.root;
   const cards = (isCatalogue() ? catalogueCards() : outlookCards()).sort((a, b) => b.pct - a.pct);
   const by = g => cards.filter(c => GROUPS.find(x => x.g === g).bands.includes(c.band));
-  const scope = isCatalogue() ? `<p class="ms-meta ms-scope">${esc(t("myskills.scope", { scope: scope() }))}</p>` : "";
+  const scopeLine = isCatalogue() ? `<p class="ms-meta ms-scope">${esc(t("myskills.scope", { scope: scope() }))}</p>` : "";
   return `<div class="stack ms-page">
     <section class="ms-card">
       <div class="ms-gh"><h2>${esc(t("myskills.title"))}</h2><span class="ms-meta">${esc(t("myskills.private"))}</span></div>
       ${cards.length ? summary(Object.fromEntries(GROUPS.map(({ g }) => [g, by(g).length])), cards.length) : ""}
-      ${scope}
+      ${scopeLine}
       <hr class="ms-hr">
       ${stayPart()}
       <div class="ms-links">${N(root) ? `<button class="link-btn" type="button" data-skill="${esc(root)}">${esc(t("myskills.jobTasks"))}</button>` : ""}<button class="link-btn" type="button" id="edit-skills">${esc(t("skills.edit"))}</button></div>

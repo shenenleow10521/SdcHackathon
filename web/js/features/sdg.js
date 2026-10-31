@@ -18,9 +18,7 @@ export function sdgOf(id) {
 }
 
 /** The UN's official goal icon (web/assets/sdg, used as published, scaled only); the name is in the icon. */
-const icon = g => `<img class="sdg-ic" src="/assets/sdg/goal-${String(g).padStart(2, "0")}.png" alt="${esc(`SDG ${g}: ${info(g).name}`)}" width="44" height="44" loading="lazy" decoding="async">`;
-/** A small numbered square in the goal's official colour, for places too small for the icon (job cards). */
-const square = (g, cls = "") => `<b class="sdg-sq${cls}" style="background:${esc(info(g).color)}">${esc(g)}</b>`;
+const icon = (g, size = 44) => `<img class="sdg-ic${size < 44 ? " sm" : ""}" src="/assets/sdg/goal-${String(g).padStart(2, "0")}.png" alt="${esc(`SDG ${g}: ${info(g).name}`)}" width="${size}" height="${size}" loading="lazy" decoding="async">`;
 
 /** Goal rows for a drawer or sheet: the goal's icon, name and reason. */
 export function sdgRows(list) {
@@ -35,12 +33,12 @@ export function sdgSection(id, titleKey) {
     ${rule ? `<p class="src">${esc(t("sdg.ruleNote"))}</p>` : ""}</div>`;
 }
 
-/** Small goal squares for a job card (at most 3). */
+/** The goals' official icons for a job card (at most 3, 24px); the full names are in the label. */
 export function sdgDots(id) {
   const { list } = sdgOf(id);
   if (!list.length) return "";
   const label = list.map(([g]) => `SDG ${g}: ${info(g).name}`).join(", ");
-  return `<span class="sdg-dots" role="img" aria-label="${esc(label)}" title="${esc(label)}">${list.slice(0, 3).map(([g]) => square(g, " sm")).join("")}</span>`;
+  return `<span class="sdg-dots" role="img" aria-label="${esc(label)}" title="${esc(label)}">${list.slice(0, 3).map(([g]) => icon(g, 24)).join("")}</span>`;
 }
 
 /** How a path supports the goals: the job's goals, then the goals the skills you'll build serve (SDG 4 is every skill). */

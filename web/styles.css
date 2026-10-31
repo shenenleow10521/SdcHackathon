@@ -1635,12 +1635,11 @@ sup.cite { font-size: 10px; font-weight: 700; color: var(--accent); margin-left:
 .hr-tabs .count[hidden] { display: none; }
 
 /* ---------- SDG mapping (features/sdg.js) ---------- */
-.sdg-sq { width: 34px; height: 34px; border-radius: 8px; display: inline-grid; place-items: center; color: #fff; font-family: var(--mono); font-size: 13px; font-weight: 700; flex: none; }
-.sdg-sq.sm { width: 20px; height: 20px; border-radius: 5px; font-size: 10.5px; }
 .sdg-rows { display: grid; gap: 8px; }
 .sdg-ic { width: 44px; height: 44px; border-radius: 4px; display: block; }
+.sdg-ic.sm { width: 24px; height: 24px; border-radius: 3px; }
 .sdg-sec .src { margin-top: 8px; }
-.sdg-dots { display: inline-flex; gap: 3px; margin-left: auto; }
+.sdg-dots { display: inline-flex; gap: 4px; margin-left: auto; }
 .sdg-path { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--panel); padding: 14px; display: grid; gap: 10px; }
 .sdg-path .sec-h { margin: 0; }
 .sdg-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
