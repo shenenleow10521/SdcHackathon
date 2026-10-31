@@ -850,6 +850,46 @@ footer a { color: var(--ink-2); }
     </div>
   </section>
 
+  <!-- ================= TECH STACK ================= -->
+  <section class="sec deck" id="stack" aria-labelledby="stack-h">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="kicker">Tech stack</p>
+        <h2 id="stack-h">Built on Replit and RunPod, running live.</h2>
+        <p>Both sponsor platforms run the product in production, not just the demo. Every figure here is in our GitHub repo, with proof-of-use files.</p>
+      </div>
+      <div class="ts">
+        <div class="ts-sponsors">
+          <article class="ts-sp rv" style="--i:1;--sp:#f26207">
+            <header><span class="ts-dot"></span><b>Replit</b><em>Hosting, database, sign-in</em></header>
+            <ul>
+              <li><b>Deployments</b> Reserved VM serves the live app at halatuju.replit.app</li>
+              <li><b>PostgreSQL 16</b> the only database: versioned knowledge base, profiles and plans</li>
+              <li><b>Clerk sign-in</b> Replit-managed accounts, plus guest access with no sign-up</li>
+              <li><b>Secrets</b> every API key kept out of the code</li>
+              <li><b>Agents in production</b> the news reader and the three voting agents run on the Replit server</li>
+            </ul>
+          </article>
+          <article class="ts-sp rv" style="--i:2;--sp:#9b6bff">
+            <header><span class="ts-dot"></span><b>RunPod</b><em>AI model serving and training</em></header>
+            <ul>
+              <li><b>Serverless</b> BAAI/bge-m3 matches CV wording to all 13,939 official skills; scales to zero when idle</li>
+              <li><b>GPU pod</b> an RTX 4090 trained our AI-exposure model in 2.5 minutes, for about US$0.04</li>
+              <li><b>Speed</b> 13,939 skills embedded in 486 s; 19,265 tasks in 3.9 s</li>
+            </ul>
+          </article>
+        </div>
+        <ol class="ts-layers rv" style="--i:3">
+          <li><span class="ts-k">Interface</span><span class="ts-chips"><i>Vanilla JS</i><i>three.js career map</i><i>GSAP</i><i>English and Bahasa Melayu</i></span></li>
+          <li><span class="ts-k">Server</span><span class="ts-chips"><i>Node 22</i><i>TypeScript</i><i>Express 5</i><i>zod</i><i>tesseract.js, local OCR</i></span></li>
+          <li><span class="ts-k">AI</span><span class="ts-chips"><i class="hl">Gemini 3.5 Flash-Lite</i><i class="hl">Gemini 3.1 Flash-Lite</i><i class="rp">bge-m3 on RunPod</i><i class="rp">our exposure model</i><i>Tavily, trusted sites only</i></span></li>
+          <li><span class="ts-k">Data</span><span class="ts-chips"><i class="rl">Replit PostgreSQL 16</i><i>ESCO v1.2.1</i><i>O*NET</i><i>ILO</i><i>DOSM</i><i>MyCOL</i></span></li>
+          <li><span class="ts-k">Quality</span><span class="ts-chips"><i>533 Vitest tests</i><i>GitHub Actions, Node 22 and 24</i><i>/api/health</i></span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= WARP ================= -->
   <section class="warp" id="go" aria-labelledby="go-h">
     <div class="wrap">
@@ -1307,6 +1347,33 @@ html { scroll-snap-type: y proximity; }
 
 .thanks { margin-top: 18px !important; font-size: 2rem !important; font-weight: 800; color: var(--amber); letter-spacing: -.02em; max-width: none !important; }
 .warp .sec-head p:not(.thanks) { margin-top: 14px; }
+
+/* ---------- tech stack ---------- */
+.ts { margin-top: 26px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 34px; align-items: start; }
+.ts-sponsors { display: grid; gap: 14px; }
+.ts-sp { position: relative; padding: 16px 20px 14px 22px; border-radius: 16px; background: linear-gradient(135deg, color-mix(in srgb, var(--sp) 16%, transparent), rgba(10, 16, 28, .55) 55%); border: 1px solid color-mix(in srgb, var(--sp) 45%, transparent); box-shadow: 0 0 34px -10px color-mix(in srgb, var(--sp) 60%, transparent); overflow: hidden; }
+.ts-sp::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--sp); box-shadow: 0 0 14px var(--sp); }
+.ts-sp header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+.ts-sp header b { font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; color: var(--ink); }
+.ts-sp header em { font-style: normal; font-size: 13px; font-weight: 600; color: var(--sp); }
+.ts-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--sp); box-shadow: 0 0 10px var(--sp); align-self: center; }
+.ts-sp ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.ts-sp li { font-size: 14px; line-height: 1.4; color: var(--ink-2); }
+.ts-sp li b { color: var(--ink); font-weight: 700; margin-right: 6px; }
+.ts-layers { list-style: none; margin: 0; padding: 0; display: grid; }
+.ts-layers li { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: start; padding: 11px 0; border-top: 1px solid rgba(170, 186, 214, .14); }
+.ts-layers li:first-child { border-top: 0; padding-top: 2px; }
+.ts-k { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-top: 6px; }
+.ts-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.ts-chips i { font-style: normal; font-size: 13.5px; font-weight: 500; padding: 5px 11px; border-radius: 999px; background: rgba(255, 255, 255, .045); border: 1px solid rgba(170, 186, 214, .2); color: var(--ink); }
+.ts-chips i.rl { border-color: rgba(242, 98, 7, .6); background: rgba(242, 98, 7, .12); }
+.ts-chips i.rp { border-color: rgba(155, 107, 255, .65); background: rgba(155, 107, 255, .14); }
+.ts-chips i.hl { border-color: rgba(74, 147, 234, .55); background: rgba(74, 147, 234, .12); }
+@media (max-width: 1000px) { .ts { grid-template-columns: 1fr; } }
+
+#stack .ts { margin-top: 20px; }
+#stack .ts-layers li { padding: 10px 0; }
+#stack .ts-sp { padding-top: 14px; padding-bottom: 12px; }
 </style>
 
 <footer>
@@ -1779,8 +1846,8 @@ setTimeout(measure, 800); addEventListener("load", measure);
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var story = $('#story'), rail = $('#rail'), stops = [], cur = -1, anim = null;
-  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'go', 'tests', 'checks', 'roadmap', 'limits'];
-  var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', market: 'Market size', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Your route changes with it' };
+  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'stack', 'go', 'tests', 'checks', 'roadmap', 'limits'];
+  var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', market: 'Market size', stack: 'Tech stack', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Your route changes with it' };
   var chNames = ['Act 1: Stay', 'Act 2: Move', 'The route', 'Act 3: Updated'], chHash = ['story', 'roles', 'route', 'rerouted'];
   function build() {
     stops = [];
@@ -1961,8 +2028,8 @@ setTimeout(measure, 800); addEventListener("load", measure);
 <script>
 /* Page numbers: a number and label in a column beside the headline, and a faint outline number behind that column (or in the top-right corner on centred pages). */
 (function () {
-  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'go', 'tests', 'checks', 'roadmap', 'limits'];
-  var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', market: 'Market size', roadmap: 'Roadmap', limits: 'What we say openly', go: 'Close' };
+  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'tested', 'brief', 'impact', 'business', 'market', 'stack', 'go', 'tests', 'checks', 'roadmap', 'limits'];
+  var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', market: 'Market size', stack: 'Tech stack', roadmap: 'Roadmap', limits: 'What we say openly', go: 'Close' };
   ids.forEach(function (id, i) {
     if (id === 'hero' || id === 'team') return; // the title and team pages carry no number; counting starts at The problem
     var el = document.getElementById(id); if (!el) return;
