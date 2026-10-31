@@ -695,15 +695,18 @@ footer a { color: var(--ink-2); }
         <h2 id="demo-h">Watch Priya’s route change, live.</h2>
         <p>Four minutes in the real app: which of her skills AI takes, where she can move, how her plan is tested, and what happens when the news changes.</p>
       </div>
-      <div class="checks acts4">
-        <div class="glass rv" style="--i:1;--c:#4a93ea"><span class="n">1</span><h3>Stay</h3><p>Her CV goes in, her personal details come out. Which of her 10 skills AI puts at risk, and what to learn in her own job.</p></div>
-        <div class="glass rv" style="--i:2;--c:#ff7a3d"><span class="n">2</span><h3>Move</h3><p>Her best job matches, a UN goal put first, the route to her new job, and the 1,000-futures test.</p></div>
-        <div class="glass rv" style="--i:3;--c:#f2b33d"><span class="n">3</span><h3>Updated</h3><p>AI speeds up, the news changes, three agents vote, and she chooses: keep my route, or switch.</p></div>
-        <div class="glass rv" style="--i:4;--c:#2fc28b"><span class="n">4</span><h3>For everyone</h3><p>The same app in Bahasa Melayu, and the whole journey from the keyboard alone.</p></div>
-      </div>
-      <div class="ctas rv center" style="--i:5">
-        <a class="btn btn-primary btn-big" href="https://halatuju.replit.app/app" target="_blank" rel="noopener" data-warp>Open the app<svg class="i i-move"><use href="#i-arrow-right"/></svg></a>
-        <a class="btn btn-ghost" href="https://youtu.be/shITdy-TYSg" target="_blank" rel="noopener">Backup video</a>
+      <div class="dm rv" style="--i:1">
+        <ol class="dm-acts">
+          <li style="--c:#5aa0f0"><span class="t">0:00</span><b>Stay</b><p>Her CV goes in, her personal details come out. Which of her 10 skills AI puts at risk.</p></li>
+          <li style="--c:#ff7a3d"><span class="t">1:05</span><b>Move</b><p>Her best job matches, a UN goal put first, and the route tested in 1,000 futures.</p></li>
+          <li style="--c:#f2b33d"><span class="t">2:25</span><b>Updated</b><p>The news changes, three agents vote, and she chooses: keep my route, or switch.</p></li>
+          <li style="--c:#2fd4a0"><span class="t">3:20</span><b>For everyone</b><p>The same app in Bahasa Melayu, and the whole journey from the keyboard.</p></li>
+        </ol>
+        <div class="dm-cta">
+          <a class="btn btn-primary btn-big" href="https://halatuju.replit.app/app" target="_blank" rel="noopener" data-warp>Open the app<svg class="i i-move"><use href="#i-arrow-right"/></svg></a>
+          <span class="dm-url">halatuju.replit.app</span>
+          <a class="dm-backup" href="https://youtu.be/shITdy-TYSg" target="_blank" rel="noopener">Backup video</a>
+        </div>
       </div>
     </div>
   </section>
@@ -1667,6 +1670,26 @@ html { scroll-snap-type: y proximity; }
 .pl-out.mid b { color: #f2b33d; }
 .pl-out.no b { color: #ff8f8f; }
 @media (max-width: 1000px) { .pl { margin-left: 0; } .pl-steps { grid-template-columns: 1fr; gap: 14px; } .pl-steps::before { display: none; } .pl-detail { grid-template-columns: 1fr; } }
+
+/* ---------- live demo: a timeline of four acts, then one call to action ---------- */
+#story { background: radial-gradient(ellipse 75% 65% at 55% 60%, rgba(5, 7, 13, .78) 0%, rgba(5, 7, 13, .5) 55%, rgba(5, 7, 13, .15) 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%); }
+.dm { margin: 36px 0 0 178px; max-width: 1000px; }
+.dm-acts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); position: relative; }
+.dm-acts::before { content: ""; position: absolute; left: 0; right: 0; top: 30px; height: 2px; background: linear-gradient(90deg, #5aa0f0, #ff7a3d 35%, #f2b33d 65%, #2fd4a0); opacity: .6; }
+.dm-acts li { position: relative; padding-right: 26px; }
+.dm-acts .t { display: block; font-size: 13px; font-weight: 700; color: var(--c); font-variant-numeric: tabular-nums; }
+.dm-acts li::before { content: ""; display: block; width: 14px; height: 14px; margin: 8px 0 16px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 5px rgba(5, 7, 13, .9), 0 0 16px var(--c); position: relative; z-index: 1; }
+.dm-acts .t { position: absolute; top: 0; left: 0; }
+.dm-acts li::before { margin-top: 23px; }
+.dm-acts b { display: block; font-size: 1.35rem; letter-spacing: -.02em; color: var(--ink); }
+.dm-acts p { margin-top: 8px; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.dm-cta { margin-top: 44px; display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.dm-url { font-size: 15px; font-weight: 600; color: var(--ink-2); }
+.dm-backup { margin-left: auto; font-size: 14px; color: var(--muted); text-decoration: none; border-bottom: 1px solid rgba(170, 186, 214, .3); padding-bottom: 2px; }
+.dm-backup:hover { color: var(--ink); }
+@media (max-width: 1000px) { .dm { margin-left: 0; } .dm-acts { grid-template-columns: 1fr 1fr; gap: 26px 0; } .dm-acts::before { display: none; } .dm-backup { margin-left: 0; } }
 </style>
 
 <footer>
