@@ -1101,6 +1101,32 @@ footer a { color: var(--ink-2); }
     </div>
   </section>
 
+  <!-- ================= DATA ================= -->
+  <section class="sec deck" id="data" aria-labelledby="data-h">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="kicker">Appendix: where our data comes from</p>
+        <h2 id="data-h">One official job list, three datasets joined by job code.</h2>
+      </div>
+      <div class="dt rv" style="--i:1">
+        <div class="dt-hub">
+          <p class="dt-k">The hub</p>
+          <b>ESCO</b>
+          <span>The EU’s official list of jobs and skills</span>
+          <div class="dt-n"><div><em>3,039</em>jobs</div><div><em>13,939</em>skills</div></div>
+          <p>Every job carries an <strong>ISCO-08</strong> code. The other datasets each add one thing ESCO lacks.</p>
+        </div>
+        <div class="dt-tab">
+          <div class="dt-head"><span>Dataset</span><span>Adds</span><span>Joined by</span><span>You see</span></div>
+          <div class="dt-row" style="--c:#5aa0f0"><div class="dt-src"><b>O*NET</b><span>US Department of Labor</span></div><p>Daily tasks in each job, rated for whether AI could halve each task</p><p>Official ESCO-to-O*NET crosswalk</p><p class="dt-see">Task list on “Check any job”, for 2,471 jobs</p></div>
+          <div class="dt-row" style="--c:#2fd4a0"><div class="dt-src"><b>MyCOL 2024/25</b><span>TalentCorp and ILMIA</span></div><p>66 job groups Malaysia officially lists as critical, in short supply</p><p>4-digit MASCO code</p><p class="dt-see">“Critical in Malaysia” flag, on 10 of 15 destination jobs</p></div>
+          <div class="dt-row" style="--c:#f2b33d"><div class="dt-src"><b>DOSM</b><span>Department of Statistics Malaysia</span></div><p>Malaysian pay: median wage and number of wage earners, 2021–2025</p><p>First digit of the code (major group)</p><p class="dt-see">The wage and its trend on each job</p></div>
+        </div>
+      </div>
+      <div class="dt-key rv" style="--i:2"><span class="dt-k">The shared key</span><span class="dt-chain"><b>ESCO job</b><i>→</i><b>ISCO-08 code</b><i>=</i><b>MASCO 2020 code</b><i>→</i><b>MyCOL and DOSM</b></span><span class="dt-note">MASCO, Malaysia’s own job classification, uses the same codes as ISCO-08.</span></div>
+    </div>
+  </section>
+
   <!-- ================= LIMITS ================= -->
   <section class="sec deck" id="limits" aria-labelledby="limits-h">
     <div class="wrap">
@@ -2097,6 +2123,34 @@ section#problem.sec, section#built.sec, section#story.sec, section#evidence.sec,
 .hz-ms b, .hz-ms span { white-space: nowrap; }
 .hz-today::before, .hz-today span { left: 8%; }
 .hz > .hz-ms { z-index: 2; }
+
+/* ---------- appendix: data sources ---------- */
+section#data.sec { background: radial-gradient(ellipse 85% 75% at 50% 55%, rgba(5,7,13,.9) 0%, rgba(5,7,13,.8) 55%, rgba(5,7,13,.55) 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 70px, #000 calc(100% - 70px), transparent 100%); mask-image: linear-gradient(180deg, transparent 0, #000 70px, #000 calc(100% - 70px), transparent 100%); }
+.dt { margin: 34px 0 0 178px; max-width: 1000px; display: grid; grid-template-columns: 250px minmax(0,1fr); gap: 22px; align-items: stretch; }
+.dt-k { margin: 0; font-family: var(--mono); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.dt-hub { padding: 20px 22px; border-radius: 10px; border: 1px solid rgba(90,160,240,.45); background: linear-gradient(180deg, rgba(90,160,240,.12), rgba(8,12,22,.85)); }
+.dt-hub > b { display: block; margin-top: 8px; font-size: 40px; font-weight: 800; letter-spacing: -.03em; color: #8cbcf5; line-height: 1; }
+.dt-hub > span { display: block; margin-top: 6px; font-size: 14px; color: var(--ink); }
+.dt-n { display: flex; gap: 20px; margin: 16px 0 14px; padding: 12px 0; border-top: 1px solid rgba(170,186,214,.14); border-bottom: 1px solid rgba(170,186,214,.14); font-size: 12.5px; color: var(--muted); }
+.dt-n em { display: block; font-style: normal; font-size: 24px; font-weight: 800; color: var(--ink); letter-spacing: -.02em; }
+.dt-hub > p { margin: 0; font-size: 13.5px; line-height: 1.45; color: var(--ink-2); }
+.dt-hub strong { color: var(--ink); }
+.dt-tab { border: 1px solid rgba(170,186,214,.18); border-radius: 10px; background: rgba(8,12,22,.85); overflow: hidden; }
+.dt-head, .dt-row { display: grid; grid-template-columns: 1.05fr 1.55fr 1.15fr 1.35fr; gap: 16px; padding: 0 18px; }
+.dt-head { padding-top: 10px; padding-bottom: 10px; background: rgba(170,186,214,.05); border-bottom: 1px solid rgba(170,186,214,.14); font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.dt-row { padding-top: 16px; padding-bottom: 16px; border-top: 1px solid rgba(170,186,214,.08); align-items: start; }
+.dt-head + .dt-row { border-top: 0; }
+.dt-src b { display: block; font-size: 16px; color: var(--c); }
+.dt-src span { display: block; margin-top: 3px; font-size: 12px; color: var(--muted); line-height: 1.35; }
+.dt-row p { margin: 0; font-size: 13.5px; line-height: 1.45; color: var(--ink-2); }
+.dt-row .dt-see { color: var(--ink); font-weight: 600; }
+.dt-key { margin: 18px 0 0 178px; max-width: 1000px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; padding: 14px 18px; border-radius: 10px; border: 1px dashed rgba(170,186,214,.28); }
+.dt-chain { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; }
+.dt-chain b { padding: 4px 10px; border-radius: 6px; background: rgba(170,186,214,.08); border: 1px solid rgba(170,186,214,.2); color: var(--ink); font-weight: 700; }
+.dt-chain i { font-style: normal; color: var(--muted); font-weight: 700; }
+.dt-note { flex-basis: 100%; font-size: 12.5px; color: var(--muted); }
+@media (max-width: 1000px) { .dt, .dt-key { margin-left: 0; } .dt { grid-template-columns: 1fr; } .dt-head { display: none; } .dt-row { grid-template-columns: 1fr; gap: 6px; } }
 </style>
 
 <footer>
@@ -2569,8 +2623,8 @@ setTimeout(measure, 800); addEventListener("load", measure);
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var story = $('#story'), rail = $('#rail'), stops = [], cur = -1, anim = null;
-  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'brief', 'impact', 'market', 'business', 'roadmap', 'arch', 'go', 'mc', 'tests', 'checks', 'limits'];
-  var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', market: 'Market size', mc: 'Business stress test', arch: 'Architecture', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Closing' };
+  var secIds = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'brief', 'impact', 'market', 'business', 'roadmap', 'arch', 'go', 'mc', 'tests', 'checks', 'data', 'limits'];
+  var names = { hero: 'Introduction', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', tested: 'How it is built', brief: 'Six must-haves, live', method: 'Three agents vote', checks: 'Judges, try to break it', impact: 'SDG contribution', evidence: 'How well it works', tests: 'Three tests', market: 'Market size', mc: 'Business stress test', arch: 'Architecture', data: 'Where our data comes from', limits: 'What we say openly', business: 'Business model', roadmap: 'Roadmap', go: 'Closing' };
   var chNames = ['Act 1: Stay', 'Act 2: Move', 'The route', 'Act 3: Updated'], chHash = ['story', 'roles', 'route', 'rerouted'];
   function build() {
     stops = [];
@@ -2751,8 +2805,8 @@ setTimeout(measure, 800); addEventListener("load", measure);
 <script>
 /* Page numbers: a number and label in a column beside the headline, and a faint outline number behind that column (or in the top-right corner on centred pages). */
 (function () {
-  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'brief', 'impact', 'market', 'business', 'roadmap', 'arch', 'go', 'mc', 'tests', 'checks', 'limits'];
-  var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', market: 'Market size', mc: 'Business stress test', arch: 'Architecture', roadmap: 'Roadmap', limits: 'What we say openly', go: 'Close' };
+  var ids = ['hero', 'team', 'problem', 'built', 'story', 'evidence', 'method', 'brief', 'impact', 'market', 'business', 'roadmap', 'arch', 'go', 'mc', 'tests', 'checks', 'data', 'limits'];
+  var labels = { hero: 'HalaTuju', team: 'Team Dsaise', problem: 'The problem', built: 'What we built', story: 'Live demo', evidence: 'How well it works', tests: 'Three tests', method: 'How plans stay current', tested: 'How it is built', checks: 'Judges, try to break it', brief: 'The six must-haves', impact: 'UN goals', business: 'Business model', market: 'Market size', mc: 'Business stress test', arch: 'Architecture', roadmap: 'Roadmap', data: 'Where our data comes from', limits: 'What we say openly', go: 'Close' };
   ids.forEach(function (id, i) {
     if (id === 'hero' || id === 'team') return; // the title and team pages carry no number; counting starts at The problem
     var el = document.getElementById(id); if (!el) return;
