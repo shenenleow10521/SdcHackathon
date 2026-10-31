@@ -21,6 +21,7 @@ const newQuiz = () => ({ sectors: null, sector: null, seed: 1, rounds: [], curre
 let Q = newQuiz();
 let stageTimer = null, lastFocus = null;
 const STAGES = ["ob.stage1", "ob.stage2", "ob.stage3", "ob.stage4"];
+const MIN_READ_MS = 10000;
 const MAX_FILE = 5 * 1024 * 1024, MAX_PHOTOS = 3;
 const isPdf = f => /pdf$/i.test(f.type) || /\.pdf$/i.test(f.name);
 const isPhoto = f => /^image\/(jpeg|png)$/i.test(f.type) || /\.(jpe?g|png)$/i.test(f.name);
@@ -278,10 +279,14 @@ async function readProfile() {
   OB.busy = true; OB.err = null; OB.stage = 0; render();
   clearInterval(stageTimer);
   stageTimer = setInterval(() => { if (OB.stage < STAGES.length - 1) { OB.stage++; if (OB.step === 0 && OB.busy) render(); } }, reduce ? 1500 : 2200);
+  const started = Date.now();
   try {
     let res;
     if (OB.mode === "upload") { const fd = new FormData(); OB.files.forEach(f => fd.append("cv", f)); res = await upload("/profile/intake", fd, { timeout: 120000 }); }
     else res = await post("/profile/intake", { text: OB.text.trim() }, { timeout: 120000 });
+    // Keep the reading steps on screen for at least MIN_READ_MS, so a fast (cached) reading still shows every step.
+    const wait = MIN_READ_MS - (Date.now() - started);
+    if (wait > 0) await new Promise(r => setTimeout(r, wait));
     if (res.needsReview) {
       // The server wasn't sure of the scan's text: show it in the paste box to check. Nothing was saved or sent to an AI.
       Object.assign(OB, { mode: "paste", text: res.text || "", review: res.ocr || { confidence: 0 }, files: [] });
