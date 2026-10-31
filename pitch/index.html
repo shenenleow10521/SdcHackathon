@@ -663,12 +663,27 @@ footer a { color: var(--ink-2); }
         <h2 id="built-h">Three things most tools don’t do.</h2>
         <p>Not a chatbot and not a dashboard. HalaTuju is a career map: your skills, the jobs they lead to, and a route between them that updates itself when the news changes.</p>
       </div>
-      <div class="stats">
-        <div class="glass rv" style="--i:1"><div class="big b"><span data-n="13939">13,939</span></div><h3>Every skill scored</h3><p>Our own AI model scores all 13,939 official skills, so you can see which of yours AI is taking over.</p><p class="src">Most tools: a job match, with no view of your own skills.</p></div>
-        <div class="glass rv" style="--i:2"><div class="big v"><span data-n="1000">1,000</span></div><h3>Every route tested</h3><p>We test each career route in 1,000 possible futures, with AI moving slowly or fast, and show what usually breaks the plan.</p><p class="src">Most tools: one fixed plan.</p></div>
-        <div class="glass rv" style="--i:3"><div class="big o"><span data-n="74">74</span></div><h3>Updated when the news changes</h3><p>Our agents read 74 trusted news sites every day. Three agents vote on each finding, every decision is recorded, and you decide whether to switch route.</p><p class="src">Most tools: fixed data, updated by hand.</p></div>
+      <div class="wb rv" style="--i:1">
+        <article style="--c:#5aa0f0">
+          <div class="wb-num"><span data-n="13939">13,939</span><small>skills</small></div>
+          <h3>Every skill scored</h3>
+          <p>Our own AI model scores every official skill, so you see which of yours AI is taking over.</p>
+          <div class="wb-vs"><span class="no">✕</span>Most tools: a job match, no view of your own skills</div>
+        </article>
+        <article style="--c:#a98bff">
+          <div class="wb-num"><span data-n="1000">1,000</span><small>futures</small></div>
+          <h3>Every route tested</h3>
+          <p>Each career route is replayed with AI moving slowly or fast, and we show what usually breaks it.</p>
+          <div class="wb-vs"><span class="no">✕</span>Most tools: one fixed plan</div>
+        </article>
+        <article style="--c:#ff7a3d">
+          <div class="wb-num"><span data-n="74">74</span><small>trusted sites</small></div>
+          <h3>Updated with the news</h3>
+          <p>Agents read the news daily, three of them vote on each finding, and you decide whether to switch.</p>
+          <div class="wb-vs"><span class="no">✕</span>Most tools: fixed data, updated by hand</div>
+        </article>
       </div>
-      <p class="after rv" style="--i:4">Built for workers, fresh graduates and career switchers, and for the HR teams and career centres that guide them.</p>
+      <p class="wb-for rv" style="--i:2">For workers, fresh graduates and career switchers, and the HR teams and career centres that guide them.</p>
     </div>
   </section>
 
@@ -1587,6 +1602,27 @@ html { scroll-snap-type: y proximity; }
 .sdg-tiles .lvl { margin-top: 4px; font-size: 12.5px; color: var(--muted); }
 .sdg-tiles p:not(.lvl) { margin: 8px auto 0; font-size: 15px; max-width: 28ch; color: var(--ink-2); }
 @media (max-width: 900px) { .sdg-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- what we built: three open columns, aligned with the text column ---------- */
+.wb { margin: 34px 0 0 178px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 1000px; }
+.wb article { position: relative; padding: 4px 30px 0; border-left: 1px solid rgba(170, 186, 214, .16); }
+.wb article:first-child { padding-left: 0; border-left: 0; }
+.wb article::before { content: ""; position: absolute; left: 30px; right: 30px; top: -18px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, var(--c), transparent); }
+.wb article:first-child::before { left: 0; }
+.wb-num { display: flex; align-items: baseline; gap: 10px; }
+.wb-num span { font-size: 54px; font-weight: 800; letter-spacing: -.045em; line-height: 1; color: var(--c); font-variant-numeric: tabular-nums; text-shadow: 0 0 28px color-mix(in srgb, var(--c) 45%, transparent); }
+.wb-num small { font-size: 14px; font-weight: 600; color: var(--ink-2); }
+.wb h3 { margin-top: 18px; font-size: 1.2rem; letter-spacing: -.015em; }
+.wb p { margin-top: 8px; font-size: 15.5px; line-height: 1.5; color: var(--ink-2); }
+.wb-vs { margin-top: 18px; padding-top: 14px; border-top: 1px dashed rgba(170, 186, 214, .2); display: flex; gap: 10px; align-items: baseline; font-size: 13.5px; color: var(--muted); }
+.wb-vs .no { flex: none; width: 18px; height: 18px; border-radius: 50%; display: inline-grid; place-items: center; font-size: 10px; background: rgba(255, 123, 123, .14); color: #ff8f8f; transform: translateY(2px); }
+.wb-for { margin: 40px 0 0 178px; font-size: 15px; color: var(--muted); max-width: 70ch; }
+@media (max-width: 1000px) { .wb, .wb-for { margin-left: 0; } .wb { grid-template-columns: 1fr; gap: 34px; } .wb article { padding: 0; border: 0; } .wb article::before { left: 0; right: 0; } }
+
+#built { background: radial-gradient(ellipse 75% 65% at 55% 58%, rgba(5, 7, 13, .78) 0%, rgba(5, 7, 13, .55) 55%, rgba(5, 7, 13, .2) 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%); }
+.wb { margin-top: 40px; }
 </style>
 
 <footer>
