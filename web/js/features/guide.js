@@ -60,7 +60,7 @@ const STEPS = [
     ok: () => t("guide.ok.mode", { mode: t("mode." + normMode(UI.mode)) }) },
   { id: "future",
     prep: closeDr,
-    target: () => [document.querySelector(".timeline"), "guide.tip.future"],
+    target: () => [document.querySelector(".future-bar"), "guide.tip.future"],
     act: () => { closeDr(); actions.showFuture?.(); },
     ok: () => t("guide.ok.future") },
   { id: "scout", admin: true,

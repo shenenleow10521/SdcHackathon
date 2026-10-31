@@ -14,6 +14,8 @@ import { $, esc, icons, badge, store, reduce, toast, errorBox } from "../util.js
 import { intro as guideIntro } from "./guide.js";
 import { intro as mapIntro } from "../graph3d.js";
 import { AUTH } from "./auth.js";
+/** The deadline the form starts with when the profile has none (the demo's redeployment date). */
+const DEFAULT_TARGET = "2027-02-15";
 
 const OB = { step: 0, mode: "upload", files: [], review: null, text: "", busy: false, stage: 0, err: null, intake: null, answers: {}, levels: {}, goals: {}, add: "" };
 // The no-CV quiz: chosen sector, every answered round, the current round's chips and what is ticked in it.
@@ -52,7 +54,7 @@ function seedLevels() {
   const p = S.profile;
   OB.levels = Object.fromEntries((p?.skills || []).filter(s => s.level > 0).map(s => [s.skillId, s.level]));
   OB.conf = Object.fromEntries((p?.skills || []).map(s => [s.skillId, s.confidence]));
-  OB.goals = { occupationId: p?.occupationId || "", hours: p?.hours || 6, targetDate: p?.targetDate || "", budgetRm: p?.budgetRm ?? "", displayName: p?.displayName || "" };
+  OB.goals = { occupationId: p?.occupationId || "", hours: p?.hours || 6, targetDate: p?.targetDate || DEFAULT_TARGET, budgetRm: p?.budgetRm ?? "", displayName: p?.displayName || "" };
 }
 
 const confNote = c => `<span class="rn-src">${esc(t(c === "verified" ? "conf.verified" : c === "cv" ? "conf.cv" : c === "quiz" ? "conf.quiz" : "conf.self"))}</span>`;

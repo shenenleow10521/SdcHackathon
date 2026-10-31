@@ -98,68 +98,69 @@ export async function setGoalMode(mode) {
 }
 
 // ---------- steps ----------
-/**
- * Tick a step done, or untick it. Your own profile: the server raises (or restores) the skill, so the plan and the map
- * recompute; returns the server's change { before:{match,weeks}, after:{match,weeks} }. The persona: ticked here only.
- */
-export async function toggleDone(skill) {
-  if (!onServer()) {
-    const g = localGoal(); if (!g) return null;
-    const s = new Set(g.done), done = !s.has(skill);
-    if (done) s.add(skill); else s.delete(skill);
-    store.set(key(), { ...g, done: [...s], verified: g.verified.filter(k => s.has(k)), doneAt: { ...(g.doneAt || {}), [skill]: done ? new Date().toISOString() : undefined } });
-    changed(true);
-    return { skillId: skill, done, local: true };
-  }
-  const id = S.profile.id, step = (C.view?.steps || []).find(x => x.skillId === skill);
-  try {
-    const res = await post(`/profile/${id}/goal/steps/${encodeURIComponent(skill)}`, { done: !step?.done });
-    const { change, ...view } = res;
-    C.view = view;
-    // the tick changed your skills: reload the profile so every match, plan and the map follow
-    if (change?.levelChanged !== false) {
-      try { const p = await get(`/profile/${id}`); if (S.profile?.id === id) { await actions.profileUpdated?.(p); refreshMap(); return change; } }
-      catch (e) { console.warn("Reloading the profile failed", e); }
-    }
-    changed(true);
-    return change;
-  } catch (e) { failed(e); return null; }
-}
-/** The persona's check was passed: tick the step and record who vouches, in this browser. */
+// A step is ticked by proof only: a passed check, a certificate link or an advisor's confirmation. There is no "Mark as
+// done" (a mentor's point: a self-tick is not reliable evidence). On your own profile the server ticks it with the proof.
+/** The persona's step got a proof (a passed check: verified): tick it and record who vouches, in this browser. */
 export function markDone(skill, verified = false) {
   const g = localGoal(); if (!g) return;
   const proofs = { ...g.proofs };
   if (verified) proofs[skill] = [...(proofs[skill] || []).filter(p => p.kind !== "check"), { id: "c" + Date.now(), kind: "check", by: "HalaTuju skill check", at: new Date().toISOString(), url: null, title: null }];
   store.set(key(), { ...g, done: [...new Set([...g.done, skill])], verified: verified ? [...new Set([...g.verified, skill])] : g.verified, proofs, doneAt: { ...(g.doneAt || {}), [skill]: (g.doneAt || {})[skill] || new Date().toISOString() } });
 }
-/** After a passed skill check: the server already recorded the proof and the tick on your profile; the persona's goes here. */
+/** After a passed skill check: the server already recorded the proof and ticked the goal step and/or the stay skill on
+ *  your profile; the persona's ticks go here. */
 export async function checkPassed(skill) {
-  if (onServer()) { await loadGoal({ force: true }); changed(true); return; }
-  markDone(skill, true); changed(true);
+  if (onServer()) { await Promise.all([loadGoal({ force: true }), loadStay()]); changed(true); return; }
+  if (localGoal()) markDone(skill, true);
+  stayAddLocal(skill);
+  changed(true);
+}
+/** Your profile changed on the server (a proof ticked or unticked a skill): reload it and the stay ticks. */
+async function afterProof(change) {
+  if (!change || !(change.goal || change.stay || change.undone)) { changed(); return; }
+  const id = S.profile.id;
+  await loadStay();
+  try { const p = await get(`/profile/${id}`); if (S.profile?.id === id) { await actions.profileUpdated?.(p); refreshMap(); return; } }
+  catch (e) { console.warn("Reloading the profile failed", e); }
+  changed(true);
 }
 export const isVerified = k => confOf(k) === "verified" || !!goal()?.verified.includes(k);
 
 // ---------- proofs ----------
-/** Add a credential link (never counts as verified). Your profile: on the server; the persona: in this browser. */
+/** Add a credential link: it ticks the step (done, never verified). Your profile: on the server; the persona: here. */
 export async function addCredential(skill, { url, title }) {
   if (!onServer()) {
-    const g = localGoal(); if (!g) return false;
-    let by = url; try { by = new URL(url).hostname.replace(/^www\./, ""); } catch { /* checked by the form */ }
-    const list = [...(g.proofs[skill] || []), { id: "l" + Date.now(), kind: "credential", by, at: new Date().toISOString(), url, title }];
-    store.set(key(), { ...g, proofs: { ...g.proofs, [skill]: list } });
-    changed(); return true;
+    const g = localGoal();
+    if (g) {
+      let by = url; try { by = new URL(url).hostname.replace(/^www\./, ""); } catch { /* checked by the form */ }
+      const list = [...(g.proofs[skill] || []), { id: "l" + Date.now(), kind: "credential", by, at: new Date().toISOString(), url, title }];
+      store.set(key(), { ...g, proofs: { ...g.proofs, [skill]: list } });
+      markDone(skill);
+    }
+    stayAddLocal(skill);
+    changed(true); return true;
   }
-  try { C.view = await post(`/profile/${S.profile.id}/goal/steps/${encodeURIComponent(skill)}/proof`, { kind: "credential", url, title }); changed(); return true; }
-  catch (e) { failed(e); return false; }
+  try {
+    const { change, ...view } = await post(`/profile/${S.profile.id}/goal/steps/${encodeURIComponent(skill)}/proof`, { kind: "credential", url, title });
+    if (view.goal) C.view = view;
+    await afterProof(change); return true;
+  } catch (e) { failed(e); return false; }
 }
+/** Remove a credential you added; with no proof left, the step is no longer done. */
 export async function removeCredential(skill, proofId) {
   if (!onServer()) {
     const g = localGoal(); if (!g) return;
-    store.set(key(), { ...g, proofs: { ...g.proofs, [skill]: (g.proofs[skill] || []).filter(p => String(p.id) !== String(proofId)) } });
-    changed(); return;
+    const left = (g.proofs[skill] || []).filter(p => String(p.id) !== String(proofId));
+    const done = left.length ? g.done : g.done.filter(k => k !== skill);
+    store.set(key(), { ...g, done, verified: g.verified.filter(k => done.includes(k)), proofs: { ...g.proofs, [skill]: left } });
+    if (!left.length) store.set(stayKey(), localStay().filter(k => k !== skill));
+    changed(true); return;
   }
-  try { C.view = await del(`/profile/${S.profile.id}/goal/steps/${encodeURIComponent(skill)}/proof/${encodeURIComponent(proofId)}`); changed(); }
-  catch (e) { failed(e); }
+  try {
+    const { change, ...view } = await del(`/profile/${S.profile.id}/goal/steps/${encodeURIComponent(skill)}/proof/${encodeURIComponent(proofId)}`);
+    if (view.goal) C.view = view;
+    await afterProof(change);
+  } catch (e) { failed(e); }
 }
 
 // ---------- weekly check-ins ----------
@@ -262,18 +263,9 @@ export function stayDone() {
 }
 /** Your own profile's ticked stay skills with name and hours (a ticked skill can leave the track: stay.js keeps it). */
 export const stayDoneItems = () => (onServer() && SC.id === S.profile.id ? SC.done : []);
-/** Tick or untick a stay skill. Your own profile: the server raises (or restores) the skill, then the profile reloads. */
-export async function toggleStay(id) {
-  if (!onServer()) { const s = new Set(localStay()); if (s.has(id)) s.delete(id); else s.add(id); store.set(stayKey(), [...s]); return { skillId: id, done: s.has(id), local: true }; }
-  const pid = S.profile.id;
-  try {
-    const { change, ...r } = await post(`/profile/${pid}/stay/${encodeURIComponent(id)}`, { done: !stayDone().includes(id) });
-    if (S.profile?.id === pid) SC.done = r.done || [];
-    if (change?.levelChanged) {
-      try { const p = await get(`/profile/${pid}`); if (S.profile?.id === pid) { await actions.profileUpdated?.(p); refreshMap(); return change; } }
-      catch (e) { console.warn("Reloading the profile failed", e); }
-    }
-    changed(true);
-    return change;
-  } catch (e) { failed(e); return null; }
+/** The persona (or a local-only profile) got a proof for a stay skill: tick it in this browser. Your own profile's stay
+ *  ticks are made by the server with the proof (see checkPassed and addCredential). */
+function stayAddLocal(id) {
+  if (onServer()) return;
+  store.set(stayKey(), [...new Set([...localStay(), id])]);
 }

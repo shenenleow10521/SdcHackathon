@@ -21,7 +21,8 @@ import { parse, notFound, badRequest, rateLimit, requireRole, actorOf, HttpError
 import { loadEsco } from "../services/esco.ts";
 import { aiSkill, isAiNode } from "../services/ai-skills.ts";
 import { loadGoal, goalJobId, goalPlan, goalView, goalSummary, planNumbers, setStepDone, isStep, addProof, proofsOf, checkInsOf,
-  skillName, isVerifiedProof, weekStartOf, isoDay, paceOf, stayView, setStayDone, type Goal, type PlanOpts } from "../services/goal.ts";
+  skillName, isVerifiedProof, weekStartOf, isoDay, paceOf, stayView, setStayDone, onStayTrack, tickStayByProof, untickWithoutProof,
+  type Goal, type PlanOpts } from "../services/goal.ts";
 
 const idParam = z.object({ id: z.coerce.number().int().positive() });
 const stepParams = idParam.extend({ skillId: z.string().min(1).max(60) });
@@ -136,16 +137,26 @@ export default function goalRoutes(svc: Services) {
     const { id, skillId } = parse(stepParams, req.params);
     const b = parse(credentialBody, req.body || {});
     const p = await mustEdit(id);
-    const goal = await mustGoal(p);
-    const g = await loadGraph(svc.db);
-    const plan = await goalPlan(svc, g, p, goal, parse(planQuery, req.query));
-    if (!(await isStep(svc.db, id, plan, skillId))) throw notAStep(skillId);
+    const g = await loadGraph(svc.db), o = parse(planQuery, req.query);
+    // A certificate can back a goal step or a skill on the "Stay AI-ready" track (which needs no goal).
+    const goal = await loadGoal(svc.db, id);
+    const onStay = await onStayTrack(svc, g, p, skillId);
+    if (!goal && !onStay) await mustGoal(p);
+    const plan = goal ? await goalPlan(svc, g, p, goal, o) : null;
+    const onGoal = !!plan && (await isStep(svc.db, id, plan, skillId));
+    if (!onGoal && !onStay) throw notAStep(skillId);
     const n = (await svc.db.query<{ n: number }>("select count(*)::int as n from skill_proofs where profile_id=$1 and skill_id=$2 and kind='credential'", [id, skillId])).rows[0].n;
     if (n >= MAX_CREDENTIALS) throw new HttpError(409, "too_many_credentials", `A skill can show up to ${MAX_CREDENTIALS} credentials. Remove one first.`);
     // Who vouches: the provider the person named, else the link's site.
     await addProof(svc.db, id, skillId, { kind: "credential", by: b.provider ?? new URL(b.url).hostname, at: svc.now(), url: b.url, title: b.title });
-    await audit(svc.db, `user:${id}`, "goal.credential_add", `${id}:${skillId}`, { host: new URL(b.url).hostname });
-    res.status(201).json(await goalView(svc, g, p, goal, plan));
+    // A step is ticked by proof, not by the person's own say-so: the certificate ticks it (done, but not verified).
+    if (onGoal) await setStepDone(svc, g, p, goal!, plan!, skillId, true);
+    if (onStay) await tickStayByProof(svc, g, id, skillId);
+    await audit(svc.db, `user:${id}`, "goal.credential_add", `${id}:${skillId}`, { host: new URL(b.url).hostname, goal: onGoal, stay: onStay });
+    const change = { skillId, goal: onGoal, stay: onStay };
+    if (!goal) { res.status(201).json({ profileId: id, goal: null, change }); return; }
+    const p2 = (await loadProfile(svc.db, id))!;
+    res.status(201).json({ ...(await goalView(svc, g, p2, goal, await goalPlan(svc, g, p2, goal, o))), change });
   });
 
   r.delete("/profile/:id/goal/steps/:skillId/proof/:proofId", async (req, res) => {
@@ -154,9 +165,13 @@ export default function goalRoutes(svc: Services) {
     // Only a credential the person added can be removed; checks and advisor confirmations are not theirs to delete.
     const del = await svc.db.query("delete from skill_proofs where id=$1 and profile_id=$2 and skill_id=$3 and kind='credential' returning id", [proofId, id, skillId]);
     if (!del.rows.length) throw notFound("Credential");
-    await audit(svc.db, `user:${id}`, "goal.credential_remove", `${id}:${skillId}`, { proofId });
+    // its last proof gone, the step is no longer done
+    const g = await loadGraph(svc.db);
+    const undone = await untickWithoutProof(svc, g, id, skillId);
+    await audit(svc.db, `user:${id}`, "goal.credential_remove", `${id}:${skillId}`, { proofId, undone });
     const goal = await loadGoal(svc.db, id);
-    res.json(goal ? await view(await loadGraph(svc.db), p, goal, parse(planQuery, req.query)) : { profileId: id, goal: null });
+    const p2 = (await loadProfile(svc.db, id))!;
+    res.json({ ...(goal ? await view(g, p2, goal, parse(planQuery, req.query)) : { profileId: id, goal: null }), change: { skillId, undone } });
   });
 
   r.post("/profile/:id/checkins", async (req, res) => {

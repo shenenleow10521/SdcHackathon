@@ -90,7 +90,7 @@ export async function seed(db: Db, opts: { force?: boolean } = {}) {
     // Demo persona (synthetic): profile id 1.
     const P = K.persona;
     await t.query(`insert into profiles(id,display_name,current_occupation_id,hours_per_week,budget_rm,target_date,is_demo)
-                   values (1,$1,$2,$3,1500,(current_date + interval '6 months')::date,true)`, [P.displayName, P.occupation, P.hours]);
+                   values (1,$1,$2,$3,1500,'2027-02-15',true)`, [P.displayName, P.occupation, P.hours]);
     await t.query("select setval(pg_get_serial_sequence('profiles','id'), 1)");
     for (const [skill, level] of Object.entries(P.level))
       await t.query("insert into profile_skills values (1,$1,$2,$3,$4)", [skill, level, P.conf[skill] || "self", P.conf[skill] === "cv" ? "From the sample CV" : null]);

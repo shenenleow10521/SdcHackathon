@@ -68,7 +68,7 @@ export const actions = {};
 
 /** The demo persona, used only if the profile service can't be reached. Same values as the database seed. */
 export const FALLBACK_PROFILE = {
-  id: 1, displayName: "Priya Nair (sample persona)", occupationId: "ap", hours: 6, budgetRm: null, targetDate: null,
+  id: 1, displayName: "Priya Nair (sample persona)", occupationId: "ap", hours: 6, budgetRm: null, targetDate: "2027-02-15",
   sdgPriority: null, lang: "en", employerId: null, isDemo: true,
   skills: Object.entries({ inv: [5, "cv"], three: [5, "cv"], pay: [4, "self"], tax: [3, "self"], erp: [4, "cv"], dispute: [3, "self"], process: [2, "self"], audit: [4, "verified"], recon: [4, "cv"], excel: [4, "verified"] })
     .map(([skillId, [level, confidence]]) => ({ skillId, level, confidence, evidence: null })),

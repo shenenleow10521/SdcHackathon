@@ -391,6 +391,35 @@ export async function recordCheckProof(svc: Services, graph: FullGraph, profileI
   return steps;
 }
 
+/** Is this skill on the person's "Stay AI-ready" track? */
+export async function onStayTrack(svc: Services, graph: FullGraph, p: Profile, skillId: string) {
+  return (await stayItems(svc, graph, p)).items.some(x => x.id === skillId);
+}
+
+/** A passed check (check=true: also recorded as proof) or a certificate on a stay-track skill ticks it, like a goal
+ *  step. True when the skill is on the stay track. */
+export async function tickStayByProof(svc: Services, graph: FullGraph, profileId: number, skillId: string, check = false): Promise<boolean> {
+  const p = (await loadProfile(svc.db, profileId))!;
+  if (!(await onStayTrack(svc, graph, p, skillId))) return false;
+  if (check && !(await proofsOf(svc.db, profileId)).get(skillId)?.some(x => x.kind === "check")) await addProof(svc.db, profileId, skillId, { kind: "check", by: CHECK_BY, at: svc.now() });
+  await setStayDone(svc, graph, p, skillId, true);
+  return true;
+}
+
+/** A step counts only with proof: when a skill's last proof is removed, its goal and stay ticks are undone.
+ *  True when a tick was undone. */
+export async function untickWithoutProof(svc: Services, graph: FullGraph, profileId: number, skillId: string): Promise<boolean> {
+  if ((await proofsOf(svc.db, profileId)).get(skillId)?.length) return false;
+  let p = (await loadProfile(svc.db, profileId))!, undone = false;
+  const g = await loadGoal(svc.db, profileId);
+  if (g && (await tickRows(svc.db, "goal_steps", profileId)).get(skillId)?.done) {
+    await setStepDone(svc, graph, p, g, await goalPlan(svc, graph, p, g, { year: 2026, scenario: "moderate" }), skillId, false);
+    p = (await loadProfile(svc.db, profileId))!; undone = true;
+  }
+  if ((await tickRows(svc.db, "stay_steps", profileId)).get(skillId)?.done) { await setStayDone(svc, graph, p, skillId, false); undone = true; }
+  return undone;
+}
+
 /** For the HR view: a short summary of one person's goal. */
 export function goalSummary(view: Awaited<ReturnType<typeof goalView>>) {
   return { goal: view.goal, match: view.match, weeksLeft: view.weeksLeft, stepsDone: view.progress.done, stepsTotal: view.progress.total,

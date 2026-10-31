@@ -98,6 +98,9 @@ function refresh({ reroute = false, animate = false } = {}) {
   // Today or 2030; the AI pace only changes anything in 2030, so it shows only then
   document.querySelectorAll("[data-year]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.year === S.year)));
   document.querySelectorAll(".scn-part").forEach(x => { x.hidden = S.year < 2030; });
+  // the AI future switch in the side panel: Now, or a pace in a few years
+  const fut = S.year < 2030 ? "now" : S.scenario;
+  document.querySelectorAll("[data-fut]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.fut === fut)));
   refreshDrawer();
   const changed = reroute && prev !== D.plan?.route?.key;
   // a route change: one small pulse on the first skill the new route takes (the old route fades out on its own)
@@ -442,6 +445,7 @@ Object.assign(actions, {
   },
   // Choosing a job fills the My goal panel; its full details open only from "See all about this job".
   selectJob(j) {
+    UI.backTo = null; // picked here, not from My goal: "All jobs" is the way back
     clearEsco();
     if (UI.job !== j) { UI.employer = null; UI.employerReq = []; }
     closeJobDrawer();
@@ -450,6 +454,7 @@ Object.assign(actions, {
   },
   // A row in the Explore list: select the job (its route shows on the map) and stay in the list, with "Open plan" on it.
   previewJob(id) {
+    UI.backTo = null;
     if (isEsco(id)) selectEsco(id, { tab: null, animate: false });
     else {
       clearEsco();
@@ -462,6 +467,7 @@ Object.assign(actions, {
   },
   /** The My goal tab: the map shows your goal's route while it's open. */
   openGoalTab() {
+    UI.backTo = null;
     // the map shows your move's route, or with no move set, the hand-made AI-ready version of your job when there is one
     const g = goal(), j = g && N(g.job)?.type === "job" ? g.job : stayJob();
     UI.tab = "goal"; UI.view = "user"; $("map-card").hidden = true;
@@ -475,10 +481,12 @@ Object.assign(actions, {
   },
   /** The × in the To box: no job chosen, back to the list. */
   clearDestination() {
+    UI.backTo = null;
     clearEsco(); closeJobDrawer(); UI.escoPinned = null; UI.pinned = null; UI.picked = false; UI.tab = "jobs"; UI.view = "user";
     $("map-card").hidden = true; refresh({ animate: true });
   },
   openPlan(id) {
+    UI.backTo = null;
     $("map-card").hidden = true;
     if (isEsco(id)) { if (UI.escoJob !== id) selectEsco(id, { tab: "path" }); else { UI.tab = "path"; UI.view = "user"; UI.routeAll = false; renderPanel(true); tabChanged(); revealPlan(); } }
     else actions.selectJob(id);
@@ -497,7 +505,9 @@ Object.assign(actions, {
     S.profile = { ...S.profile, hours: h }; Path.invalidate(); refresh();
     if (!S.profile.isDemo && !S.profileFallback) put(`/profile/${profileId()}`, { hours: h }).catch(e => toast({ title: t("state.failed"), detail: e.message, badgeHtml: badge("b-crit", t("state.error")) }));
   },
-  showPath(j) {
+  /** Open a job's route page. from: "goal" when opened from My goal, so its back link returns there. */
+  showPath(j, { from = null } = {}) {
+    UI.backTo = from === "goal" ? "goal" : null;
     clearEsco();
     if (!UI.ring.includes(j)) UI.pinned = j;
     if (UI.job !== j) { UI.employer = null; UI.employerReq = []; }
@@ -555,7 +565,7 @@ Object.assign(actions, {
 function initControls() {
   ["jobs", "goal", "skills"].forEach((tb, i, all) => {
     const b = $("tab-" + tb);
-    b.addEventListener("click", () => { closeWhy(); if (tb === "goal") return actions.openGoalTab(); UI.tab = tb; $("map-card").hidden = true; renderPanel(true); tabChanged(); });
+    b.addEventListener("click", () => { closeWhy(); UI.backTo = null; if (tb === "goal") return actions.openGoalTab(); UI.tab = tb; $("map-card").hidden = true; renderPanel(true); tabChanged(); });
     b.addEventListener("keydown", e => {
       if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
       const n = all[(i + (e.key === "ArrowRight" ? 1 : all.length - 1)) % all.length];
@@ -575,6 +585,13 @@ function initControls() {
       toast({ title: t("scn.changedTitle"), detail, badgeHtml: badge("b-info", t("scn.newPath")) });
     }
     if (UI.sdg) { await Jobs.loadRank(); refresh(); }
+  }));
+  // The AI future switch drives the year and pace controls above (kept hidden on the map), so their effects stay the same.
+  document.querySelectorAll("[data-fut]").forEach(b => b.addEventListener("click", () => {
+    const f = b.dataset.fut;
+    if (f === "now") { document.querySelector('[data-year="2026"]').click(); return; }
+    if (S.year < 2030) { S.scenario = f; document.querySelector('[data-year="2030"]').click(); return; }
+    document.querySelector(`[data-scn="${f}"]`).click();
   }));
   document.querySelectorAll("[data-year]").forEach(b => b.addEventListener("click", async () => {
     if (+b.dataset.year === S.year) return;

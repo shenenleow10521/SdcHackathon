@@ -1,5 +1,5 @@
 // My goal tab: what to do this week, then the two tracks ("Stay AI-ready in your job", "Your move") as step cards.
-// Each step is a compact row (name, planned dates and hours, status, one Mark as done toggle); tapping it opens the shared skill view.
+// Each step is a compact row (name, planned dates and hours, status, one "Verify skill" button that opens the check and "Add certificate"); tapping it opens the shared skill view.
 // Also here: the printable skills record and "Share my progress with my employer". The drawer reuses the Prove block.
 // Storage (server for your own profile, this browser for the sample persona) lives in features/goal.js.
 import { S, UI, N, nameOf, actions, currentJobTitle, when } from "../state.js";
@@ -8,9 +8,9 @@ import { t, getLang } from "../i18n.js";
 import { esc, badge, toast, safeUrl, loadingBox, errorBox, bindRetry } from "../util.js";
 import { startCheck } from "../drawer.js";
 import { stayTrack } from "./stay.js";
-import { goal, goalView, onServer, loadGoal, goalError, goalLoading, toggleDone, checkPassed, addCredential, removeCredential, logHours, thisWeek,
-  weeksLeftOf, setShare, toggleStay } from "./goal.js";
-import { scheduleSteps, dateRange, dayMonth, changeText, paceText, weekHours, progressLine, okCredentialUrl, isoDay, mondayOf } from "./track-text.js";
+import { goal, goalView, onServer, loadGoal, goalError, goalLoading, checkPassed, addCredential, removeCredential, logHours, thisWeek,
+  weeksLeftOf, setShare } from "./goal.js";
+import { scheduleSteps, dateRange, dayMonth, paceText, weekHours, progressLine, okCredentialUrl, isoDay, mondayOf } from "./track-text.js";
 
 const SHOWN = 5;                         // step cards before "Show more"
 const MAX_CREDENTIALS = 5;               // the server's limit per skill
@@ -39,12 +39,12 @@ function proofLine(p, id) {
 }
 
 /** Prove: who vouches for this skill so far, the 5-minute check and "+ Add certificate". Shared with the drawer. */
-export function proveHtml(s) {
+export function proveHtml(s, quiet = false) {
   const id = s.skillId, proofs = s.proofs || [];
   const creds = proofs.filter(p => p.kind === "credential").length, checked = proofs.some(p => p.kind === "check");
   const check = canCheck(id) && !checked && !s.verified ? `<button class="ms-btn" type="button" data-gl-check="${esc(id)}">${esc(t("check.take"))}</button>` : "";
   const add = creds < MAX_CREDENTIALS ? `<button class="gl-add" type="button" data-gl-add="${esc(id)}"><i data-lucide="plus"></i>${esc(t("track.addCert"))}</button>` : "";
-  return `${proofs.length ? `<ul class="gl-proofs">${proofs.map(p => proofLine(p, id)).join("")}</ul>` : `<p class="ms-meta">${esc(t("track.noProof"))}</p>`}
+  return `${proofs.length ? `<ul class="gl-proofs">${proofs.map(p => proofLine(p, id)).join("")}</ul>` : quiet ? "" : `<p class="ms-meta">${esc(t("track.noProof"))}</p>`}
     ${check ? `<div class="gl-btns">${check}</div>` : ""}
     <div class="gl-checkbox" data-gl-checkbox="${esc(id)}"></div>
     ${add}<div class="gl-formbox" data-gl-form="${esc(id)}"></div>`;
@@ -53,18 +53,22 @@ export function proveHtml(s) {
 /** The id the skill view uses: catalogue skills as they are, ESCO skills with "xs:" (the same rule as the map). */
 const drawerId = id => (N(id) || String(id).startsWith("xs:") ? id : "xs:" + id);
 
+// A step is done only with proof: "Verify skill" opens the 5-minute check and "Add certificate" under the row.
 function stepRow(s, when, { track, nextId, hidden }) {
-  const attr = track === "stay" ? "data-gl-stay" : "data-gl-done";
   const dates = !s.done && when ? dateRange(when.start, when.end, t, lang(), year()) : "";
   const meta = [dates, s.hours != null ? hoursText(s.hours) : ""].filter(Boolean).join(", ");
   const mark = s.done ? `<i data-lucide="check"></i>` : s.n ? `<b>${s.n}</b>` : "";
-  const did = drawerId(s.skillId), name = stepName(s);
-  const status = s.done ? `<span class="gl-done"><i data-lucide="circle-check"></i>${esc(s.doneAt ? t("track.doneOn", { date: day(s.doneAt) }) : t("track.done"))}</span>${s.verified ? badge("b-good", t("conf.verified"), "badge-check") : ""}` : "";
+  const did = drawerId(s.skillId), name = stepName(s), key = `${track}-${s.skillId}`;
+  const status = s.done ? (s.verified ? badge("b-good", t("conf.verified"), "badge-check") : `<span class="gl-done"><i data-lucide="circle-check"></i>${esc(t("track.proofAdded"))}</span>`) : "";
+  const open = OPEN.has(key);
   return `<li class="gl-step${s.done ? " done" : ""}"${hidden ? " hidden data-gl-extra" : ""} id="gl-step-${esc(track)}-${esc(s.skillId)}">
-    <div class="gl-main" role="button" tabindex="0" data-gl-open="${esc(did)}" data-gl-name="${esc(name)}"><span class="gl-num${s.n || s.done ? "" : " gl-num-o"}" aria-hidden="true">${mark}</span>
+    <div class="gl-steprow"><div class="gl-main" role="button" tabindex="0" data-gl-open="${esc(did)}" data-gl-name="${esc(name)}"><span class="gl-num${s.n || s.done ? "" : " gl-num-o"}" aria-hidden="true">${mark}</span>
       <span class="gl-st"><span class="gl-name">${esc(name)}</span>${meta ? `<span class="ms-meta">${esc(meta)}</span>` : ""}</span></div>
-    <div class="gl-side">${status}<button class="link-btn gl-tg" type="button" ${attr}="${esc(s.skillId)}">${esc(t(s.done ? "track.undo" : "track.markDone"))}</button></div></li>`;
+    <div class="gl-side">${status}${s.done ? "" : `<button class="link-btn gl-tg" type="button" data-gl-verify="${esc(key)}" aria-expanded="${open}">${esc(t("track.verify"))}</button>`}</div></div>
+    ${s.done ? "" : `<div class="gl-verify" data-gl-vbox="${esc(key)}"${open ? "" : " hidden"}><p class="ms-meta">${esc(t("track.verifyHow"))}</p>${proveHtml(s, true)}</div>`}</li>`;
 }
+/** Verify panels left open, so a redraw (e.g. after a failed check) keeps them open. */
+const OPEN = new Set();
 
 function stepList(steps, dates, track, autoOpen = true) {
   const nextId = autoOpen ? steps.find(s => !s.done)?.skillId : null;
@@ -180,20 +184,21 @@ export function renderGoal() {
 
 /** Bind every step and Prove control under root (the My goal panel, or the drawer). */
 export function bindSteps(root) {
-  root.querySelectorAll("[data-gl-done]").forEach(b => b.addEventListener("click", () => tick(b, b.dataset.glDone)));
-  root.querySelectorAll("[data-gl-stay]").forEach(b => b.addEventListener("click", async () => {
-    const id = b.dataset.glStay; b.disabled = true;
-    const ch = await toggleStay(id);
-    if (!ch) { b.disabled = false; return; }
-    actions.refresh({ animate: false });
+  root.querySelectorAll("[data-gl-verify]").forEach(b => b.addEventListener("click", () => {
+    const k = b.dataset.glVerify, box = [...root.querySelectorAll("[data-gl-vbox]")].find(x => x.dataset.glVbox === k);
+    if (!box) return;
+    box.hidden = !box.hidden; b.setAttribute("aria-expanded", String(!box.hidden));
+    if (box.hidden) OPEN.delete(k); else OPEN.add(k);
   }));
+  // the check and certificate controls live inside a step's panel (or the drawer): find their box next to them
+  const near = (b, sel, id, attr) => [...(b.closest(".gl-verify, .gl-dprove") || root).querySelectorAll(sel)].find(x => x.dataset[attr] === id);
   root.querySelectorAll("[data-gl-check]").forEach(b => b.addEventListener("click", () => {
-    const id = b.dataset.glCheck, box = [...root.querySelectorAll("[data-gl-checkbox]")].find(x => x.dataset.glCheckbox === id);
+    const id = b.dataset.glCheck, box = near(b, "[data-gl-checkbox]", id, "glCheckbox");
     b.disabled = true;
     startCheck(id, box, () => checkPassed(id));
   }));
   root.querySelectorAll("[data-gl-add]").forEach(b => b.addEventListener("click", () => {
-    const id = b.dataset.glAdd, box = [...root.querySelectorAll("[data-gl-form]")].find(x => x.dataset.glForm === id);
+    const id = b.dataset.glAdd, box = near(b, "[data-gl-form]", id, "glForm");
     if (box) { b.hidden = true; credForm(box, id, () => { b.hidden = false; }); }
   }));
   root.querySelectorAll("[data-gl-rm]").forEach(b => b.addEventListener("click", () => { b.disabled = true; removeCredential(b.dataset.glRm, b.dataset.proof); }));
@@ -204,20 +209,6 @@ export function bindSteps(root) {
     else toast({ title: t(c.checked ? "track.shareOn" : "track.shareOff"), badgeHtml: badge(c.checked ? "b-info" : "b-mute", t(c.checked ? "track.shared" : "myskills.private")) });
     c.disabled = false;
   }));
-}
-
-async function tick(b, id) {
-  b.disabled = true;
-  const before = goalView();
-  const was = before?.steps.find(s => s.skillId === id);
-  const ch = await toggleDone(id);
-  if (!ch) { b.disabled = false; return; }
-  const name = was ? stepName(was) : nameOf(id), v = goalView();
-  let detail;
-  if (ch.local) { const steps = v?.steps || []; detail = progressLine(steps.filter(s => s.done).length, steps.length, weeksLeftOf(steps), t); }
-  else detail = changeText(ch, t);
-  toast({ title: name, detail, badgeHtml: badge(ch.done ? "b-good" : "b-mute", t(ch.done ? "track.done" : "track.notDone"), ch.done ? "check" : undefined) });
-  actions.refresh({ animate: false });
 }
 
 function credForm(box, id, onClose) {
@@ -250,7 +241,7 @@ function openSkill(id, name) {
 export function bindGoal(el) {
   bindSteps(el);
   el.querySelectorAll("[data-tab-jobs]").forEach(b => b.addEventListener("click", () => { UI.tab = "jobs"; actions.renderPanel(); }));
-  el.querySelectorAll("[data-open-route]").forEach(b => b.addEventListener("click", () => actions.showPath(b.dataset.openRoute)));
+  el.querySelectorAll("[data-open-route]").forEach(b => b.addEventListener("click", () => actions.showPath(b.dataset.openRoute, { from: "goal" })));
   el.querySelectorAll("[data-gl-more]").forEach(b => b.addEventListener("click", () => {
     ALL[b.dataset.glMore] = true;
     b.closest(".gl-track").querySelectorAll("[data-gl-extra]").forEach(x => { x.hidden = false; });

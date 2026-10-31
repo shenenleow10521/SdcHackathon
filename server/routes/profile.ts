@@ -28,7 +28,7 @@ import { SECTORS, SECTOR_IDS, MIN_ROUNDS, MAX_ROUNDS, CHIPS_PER_ROUND, sectorMod
   chipFor, warmChips, catalogueOccupation, type SectorModel, type Rounds } from "../services/quiz.ts";
 import type { Db } from "../lib/db.ts";
 import { currentEscoFor, loadEsco } from "../services/esco.ts";
-import { recordCheckProof } from "../services/goal.ts";
+import { recordCheckProof, tickStayByProof } from "../services/goal.ts";
 import { loadGraph } from "../kb.ts";
 
 const idParam = z.object({ id: z.coerce.number().int().positive() });
@@ -281,8 +281,11 @@ export default function profileRoutes(svc: Services) {
     const skillId = String(req.params.skillId).slice(0, 60);
     const out = await submitCheck(svc, skillId, b);
     // A pass on a goal step also records who vouches for it ("HalaTuju skill check") and ticks the step.
-    const goalSteps = out.passed && out.saved ? await recordCheckProof(svc, await loadGraph(svc.db), b.profileId, skillId) : [];
-    res.json(goalSteps.length ? { ...out, profile: (await loadProfile(svc.db, b.profileId))!, goalSteps } : { ...out, goalSteps });
+    const passed = out.passed && out.saved, g = passed ? await loadGraph(svc.db) : null;
+    const goalSteps = passed ? await recordCheckProof(svc, g!, b.profileId, skillId) : [];
+    // ...and on the "Stay AI-ready" track it ticks that skill the same way
+    const stay = passed ? await tickStayByProof(svc, g!, b.profileId, skillId, true) : false;
+    res.json(goalSteps.length || stay ? { ...out, profile: (await loadProfile(svc.db, b.profileId))!, goalSteps, stay } : { ...out, goalSteps, stay });
   });
 
   return r;

@@ -6,7 +6,7 @@
 // in the My goal tab (renderGoal below).
 // Right under the header: how the path supports the UN goals (features/sdg.js). Below the route: the same plan in four
 // futures side by side (features/futures.js), then the future stress test, and (collapsed) facts about the job, then cost, deadline and sending the plan to an advisor.
-import { S, UI, D, N, when, nameOf, cap, W, actions, profileId, kindOf, matchOf, currentJobTitle, escoRow, escoPlanWeeks, isAiEra } from "../state.js";
+import { S, UI, D, N, when, isLater, nameOf, cap, W, actions, profileId, kindOf, matchOf, currentJobTitle, escoRow, escoPlanWeeks, isAiEra } from "../state.js";
 import { normMode, stressTest, yearOf } from "/shared/engine.js";
 import { get } from "../api.js";
 import { t } from "../i18n.js";
@@ -91,18 +91,17 @@ function haveLine(a, c, b, match) {
 
 /** The one weeks figure, with the hours a week as a picker: every weeks figure in the app follows it. */
 const HOURS = [2, 3, 4, 5, 6, 8, 10, 12, 15, 20];
-/** The two big figures, like a map app's "25 min, 12 km": the match and the weeks to job-ready. */
+/** The two big figures, like a map app's "25 min, 12 km": the match and the weeks to job-ready (at your hours a week). */
 function figs(match, weeks, matchWhy = "", weeksWhy = "") {
   return `<div class="figs">
-      <div class="fig"><span class="fig-v num">${esc(String(match))}%</span><span class="fig-k">${esc(t("path.figMatch"))}${matchWhy}</span></div>
-      ${weeks != null ? `<div class="fig"><span class="fig-v num">${esc(t("path.readyBig", { w: weeks }))}</span><span class="fig-k">${esc(t("path.figReady"))}${weeksWhy}</span></div>` : ""}
+      <div class="fig"><span class="fig-v num">${esc(String(match))}%</span><span class="fig-k"><span class="nw">${esc(isLater() ? t("path.figMatchLater") : t("path.figMatch"))}${matchWhy}</span></span></div>
+      ${weeks != null ? `<div class="fig"><span class="fig-v num">${esc(t("path.readyBig", { w: weeks }))}</span><span class="fig-k">${esc(t("path.figReady"))} ${esc(t("path.readyPre"))} ${hoursPick()} <span class="nw">${esc(t("path.hWeek"))}${weeksWhy}</span></span></div>` : ""}
     </div>`;
 }
 
-function readySum(weeks, estimated, why = "", totalHours = null) {
+function hoursPick() {
   const h = S.profile.hours, opts = [...new Set([...HOURS, h])].sort((x, y) => x - y);
-  return `<div class="route-sum">
-      <span class="rs-t"><span class="rs-line"><b>${esc(t("path.readyPre"))}</b><label class="hours-pick"><span class="sr">${esc(t("path.hoursLabel"))}</span><select id="hours-sel">${opts.map(x => `<option value="${x}"${x === h ? " selected" : ""}>${x}</option>`).join("")}</select></label><b>${esc(t("path.hWeek"))}</b>${why}</span><small>${totalHours ? esc(t("path.totalHours", { h: Math.round(totalHours) })) + " " : ""}${estimated ? esc(t("path.estimatedNote")) : ""}</small></span></div>`;
+  return `<label class="hours-pick"><span class="sr">${esc(t("path.hoursLabel"))}</span><select id="hours-sel">${opts.map(x => `<option value="${x}"${x === h ? " selected" : ""}>${x}</option>`).join("")}</select></label>`;
 }
 
 /** "Your goal now: X", as a way back to it while looking at another job. */
@@ -128,25 +127,23 @@ function aboutHtml(j) {
 }
 
 // Back to the job list: the route page lives under Explore, like a map app's directions
-const backRow = () => `<button class="link-btn path-back" type="button" data-tab-jobs><i data-lucide="arrow-left"></i>${esc(t("path.back"))}</button>`;
+// ...or back to My goal, when the route was opened from there ("See route on map")
+const backRow = () => UI.backTo === "goal"
+  ? `<button class="link-btn path-back" type="button" data-tab-goal><i data-lucide="arrow-left"></i>${esc(t("tabs.goal"))}</button>`
+  : `<button class="link-btn path-back" type="button" data-tab-jobs><i data-lucide="arrow-left"></i>${esc(t("path.back"))}</button>`;
 
 export function render() {
   if (UI.escoJob && escoRow(UI.escoJob)) return escoRender();
   const E = S.E, j = UI.job, g = goal();
   if (!j || !UI.picked) return `<div class="empty pick"><span class="em-ic"><i data-lucide="flag"></i></span><h3>${esc(t("path.pickTitle"))}</h3><p>${esc(t("path.pickJob"))}</p>
     <div class="quick">${UI.ring.slice(0, 3).map(x => `<button type="button" data-quick="${esc(x)}"><span>${esc(nameOf(x))}</span><span class="num">${matchOf(x)}%</span></button>`).join("")}</div></div>`;
-  const p = D.plan, n = N(j), mine = isGoal(j), req = (S.graph.req[j] || []).filter(r => E.isSkill(r.skill));
-  // the one weeks figure, big, like a map app's travel time; it sits above "Set as my goal"
-  const estimated = (p?.missing || []).some(m => m.estimated);
-  const sum = p?.route ? readySum(W(p.ready), estimated, "", p.hours) : "";
-  const cov = req.map(r => E.coverage(r.skill, r.need));
+  const p = D.plan, n = N(j), mine = isGoal(j);
+  // the one weeks figure, big, like a map app's travel time; it sits above "Set as my goal". The match ⓘ lists each skill.
   const head = `<header class="goal-head">
-      <div class="goal-k"><span>${mine ? `<i data-lucide="flag"></i>${esc(t("goal.yours"))}` : esc(t("goal.preview"))}</span><span class="goal-kind">${esc(n.stay ? t("jobs.stay") : t("jobs.change"))}</span></div>
+      ${mine ? `<div class="goal-k"><span><i data-lucide="flag"></i>${esc(t("goal.yours"))}</span></div>` : ""}
       <h2>${esc(n.name)}</h2>
       ${figs(matchOf(j), p?.route ? W(p.ready) : null, whyBtn("match", j), p?.route ? whyBtn("weeks", j) : "")}
-      ${haveLine(cov.filter(c => c >= 1).length, cov.filter(c => c > 0 && c < 1).length, req.length, matchOf(j))}
       ${UI.employer ? `<div class="emp-chip">${badge("b-info", t("emp.at", { name: UI.employer.name }), "building-2")}<button class="ghost sm" type="button" id="emp-clear"><i data-lucide="x"></i>${esc(t("emp.clear"))}</button></div>` : ""}
-      ${sum}
       ${stressLine(j)}
       ${futuresLine(j, UI.mode, UI.employerReq)}
       ${mine ? `<button class="link-btn goal-back" type="button" data-tab-goal><i data-lucide="list-checks"></i>${esc(t("goal.seeProgress"))}</button>` : `<button class="btn btn-primary goal-set" id="goal-set" type="button" ${p?.route ? "" : "disabled"}><i data-lucide="flag"></i>${esc(t(g ? "goal.switch" : "goal.set"))}</button>
@@ -204,10 +201,8 @@ function escoRender() {
   const mid = k => (N(k) ? k : "xs:" + k), nm = k => (N(k) ? nameOf(k) : cap(xp?.names[k]) || nameOf(mid(k)));
   const c = xp?.counts, have = c?.have ?? r.have, close = c?.related ?? r.close ?? 0, n = c?.essential ?? r.essential;
   const head = `<header class="goal-head">
-      <div class="goal-k"><span>${esc(t("goal.preview"))}</span><span class="goal-kind">${esc(r.isCurrent ? t("jobs.currentStay") : t("jobs.change"))}</span></div>
       <h2>${esc(nameOf(id))}</h2>
       ${r.match != null ? `${figs(r.match, xp && !xp.none ? escoPlanWeeks(xp) : null)}${n ? haveLine(have ?? 0, close, n, r.match) : ""}` : ""}
-      ${xp && !xp.none && escoPlanWeeks(xp) != null ? readySum(escoPlanWeeks(xp), (xp.missing || []).some(m => m.estimated), "", xp.totalHours) : ""}
       ${futuresLine(null)}
       ${goalNote(g)}
     </header>`;

@@ -205,7 +205,7 @@ describe("POST /api/profile/:id/goal/steps/:skillId", () => {
 });
 
 describe("proofs", () => {
-  it("credential: https only, length limits; shown but never verified; can be removed", async () => {
+  it("credential: https only, length limits; ticks the step but never verifies it; removing the last proof unticks it", async () => {
     const id = await newProfile();
     const sid = (await request(app).put(`/api/profile/${id}/goal`).send({ job: JOB })).body.steps[0].skillId;
     const post = (body: any) => request(app).post(`/api/profile/${id}/goal/steps/${sid}/proof`).send(body);
@@ -222,14 +222,49 @@ describe("proofs", () => {
     const res = await post({ kind: "credential", url: "https://learn.example.org/cert/123", title: "Prompting for finance" });
     expect(res.status).toBe(201);
     const step = res.body.steps.find((s: any) => s.skillId === sid);
-    expect(step).toMatchObject({ verified: false, done: false });
+    expect(step).toMatchObject({ verified: false, done: true });
+    expect(res.body.change).toEqual({ skillId: sid, goal: true, stay: expect.any(Boolean) });
     expect(step.proofs).toEqual([{ id: expect.any(Number), kind: "credential", by: "learn.example.org", at: "2026-10-23T10:00:00.000Z", url: "https://learn.example.org/cert/123", title: "Prompting for finance" }]);
     const withProvider = await post({ kind: "credential", url: "https://x.example/c", title: "Another", provider: "Coursera" });
-    expect(withProvider.body.steps.find((s: any) => s.skillId === sid).proofs[1].by).toBe("Coursera");
+    const second = withProvider.body.steps.find((s: any) => s.skillId === sid).proofs[1];
+    expect(second.by).toBe("Coursera");
     const del = await request(app).delete(`/api/profile/${id}/goal/steps/${sid}/proof/${step.proofs[0].id}`);
     expect(del.status).toBe(200);
-    expect(del.body.steps.find((s: any) => s.skillId === sid).proofs).toHaveLength(1);
+    const after1 = del.body.steps.find((s: any) => s.skillId === sid);
+    expect(after1.proofs).toHaveLength(1);
+    expect(after1.done).toBe(true); // another certificate still backs it
     expect((await request(app).delete(`/api/profile/${id}/goal/steps/${sid}/proof/${step.proofs[0].id}`)).status).toBe(404);
+    const del2 = await request(app).delete(`/api/profile/${id}/goal/steps/${sid}/proof/${second.id}`);
+    expect(del2.body.change).toEqual({ skillId: sid, undone: true });
+    expect(del2.body.steps.find((s: any) => s.skillId === sid)).toMatchObject({ done: false, proofs: [] });
+  });
+
+  it("a certificate or a passed check ticks a skill on the stay track, with no goal set", async () => {
+    const id = await newProfile();
+    const stay = (await request(app).get(`/api/profile/${id}/stay`)).body;
+    expect(stay.done).toEqual([]);
+    // the stay track the server computes for this profile (the same one the app shows)
+    const { stayItems } = await import("../server/services/goal.ts");
+    const { loadGraph } = await import("../server/kb.ts");
+    const { loadProfile } = await import("../server/repo.ts");
+    const items = (await stayItems(svc, await loadGraph(svc.db), (await loadProfile(svc.db, id))!)).items;
+    expect(items.length).toBeGreaterThan(1);
+    const [a, b] = items;
+    const res = await request(app).post(`/api/profile/${id}/goal/steps/${encodeURIComponent(a.id)}/proof`).send({ kind: "credential", url: "https://learn.example.org/c/9", title: "Cert" });
+    expect(res.status).toBe(201);
+    expect(res.body).toMatchObject({ goal: null, change: { skillId: a.id, goal: false, stay: true } });
+    expect((await request(app).get(`/api/profile/${id}/stay`)).body.done.map((d: any) => d.skillId)).toContain(a.id);
+    // not on the stay track and no goal: still refused
+    expect((await request(app).post(`/api/profile/${id}/goal/steps/zzz/proof`).send({ kind: "credential", url: "https://x.example/c", title: "Cert" })).status).toBe(409);
+    if (b) {
+      const check = await request(app).get(`/api/skills/${encodeURIComponent(b.id)}/check?profile=${id}`);
+      expect(check.status).toBe(200); {
+        const answers = (await svc.db.query("select answer_key from skill_checks where id=$1", [check.body.checkId])).rows[0].answer_key;
+        const out = await request(app).post(`/api/skills/${encodeURIComponent(b.id)}/check`).send({ profileId: id, checkId: check.body.checkId, answers });
+        expect(out.body).toMatchObject({ passed: true, stay: true });
+        expect((await request(app).get(`/api/profile/${id}/stay`)).body.done.map((d: any) => d.skillId)).toContain(b.id);
+      }
+    }
   });
 
   it("passing the skill check on a goal step records { kind:'check' } and ticks the step, verified", async () => {
@@ -352,7 +387,8 @@ describe("GET /api/profile/:id/record", () => {
     const inv = res.body.skills.find((s: any) => s.skillId === "inv");
     expect(inv).toMatchObject({ source: "catalogue", level: expect.any(Number), basis: expect.any(String), held: true, proofs: [] });
     const cred = res.body.skills.find((s: any) => s.skillId === sid);
-    expect(cred).toMatchObject({ held: false, verified: false, proofs: [expect.objectContaining({ kind: "credential", by: "learn.example.org", url: "https://learn.example.org/c/1" })] });
+    // the certificate ticked the step, so the skill is held, but a certificate alone never makes it verified
+    expect(cred).toMatchObject({ verified: false, proofs: [expect.objectContaining({ kind: "credential", by: "learn.example.org", url: "https://learn.example.org/c/1" })] });
     expect(res.body.sources).toEqual(expect.arrayContaining([expect.objectContaining({ kind: "credential", url: "https://learn.example.org/c/1" }), expect.objectContaining({ kind: "catalogue" })]));
     expect(res.body.counts.credentials).toBe(1);
     expect((await request(app).get("/api/profile/1/record")).body).toMatchObject({ profileId: 1, isSample: true });

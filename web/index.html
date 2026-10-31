@@ -57,6 +57,18 @@
           <button class="dir-x" id="dir-x" type="button" hidden aria-label="Clear the destination" data-i18n-aria="dir.clear"><i data-lucide="x"></i></button></div>
         <div class="dir-results glass" id="results" aria-live="polite" hidden></div>
       </div>
+      <!-- One switch for the AI future, like a map app's "Leave now": every number, the route and the map follow it -->
+      <div class="future-bar" role="group" aria-label="AI future: how fast AI takes over work tasks" data-i18n-aria="future.aria">
+        <div class="seg fb-now"><button type="button" data-fut="now" aria-pressed="true" data-i18n="future.today">Today</button></div>
+        <div class="fb-later">
+          <span class="fb-cap" title="How fast AI takes over work tasks over the next few years, not how fast this app runs." data-i18n="future.caption" data-i18n-title="scn.hint">AI trend over the next few years</span>
+          <div class="seg fb-seg">
+            <button type="button" data-fut="slow" aria-pressed="false" data-i18n="scn.slowBtn">Slow</button>
+            <button type="button" data-fut="moderate" aria-pressed="false" data-i18n="scn.moderateBtn">Expected</button>
+            <button type="button" data-fut="fast" aria-pressed="false" data-i18n="scn.fastBtn">Fast</button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="side-body">
       <div class="guide" id="guide" role="region" aria-label="Demo guide" data-i18n-aria="guide.aria" hidden></div>
@@ -93,9 +105,9 @@
             <button class="status-dot" id="status-dot" type="button" aria-expanded="false" aria-controls="status-pop" aria-label="System status"></button>
             <span id="fresh" data-i18n="status.loading">Loading market data…</span>
           </div>
-          <button class="lg-more" id="legend-more" type="button" aria-expanded="false" aria-controls="legend-extra" data-i18n="legend.more">Map key</button>
+          <button class="lg-more" id="legend-more" type="button" aria-expanded="true" aria-controls="legend-extra" data-i18n="legend.less">Hide key</button>
         </div>
-        <div class="lg-row" id="legend-extra" hidden>
+        <div class="lg-row" id="legend-extra">
           <span><i class="lg" style="background:var(--n-you)"></i><span data-i18n="legend.you">You</span></span>
           <span><i class="lg" style="background:var(--n-have)"></i><span data-i18n="legend.have">Your skills</span></span>
           <span><i class="lg" style="background:var(--n-risk)"></i><span data-i18n="legend.risk">At risk</span></span>
@@ -117,7 +129,7 @@
     <div class="map-card glass" id="map-card" role="region" aria-live="polite" hidden></div>
     <aside class="drawer glass" id="drawer" aria-label="Details"></aside>
     <div class="dock">
-      <div class="timeline glass" role="group" aria-label="Forecast" data-i18n-aria="time.aria">
+      <div class="timeline glass" role="group" aria-label="Forecast" data-i18n-aria="time.aria" hidden><!-- replaced by the AI future switch in the side panel; kept for code that clicks it -->
         <div class="seg" role="group" aria-label="Forecast year" data-i18n-aria="time.year">
           <button type="button" data-year="2026" aria-pressed="true" data-i18n="time.today">Now</button>
           <button type="button" data-year="2030" aria-pressed="false" data-i18n="time.later">In a few years</button>
