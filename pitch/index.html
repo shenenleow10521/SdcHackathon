@@ -745,13 +745,29 @@ footer a { color: var(--ink-2); }
         <h2 id="method-h">Agents read the news. Three agents vote. Plain code does the maths.</h2>
         <p>AI reads text and evidence. Fixed formulas work out every number on screen, so every number can be explained. Every change is saved as a version and can be undone.</p>
       </div>
-      <ol class="pipe rv" aria-label="How a new AI signal reaches a worker's route">
-        <li style="--i:0"><span class="ic"><svg class="i"><use href="#i-radar"/></svg></span><div><h3>Read</h3><p>Every 24 hours, our agents read news and research from 74 trusted websites, and must copy the exact quote and link.</p></div></li>
-        <li style="--i:1"><span class="ic"><svg class="i"><use href="#i-funnel"/></svg></span><div><h3>Check</h3><p>The quote must appear word for word on the page. No source, a quote that is not there, or a duplicate: thrown out.</p></div></li>
-        <li style="--i:2"><span class="ic"><svg class="i"><use href="#i-bot"/></svg></span><div><h3>Vote</h3><p>Three agents vote. One checks the evidence is real, recent and trusted. One checks it is about this skill. One is a sceptic that looks for hype or a sales pitch.</p></div></li>
-        <li class="human" style="--i:3"><span class="ic"><svg class="i"><use href="#i-user-check"/></svg></span><div><h3>Decide</h3><p>2 or 3 yes votes: applied, labelled, and it can be undone. 1 yes: a person decides. 0 yes: rejected and recorded.</p></div></li>
-        <li class="go" style="--i:4"><span class="ic"><svg class="i"><use href="#i-navigation"/></svg></span><div><h3>You choose</h3><p>Anyone whose saved plan is affected sees the old route and the new one, and chooses: keep my route, or switch.</p></div></li>
-      </ol>
+      <div class="pl rv" style="--i:1">
+        <ol class="pl-steps">
+          <li style="--c:#5aa0f0"><span class="n">1</span><b>Read</b><small>74 trusted sites, every 24 hours</small></li>
+          <li style="--c:#5aa0f0"><span class="n">2</span><b>Check</b><small>the quote must be on the page</small></li>
+          <li style="--c:#2fd4a0" class="hot"><span class="n">3</span><b>Vote</b><small>three agents, two vendors</small></li>
+          <li style="--c:#f2b33d" class="hot"><span class="n">4</span><b>Decide</b><small>a fixed rule, not a model</small></li>
+          <li style="--c:#ff7a3d"><span class="n">5</span><b>You choose</b><small>keep my route, or switch</small></li>
+        </ol>
+        <div class="pl-detail">
+          <section class="pl-card" style="--c:#2fd4a0">
+            <p class="pl-h"><span>3</span>Three agents vote on every finding</p>
+            <div class="pl-row"><b>Evidence checker</b><span>Is it real, recent and trusted?</span><em>GPT-5.5</em></div>
+            <div class="pl-row"><b>Skill matcher</b><span>Is it really about this skill?</span><em>GPT-6-sol</em></div>
+            <div class="pl-row"><b>Sceptic</b><span>Is it hype or a sales pitch?</span><em>DeepSeek-V4-Pro</em></div>
+          </section>
+          <section class="pl-card" style="--c:#f2b33d">
+            <p class="pl-h"><span>4</span>Then a fixed rule decides</p>
+            <div class="pl-out ok"><b>2 or 3 yes</b><span>Applied, labelled, and it can be undone</span></div>
+            <div class="pl-out mid"><b>1 yes</b><span>A person decides, with all three reasons</span></div>
+            <div class="pl-out no"><b>0 yes</b><span>Rejected, and the reasons are recorded</span></div>
+          </section>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1623,6 +1639,34 @@ html { scroll-snap-type: y proximity; }
   -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
           mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%); }
 .wb { margin-top: 40px; }
+
+/* ---------- how plans stay current: steps + two detail cards ---------- */
+#method { background: radial-gradient(ellipse 75% 65% at 55% 60%, rgba(5, 7, 13, .8) 0%, rgba(5, 7, 13, .55) 55%, rgba(5, 7, 13, .2) 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%); }
+.pl { margin: 34px 0 0 178px; max-width: 1000px; }
+.pl-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); position: relative; }
+.pl-steps::before { content: ""; position: absolute; left: 17px; right: 17%; top: 17px; height: 2px; background: linear-gradient(90deg, #5aa0f0, #2fd4a0 45%, #f2b33d 65%, #ff7a3d); opacity: .55; }
+.pl-steps li { position: relative; padding-right: 16px; }
+.pl-steps .n { position: relative; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #0c1322; border: 2px solid var(--c); color: var(--c); font-weight: 800; font-size: 15px; box-shadow: 0 0 0 6px rgba(5,7,13,.9); }
+.pl-steps li.hot .n { background: var(--c); color: #0a0e18; box-shadow: 0 0 0 6px rgba(5,7,13,.9), 0 0 22px var(--c); }
+.pl-steps b { display: block; margin-top: 14px; font-size: 1.1rem; color: var(--ink); letter-spacing: -.01em; }
+.pl-steps small { display: block; margin-top: 4px; font-size: 14px; line-height: 1.4; color: var(--ink-2); }
+.pl-detail { margin-top: 30px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; }
+.pl-card { padding: 18px 22px 14px; border-radius: 16px; background: rgba(12, 18, 32, .72); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); box-shadow: inset 3px 0 0 var(--c); }
+.pl-h { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.pl-h span { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--c); color: #0a0e18; font-size: 12px; font-weight: 800; }
+.pl-row { display: grid; grid-template-columns: 136px minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 9px 0; border-top: 1px solid rgba(170, 186, 214, .12); font-size: 14px; }
+.pl-row b { color: var(--ink); }
+.pl-row span { color: var(--ink-2); }
+.pl-row em { font-style: normal; font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px; color: #5ee3b8; background: rgba(47, 212, 160, .12); border: 1px solid rgba(47, 212, 160, .35); white-space: nowrap; }
+.pl-out { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 9px 0; border-top: 1px solid rgba(170, 186, 214, .12); font-size: 14px; }
+.pl-out b { font-weight: 800; }
+.pl-out span { color: var(--ink-2); }
+.pl-out.ok b { color: #7fd38f; }
+.pl-out.mid b { color: #f2b33d; }
+.pl-out.no b { color: #ff8f8f; }
+@media (max-width: 1000px) { .pl { margin-left: 0; } .pl-steps { grid-template-columns: 1fr; gap: 14px; } .pl-steps::before { display: none; } .pl-detail { grid-template-columns: 1fr; } }
 </style>
 
 <footer>
