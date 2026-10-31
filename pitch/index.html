@@ -746,14 +746,14 @@ footer a { color: var(--ink-2); }
       <div class="sec-head rv">
         <p class="kicker">How it is built</p>
         <h2 id="tested-h">Six parts, each with one job. 533 tests on every update.</h2>
-        <p>Deployed on Replit, with the whole journey running live on one pipeline. AI reads text; plain code works out every number. If Gemini goes down, CV reading falls back to keyword matching. If RunPod is slow to start, a local model takes over. If no course exists, the screen says “no course listed yet”.</p>
+        <p>Deployed on Replit, with the whole journey running live on one pipeline. AI reads text; plain code works out every number. If the AI gateway goes down, CV reading falls back to keyword matching. If RunPod is slow to start, a local model takes over. If no course exists, the screen says “no course listed yet”.</p>
       </div>
       <div class="checks mods">
         <div class="glass rv" style="--i:1;--c:#4a93ea"><span class="n">01</span><h3>Data</h3><p>The EU’s official list of jobs and skills, plus Malaysian wage and job data from the Department of Statistics (DOSM) and MyCOL.</p><p class="src">Database, every version kept</p></div>
         <div class="glass rv" style="--i:2;--c:#9b8cff"><span class="n">02</span><h3>Model</h3><p>Scores how much of each task and skill AI can do today.</p><p class="src">Our own trained model, run on RunPod</p></div>
-        <div class="glass rv" style="--i:3;--c:#2fc28b"><span class="n">03</span><h3>Profile</h3><p>Turns a CV or a few questions into a skills list. Personal details are removed first.</p><p class="src">Gemini Flash-Lite and a meaning-matching model</p></div>
+        <div class="glass rv" style="--i:3;--c:#2fc28b"><span class="n">03</span><h3>Profile</h3><p>Turns a CV or a few questions into a skills list. Personal details are removed first.</p><p class="src">GPT-5.5 via KrackedDevs, bge-m3 on RunPod</p></div>
         <div class="glass rv" style="--i:4;--c:#ff7a3d"><span class="n">04</span><h3>Engine</h3><p>Matches jobs, builds routes, tracks goals and runs the 1,000-futures test.</p><p class="src">Plain code, no AI</p></div>
-        <div class="glass rv" style="--i:5;--c:#f2b33d"><span class="n">05</span><h3>Researcher</h3><p>Reads the news, checks every quote, and runs the three-agent vote.</p><p class="src">Gemini, 74 trusted sites</p></div>
+        <div class="glass rv" style="--i:5;--c:#f2b33d"><span class="n">05</span><h3>Researcher</h3><p>Reads the news, checks every quote, and runs the three-agent vote.</p><p class="src">GPT-5.5 and DeepSeek via KrackedDevs, 74 trusted sites</p></div>
         <div class="glass rv" style="--i:6;--c:#eef2f8"><span class="n">06</span><h3>People</h3><p>Screens for workers, HR teams, advisors and reviewers.</p><p class="src">Web app, English and Bahasa Melayu</p></div>
       </div>
     </div>
@@ -854,98 +854,93 @@ footer a { color: var(--ink-2); }
     <div class="wrap">
       <div class="sec-head rv">
         <p class="kicker">Architecture</p>
-        <h2 id="arch-h">One app on Replit, with AI services plugged in at the edge.</h2>
+        <h2 id="arch-h">One app on Replit, with KrackedDevs and RunPod plugged in.</h2>
       </div>
       <div class="arch rv" style="--i:1">
-<svg class="arch-svg" viewBox="0 0 1200 500" role="img" aria-labelledby="arch-t arch-d">
+<svg class="arch-svg v2" viewBox="0 0 1200 470" role="img" aria-labelledby="arch-t arch-d">
   <title id="arch-t">HalaTuju system architecture</title>
-  <desc id="arch-d">People use the web app on Replit. The REST API calls the engine, which is plain code, and the agents, which use Gemini, RunPod and trusted news sources. A triage gate with a three-agent vote writes to the versioned PostgreSQL knowledge base. GitHub Actions tests every update before it is deployed to Replit.</desc>
+  <desc id="arch-d">People use the HalaTuju web app, which runs entirely on Replit: web app, REST API, a plain-code engine, AI agents, a triage gate and a PostgreSQL knowledge base. The agents call language models through the KrackedDevs gateway (GPT-5.5, GPT-6-sol and DeepSeek-V4-Pro) and embeddings on RunPod Serverless; our exposure model was trained on a RunPod GPU pod. Every code update is tested on GitHub Actions before it is deployed to Replit.</desc>
   <defs>
-    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8fa3c0"/></marker>
-    <marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a93ea"/></marker>
-    <marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#a98bff"/></marker>
-    <marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#f2b33d"/></marker>
-    <linearGradient id="g-node" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#18223a"/><stop offset="1" stop-color="#0f1626"/></linearGradient>
-    <linearGradient id="g-eng" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2f52"/><stop offset="1" stop-color="#112038"/></linearGradient>
-    <linearGradient id="g-rp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b1f52"/><stop offset="1" stop-color="#160f2c"/></linearGradient>
+    <marker id="m-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8fa3c0"/></marker>
+    <marker id="m-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#5aa0f0"/></marker>
+    <marker id="m-k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2fd4a0"/></marker>
+    <marker id="m-p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#a98bff"/></marker>
+    <linearGradient id="v2-card" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#172238"/><stop offset="1" stop-color="#0e1524"/></linearGradient>
+    <linearGradient id="v2-rl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(242,98,7,.10)"/><stop offset=".6" stop-color="rgba(242,98,7,.025)"/></linearGradient>
+    <linearGradient id="v2-kd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(47,212,160,.20)"/><stop offset="1" stop-color="rgba(47,212,160,.04)"/></linearGradient>
+    <linearGradient id="v2-rp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(169,139,255,.24)"/><stop offset="1" stop-color="rgba(169,139,255,.05)"/></linearGradient>
   </defs>
 
   <!-- people -->
-  <text class="a-col" x="10" y="26">People</text>
-  <g class="a-person"><rect x="10" y="44" width="160" height="58" rx="12"/><circle cx="34" cy="73" r="6" fill="#f4f6fa"/><text x="50" y="69" class="a-t">Worker</text><text x="50" y="87" class="a-s">CV or questions</text></g>
-  <g class="a-person"><rect x="10" y="118" width="160" height="58" rx="12"/><circle cx="34" cy="147" r="6" fill="#2fc28b"/><text x="50" y="143" class="a-t">HR or advisor</text><text x="50" y="161" class="a-s">opt-in team view</text></g>
-  <g class="a-person"><rect x="10" y="192" width="160" height="58" rx="12"/><circle cx="34" cy="221" r="6" fill="#f2b33d"/><text x="50" y="217" class="a-t">Reviewer</text><text x="50" y="235" class="a-s">decides split votes</text></g>
+  <text class="v-col" x="0" y="88">People</text>
+  <g class="v-person"><rect x="0" y="104" width="150" height="46" rx="23"/><circle cx="24" cy="127" r="5.5" fill="#f4f6fa"/><text x="38" y="132" class="v-pt">Worker</text></g>
+  <g class="v-person"><rect x="0" y="164" width="150" height="46" rx="23"/><circle cx="24" cy="187" r="5.5" fill="#5aa0f0"/><text x="38" y="192" class="v-pt">HR or advisor</text></g>
+  <g class="v-person"><rect x="0" y="224" width="150" height="46" rx="23"/><circle cx="24" cy="247" r="5.5" fill="#f2b33d"/><text x="38" y="252" class="v-pt">Reviewer</text></g>
+  <text class="v-note" x="0" y="292">The reviewer decides</text><text class="v-note" x="0" y="308">only split votes.</text>
 
-  <!-- replit boundary -->
-  <rect class="a-replit" x="205" y="10" width="655" height="400" rx="18"/>
-  <rect x="222" y="0" width="236" height="22" rx="11" fill="#f26207"/>
-  <text x="340" y="15.5" text-anchor="middle" class="a-badge">Replit Deployments, Reserved VM</text>
+  <!-- REPLIT -->
+  <rect class="v-rl" x="188" y="30" width="634" height="372" rx="20"/>
+  <g transform="translate(212 52)"><rect width="26" height="26" rx="7" fill="#f26207"/><path d="M8 6h6v6H8zM14 12h6v6h-6zM8 18h6v6H8z" fill="#fff" opacity=".95" transform="translate(-1 -2) scale(.95)"/></g>
+  <text x="248" y="71" class="v-sp">Replit</text>
+  <text x="322" y="71" class="v-sps">hosts and runs the whole product</text>
 
-  <!-- web + api + auth -->
-  <g class="a-node"><rect x="235" y="44" width="170" height="70" rx="12"/><text x="252" y="72" class="a-t">Web app</text><text x="252" y="92" class="a-s">three.js career map</text><text x="252" y="106" class="a-s">English and BM</text></g>
-  <g class="a-node"><rect x="235" y="150" width="170" height="70" rx="12"/><text x="252" y="178" class="a-t">REST API</text><text x="252" y="198" class="a-s">Node 22, TypeScript</text><text x="252" y="212" class="a-s">Express 5, zod checks</text></g>
-  <g class="a-node small"><rect x="235" y="256" width="170" height="52" rx="12"/><text x="252" y="278" class="a-t sm">Sign-in</text><text x="252" y="296" class="a-s">Replit Clerk, or guest</text></g>
-  <g class="a-node small"><rect x="235" y="330" width="170" height="52" rx="12"/><text x="252" y="352" class="a-t sm">/api/health</text><text x="252" y="370" class="a-s">database, AI, scheduler</text></g>
+  <g class="v-card"><rect x="212" y="98" width="176" height="64" rx="12"/><text x="228" y="124" class="v-t">Web app</text><text x="228" y="144" class="v-s">three.js map, English and BM</text></g>
+  <g class="v-card"><rect x="212" y="190" width="176" height="64" rx="12"/><text x="228" y="216" class="v-t">REST API</text><text x="228" y="236" class="v-s">Node 22, TypeScript</text></g>
+  <g class="v-card core"><rect x="420" y="98" width="176" height="64" rx="12"/><text x="436" y="124" class="v-t">Engine</text><text x="436" y="144" class="v-s">matches, routes, futures</text></g>
+  <g class="v-card"><rect x="420" y="190" width="176" height="64" rx="12"/><text x="436" y="216" class="v-t">AI agents</text><text x="436" y="236" class="v-s">CV reader, researcher, voters</text></g>
+  <g class="v-db"><path d="M628 110 a88 12 0 0 1 176 0 v42 a88 12 0 0 1 -176 0z"/><path class="top" d="M628 110 a88 12 0 0 0 176 0"/><text x="716" y="137" text-anchor="middle" class="v-t">PostgreSQL 16</text><text x="716" y="155" text-anchor="middle" class="v-s">versioned knowledge base</text></g>
+  <g class="v-card gate"><rect x="628" y="190" width="176" height="64" rx="12"/><text x="644" y="216" class="v-t">Triage gate</text><text x="644" y="236" class="v-s">quote check, 2 of 3 vote</text></g>
 
-  <!-- engine -->
-  <g class="a-eng"><rect x="450" y="44" width="180" height="100" rx="12"/><text x="467" y="72" class="a-t">Engine</text><text x="467" y="92" class="a-s">match score, routes</text><text x="467" y="108" class="a-s">goal tracking, 1,000 futures</text><rect x="467" y="118" width="118" height="18" rx="9" class="a-pill"/><text x="526" y="131" text-anchor="middle" class="a-pt">plain code, no AI</text></g>
-
-  <!-- agents -->
-  <g class="a-node"><rect x="450" y="176" width="180" height="206" rx="12"/><text x="467" y="204" class="a-t">AI agents</text>
-    <text x="467" y="230" class="a-li">CV reader</text><text x="467" y="245" class="a-s">personal details removed first</text>
-    <text x="467" y="270" class="a-li">Interviewer, explainer</text>
-    <text x="467" y="295" class="a-li">News researcher</text><text x="467" y="310" class="a-s">every 24 hours</text>
-    <text x="467" y="335" class="a-li">Three voters</text><text x="467" y="350" class="a-s">evidence, skill, sceptic</text>
-    <text x="467" y="370" class="a-s dim">output checked against real IDs</text></g>
-
-  <!-- db + triage -->
-  <g class="a-db"><path d="M672 56 a80 14 0 0 1 160 0 v78 a80 14 0 0 1 -160 0z"/><path d="M672 56 a80 14 0 0 0 160 0" class="a-db-top"/>
-    <text x="752" y="96" text-anchor="middle" class="a-t">PostgreSQL 16</text><text x="752" y="115" text-anchor="middle" class="a-s">versioned knowledge base</text><text x="752" y="131" text-anchor="middle" class="a-s">every change undoable</text></g>
-  <g class="a-gate"><rect x="672" y="190" width="160" height="96" rx="12"/><text x="689" y="216" class="a-t">Triage gate</text><text x="689" y="236" class="a-s">quote found on the page</text><text x="689" y="252" class="a-s">2 or 3 yes: applied</text><text x="689" y="268" class="a-s">1 yes: a person decides</text></g>
-
-  <!-- externals -->
-  <text class="a-col" x="905" y="26">Outside services</text>
-  <g class="a-rp"><rect x="905" y="40" width="285" height="118" rx="14"/><circle cx="927" cy="64" r="6" fill="#a98bff"/><text x="941" y="69" class="a-t">RunPod</text>
-    <text x="923" y="94" class="a-li">Serverless: BAAI/bge-m3</text><text x="923" y="110" class="a-s">CV wording to 13,939 skills, scales to zero</text>
-    <text x="923" y="134" class="a-li">GPU pod: RTX 4090</text><text x="923" y="150" class="a-s">trained our AI-exposure model</text></g>
-  <g class="a-ext"><rect x="905" y="176" width="285" height="74" rx="14"/><circle cx="927" cy="200" r="6" fill="#4a93ea"/><text x="941" y="205" class="a-t">Google Gemini</text><text x="923" y="228" class="a-s">3.5 Flash-Lite reads and writes</text><text x="923" y="243" class="a-s">3.1 Flash-Lite reviews and votes</text></g>
-  <g class="a-ext"><rect x="905" y="268" width="285" height="74" rx="14"/><circle cx="927" cy="292" r="6" fill="#2fc28b"/><text x="941" y="297" class="a-t">Trusted sources</text><text x="923" y="320" class="a-s">74 sites via Tavily, arXiv, OpenAlex, RSS</text><text x="923" y="335" class="a-s">ESCO, O*NET, ILO, DOSM, MyCOL data</text></g>
-  <g class="a-fb"><rect x="905" y="356" width="285" height="54" rx="12"/><text x="921" y="378" class="a-s">If RunPod is cold: local model, then keywords</text><text x="921" y="396" class="a-s">If Gemini is down: keyword matching, labelled</text></g>
-
-  <!-- arrows: people to web -->
-  <path class="a-ar" d="M170 73 H200 V79 H233" marker-end="url(#ah)"/>
-  <path class="a-ar" d="M170 147 H200 V86"/>
-  <path class="a-ar" d="M170 221 H200 V147"/>
-  <!-- web <-> api -->
-  <path class="a-ar b" d="M320 116 V148" marker-start="url(#ahb)" marker-end="url(#ahb)"/>
-  <!-- api -> sign-in -->
-  <path class="a-ar" d="M320 222 V254" marker-end="url(#ah)"/>
-  <!-- api -> engine, api -> agents -->
-  <path class="a-ar b flow" d="M405 172 H428 V94 H448" marker-end="url(#ahb)"/>
-  <path class="a-ar b flow" d="M405 196 H428 V260 H448" marker-end="url(#ahb)"/>
-  <!-- engine <-> db -->
-  <path class="a-ar b" d="M632 94 H670" marker-start="url(#ahb)" marker-end="url(#ahb)"/>
-  <!-- agents -> gate -> db -->
-  <path class="a-ar a flow" d="M632 300 H650 V238 H670" marker-end="url(#aha)"/>
-  <path class="a-ar a" d="M752 188 V150" marker-end="url(#aha)"/>
-  <!-- gate -> reviewer (split vote) -->
-  <path class="a-ar a dash" d="M752 288 V394 H188 V232 H172" marker-end="url(#aha)"/>
-  <text x="560" y="404" class="a-lab">split vote goes to a person</text>
-  <!-- agents -> externals -->
-  <path class="a-ar p flow" d="M632 330 H862 V100 H903" marker-end="url(#ahp)"/>
-  <path class="a-ar b" d="M862 213 H903" marker-end="url(#ahb)"/>
-  <path class="a-ar" d="M862 305 H903" marker-end="url(#ah)"/>
-
-  <!-- CI strip -->
-  <g class="a-ci">
-    <text class="a-col" x="10" y="452">Every update</text>
-    <rect x="150" y="430" width="160" height="38" rx="19"/><text x="230" y="454" text-anchor="middle" class="a-ct">GitHub push</text>
-    <rect x="350" y="430" width="250" height="38" rx="19"/><text x="475" y="454" text-anchor="middle" class="a-ct">GitHub Actions: typecheck, 533 tests</text>
-    <rect x="640" y="430" width="200" height="38" rx="19"/><text x="740" y="454" text-anchor="middle" class="a-ct">Node 22 and Node 24</text>
-    <rect x="880" y="430" width="200" height="38" rx="19" class="rl"/><text x="980" y="454" text-anchor="middle" class="a-ct">Deploy to Replit</text>
-    <path class="a-ar" d="M312 449 H348" marker-end="url(#ah)"/><path class="a-ar" d="M602 449 H638" marker-end="url(#ah)"/><path class="a-ar" d="M842 449 H878" marker-end="url(#ah)"/>
+  <text class="v-col" x="212" y="296">Replit services we use</text>
+  <g class="v-chips">
+    <rect x="212" y="308" width="196" height="30" rx="15"/><text x="310" y="328" text-anchor="middle">Deployments, Reserved VM</text>
+    <rect x="416" y="308" width="140" height="30" rx="15"/><text x="486" y="328" text-anchor="middle">PostgreSQL 16</text>
+    <rect x="564" y="308" width="118" height="30" rx="15"/><text x="623" y="328" text-anchor="middle">Clerk sign-in</text>
+    <rect x="690" y="308" width="110" height="30" rx="15"/><text x="745" y="328" text-anchor="middle">Secrets</text>
+    <rect x="212" y="346" width="160" height="30" rx="15"/><text x="292" y="366" text-anchor="middle">Agents run 24/7</text>
+    <rect x="380" y="346" width="186" height="30" rx="15"/><text x="473" y="366" text-anchor="middle">Replit Agent in our build</text>
   </g>
+
+  <!-- KRACKEDDEVS -->
+  <rect class="v-kd" x="862" y="30" width="338" height="196" rx="20"/>
+  <g transform="translate(884 52)"><rect width="26" height="26" rx="7" fill="#2fd4a0"/><text x="13" y="18.5" text-anchor="middle" class="v-logo">K</text></g>
+  <text x="920" y="71" class="v-sp">KrackedDevs</text>
+  <text x="1064" y="71" class="v-sps kd">LLM gateway</text>
+  <g class="v-row"><text x="884" y="104" class="v-k">Main</text><text x="970" y="104" class="v-m">GPT-5.5</text><text x="970" y="120" class="v-s">reads CVs, finds news, explains</text></g>
+  <g class="v-row"><text x="884" y="148" class="v-k">Reviewer</text><text x="970" y="148" class="v-m">DeepSeek-V4-Pro</text><text x="970" y="164" class="v-s">checks the main model’s work</text></g>
+  <g class="v-row"><text x="884" y="192" class="v-k">Voters</text><text x="970" y="192" class="v-m">GPT-5.5, GPT-6-sol, DeepSeek</text><text x="970" y="208" class="v-s">two vendors, three independent votes</text></g>
+
+  <!-- RUNPOD -->
+  <rect class="v-rp" x="862" y="246" width="338" height="156" rx="20"/>
+  <g transform="translate(884 268)"><rect width="26" height="26" rx="7" fill="#a98bff"/><text x="13" y="18.5" text-anchor="middle" class="v-logo">R</text></g>
+  <text x="920" y="287" class="v-sp">RunPod</text>
+  <text x="1004" y="287" class="v-sps rp">GPU compute</text>
+  <g class="v-row"><text x="884" y="320" class="v-k">Serverless</text><text x="970" y="320" class="v-m">BAAI/bge-m3</text><text x="970" y="336" class="v-s">CV wording to 13,939 skills</text></g>
+  <g class="v-row"><text x="884" y="366" class="v-k">GPU pod</text><text x="970" y="366" class="v-m">RTX 4090</text><text x="970" y="382" class="v-s">trained our AI-exposure model</text></g>
+
+  <!-- arrows -->
+  <path class="v-ar" d="M150 127 H172 V130 H210" marker-end="url(#m-g)"/>
+  <path class="v-ar" d="M150 187 H172 V130"/>
+  <path class="v-ar" d="M150 247 H172 V187"/>
+  <path class="v-ar b" d="M300 164 V188" marker-start="url(#m-b)" marker-end="url(#m-b)"/>
+  <path class="v-ar b flow" d="M390 214 H404 V130 H418" marker-end="url(#m-b)"/>
+  <path class="v-ar b flow" d="M390 230 H418" marker-end="url(#m-b)"/>
+  <path class="v-ar b" d="M598 130 H626" marker-start="url(#m-b)" marker-end="url(#m-b)"/>
+  <path class="v-ar b flow" d="M598 222 H626" marker-end="url(#m-b)"/>
+  <path class="v-ar b" d="M716 188 V166" marker-end="url(#m-b)"/>
+  <path class="v-ar k flow" d="M508 256 V276 H842 V128 H860" marker-end="url(#m-k)"/>
+  <path class="v-ar p flow" d="M842 276 V324 H860" marker-end="url(#m-p)"/>
+
+  <!-- bottom: data and delivery -->
+  <line x1="0" y1="424" x2="1200" y2="424" class="v-rule"/>
+  <text class="v-col" x="0" y="453">Data</text>
+  <text class="v-foot" x="56" y="453">ESCO, O*NET, ILO, DOSM, MyCOL, and 74 trusted news sites</text>
+  <text class="v-col" x="600" y="453">Every update</text>
+  <text class="v-foot" x="728" y="453">GitHub push</text><path class="v-ar" d="M812 449 H834" marker-end="url(#m-g)"/>
+  <text class="v-foot" x="842" y="453">Actions: typecheck, 533 tests</text><path class="v-ar" d="M1036 449 H1058" marker-end="url(#m-g)"/>
+  <text class="v-foot rl" x="1066" y="453">Deploy to Replit</text>
 </svg>
+
 
       </div>
     </div>
@@ -956,37 +951,46 @@ footer a { color: var(--ink-2); }
     <div class="wrap">
       <div class="sec-head rv">
         <p class="kicker">Tech stack</p>
-        <h2 id="stack-h">Built on Replit and RunPod, running live.</h2>
-        <p>Both sponsor platforms run the product in production, not just the demo. Every figure here is in our GitHub repo, with proof-of-use files.</p>
+        <h2 id="stack-h">Built on our three sponsors, running live.</h2>
+        <p>Replit hosts the product, KrackedDevs gives our agents their language models, and RunPod runs and trained our own AI models. Every figure is in our GitHub repo.</p>
       </div>
-      <div class="ts">
-        <div class="ts-sponsors">
-          <article class="ts-sp rv" style="--i:1;--sp:#f26207">
-            <header><span class="ts-dot"></span><b>Replit</b><em>Hosting, database, sign-in</em></header>
-            <ul>
-              <li><b>Deployments</b> Reserved VM serves the live app at halatuju.replit.app</li>
-              <li><b>PostgreSQL 16</b> the only database: versioned knowledge base, profiles and plans</li>
-              <li><b>Clerk sign-in</b> Replit-managed accounts, plus guest access with no sign-up</li>
-              <li><b>Secrets</b> every API key kept out of the code</li>
-              <li><b>Agents in production</b> the news reader and the three voting agents run on the Replit server</li>
-            </ul>
-          </article>
-          <article class="ts-sp rv" style="--i:2;--sp:#9b6bff">
-            <header><span class="ts-dot"></span><b>RunPod</b><em>AI model serving and training</em></header>
-            <ul>
-              <li><b>Serverless</b> BAAI/bge-m3 matches CV wording to all 13,939 official skills; scales to zero when idle</li>
-              <li><b>GPU pod</b> an RTX 4090 trained our AI-exposure model in 2.5 minutes, for about US$0.04</li>
-              <li><b>Speed</b> 13,939 skills embedded in 486 s; 19,265 tasks in 3.9 s</li>
-            </ul>
-          </article>
-        </div>
-        <ol class="ts-layers rv" style="--i:3">
-          <li><span class="ts-k">Interface</span><span class="ts-chips"><i>Vanilla JS</i><i>three.js career map</i><i>GSAP</i><i>English and Bahasa Melayu</i></span></li>
-          <li><span class="ts-k">Server</span><span class="ts-chips"><i>Node 22</i><i>TypeScript</i><i>Express 5</i><i>zod</i><i>tesseract.js, local OCR</i></span></li>
-          <li><span class="ts-k">AI</span><span class="ts-chips"><i class="hl">Gemini 3.5 Flash-Lite</i><i class="hl">Gemini 3.1 Flash-Lite</i><i class="rp">bge-m3 on RunPod</i><i class="rp">our exposure model</i><i>Tavily, trusted sites only</i></span></li>
-          <li><span class="ts-k">Data</span><span class="ts-chips"><i class="rl">Replit PostgreSQL 16</i><i>ESCO v1.2.1</i><i>O*NET</i><i>ILO</i><i>DOSM</i><i>MyCOL</i></span></li>
-          <li><span class="ts-k">Quality</span><span class="ts-chips"><i>533 Vitest tests</i><i>GitHub Actions, Node 22 and 24</i><i>/api/health</i></span></li>
-        </ol>
+      <div class="ts3">
+        <article class="sp rv" style="--i:1;--sp:#f26207">
+          <header><span class="sp-logo"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 3h7v6H5zM12 9h7v6h-7zM5 15h7v6H5z" fill="#0a0e18"/></svg></span><div><b>Replit</b><em>Hosting and data</em></div></header>
+          <ul>
+            <li><b>Deployments</b>serves the live app</li>
+            <li><b>PostgreSQL 16</b>the only database</li>
+            <li><b>Clerk sign-in</b>accounts and guests</li>
+            <li><b>Secrets</b>API keys out of the code</li>
+            <li><b>Always on</b>agents run 24/7</li>
+          </ul>
+        </article>
+        <article class="sp rv" style="--i:2;--sp:#2fd4a0">
+          <header><span class="sp-logo">K</span><div><b>KrackedDevs</b><em>LLM gateway</em></div></header>
+          <ul>
+            <li><b>GPT-5.5</b>main model, every agent</li>
+            <li><b>DeepSeek-V4-Pro</b>reviews the main model</li>
+            <li><b>GPT-6-sol</b>one of three voters</li>
+            <li><b>Two vendors</b>a truly independent vote</li>
+            <li><b>One endpoint</b>OpenAI-compatible JSON</li>
+          </ul>
+        </article>
+        <article class="sp rv" style="--i:3;--sp:#a98bff">
+          <header><span class="sp-logo">R</span><div><b>RunPod</b><em>GPU compute</em></div></header>
+          <ul>
+            <li><b>Serverless</b>bge-m3, CV to 13,939 skills</li>
+            <li><b>Scales to zero</b>no cost when idle</li>
+            <li><b>GPU pod</b>RTX 4090 trained our model</li>
+            <li><b>Training</b>2.5 minutes, US$0.04</li>
+            <li><b>Speed</b>13,939 skills in 486 s</li>
+          </ul>
+        </article>
+      </div>
+      <div class="ts-row rv" style="--i:4">
+        <div><span>Interface</span>Vanilla JS, three.js, GSAP, English and BM</div>
+        <div><span>Server</span>Node 22, TypeScript, Express 5, zod</div>
+        <div><span>Data</span>ESCO, O*NET, ILO, DOSM, MyCOL</div>
+        <div><span>Quality</span>533 tests, GitHub Actions</div>
       </div>
     </div>
   </section>
@@ -1524,6 +1528,57 @@ html { scroll-snap-type: y proximity; }
 #market.in .mkt-ladder .bar i, #market .mkt.in .mkt-ladder .bar i { width: var(--w); }
 #market .mkt-ladder .what { display: block; margin-left: 78px; }
 @media (max-width: 1000px) { #market .mkt, #market .mkt-src { margin-left: 0; } }
+
+/* ---------- architecture v2 ---------- */
+.arch-svg.v2 { max-height: calc(100svh - 250px); }
+.v2 .v-col { font-size: 11px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; fill: #7f8ba3; }
+.v2 .v-person rect { fill: rgba(255,255,255,.04); stroke: rgba(170,186,214,.28); }
+.v2 .v-pt { font-size: 14px; font-weight: 600; fill: #eef2f8; }
+.v2 .v-note { font-size: 11.5px; fill: #8d9bb0; }
+.v2 .v-rl { fill: url(#v2-rl); stroke: rgba(242,98,7,.75); stroke-width: 1.4; }
+.v2 .v-kd { fill: url(#v2-kd); stroke: rgba(47,212,160,.8); stroke-width: 1.4; filter: drop-shadow(0 0 18px rgba(47,212,160,.18)); }
+.v2 .v-rp { fill: url(#v2-rp); stroke: rgba(169,139,255,.85); stroke-width: 1.4; filter: drop-shadow(0 0 18px rgba(169,139,255,.2)); }
+.v2 .v-sp { font-size: 20px; font-weight: 800; fill: #fff; letter-spacing: -.4px; }
+.v2 .v-sps { font-size: 12.5px; font-weight: 600; fill: #ff9a5c; }
+.v2 .v-sps.kd { fill: #5ee3b8; }
+.v2 .v-sps.rp { fill: #c4b2ff; }
+.v2 .v-logo { font-size: 15px; font-weight: 900; fill: #0a0e18; }
+.v2 .v-card rect { fill: url(#v2-card); stroke: rgba(170,186,214,.26); }
+.v2 .v-card.core rect { stroke: #5aa0f0; stroke-width: 1.3; }
+.v2 .v-card.gate rect { stroke: #f2b33d; stroke-width: 1.3; }
+.v2 .v-t { font-size: 15px; font-weight: 700; fill: #eef2f8; letter-spacing: -.2px; }
+.v2 .v-s { font-size: 11.5px; fill: #a9b5c9; }
+.v2 .v-db path { fill: #132038; stroke: #5aa0f0; stroke-width: 1.3; }
+.v2 .v-db .top { fill: none; }
+.v2 .v-chips rect { fill: rgba(242,98,7,.12); stroke: rgba(242,98,7,.55); }
+.v2 .v-chips text { font-size: 12px; font-weight: 600; fill: #ffd7bf; }
+.v2 .v-k { font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; fill: #8d9bb0; }
+.v2 .v-m { font-size: 14px; font-weight: 700; fill: #fff; }
+.v2 .v-ar { fill: none; stroke: #8fa3c0; stroke-width: 1.4; }
+.v2 .v-ar.b { stroke: #5aa0f0; }
+.v2 .v-ar.k { stroke: #2fd4a0; }
+.v2 .v-ar.p { stroke: #a98bff; }
+.v2 .v-ar.flow { stroke-dasharray: 7 6; animation: archflow 1.6s linear infinite; }
+.v2 .v-rule { stroke: rgba(170,186,214,.16); }
+.v2 .v-foot { font-size: 12.5px; fill: #c9d3e3; }
+.v2 .v-foot.rl { fill: #ff9a5c; font-weight: 700; }
+/* ---------- tech stack v3 ---------- */
+.ts3 { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.sp { position: relative; padding: 18px 20px 16px; border-radius: 18px; background: linear-gradient(160deg, color-mix(in srgb, var(--sp) 18%, transparent), rgba(10, 16, 28, .6) 60%); border: 1px solid color-mix(in srgb, var(--sp) 55%, transparent); box-shadow: 0 0 40px -14px color-mix(in srgb, var(--sp) 70%, transparent); }
+.sp header { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+.sp-logo { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--sp); color: #0a0e18; font-weight: 900; font-size: 18px; box-shadow: 0 0 18px color-mix(in srgb, var(--sp) 60%, transparent); }
+.sp header b { display: block; font-size: 1.3rem; font-weight: 800; letter-spacing: -.02em; color: #fff; line-height: 1.1; }
+.sp header em { font-style: normal; font-size: 13px; font-weight: 600; color: var(--sp); }
+.sp ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.sp li { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 10px; padding: 7px 0; border-top: 1px solid rgba(170, 186, 214, .12); font-size: 13.5px; line-height: 1.35; color: var(--ink-2); }
+.sp li:first-child { border-top: 0; }
+.sp li b { color: #fff; font-weight: 700; }
+.ts-row { margin-top: 16px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; font-size: 13.5px; color: var(--ink-2); }
+.ts-row span { display: block; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+@media (max-width: 1000px) { .ts3, .ts-row { grid-template-columns: 1fr; } }
+
+.sp li { grid-template-columns: 128px minmax(0, 1fr); padding: 8px 0; font-size: 14px; }
+.sp-logo svg { display: block; }
 </style>
 
 <footer>
