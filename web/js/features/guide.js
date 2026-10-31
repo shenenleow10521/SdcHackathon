@@ -1,7 +1,7 @@
 // Demo guide: walks a first-time viewer through the loop that matters most — pick a job, check the safer route,
 // look ahead to 2030, run the market scout, then approve a change and watch the route reroute.
 // It never blocks the app: the spotlight ignores clicks, any click elsewhere puts it away, and the tour is one
-// compact line that can be closed. "Tour done" is remembered in localStorage (store() wraps it in try/catch).
+// compact line that can be closed. It only runs when started from the menu.
 import { S, UI, actions, nameOf, W, matchOf, isEsco } from "../state.js";
 import { MODES, normMode } from "/shared/engine.js";
 import { t } from "../i18n.js";
@@ -11,7 +11,8 @@ import { hasRole } from "./auth.js";
 import { A, pendingCount } from "../panels/admin.js";
 
 const done = { job: false, mode: false, future: false, scout: false, signal: false };
-let skipped = store.get("tourDone", false);
+// Off by default (it got in the way of live demos); the menu's "Take the demo tour" starts it.
+let skipped = true;
 let last = null, okMsg = "", timer = 0, reroute = null, autoShown = false;
 
 const blocked = () => !$("ob")?.hidden || !$("auth")?.hidden;
