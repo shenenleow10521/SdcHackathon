@@ -70,9 +70,8 @@ export function pathSdgHtml(job, skills) {
     return `<li>${icon(g)}<div><strong>${esc(t("sdg.goal", { n: g, name: info(g).name }))}</strong>${lines}</div></li>`;
   }).join("");
   return `<section class="sdg-path" aria-labelledby="sdg-path-h">
-    <h3 class="sec-h" id="sdg-path-h"><i data-lucide="globe"></i>${esc(t("sdg.pathH"))}</h3>
+    <h3 class="sec-h" id="sdg-path-h" title="${esc(t(rule ? "sdg.pathSrcRule" : "sdg.pathSrc"))}"><i data-lucide="globe"></i>${esc(t("sdg.pathH"))}</h3>
     <ul class="sdg-list">${rows}</ul>
-    <p class="src">${esc(t(rule ? "sdg.pathSrcRule" : "sdg.pathSrc"))}</p>
   </section>`;
 }
 

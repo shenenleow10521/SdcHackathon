@@ -25,8 +25,10 @@ const hoursText = h => t("common.hours", { h: Math.max(1, Math.round(h)) });
 const courseOf = id => (S.graph?.courses?.[id] || [])[0] || null;
 const canCheck = id => N(id)?.type === "skill" && !S.profileFallback;
 const stepName = s => (s.kind === "upskill" && s.levelFrom != null && s.levelTo != null ? t("path.upTitle", { name: s.name || nameOf(s.skillId), from: s.levelFrom, to: s.levelTo }) : s.name || nameOf(s.skillId));
-/** Key steps are numbered in route order, like the map; other skills ("also needed") are not. */
-const numbered = steps => { let n = 0; return steps.map(s => ({ ...s, n: s.key ? ++n : 0 })); };
+/** Steps are numbered like the map: route steps first, then (for a catalogue job) the other skills to learn. An ESCO
+ *  job's map clusters its many other skills ("+6"), so there only the route steps get numbers. */
+const numbered = (steps, all = true) => { let n = 0; return steps.map(s => ({ ...s, n: s.key || (all && s.kind !== "upskill") ? ++n : 0 })); };
+const catalogueGoal = v => !String(v?.goal?.job || "").startsWith("esco:");
 
 // ---------- the step row ----------
 function proofLine(p, id) {
@@ -87,7 +89,7 @@ const figs = (weeksLeft, done, total) => `<div class="gl-figs">
 // ---------- the two tracks ----------
 // hero: this track is the goal, shown first with big figures.
 function moveCard(v, hero = false) {
-  const steps = numbered(v.steps || []);
+  const steps = numbered(v.steps || [], catalogueGoal(v));
   const head = `<div class="gl-kick">${esc(t(hero ? "goal.heroKicker" : "goal.moveKicker"))}</div>
     <div class="ms-gh"><h2>${esc(v.goal.title || nameOf(v.goal.job))}</h2><span class="ms-meta">${esc(t("goal.setOn", { date: day(v.goal.setAt) }))}</span></div>`;
   if (v.noRoute || !steps.length) return `<section class="ms-card gl-track${hero ? " gl-hero" : ""}">${head}<p class="ms-line">${esc(v.noRoute ? t("path.noRouteBody", { year: when() }) : t("track.nothingLeft"))}</p>${links(v)}</section>`;
@@ -120,7 +122,7 @@ function stayCard(st, withDates, hero = false) {
 function weekCard(v, st) {
   const hpw = v?.hoursPerWeek || S.profile.hours;
   let nx = null;
-  if (v) nx = numbered(v.steps || []).find(s => !s.done) || null;
+  if (v) nx = numbered(v.steps || [], catalogueGoal(v)).find(s => !s.done) || null;
   if (!nx && st && !v) { const x = st.items.find(i => !i.done); if (x) { nx = { skillId: x.id, name: x.name, hours: x.hours, n: 0, course: x.course || null }; } }
   if (!v && !nx) return "";
   let next;

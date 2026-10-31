@@ -81,7 +81,10 @@ function orbitOrder(ring) {
 function routeChain() {
   if (UI.escoJob) return escoChain();
   const p = D.plan;
-  return UI.picked && UI.job && p?.route ? p.route.nodes : null;
+  if (!(UI.picked && UI.job && p?.route)) return null;
+  // one line in learning order: the route's bridge skills, then the job's other skills to learn (steps 2, 3...), then the job
+  const nodes = p.route.nodes, also = alsoNeeded().filter(k => !nodes.includes(k));
+  return also.length ? [...nodes.slice(0, -1), ...also, nodes[nodes.length - 1]] : nodes;
 }
 /** Route view is on in the Plan and My goal tabs while a route is open, unless "Show all jobs" was pressed. */
 export const routeView = () => (UI.tab === "path" || UI.tab === "goal") && UI.view === "user" && !UI.routeAll && !!routeChain();
@@ -98,7 +101,7 @@ function routeLayout() {
   const extra = xp ? xp.missing.filter(m => !ch.includes(mapId(m.id))).map(m => ({ id: mapId(m.id), group: m.group ? mapId(m.group) : null }))
     : [...(D.plan?.extras || []).map(x => ({ id: x.id, group: null })), ...(D.plan?.ups || []).filter(u => !ch.includes(u.id)).map(u => ({ id: u.id, group: null }))];
   const count = new Map(), job = ch[n - 1];
-  extra.forEach(m => {
+  extra.filter(m => !target[m.id]).forEach(m => {
     const key = m.group && target[m.group] ? m.group : job, c = target[key], i = count.get(key) || 0;
     count.set(key, i + 1);
     const real = !!N(m.id) && !isEsco(m.id); // a catalogue skill keeps its labelled ball, so give it more room
@@ -108,6 +111,13 @@ function routeLayout() {
   LAYOUT.target = target; LAYOUT.cluster = count;
   LAYOUT.visible = new Set(Object.keys(target));
   return "route|" + Object.keys(target).sort().join(",") + "|" + ch.join(">");
+}
+
+/** The selected catalogue job's other skills to learn (steps 2, 3...: not on the route line). ESCO jobs cluster theirs. */
+function alsoNeeded() {
+  const p = D.plan;
+  if (UI.escoJob || !p?.route || !S.E) return [];
+  return (p.missing || []).filter(m => !m.key && m.kind !== "upskill" && N(m.id) && S.E.isSkill(m.id)).map(m => m.id);
 }
 
 function computeLayout() {
@@ -175,9 +185,21 @@ function computeLayout() {
     const a = i * 2.39996, r = (key === "job" ? 20 : 13) + 3.4 * Math.sqrt(i);
     target[mapId(m.id)] = { x: centre.x + r * Math.cos(a), y: centre.y - 3, z: centre.z + r * Math.sin(a) };
   });
+  // The selected job's other skills to learn leave the shared ring and step along the route's last leg towards the job,
+  // so the line runs 1, 2, 3 to the job (they go back to the ring when the job is deselected).
+  const also = alsoNeeded().filter(k => !(D.plan.route.nodes || []).includes(k)), jt = target[UI.job];
+  if (also.length && jt) {
+    const stops = (D.plan.route.nodes || []).filter(k => target[k] && k !== UI.job && k !== E.root);
+    const st = target[stops[stops.length - 1]] || target[E.root];
+    const dx = jt.x - st.x, dz = jt.z - st.z, len = Math.hypot(dx, dz) || 1, px = -dz / len, pz = dx / len;
+    also.forEach((k, i) => {
+      const f = (i + 1) / (also.length + 1), side = (i % 2 ? -1 : 1) * 12; // a slight zig so labels don't stack
+      target[k] = { x: st.x + dx * f + px * side, y: st.y + (jt.y - st.y) * f, z: st.z + dz * f + pz * side };
+    });
+  }
   LAYOUT.target = target; LAYOUT.cluster = new Map();
   LAYOUT.visible = new Set(Object.keys(target));
-  return Object.keys(target).sort().join(",") + "|" + ring.join(",") + "|" + ring.map(j => Math.round(rad[j])).join(",") + "|" + Object.values(ang).join(",") + "|" + (xp ? xp.id + xp.keys.join(",") + (xp.route || []).join(",") : "");
+  return "also:" + also.join(",") + "|" + Object.keys(target).sort().join(",") + "|" + ring.join(",") + "|" + ring.map(j => Math.round(rad[j])).join(",") + "|" + Object.values(ang).join(",") + "|" + (xp ? xp.id + xp.keys.join(",") + (xp.route || []).join(",") : "");
 }
 
 function graphLinks() {
@@ -185,8 +207,10 @@ function graphLinks() {
   // You-to-skill links exist only so a route's first leg can be drawn; they never show on their own
   for (const k of E.ownedSkills()) if (vis.has(k)) out.push({ source: root, target: k, key: root + ">" + k, from: root, to: k, kind: "own" });
   for (const e of S.graph.edges) if (vis.has(e.from) && vis.has(e.to)) out.push({ source: e.from, target: e.to, key: e.from + ">" + e.to, from: e.from, to: e.to, kind: e.kind });
-  const ch = escoChain();
-  if (ch) for (let i = 1; i < ch.length; i++) if (vis.has(ch[i - 1]) && vis.has(ch[i])) out.push({ source: ch[i - 1], target: ch[i], key: ch[i - 1] + ">" + ch[i], from: ch[i - 1], to: ch[i], kind: "xroute" });
+  // the route line's legs that are not skill links of their own (an ESCO route, or a catalogue job's steps 2, 3...)
+  const keys = new Set(out.map(l => l.key));
+  const ch = escoChain() || (!UI.escoJob ? routeChain() : null);
+  if (ch) for (let i = 1; i < ch.length; i++) if (!keys.has(ch[i - 1] + ">" + ch[i])) if (vis.has(ch[i - 1]) && vis.has(ch[i])) out.push({ source: ch[i - 1], target: ch[i], key: ch[i - 1] + ">" + ch[i], from: ch[i - 1], to: ch[i], kind: "xroute" });
   return out;
 }
 
@@ -225,7 +249,7 @@ const posOf = id => OBJ[id] ? { x: OBJ[id].fx, y: OBJ[id].fy, z: OBJ[id].fz } : 
 function pathKeys() {
   const s = new Set();
   if (UI.escoJob) { const ch = escoChain(); if (ch) for (let i = 1; i < ch.length; i++) s.add(ch[i - 1] + ">" + ch[i]); return s; }
-  const p = D.plan; if (p?.route) p.route.legs.forEach(l => s.add(l.from + ">" + l.to)); return s;
+  const ch = routeChain(); if (ch) for (let i = 1; i < ch.length; i++) s.add(ch[i - 1] + ">" + ch[i]); return s;
 }
 export const onPlan = id => {
   if (UI.escoJob) { const ch = escoChain(); return !!ch && ch.includes(id) && id !== S.E.root; }
@@ -496,7 +520,11 @@ export function updateLabels() {
   let step = 0; const stepOf = {};
   const p = D.plan, ch = escoChain();
   if (UI.escoJob) (ch || []).forEach(k => { if (kindOf(k) === "learn") stepOf[k] = ++step; });
-  else if (p?.route) p.route.nodes.forEach(k => { if (kindOf(k) === "learn") stepOf[k] = ++step; });
+  else if (p?.route) {
+    p.route.nodes.forEach(k => { if (kindOf(k) === "learn") stepOf[k] = ++step; });
+    // a catalogue job's other skills to learn are numbered too, after the route, in the plan's order (= My goal's list)
+    (p.missing || []).forEach(m => { if (!m.key && m.kind !== "upskill" && !stepOf[m.id] && kindOf(m.id) === "learn") stepOf[m.id] = ++step; });
+  }
   Object.entries(labelEls).forEach(([id, el]) => {
     const n = N(id); if (!n && !isEsco(id) && !S.xsNames[id]) return;
     const kind = kindOf(id), real = !!n && E.isSkill(id), tk = real && E.taken(id), imp = real ? E.impact(id).label : "";
@@ -510,7 +538,7 @@ export function updateLabels() {
     } else if (kind === "learn") {
       if (stepOf[id]) cls += " stop"; el._step = stepOf[id] || 0;
       // in route view a numbered step also counts the other missing skills clustered round it ("+6")
-      const more = stepOf[id] && routeView() ? LAYOUT.cluster.get(id) || 0 : 0;
+      const more = stepOf[id] && routeView() && UI.escoJob ? LAYOUT.cluster.get(id) || 0 : 0; // catalogue extras have their own numbers
       html = `${stepOf[id] ? `<span class="n">${stepOf[id]}</span>` : ""}<span class="tx">${esc(nameOf(id))}${n?.emerging ? ` <span class="tg new">${esc(t("map.new"))}</span>` : ""}${S.xsMeta?.[id]?.aiEra ? ` <span class="tg aiera">${esc(t("map.aiEra"))}</span>` : ""}</span>${more ? `<span class="more">+${more}</span>` : ""}`;
     }
     else html = `${esc(nameOf(id))}${tk ? ` <span class="tg taken">${esc(t("map.tookOver"))}</span>` : imp === "Declining" ? ` <span class="tg risk">${esc(t("map.atRisk"))}</span>` : imp === "Rising human skill" ? ` <span class="tg human">${esc(t("map.humanEdge"))}</span>` : ""}`;

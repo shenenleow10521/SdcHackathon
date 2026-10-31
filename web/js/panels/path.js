@@ -126,6 +126,9 @@ function aboutHtml(j) {
     </details>`;
 }
 
+/** The future check under the two figures: how the plan holds up and what AI could take, as one quiet box. */
+const outlook = html => (html.trim() ? `<div class="outlook">${html}</div>` : "");
+
 // Back to the job list: the route page lives under Explore, like a map app's directions
 // ...or back to My goal, when the route was opened from there ("See route on map")
 const backRow = () => UI.backTo === "goal"
@@ -144,9 +147,8 @@ export function render() {
       <h2>${esc(n.name)}</h2>
       ${figs(matchOf(j), p?.route ? W(p.ready) : null, whyBtn("match", j), p?.route ? whyBtn("weeks", j) : "")}
       ${UI.employer ? `<div class="emp-chip">${badge("b-info", t("emp.at", { name: UI.employer.name }), "building-2")}<button class="ghost sm" type="button" id="emp-clear"><i data-lucide="x"></i>${esc(t("emp.clear"))}</button></div>` : ""}
-      ${stressLine(j)}
-      ${futuresLine(j, UI.mode, UI.employerReq)}
-      ${mine ? `<button class="link-btn goal-back" type="button" data-tab-goal><i data-lucide="list-checks"></i>${esc(t("goal.seeProgress"))}</button>` : `<button class="btn btn-primary goal-set" id="goal-set" type="button" ${p?.route ? "" : "disabled"}><i data-lucide="flag"></i>${esc(t(g ? "goal.switch" : "goal.set"))}</button>
+      ${outlook(stressLine(j) + futuresLine(j, UI.mode, UI.employerReq))}
+      ${mine ? `<button class="btn btn-soft goal-set" type="button" data-tab-goal><i data-lucide="list-checks"></i>${esc(t("goal.seeProgress"))}</button>` : `<button class="btn btn-primary goal-set" id="goal-set" type="button" ${p?.route ? "" : "disabled"}><i data-lucide="flag"></i>${esc(t(g ? "goal.switch" : "goal.set"))}</button>
         ${goalNote(g)}`}
     </header>`;
   const options = routeChoice(j);
@@ -203,7 +205,7 @@ function escoRender() {
   const head = `<header class="goal-head">
       <h2>${esc(nameOf(id))}</h2>
       ${r.match != null ? `${figs(r.match, xp && !xp.none ? escoPlanWeeks(xp) : null)}${n ? haveLine(have ?? 0, close, n, r.match) : ""}` : ""}
-      ${futuresLine(null)}
+      ${outlook(futuresLine(null))}
       ${goalNote(g)}
     </header>`;
   const details = `<button class="btn btn-ghost sm" type="button" data-esco-sheet="${esc(id.slice(5))}"><i data-lucide="info"></i>${esc(t("jobs.escoDetails"))}</button>`;
