@@ -500,7 +500,7 @@ svg.lucide { width: 16px; height: 16px; stroke-width: 2; flex: none; }
 .cov.part { background: var(--warn-wash); color: var(--warn); }
 .cov.none { background: var(--panel-2); color: var(--muted); border: 1px solid var(--line); }
 .big-pct { font-size: 40px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
-.sdg { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; align-items: center; font-size: 12.5px; color: var(--ink-2); }
+.sdg { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; align-items: center; font-size: 12.5px; color: var(--ink-2); }
 .sdg b { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; color: #fff; font-family: var(--mono); font-size: 13px; }
 .src { font-size: 11.5px; color: var(--muted); margin: 0; }
 
@@ -1633,3 +1633,38 @@ sup.cite { font-size: 10px; font-weight: 700; color: var(--accent); margin-left:
 @media (min-width: 981px) { .toast { top: 112px; left: 50%; } }
 .hr-tabs .count { margin-left: 6px; }
 .hr-tabs .count[hidden] { display: none; }
+
+/* ---------- SDG mapping (features/sdg.js) ---------- */
+.sdg-sq { width: 34px; height: 34px; border-radius: 8px; display: inline-grid; place-items: center; color: #fff; font-family: var(--mono); font-size: 13px; font-weight: 700; flex: none; }
+.sdg-sq.sm { width: 20px; height: 20px; border-radius: 5px; font-size: 10.5px; }
+.sdg-rows { display: grid; gap: 8px; }
+.sdg-ic { width: 44px; height: 44px; border-radius: 4px; display: block; }
+.sdg-sec .src { margin-top: 8px; }
+.sdg-dots { display: inline-flex; gap: 3px; margin-left: auto; }
+.sdg-path { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--panel); padding: 14px; display: grid; gap: 10px; }
+.sdg-path .sec-h { margin: 0; }
+.sdg-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.sdg-list li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; align-items: start; }
+.sdg-list li > div { display: grid; gap: 2px; font-size: 12.5px; color: var(--ink-2); }
+.sdg-list strong { color: var(--ink); font-weight: 600; }
+
+/* ---------- AI futures (features/futures.js) ---------- */
+.fut-line { display: flex; gap: 6px; align-items: flex-start; margin: 2px 0; font-size: 12.5px; color: var(--ink-2); }
+.fut-line svg { width: 15px; height: 15px; flex: none; margin-top: 1px; color: var(--ink-2); }
+.fut-line .link-btn { font-size: 12.5px; }
+.futures .sec-h .badge { margin-left: 2px; }
+.fut-shifts { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 12.5px; color: var(--ink); }
+.fut-more { margin-top: 8px; }
+.fut-more > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; font-weight: 550; color: var(--accent); }
+.fut-more > summary::-webkit-details-marker { display: none; }
+.fut-more > summary svg { width: 14px; height: 14px; transition: transform .2s ease-out; }
+.fut-more[open] > summary svg { transform: rotate(180deg); }
+.fut-more > .note { margin: 8px 0; }
+.fut-tbl th[scope="row"] { font-weight: 500; color: var(--ink-2); font-size: 12px; white-space: normal; }
+.fut-tbl thead th { text-align: right; }
+.fut-tbl thead .link-btn { font-size: 11.5px; font-weight: 600; color: var(--ink-2); }
+.fut-tbl td { text-align: right; }
+.fut-tbl .grp th { padding-top: 12px; font-size: 11.5px; font-weight: 600; color: var(--ink); text-transform: none; border-bottom: 1px solid var(--line); }
+.fut-tbl .now { background: var(--panel-2); color: var(--ink); font-weight: 600; }
+.fut-tbl thead .now .link-btn { color: var(--ink); }
+.futures .src { margin-top: 8px; }

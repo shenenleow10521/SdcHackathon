@@ -4,8 +4,9 @@
 // then "Also needed". Catalogue jobs and ESCO jobs (from the map, the list or the search box) share this layout.
 // Steps show hours (they add up exactly); only the total is in weeks, with its hours shown. Progress on your goal lives
 // in the My goal tab (renderGoal below).
-// Below: the future stress test, and (collapsed) facts about the job, then cost, deadline and sending the plan to an advisor.
-import { S, UI, D, N, nameOf, cap, W, actions, profileId, kindOf, matchOf, currentJobTitle, escoRow, escoPlanWeeks, isAiEra } from "../state.js";
+// Right under the header: how the path supports the UN goals (features/sdg.js). Below the route: the same plan in four
+// futures side by side (features/futures.js), then the future stress test, and (collapsed) facts about the job, then cost, deadline and sending the plan to an advisor.
+import { S, UI, D, N, when, nameOf, cap, W, actions, profileId, kindOf, matchOf, currentJobTitle, escoRow, escoPlanWeeks, isAiEra } from "../state.js";
 import { normMode, stressTest, yearOf } from "/shared/engine.js";
 import { get } from "../api.js";
 import { t } from "../i18n.js";
@@ -19,6 +20,8 @@ import { splitBar } from "./skills.js";
 import { previewRoute } from "../graph3d.js";
 import { saferLine, saferWeeks, aiEraBadge } from "../features/safer.js";
 import { openSheet } from "../features/views.js";
+import { pathSdgHtml, escoSkill } from "../features/sdg.js";
+import { futuresHtml, futuresLine, bindFutures } from "../features/futures.js";
 
 const server = { key: "", data: null, err: null, loading: false, seq: 0 };
 const ICON = { start: "user-round", reuse: "check", upskill: "arrow-up", evolve: "refresh-cw", reskill: "plus", arrive: "flag" };
@@ -115,8 +118,8 @@ function aboutHtml(j) {
       <div class="more-in">
         ${n.blurb ? `<p class="note">${esc(n.blurb)}</p>` : ""}
         ${openingsHtml(n.name)}
-        <div class="msec"><h4>${esc(t("drawer.whoWork", { year: S.year }))}</h4>${splitBar(j, "job")}
-          <p class="note">${esc(t("drawer.expLine", { e: Math.round(E.exposure(j) * 100), d: sign(E.demand(j)), year: S.year }))} ${srcBadge(n.outlookSource)}</p></div>
+        <div class="msec"><h4>${esc(t("drawer.whoWork", { year: when() }))}</h4>${splitBar(j, "job")}
+          <p class="note">${esc(t("drawer.expLine", { e: Math.round(E.exposure(j) * 100), d: sign(E.demand(j)), year: when() }))} ${srcBadge(n.outlookSource)}</p></div>
         <div class="msec"><h4>${esc(t("drawer.asks"))}</h4>${jobAsks(j)}</div>
         ${n.malaysia ? `<p class="note">${esc(t("path.dosm", { group: t("esco.my.g." + n.malaysia.group), rm: rm(n.malaysia.medianWageRm), year: n.malaysia.year }))} ${extLink(n.malaysia.url, "OpenDOSM")}</p>` : ""}
         <button class="btn btn-soft" type="button" data-open="${esc(j)}"><i data-lucide="briefcase"></i>${esc(t("path.aboutAll"))}</button>
@@ -145,17 +148,19 @@ export function render() {
       ${UI.employer ? `<div class="emp-chip">${badge("b-info", t("emp.at", { name: UI.employer.name }), "building-2")}<button class="ghost sm" type="button" id="emp-clear"><i data-lucide="x"></i>${esc(t("emp.clear"))}</button></div>` : ""}
       ${sum}
       ${stressLine(j)}
+      ${futuresLine(j, UI.mode, UI.employerReq)}
       ${mine ? `<button class="link-btn goal-back" type="button" data-tab-goal><i data-lucide="list-checks"></i>${esc(t("goal.seeProgress"))}</button>` : `<button class="btn btn-primary goal-set" id="goal-set" type="button" ${p?.route ? "" : "disabled"}><i data-lucide="flag"></i>${esc(t(g ? "goal.switch" : "goal.set"))}</button>
         ${goalNote(g)}`}
     </header>`;
   const options = routeChoice(j);
-  if (!p?.route) return `<div class="stack">${backRow()}${head}<p class="note">${esc(t("path.noRouteBody", { year: S.year }))}</p>${aboutHtml(j)}</div>`;
+  const sdgBox = pathSdgHtml(j, (p?.missing || []).map(m => ({ id: m.id })));
+  if (!p?.route) return `<div class="stack">${backRow()}${head}${sdgBox}<p class="note">${esc(t("path.noRouteBody", { year: when() }))}</p>${futuresHtml(j, UI.mode, UI.employerReq)}${aboutHtml(j)}</div>`;
 
   const done = new Set(mine ? g.done : []);
   const hoursOf = id => (p.missing || []).find(m => m.id === id)?.hours ?? null;
   let k = 0;
   const root = E.root;
-  const rows = [stepRow({ kind: "start", title: currentJobTitle() ? t("path.youToday", { job: currentJobTitle() }) : t("path.youTodayNoJob"), sub: E.taken(root) ? t("path.youTakenShort", { year: S.year }) : "", node: root })];
+  const rows = [stepRow({ kind: "start", title: currentJobTitle() ? t("path.youToday", { job: currentJobTitle() }) : t("path.youTodayNoJob"), sub: E.taken(root) ? t("path.youTakenShort", { year: when() }) : "", node: root })];
   p.route.legs.forEach(l => {
     const kind = kindOf(l.to);
     if (kind === "have") rows.push(stepRow({ kind: "reuse", title: nameOf(l.to), sub: t("path.have", { n: E.lvl(l.to) }), node: l.to }));
@@ -174,10 +179,12 @@ export function render() {
   });
   return `<div class="stack">
     ${backRow()}${head}
+    ${sdgBox}
     <section><h3 class="sec-h">${esc(t("path.routeYours"))}<span class="sec-meta">${esc(t("mode." + normMode(UI.mode)))}</span></h3>
       ${options}
       <ol class="steps">${rows.join("")}</ol>
     </section>
+    ${futuresHtml(j, UI.mode, UI.employerReq)}
     ${stressHtml(j)}
     ${aboutHtml(j)}
     <details class="more" id="plan-more"${UI.planMore ? " open" : ""}>
@@ -201,11 +208,13 @@ function escoRender() {
       <h2>${esc(nameOf(id))}</h2>
       ${r.match != null ? `${figs(r.match, xp && !xp.none ? escoPlanWeeks(xp) : null)}${n ? haveLine(have ?? 0, close, n, r.match) : ""}` : ""}
       ${xp && !xp.none && escoPlanWeeks(xp) != null ? readySum(escoPlanWeeks(xp), (xp.missing || []).some(m => m.estimated), "", xp.totalHours) : ""}
+      ${futuresLine(null)}
       ${goalNote(g)}
     </header>`;
   const details = `<button class="btn btn-ghost sm" type="button" data-esco-sheet="${esc(id.slice(5))}"><i data-lucide="info"></i>${esc(t("jobs.escoDetails"))}</button>`;
   if (!xp) return `<div class="stack">${backRow()}${head}${loadingBox(t("jobs.escoLoading"))}</div>`;
-  if (xp.none || !xp.route) return `<div class="stack">${backRow()}${head}${details}</div>`;
+  const sdgBox = pathSdgHtml(id, (xp.missing || []).map(m => escoSkill(mid(m.id), m.name)));
+  if (xp.none || !xp.route) return `<div class="stack">${backRow()}${head}${sdgBox}${details}${futuresHtml(null)}</div>`;
   // the route choice: "Safer route available" (only sent when it differs), or on the safer route a way back
   const safest = normMode(UI.mode) === "safest";
   const options = xp.safer && !safest ? card("safest", t("path.saferH"), saferLine(xp.safer.avoids || [], nm), xp.safer.addedWeeks != null ? `<span class="risk">${esc(saferWeeks(xp.safer.addedWeeks))}</span>` : "")
@@ -233,11 +242,13 @@ function escoRender() {
   const emerging = (xp.emerging || []).length ? `<div class="esco-emg"><span class="esco-emg-k">${esc(t("jobs.escoEmerging"))}</span>${xp.emerging.slice(0, 3).map(e => `<button class="link-btn" type="button" data-xs="xs:${esc(e)}">${esc(nameOf("xs:" + e))}</button>`).join("")}</div>` : "";
   return `<div class="stack">
     ${backRow()}${head}
+    ${sdgBox}
     <section><h3 class="sec-h">${esc(t("path.routeYours"))}<span class="sec-meta">${esc(t("mode." + normMode(UI.mode)))}</span></h3>
       ${options}
       <ol class="steps">${rows.join("")}</ol>
       ${emerging}
     </section>
+    ${futuresHtml(null)}
     ${details}
   </div>`;
 }
@@ -484,6 +495,7 @@ export function bind(el) {
   const gg = el.querySelector("#goto-goal"); if (gg) gg.addEventListener("click", () => { const g = goal(); if (g) { UI.mode = g.mode || UI.mode; actions.showPath(g.job); } });
   el.querySelectorAll("[data-esco-sheet]").forEach(b => b.addEventListener("click", () => openSheet("esco", b.dataset.escoSheet)));
   el.querySelectorAll("[data-xs]").forEach(b => b.addEventListener("click", () => actions.openDrawer(b.dataset.xs)));
+  bindFutures(el);
   const jm = el.querySelector("#job-more"); if (jm) jm.addEventListener("toggle", () => { UI.jobMore = jm.open; });
   const ec = el.querySelector("#emp-clear"); if (ec) ec.addEventListener("click", () => actions.setEmployer(null));
   const box = $("plan-server"); if (box) bindServer(box);

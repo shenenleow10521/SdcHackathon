@@ -184,8 +184,8 @@ Grouped by priority: the first group is the demo path. **Status:** ✅ **Works**
 | 2. AI-trend signal layer (updatable, dated) | Daily Job market researcher on 74 vetted sites; every signal dated, quoted and checked; versioned knowledge base |
 | 3. Future-role matching + skills gap | Match % and skill gap per job, per employer, and for any of 3,039 ESCO jobs |
 | 4. Personalised reskilling pathway | Fastest / Balanced / Safest routes at your weekly hours, with real courses and RM cost |
-| 5. SDG mapping | Every job and skill tagged with a UN goal and a one-line reason (checked by a test); SDG-aware ranking |
-| 6. More than one future scenario | Steady vs Fast AI spread, 2026–2030 slider, and each plan replayed in 1,000 futures |
+| 5. SDG mapping | Every job and skill tagged with a UN goal and a one-line reason: hand-written for the catalogue, a rule (topic words, then ISCO group) for all 3,039 ESCO jobs and 13,939 ESCO skills (checked by a test). The Plan tab shows how the chosen path supports each goal; SDG-aware ranking |
+| 6. More than one future scenario | Slow / Expected / Fast AI adoption, measured from the user (now, when job-ready, in N years; data runs to 2030). The Plan tab leads with the expected value and its range, says what shifts (top pick, route skills, weeks) and labels it all as estimates; each plan replayed in 1,000 futures |
 
 **Humans stay in control:** no plan changes without the worker's or an advisor's approval; any change that would reroute someone needs a person; saved plans are offered a new route to *keep or switch*.
 

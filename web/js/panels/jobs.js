@@ -8,10 +8,13 @@ import { $, esc, icons, errorBox, loadingBox, bindRetry } from "../util.js";
 import { openSheet } from "../features/views.js";
 import { isGoal } from "../features/goal.js";
 import { stayTrack } from "../features/stay.js";
+import { sdgDots } from "../features/sdg.js";
 
 export function render() {
   const sec = (S.graph.sectors || []).find(s => s.id === UI.sector) || { name: t("jobs.best"), note: "" };
-  const sdgs = S.graph.sdgs || {};
+  // only goals some catalogue job serves can re-rank the list
+  const onJobs = new Set(Object.values(S.graph.nodes).filter(n => n.type === "job").flatMap(n => (n.sdg || []).map(x => String(x[0]))));
+  const sdgs = Object.fromEntries(Object.entries(S.graph.sdgs || {}).filter(([k]) => onJobs.has(k)));
   const open = UI.explore || UI.sector !== "best" || !!UI.sdg;
   const list = listJobs();
   const total = (S.escoJobs || 3039).toLocaleString("en-MY");
@@ -92,6 +95,7 @@ function escoCard(id) {
     <div class="job-top"><div class="job-name">${esc(nameOf(id))}</div><div class="job-pct"><b>${esc(String(r.match))}%</b><span>${esc(t("jobs.matchWord"))}</span></div></div>
     <div class="job-row"><span>${wk ? esc(t("jobs.readyLine", { w: wk })) : ""}</span>${r.critical ? `<span class="dem d-up"><i data-lucide="trending-up"></i>${esc(t("esco.criticalShort"))}</span>` : ""}</div>
     <div class="job-counts">${esc(counts)}</div>
+    <div class="job-tags">${sdgDots(id)}</div>
     ${on ? openRow(id) : ""}
   </div>`;
 }
@@ -135,6 +139,7 @@ function jobCard(j) {
     j === UI.pinned ? `<span class="jtag">${esc(t("jobs.searched"))}</span>` : "",
     rr?.sdgFit ? `<span class="jtag">${esc(t("sdg.fit", { sdg: UI.sdg }))}</span>` : "",
     moved ? `<span class="jtag">${esc(t(moved > 0 ? "jobs.movedUp" : "jobs.movedDown", { n: Math.abs(moved) }))}</span>` : "",
+    sdgDots(j),
   ].filter(Boolean);
   return `<div class="job${mine ? " goal" : ""}${on ? " on" : ""}" data-card="${esc(j)}" aria-current="${on}">
     <button class="job-hit" type="button" data-job="${esc(j)}" aria-pressed="${on}" aria-label="${esc(t("jobs.cardAria", { job: n.name, match: m }))}"></button>

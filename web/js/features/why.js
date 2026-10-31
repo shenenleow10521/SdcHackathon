@@ -1,7 +1,7 @@
 // "Why this number?" — every match %, weeks and exposure figure has a small (i) button that opens this popover:
 // the formula in plain words, the inputs behind it, where each record comes from, the knowledge-base version,
 // applied signals (GET /api/signals?node=) and, when available, an AI-written, fact-checked explanation (GET /api/explain).
-import { S, UI, D, N, nameOf, W, profileId, kindOf } from "../state.js";
+import { S, UI, D, N, nameOf, W, profileId, kindOf, when, scope } from "../state.js";
 import { PARAMS } from "/shared/engine.js";
 import { get } from "../api.js";
 import { t } from "../i18n.js";
@@ -68,7 +68,7 @@ function open(kind, id, anchor) {
     <div class="pop-body">${body.html}
       <div class="pop-sec" data-signals-sec><h4>${esc(t("why.signals"))}</h4><div data-signals>${loadingBox()}</div></div>
       ${body.explain ? `<div class="pop-sec" data-explain-sec><h4>${esc(t("why.inWords"))}</h4><div data-explain>${loadingBox(t("why.explaining"))}</div></div>` : ""}
-      <p class="src">${esc(t("why.scenarioLine", { year: S.year, scenario: t("scn." + S.scenario), date: fmtDate(S.graph.kbCreatedAt) }))}</p>
+      <p class="src">${esc(t("why.scenarioLine", { scope: scope(), date: fmtDate(S.graph.kbCreatedAt) }))}</p>
     </div>`;
   document.body.appendChild(pop);
   pop.querySelector("[data-pop-close]").addEventListener("click", close);
@@ -171,7 +171,7 @@ function weeksBody(job) {
   const html = `${p.route ? `<p class="pop-lead">${esc(t("why.leadWeeks", { w: W(p.ready), h }))}</p>` : ""}
     ${p.route ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>${esc(t("why.col.step"))}</th><th>${esc(t("why.col.ref"))}</th><th>${esc(t("why.col.you", { h }))}</th></tr></thead><tbody>${legRows}${upRows}${exRows}</tbody>
       <tfoot><tr><td>${esc(t("why.jobReady"))}</td><td class="num">${p.ready}</td><td class="num"><b>${W(p.ready)}</b></td></tr></tfoot></table></div>`
-      : `<p class="note">${esc(t("path.noRouteBody", { year: S.year }))}</p>`}
+      : `<p class="note">${esc(t("path.noRouteBody", { year: when() }))}</p>`}
     <details class="pop-more"><summary>${esc(t("why.howCalc"))}</summary><p class="formula">${esc(t("why.weeksFormula", { h }))}</p>
       <ul class="formula-notes"><li>${esc(t("why.weeksMode." + UI.mode))}</li><li>${esc(t("why.weeksClosed"))}</li></ul></details>
     <p class="src">${esc(t("why.edgesSrc"))}</p>`;
@@ -183,8 +183,8 @@ function exposureBody(id) {
   const e = n.e || [0, 0, 0], d = n.d || [0, 0, 0];
   const dE = S.graph.deltas?.e?.[id] || 0, dD = S.graph.deltas?.d?.[id] || 0;
   const thr = PARAMS.takenBase - PARAMS.takenTideSlope * E.tide();
-  const html = `<p class="pop-lead">${esc(t("why.expNow", { year: S.year, scenario: t("scn." + S.scenario), e: Math.round(E.exposure(id) * 100), d: sign(E.demand(id)) }))}</p>
-    <div class="tbl-wrap"><table class="tbl"><thead><tr><th></th><th>2026</th><th>${esc(t("why.col.mod"))}</th><th>${esc(t("why.col.fast"))}</th></tr></thead><tbody>
+  const html = `<p class="pop-lead">${esc(t("why.expNow", { scope: scope(), e: Math.round(E.exposure(id) * 100), d: sign(E.demand(id)) }))}</p>
+    <div class="tbl-wrap"><table class="tbl"><thead><tr><th></th><th>${esc(t("why.col.now"))}</th><th>${esc(t("why.col.mod"))}</th><th>${esc(t("why.col.fast"))}</th></tr></thead><tbody>
       <tr><td>${esc(t("common.exposure"))}</td>${e.map(v => `<td class="num">${Math.round(v * 100)}%</td>`).join("")}</tr>
       <tr><td>${esc(t("common.demand"))}</td>${d.map(v => `<td class="num">${sign(v)}</td>`).join("")}</tr></tbody></table></div>
     ${E.taken(id) && (E.isSkill(id) || kindOf(id) === "you") ? `<p class="note">${esc(t("why.tookOverNow"))}</p>` : ""}

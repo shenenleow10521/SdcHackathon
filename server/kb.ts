@@ -1,6 +1,9 @@
 // Knowledge-base snapshots. The graph at version V = seed tables + every kb_change with kb_version <= V
 // (minus changes undone by a 'revert' change at or before V). Versions are immutable, so snapshots are cached.
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import type { Db } from "./lib/db.ts";
+import { projectRoot } from "./lib/db.ts";
 import { HAVE_LEVEL } from "../shared/engine.js";
 import { escoReq, ESCO_REQ_WEIGHT, catalogueIsco, mycolFor, dosmFor, type EscoReq } from "./lib/esco-labels.ts";
 
@@ -56,6 +59,19 @@ export async function loadGraph(db: Db, version?: number | "latest"): Promise<Fu
 
 export function clearGraphCache(db: Db) { cache.delete(db); }
 
+// SDG tags from the seed file, for databases seeded before every catalogue job and skill had one: a missing tag in the
+// database falls back to the seed's hand-written one, so the map never shows an untagged catalogue job or skill.
+let seedSdgCache: Record<string, any> | null = null;
+function seedSdg(): Record<string, any> {
+  if (!seedSdgCache) {
+    try {
+      const k = JSON.parse(readFileSync(path.join(projectRoot, "db", "seed", "knowledge.json"), "utf8"));
+      seedSdgCache = Object.fromEntries([...(k.occupations || []), ...(k.skills || [])].filter((x: any) => x.sdg?.length).map((x: any) => [x.id, x.sdg]));
+    } catch { seedSdgCache = {}; }
+  }
+  return seedSdgCache!;
+}
+
 async function buildGraph(db: Db, v: number): Promise<FullGraph> {
   const [ver, occs, skills, outlook, edges, req, sectors, courses, tasks, aliases, changes] = await Promise.all([
     db.query("select note, created_at from kb_versions where id=$1", [v]),
@@ -78,13 +94,13 @@ async function buildGraph(db: Db, v: number): Promise<FullGraph> {
   for (const o of occs.rows as any[]) {
     const isco = o.isco_code || catalogueIsco(o.id);
     nodes[o.id] = { name: o.title, type: o.is_destination ? "job" : "occupation", e: eArr(o.id), d: dArr(o.id), stay: o.stay,
-      blurb: o.blurb, postings: o.postings, conf: o.conf, split: o.split, sdg: o.sdg || [], source: o.source, sourceUri: o.source_uri,
+      blurb: o.blurb, postings: o.postings, conf: o.conf, split: o.split, sdg: o.sdg?.length ? o.sdg : seedSdg()[o.id] || [], source: o.source, sourceUri: o.source_uri,
       iscoCode: isco, onetCode: o.onet_code, outlookSource: ol[o.id]?.source || "sample",
       mycol: mycolFor(isco), malaysia: dosmFor(isco) }; // MyCOL (4-digit group) and DOSM wages (major group), from the ISCO code
   }
   for (const s of skills.rows as any[])
     nodes[s.id] = { name: s.label, type: "skill", e: eArr(s.id), d: dArr(s.id), description: s.description,
-      emerging: s.emerging ? { ...s.emerging } : null, sdg: s.sdg, angle: s.angle, source: s.source, sourceUri: s.source_uri,
+      emerging: s.emerging ? { ...s.emerging } : null, sdg: s.sdg?.length ? s.sdg : seedSdg()[s.id] ?? null, angle: s.angle, source: s.source, sourceUri: s.source_uri,
       tasks: [], aliases: [], outlookSource: ol[s.id]?.source || "sample" };
   for (const t of tasks.rows as any[]) nodes[t.skill_id]?.tasks.push({ text: t.text, mode: t.mode, source: t.source });
   for (const a of aliases.rows as any[]) nodes[a.skill_id]?.aliases.push(a.alias);

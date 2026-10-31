@@ -2,7 +2,7 @@
 // Each skill is one row: name, one sentence, one action. Tap the row for the full detail in the drawer.
 // Two sources, one row: the hand-made catalogue (the sample persona: tasks with who does them, "evolves into", real
 // courses, forecast by year) or, for everyone else, the server's outlook for their ESCO skills (features/stay.js header).
-import { S, N, nameOf, humanSplit, confOf, actions, cap } from "../state.js";
+import { S, N, nameOf, humanSplit, confOf, actions, cap, scope } from "../state.js";
 import { t } from "../i18n.js";
 import { esc, badge } from "../util.js";
 import { stayTrack, stayJob } from "../features/stay.js";
@@ -113,7 +113,7 @@ export function render() {
   const E = S.E, root = E.root;
   const cards = (isCatalogue() ? catalogueCards() : outlookCards()).sort((a, b) => b.pct - a.pct);
   const by = g => cards.filter(c => GROUPS.find(x => x.g === g).bands.includes(c.band));
-  const scope = isCatalogue() ? `<p class="ms-meta ms-scope">${esc(t("myskills.scope", { year: S.year, scenario: t("scn." + S.scenario) }))}</p>` : "";
+  const scope = isCatalogue() ? `<p class="ms-meta ms-scope">${esc(t("myskills.scope", { scope: scope() }))}</p>` : "";
   return `<div class="stack ms-page">
     <section class="ms-card">
       <div class="ms-gh"><h2>${esc(t("myskills.title"))}</h2><span class="ms-meta">${esc(t("myskills.private"))}</span></div>

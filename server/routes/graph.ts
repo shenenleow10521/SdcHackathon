@@ -5,13 +5,10 @@ import { z } from "zod";
 import type { Services } from "../context.ts";
 import { loadGraph, listVersions } from "../kb.ts";
 import { parse } from "../lib/http.ts";
+import { SDG_INFO } from "../../shared/sdg.js";
 
-export const SDGS = {
-  4: { name: "Quality education", color: "#c5192d" }, 8: { name: "Decent work", color: "#a21942" },
-  9: { name: "Industry & innovation", color: "#fd6925" }, 10: { name: "Reduced inequalities", color: "#dd1367" },
-  12: { name: "Responsible production", color: "#bf8b2e" }, 13: { name: "Climate action", color: "#3f7e44" },
-  16: { name: "Strong institutions", color: "#00689d" },
-};
+// All 17 goals (shared/sdg.js), so rule-based tags on ESCO jobs and skills have a name and colour too.
+export const SDGS = SDG_INFO;
 export const EMERGING_THRESHOLDS = { postings: 15, employers: 5, weeks: 4 };
 
 export default function graphRoutes(svc: Services) {

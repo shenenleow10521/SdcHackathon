@@ -1,7 +1,7 @@
 // Detail drawer for a job, a skill or you. Jobs add: employer picker with per-employer match and extra stops,
 // "Studies disagree" (GET /api/studies), requirements, SDG links. Skills add: tasks (human edge), Learn → Practice → Prove,
 // emerging-skill evidence and the 5-minute check (GET/POST /api/skills/:id/check).
-import { S, UI, D, N, nameOf, W, matchOf, humanSplit, kindOf, confOf, actions, profileId, isAiEra } from "./state.js";
+import { S, UI, D, N, when, scope, nameOf, W, matchOf, humanSplit, kindOf, confOf, actions, profileId, isAiEra } from "./state.js";
 import { aiEraBadge } from "./features/safer.js";
 import { get, post } from "./api.js";
 import { t } from "./i18n.js";
@@ -15,6 +15,7 @@ import { goalStep, stayDone } from "./features/goal.js";
 import * as Goal from "./features/goal.js"; // Goal.practiseFor (sdc goal module) may not exist yet: read it optionally
 import { drawerProve, bindSteps, shareHtml } from "./features/goal-ui.js";
 import { learnBlock } from "./features/learn.js";
+import { sdgSection } from "./features/sdg.js";
 
 let lastFocus = null;
 const cache = { employers: null, employersErr: null, studies: {}, empMatch: {}, esco: {} };
@@ -90,14 +91,9 @@ function drHead(kind, icon, title, sub = "") {
 /** Who does the work, then exposure and demand in one line with the section's single "How is this worked out?" link. */
 function splitBlock(id) {
   const E = S.E;
-  return `<div class="sec"><h3><i data-lucide="pie-chart"></i>${esc(t("drawer.whoWork", { year: S.year }))}</h3>${splitBar(id, "job")}
-    <p class="note" style="margin-top:8px">${esc(t("drawer.expLine", { e: Math.round(E.exposure(id) * 100), d: sign(E.demand(id)), year: S.year }))}</p>
+  return `<div class="sec"><h3><i data-lucide="pie-chart"></i>${esc(t("drawer.whoWork", { year: when() }))}</h3>${splitBar(id, "job")}
+    <p class="note" style="margin-top:8px">${esc(t("drawer.expLine", { e: Math.round(E.exposure(id) * 100), d: sign(E.demand(id)), year: when() }))}</p>
     <div class="dr-meta">${howLink("exposure", id)}</div></div>`;
-}
-
-function sdgRows(list) {
-  const sd = S.graph.sdgs || {};
-  return list.filter(x => Array.isArray(x)).map(([n, r]) => `<div class="sdg"><b style="background:${esc(sd[n]?.color || "#687284")}">${esc(n)}</b><span><strong>${esc(sd[n]?.name || "SDG " + n)}.</strong> ${esc(r)}</span></div>`).join("");
 }
 
 // ---------- job ----------
@@ -152,13 +148,13 @@ function jobDetail(j) {
       <div style="text-align:right"><div class="num big-wk">${p.route ? esc(t("common.weeksN", { w: W(p.ready) })) : "–"}</div><div class="note">${esc(t("drawer.toReady"))}</div></div></div>
       <div class="dr-meta">${howLink("match", j)}${isSample(n.outlookSource) ? `<span class="src">${esc(t("drawer.sampleNote"))}</span>` : ""}</div></div>
     ${n.blurb ? `<p class="note">${esc(n.blurb)}</p>` : ""}
+    ${sdgSection(j, "drawer.sdg")}
     <button class="btn btn-primary" id="show-path" type="button"><i data-lucide="route"></i>${esc(t("drawer.showPath"))}</button>
     ${hasReq(j) ? `<div class="sec"><h3><i data-lucide="list-checks"></i>${esc(t("drawer.asks"))}</h3>${jobAsks(j)}</div>` : ""}
     ${openingsHtml(n.name)}
     ${fold("info", t("drawer.moreJob"), `${splitBlock(j)}
     <div class="sec" id="emp-sec"><h3><i data-lucide="building-2"></i>${esc(t("emp.title"))}</h3><div id="emp-box">${loadingBox()}</div></div>
-    <div class="sec" id="studies-sec"><h3><i data-lucide="scale"></i>${esc(t("studies.title"))}</h3><div id="studies-box">${loadingBox()}</div></div>
-    ${Array.isArray(n.sdg) && n.sdg.length ? `<div class="sec"><h3><i data-lucide="globe"></i>${esc(t("drawer.sdg"))}</h3><div style="display:grid;gap:8px">${sdgRows(n.sdg)}</div></div>` : ""}`, !!(UI.employer && j === UI.job))}`;
+    <div class="sec" id="studies-sec"><h3><i data-lucide="scale"></i>${esc(t("studies.title"))}</h3><div id="studies-box">${loadingBox()}</div></div>`,!!(UI.employer && j === UI.job))}`;
 }
 
 // employers for this job
@@ -241,7 +237,7 @@ function youDetail(id) {
   const p = S.profile;
   return `${drHead(t("drawer.you"), "user-round", nameOf(id))}
     ${splitBlock(id)}
-    <p class="note">${esc(t("skills.tasksNote", { year: S.year, scenario: t("scn." + S.scenario) }))}</p>
+    <p class="note">${esc(t("skills.tasksNote", { scope: scope() }))}</p>
     ${jobTasksHtml()}
     <p class="note">${esc(t("drawer.youNote"))}</p>
     ${isSample(N(id).outlookSource) ? `<p class="src">${esc(t("drawer.sampleNote"))}</p>` : ""}
@@ -282,6 +278,7 @@ function aiEraDetail(id) {
   const m = S.xsMeta[id] || S.xsMeta["xs:" + id] || {}, src = m.sources || [];
   return `${drHead(doneInGoal(id) ? t("drawer.learned") : t("aiEra.kind"), doneInGoal(id) ? "check-circle" : "trending-up", nameOf(id), `<p class="dr-sub">${aiEraBadge()}</p>`)}
     <div class="sec">${doneNote(id)}<p class="note">${esc(t("aiEra.why"))}</p></div>
+    ${sdgSection(id, "skill.sdg")}
     ${learnBlock(id, nameOf(id))}
     ${practiseHtml(id)}${goalProve(id)}
     ${fold("info", t("drawer.more"), `${m.description ? `<p class="note">${esc(m.description)}</p>` : ""}
@@ -296,6 +293,7 @@ function escoSkillDetail(id) {
     m?.hours ? t("drawer.estHours", { h: Math.round(m.hours) }) : ""].filter(Boolean);
   return `${drHead(kindLabel(id, have), kindIcon(id, have), nameOf(id), `<p class="dr-sub" id="esco-band"></p>`)}
     <div class="sec">${doneNote(id)}<p class="note" id="esco-ai"></p>${ctx.length ? `<p class="note" style="margin-top:6px">${esc(ctx.join(". "))}.</p>` : ""}</div>
+    ${sdgSection(id, "skill.sdg")}
     ${have ? "" : learnBlock(id, nameOf(id))}
     ${practiseHtml(id)}${goalProve(id)}
     ${fold("info", t("drawer.more"), `<p class="note" id="esco-desc"></p><p class="src" style="margin-top:8px">${esc(t("drawer.escoSrc"))}</p>`)}`;
@@ -341,20 +339,20 @@ function skillDetail(k) {
   // a step of your goal: who vouches for it, the check and "+ Add certificate" (features/goal-ui.js); else the plain check
   const gs = goalStep(k);
   const check = gs ? drawerProve(gs) : have ? `<div class="sec" id="check-sec"><button class="btn btn-soft" id="prove" type="button" style="width:100%" ${verified || S.profileFallback ? "disabled" : ""}><i data-lucide="badge-check"></i>${esc(verified ? t("check.already") : t("check.take"))}</button></div>` : "";
-  const sdg = Array.isArray(n.sdg) && n.sdg.length === 2 && !Array.isArray(n.sdg[0]) ? `<div class="sec"><h3><i data-lucide="globe"></i>${esc(t("skill.sdg"))}</h3>${sdgRows([n.sdg])}</div>` : Array.isArray(n.sdg?.[0]) ? `<div class="sec"><h3><i data-lucide="globe"></i>${esc(t("skill.sdg"))}</h3>${sdgRows(n.sdg)}</div>` : "";
   // what to learn: for a skill at risk, what it evolves into; else this skill until level 5
   const evoNext = evoOut.map(e => e.to).find(x => !E.owned(x));
   const learnTo = band === "risk" && evoNext ? evoNext : lvl < 5 ? k : evoNext || null;
-  const summary = n.aiEra ? t("aiEra.why") : t("drawer.expLine", { e: Math.round(E.exposure(k) * 100), d: sign(E.demand(k)), year: S.year });
+  const summary = n.aiEra ? t("aiEra.why") : t("drawer.expLine", { e: Math.round(E.exposure(k) * 100), d: sign(E.demand(k)), year: when() });
   const more = `${n.description ? `<p class="note">${esc(n.description)}</p>` : ""}
     ${!n.aiEra ? `<p class="note">${esc(t("impact.why." + im.label, {}))}.</p><div class="dr-meta">${howLink("exposure", k)}</div>` : ""}
     ${n.aiEra ? `<div class="sec"><h3><i data-lucide="library"></i>${esc(t("aiEra.sources", { n: (n.sources || []).length }))}</h3>${aiEraSources(n.sources || [])}</div>` : ""}
     ${emgSec}
     ${links ? `<div class="sec"><h3><i data-lucide="git-branch"></i>${esc(t("skill.connections"))}</h3><div class="chips">${links}</div></div>` : ""}
-    ${Array.isArray(n.tasks) && n.tasks.length ? skillBlock(k) : ""}${sdg}
+    ${Array.isArray(n.tasks) && n.tasks.length ? skillBlock(k) : ""}
     <p class="src">${esc(t("skill.srcNote"))}${em ? "" : " " + esc(t("skill.frameworkNote"))}${isSample(n.outlookSource) ? " " + esc(t("skill.sampleNote")) : ""}</p>`;
   return `${drHead(kindLabel(k, have), kindIcon(k, have), n.name, sub)}
     <div class="sec">${have ? "" : doneNote(k)}<p class="note">${esc(summary)}</p></div>
+    ${sdgSection(k, "skill.sdg")}
     ${tasks}
     ${learnTo ? learnBlock(learnTo, nameOf(learnTo), [], learnTo === k ? "" : t("learn.next", { name: nameOf(learnTo) })) : ""}
     ${practiseHtml(k)}${check}${levels}

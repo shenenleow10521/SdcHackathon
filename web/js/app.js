@@ -100,7 +100,11 @@ function refresh({ reroute = false, animate = false } = {}) {
   document.querySelectorAll(".scn-part").forEach(x => { x.hidden = S.year < 2030; });
   refreshDrawer();
   const changed = reroute && prev !== D.plan?.route?.key;
-  if (changed) G.wave(S.E.root, "#f08a5d", 1.6, 620);
+  // a route change: one small pulse on the first skill the new route takes (the old route fades out on its own)
+  if (changed) {
+    const was = new Set(String(prev || "").split(">")), next = (D.plan?.route?.nodes || []).find(k => S.E.isSkill(k) && !was.has(k));
+    if (next) G.wave(next, "#f08a5d", 0.9, 90);
+  }
   if (changed && G.isReady() && !relaid) {
     $("rerouting").classList.add("show");
     setTimeout(() => { $("rerouting").classList.remove("show"); G.restyle(); }, reduce ? 200 : 1000);
@@ -482,7 +486,7 @@ Object.assign(actions, {
   /** A job from the search box that isn't among your best matches: add it (match and counts come with its plan). */
   openEscoJob(e) {
     const id = "esco:" + e.id;
-    if (!escoRow(id)) S.escoExtra = [...S.escoExtra, { id: e.id, title: e.title, essential: e.essential ?? 0, match: null, have: null, close: null, iloExposure: e.iloExposure ?? null, critical: !!e.critical, weeksRef: null }];
+    if (!escoRow(id)) S.escoExtra = [...S.escoExtra, { id: e.id, title: e.title, isco: e.isco ?? null, essential: e.essential ?? 0, match: null, have: null, close: null, iloExposure: e.iloExposure ?? null, critical: !!e.critical, weeksRef: null }];
     UI.escoPinned = id;
     selectEsco(id, { tab: "path" });
   },
@@ -561,7 +565,15 @@ function initControls() {
   document.querySelectorAll("[data-scn]").forEach(b => b.addEventListener("click", async () => {
     S.scenario = b.dataset.scn; Guide.mark("future");
     document.querySelectorAll("[data-scn]").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
-    if (refresh({ reroute: true })) toast({ title: t("scn.changedTitle"), detail: t("scn.changedBody", { scenario: t("scn." + S.scenario) }), badgeHtml: badge("b-info", t("scn.newPath")) });
+    const before = (D.plan?.route?.nodes || []).filter(k => S.E.isSkill(k));
+    if (refresh({ reroute: true })) {
+      // name what changed: the skill that is no longer a safe bet, and what the route takes instead
+      const after = (D.plan?.route?.nodes || []).filter(k => S.E.isSkill(k));
+      const drop = before.filter(k => !after.includes(k)).map(nameOf), add = after.filter(k => !before.includes(k)).map(nameOf);
+      const detail = drop.length ? t(add.length ? "scn.changedSwap" : "scn.changedDrop", { scenario: t("scn." + S.scenario), drop: drop.join(", "), add: add.join(", ") })
+        : t("scn.changedBody", { scenario: t("scn." + S.scenario) });
+      toast({ title: t("scn.changedTitle"), detail, badgeHtml: badge("b-info", t("scn.newPath")) });
+    }
     if (UI.sdg) { await Jobs.loadRank(); refresh(); }
   }));
   document.querySelectorAll("[data-year]").forEach(b => b.addEventListener("click", async () => {

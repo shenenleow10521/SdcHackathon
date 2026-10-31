@@ -3,6 +3,13 @@
 // Server results (GET /api/plan, /api/map …) are authoritative; the browser engine is for feedback.
 import { createEngine, displayWeeks } from "/shared/engine.js";
 import { store } from "./util.js";
+import { t } from "./i18n.js";
+
+/** The forecast time in words, measured from today ("now" / "in 3 years"); the data's end year never shows. */
+export const isLater = () => S.year >= 2030;
+export const when = () => t(isLater() ? "time.whenLater" : "time.whenNow");
+/** The whole forecast setting in words: "today" or "3 years from now, with fast AI adoption". */
+export const scope = () => (isLater() ? t("time.scopeLater", { scenario: t("scn." + S.scenario) }) : t("time.scopeNow"));
 
 /** "Show 10 more": the list (and the map, which shows the same jobs) starts at SHOW_STEP best matches and grows by
  *  SHOW_STEP up to MAP_STARS_MAX. */

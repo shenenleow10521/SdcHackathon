@@ -1,12 +1,14 @@
 // Full-width sheets for the people around the worker: "For HR" (redeployment, and plans to approve)
 // and the employer requirements form. Each loads on open and shows loading / empty / error states.
-import { S, actions, nameOf, profileId } from "../state.js";
+import { S, actions, nameOf, profileId, scope } from "../state.js";
 import { get, post, put } from "../api.js";
 import { t } from "../i18n.js";
 import { $, esc, icons, badge, errorBox, loadingBox, fmtDate, rm, toast, bindRetry, ago, extLink } from "../util.js";
 import { routeNodes, statusBadge } from "./plans.js";
 import { forgetEmployers } from "../drawer.js";
 import { loadTeamProgress } from "./team-progress.js";
+import { sdgRows } from "./sdg.js";
+import { sdgForJob } from "/shared/sdg.js";
 
 let current = null, lastFocus = null;
 
@@ -69,6 +71,7 @@ async function loadEscoJob(id) {
       <p><span class="esco-big tn">${esc(ilo ? t("esco.aiIlo", { n: Math.round(ilo.mean * 100) }) : t("esco.aiNone"))}</span><small class="rs">${esc(t("esco.aiIloSub"))}</small></p>
     </div>
     ${desc ? `<p class="esco-desc">${esc(desc.length >= 400 ? desc.replace(/\s+\S*$/, "") + "…" : desc)}</p>` : ""}
+    <div class="sdg-sec"><div class="sub-h"><i data-lucide="globe"></i>${esc(t("drawer.sdg"))}</div><div class="sdg-rows">${sdgRows(sdgForJob(o.title, o.isco))}</div><p class="src">${esc(t("sdg.ruleNote"))}</p></div>
     ${o.critical ? `<p class="note"><b>${esc(t("esco.critical"))}.</b> ${esc(t("esco.criticalNote", { title: o.critical.title }))}${o.critical.new ? " " + esc(t("esco.criticalNew")) : ""}${o.critical.everyEdition ? " " + esc(t("esco.criticalEvery")) : ""} ${extLink(o.critical.url, t("esco.criticalLink"))}</p>` : ""}
     ${escoTasks(o.onet)}
     <div id="esco-next"></div>
@@ -229,7 +232,7 @@ async function loadHr() {
   // open on the first employer that has a team (the sample shared services centre), not an empty one
   if (!hrEmployer || !emps.some(e => e.id === hrEmployer)) hrEmployer = (emps.find(e => e.hasTeam) || emps.find(e => e.source === "sample") || emps[0]).id;
   o.innerHTML = `<div class="hr-pick"><label for="hr-emp">${esc(t("hr.employer"))}</label><select id="hr-emp" class="select">${emps.map(e => `<option value="${esc(e.id)}" ${e.id === hrEmployer ? "selected" : ""}>${esc(e.name)}</option>`).join("")}</select>
-    <span class="rs">${esc(S.year < 2030 ? t("hr.today") : t("hr.scenario", { year: S.year, scenario: t("scn." + S.scenario) }))}</span></div><div id="hr-out">${loadingBox(t("hr.loading"))}</div>`;
+    <span class="rs">${esc(S.year < 2030 ? t("hr.today") : t("hr.scenario", { scope: scope() }))}</span></div><div id="hr-out">${loadingBox(t("hr.loading"))}</div>`;
   o.querySelector("#hr-emp").addEventListener("change", e => { hrEmployer = Number(e.target.value); loadTeam(); });
   icons();
   loadTeam();

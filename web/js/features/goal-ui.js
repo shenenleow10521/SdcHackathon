@@ -2,7 +2,7 @@
 // Each step is a compact row (name, planned dates and hours, status, one Mark as done toggle); tapping it opens the shared skill view.
 // Also here: the printable skills record and "Share my progress with my employer". The drawer reuses the Prove block.
 // Storage (server for your own profile, this browser for the sample persona) lives in features/goal.js.
-import { S, UI, N, nameOf, actions, currentJobTitle } from "../state.js";
+import { S, UI, N, nameOf, actions, currentJobTitle, when } from "../state.js";
 import { get } from "../api.js";
 import { t, getLang } from "../i18n.js";
 import { esc, badge, toast, safeUrl, loadingBox, errorBox, bindRetry } from "../util.js";
@@ -86,7 +86,7 @@ function moveCard(v, hero = false) {
   const steps = numbered(v.steps || []);
   const head = `<div class="gl-kick">${esc(t(hero ? "goal.heroKicker" : "goal.moveKicker"))}</div>
     <div class="ms-gh"><h2>${esc(v.goal.title || nameOf(v.goal.job))}</h2><span class="ms-meta">${esc(t("goal.setOn", { date: day(v.goal.setAt) }))}</span></div>`;
-  if (v.noRoute || !steps.length) return `<section class="ms-card gl-track${hero ? " gl-hero" : ""}">${head}<p class="ms-line">${esc(v.noRoute ? t("path.noRouteBody", { year: S.year }) : t("track.nothingLeft"))}</p>${links(v)}</section>`;
+  if (v.noRoute || !steps.length) return `<section class="ms-card gl-track${hero ? " gl-hero" : ""}">${head}<p class="ms-line">${esc(v.noRoute ? t("path.noRouteBody", { year: when() }) : t("track.nothingLeft"))}</p>${links(v)}</section>`;
   const done = steps.filter(s => s.done).length, left = weeksLeftOf(steps);
   const dates = scheduleSteps(steps, v.hoursPerWeek || S.profile.hours, today());
   const match = v.match != null ? t("track.matchNow", { n: Math.round(v.match) }) + " " : "";
